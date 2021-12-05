@@ -12,7 +12,15 @@
         echo "<th>" .$row["marca"] . "\n </th>";
         echo "<th>" .$row["placa"] . "\n </th>";
         echo "<th>" .$row["modelo"] . " </th>";
-        echo "<th> <a> <i class='fas fa-plus-square'></i> Add</a> <i class='fas fa-minus-circle'></i> <a>Delete</a> <i class='fas fa-pencil-alt'></i> <a>Alter</a> </th><break>";
+
+        //redirect to edit/remove/add page
+        $URLedit = "edit.php?motoID=".$row["motoID"];
+        $URLremove= "delete.php?motoID=".$row["motoID"];
+        $URLadd = "add.php?motoID=".$row["motoID"];
+
+        echo "<th> <i class='fas fa-plus-square'></i><a href='".$URLedit."'> Add</a>";
+        echo " <i class='fas fa-minus-circle'></i> <a href='".$URLremove."' >Delete</a>";
+        echo " <i class='fas fa-pencil-alt'></i> <a href='".$URLadd."'>Edit</a> </th><break>";
         echo "</tr>";
     }
     echo "</table>";
