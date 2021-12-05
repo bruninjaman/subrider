@@ -4,7 +4,8 @@
 ?>
 <html>
 	<head>
-	<title>Title of the document</title>
+		<title>Title of the document</title>
+		<link rel="stylesheet" href="fontawesome-5.15.4\css\all.css">
 	</head>
 	<style>
 		table, th, td {

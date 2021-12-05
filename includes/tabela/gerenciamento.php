@@ -12,7 +12,7 @@
         echo "<th>" .$row["marca"] . "\n </th>";
         echo "<th>" .$row["placa"] . "\n </th>";
         echo "<th>" .$row["modelo"] . " </th>";
-        echo "<th> <a>Add</a> <a>Delete</a> <a>Alter</a> </th><break>";
+        echo "<th> <a> <i class='fas fa-plus-square'></i> Add</a> <i class='fas fa-minus-circle'></i> <a>Delete</a> <i class='fas fa-pencil-alt'></i> <a>Alter</a> </th><break>";
         echo "</tr>";
     }
     echo "</table>";
