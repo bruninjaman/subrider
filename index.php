@@ -6,6 +6,11 @@
 	<head>
 	<title>Title of the document</title>
 	</head>
+	<style>
+		table, th, td {
+		border:1px solid black;
+		}
+	</style>
 	<body>
 		Exibição simples de tabela:
 		<?php 
