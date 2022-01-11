@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>Gerenciamento</title>
+      <!-- NAVBAR CSS-->
+      <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+      <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+      <link rel='stylesheet' href='https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css'>
+      <link rel="stylesheet" href="./style.css">
+      <style>
+         .crud {
+         width:100px;
+         vertical-align: middle !important;
+         }
+         .crud a {
+         cursor: pointer;
+         display: inline-block;
+         margin: 0 5px;
+         min-width: 24px;
+         font-size:1.5em;
+         }
+         .add-new {
+         float:right;
+         margin-bottom: 5px;
+         }
+         #servers_modal table.table td .add {
+         display: inline-block;      
+         }
+         .modal-content {
+         margin-top: 100px;
+         }
+         #servers_modal table.table .form-control.error {
+         border-color: #f50000;
+         }
+      </style>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <!-- Navigation -->
+      <nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
+         <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand page-scroll" href="#page-top">[LOGO Sub-Rider]</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+               <ul class="nav navbar-nav navbar-right">
+                  <li class="hidden active">
+                     <a href="#page-top"></a>
+                  </li>
+                  <li class="">
+                     <a class="page-scroll" href="index.html">Voltar</a>
+                  </li>
+               </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+         </div>
+         <!-- /.container-fluid -->
+      </nav>
+      <!-- jQuery Version 1.11.0 -->
+      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/jquery-1.11.0.js"></script>
+      <!-- Bootstrap Core JavaScript -->
+      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/bootstrap.min.js"></script>
+      <!-- Plugin JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/classie.js"></script>
+      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/cbpAnimatedHeader.js"></script>
+      <!-- Contact Form JavaScript -->
+      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/jqBootstrapValidation.js"></script>
+      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/contact_me.js"></script>
+      <span style="height: 20px; width: 40px; min-height: 20px; min-width: 40px; position: absolute; opacity: 0.85; z-index: 8675309; display: none; cursor: pointer; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAYAAAD/Rn+7AAADU0lEQVR42s2WXUhTYRjHz0VEVPRFUGmtVEaFUZFhHxBhsotCU5JwBWEf1EWEEVHQx4UfFWYkFa2biPJiXbUta33OXFtuUXMzJ4bK3Nqay7m5NeZq6h/tPQ+xU20zugjOxR/+7/O8539+5znnwMtNTExwJtMb3L/fiLv3botCSmUjeCaejTOb39AiFothfHxcFIrHY8RksZjBsckJcOIRMfFsHD/SsbExUYpnI8DR0dGUGjSb0byhEJp5Uqg5CTSzc2CQleJbMEj9/ywBcGRkJEk9DQqouEVQT1sK444yWI9UonmTjGqauVLEIlHa9x8lAMbj8SSpp0rwKGMVvg8P46vbg0C7na8z8JsMcgHe7jlEa+edRhiLy8n/TUMfu6EvLElk+U0WtGwrTrdfAGQf5J8iiK4LVzDU28t8JtMSocf8E+l68myaNFXm/6rXslLK7ay5TOunuRvZWpJuvwAYjUaTpOIWoquuAZ219RTaxKYp9BbjycoN5FvL9qH9TBX5rvoGdJythvXYSTxdtRnWylO/ZdqrLsGwszzhWQ593z2KlAwCYCQSSZJ6ehZ0W7bD9VBLgN0NCqr3qR7R2rBrL3pu3Sb/7nDlz2uy6cG0OXk0GTbZXzNp8trsPAQdTj6frlWzN2DcXZGKQQAMh8NJ6rpyHe+PnkCr/CAFdZyvpfpjuvkifLF9wIt1Wwlo0OHie1RvWrKa93RjzfzliTzPKz3ltB0/Tevmwp14wGUgHAzSOoUEwFAolFaaBSuhnslPRkJexUJtZ6v5HtUeLswl33n1BgEY5fvhs9sJ3FAiT+QYyyvoAQJuD0KBAFRTJNAuz5/s3gJgMBhMJwrVFRThM5tY5zUF/A4X1f2fvQTRLCuBreoim0YmAbqNJryvPEXeeq46kaNdkQ/1HCncbJKPs9ZSv2VHGfWsZ2hfkhKAfr8/pdxWKx4wwD69PmVfNSOL+lr2w+gYqHpWDtXt1xQ8AMlWU0e1lqLd/APRHoP8AJqWrQG9gYxcPMsvSJUvAA4MDKTUJ7MZLaVy8v+qT21tcDx/OemePr0RTkNrur4A6PP5xCgBsL+/X4wiQDpuuVxOeL1eMYmYeDY6sOp0z+B0OuHxeEQhxkJMFosJiSO/UinOI/8Pc+l7KKArAT8AAAAASUVORK5CYII=);"></span>
+      <div class="modal" id="servers_modal" style="display:block;">
+		<!-- table 1 -->
+         <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Motocicletas Cadastradas</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="table-wrapper">
+                     <div class="table-title">
+                        <button type="button" class="btn btn-primary add-new">
+                        <i class="fa fa-plus"></i> Adicionar motocicleta
+                        </button>
+                     </div>
+                     <table class="table table-bordered">
+                        <thead>
+                           <tr>
+                              <th>Imagem</th>
+                              <th>Marca</th>
+                              <th>Modelo</th>
+                              <th>Placa</th>
+                              <th>KM</th>
+                              <th>Proprietario</th>
+                              <th>Ações</th>
+                           </tr>
+                        </thead>
+                        <tbody id="servers_table" runat="server" ClientIDMode="static" data-delete="">
+                           <tr id="server_0">
+                              <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwJBGey-456UVqhCm-JHzINmpmxsqMrR4VKQ&usqp=CAU" style="width:200px; height:100px;"></td>
+                              <td>Suzuki</td>
+                              <td>VL 1500 lc</td>
+                              <td>ABCDEFG</td>
+                              <td>Leonard</td>
+                              <td class="pw">****<input type="hidden" value="Blah"></td>
+                              <td class="crud"><a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-check"></i></a><a class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a><a class="delete" title="Delete" data-toggle=
+                                 "tooltip"><i class="fa fa-trash"></i></a></td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-default" onclick="SaveServerList();">Salvar</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+               </div>
+            </div>
+         </div>
+         <!-- table 2 -->
+         <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Clientes</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="table-wrapper">
+                     <div class="table-title">
+                        <button type="button" class="btn btn-primary add-new">
+                        <i class="fa fa-plus"></i> Adicionar cliente
+                        </button>
+                     </div>
+                     <table class="table table-bordered">
+                        <thead>
+                           <tr>
+                              <th>Nome Completo</th>
+                              <th>CPF</th>
+                              <th>Telefone</th>
+                              <th>Email</th>
+                              <th>Ações</th>
+                           </tr>
+                        </thead>
+                        <tbody id="servers_table" runat="server" ClientIDMode="static" data-delete="">
+                           <tr id="server_0">
+                              <td>Ronaldo da silva</td>
+                              <td>111.111.111-51</td>
+                              <td>61 95385-5435</td>
+                              <td>ronaldmcdonald@hotmail.com</td>
+                              <td class="crud"><a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-check"></i></a><a class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a><a class="delete" title="Delete" data-toggle=
+                                 "tooltip"><i class="fa fa-trash"></i></a></td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-default" onclick="SaveServerList();">Salvar</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+               </div>
+            </div>
+         </div>
+         <!-- table 3 -->
+         <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 class="modal-title">Ordem de serviço</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="table-wrapper">
+                     <div class="table-title">
+                        <button type="button" class="btn btn-primary add-new">
+                        <i class="fa fa-plus"></i> Adicionar ordem de serviço
+                        </button>
+                     </div>
+                     <table class="table table-bordered">
+                        <thead>
+                           <tr>
+                              <th>Serviço</th>
+                              <th>Descrição</th>
+                              <th>Peças</th>
+                              <th>Moto</th>
+                              <th>Ações</th>
+                           </tr>
+                        </thead>
+                        <tbody id="servers_table" runat="server" ClientIDMode="static" data-delete="">
+                           <tr id="server_0">
+                              <td>Serviço Nº 10001</td>
+                              <td>Troca de fluído de freio</td>
+                              <td>Fluído dot 4</td>
+                              <td>NX 150</td>
+                              <td class="crud"><a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-check"></i></a><a class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a><a class="delete" title="Delete" data-toggle=
+                                 "tooltip"><i class="fa fa-trash"></i></a></td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-default" onclick="SaveServerList();">Salvar</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+         //ripped from https://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=table-with-add-and-delete-row-feature
+         
+         $(document).ready(function(){
+           $('[data-toggle="tooltip"]').tooltip();
+           //hide the add button to maintain display: inline-block
+           $('#servers_modal table.table td .add').toggle(false);
+         //this line could cause problems if the modal doesnt contain any existing entries
+         var actions = $("#servers_modal table td:last-child").html();
+         // Append table with add row form on add new button click
+           $(".add-new").click(function(){
+         $(this).attr("disabled", "disabled");
+         var index = $("#servers_modal table tbody tr:last-child").index();
+               var row = '<tr id="server_0">' +
+                   '<td><input type="file" name="server_label" id="server_label"></td>' +
+                   '<td><input type="text" class="form-control" name="server_hostname" id="server_hostname"></td>' +
+                   '<td><input type="text" class="form-control" name="server_streamport" id="server_streamport"></td>' +
+                   '<td><input type="text" class="form-control" name="server_apiport" id="server_apiport"></td>' +
+                   '<td><input type="o,a" class="form-control" name="server_user" id="server_user"></td>' +
+                   '<td class="pw"><input type="password" class="form-control pw" name="server_pass" id="server_pass"></td>' +
+         	'<td class="crud">' + actions + '</td>' +
+               '</tr>';
+           	$("#servers_modal table").append(row);		
+         $("#servers_modal table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+               $('[data-toggle="tooltip"]').tooltip();
+           });
+         // Add row on add button click
+         $(document).on("click", ".add", function(){
+         var empty = false;
+         //var input = $(this).closest("tr").find('input[type="text"]');
+               var input = $(this).closest("tr").find('input[type="text"], input[type="password"]');
+               input.each(function(){
+         	if(!$(this).val()){
+         		$(this).addClass("error");
+         		empty = true;
+         	} else{
+                       $(this).removeClass("error");
+                   }
+         });
+         $(this).closest("tr").find(".error").first().focus();
+         if(!empty){
+                   input.each(function () {
+                       if ($(this).is(".pw")) {
+                          
+                           var asterisks = $(this).val().split('').map(function () {
+                               return "*";
+                           });
+                           $(this).parent("td").text(asterisks.join("")).append('<input type="hidden" value="' + $(this).val() + '"/>');    
+                       } else {
+                           $(this).parent("td").html($(this).val());
+                       }
+         		
+         	});			
+         	$(this).closest("tr").find(".add, .edit").toggle();
+         	$(".add-new").removeAttr("disabled");
+         }		
+           });
+         // Edit row on edit button click
+         $(document).on("click", ".edit", function(){		
+               $(this).closest("tr").find("td:not(:last-child)").each(function () {
+                   if ($(this).is(".pw")) {
+                       $(this).html('<input type="password" class="form-control pw" value="' + $(this).find('input[type="hidden"]').val() + '">');
+                   } else {
+                       $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+                   }
+         	
+         });		
+         $(this).closest("tr").find(".add, .edit").toggle();
+         $(".add-new").attr("disabled", "disabled");
+           });
+         // Delete row on delete button click
+           $(document).on("click", ".delete", function () {      
+               if (!$(".add-new").prop("disabled")) {
+                   var delable = $("#servers_table").data("delete");
+                   delable += $(this).closest("tr").attr("id").replace("server_", "") + "¬";
+                   $("#servers_table").data("delete", delable);
+               }
+                   $(this).closest("tr").remove();
+                   $(".add-new").removeAttr("disabled");
+           });
+         });
+      </script>
+   </body>
+</html>
