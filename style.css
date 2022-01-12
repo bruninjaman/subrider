@@ -265,9 +265,10 @@ header {
     text-align: center;
     color: #fff;
     background-attachment: scroll;
-    background-image: url(https://images.unsplash.com/photo-1527536695305-3606019ecfe1?ixid=Mnw3MjU4M3wwfDF8c2VhcmNofDIxOHx8bWVjaGFuaWN8ZW58MHx8fHwxNjM3MDE1MDk0&ixlib=rb-1.2.1%3Fw%3D1366&q=70&auto=format&fit=crop&w=1224&h=368);
+    background-image: url(https://image.shutterstock.com/image-photo/male-service-man-hold-silver-600w-2035954019.jpg);
     background-position: center center;
     background-repeat: no-repeat;
+	background-size: cover;
 	background-color: #3b5278;
 }
 
@@ -647,8 +648,9 @@ section h3.section-subheading {
 
 section#contact {
     background-color: #222;
-    background-image: url(https://unsplash.imgix.net/44/C3EWdWzT8imxs0fKeKoC_blackforrest.JPG?q=75&fm=jpg&auto=format&s=986aaa92169d4e97975fa66ebd60bafd);
+    background-image: url(https://image.shutterstock.com/image-photo/25082020-riga-latvia-motorcycle-on-600w-1935086042.jpg);
     background-position: center;
+	background-size: cover;
     background-repeat: no-repeat;
 }
 
