@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php 
+	if (isset(POST["user"])) {
+		echo "found user";
+	} 
+
+?>
 <html lang="en" >
    <head>
       <!-- NAVBAR CSS-->
@@ -32,7 +38,7 @@
                      <a href="#page-top"></a>
                   </li>
                   <li class="">
-                     <a class="page-scroll" href="index.html">Voltar</a>
+                     <a class="page-scroll" href="index.php">Voltar</a>
                   </li>
                </ul>
             </div>
@@ -61,7 +67,7 @@
                <div class="sign-in-htm">
                   <div class="group">
                      <label for="user" class="label">Nome de Usuario</label>
-                     <input id="user" type="text" class="input">
+                     <input id="user" name="user" type="text" class="input">
                   </div>
                   <div class="group">
                      <label for="pass" class="label">Senha</label>

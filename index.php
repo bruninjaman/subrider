@@ -22,7 +22,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   </button>
-				  <a class="navbar-brand page-scroll" href="login.html">Login</a>
+				  <a class="navbar-brand page-scroll" href="login.php">Login</a>
                   <a class="navbar-brand page-scroll" href="#page-top">[LOGO Sub-Rider]</a>
                </div>
                <!-- Collect the nav links, forms, and other content for toggling -->

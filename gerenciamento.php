@@ -62,7 +62,7 @@
                      <a href="#page-top"></a>
                   </li>
                   <li class="">
-                     <a class="page-scroll" href="index.html">Voltar</a>
+                     <a class="page-scroll" href="index.php">Voltar</a>
                   </li>
                </ul>
             </div>
