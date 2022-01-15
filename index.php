@@ -77,26 +77,27 @@
                   <div class="col-md-4">
                      <span class="fa-stack fa-4x">
                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                     <i class="glyphicon glyphicon-tree-conifer"></i>
+                     <i class="glyphicon glyphicon-flag"></i>
+					 <i class="fas fa-truck-couch"></i>
                      </span>
                      <h4 class="service-heading">Reboque</h4>
-                     <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                     <p class="text-muted">Transporte guincho para a oficina e para a residência do cliente.</p>
                   </div>
                   <div class="col-md-4">
                      <span class="fa-stack fa-4x">
                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                     <i class="glyphicon glyphicon-heart"></i>
+                     <i class="glyphicon glyphicon-wrench"></i>
                      </span>
                      <h4 class="service-heading">Manutenção Preventiva</h4>
-                     <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                     <p class="text-muted">Manutenção periódica conforme a tabela do fabricante ou por níveis: básico, intermediário e avançado.</p>
                   </div>
                   <div class="col-md-4">
                      <span class="fa-stack fa-4x">
                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                     <i class="glyphicon glyphicon-tint"></i>
+                     <i class="glyphicon glyphicon-ok"></i>
                      </span>
-                     <h4 class="service-heading">Serviço de Reparo</h4>
-                     <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                     <h4 class="service-heading">Manutenção Corretiva</h4>	
+                     <p class="text-muted">Reparo mecânico, elétrico, eletrônico e estético e motocicletas de 1 a 6 cilindros de todas as categorias e das marcas japonesas e europeias.</p>
                   </div>
                </div>
             </div>
@@ -276,6 +277,7 @@
                </div>
             </div>
          </section>
+		 <!--
          <footer>
             <div class="container">
                <div class="row">
@@ -302,7 +304,7 @@
                   </div>
                </div>
             </div>
-         </footer>
+         </footer> -->
          <!-- Portfolio Modals -->
          <!-- Use the modals below to showcase details about your portfolio projects! -->
          <!-- Portfolio Modal 1 -->

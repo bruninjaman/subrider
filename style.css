@@ -263,9 +263,9 @@ fieldset[disabled] .btn-xl.active {
 
 header {
     text-align: center;
-    color: #fff;
+    color: #15155e;
     background-attachment: scroll;
-    background-image: url(https://image.shutterstock.com/image-photo/male-service-man-hold-silver-600w-2035954019.jpg);
+    /* background-image: url(https://image.shutterstock.com/image-photo/male-service-man-hold-silver-600w-2035954019.jpg); */
     background-position: center center;
     background-repeat: no-repeat;
 	background-size: cover;
@@ -648,7 +648,7 @@ section h3.section-subheading {
 
 section#contact {
     background-color: #222;
-    background-image: url(https://image.shutterstock.com/image-photo/25082020-riga-latvia-motorcycle-on-600w-1935086042.jpg);
+    /*background-image: url(https://image.shutterstock.com/image-photo/25082020-riga-latvia-motorcycle-on-600w-1935086042.jpg); */
     background-position: center;
 	background-size: cover;
     background-repeat: no-repeat;
