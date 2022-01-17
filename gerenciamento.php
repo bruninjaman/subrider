@@ -1,45 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
    <head>
-      <meta charset="utf-8">
-      <title>Gerenciamento</title>
       <!-- NAVBAR CSS-->
       <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
       <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
       <link rel='stylesheet' href='https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css'>
       <link rel="stylesheet" href="./style.css">
-      <style>
-         .crud {
-         width:100px;
-         vertical-align: middle !important;
-         }
-         .crud a {
-         cursor: pointer;
-         display: inline-block;
-         margin: 0 5px;
-         min-width: 24px;
-         font-size:1.5em;
-         }
-         .add-new {
-         float:right;
-         margin-bottom: 5px;
-         }
-         #servers_modal table.table td .add {
-         display: inline-block;      
-         }
-         .modal-content {
-         margin-top: 100px;
-         }
-         #servers_modal table.table .form-control.error {
-         border-color: #f50000;
-         }
-      </style>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <meta charset="UTF-8">
+      <title>CodePen - Bootstrap : CRUD Table</title>
+      <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto|Varela+Round'>
+      <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+      <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+      <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+      <link rel="stylesheet" href="./gerenciamento_style.css">
    </head>
    <body>
       <!-- Navigation -->
@@ -70,234 +43,226 @@
          </div>
          <!-- /.container-fluid -->
       </nav>
-      <!-- jQuery Version 1.11.0 -->
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/jquery-1.11.0.js"></script>
-      <!-- Bootstrap Core JavaScript -->
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/bootstrap.min.js"></script>
-      <!-- Plugin JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/classie.js"></script>
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/cbpAnimatedHeader.js"></script>
-      <!-- Contact Form JavaScript -->
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/jqBootstrapValidation.js"></script>
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/contact_me.js"></script>
-      <span style="height: 20px; width: 40px; min-height: 20px; min-width: 40px; position: absolute; opacity: 0.85; z-index: 8675309; display: none; cursor: pointer; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAYAAAD/Rn+7AAADU0lEQVR42s2WXUhTYRjHz0VEVPRFUGmtVEaFUZFhHxBhsotCU5JwBWEf1EWEEVHQx4UfFWYkFa2biPJiXbUta33OXFtuUXMzJ4bK3Nqay7m5NeZq6h/tPQ+xU20zugjOxR/+7/O8539+5znnwMtNTExwJtMb3L/fiLv3botCSmUjeCaejTOb39AiFothfHxcFIrHY8RksZjBsckJcOIRMfFsHD/SsbExUYpnI8DR0dGUGjSb0byhEJp5Uqg5CTSzc2CQleJbMEj9/ywBcGRkJEk9DQqouEVQT1sK444yWI9UonmTjGqauVLEIlHa9x8lAMbj8SSpp0rwKGMVvg8P46vbg0C7na8z8JsMcgHe7jlEa+edRhiLy8n/TUMfu6EvLElk+U0WtGwrTrdfAGQf5J8iiK4LVzDU28t8JtMSocf8E+l68myaNFXm/6rXslLK7ay5TOunuRvZWpJuvwAYjUaTpOIWoquuAZ219RTaxKYp9BbjycoN5FvL9qH9TBX5rvoGdJythvXYSTxdtRnWylO/ZdqrLsGwszzhWQ593z2KlAwCYCQSSZJ6ehZ0W7bD9VBLgN0NCqr3qR7R2rBrL3pu3Sb/7nDlz2uy6cG0OXk0GTbZXzNp8trsPAQdTj6frlWzN2DcXZGKQQAMh8NJ6rpyHe+PnkCr/CAFdZyvpfpjuvkifLF9wIt1Wwlo0OHie1RvWrKa93RjzfzliTzPKz3ltB0/Tevmwp14wGUgHAzSOoUEwFAolFaaBSuhnslPRkJexUJtZ6v5HtUeLswl33n1BgEY5fvhs9sJ3FAiT+QYyyvoAQJuD0KBAFRTJNAuz5/s3gJgMBhMJwrVFRThM5tY5zUF/A4X1f2fvQTRLCuBreoim0YmAbqNJryvPEXeeq46kaNdkQ/1HCncbJKPs9ZSv2VHGfWsZ2hfkhKAfr8/pdxWKx4wwD69PmVfNSOL+lr2w+gYqHpWDtXt1xQ8AMlWU0e1lqLd/APRHoP8AJqWrQG9gYxcPMsvSJUvAA4MDKTUJ7MZLaVy8v+qT21tcDx/OemePr0RTkNrur4A6PP5xCgBsL+/X4wiQDpuuVxOeL1eMYmYeDY6sOp0z+B0OuHxeEQhxkJMFosJiSO/UinOI/8Pc+l7KKArAT8AAAAASUVORK5CYII=);"></span>
-      <div class="modal" id="servers_modal" style="display:block;">
-		<!-- table 1 -->
-         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">×</button>
-                  <h4 class="modal-title">Motocicletas Cadastradas</h4>
-               </div>
-               <div class="modal-body">
-                  <div class="table-wrapper">
-                     <div class="table-title">
-                        <button type="button" class="btn btn-primary add-new">
-                        <i class="fa fa-plus"></i> Adicionar motocicleta
-                        </button>
-                     </div>
-                     <table class="table table-bordered">
-                        <thead>
-                           <tr>
-                              <th>Imagem</th>
-                              <th>Marca</th>
-                              <th>Modelo</th>
-                              <th>Placa</th>
-                              <th>KM</th>
-                              <th>Proprietario</th>
-                              <th>Ações</th>
-                           </tr>
-                        </thead>
-                        <tbody id="servers_table" runat="server" ClientIDMode="static" data-delete="">
-                           <tr id="server_0">
-                              <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwJBGey-456UVqhCm-JHzINmpmxsqMrR4VKQ&usqp=CAU" style="width:200px; height:100px;"></td>
-                              <td>Suzuki</td>
-                              <td>VL 1500 lc</td>
-                              <td>ABCDEFG</td>
-                              <td>Leonard</td>
-                              <td class="pw">****<input type="hidden" value="Blah"></td>
-                              <td class="crud"><a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-check"></i></a><a class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a><a class="delete" title="Delete" data-toggle=
-                                 "tooltip"><i class="fa fa-trash"></i></a></td>
-                           </tr>
-                        </tbody>
-                     </table>
+      <!-- partial:index.partial.html -->
+      <div class="container">
+         <div class="table-wrapper">
+            <div class="table-title">
+               <div class="row">
+                  <div class="col-sm-6">
+                     <h2>Gerenciar <b>Motocicletas</b></h2>
                   </div>
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" onclick="SaveServerList();">Salvar</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                  <div class="col-sm-6">
+                     <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>
+                     <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Deletar</span></a>
+                  </div>
                </div>
             </div>
-         </div>
-         <!-- table 2 -->
-         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">×</button>
-                  <h4 class="modal-title">Clientes</h4>
-               </div>
-               <div class="modal-body">
-                  <div class="table-wrapper">
-                     <div class="table-title">
-                        <button type="button" class="btn btn-primary add-new">
-                        <i class="fa fa-plus"></i> Adicionar cliente
-                        </button>
-                     </div>
-                     <table class="table table-bordered">
-                        <thead>
-                           <tr>
-                              <th>Nome Completo</th>
-                              <th>CPF</th>
-                              <th>Telefone</th>
-                              <th>Email</th>
-                              <th>Ações</th>
-                           </tr>
-                        </thead>
-                        <tbody id="servers_table" runat="server" ClientIDMode="static" data-delete="">
-                           <tr id="server_0">
-                              <td>Ronaldo da silva</td>
-                              <td>111.111.111-51</td>
-                              <td>61 95385-5435</td>
-                              <td>ronaldmcdonald@hotmail.com</td>
-                              <td class="crud"><a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-check"></i></a><a class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a><a class="delete" title="Delete" data-toggle=
-                                 "tooltip"><i class="fa fa-trash"></i></a></td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" onclick="SaveServerList();">Salvar</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-               </div>
-            </div>
-         </div>
-         <!-- table 3 -->
-         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">×</button>
-                  <h4 class="modal-title">Ordem de serviço</h4>
-               </div>
-               <div class="modal-body">
-                  <div class="table-wrapper">
-                     <div class="table-title">
-                        <button type="button" class="btn btn-primary add-new">
-                        <i class="fa fa-plus"></i> Adicionar ordem de serviço
-                        </button>
-                     </div>
-                     <table class="table table-bordered">
-                        <thead>
-                           <tr>
-                              <th>Serviço</th>
-                              <th>Descrição</th>
-                              <th>Peças</th>
-                              <th>Moto</th>
-                              <th>Ações</th>
-                           </tr>
-                        </thead>
-                        <tbody id="servers_table" runat="server" ClientIDMode="static" data-delete="">
-                           <tr id="server_0">
-                              <td>Serviço Nº 10001</td>
-                              <td>Troca de fluído de freio</td>
-                              <td>Fluído dot 4</td>
-                              <td>NX 150</td>
-                              <td class="crud"><a class="add" title="Add" data-toggle="tooltip"><i class="fa fa-check"></i></a><a class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a><a class="delete" title="Delete" data-toggle=
-                                 "tooltip"><i class="fa fa-trash"></i></a></td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" onclick="SaveServerList();">Salvar</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-               </div>
+            <table class="table table-striped table-hover">
+               <thead>
+                  <tr>
+                     <th>
+                        <span class="custom-checkbox">
+                        <input type="checkbox" id="selectAll">
+                        <label for="selectAll"></label>
+                        </span>
+                     </th>
+                     <th>Foto</th>
+                     <th>Proprietario</th>
+                     <th>Endereço</th>
+                     <th>Telefone</th>
+                     <th>Ações</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td>
+                        <span class="custom-checkbox">
+                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                        <label for="checkbox1"></label>
+                        </span>
+                     </td>
+                     <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
+                     <td>Jonny da Silva</td>
+                     <td>89 Chiaroscuro Rd, Portland, USA</td>
+                     <td>(171) 555-2222</td>
+                     <td>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <span class="custom-checkbox">
+                        <input type="checkbox" id="checkbox2" name="options[]" value="1">
+                        <label for="checkbox2"></label>
+                        </span>
+                     </td>
+                     <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
+                     <td>Jonny da Silva</td>
+                     <td>89 Chiaroscuro Rd, Portland, USA</td>
+                     <td>(171) 555-2222</td>
+                     <td>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <span class="custom-checkbox">
+                        <input type="checkbox" id="checkbox3" name="options[]" value="1">
+                        <label for="checkbox3"></label>
+                        </span>
+                     </td>
+                     <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
+                     <td>Jonny da Silva</td>
+                     <td>89 Chiaroscuro Rd, Portland, USA</td>
+                     <td>(171) 555-2222</td>
+                     <td>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <span class="custom-checkbox">
+                        <input type="checkbox" id="checkbox4" name="options[]" value="1">
+                        <label for="checkbox4"></label>
+                        </span>
+                     </td>
+                     <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
+                     <td>Jonny da Silva</td>
+                     <td>89 Chiaroscuro Rd, Portland, USA</td>
+                     <td>(171) 555-2222</td>
+                     <td>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <span class="custom-checkbox">
+                        <input type="checkbox" id="checkbox5" name="options[]" value="1">
+                        <label for="checkbox5"></label>
+                        </span>
+                     </td>
+                     <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
+                     <td>Jonny da Silva</td>
+                     <td>89 Chiaroscuro Rd, Portland, USA</td>
+                     <td>(171) 555-2222</td>
+                     <td>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <div class="clearfix">
+               <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+               <ul class="pagination">
+                  <li class="page-item disabled"><a href="#">Previous</a></li>
+                  <li class="page-item"><a href="#" class="page-link">1</a></li>
+                  <li class="page-item"><a href="#" class="page-link">2</a></li>
+                  <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                  <li class="page-item"><a href="#" class="page-link">4</a></li>
+                  <li class="page-item"><a href="#" class="page-link">5</a></li>
+                  <li class="page-item"><a href="#" class="page-link">Next</a></li>
+               </ul>
             </div>
          </div>
       </div>
-      <script>
-         //ripped from https://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=table-with-add-and-delete-row-feature
-         
-         $(document).ready(function(){
-           $('[data-toggle="tooltip"]').tooltip();
-           //hide the add button to maintain display: inline-block
-           $('#servers_modal table.table td .add').toggle(false);
-         //this line could cause problems if the modal doesnt contain any existing entries
-         var actions = $("#servers_modal table td:last-child").html();
-         // Append table with add row form on add new button click
-           $(".add-new").click(function(){
-         $(this).attr("disabled", "disabled");
-         var index = $("#servers_modal table tbody tr:last-child").index();
-               var row = '<tr id="server_0">' +
-                   '<td><input type="file" name="server_label" id="server_label"></td>' +
-                   '<td><input type="text" class="form-control" name="server_hostname" id="server_hostname"></td>' +
-                   '<td><input type="text" class="form-control" name="server_streamport" id="server_streamport"></td>' +
-                   '<td><input type="text" class="form-control" name="server_apiport" id="server_apiport"></td>' +
-                   '<td><input type="o,a" class="form-control" name="server_user" id="server_user"></td>' +
-                   '<td class="pw"><input type="password" class="form-control pw" name="server_pass" id="server_pass"></td>' +
-         	'<td class="crud">' + actions + '</td>' +
-               '</tr>';
-           	$("#servers_modal table").append(row);		
-         $("#servers_modal table tbody tr").eq(index + 1).find(".add, .edit").toggle();
-               $('[data-toggle="tooltip"]').tooltip();
-           });
-         // Add row on add button click
-         $(document).on("click", ".add", function(){
-         var empty = false;
-         //var input = $(this).closest("tr").find('input[type="text"]');
-               var input = $(this).closest("tr").find('input[type="text"], input[type="password"]');
-               input.each(function(){
-         	if(!$(this).val()){
-         		$(this).addClass("error");
-         		empty = true;
-         	} else{
-                       $(this).removeClass("error");
-                   }
-         });
-         $(this).closest("tr").find(".error").first().focus();
-         if(!empty){
-                   input.each(function () {
-                       if ($(this).is(".pw")) {
-                          
-                           var asterisks = $(this).val().split('').map(function () {
-                               return "*";
-                           });
-                           $(this).parent("td").text(asterisks.join("")).append('<input type="hidden" value="' + $(this).val() + '"/>');    
-                       } else {
-                           $(this).parent("td").html($(this).val());
-                       }
-         		
-         	});			
-         	$(this).closest("tr").find(".add, .edit").toggle();
-         	$(".add-new").removeAttr("disabled");
-         }		
-           });
-         // Edit row on edit button click
-         $(document).on("click", ".edit", function(){		
-               $(this).closest("tr").find("td:not(:last-child)").each(function () {
-                   if ($(this).is(".pw")) {
-                       $(this).html('<input type="password" class="form-control pw" value="' + $(this).find('input[type="hidden"]').val() + '">');
-                   } else {
-                       $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-                   }
-         	
-         });		
-         $(this).closest("tr").find(".add, .edit").toggle();
-         $(".add-new").attr("disabled", "disabled");
-           });
-         // Delete row on delete button click
-           $(document).on("click", ".delete", function () {      
-               if (!$(".add-new").prop("disabled")) {
-                   var delable = $("#servers_table").data("delete");
-                   delable += $(this).closest("tr").attr("id").replace("server_", "") + "¬";
-                   $("#servers_table").data("delete", delable);
-               }
-                   $(this).closest("tr").remove();
-                   $(".add-new").removeAttr("disabled");
-           });
-         });
-      </script>
+      <!-- Edit Modal HTML -->
+      <div id="addEmployeeModal" class="modal fade">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <form>
+                  <div class="modal-header">
+                     <h4 class="modal-title">Adicionar moto</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                     <div class="form-group">
+                        <label>Imagem</label>
+                        <input type="file" required>
+                     </div>
+                     <div class="form-group">
+                        <label>Proprietario</label>
+                        <input type="email" class="form-control" required>
+                     </div>
+                     <div class="form-group">
+                        <label>Endereço</label>
+                        <textarea class="form-control" required></textarea>
+                     </div>
+                     <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="text" class="form-control" required>
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                     <input type="submit" class="btn btn-success" value="Adicionar">
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!-- Edit Modal HTML -->
+      <div id="editEmployeeModal" class="modal fade">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <form>
+                  <div class="modal-header">
+                     <h4 class="modal-title">Editar Motocicleta</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                     <div class="form-group">
+                        <label>Imagem</label>
+                        <input type="file" required>
+                     </div>
+                     <div class="form-group">
+                        <label>Proprietario</label>
+                        <input type="email" class="form-control" required>
+                     </div>
+                     <div class="form-group">
+                        <label>Endereço</label>
+                        <textarea class="form-control" required></textarea>
+                     </div>
+                     <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="text" class="form-control" required>
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                     <input type="submit" class="btn btn-info" value="Salvar">
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!-- Delete Modal HTML -->
+      <div id="deleteEmployeeModal" class="modal fade">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <form>
+                  <div class="modal-header">
+                     <h4 class="modal-title">Deletar Motocicleta</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                     <p>Tem certeza que deseja deletar esse registro?</p>
+                     <p class="text-warning"><small>Está ação não pode ser desfeita.</small></p>
+                  </div>
+                  <div class="modal-footer">
+                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                     <input type="submit" class="btn btn-danger" value="Deletar">
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!-- partial -->
+      <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+      <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script><script  src="./gerenciamento_script.js"></script>
    </body>
 </html>

@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<?php 
-	if (isset(POST["user"])) {
-		echo "found user";
-	} 
-
-?>
 <html lang="en" >
    <head>
       <!-- NAVBAR CSS-->
@@ -65,50 +59,54 @@
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Criar conta</label>
             <div class="login-form">
                <div class="sign-in-htm">
-                  <div class="group">
-                     <label for="user" class="label">Nome de Usuario</label>
-                     <input id="user" name="user" type="text" class="input">
-                  </div>
-                  <div class="group">
-                     <label for="pass" class="label">Senha</label>
-                     <input id="pass" type="password" class="input" data-type="password">
-                  </div>
-                  <div class="group">
-                     <input id="check" type="checkbox" class="check" checked>
-                     <label for="check"><span class="icon"></span> Me mantenha logado</label>
-                  </div>
-                  <div class="group">
-                     <input type="submit" class="button" value="Logar">
-                  </div>
-                  <div class="hr"></div>
-                  <div class="foot-lnk">
-                     <a href="#forgot">Esqueceu sua senha?</a>
-                  </div>
+                  <form action="loginscript.php" method="POST">
+                     <div class="group">
+                        <label for="user" class="label">Nome de Usuario</label>
+                        <input id="user" name="user" type="text" class="input">
+                     </div>
+                     <div class="group">
+                        <label for="pass" class="label">Senha</label>
+                        <input id="pass" name="pass" type="password" class="input" data-type="password">
+                     </div>
+                     <div class="group">
+                        <input id="check" type="checkbox" class="check" checked>
+                        <label for="check"><span class="icon"></span> Me mantenha logado</label>
+                     </div>
+                     <div class="group">
+                        <input type="submit" class="button" value="Logar">
+                     </div>
+                     <div class="hr"></div>
+                     <div class="foot-lnk">
+                        <a href="#forgot">Esqueceu sua senha?</a>
+                     </div>
                </div>
+               </form>
                <div class="sign-up-htm">
-                  <div class="group">
-                     <label for="user" class="label">Nome de Usuario</label>
-                     <input id="user" type="text" class="input">
-                  </div>
-                  <div class="group">
-                     <label for="pass" class="label">Senha</label>
-                     <input id="pass" type="password" class="input" data-type="password">
-                  </div>
-                  <div class="group">
-                     <label for="pass" class="label">Repita sua senha</label>
-                     <input id="pass" type="password" class="input" data-type="password">
-                  </div>
-                  <div class="group">
-                     <label for="pass" class="label">Digite o endereço de email</label>
-                     <input id="pass" type="text" class="input">
-                  </div>
-                  <div class="group">
-                     <input type="submit" class="button" value="Criar conta">
-                  </div>
-                  <div class="hr"></div>
-                  <div class="foot-lnk">
-                     <label for="tab-1">Já tem uma conta?</a>
-                  </div>
+                  <form action="index.php" method="POST">
+                     <div class="group">
+                        <label for="user" class="label">Nome de Usuario</label>
+                        <input id="user" type="text" class="input">
+                     </div>
+                     <div class="group">
+                        <label for="pass" class="label">Senha</label>
+                        <input id="pass" type="password" class="input" data-type="password">
+                     </div>
+                     <div class="group">
+                        <label for="pass" class="label">Repita sua senha</label>
+                        <input id="pass" type="password" class="input" data-type="password">
+                     </div>
+                     <div class="group">
+                        <label for="pass" class="label">Digite o endereço de email</label>
+                        <input id="pass" type="text" class="input">
+                     </div>
+                     <div class="group">
+                        <input type="submit" class="button" value="Criar conta">
+                     </div>
+                     <div class="hr"></div>
+                     <div class="foot-lnk">
+                        <label for="tab-1">Já tem uma conta?</a>
+                     </div>
+                  </form>
                </div>
             </div>
          </div>

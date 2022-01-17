@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<?php session_start();
+   ?>
 <html lang="en" >
    <head>
       <meta charset="UTF-8">
@@ -22,7 +24,13 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   </button>
-				  <a class="navbar-brand page-scroll" href="login.php">Login</a>
+                  <?php 
+                     if(isset($_SESSION["user"])) {
+						echo '<a class="navbar-brand page-scroll" href="sairscript.php">Sair</a>';
+                     } else {
+						echo '<a class="navbar-brand page-scroll" href="login.php">Login</a>';
+                     }
+                     ?>
                   <a class="navbar-brand page-scroll" href="#page-top">[LOGO Sub-Rider]</a>
                </div>
                <!-- Collect the nav links, forms, and other content for toggling -->
@@ -31,6 +39,13 @@
                      <li class="hidden active">
                         <a href="#page-top"></a>
                      </li>
+                     <?php 
+                        if(isset($_SESSION["user"])) {
+                        	echo '<li class="">
+                            <a class="page-scroll" href="gerenciamento.php">Gerenciamento</a>
+                            </li>';
+                        }
+                         ?>
                      <li class="">
                         <a class="page-scroll" href="#services">Serviços</a>
                      </li>
@@ -57,9 +72,9 @@
          <header>
             <div class="container">
                <div class="intro-text">
-					<!-- 
-                  <div class="intro-lead-in">Mecanica de motocicletas</div>
-				  -->
+                  <!-- 
+                     <div class="intro-lead-in">Mecanica de motocicletas</div>
+                     -->
                   <div class="intro-heading"></div>
                </div>
             </div>
@@ -78,7 +93,7 @@
                      <span class="fa-stack fa-4x">
                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
                      <i class="glyphicon glyphicon-flag"></i>
-					 <i class="fas fa-truck-couch"></i>
+                     <i class="fas fa-truck-couch"></i>
                      </span>
                      <h4 class="service-heading">Reboque</h4>
                      <p class="text-muted">Transporte guincho para a oficina e para a residência do cliente.</p>
@@ -96,7 +111,7 @@
                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
                      <i class="glyphicon glyphicon-ok"></i>
                      </span>
-                     <h4 class="service-heading">Manutenção Corretiva</h4>	
+                     <h4 class="service-heading">Manutenção Corretiva</h4>
                      <p class="text-muted">Reparo mecânico, elétrico, eletrônico e estético e motocicletas de 1 a 6 cilindros de todas as categorias e das marcas japonesas e europeias.</p>
                   </div>
                </div>
@@ -107,9 +122,9 @@
             <div class="container">
                <div class="row">
                   <div class="col-lg-12 text-center">
-					 <h2 class="section-heading">Feed Instagram</h2>
-					 <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-					 <div style="margin-left: 220px;" class="elfsight-app-685f8634-90c1-4e64-9411-3e7ae2e33456"></div> 
+                     <h2 class="section-heading">Feed Instagram</h2>
+                     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+                     <div style="margin-left: 220px;" class="elfsight-app-685f8634-90c1-4e64-9411-3e7ae2e33456"></div>
                   </div>
                </div>
             </div>
@@ -277,34 +292,34 @@
                </div>
             </div>
          </section>
-		 <!--
-         <footer>
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-4">
-                     <span class="copyright">Direitos Autorais © Seu site 2014</span>
-                  </div>
-                  <div class="col-md-4">
-                     <ul class="list-inline social-buttons">
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                     </ul>
-                  </div>
-                  <div class="col-md-4">
-                     <ul class="list-inline quicklinks">
-                        <li><a href="#">Politica de Privacidade</a>
-                        </li>
-                        <li><a href="#">Termos de uso</a>
-                        </li>
-                     </ul>
+         <!--
+            <footer>
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-4">
+                        <span class="copyright">Direitos Autorais © Seu site 2014</span>
+                     </div>
+                     <div class="col-md-4">
+                        <ul class="list-inline social-buttons">
+                           <li><a href="#"><i class="fa fa-twitter"></i></a>
+                           </li>
+                           <li><a href="#"><i class="fa fa-facebook"></i></a>
+                           </li>
+                           <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="col-md-4">
+                        <ul class="list-inline quicklinks">
+                           <li><a href="#">Politica de Privacidade</a>
+                           </li>
+                           <li><a href="#">Termos de uso</a>
+                           </li>
+                        </ul>
+                     </div>
                   </div>
                </div>
-            </div>
-         </footer> -->
+            </footer> -->
          <!-- Portfolio Modals -->
          <!-- Use the modals below to showcase details about your portfolio projects! -->
          <!-- Portfolio Modal 1 -->
