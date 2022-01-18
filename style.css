@@ -723,6 +723,9 @@ footer span.copyright {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     line-height: 40px;
 }
+footer span.copyright:hover {
+	color: #e74c3c;
+}
 
 footer ul.quicklinks {
     margin-bottom: 0;
@@ -749,6 +752,12 @@ ul.social-buttons li a {
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     transition: all .3s;
+}
+
+.wpp li a:hover,
+.wpp li a:focus,
+.wpp li a:active {
+    background-color: #1ee2e7;
 }
 
 ul.social-buttons li a:hover,
