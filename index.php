@@ -7,7 +7,7 @@
       <title>Sub-rider</title>
       <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
       <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
-      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
       <link rel="stylesheet" href="./style.css">
    </head>
    <body>
@@ -85,15 +85,14 @@
                <div class="row">
                   <div class="col-lg-12 text-center">
                      <h2 class="section-heading">Serviços</h2>
-                     <h3 class="section-subheading text-muted">Mecânica de motocicletas especializada.</h3>
+                     <h3 class="section-subheading text-muted">Mecânica especializada de motocicletas.</h3>
                   </div>
                </div>
                <div class="row text-center">
                   <div class="col-md-4">
                      <span class="fa-stack fa-4x">
                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                     <i class="glyphicon glyphicon-flag"></i>
-                     <i class="fas fa-truck-couch"></i>
+                     <i class="fas fa-truck-couch" style="position:relative;"></i>
                      </span>
                      <h4 class="service-heading">Reboque</h4>
                      <p class="text-muted">Transporte guincho para a oficina e para a residência do cliente.</p>
@@ -282,10 +281,7 @@
                <div class="row">
                   <div class="col-lg-12 text-center">
                      <h2 class="section-heading"></h2>
-                     <h4 class="section-subheading" style="color:white;">Endereço: </h4>
-                     <h3 class="section-subheading text-muted">
-                        Setor Sul, Gama-DF.
-                     </h3>
+                     <h4 class="section-subheading" style="color:white;"> <i class="fas fa-map-marked-alt" style="position:relative;"></i> Endereço: </h4>
 					 <center>
 						 <div class="mapouter">
 							<div class="gmap_canvas">
@@ -296,9 +292,8 @@
 							   <style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>
 							</div>
 						 </div>
-					 </center
-                     <h4 class="section-subheading" style="color:white">WhatsApp: </h4>
-                     <h3 class="section-subheading text-muted"> (61) 98128-2136</h3>
+					 </center>
+                     <h4 class="section-subheading" style="color:white"> <i class="fab fa-whatsapp" style="position:relative;color:green;"></i> WhatsApp: <a style="color:black;">(61) 98128-2136</a> </h4>
                   </div>
                </div>
             </div>
