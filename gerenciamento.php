@@ -26,7 +26,7 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
                </button>
-               <a class="navbar-brand page-scroll" href="#page-top">[LOGO Sub-Rider]</a>
+               <img src="./imgs/logo-crop.png" style="height:60px;width:180px;">
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

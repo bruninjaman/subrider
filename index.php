@@ -7,7 +7,7 @@
       <title>Sub-rider</title>
       <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
       <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
-      <link rel='stylesheet' href='https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css'>
+      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
       <link rel="stylesheet" href="./style.css">
    </head>
    <body>
@@ -26,12 +26,12 @@
                   </button>
                   <?php 
                      if(isset($_SESSION["user"])) {
-						echo '<a class="navbar-brand page-scroll" href="sairscript.php">Sair</a>';
+                     echo '<a class="navbar-brand page-scroll" href="sairscript.php">Sair</a>';
                      } else {
-						echo '<a class="navbar-brand page-scroll" href="login.php">Login</a>';
+                     echo '<a class="navbar-brand page-scroll" href="login.php">Login</a>';
                      }
                      ?>
-                  <a class="navbar-brand page-scroll" href="#page-top">[LOGO Sub-Rider]</a>
+                  <img src="./imgs/logo-crop.png" style="height:60px;width:180px;">
                </div>
                <!-- Collect the nav links, forms, and other content for toggling -->
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -286,7 +286,18 @@
                      <h3 class="section-subheading text-muted">
                         Setor Sul, Gama-DF.
                      </h3>
-                     <h4 class="section-subheading" style="color:white;">WhatsApp: </h4>
+					 <center>
+						 <div class="mapouter">
+							<div class="gmap_canvas">
+							   <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=brazil%20subrider&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123moviesz.nl"></a><br>
+							   <style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style>
+							   <a href="https://googlemapsembedcodegenerator.com
+								  "> how to add a map to wordpress </a>
+							   <style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>
+							</div>
+						 </div>
+					 </center
+                     <h4 class="section-subheading" style="color:white">WhatsApp: </h4>
                      <h3 class="section-subheading text-muted"> (61) 98128-2136</h3>
                   </div>
                </div>
