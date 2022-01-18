@@ -123,7 +123,9 @@
                   <div class="col-lg-12 text-center">
                      <h2 class="section-heading">Feed Instagram</h2>
                      <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-                     <div style="margin-left: 220px;" class="elfsight-app-685f8634-90c1-4e64-9411-3e7ae2e33456"></div>
+					 <center>
+						<div class="elfsight-app-685f8634-90c1-4e64-9411-3e7ae2e33456"></div>
+					</center>
                   </div>
                </div>
             </div>
@@ -281,7 +283,7 @@
                <div class="row">
                   <div class="col-lg-12 text-center">
                      <h2 class="section-heading"></h2>
-                     <h4 class="section-subheading" style="color:white;"> <i class="fas fa-map-marked-alt" style="position:relative;"></i> Endereço: </h4>
+                     <h4 class="section-subheading" style="color:white; text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;  "> <i class="fas fa-map-marked-alt" style="position:relative;color:#a68811;"></i> Endereço: </h4>
 					 <center>
 						 <div class="mapouter">
 							<div class="gmap_canvas">
@@ -293,7 +295,7 @@
 							</div>
 						 </div>
 					 </center>
-                     <h4 class="section-subheading" style="color:white"> <i class="fab fa-whatsapp" style="position:relative;color:green;"></i> WhatsApp: <a style="color:black;">(61) 98128-2136</a> </h4>
+                     <h4 class="section-subheading" style="color:white; text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;"><i class="fab fa-whatsapp" style="position:relative;color:green;"></i> WhatsApp: <a style="color:black;text-shadow:none;">(61) 98128-2136</a> </h4>
                   </div>
                </div>
             </div>
