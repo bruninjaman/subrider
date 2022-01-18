@@ -123,9 +123,9 @@
                   <div class="col-lg-12 text-center">
                      <h2 class="section-heading">Feed Instagram</h2>
                      <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-					 <center>
-						<div class="elfsight-app-685f8634-90c1-4e64-9411-3e7ae2e33456"></div>
-					</center>
+                     <center>
+                        <div class="elfsight-app-685f8634-90c1-4e64-9411-3e7ae2e33456"></div>
+                     </center>
                   </div>
                </div>
             </div>
@@ -283,51 +283,50 @@
                <div class="row">
                   <div class="col-lg-12 text-center">
                      <h2 class="section-heading"></h2>
-                     <h4 class="section-subheading" style="color:white; text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;  "> <i class="fas fa-map-marked-alt" style="position:relative;color:#a68811;"></i> Endereço: </h4>
-					 <center>
-						 <div class="mapouter">
-							<div class="gmap_canvas">
-							   <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=brazil%20subrider&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123moviesz.nl"></a><br>
-							   <style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style>
-							   <a href="https://googlemapsembedcodegenerator.com
-								  "> how to add a map to wordpress </a>
-							   <style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>
-							</div>
-						 </div>
-					 </center>
-                     <h4 class="section-subheading" style="color:white; text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;"><i class="fab fa-whatsapp" style="position:relative;color:green;"></i> WhatsApp: <a style="color:black;text-shadow:none;">(61) 98128-2136</a> </h4>
+                     <center>
+                        <div class="mapouter">
+                           <div class="gmap_canvas">
+                              <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=brazil%20subrider&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123moviesz.nl"></a><br>
+                              <style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style>
+                              <a href="https://googlemapsembedcodegenerator.com
+                                 "> how to add a map to wordpress </a>
+                              <style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>
+                           </div>
+                        </div>
+                     </center>
                   </div>
                </div>
             </div>
          </section>
-         <!--
-            <footer>
-               <div class="container">
-                  <div class="row">
-                     <div class="col-md-4">
-                        <span class="copyright">Direitos Autorais © Seu site 2014</span>
-                     </div>
-                     <div class="col-md-4">
-                        <ul class="list-inline social-buttons">
-                           <li><a href="#"><i class="fa fa-twitter"></i></a>
-                           </li>
-                           <li><a href="#"><i class="fa fa-facebook"></i></a>
-                           </li>
-                           <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                           </li>
-                        </ul>
-                     </div>
-                     <div class="col-md-4">
-                        <ul class="list-inline quicklinks">
-                           <li><a href="#">Politica de Privacidade</a>
-                           </li>
-                           <li><a href="#">Termos de uso</a>
-                           </li>
-                        </ul>
-                     </div>
+         <footer>
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-4">
+                     <span class="copyright">
+                        <h4 class="section-subheading"><i class="fab fa-whatsapp" style="position:relative;font-size: 25px;"></i> WhatsApp: (61) 98128-2136 </h4>
+                     </span>
+                  </div>
+                  <div class="col-md-4">
+                     <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="col-md-4">
+                     <ul class="list-inline quicklinks">
+                        <li><a href="#">Politica de Privacidade</a>
+                        </li>
+                        <li><a href="#">Termos de uso</a>
+                        </li>
+                     </ul>
                   </div>
                </div>
-            </footer> -->
+            </div>
+         </footer>
          <!-- Portfolio Modals -->
          <!-- Use the modals below to showcase details about your portfolio projects! -->
          <!-- Portfolio Modal 1 -->
