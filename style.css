@@ -865,3 +865,7 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: #1ee2e7;
 }
+
+.navbar-default .nav li a.loginicon:hover {
+	color: #eb8f34;
+}

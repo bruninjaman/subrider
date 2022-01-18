@@ -24,14 +24,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   </button>
-                  <?php 
-                     if(isset($_SESSION["user"])) {
-                     echo '<a class="navbar-brand page-scroll" href="sairscript.php">Sair</a>';
-                     } else {
-                     echo '<a class="navbar-brand page-scroll" href="login.php">Login</a>';
-                     }
-                     ?>
-                  <img src="./imgs/logo-crop.png" style="height:60px;width:180px;">
+                  <img src="./imgs/logo-branco.png" style="height:60px;width:180px;">
                </div>
                <!-- Collect the nav links, forms, and other content for toggling -->
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -61,6 +54,15 @@
                         </li> !-->
                      <li class="">
                         <a class="page-scroll" href="#contact">Contato</a>
+                     </li>
+					 <li class="">                       
+						<?php 
+						 if(isset($_SESSION["user"])) {
+						 echo '<a class="page-scroll loginicon" href="sairscript.php">Sair</a>';
+						 } else {
+						 echo '<a class="page-scroll loginicon" href="login.php">Login</a>';
+						 }
+						 ?>
                      </li>
                   </ul>
                </div>
