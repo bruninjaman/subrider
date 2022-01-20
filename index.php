@@ -545,8 +545,8 @@
 		<nav class="main-nav">
 			<ul>
 				<!-- inser more links here -->
-				<li><a class="cd-signin" href="#0">Sign in</a></li>
-				<li><a class="cd-signup" href="#0">Sign up</a></li>
+				<li><a class="cd-signin" href="#0">Logar</a></li>
+				<li><a class="cd-signup" href="#0">Criar conta</a></li>
 			</ul>
 		</nav>
 	</header>
