@@ -66,34 +66,18 @@
 
                   <div class="logincss" style="display:inline;">
                      <li class="">
-                        <nav class="main-nav">
-                           <!-- inser more links here -->
-                           <a class="cd-signin" href="#0">Logar</a>
-                        </nav>
                         <?php
                         if (isset($_SESSION["user"])) {
                            echo '<a class="page-scroll loginicon" href="sairscript.php">Sair</a>';
                         } else {
-                           //echo '<a class="page-scroll loginicon" href="login.php">Login</a>';
+                           echo '<nav class="main-nav">';
+                           echo '<a class="cd-signin" href="#0">Logar</a>';
+                           echo '<a class="cd-signup" href="#0">Criar conta</a>';
+                           echo '</nav>';
                         }
                         ?>
                      </li>
 
-                     <li class="">
-                        <div class="logincss">
-                           <nav class="main-nav">
-                              <!-- inser more links here -->
-                              <a class="cd-signup" href="#0">Criar conta</a>
-                           </nav>
-                        </div>
-                        <?php
-                        if (isset($_SESSION["user"])) {
-                           echo '<a class="page-scroll loginicon" href="sairscript.php">Sair</a>';
-                        } else {
-                           //echo '<a class="page-scroll loginicon" href="login.php">Login</a>';
-                        }
-                        ?>
-                     </li>
                   </div>
                </ul>
             </div>
