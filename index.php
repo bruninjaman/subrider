@@ -9,12 +9,12 @@
    <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-   <link rel="stylesheet" href="./default-navbar.css">
+   <link rel="stylesheet" href="./css/default-navbar.css">
 
    <!-- login css -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
 
-   <link rel="stylesheet" href="./login.css">
+   <link rel="stylesheet" href="./css/login.css">
 </head>
 
 <body class="defaultpage">
@@ -68,7 +68,7 @@
                      <li class="">
                         <?php
                         if (isset($_SESSION["user"])) {
-                           echo '<a class="page-scroll loginicon" href="sairscript.php">Sair</a>';
+                           echo '<a class="page-scroll loginicon" href="scripts/php/sairscript.php">Sair</a>';
                         } else {
                            echo '<nav class="main-nav">';
                            echo '<a class="cd-signin" href="#0">Logar</a>';
@@ -541,7 +541,7 @@
    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
-   <script src="./script.js"></script>
+   <script src="./scripts/script.js"></script>
 
 
    <div class="logincss">
@@ -645,6 +645,6 @@
 </body>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="./login.js"></script>
+<script src="./scripts/login.js"></script>
 
 </html>

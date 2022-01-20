@@ -6,14 +6,14 @@
    <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
    <link rel='stylesheet' href='https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css'>
-   <link rel="stylesheet" href="./default-navbar.css">
+   <link rel="stylesheet" href="./css/default-navbar.css">
    <meta charset="UTF-8">
    <title>CodePen - Bootstrap : CRUD Table</title>
    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto|Varela+Round'>
    <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-   <link rel="stylesheet" href="./crud-table.css">
+   <link rel="stylesheet" href="./css/crud-table.css">
 </head>
 
 <body class="crud-table defaultpage">
@@ -266,7 +266,7 @@
    <!-- partial -->
    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-   <script src="./gerenciamento_script.js"></script>
+   <script src="./scripts/gerenciamento_script.js"></script>
 </body>
 
 </html>
