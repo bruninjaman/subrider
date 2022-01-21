@@ -260,6 +260,7 @@
 .defaultpage header {
     text-align: center;
     color: #15155e;
+    margin-top: 130px;
     background-attachment: scroll;
     background-image: url("./../imgs/Close.jpg");
     background-position: center center;
