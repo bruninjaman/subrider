@@ -71,7 +71,7 @@
                            echo '<a class="page-scroll loginicon" href="scripts/php/sairscript.php">Sair</a>';
                         } else {
                            echo '<nav class="main-nav">';
-                           echo '<a class="cd-signin" style="margin:5px" href="#0">Logar</a>';
+                           echo '<a class="cd-signin" style="margin:5px" href="#0">Entrar</a>';
                            echo '<a class="cd-signup" href="#0">Criar conta</a>';
                            echo '</nav>';
                         }
