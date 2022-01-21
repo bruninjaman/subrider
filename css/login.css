@@ -490,8 +490,7 @@ File list:
     left: 0;
     bottom: -30px;
     text-align: center;
-    font-size: 14px;
-    font-size: .875rem;
+    font-size: 1.5rem;
 }
 
 .logincss .cd-form-bottom-message a {

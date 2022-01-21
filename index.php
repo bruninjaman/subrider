@@ -557,16 +557,16 @@
 
             <div id="cd-login">
                <!-- log in form -->
-               <form class="cd-form">
+               <form class="cd-form" action="loginscript.php" method="POST">
                   <p class="fieldset">
-                     <label class="image-replace cd-email" for="signin-email">E-mail</label>
-                     <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+                     <label class="image-replace cd-email" for="signin-email">E-mail ou Nome de Usuario</label>
+                     <input class="full-width has-padding has-border" id="signin-email" name="user" placeholder="E-mail">
                      <span class="cd-error-message">Error message here!</span>
                   </p>
 
                   <p class="fieldset">
                      <label class="image-replace cd-password" for="signin-password">Senha</label>
-                     <input class="full-width has-padding has-border" id="signin-password" type="text" placeholder="Senha">
+                     <input class="full-width has-padding has-border" id="signin-password" name="pass" type="text" placeholder="Senha">
                      <a href="#0" class="hide-password">Esconder</a>
                      <span class="cd-error-message">Error message here!</span>
                   </p>
@@ -587,7 +587,7 @@
 
             <div id="cd-signup">
                <!-- sign up form -->
-               <form class="cd-form">
+               <form class="cd-form" action="loginscript.php" method="POST">
                   <p class="fieldset">
                      <label class="image-replace cd-username" for="signup-username">Nome de Usuario</label>
                      <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Nome de Usuario">
