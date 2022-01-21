@@ -22,7 +22,7 @@ File list:
 
 .logincss {
     font-size: 100%;
-    font-family: "PT Sans",sans-serif;
+    font-family: "PT Sans", sans-serif;
     color: #505260;
     background-color: #fff;
 }
@@ -38,9 +38,8 @@ File list:
 
 .logincss input,
 .logincss textarea {
-    font-family: "PT Sans",sans-serif;
-    font-size: 16px;
-    font-size: 1rem;
+    font-family: "PT Sans", sans-serif;
+    font-size: 2rem;
 }
 
 .logincss input::-ms-clear,
@@ -83,7 +82,6 @@ File list:
     .logincss header[role=banner] {
         height: 80px;
     }
-
     .logincss header[role=banner] #cd-logo {
         margin: 20px 0 0 5%;
         -webkit-transform: scale(1);
@@ -96,6 +94,7 @@ File list:
 
 .logincss .main-nav {
     float: right;
+    margin: 2%;
     margin-right: 5%;
     width: 44px;
     height: 100%;
@@ -140,7 +139,6 @@ File list:
         background: 0;
         cursor: auto;
     }
-
     .logincss .main-nav ul {
         position: static;
         width: auto;
@@ -151,7 +149,6 @@ File list:
         transform: translateY(0);
         line-height: 80px;
     }
-
     .logincss .main-nav ul.is-visible {
         -webkit-transform: translateY(0);
         -moz-transform: translateY(0);
@@ -159,30 +156,25 @@ File list:
         -o-transform: translateY(0);
         transform: translateY(0);
     }
-
     .logincss .main-nav li {
         display: inline-block;
         margin-left: 1em;
     }
-
     .logincss .main-nav li:nth-last-child(2) {
         margin-left: 2em;
     }
-
     .logincss .main-nav a {
         display: inline-block;
         height: auto;
         line-height: normal;
         background: transparent;
     }
-
     .logincss .main-nav a.cd-signin,
     .logincss .main-nav a.cd-signup {
         padding: .6em 1em;
-        border: 1px solid rgba(255,255,255,0.6);
+        border: 1px solid rgba(255, 255, 255, 0.6);
         border-radius: 50em;
     }
-
     .logincss .main-nav a.cd-signup {
         background: #2f889a;
         border: 0;
@@ -195,23 +187,23 @@ File list:
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(52,54,66,0.9);
+    background: rgba(52, 54, 66, 0.9);
     z-index: 3;
     overflow-y: auto;
     cursor: pointer;
     visibility: hidden;
     opacity: 0;
-    -webkit-transition: opacity .3s 0,visibility 0 .3s;
-    -moz-transition: opacity .3s 0,visibility 0 .3s;
-    transition: opacity .3s 0,visibility 0 .3s;
+    -webkit-transition: opacity .3s 0, visibility 0 .3s;
+    -moz-transition: opacity .3s 0, visibility 0 .3s;
+    transition: opacity .3s 0, visibility 0 .3s;
 }
 
 .logincss .cd-user-modal.is-visible {
     visibility: visible;
     opacity: 1;
-    -webkit-transition: opacity .3s 0,visibility 0 0;
-    -moz-transition: opacity .3s 0,visibility 0 0;
-    transition: opacity .3s 0,visibility 0 0;
+    -webkit-transition: opacity .3s 0, visibility 0 0;
+    -moz-transition: opacity .3s 0, visibility 0 0;
+    transition: opacity .3s 0, visibility 0 0;
 }
 
 .logincss .cd-user-modal.is-visible .cd-user-modal-container {
@@ -281,7 +273,6 @@ File list:
     .logincss .cd-user-modal-container {
         margin: 10em auto;
     }
-
     .logincss .cd-user-modal-container .cd-switcher a {
         height: 70px;
         line-height: 70px;
@@ -306,8 +297,7 @@ File list:
 }
 
 .logincss .cd-form label {
-    font-size: 14px;
-    font-size: .875rem;
+    font-size: 1.5rem;
 }
 
 .logincss .cd-form label.image-replace {
@@ -369,7 +359,7 @@ File list:
 
 .logincss .cd-form input.has-border:focus {
     border-color: #343642;
-    box-shadow: 0 0 5px rgba(52,54,66,0.1);
+    box-shadow: 0 0 5px rgba(52, 54, 66, 0.1);
     outline: 0;
 }
 
@@ -416,7 +406,7 @@ File list:
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
     font-size: 14px;
-    font-size: .875rem;
+    font-size: 1.5rem;
     color: #343642;
 }
 
@@ -425,19 +415,18 @@ File list:
     position: absolute;
     left: -5px;
     bottom: -35px;
-    background: rgba(215,102,102,0.9);
+    background: rgba(215, 102, 102, 0.9);
     padding: .8em;
     z-index: 2;
     color: #FFF;
-    font-size: 13px;
     font-size: .8125rem;
     border-radius: .25em;
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    -webkit-transition: opacity .2s 0,visibility 0 .2s;
-    -moz-transition: opacity .2s 0,visibility 0 .2s;
-    transition: opacity .2s 0,visibility 0 .2s;
+    -webkit-transition: opacity .2s 0, visibility 0 .2s;
+    -moz-transition: opacity .2s 0, visibility 0 .2s;
+    transition: opacity .2s 0, visibility 0 .2s;
 }
 
 .logincss .cd-form .cd-error-message::after {
@@ -447,7 +436,7 @@ File list:
     bottom: 100%;
     height: 0;
     width: 0;
-    border-bottom: 8px solid rgba(215,102,102,0.9);
+    border-bottom: 8px solid rgba(215, 102, 102, 0.9);
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
 }
@@ -455,32 +444,27 @@ File list:
 .logincss .cd-form .cd-error-message.is-visible {
     opacity: 1;
     visibility: visible;
-    -webkit-transition: opacity .2s 0,visibility 0 0;
-    -moz-transition: opacity .2s 0,visibility 0 0;
-    transition: opacity .2s 0,visibility 0 0;
+    -webkit-transition: opacity .2s 0, visibility 0 0;
+    -moz-transition: opacity .2s 0, visibility 0 0;
+    transition: opacity .2s 0, visibility 0 0;
 }
 
 @media only screen and (min-width:600px) {
     .logincss .cd-form {
         padding: 2em;
     }
-
     .logincss .cd-form .fieldset {
         margin: 2em 0;
     }
-
     .logincss .cd-form .fieldset:first-child {
         margin-top: 0;
     }
-
     .logincss .cd-form .fieldset:last-child {
         margin-bottom: 0;
     }
-
     .logincss .cd-form input.has-padding {
         padding: 16px 20px 16px 50px;
     }
-
     .logincss .cd-form input[type=submit] {
         padding: 16px 0;
     }
