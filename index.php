@@ -68,7 +68,9 @@
                      <li class="">
                         <?php
                         if (isset($_SESSION["user"])) {
-                           echo '<a class="page-scroll loginicon" href="scripts/php/sairscript.php">Sair</a>';
+                           echo '<nav class="main-nav">';
+                           echo '<a class="page-scroll loginicon cd-signup" href="scripts/php/sairscript.php">Sair</a>';
+                           echo '</nav>';
                         } else {
                            echo '<nav class="main-nav">';
                            echo '<a class="cd-signin" style="margin:5px" href="#0">Entrar</a>';
@@ -557,7 +559,7 @@
 
             <div id="cd-login">
                <!-- log in form -->
-               <form class="cd-form" action="loginscript.php" method="POST">
+               <form class="cd-form" name="login" action="scripts/php/loginscript.php" method="POST">
                   <p class="fieldset">
                      <label class="image-replace cd-email" for="signin-email">E-mail ou Nome de Usuario</label>
                      <input class="full-width has-padding has-border" id="signin-email" name="user" placeholder="E-mail">
@@ -577,7 +579,7 @@
                   </p>
 
                   <p class="fieldset">
-                     <input class="full-width" type="submit" value="Login">
+                     <input class="full-width" type="submit" value="Entrar">
                   </p>
                </form>
 
