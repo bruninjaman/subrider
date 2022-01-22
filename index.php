@@ -69,7 +69,7 @@
                         <?php
                         if (isset($_SESSION["user"])) {
                            echo '<nav class="main-nav">';
-                           echo '<a class="page-scroll loginicon cd-signup" href="scripts/php/sairscript.php">Sair</a>';
+                           echo '<a class="page-scroll loginicon cd-signup cd-logout" style="margin:5px;" href="scripts/php/sairscript.php">Sair</a>';
                            echo '</nav>';
                         } else {
                            echo '<nav class="main-nav">';
@@ -143,7 +143,7 @@
                   <h2 class="section-heading">Feed Instagram</h2>
                   <script src="https://apps.elfsight.com/p/platform.js" defer></script>
                   <center>
-                     <div class="elfsight-app-685f8634-90c1-4e64-9411-3e7ae2e33456"></div>
+                     <div class="elfsight-app-34d2621b-ebb5-4833-847c-c7e60974f8da"></div>
                   </center>
                </div>
             </div>
