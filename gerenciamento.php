@@ -8,7 +8,7 @@
    <link rel='stylesheet' href='https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css'>
    <link rel="stylesheet" href="./css/default-navbar.css">
    <meta charset="UTF-8">
-   <title>CodePen - Bootstrap : CRUD Table</title>
+   <title>Gerenciamento Tabela</title>
    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto|Varela+Round'>
    <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
@@ -159,15 +159,15 @@
             </tbody>
          </table>
          <div class="clearfix">
-            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+            <div class="hint-text">Mostrando <b>5</b> de <b>25</b> resultados.</div>
             <ul class="pagination">
-               <li class="page-item disabled"><a href="#">Previous</a></li>
+               <li class="page-item disabled"><a href="#">Anterior</a></li>
                <li class="page-item"><a href="#" class="page-link">1</a></li>
                <li class="page-item"><a href="#" class="page-link">2</a></li>
                <li class="page-item active"><a href="#" class="page-link">3</a></li>
                <li class="page-item"><a href="#" class="page-link">4</a></li>
                <li class="page-item"><a href="#" class="page-link">5</a></li>
-               <li class="page-item"><a href="#" class="page-link">Next</a></li>
+               <li class="page-item"><a href="#" class="page-link">Proximo</a></li>
             </ul>
          </div>
       </div>
