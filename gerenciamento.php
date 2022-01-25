@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+
+<?php
+include("./connection/connection.php");
+
+//Adicionar moto
+if (isset($_POST["proprietario"]) && !$gettrash == $_POST["proprietario"]) {
+   $mysqli_query = "INSERT INTO motocicletas (endereco, proprietario, telefone)";
+   $mysqli_query .= " VALUES ('{$_POST['endereco']}','{$_POST['proprietario']}','{$_POST['telefone']}')";
+   $result = mysqli_query($conn, $mysqli_query);
+
+   // only for tests
+   $gettrash = $_POST["proprietario"];
+}
+
+?>
+
 <html lang="en">
 
 <head>
@@ -76,86 +92,14 @@
                </tr>
             </thead>
             <tbody>
-               <tr>
-                  <td>
-                     <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                        <label for="checkbox1"></label>
-                     </span>
-                  </td>
-                  <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
-                  <td>Jonny da Silva</td>
-                  <td>89 Chiaroscuro Rd, Portland, USA</td>
-                  <td>(171) 555-2222</td>
-                  <td>
-                     <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                     <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox2" name="options[]" value="1">
-                        <label for="checkbox2"></label>
-                     </span>
-                  </td>
-                  <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
-                  <td>Jonny da Silva</td>
-                  <td>89 Chiaroscuro Rd, Portland, USA</td>
-                  <td>(171) 555-2222</td>
-                  <td>
-                     <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                     <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox3" name="options[]" value="1">
-                        <label for="checkbox3"></label>
-                     </span>
-                  </td>
-                  <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
-                  <td>Jonny da Silva</td>
-                  <td>89 Chiaroscuro Rd, Portland, USA</td>
-                  <td>(171) 555-2222</td>
-                  <td>
-                     <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                     <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox4" name="options[]" value="1">
-                        <label for="checkbox4"></label>
-                     </span>
-                  </td>
-                  <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
-                  <td>Jonny da Silva</td>
-                  <td>89 Chiaroscuro Rd, Portland, USA</td>
-                  <td>(171) 555-2222</td>
-                  <td>
-                     <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                     <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                  </td>
-               </tr>
-               <tr>
-                  <td>
-                     <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox5" name="options[]" value="1">
-                        <label for="checkbox5"></label>
-                     </span>
-                  </td>
-                  <td><img src="https://blog.grao.com.br/wp-content/uploads/2020/08/comprar-a-moto-certa-540x540.jpg" style="height:100px;width:100px;"></td>
-                  <td>Jonny da Silva</td>
-                  <td>89 Chiaroscuro Rd, Portland, USA</td>
-                  <td>(171) 555-2222</td>
-                  <td>
-                     <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                     <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                  </td>
-               </tr>
+               <?php
+               $mysqli_query = "SELECT endereco, proprietario, telefone FROM motocicletas";
+               $result = mysqli_query($conn, $mysqli_query);
+
+               while ($row = mysqli_fetch_assoc($result)) {
+                  include("./includes/tablecontent/tablecontent.php");
+               }
+               ?>
             </tbody>
          </table>
          <div class="clearfix">
@@ -176,7 +120,7 @@
    <div id="addEmployeeModal" class="modal fade">
       <div class="modal-dialog">
          <div class="modal-content">
-            <form>
+            <form name="addmoto" action="gerenciamento.php" method="POST">
                <div class="modal-header">
                   <h4 class="modal-title">Adicionar moto</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -184,19 +128,19 @@
                <div class="modal-body">
                   <div class="form-group">
                      <label>Imagem</label>
-                     <input type="file" required>
+                     <input type="file">
                   </div>
                   <div class="form-group">
                      <label>Proprietario</label>
-                     <input type="email" class="form-control" required>
+                     <input type="text" name="proprietario" class="form-control" required>
                   </div>
                   <div class="form-group">
                      <label>Endereço</label>
-                     <textarea class="form-control" required></textarea>
+                     <textarea class="form-control" name="endereco" required></textarea>
                   </div>
                   <div class="form-group">
                      <label>Telefone</label>
-                     <input type="text" class="form-control" required>
+                     <input type="text" name="telefone" class="form-control" required>
                   </div>
                </div>
                <div class="modal-footer">

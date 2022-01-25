@@ -18,9 +18,6 @@
 </head>
 
 <body class="defaultpage">
-   <?php
-      include("./connection/connection.php");
-   ?>
    <!-- partial:index.partial.html -->
 
    <body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
