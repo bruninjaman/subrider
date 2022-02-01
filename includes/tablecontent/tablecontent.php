@@ -1,7 +1,3 @@
-<?php 
-
-?>
-
 <tr>
     <td>
         <span class="custom-checkbox">

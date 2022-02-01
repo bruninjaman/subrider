@@ -3,14 +3,26 @@
 <?php
 include("./connection/connection.php");
 
+//PAGE
+if (!isset($_GET["page"])) {
+   $page = 1;
+} else {
+   $page = $_GET["page"];
+}
+
+
+//get all rows
+$mysqli_query = "SELECT motoID FROM motocicletas";
+$result = mysqli_query($conn, $mysqli_query);
+$table_count = mysqli_num_rows($result);
+
+
+
 //Adicionar moto
-if (isset($_POST["proprietario"]) && !$gettrash == $_POST["proprietario"]) {
+if (isset($_POST["proprietario"])) {
    $mysqli_query = "INSERT INTO motocicletas (endereco, proprietario, telefone)";
    $mysqli_query .= " VALUES ('{$_POST['endereco']}','{$_POST['proprietario']}','{$_POST['telefone']}')";
    $result = mysqli_query($conn, $mysqli_query);
-
-   // only for tests
-   $gettrash = $_POST["proprietario"];
 }
 
 ?>
@@ -93,25 +105,71 @@ if (isset($_POST["proprietario"]) && !$gettrash == $_POST["proprietario"]) {
             </thead>
             <tbody>
                <?php
-               $mysqli_query = "SELECT endereco, proprietario, telefone FROM motocicletas";
+               $mysqli_query = "SELECT endereco, proprietario, telefone FROM motocicletas limit " . (($page - 1) * 5) . ",5";
+
                $result = mysqli_query($conn, $mysqli_query);
 
                while ($row = mysqli_fetch_assoc($result)) {
                   include("./includes/tablecontent/tablecontent.php");
                }
+
                ?>
             </tbody>
          </table>
          <div class="clearfix">
-            <div class="hint-text">Mostrando <b>5</b> de <b>25</b> resultados.</div>
+            <?php
+            $items_showing = ($page * 5);
+            if ($items_showing > $table_count)
+               $items_showing = $table_count;
+            ?>
+            <div class="hint-text">Mostrando <b><?php echo $items_showing ?></b> de <b><?php echo $table_count ?></b> resultados.</div>
             <ul class="pagination">
-               <li class="page-item disabled"><a href="#">Anterior</a></li>
-               <li class="page-item"><a href="#" class="page-link">1</a></li>
-               <li class="page-item"><a href="#" class="page-link">2</a></li>
-               <li class="page-item active"><a href="#" class="page-link">3</a></li>
-               <li class="page-item"><a href="#" class="page-link">4</a></li>
-               <li class="page-item"><a href="#" class="page-link">5</a></li>
-               <li class="page-item"><a href="#" class="page-link">Proximo</a></li>
+               <?php
+
+               $table_current_page = $page;
+
+               //previous next
+               if ($page <= 1) {
+                  echo '<li class="page-item disabled"><a href="#">Anterior</a></li>';
+               } else {
+                  echo '<li class="page-item"><a href="?page=' . $page - 1 . '">Anterior</a></li>';
+               }
+
+               $i = 0;
+               while ($i <= 10) {
+                  $table_page_index = ($i - 5);
+
+                  //continue loop if page is not positive number
+                  if ($table_page_index <= 0) {
+                     $i++;
+                     continue;
+                  }
+
+                  //determine the current active page
+                  if ($table_current_page == $table_page_index) {
+                     $addclass = ' active';
+                  } else {
+                     $addclass = '';
+                  }
+
+                  //disable pages that are empty
+                  if (ceil($table_count/5) < $table_page_index) {
+                     $addclass .= ' disabled';
+                     echo '<li class="page-item ' . $addclass . '"><a href="?page=' . $page . '" class="page-link"> ' . $table_page_index . ' </a></li>';
+                  } else                 
+                     echo '<li class="page-item ' . $addclass . '"><a href="?page=' . $table_page_index . '" class="page-link"> ' . $table_page_index . ' </a></li>';
+                     
+                  $i++;
+               }
+
+               //disable next
+               if ($page >= $table_count/5) {
+                  echo '<li class="page-item disabled"><a href="#" class="page-link">Proximo</a></li>';
+               } else {
+                  $next_prev = "";
+                  echo '<li class="page-item"><a href="?page=' . $page + 1 . '" class="page-link">Proximo</a></li>';
+               }
+               ?>
             </ul>
          </div>
       </div>
@@ -120,7 +178,7 @@ if (isset($_POST["proprietario"]) && !$gettrash == $_POST["proprietario"]) {
    <div id="addEmployeeModal" class="modal fade">
       <div class="modal-dialog">
          <div class="modal-content">
-            <form name="addmoto" action="gerenciamento.php" method="POST">
+            <form name="addmoto" action="gerenciamento.php?page=<?php echo $page ?>" method="POST">
                <div class="modal-header">
                   <h4 class="modal-title">Adicionar moto</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
