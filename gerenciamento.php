@@ -36,6 +36,7 @@ if (isset($_POST["proprietario"])) {
    $mysqli_query .= " ,'{$_POST['km']}','{$file_destination}')";
 
    $result = mysqli_query($conn, $mysqli_query);
+   header('Location: gerenciamento.php');
 }
 ?>
 
