@@ -20,11 +20,23 @@ $table_count = mysqli_num_rows($result);
 
 //Adicionar moto
 if (isset($_POST["proprietario"])) {
-   $mysqli_query = "INSERT INTO motocicletas (endereco, proprietario, telefone)";
-   $mysqli_query .= " VALUES ('{$_POST['endereco']}','{$_POST['proprietario']}','{$_POST['telefone']}')";
+   //upload image
+   $tmp_name = "";
+   $tmp_name = uniqid($tmp_name,true);
+   $tmp_name = $tmp_name.$_FILES['foto']['name'];
+   $file_destination = 'fotos/motos/'. $tmp_name;
+
+   move_uploaded_file($_FILES['foto']['tmp_name'],$file_destination);
+
+
+
+   $mysqli_query = "INSERT INTO motocicletas (endereco, proprietario, marca, placa, ano, modelo, km, foto)";
+   $mysqli_query .= " VALUES ('{$_POST['endereco']}','{$_POST['proprietario']}' ";
+   $mysqli_query .= " ,'{$_POST['marca']}','{$_POST['placa']}','{$_POST['ano']}','{$_POST['modelo']}' ";
+   $mysqli_query .= " ,'{$_POST['km']}','{$file_destination}')";
+
    $result = mysqli_query($conn, $mysqli_query);
 }
-
 ?>
 
 <html lang="en">
@@ -99,13 +111,17 @@ if (isset($_POST["proprietario"])) {
                   <th>Foto</th>
                   <th>Proprietario</th>
                   <th>Endereço</th>
-                  <th>Telefone</th>
+                  <th>Marca</th>
+                  <th>Placa</th>
+                  <th>Ano</th>
+                  <th>Modelo</th>
+                  <th>KM</th>
                   <th>Ações</th>
                </tr>
             </thead>
             <tbody>
                <?php
-               $mysqli_query = "SELECT endereco, proprietario, telefone FROM motocicletas limit " . (($page - 1) * 5) . ",5";
+               $mysqli_query = "SELECT * FROM motocicletas limit " . (($page - 1) * 5) . ",5";
 
                $result = mysqli_query($conn, $mysqli_query);
 
@@ -178,7 +194,7 @@ if (isset($_POST["proprietario"])) {
    <div id="addEmployeeModal" class="modal fade">
       <div class="modal-dialog">
          <div class="modal-content">
-            <form name="addmoto" action="gerenciamento.php?page=<?php echo $page ?>" method="POST">
+            <form name="addmoto" action="gerenciamento.php?page=<?php echo $page ?>" method="POST" enctype="multipart/form-data">
                <div class="modal-header">
                   <h4 class="modal-title">Adicionar moto</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -186,7 +202,7 @@ if (isset($_POST["proprietario"])) {
                <div class="modal-body">
                   <div class="form-group">
                      <label>Imagem</label>
-                     <input type="file">
+                     <input type="file" name="foto">
                   </div>
                   <div class="form-group">
                      <label>Proprietario</label>
@@ -197,8 +213,24 @@ if (isset($_POST["proprietario"])) {
                      <textarea class="form-control" name="endereco" required></textarea>
                   </div>
                   <div class="form-group">
-                     <label>Telefone</label>
-                     <input type="text" name="telefone" class="form-control" required>
+                     <label>Marca</label>
+                     <input type="text" name="marca" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                     <label>Placa</label>
+                     <input type="text" name="placa" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                     <label>Ano</label>
+                     <input type="text" name="ano" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                     <label>Modelo</label>
+                     <input type="text" name="modelo" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                     <label>KM</label>
+                     <input type="text" name="km" class="form-control" required>
                   </div>
                </div>
                <div class="modal-footer">
