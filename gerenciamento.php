@@ -26,7 +26,13 @@ if (isset($_POST["proprietario"])) {
    $tmp_name = $tmp_name . $_FILES['foto']['name'];
    $file_destination = 'fotos/motos/' . $tmp_name;
 
-   move_uploaded_file($_FILES['foto']['tmp_name'], $file_destination);
+   if(file_exists($file_destination)) {
+      echo "Sorry, file already exists.";
+   } else if ($_FILES['foto']['size'] > 500000) {
+      echo "Sorry, your file is too large.";
+   } else {
+      move_uploaded_file($_FILES['foto']['tmp_name'], $file_destination);
+   };
 
 
 
@@ -47,7 +53,13 @@ if (isset($_POST["proprietario2"])) {
    $tmp_name = $tmp_name . $_FILES['foto2']['name'];
    $file_destination = 'fotos/motos/' . $tmp_name;
 
-   move_uploaded_file($_FILES['foto2']['tmp_name'], $file_destination);
+   if(file_exists($file_destination)) {
+      echo "Sorry, file already exists.";
+   } else if ($_FILES['foto']['size'] > 500000) {
+      echo "Sorry, your file is too large.";
+   } else {
+      move_uploaded_file($_FILES['foto']['tmp_name'], $file_destination);
+   };
 
 
 
@@ -109,8 +121,17 @@ if (isset($_POST["motoid3"])) {
                   <a href="#page-top"></a>
                </li>
                <li class="">
-                  <a class="page-scroll" href="index.php">Voltar</a>
+                  <a class="page-scroll" href="#">Tabela Motocicletas</a>
                </li>
+               <li class="">
+                  <a class="page-scroll" href="services.php">Tabela Serviços</a>
+               </li>
+               <li class="">
+                  <a class="page-scroll" href="parts.php">Tabela Peças</a>
+               </li>
+               <li class="">
+                  <a class="page-scroll" href="index.php">Voltar</a>
+               </li>            
             </ul>
          </div>
          <!-- /.navbar-collapse -->
@@ -158,7 +179,7 @@ if (isset($_POST["motoid3"])) {
             $result = mysqli_query($conn, $mysqli_query);
 
             while ($row = mysqli_fetch_assoc($result)) {
-               include("./includes/tablecontent/tablecontent.php");
+               include("./includes/tablecontent/tablemoto.php");
             }
 
                ?>
