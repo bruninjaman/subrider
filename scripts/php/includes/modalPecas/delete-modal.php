@@ -12,7 +12,7 @@
                   <p class="text-warning"><small>Está ação não pode ser desfeita.</small></p>
                </div>
                <div class="form-group hidden">
-                  <input type="text" name="pecaId3" class="form-control pecaId3" required>
+                  <input type="text" name="removePecaId" class="form-control removePecaId" required>
                </div>
                <div class="modal-footer">
                   <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">

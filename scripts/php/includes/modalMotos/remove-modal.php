@@ -11,7 +11,7 @@
                   <p class="text-warning"><small>Está ação não pode ser desfeita.</small></p>
                </div>
                <div class="form-group hidden">
-                  <input type="text" name="motoid3" class="form-control editmotoid3" required>
+                  <input type="text" name="removeMotoId" class="form-control removeMotoId" required>
                </div>
                <div class="modal-footer">
                   <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">

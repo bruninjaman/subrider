@@ -11,15 +11,15 @@ $page = getPage();
 
 
 //TABLE COUNT
-$mysqli_query = "SELECT pecaId FROM pecas";
+$mysqli_query = "SELECT servicoId FROM servicos";
 $result = mysqli_query($conn, $mysqli_query);
 $table_count = getTableCount($conn, $mysqli_query);
 
 
 //ADD-EDIT-DELETE
-addPeca($conn);
-editPeca($conn);
-deletePeca($conn)
+addServico($conn);
+editServico($conn);
+deleteServico($conn);
 ?>
 
 <html lang="en">
@@ -41,7 +41,7 @@ deletePeca($conn)
 
 <body class="crud-table defaultpage">
    <?php
-   include("./scripts/php/includes/nav-bar/tabelaPecas/navbar.php");
+   include("./scripts/php/includes/nav-bar/tabelaServicos/navbar.php");
    ?>
    <!-- partial:index.partial.html -->
    <div class="container">
@@ -72,27 +72,27 @@ deletePeca($conn)
             </thead>
             <tbody>
                <?php
-               showPecas($conn, $page);
+               showServicos($conn, $page);
                ?>
             </tbody>
          </table>
          <div class="clearfix">
             <?php
-            showPecasMain($table_count, $page);
+            showServicosMain($table_count, $page);
             ?>
             </ul>
          </div>
       </div>
    </div>
    <?php
-   include("./scripts/php/includes/modalPecas/add-modal.php");
-   include("./scripts/php/includes/modalPecas/edit-modal.php");
-   include("./scripts/php/includes/modalPecas/delete-modal.php");
+   include("./scripts/php/includes/modalServicos/add-modal.php");
+   include("./scripts/php/includes/modalServicos/edit-modal.php");
+   include("./scripts/php/includes/modalServicos/delete-modal.php");
    ?>
    <!-- partial -->
    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-   <script src="./scripts/tabela_pecas.js"></script>
+   <script src="./scripts/tabela_servicos.js"></script>
 </body>
 
 </html>

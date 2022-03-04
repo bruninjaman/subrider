@@ -2,7 +2,7 @@
  <div id="deleteEmployeeModal" class="modal fade">
       <div class="modal-dialog">
          <div class="modal-content">
-            <form id="deleteform" action="tabelaPecas.php?page=<?php echo $page ?>" method="POST">
+            <form id="deleteform" action="tabelaServicos.php?page=<?php echo $page ?>" method="POST">
                <div class="modal-header">
                   <h4 class="modal-title">Deletar Peça</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -12,7 +12,7 @@
                   <p class="text-warning"><small>Está ação não pode ser desfeita.</small></p>
                </div>
                <div class="form-group hidden">
-                  <input type="text" name="pecaId3" class="form-control pecaId3" required>
+                  <input type="text" name="removeServicoId" class="form-control removeServicoId" required>
                </div>
                <div class="modal-footer">
                   <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">

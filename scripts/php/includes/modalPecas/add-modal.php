@@ -2,7 +2,7 @@
 <div id="addEmployeeModal" class="modal fade">
       <div class="modal-dialog">
          <div class="modal-content">
-            <form name="addmoto" action="tabelaPecas.php?page=<?php echo $page ?>" method="POST" enctype="multipart/form-data">
+            <form name="addPecas" action="tabelaPecas.php?page=<?php echo $page ?>" method="POST" enctype="multipart/form-data">
                <div class="modal-header">
                   <h4 class="modal-title">Adicionar Peça</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -10,19 +10,19 @@
                <div class="modal-body">
                   <div class="form-group">
                      <label>Imagem</label>
-                     <input type="file" name="foto">
+                     <input type="file" name="addFoto">
                   </div>
                   <div class="form-group">
                      <label>Grupo</label>
-                     <input type="text" name="grupo" class="form-control" required>
+                     <input type="text" name="addGrupo" class="form-control" required>
                   </div>
                   <div class="form-group">
                      <label>Item</label>
-                     <textarea class="form-control" name="item" required></textarea>
+                     <textarea name="addItem" class="form-control" required></textarea>
                   </div>
                   <div class="form-group">
                      <label>Parte</label>
-                     <input type="text" name="parte" class="form-control" required>
+                     <input type="text" name="addParte" class="form-control" required>
                   </div>
                </div>
                <div class="modal-footer">
