@@ -1,4 +1,4 @@
-a<tr>
+<tr>
     <td>
         <span class="custom-checkbox">
             <input type="checkbox" id="checkbox1" name="options[]" value="1">
