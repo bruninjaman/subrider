@@ -21,10 +21,10 @@
                   <a class="page-scroll" href="tabelaMotos.php">Tabela Motocicletas</a>
                </li>
                <li class="">
-                  <a class="page-scroll" href="tabelaServicos.php">Tabela Serviços</a>
+                  <a class="page-scroll" href="#">Tabela Serviços</a>
                </li>
                <li class="">
-                  <a class="page-scroll" href="#">Tabela Peças</a>
+                  <a class="page-scroll" href="tabelaPecas.php">Tabela Peças</a>
                </li>
                <li class="">
                   <a class="page-scroll" href="index.php">Voltar</a>
