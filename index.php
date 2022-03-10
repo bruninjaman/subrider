@@ -1,652 +1,249 @@
-<!DOCTYPE html>
-<?php session_start();
+<!DOCTYPE HTML>
+
+<?php
+session_start();
 ?>
-<html lang="en">
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
 
 <head>
-   <meta charset="UTF-8">
-   <title>Sub-rider</title>
-   <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
-   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
-   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-   <link rel="stylesheet" href="./css/default-navbar.css">
-
-   <!-- login css -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-
-   <link rel="stylesheet" href="./css/login.css">
+    <title>Subrider</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" />
+    </noscript>
 </head>
 
-<body class="defaultpage">
-   <!-- partial:index.partial.html -->
+<body class="is-preload landing">
+    <div id="page-wrapper">
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo">
+                <a href="index.html"><img src="./images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
+            </h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html">Sobre nossos serviços</a></li>
+                    <?php
 
-   <body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
-      <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
-         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-               </button>
-               <img src="./imgs/logo-branco-crop.png" style="height:60px;width:180px;">
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-               <ul class="nav navbar-nav navbar-right">
-                  <li class="hidden active">
-                     <a href="#page-top"></a>
-                  </li>
-                  <?php
-                  if (isset($_SESSION["user"])) {
-                     echo '<li class="">
-                            <a class="page-scroll" href="tabelaMotos.php">Tabelas</a>
-                            </li>';
-                  }
-                  ?>
-                  <li class="">
-                     <a class="page-scroll" href="#services">Serviços</a>
-                  </li>
-                  <li class="">
-                     <a class="page-scroll" href="#portfolio">Feed Instagram</a>
-                  </li>
-                  <!--
-                        <li class="">
-                            <a class="page-scroll" href="#about">About</a>
-                        </li>
-                        <li class="">
-                            <a class="page-scroll" href="#team">Team</a>
-                        </li> !-->
-                  <li class="">
-                     <a class="page-scroll" href="#contact">Contato</a>
-                  </li>
-
-                  <div class="logincss" style="display:inline;">
-                     <li class="">
-                        <?php
-                        if (isset($_SESSION["user"])) {
-                           echo '<nav class="main-nav">';
-                           echo '<a class="page-scroll loginicon cd-signup cd-logout" style="margin:5px;" href="scripts/php/sairscript.php">Sair</a>';
-                           echo '</nav>';
-                        } else {
-                           echo '<nav class="main-nav">';
-                           echo '<a class="cd-signin" style="margin:5px" href="#0">Entrar</a>';
-                           echo '<a class="cd-signup" href="#0">Criar conta</a>';
-                           echo '</nav>';
-                        }
-                        ?>
-                     </li>
-
-                  </div>
-               </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-         </div>
-         <!-- /.container-fluid -->
-      </nav>
-      <!-- Header -->
-      <header>
-         <div class="container">
-            <div class="intro-text">
-               <!-- 
-                     <div class="intro-lead-in">Mecanica de motocicletas</div>
-                     -->
-               <div class="intro-heading"></div>
-            </div>
-         </div>
-      </header>
-      <!-- Services Section -->
-      <section id="services">
-         <div class="container">
-            <div class="row">
-               <div class="col-lg-12 text-center">
-                  <h2 class="section-heading">Serviços</h2>
-                  <h3 class="section-subheading text-muted">Mecânica especializada de motocicletas.</h3>
-               </div>
-            </div>
-            <div class="row text-center">
-               <div class="col-md-4">
-                  <span class="fa-stack fa-4x">
-                     <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                     <i class="fas fa-truck-couch" style="position:relative;"></i>
-                  </span>
-                  <h4 class="service-heading">Reboque</h4>
-                  <p class="text-muted">Transporte guincho para a oficina e para a residência do cliente.</p>
-               </div>
-               <div class="col-md-4">
-                  <span class="fa-stack fa-4x">
-                     <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                     <i class="glyphicon glyphicon-wrench"></i>
-                  </span>
-                  <h4 class="service-heading">Manutenção Preventiva</h4>
-                  <p class="text-muted">Manutenção periódica conforme a tabela do fabricante ou por níveis: básico, intermediário e avançado.</p>
-               </div>
-               <div class="col-md-4">
-                  <span class="fa-stack fa-4x">
-                     <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                     <i class="glyphicon glyphicon-ok"></i>
-                  </span>
-                  <h4 class="service-heading">Manutenção Corretiva</h4>
-                  <p class="text-muted">Reparo mecânico, elétrico, eletrônico e estético e motocicletas de 1 a 6 cilindros de todas as categorias e das marcas japonesas e europeias.</p>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- Portfolio Grid Section -->
-      <section id="portfolio" class="bg-light-gray">
-         <div class="container">
-            <div class="row">
-               <div class="col-lg-12 text-center">
-                  <h2 class="section-heading">Feed Instagram</h2>
-                  <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-                  <center>
-                     <div class="elfsight-app-34d2621b-ebb5-4833-847c-c7e60974f8da"></div>
-                  </center>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- About Section -->
-      <!--
-            <section id="about">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
-                            <h2 class="section-heading">About</h2>
-                            <h3 class="section-subheading text-muted">Ajmal, I need help to learn how to tweak this part. I don't want this timeline crap. Haha.</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <ul class="timeline">
-                                <li>
-                                    <div class="timeline-image">
-                                        <img class="img-circle img-responsive" src="img/about/1.jpg" alt="">
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4>2009-2011</h4>
-                                            <h4 class="subheading">Our Humble Beginnings</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-inverted">
-                                    <div class="timeline-image">
-                                        <img class="img-circle img-responsive" src="img/about/2.jpg" alt="">
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4>March 2011</h4>
-                                            <h4 class="subheading">An Agency is Born</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="timeline-image">
-                                        <img class="img-circle img-responsive" src="img/about/3.jpg" alt="">
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4>December 2012</h4>
-                                            <h4 class="subheading">Transition to Full Service</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-inverted">
-                                    <div class="timeline-image">
-                                        <img class="img-circle img-responsive" src="img/about/4.jpg" alt="">
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4>July 2014</h4>
-                                            <h4 class="subheading">Phase Two Expansion</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-inverted">
-                                    <div class="timeline-image">
-                                        <h4>Be Part
-                                            <br>Of Our
-                                            <br>Story!</h4>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            -->
-      <!-- Team Section -->
-      <!--
-            <section id="team" class="bg-light-gray">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
-                            <h2 class="section-heading">Our Amazing Team</h2>
-                            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="team-member">
-                                <img src="http://www.mycatspace.com/wp-content/uploads/2013/08/adopting-a-cat.jpg" class="img-responsive img-circle" alt="">
-                                <h4>Kay Garland</h4>
-                                <p class="text-muted">Lead Designer</p>
-                                <ul class="list-inline social-buttons">
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="team-member">
-                                <img src="http://www.mycatspace.com/wp-content/uploads/2013/08/adopting-a-cat.jpg" class="img-responsive img-circle" alt="">
-                                <h4>Larry Parker</h4>
-                                <p class="text-muted">Lead Marketer</p>
-                                <ul class="list-inline social-buttons">
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="team-member">
-                                <img src="http://www.mycatspace.com/wp-content/uploads/2013/08/adopting-a-cat.jpg" class="img-responsive img-circle" alt="">
-                                <h4>Diana Pertersen</h4>
-                                <p class="text-muted">Lead Developer</p>
-                                <ul class="list-inline social-buttons">
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2 text-center">
-                            <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            -->
-      <!-- Clients Aside -->
-      <section id="contact">
-         <div class="container">
-            <div class="row">
-               <div class="col-lg-12 text-center">
-                  <h2 class="section-heading"></h2>
-                  <center>
-                     <div class="mapouter">
-                        <div class="gmap_canvas">
-                           <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=brazil%20subrider&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123moviesz.nl"></a><br>
-                           <style>
-                              .mapouter {
-                                 position: relative;
-                                 text-align: right;
-                                 height: 500px;
-                                 width: 600px;
-                              }
-                           </style>
-                           <a href="https://googlemapsembedcodegenerator.com
-                                 "> how to add a map to wordpress </a>
-                           <style>
-                              .gmap_canvas {
-                                 overflow: hidden;
-                                 background: none !important;
-                                 height: 500px;
-                                 width: 600px;
-                              }
-                           </style>
-                        </div>
-                     </div>
-                  </center>
-               </div>
-            </div>
-         </div>
-      </section>
-      <footer>
-         <div class="container">
-            <div class="row">
-               <div class="col-md-4">
-                  <span class="copyright">
-                     <h4 class="section-subheading"><i class="fab fa-whatsapp" style="position:relative;font-size: 25px;"></i> WhatsApp: (61) 98128-2136 </h4>
-                  </span>
-               </div>
-               <div class="col-md-4">
-                  <ul class="list-inline social-buttons">
-                     <li><a href="#"><i class="fab fa-whatsapp"></i></a>
-                     </li>
-                     <li><a href="#"><i class="fab fa-instagram"></i></a>
-                     </li>
-                     <li><a href="#"><i class="fab fa-youtube"></i></a>
-                     </li>
-                  </ul>
-               </div>
-               <!--
-                  <div class="col-md-4">
-                     <ul class="list-inline quicklinks">
-                        <li><a href="#">Politica de Privacidade</a>
-                        </li>
-                        <li><a href="#">Termos de uso</a>
-                        </li>
-                     </ul>
-                  </div>
-				  -->
-            </div>
-         </div>
-      </footer>
-      <!-- Portfolio Modals -->
-      <!-- Use the modals below to showcase details about your portfolio projects! -->
-      <!-- Portfolio Modal 1 -->
-      <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-         <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-               <div class="lr">
-                  <div class="rl">
-                  </div>
-               </div>
-            </div>
-            <div class="container">
-               <div class="row">
-                  <div class="col-lg-8 col-lg-offset-2">
-                     <div class="modal-body">
-                        <!-- Project Details Go Here -->
-                        <h2>Project Name</h2>
-                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                        <img class="img-responsive" src="https://unsplash.imgix.net/uploads%2F1411419068566071cef10%2F7562527b?q=75&w=1080&h=1080&fit=max&fm=jpg&auto=format&s=240c45655f09c546232a6f106688e502" alt="">
-                        <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                        <p>
-                           <strong>Want these icons in this portfolio item sample?</strong>You can download 60 of them for free, courtesy of <a href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">RoundIcons.com</a>, or you can purchase the 1500 icon set <a href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">here</a>.
-                        </p>
-                        <ul class="list-inline">
-                           <li>Date: July 2014</li>
-                           <li>Client: Round Icons</li>
-                           <li>Category: Graphic Design</li>
+                    if (isset($_SESSION["user"])) {
+                        echo '
+                    <li>
+                        <a href="#">Tabelas</a>
+                        <ul>
+                            <li><a href="tabelaPecas.php">Tabela de peças</a></li>
+                            <li><a href="tabelaMotos.php">Tabela de motocicletas</a></li>
+                            <li><a href="tabelaServicos.php">Tabela de serviços</a></li>
+                            <li><a href="#">Tabela de clientes</a></li>
                         </ul>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
-                     </div>
-                  </div>
-               </div>
+                    </li>';
+                    }
+                    ?>
+                    <li><a href="#">Contato</a></li>
+                    <?php
+                    if (isset($_SESSION["user"])) {
+                        echo '<li>';
+                        echo '<a class="button primary" href="scripts/php/sair.php">Sair</a>';
+                        echo '</li>';
+                    } else {
+                        echo '<li>';
+                        echo '<a class="button primary" href="login.php">Entrar</a>';
+                        echo '</li><li>';
+                        echo '<a class="button secondary" href="cadastrar.php">Criar conta</a>';
+                        echo '</li>';
+                    }
+                    ?>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Banner -->
+        <section id="banner">
+            <div class="content">
+                <header>
+                    <h2>Mecânica Especializada em motocicletas</h2>
+                    <p>Oficina de reparo, manutenção e pintura.<br /> Entre em contato conosco e conheça nossos serviços.</p>
+                </header>
+                <span class="image"><img src="images/Close.jpg" alt="" /></span>
             </div>
-         </div>
-      </div>
-      <!-- Portfolio Modal 2 -->
-      <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-         <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-               <div class="lr">
-                  <div class="rl">
-                  </div>
-               </div>
+            <a href="#one" class="goto-next scrolly">Next</a>
+        </section>
+
+        <!-- One -->
+        <section id="one" class="spotlight style1 bottom">
+            <span class="image fit main"><img src="images/V Strom.jpg" alt="" /></span>
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 col-12-medium" style="margin-right: 300px;">
+                            <div class="mapouter">
+                                <div class="gmap_canvas">
+                                    <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=brazil%20subrider&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                    <a href="https://123moviesz.nl"></a><br>
+                                    <style>
+                                        .mapouter {
+                                            position: relative;
+                                            text-align: right;
+                                            height: 300px;
+                                            width: 550px;
+                                        }
+                                    </style>
+                                    <a href="https://googlemapsembedcodegenerator.com
+											"> how to add a map to wordpress </a>
+                                    <style>
+                                        .gmap_canvas {
+                                            overflow: hidden;
+                                            background: none !important;
+                                            height: 300px;
+                                            width: 550px;
+                                        }
+                                    </style>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-12-medium">
+                            <p>Endereço da Sub-Rider, Quadra 12, conjunto L, St. Sul, Brasília - DF. CEP 72415-612. Whatsapp: (61) 98128-2136 </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="container">
-               <div class="row">
-                  <div class="col-lg-8 col-lg-offset-2">
-                     <div class="modal-body">
-                        <h2>Project Heading</h2>
-                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                        <img class="img-responsive img-centered" src="https://unsplash.imgix.net/44/9s1lvXLlSbCX5l3ZaYWP_hdr-1.jpg?q=75&w=1080&h=1080&fit=max&fm=jpg&auto=format&s=f0a1db79752dbb04ec6d2aab7d17c7b0" alt="">
-                        <p><a href="https://designmodo.com/startup/?u=787">Startup Framework</a> is a website builder for professionals. Startup Framework contains components and complex blocks (PSD+HTML Bootstrap themes and templates) which can easily be integrated into almost any design. All of these components are made in the same style, and can easily be integrated into projects, allowing you to create hundreds of solutions for your future projects.</p>
-                        <p>You can preview Startup Framework <a href="https://designmodo.com/startup/?u=787">here</a>.</p>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
-                     </div>
-                  </div>
-               </div>
+            <a href="#two" class="goto-next scrolly">Next</a>
+        </section>
+
+        <!-- Two -->
+        <section id="two" class="spotlight style2 right">
+            <span class="image fit main"><img src="images/pic03.jpg" alt="" /></span>
+            <div class="content">
+                <header>
+                    <h2>Canal de videos no youtube</h2>
+                    <p>O link será disponibilizado em breve</p>
+                </header>
+                <p>Mostramos os nossos serviços de manutenção e estética em motocicletas. E também nosso trabalho especialização/ferramentas e tecnologias.</p>
+                <ul class="actions">
+                    <li><a href="#" class="button">Inscreva-se</a></li>
+                </ul>
             </div>
-         </div>
-      </div>
-      <!-- Portfolio Modal 3 -->
-      <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-         <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-               <div class="lr">
-                  <div class="rl">
-                  </div>
-               </div>
+            <a href="#three" class="goto-next scrolly">Next</a>
+        </section>
+
+        <!-- Three -->
+        <section id="three" class="spotlight style3 left">
+            <span class="image fit main bottom"><img src="images/pic04.jpg" alt="" /></span>
+            <div class="content">
+                <header>
+                    <h2>Conheça nosso instagram</h2>
+                    <p>fotos e resultados de clientes satisfeitos com nosso trabalho</p>
+                </header>
+                <p>Nos siga no instagram e fique por dentro de todas novidades.</p>
+                <ul class="actions">
+                    <li><a href="#" class="button">Seguir</a></li>
+                </ul>
             </div>
-            <div class="container">
-               <div class="row">
-                  <div class="col-lg-8 col-lg-offset-2">
-                     <div class="modal-body">
-                        <!-- Project Details Go Here -->
-                        <h2>Project Name</h2>
-                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                        <img class="img-responsive img-centered" src="https://unsplash.imgix.net/46/Ov6ZY1zLTWmhPC0wFysP_IMG_2896_edt.jpg?q=75&w=1080&h=1080&fit=max&fm=jpg&auto=format&s=6518e4df89659818f6c0392175a9c5e6" alt="">
-                        <p>Treehouse is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. This is bright and spacious design perfect for people or startup companies looking to showcase their apps or other projects.</p>
-                        <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/treehouse-free-psd-web-template/">FreebiesXpress.com</a>.</p>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- Portfolio Modal 4 -->
-      <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-         <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-               <div class="lr">
-                  <div class="rl">
-                  </div>
-               </div>
-            </div>
-            <div class="container">
-               <div class="row">
-                  <div class="col-lg-8 col-lg-offset-2">
-                     <div class="modal-body">
-                        <!-- Project Details Go Here -->
-                        <h2>Project Name</h2>
-                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                        <img class="img-responsive img-centered" src="https://unsplash.imgix.net/44/9s1lvXLlSbCX5l3ZaYWP_hdr-1.jpg?q=75&w=1080&h=1080&fit=max&fm=jpg&auto=format&s=f0a1db79752dbb04ec6d2aab7d17c7b0" alt="">
-                        <p>Start Bootstrap's Agency theme is based on Golden, a free PSD website template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Golden is a modern and clean one page web template that was made exclusively for Best PSD Freebies. This template has a great portfolio, timeline, and meet your team sections that can be easily modified to fit your needs.</p>
-                        <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/golden-free-one-page-web-template/">FreebiesXpress.com</a>.</p>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- Portfolio Modal 5 -->
-      <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-         <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-               <div class="lr">
-                  <div class="rl">
-                  </div>
-               </div>
-            </div>
-            <div class="container">
-               <div class="row">
-                  <div class="col-lg-8 col-lg-offset-2">
-                     <div class="modal-body">
-                        <!-- Project Details Go Here -->
-                        <h2>Project Name</h2>
-                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                        <img class="img-responsive img-centered" src="https://unsplash.imgix.net/46/Ov6ZY1zLTWmhPC0wFysP_IMG_2896_edt.jpg?q=75&w=1080&h=1080&fit=max&fm=jpg&auto=format&s=6518e4df89659818f6c0392175a9c5e6" alt="">
-                        <p>Escape is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Escape is a one page web template that was designed with agencies in mind. This template is ideal for those looking for a simple one page solution to describe your business and offer your services.</p>
-                        <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/escape-one-page-psd-web-template/">FreebiesXpress.com</a>.</p>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- Portfolio Modal 6 -->
-      <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-         <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-               <div class="lr">
-                  <div class="rl">
-                  </div>
-               </div>
-            </div>
-            <div class="container">
-               <div class="row">
-                  <div class="col-lg-8 col-lg-offset-2">
-                     <div class="modal-body">
-                        <!-- Project Details Go Here -->
-                        <h2>Project Name</h2>
-                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                        <img class="img-responsive img-centered" src="https://unsplash.imgix.net/uploads%2F1411419068566071cef10%2F7562527b?q=75&w=1080&h=1080&fit=max&fm=jpg&auto=format&s=240c45655f09c546232a6f106688e502" alt="">
-                        <p>Dreams is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Dreams is a modern one page web template designed for almost any purpose. It’s a beautiful template that’s designed with the Bootstrap framework in mind.</p>
-                        <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/dreams-free-one-page-web-template/">FreebiesXpress.com</a>.</p>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- jQuery Version 1.11.0 -->
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/jquery-1.11.0.js"></script>
-      <!-- Bootstrap Core JavaScript -->
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/bootstrap.min.js"></script>
-      <!-- Plugin JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/classie.js"></script>
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/cbpAnimatedHeader.js"></script>
-      <!-- Contact Form JavaScript -->
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/jqBootstrapValidation.js"></script>
-      <script src="https://raw.githubusercontent.com/IronSummitMedia/startbootstrap/gh-pages/templates/agency/js/contact_me.js"></script>
-      <span style="height: 20px; width: 40px; min-height: 20px; min-width: 40px; position: absolute; opacity: 0.85; z-index: 8675309; display: none; cursor: pointer; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAYAAAD/Rn+7AAADU0lEQVR42s2WXUhTYRjHz0VEVPRFUGmtVEaFUZFhHxBhsotCU5JwBWEf1EWEEVHQx4UfFWYkFa2biPJiXbUta33OXFtuUXMzJ4bK3Nqay7m5NeZq6h/tPQ+xU20zugjOxR/+7/O8539+5znnwMtNTExwJtMb3L/fiLv3botCSmUjeCaejTOb39AiFothfHxcFIrHY8RksZjBsckJcOIRMfFsHD/SsbExUYpnI8DR0dGUGjSb0byhEJp5Uqg5CTSzc2CQleJbMEj9/ywBcGRkJEk9DQqouEVQT1sK444yWI9UonmTjGqauVLEIlHa9x8lAMbj8SSpp0rwKGMVvg8P46vbg0C7na8z8JsMcgHe7jlEa+edRhiLy8n/TUMfu6EvLElk+U0WtGwrTrdfAGQf5J8iiK4LVzDU28t8JtMSocf8E+l68myaNFXm/6rXslLK7ay5TOunuRvZWpJuvwAYjUaTpOIWoquuAZ219RTaxKYp9BbjycoN5FvL9qH9TBX5rvoGdJythvXYSTxdtRnWylO/ZdqrLsGwszzhWQ593z2KlAwCYCQSSZJ6ehZ0W7bD9VBLgN0NCqr3qR7R2rBrL3pu3Sb/7nDlz2uy6cG0OXk0GTbZXzNp8trsPAQdTj6frlWzN2DcXZGKQQAMh8NJ6rpyHe+PnkCr/CAFdZyvpfpjuvkifLF9wIt1Wwlo0OHie1RvWrKa93RjzfzliTzPKz3ltB0/Tevmwp14wGUgHAzSOoUEwFAolFaaBSuhnslPRkJexUJtZ6v5HtUeLswl33n1BgEY5fvhs9sJ3FAiT+QYyyvoAQJuD0KBAFRTJNAuz5/s3gJgMBhMJwrVFRThM5tY5zUF/A4X1f2fvQTRLCuBreoim0YmAbqNJryvPEXeeq46kaNdkQ/1HCncbJKPs9ZSv2VHGfWsZ2hfkhKAfr8/pdxWKx4wwD69PmVfNSOL+lr2w+gYqHpWDtXt1xQ8AMlWU0e1lqLd/APRHoP8AJqWrQG9gYxcPMsvSJUvAA4MDKTUJ7MZLaVy8v+qT21tcDx/OemePr0RTkNrur4A6PP5xCgBsL+/X4wiQDpuuVxOeL1eMYmYeDY6sOp0z+B0OuHxeEQhxkJMFosJiSO/UinOI/8Pc+l7KKArAT8AAAAASUVORK5CYII=);"></span>
-   </body>
-   <!-- partial -->
-   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-   <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
-   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
-   <script src="./scripts/script.js"></script>
+            <a href="#four" class="goto-next scrolly">Next</a>
+        </section>
+
+        <!-- Four -->
 
 
-   <div class="logincss">
+        <section id="four" class="wrapper style1 special fade-up">
+            <div class="container">
+                <header class="major">
+                    <h2>Oferecemos serviço de manutenção em várias marcas de motocicletas</h2>
+                    <p>Veja as variadas opções de serviços</p>
+                </header>
+                <div class="box alt">
+                    <div class="row gtr-uniform">
+                        <section class="col-4 col-6-medium col-12-xsmall">
+                            <span class="icon solid alt major fa-trailer"></span>
+                            <h3>Trasnsporte/Reboque</h3>
+                            <p>Transporte guincho para a oficina e para a residência do cliente.</p>
+                        </section>
+                        <section class="col-4 col-6-medium col-12-xsmall">
+                            <span class="icon solid alt major fa-hammer"></span>
+                            <h3>Manutenção Preventiva</h3>
+                            <p>Manutenção periódica conforme a tabela do fabricante ou por níveis: básico, intermediário e avançado.</p>
+                        </section>
+                        <section class="col-4 col-6-medium col-12-xsmall">
+                            <span class="icon solid alt major fa-gear"></span>
+                            <h3>Manutenção Corretiva</h3>
+                            <p>Reparo mecânico, elétrico, eletrônico e estético e motocicletas de 1 a 6 cilindros.</p>
+                        </section>
+                        <section class="col-4 col-6-medium col-12-xsmall">
+                            <span class="icon solid alt major fa-broom-ball"></span>
+                            <h3>Manutenção Estética</h3>
+                            <p>Pintura, polimento, recuperação de peças cromadas, soldas, etc.</p>
+                        </section>
+                        <section class="col-4 col-6-medium col-12-xsmall">
+                            <span class="icon solid alt major fa-kit-medical"></span>
+                            <h3>Manutenção Emergencial</h3>
+                            <p>Atendimento de emergência para motocicletas imobilizadas.</p>
+                        </section>
+                        <section class="col-4 col-6-medium col-12-xsmall">
+                            <span class="icon solid alt major fa-coins"></span>
+                            <h3>Manutenção Econômica</h3>
+                            <p>Busca por alternativas seguras de redução de custos de manutenção.</p>
+                        </section>
+                    </div>
+                </div>
+                <footer class="major">
+                    <ul class="actions special">
+                        <li><a href="#" class="button">Entrar em contato</a></li>
+                    </ul>
+                </footer>
+            </div>
+        </section>
 
-      <div class="cd-user-modal">
-         <!-- this is the entire modal form, including the background -->
-         <div class="cd-user-modal-container">
-            <!-- this is the container wrapper -->
-            <ul class="cd-switcher">
-               <li><a href="#0">Entrar</a></li>
-               <li><a href="#0">Nova Conta</a></li>
+        <!-- Five -->
+        <section id="five" class="wrapper style2 special fade">
+            <div class="container">
+                <header>
+                    <h2>Começe o seu cadastro em e veja mais opções de serviços e manutenções</h2>
+                    <p>Criando sua conta em nosso site</p>
+                </header>
+                <form method="post" action="#" class="cta">
+                    <div class="row gtr-uniform gtr-50">
+                        <div class="col-8 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Digite seu endereço de email" /></div>
+                        <div class="col-4 col-12-xsmall"><input type="submit" value="Começar" class="fit primary" /></div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
             </ul>
+            <ul class="copyright">
+                <li>&copy; Whatsapp: (61) 98128-2136.</li>
+                <li>Fale com: <a href="http://html5up.net">Robson Alexandre</a></li>
+            </ul>
+        </footer>
 
-            <div id="cd-login">
-               <!-- log in form -->
-               <form class="cd-form" name="login" action="scripts/php/login.php" method="POST">
-                  <p class="fieldset">
-                     <label class="image-replace cd-email" for="signin-email">E-mail ou Nome de Usuario</label>
-                     <input class="full-width has-padding has-border" id="signin-email" name="user" placeholder="E-mail">
-                     <span class="cd-error-message">Error message here!</span>
-                  </p>
+    </div>
 
-                  <p class="fieldset">
-                     <label class="image-replace cd-password" for="signin-password">Senha</label>
-                     <input class="full-width has-padding has-border" id="signin-password" name="pass" type="text" placeholder="Senha">
-                     <a href="#0" class="hide-password">Esconder</a>
-                     <span class="cd-error-message">Error message here!</span>
-                  </p>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
 
-                  <p class="fieldset">
-                     <input type="checkbox" id="remember-me" checked>
-                     <label for="remember-me">Manter logado</label>
-                  </p>
-
-                  <p class="fieldset">
-                     <input class="full-width" type="submit" value="Entrar">
-                  </p>
-               </form>
-
-               <p class="cd-form-bottom-message"><a href="#0">Esqueceu sua Senha?</a></p>
-               <!-- <a href="#0" class="cd-close-form">Close</a> -->
-            </div> <!-- cd-login -->
-
-            <div id="cd-signup">
-               <!-- sign up form -->
-               <form class="cd-form" action="loginscript.php" method="POST">
-                  <p class="fieldset">
-                     <label class="image-replace cd-username" for="signup-username">Nome de Usuario</label>
-                     <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Nome de Usuario">
-                     <span class="cd-error-message">Error message here!</span>
-                  </p>
-
-                  <p class="fieldset">
-                     <label class="image-replace cd-email" for="signup-email">E-mail</label>
-                     <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
-                     <span class="cd-error-message">Error message here!</span>
-                  </p>
-
-                  <p class="fieldset">
-                     <label class="image-replace cd-password" for="signup-password">Senha</label>
-                     <input class="full-width has-padding has-border" id="signup-password" type="text" placeholder="Senha">
-                     <a href="#0" class="hide-password">Esconder</a>
-                     <span class="cd-error-message">Error message here!</span>
-                  </p>
-
-                  <p class="fieldset">
-                     <input type="checkbox" id="accept-terms">
-                     <label for="accept-terms">Eu concordo com os <a href="#0">termos de uso</a></label>
-                  </p>
-
-                  <p class="fieldset">
-                     <input class="full-width has-padding" type="submit" value="Criar Conta">
-                  </p>
-               </form>
-
-               <!-- <a href="#0" class="cd-close-form">Close</a> -->
-            </div> <!-- cd-signup -->
-
-            <div id="cd-reset-password">
-               <!-- reset password form -->
-               <p class="cd-form-message">Esqueceu sua senha? Por favor digite seu endereço de email. Você receberá o link para mudar de senha.</p>
-
-               <form class="cd-form">
-                  <p class="fieldset">
-                     <label class="image-replace cd-email" for="reset-email">E-mail</label>
-                     <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
-                     <span class="cd-error-message">Error message here!</span>
-                  </p>
-
-                  <p class="fieldset">
-                     <input class="full-width has-padding" type="submit" value="Reset password">
-                  </p>
-               </form>
-
-               <p class="cd-form-bottom-message"><a href="#0">Volto para o login</a></p>
-            </div> <!-- cd-reset-password -->
-            <a href="#0" class="cd-close-form">Fechar</a>
-         </div> <!-- cd-user-modal-container -->
-      </div> <!-- cd-user-modal -->
-   </div>
 </body>
-
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="./scripts/login.js"></script>
 
 </html>

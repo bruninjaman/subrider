@@ -2,9 +2,9 @@
 
 <?php
 //CONNECTION
-include("./connection/connection.php");
+require("./connection/connection.php");
 //FUNCTIONS
-include("./scripts/php/tabelas/functions.php");
+require("./scripts/php/tabelas/functions.php");
 
 //PAGE
 $page = getPage();
@@ -40,7 +40,7 @@ deleteMoto($conn)
 
 <body class="crud-table defaultpage">
    <?php
-   include("./scripts/php/includes/nav-bar/tabelaMotos/navbar.php");
+   require("./scripts/php/includes/nav-bar/tabelaMotos/navbar.php");
    ?>
    <!-- partial:index.partial.html -->
    <div class="container">
@@ -91,9 +91,9 @@ deleteMoto($conn)
       </div>
    </div>
    <?php
-   include("./scripts/php/includes/modalMotos/add-modal.php");
-   include("./scripts/php/includes/modalMotos/edit-modal.php");
-   include("./scripts/php/includes/modalMotos/remove-modal.php");
+   require("./scripts/php/includes/modalMotos/add-modal.php");
+   require("./scripts/php/includes/modalMotos/edit-modal.php");
+   require("./scripts/php/includes/modalMotos/remove-modal.php");
    ?>
    <!-- partial -->
    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>

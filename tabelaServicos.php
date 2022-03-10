@@ -2,9 +2,9 @@
 
 <?php
 //CONNECTION
-include("./connection/connection.php");
+require("./connection/connection.php");
 //FUNCTIONS
-include("./scripts/php/tabelas/functions.php");
+require("./scripts/php/tabelas/functions.php");
 
 //PAGE
 $page = getPage();
@@ -41,7 +41,7 @@ deleteServico($conn);
 
 <body class="crud-table defaultpage">
    <?php
-   include("./scripts/php/includes/nav-bar/tabelaServicos/navbar.php");
+   require("./scripts/php/includes/nav-bar/tabelaServicos/navbar.php");
    ?>
    <!-- partial:index.partial.html -->
    <div class="container">
@@ -85,9 +85,9 @@ deleteServico($conn);
       </div>
    </div>
    <?php
-   include("./scripts/php/includes/modalServicos/add-modal.php");
-   include("./scripts/php/includes/modalServicos/edit-modal.php");
-   include("./scripts/php/includes/modalServicos/delete-modal.php");
+   require("./scripts/php/includes/modalServicos/add-modal.php");
+   require("./scripts/php/includes/modalServicos/edit-modal.php");
+   require("./scripts/php/includes/modalServicos/delete-modal.php");
    ?>
    <!-- partial -->
    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>

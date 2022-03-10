@@ -2,9 +2,9 @@
 
 <?php
 //CONNECTION
-include("./connection/connection.php");
+require("./connection/connection.php");
 //FUNCTIONS
-include("./scripts/php/tabelas/functions.php");
+require("./scripts/php/tabelas/functions.php");
 
 //PAGE
 $page = getPage();
@@ -41,7 +41,7 @@ deletePeca($conn)
 
 <body class="crud-table defaultpage">
    <?php
-   include("./scripts/php/includes/nav-bar/tabelaPecas/navbar.php");
+   require("./scripts/php/includes/nav-bar/tabelaPecas/navbar.php");
    ?>
    <!-- partial:index.partial.html -->
    <div class="container">
@@ -87,9 +87,9 @@ deletePeca($conn)
       </div>
    </div>
    <?php
-   include("./scripts/php/includes/modalPecas/add-modal.php");
-   include("./scripts/php/includes/modalPecas/edit-modal.php");
-   include("./scripts/php/includes/modalPecas/delete-modal.php");
+   require("./scripts/php/includes/modalPecas/add-modal.php");
+   require("./scripts/php/includes/modalPecas/edit-modal.php");
+   require("./scripts/php/includes/modalPecas/delete-modal.php");
    ?>
    <!-- partial -->
    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>

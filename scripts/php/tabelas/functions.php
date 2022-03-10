@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__."./subfunctions.php");
+require(__DIR__."./subfunctions.php");
 
 function getPage()
 {
@@ -144,7 +144,7 @@ function showMotos($conn, $page)
     $result = mysqli_query($conn, $mysqli_query);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        include("./scripts/php/tabelas/tabela_moto.php");
+        require("./scripts/php/tabelas/tabela_moto.php");
     }
 }
 
@@ -155,7 +155,7 @@ function showPecas($conn, $page)
     $result = mysqli_query($conn, $mysqli_query);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        include("./scripts/php/tabelas/tabela_pecas.php");
+        require("./scripts/php/tabelas/tabela_pecas.php");
     }
 }
 
@@ -166,7 +166,7 @@ function showServicos($conn, $page)
     $result = mysqli_query($conn, $mysqli_query);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        include("./scripts/php/tabelas/tabela_servicos.php");
+        require("./scripts/php/tabelas/tabela_servicos.php");
     }
 }
 
