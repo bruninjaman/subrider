@@ -119,7 +119,7 @@ session_start();
 
         <!-- Two -->
         <section id="two" class="spotlight style2 right">
-            <span class="image fit main"><img src="images/pic03.jpg" alt="" /></span>
+            <span class="image fit main"><img src="images/motor v-strom.jpg" alt="" /></span>
             <div class="content">
                 <header>
                     <h2>Canal de videos no youtube</h2>

@@ -1,6 +1,6 @@
 <?php
 
-require(__DIR__."./subfunctions.php");
+require("subfunctions.php");
 
 function getPage()
 {
