@@ -73,7 +73,7 @@
                                 <label for="fname">Login:</label>
                                 <input type="text" id="user" name="user"><br>
                                 <label for="lname">Senha:</label>
-                                <input type="text" id="pass" name="pass"><br>
+                                <input type="password" id="pass" name="pass"><br>
                             </div>
                             <div class="col-4 col-12-medium">
                                 <a class="button primary" href='javascript:loginform.submit()'>Entrar</a>

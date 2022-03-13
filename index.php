@@ -15,9 +15,12 @@ session_start();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
+
 </head>
 
 <body class="is-preload landing">
@@ -25,12 +28,12 @@ session_start();
         <!-- Header -->
         <header id="header">
             <h1 id="logo">
-                <a href="index.html"><img src="./images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
+                <a href="index.php"><img src="./images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
             </h1>
             <nav id="nav">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="index.html">Sobre nossos serviços</a></li>
+                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="index.php">Sobre nossos serviços</a></li>
                     <?php
 
                     if (isset($_SESSION["user"])) {
@@ -69,11 +72,11 @@ session_start();
             <div class="content">
                 <header>
                     <h2>Mecânica Especializada em motocicletas</h2>
-                    <p>Oficina de reparo, manutenção e pintura.<br /> Entre em contato conosco e conheça nossos serviços.</p>
+                    <p>Oficina multimarcas incluindo HD.<br /> Entre em contato conosco e conhezça nossos serviços.</p>
                 </header>
                 <span class="image"><img src="images/Close.jpg" alt="" /></span>
             </div>
-            <a href="#one" class="goto-next scrolly">Next</a>
+            <a href="#one" class="goto-next scrolly">Proximo</a>
         </section>
 
         <!-- One -->
@@ -114,7 +117,7 @@ session_start();
                     </div>
                 </div>
             </div>
-            <a href="#two" class="goto-next scrolly">Next</a>
+            <a href="#two" class="goto-next scrolly">Proximo</a>
         </section>
 
         <!-- Two -->
@@ -123,31 +126,43 @@ session_start();
             <div class="content">
                 <header>
                     <h2>Canal de videos no youtube</h2>
-                    <p>O link será disponibilizado em breve</p>
+                    <a href="https://www.youtube.com/channel/UC_rUL6tWuwx-iACNG_uHZVA?sub_confirmation=1" target="_blank">Acesse o canal</a>
                 </header>
-                <p>Mostramos os nossos serviços de manutenção e estética em motocicletas. E também nosso trabalho especialização/ferramentas e tecnologias.</p>
+                <p>Mostramos os nossos serviços de manutenção e estética em motocicletas com nosso trabalho, especialização, ferramentas e tecnologias.</p>
                 <ul class="actions">
-                    <li><a href="#" class="button">Inscreva-se</a></li>
+                    <li><a href="https://www.youtube.com/channel/UC_rUL6tWuwx-iACNG_uHZVA?sub_confirmation=1" target="_blank" class="button">Inscreva-se</a></li>
                 </ul>
             </div>
-            <a href="#three" class="goto-next scrolly">Next</a>
+            <a href="#three" class="goto-next scrolly">Proximo</a>
         </section>
 
         <!-- Three -->
         <section id="three" class="spotlight style3 left">
-            <span class="image fit main bottom"><img src="images/pic04.jpg" alt="" /></span>
+            <span class="image fit main bottom">
+                <img src="images/insta-image.jpg" alt="" />
+            </span>
             <div class="content">
                 <header>
-                    <h2>Conheça nosso instagram</h2>
-                    <p>fotos e resultados de clientes satisfeitos com nosso trabalho</p>
+                    <!-- <div id="instafeed"></div> -->
+                    <h2>Conheça nosso Instagram</h2>
+                    <p>Fotos do nosso trabalho.</p>
                 </header>
                 <p>Nos siga no instagram e fique por dentro de todas novidades.</p>
                 <ul class="actions">
-                    <li><a href="#" class="button">Seguir</a></li>
+                    <li><a href="https://www.instagram.com/xandov/" target="_blank" class="button">Seguir</a></li>
                 </ul>
             </div>
-            <a href="#four" class="goto-next scrolly">Next</a>
+            <a href="#subriderfeed" class="goto-next scrolly">Proximo</a>
         </section>
+
+        <!-- Instagram feed -->
+        <section id="subriderfeed" class="wrapper style2 special fade">
+            <div class="container">
+                <h2>Instagram Subrider</h2>
+                <div id="instafeed" class="owl-carousel owl-theme owl-loaded owl-drag"></div>
+            </div>
+        </section>
+
 
         <!-- Four -->
 
@@ -166,7 +181,7 @@ session_start();
                             <p>Transporte guincho para a oficina e para a residência do cliente.</p>
                         </section>
                         <section class="col-4 col-6-medium col-12-xsmall">
-                            <span class="icon solid alt major fa-hammer"></span>
+                            <span class="icon solid alt major fa-clock-rotate-left"></span>
                             <h3>Manutenção Preventiva</h3>
                             <p>Manutenção periódica conforme a tabela do fabricante ou por níveis: básico, intermediário e avançado.</p>
                         </section>
@@ -194,13 +209,14 @@ session_start();
                 </div>
                 <footer class="major">
                     <ul class="actions special">
-                        <li><a href="#" class="button">Entrar em contato</a></li>
+                        <li><a href="contato.php" class="button">Entrar em contato</a></li>
                     </ul>
                 </footer>
             </div>
         </section>
 
         <!-- Five -->
+        <!--
         <section id="five" class="wrapper style2 special fade">
             <div class="container">
                 <header>
@@ -214,17 +230,17 @@ session_start();
                     </div>
                 </form>
             </div>
-        </section>
+        </section> -->
 
         <!-- Footer -->
         <footer id="footer">
             <ul class="icons">
-                <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-                <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+                <li><a href="#" target="_blank" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" target="_blank" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://www.youtube.com/channel/UC_rUL6tWuwx-iACNG_uHZVA?sub_confirmation=1" target="_blank" class="icon brands alt fa-youtube"><span class="label">Youtube</span></a></li>
+                <li><a href="https://www.instagram.com/xandov/" target="_blank" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="#" target="_blank" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
             </ul>
             <ul class="copyright">
                 <li>&copy; Whatsapp: (61) 98128-2136.</li>
@@ -236,6 +252,7 @@ session_start();
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
     <script src="assets/js/jquery.scrolly.min.js"></script>
     <script src="assets/js/jquery.dropotron.min.js"></script>
     <script src="assets/js/jquery.scrollex.min.js"></script>
@@ -243,6 +260,19 @@ session_start();
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- Instagram feed script -->
+    <script type="text/javascript" src="assets/js/instafeed.min.js"></script>
+    <script type="text/javascript">
+        var feed = new Instafeed({
+            accessToken: 'IGQVJYV25ROUFndzlXQWlkMDd0VDJmU2lLWW9YZADI2RzM0QW1NQjhBSU9ubTEtLUtyT21xSnhsWG5vbWh0U1BtSzcyODhQemtTN1NyM0tpTlpUUS15ckZAKR051emVRWjM1ckdCWS1UOWhWZAmpQUHJJXwZDZD',
+            limit: 21,
+            template: '<div class="item"><a href="{{link}}" target="_blank"><img title="{{caption}}" src="{{image}}" /></a></div>',
+            after: function() {
+                $(".owl-carousel").owlCarousel();
+            }
+        });
+        feed.run();
+    </script>
 
 </body>
 
