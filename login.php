@@ -21,7 +21,7 @@
         <!-- Header -->
         <header id="header">
             <h1 id="logo">
-                <a href="index.html"><img src="./images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
+                <a href="index.html"><img src="./assets/css/images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
             </h1>
             <nav id="nav">
                 <ul>
@@ -33,10 +33,10 @@
         </header>
         <!-- one -->
         <section id="two" class="spotlight style2 right">
-            <span class="image fit main"><img src="images/race-moto.gif" alt="" /></span>
+            <span class="image fit main"><img src="./assets/css/images/race-moto.gif" alt="" /></span>
             <div class="content">
                 <header>
-                    <h2>Logue na sua conta e</h2>
+                    <h2>Entre na sua conta</h2>
                 </header>
                 <p>
                 <ul>
@@ -52,12 +52,12 @@
                     </li>
 
                     <li>
-                        veja novas possibilidades de serviço/upgrade para sua motocicleta.
+                        Veja como está progredindo e a etapa em que está seu serviço.
                     </li>
                 </ul>
                 </p>
                 <ul class="actions">
-                    <li><a href="#" class="button">Saiba mais</a></li>
+                    <li><a href="#login" class="button">Entrar</a></li>
                 </ul>
             </div>
             <a href="#login" class="goto-next scrolly">Next</a>

@@ -21,7 +21,7 @@
         <!-- Header -->
         <header id="header">
             <h1 id="logo">
-                <a href="index.html"><img src="./images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
+                <a href="index.html"><img src="./assets/css/images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
             </h1>
             <nav id="nav">
                 <ul>
@@ -33,7 +33,7 @@
         </header>
         <!-- one -->
         <section id="two" class="spotlight style2 right">
-            <span class="image fit main"><img src="images/motor.gif" alt="" /></span>
+            <span class="image fit main"><img src="./assets/css/images/motor.gif" alt="" /></span>
             <div class="content">
                 <header>
                     <h2>Vantagens ao criar uma conta na subrider</h2>

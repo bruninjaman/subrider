@@ -28,7 +28,7 @@ session_start();
         <!-- Header -->
         <header id="header">
             <h1 id="logo">
-                <a href="index.php"><img src="./images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
+                <a href="index.php"><img src="./assets/css/images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
             </h1>
             <nav id="nav">
                 <ul>
@@ -72,16 +72,16 @@ session_start();
             <div class="content">
                 <header>
                     <h2>Mecânica Especializada em motocicletas</h2>
-                    <p>Oficina multimarcas incluindo HD.<br /> Entre em contato conosco e conhezça nossos serviços.</p>
+                    <p>Oficina multimarcas incluindo HD.<br /> Entre em contato conosco e conheça nossos serviços.</p>
                 </header>
-                <span class="image"><img src="images/Close.jpg" alt="" /></span>
+                <span class="image"><img src="./assets/css/images/Close.jpg" alt="" /></span>
             </div>
             <a href="#one" class="goto-next scrolly">Proximo</a>
         </section>
 
         <!-- One -->
         <section id="one" class="spotlight style1 bottom">
-            <span class="image fit main"><img src="images/V Strom.jpg" alt="" /></span>
+            <span class="image fit main"><img src="./assets/css/images/V Strom.jpg" alt="" /></span>
             <div class="content">
                 <div class="container">
                     <div class="row">
@@ -122,7 +122,7 @@ session_start();
 
         <!-- Two -->
         <section id="two" class="spotlight style2 right">
-            <span class="image fit main"><img src="images/motor v-strom.jpg" alt="" /></span>
+            <span class="image fit main"><img src="./assets/css/images/motor v-strom.jpg" alt="" /></span>
             <div class="content">
                 <header>
                     <h2>Canal de videos no youtube</h2>
@@ -139,7 +139,7 @@ session_start();
         <!-- Three -->
         <section id="three" class="spotlight style3 left">
             <span class="image fit main bottom">
-                <img src="images/insta-image.jpg" alt="" />
+                <img src="./assets/css/images/insta-image.jpg" alt="" />
             </span>
             <div class="content">
                 <header>
