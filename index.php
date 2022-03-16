@@ -53,7 +53,7 @@ session_start();
                     <?php
                     if (isset($_SESSION["user"])) {
                         echo '<li>';
-                        echo '<a class="button primary" href="scripts/php/sair.php">Sair</a>';
+                        echo '<a class="button primary" href="assets/php/scripts/log-out.php">Sair</a>';
                         echo '</li>';
                     } else {
                         echo '<li>';

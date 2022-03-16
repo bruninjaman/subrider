@@ -4,7 +4,7 @@
 			session_start();
 			$_SESSION["user"] = "xandov";
 			$_SESSION["type"] = "adm";
-			header("location: ../../index.php");
+			header("location: ../../../index.php");
       	}
       }
 	  echo "failed to login";
