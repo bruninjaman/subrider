@@ -42,7 +42,7 @@ deleteMoto($conn)
    <link rel="stylesheet" href="./assets/css/crud-table.css">
 </head>
 
-<body class="is-preload landing">
+<body class="">
    <div id="page-wrapper">
       <!-- Header -->
       <header id="header">
@@ -51,9 +51,9 @@ deleteMoto($conn)
          </h1>
          <nav id="nav">
             <ul>
-               <li><a href="tabelaServicos.php">Tabela de serviços</a></li>
                <li><a href="tabelaPecas.php">Tabela de peças</a></li>
-               <li><a href="tabelaClientes.php">Tabela de clientes</a></li>
+               <li><a href="tabelaServicos.php">Tabela de serviços</a></li>
+               <li><a href="#">Tabela de clientes</a></li>
                <?php
                if (isset($_SESSION["user"])) {
                   echo '<li>';
@@ -70,63 +70,55 @@ deleteMoto($conn)
             </ul>
          </nav>
       </header>
-      <!-- Banner
-      <section id="banner">
-         <div class="content">
-            <header>
-               <h2>Tabela de motocicletas</h2>
-               <p>Tabela de dados motocicletas.<br /> Os dados das motocicletas serão guardados aqui.</p>
-            </header>
-            <span class="image"><img src="images/Close.jpg" alt="" /></span>
-         </div>
-         <a href="#one" class="goto-next scrolly">Proximo</a>
-      </section> -->
+
       <!-- tabela -->
       <section id="one" class=crud-table>
-         <div class="container">
-            <div class="table-wrapper">
-               <div class="table-title">
-                  <div class="row">
-                     <div class="col-sm-6">
-                        <h2>Gerenciar <b>Motocicletas</b></h2>
-                     </div>
-                     <div class="col-sm-6">
-                        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>
-                        <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Deletar</span></a>
+         <div class="content">
+            <div class="container">
+               <div class="table-wrapper">
+                  <div class="table-title">
+                     <div class="row">
+                        <div class="col-sm-6">
+                           <h2>Gerenciar <b>Motocicletas</b></h2>
+                        </div>
+                        <div class="col-sm-6">
+                           <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>
+                           <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Deletar</span></a>
+                        </div>
                      </div>
                   </div>
-               </div>
-               <table class="table table-striped table-hover">
-                  <thead>
-                     <tr>
-                        <th>
-                           <span class="custom-checkbox">
-                              <input type="checkbox" id="selectAll">
-                              <label for="selectAll"></label>
-                           </span>
-                        </th>
-                        <th>Foto</th>
-                        <th>Proprietario</th>
-                        <th>Endereço</th>
-                        <th>Marca</th>
-                        <th>Placa</th>
-                        <th>Ano</th>
-                        <th>Modelo</th>
-                        <th>KM</th>
-                        <th>Ações</th>
-                     </tr>
-                  </thead>
-                  <tbody>
+                  <table class="table table-striped table-hover">
+                     <thead>
+                        <tr>
+                           <th>
+                              <span class="custom-checkbox">
+                                 <input type="checkbox" id="selectAll">
+                                 <label for="selectAll"></label>
+                              </span>
+                           </th>
+                           <th>Foto</th>
+                           <th>Proprietario</th>
+                           <th>Endereço</th>
+                           <th>Marca</th>
+                           <th>Placa</th>
+                           <th>Ano</th>
+                           <th>Modelo</th>
+                           <th>KM</th>
+                           <th>Ações</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <?php
+                        showMotos($conn, $page);
+                        ?>
+                     </tbody>
+                  </table>
+                  <div class="clearfix">
                      <?php
-                     showMotos($conn, $page);
+                     showMotosMain($table_count, $page);
                      ?>
-                  </tbody>
-               </table>
-               <div class="clearfix">
-                  <?php
-                  showMotosMain($table_count, $page);
-                  ?>
-                  </ul>
+                     </ul>
+                  </div>
                </div>
             </div>
          </div>
@@ -140,6 +132,18 @@ deleteMoto($conn)
          <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
          <script src="./assets/js/tabela_moto.js"></script>
       </section>
+
+      <!-- Banner
+      <section id="banner">
+         <div class="content">
+            <header>
+               <h2>Tabela de motocicletas</h2>
+               <p>Tabela de dados motocicletas.<br /> Os dados das motocicletas serão guardados aqui.</p>
+            </header>
+            <span class="image"><img src="images/Close.jpg" alt="" /></span>
+         </div>
+         <a href="#one" class="goto-next scrolly">Proximo</a>
+      </section> -->
 
 
 

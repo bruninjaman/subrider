@@ -52,9 +52,9 @@ deletePeca($conn)
       </h1>
       <nav id="nav">
          <ul>
-            <li><a href="tabelaServicos.php">Tabela de serviços</a></li>
             <li><a href="tabelaMotos.php">Tabela de motocicletas</a></li>
-            <li><a href="tabelaClientes.php">Tabela de clientes</a></li>
+            <li><a href="tabelaServicos.php">Tabela de serviços</a></li>
+            <li><a href="#">Tabela de clientes</a></li>
             <?php
             if (isset($_SESSION["user"])) {
                echo '<li>';

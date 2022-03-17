@@ -14,7 +14,7 @@
                   </div>
                   <div class="form-group">
                      <label>Tipo</label>
-                     <textarea class="form-control editTipo" name="editTipo" required></textarea>
+                     <input type="text" name="addTipo" class="form-control" required>
                   </div>
                   <div class="form-group hidden">
                      <input type="text" name="editServicoId" class="form-control editServicoId" required>

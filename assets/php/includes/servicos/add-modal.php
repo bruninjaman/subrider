@@ -14,12 +14,12 @@
                   </div>
                   <div class="form-group">
                      <label>Tipo</label>
-                     <textarea class="form-control" name="addTipo" required></textarea>
+                     <input type="text" name="addTipo" class="form-control" required>
                   </div>
                </div>
                <div class="modal-footer">
                   <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                  <input type="submit" class="btn btn-success" value="Adicionar">
+                  <input type="submit" class="btn btn-info" value="Adicionar">
                </div>
             </form>
          </div>
