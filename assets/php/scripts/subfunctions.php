@@ -33,7 +33,7 @@ function pageCarousel($page,$table_count){
     if ($page <= 1) {
         echo '<li class="page-item disabled"><a href="#">Anterior</a></li>';
     } else {
-        echo '<li class="page-item"><a href="?page=' . $page - 1 . '">Anterior</a></li>';
+        echo '<li class="page-item"><a href="?page=' . ($page - 1) . '">Anterior</a></li>';
     }
 
     $i = 0;
@@ -68,7 +68,7 @@ function pageCarousel($page,$table_count){
     if ($page >= $table_count / 5) {
         echo '<li class="page-item disabled"><a href="#" class="page-link">Proximo</a></li>';
     } else {
-        echo '<li class="page-item"><a href="?page=' . $page + 1 . '" class="page-link">Proximo</a></li>';
+        echo '<li class="page-item"><a href="?page=' . ($page + 1) . '" class="page-link">Proximo</a></li>';
     }
 }
 ?>
