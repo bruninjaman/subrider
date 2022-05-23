@@ -87,7 +87,7 @@ deleteMoto($conn)
                         </div>
                      </div>
                   </div>
-                  <table class="table table-striped table-hover">
+                  <table class="table table-striped table-hover table-sortable">
                      <thead>
                         <tr>
                            <th>
@@ -171,6 +171,7 @@ deleteMoto($conn)
       <script src="assets/js/breakpoints.min.js"></script>
       <script src="assets/js/util.js"></script>
       <script src="assets/js/main.js"></script>
+      <script src="assets/js/table_sort.js"></script>
    </div>
 </body>
 
