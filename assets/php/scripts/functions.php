@@ -2,6 +2,15 @@
 
 require("subfunctions.php");
 
+function login($user, $password, $conn) {
+    $mysqli_query = "SELECT * FROM login WHERE username = '{$user}' AND password = '{$password}'";
+    $result = mysqli_query($conn, $mysqli_query);
+    session_start();
+    $result = mysqli_fetch_assoc($result);
+    $_SESSION["user"] = $result["username"];
+	$_SESSION["type"] = $result["userType"];
+}
+
 function getPage()
 {
     if (!isset($_GET["page"])) {
