@@ -80,6 +80,10 @@
     font-size: 1.2em !important;
 }
 
+.crud-table tr th {
+    color: black;
+}
+
 .crud-table table.table tr th,
 .crud-table table.table tr td {
     border-color: grey;
