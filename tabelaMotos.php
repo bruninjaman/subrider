@@ -71,6 +71,20 @@ deleteMoto($conn)
          </nav>
       </header>
 
+      <div class="form-group" style="display: none;">
+         <!--		Show Numbers Of Rows 		-->
+         <select class="form-control" name="state" id="maxRows">
+            <option value="5000">Show ALL Rows</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="70">70</option>
+            <option value="100">100</option>
+         </select>
+
+      </div>
       <!-- tabela -->
       <section id="one" class=crud-table>
          <div class="content">
@@ -82,20 +96,13 @@ deleteMoto($conn)
                            <h2>Gerenciar <b>Motocicletas</b></h2>
                         </div>
                         <div class="col-sm-6">
-                           <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>
-                           <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Deletar</span></a>
+                           <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>                        
                         </div>
                      </div>
                   </div>
-                  <table class="table table-striped table-hover table-sortable">
+                  <table class="table table-striped table-hover table-sortable" id="table-id">
                      <thead>
-                        <tr>
-                           <th>
-                              <span class="custom-checkbox">
-                                 <input type="checkbox" id="selectAll">
-                                 <label for="selectAll"></label>
-                              </span>
-                           </th>
+                        <tr>                          
                            <th>Foto</th>
                            <th>Proprietario</th>
                            <th>Endereço</th>
@@ -114,11 +121,26 @@ deleteMoto($conn)
                      </tbody>
                   </table>
                   <div class="clearfix">
-                     <?php
-                     showMotosMain($table_count, $page);
-                     ?>
-                     </ul>
-                  </div>
+                     <!--		Start Pagination -->
+                     <div class='pagination-container'>
+                        <nav>
+                           <ul class="pagination">
+
+                              <li data-page="prev">
+                                 <span>
+                                    < <span class="sr-only">(current)
+                                 </span></span>
+                              </li>
+                              <!--	Here the JS Function Will Add the Rows -->
+                              <li data-page="next" id="prev">
+                                 <span> > <span class="sr-only">(current)</span></span>
+                              </li>
+                           </ul>
+                        </nav>
+                     </div>
+
+                  </div> <!-- 		End of Container -->
+                  </ul>
                </div>
             </div>
          </div>
@@ -127,13 +149,15 @@ deleteMoto($conn)
          require("./assets/php/includes/motos/edit-modal.php");
          require("./assets/php/includes/motos/remove-modal.php");
          ?>
-         <!-- Tabela -->
-         <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
-         <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-         <script src="./assets/js/tabela_moto.js"></script>
-      </section>
+   </div>
+   <!-- Tabela -->
+   <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+   <script src="./assets/js/tabela_moto.js"></script>
+   <script src="./assets/js/table.pagination.js"></script>
+   </section>
 
-      <!-- Banner
+   <!-- Banner
       <section id="banner">
          <div class="content">
             <header>
@@ -147,31 +171,31 @@ deleteMoto($conn)
 
 
 
-      <!-- Footer -->
-      <footer id="footer">
-         <ul class="icons">
-            <li><a href="#" target="_blank" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" target="_blank" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-            <li><a href="https://www.youtube.com/channel/UC_rUL6tWuwx-iACNG_uHZVA?sub_confirmation=1" target="_blank" class="icon brands alt fa-youtube"><span class="label">Youtube</span></a></li>
-            <li><a href="https://www.instagram.com/xandov/" target="_blank" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-            <li><a href="#" target="_blank" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-         </ul>
-         <ul class="copyright">
-            <li>&copy; Whatsapp: (61) 98128-2136.</li>
-            <li>Fale com: <a href="http://html5up.net">Robson Alexandre</a></li>
-         </ul>
-      </footer>
+   <!-- Footer -->
+   <footer id="footer">
+      <ul class="icons">
+         <li><a href="#" target="_blank" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+         <li><a href="#" target="_blank" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+         <li><a href="https://www.youtube.com/channel/UC_rUL6tWuwx-iACNG_uHZVA?sub_confirmation=1" target="_blank" class="icon brands alt fa-youtube"><span class="label">Youtube</span></a></li>
+         <li><a href="https://www.instagram.com/xandov/" target="_blank" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+         <li><a href="#" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+         <li><a href="#" target="_blank" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+      </ul>
+      <ul class="copyright">
+         <li>&copy; Whatsapp: (61) 98128-2136.</li>
+         <li>Fale com: <a href="http://html5up.net">Robson Alexandre</a></li>
+      </ul>
+   </footer>
 
-      <!-- Scripts -->
-      <script src="assets/js/jquery.scrolly.min.js"></script>
-      <script src="assets/js/jquery.dropotron.min.js"></script>
-      <script src="assets/js/jquery.scrollex.min.js"></script>
-      <script src="assets/js/browser.min.js"></script>
-      <script src="assets/js/breakpoints.min.js"></script>
-      <script src="assets/js/util.js"></script>
-      <script src="assets/js/main.js"></script>
-      <script src="assets/js/table_sort.js"></script>
+   <!-- Scripts -->
+   <script src="assets/js/jquery.scrolly.min.js"></script>
+   <script src="assets/js/jquery.dropotron.min.js"></script>
+   <script src="assets/js/jquery.scrollex.min.js"></script>
+   <script src="assets/js/browser.min.js"></script>
+   <script src="assets/js/breakpoints.min.js"></script>
+   <script src="assets/js/util.js"></script>
+   <script src="assets/js/main.js"></script>
+   <script src="assets/js/table_sort.js"></script>
    </div>
 </body>
 

@@ -70,6 +70,20 @@ deleteServico($conn);
          </ul>
       </nav>
    </header>
+   <div class="form-group" style="display: none;">
+         <!--		Show Numbers Of Rows 		-->
+         <select class="form-control" name="state" id="maxRows">
+            <option value="5000">Show ALL Rows</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="70">70</option>
+            <option value="100">100</option>
+         </select>
+
+      </div>
    <!-- tabela -->
    <section id="one" class=crud-table>
       <div class="container">
@@ -96,6 +110,7 @@ deleteServico($conn);
                      </th>
                      <th>Item</th>
                      <th>Tipo</th>
+                     <th>Ações</th>
                   </tr>
                </thead>
                <tbody>
@@ -105,23 +120,38 @@ deleteServico($conn);
                </tbody>
             </table>
             <div class="clearfix">
-               <?php
-               showServicosMain($table_count, $page);
-               ?>
-               </ul>
-            </div>
+                     <!--		Start Pagination -->
+                     <div class='pagination-container'>
+                        <nav>
+                           <ul class="pagination">
+
+                              <li data-page="prev">
+                                 <span>
+                                    < <span class="sr-only">(current)
+                                 </span></span>
+                              </li>
+                              <!--	Here the JS Function Will Add the Rows -->
+                              <li data-page="next" id="prev">
+                                 <span> > <span class="sr-only">(current)</span></span>
+                              </li>
+                           </ul>
+                        </nav>
+                     </div>
+
+                  </div> <!-- 		End of Container -->
          </div>
+         <?php
+         require("./assets/php/includes/servicos/add-modal.php");
+         require("./assets/php/includes/servicos/edit-modal.php");
+         require("./assets/php/includes/servicos/remove-modal.php");
+         ?>
       </div>
-      <?php
-      require("./assets/php/includes/servicos/add-modal.php");
-      require("./assets/php/includes/servicos/edit-modal.php");
-      require("./assets/php/includes/servicos/remove-modal.php");
-      ?>
       <!-- partial -->
       <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
       <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
       <script src="./assets/js/tabela_servicos.js"></script>
       <script src="assets/js/table_sort.js"></script>
+      <script src="./assets/js/table.pagination.js"></script>
    </section>
 
    <!-- Footer -->

@@ -152,9 +152,9 @@ function deletePeca($conn)
     }
 }
 
-function showMotos($conn, $page)
+function showMotos($conn)
 {
-    $mysqli_query = "SELECT * FROM motocicletas limit " . (($page - 1) * 5) . ",5";
+    $mysqli_query = "SELECT * FROM motocicletas";
 
     $result = mysqli_query($conn, $mysqli_query);
 
