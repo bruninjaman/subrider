@@ -341,3 +341,15 @@
 .table-sortable .th-sort-desc {
     background: rgba(0, 0, 0, 0.1);
 }
+
+
+/* search bar */
+
+.crud-table .searchbar {
+    font-size: 20px;
+}
+
+#search-box {
+    color: #000;
+    margin: 5px;
+}

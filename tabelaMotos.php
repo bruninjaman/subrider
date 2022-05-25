@@ -95,7 +95,8 @@ deleteMoto($conn)
                         <div class="col-sm-6">
                            <h2>Gerenciar <b>Motocicletas</b></h2>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
+                           <a data-toggle="modal"><label class="searchbar">Buscar:</label></a><input id='search-box' placeholder='Search'>
                            <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>                        
                         </div>
                      </div>
