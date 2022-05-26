@@ -94,9 +94,9 @@ deletePeca($conn)
                   <div class="col-sm-6">
                      <h2>Gerenciar <b>Peças</b></h2>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-5">
                      <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar Peça</span></a>
-                     <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Deletar</span></a>
+                     <a data-toggle="modal"><label class="searchbar">Buscar:</label></a><input id='search-box' placeholder='Search'>
                   </div>
                </div>
             </div>
