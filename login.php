@@ -18,74 +18,11 @@
 
 <body class="is-preload landing">
     <div id="page-wrapper">
-        <!-- Header -->
-        <header id="header">
-            <h1 id="logo">
-                <a href="index.html"><img src="./assets/css/images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
-            </h1>
-            <nav id="nav">
-                <ul>
-                    <li><a href="index.php">Página Inicial</a></li>
-                    <li><a href="elements.html"><a class="button primary" href="#">Cadastrar</a></a></li>
-                    <li><a class="button secondary" href="index.php">Voltar</a></li>
-                </ul>
-            </nav>
-        </header>
-        <!-- one -->
-        <section id="two" class="spotlight style2 right">
-            <span class="image fit main"><img src="./assets/css/images/race-moto.gif" alt="" /></span>
-            <div class="content">
-                <header>
-                    <h2>Entre na sua conta</h2>
-                </header>
-                <p>
-                <ul>
-                    <li>
-                        Cadastre suas motocicletas.
-                    </li>
-                    <li>
-                        Veja todas opções de serviços disponiveis para você.
-                    </li>
-
-                    <li>
-                        Entre em contato conosco para marcar novos serviços.
-                    </li>
-
-                    <li>
-                        Veja como está progredindo e a etapa em que está seu serviço.
-                    </li>
-                </ul>
-                </p>
-                <ul class="actions">
-                    <li><a href="#login" class="button">Entrar</a></li>
-                </ul>
-            </div>
-            <a href="#login" class="goto-next scrolly">Next</a>
-        </section>
-        <!-- Two -->
-        <section id="login" class="spotlight style1 bottom">
-            <div class="content">
-                <div class="container">
-                    <div class="row">
-                        <form id="loginform" name="loginform" method="POST" action="assets/php/scripts/log-in.php">
-                            <div class="col-4 col-12-medium">
-                                <h2>Entre com sua conta da sub-rider!</h2>
-                                <label for="fname">Login:</label>
-                                <input type="text" id="user" name="user"><br>
-                                <label for="lname">Senha:</label>
-                                <input type="password" id="pass" name="pass"><br>
-                            </div>
-                            <div class="col-4 col-12-medium">
-                                <a class="button primary" href='javascript:loginform.submit()'>Entrar</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <?php 
-            require("./assets/php/includes/main/footer.php");
+        <?php
+        require("./assets/php/includes/pages/login/header/header.php");
+        require("./assets/php/includes/pages/login/sections/capa.php");
+        require("./assets/php/includes/pages/login/sections/login.php");
+        require("./assets/php/includes/main/footer.php");
         ?>
 
     </div>
