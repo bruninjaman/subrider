@@ -44,7 +44,7 @@ deletePeca($conn)
    <link rel="stylesheet" href="./assets/css/crud-table.css">
 </head>
 
-<body class=""> 
+<body class="">
    <!-- Header is-preload landing -->
    <header id="header">
       <h1 id="logo">
@@ -72,19 +72,19 @@ deletePeca($conn)
       </nav>
    </header>
    <div class="form-group" style="display: none;">
-         <!--		Show Numbers Of Rows 		-->
-         <select class="form-control" name="state" id="maxRows">
-            <option value="5000">Show ALL Rows</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="70">70</option>
-            <option value="100">100</option>
-         </select>
+      <!--		Show Numbers Of Rows 		-->
+      <select class="form-control" name="state" id="maxRows">
+         <option value="5000">Show ALL Rows</option>
+         <option value="5">5</option>
+         <option value="10">10</option>
+         <option value="15">15</option>
+         <option value="20">20</option>
+         <option value="50">50</option>
+         <option value="70">70</option>
+         <option value="100">100</option>
+      </select>
 
-      </div>
+   </div>
    <!-- tabela -->
    <section id="one" class=crud-table>
       <div class="container">
@@ -100,15 +100,9 @@ deletePeca($conn)
                   </div>
                </div>
             </div>
-            <table class="table table-striped table-hover table-sortable">
+            <table class="table table-striped table-hover table-sortable" id="table-id">
                <thead>
                   <tr>
-                     <th>
-                        <span class="custom-checkbox">
-                           <input type="checkbox" id="selectAll">
-                           <label for="selectAll"></label>
-                        </span>
-                     </th>
                      <th>Foto</th>
                      <th>Grupo</th>
                      <th>Parte</th>
@@ -123,25 +117,25 @@ deletePeca($conn)
                </tbody>
             </table>
             <div class="clearfix">
-                     <!--		Start Pagination -->
-                     <div class='pagination-container'>
-                        <nav>
-                           <ul class="pagination">
+               <!--		Start Pagination -->
+               <div class='pagination-container'>
+                  <nav>
+                     <ul class="pagination">
 
-                              <li data-page="prev">
-                                 <span>
-                                    < <span class="sr-only">(current)
-                                 </span></span>
-                              </li>
-                              <!--	Here the JS Function Will Add the Rows -->
-                              <li data-page="next" id="prev">
-                                 <span> > <span class="sr-only">(current)</span></span>
-                              </li>
-                           </ul>
-                        </nav>
-                     </div>
+                        <li data-page="prev">
+                           <span>
+                              < <span class="sr-only">(current)
+                           </span></span>
+                        </li>
+                        <!--	Here the JS Function Will Add the Rows -->
+                        <li data-page="next" id="prev">
+                           <span> > <span class="sr-only">(current)</span></span>
+                        </li>
+                     </ul>
+                  </nav>
+               </div>
 
-                  </div> <!-- 		End of Container -->
+            </div> <!-- 		End of Container -->
          </div>
          <?php
          require("./assets/php/includes/pecas/add-modal.php");
@@ -157,21 +151,9 @@ deletePeca($conn)
       <script src="./assets/js/table.pagination.js"></script>
    </section>
 
-   <!-- Footer -->
-   <footer id="footer">
-         <ul class="icons">
-            <li><a href="#" target="_blank" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" target="_blank" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-            <li><a href="https://www.youtube.com/channel/UC_rUL6tWuwx-iACNG_uHZVA?sub_confirmation=1" target="_blank" class="icon brands alt fa-youtube"><span class="label">Youtube</span></a></li>
-            <li><a href="https://www.instagram.com/xandov/" target="_blank" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-            <li><a href="#" target="_blank" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-         </ul>
-         <ul class="copyright">
-            <li>&copy; Whatsapp: (61) 98128-2136.</li>
-            <li>Fale com: <a href="http://html5up.net">Robson Alexandre</a></li>
-         </ul>
-      </footer>
+   <?php
+   require("./assets/php/includes/main/footer.php");
+   ?>
 </body>
 
 </html>

@@ -1,10 +1,4 @@
 <tr>
-    <td>
-        <span class="custom-checkbox">
-            <input type="checkbox" id="checkbox1" name="options[]" value="1">
-            <label for="checkbox1"></label>
-        </span>
-    </td>
     <td class="foto"><img src="<?php echo $row["foto"] ?>" style="height:100px;width:100px;"></td>
     <td class="grupo"><?php echo $row["grupo"]?></td>
     <td class="item"><?php echo $row["item"]?></td>

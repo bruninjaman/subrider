@@ -90,7 +90,7 @@
                                 <input type="date" style="color:black">
                             </div>
                             <div class="col-4 col-12-medium">
-                            <a class="button primary" href="#" type="submit">Confirmar Cadastro</a>
+                                <a class="button primary" href="#" type="submit">Confirmar Cadastro</a>
                             </div>
                         </div>
                     </form>
@@ -99,21 +99,9 @@
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer id="footer">
-            <ul class="icons">
-                <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-                <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; Whatsapp: (61) 98128-2136.</li>
-                <li>Fale com: <a href="http://html5up.net">Robson Alexandre</a></li>
-            </ul>
-        </footer>
+        <?php
+        require("./assets/php/includes/main/footer.php");
+        ?>
 
     </div>
 

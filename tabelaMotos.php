@@ -97,13 +97,13 @@ deleteMoto($conn)
                         </div>
                         <div class="col-sm-5">
                            <a data-toggle="modal"><label class="searchbar">Buscar:</label></a><input id='search-box' placeholder='Search'>
-                           <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>                        
+                           <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>
                         </div>
                      </div>
                   </div>
                   <table class="table table-striped table-hover table-sortable" id="table-id">
                      <thead>
-                        <tr>                          
+                        <tr>
                            <th>Foto</th>
                            <th>Proprietario</th>
                            <th>Endereço</th>
@@ -148,6 +148,8 @@ deleteMoto($conn)
          <?php
          require("./assets/php/includes/motos/add-modal.php");
          require("./assets/php/includes/motos/edit-modal.php");
+         require("./assets/php/includes/motos/proprietarioModal.php");
+         require("./assets/php/includes/motos/ordemservicosModal.php");
          require("./assets/php/includes/motos/remove-modal.php");
          ?>
    </div>
@@ -172,21 +174,9 @@ deleteMoto($conn)
 
 
 
-   <!-- Footer -->
-   <footer id="footer">
-      <ul class="icons">
-         <li><a href="#" target="_blank" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-         <li><a href="#" target="_blank" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-         <li><a href="https://www.youtube.com/channel/UC_rUL6tWuwx-iACNG_uHZVA?sub_confirmation=1" target="_blank" class="icon brands alt fa-youtube"><span class="label">Youtube</span></a></li>
-         <li><a href="https://www.instagram.com/xandov/" target="_blank" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-         <li><a href="#" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-         <li><a href="#" target="_blank" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-      </ul>
-      <ul class="copyright">
-         <li>&copy; Whatsapp: (61) 98128-2136.</li>
-         <li>Fale com: <a href="http://html5up.net">Robson Alexandre</a></li>
-      </ul>
-   </footer>
+   <?php
+   require("./assets/php/includes/main/footer.php");
+   ?>
 
    <!-- Scripts -->
    <script src="assets/js/jquery.scrolly.min.js"></script>

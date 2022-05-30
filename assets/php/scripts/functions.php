@@ -165,7 +165,7 @@ function showMotos($conn)
 
 function showPecas($conn, $page)
 {
-    $mysqli_query = "SELECT * FROM pecas limit " . (($page - 1) * 5) . ",5";
+    $mysqli_query = "SELECT * FROM pecas";
 
     $result = mysqli_query($conn, $mysqli_query);
 
@@ -176,7 +176,7 @@ function showPecas($conn, $page)
 
 function showServicos($conn, $page)
 {
-    $mysqli_query = "SELECT * FROM servicos limit " . (($page - 1) * 5) . ",5";
+    $mysqli_query = "SELECT * FROM servicos";
 
     $result = mysqli_query($conn, $mysqli_query);
 

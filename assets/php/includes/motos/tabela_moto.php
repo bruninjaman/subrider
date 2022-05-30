@@ -11,8 +11,8 @@
     <td class="km"><?php echo $row["km"]?></td>
     <td class="motoId hidden"><?php echo $row["motoId"]?></td>
     <td>
-        <a href="#" class="services" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Mostrar Ordens de Serviço">&#xe0e0;</i></a>
-        <a href="#" class="sync" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Adicionar/trocar Proprietario">&#xe7ef;</i></a>
+        <a href="#ordemservicos" class="services" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Mostrar Ordens de Serviço">&#xe0e0;</i></a>
+        <a href="#proprietariomodal" class="sync" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Adicionar/trocar Proprietario">&#xe7ef;</i></a>
         <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
     </td>
