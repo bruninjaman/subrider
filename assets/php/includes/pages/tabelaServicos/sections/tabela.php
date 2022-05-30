@@ -49,9 +49,9 @@
             </div> <!-- 		End of Container -->
         </div>
         <?php
-        require("./assets/php/includes/servicos/add-modal.php");
-        require("./assets/php/includes/servicos/edit-modal.php");
-        require("./assets/php/includes/servicos/remove-modal.php");
+        require("./assets/php/includes/pages/tabelaServicos/modals/add.php");
+        require("./assets/php/includes/pages/tabelaServicos/modals/edit.php");
+        require("./assets/php/includes/pages/tabelaServicos/modals/delete.php");
         ?>
     </div>
     <!-- partial -->

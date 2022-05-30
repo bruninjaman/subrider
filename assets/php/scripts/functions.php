@@ -159,7 +159,7 @@ function showMotos($conn)
     $result = mysqli_query($conn, $mysqli_query);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        require("./assets/php/includes/motos/tabela_moto.php");
+        require("./assets/php/includes/pages/tabelaMotos/modals/itemTable.php");
     }
 }
 
@@ -170,7 +170,7 @@ function showPecas($conn, $page)
     $result = mysqli_query($conn, $mysqli_query);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        require("./assets/php/includes/pecas/tabela_pecas.php");
+        require("./assets/php/includes/pages/tabelaPecas/modals/itemTable.php");
     }
 }
 
@@ -181,7 +181,7 @@ function showServicos($conn, $page)
     $result = mysqli_query($conn, $mysqli_query);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        require("./assets/php/includes/servicos/tabela_servicos.php");
+        require("./assets/php/includes/pages/tabelaServicos/modals/itemTable.php");
     }
 }
 

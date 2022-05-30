@@ -51,9 +51,9 @@
             </div> <!-- 		End of Container -->
         </div>
         <?php
-        require("./assets/php/includes/pecas/add-modal.php");
-        require("./assets/php/includes/pecas/edit-modal.php");
-        require("./assets/php/includes/pecas/delete-modal.php");
+        require("./assets/php/includes/pages/tabelaPecas/modals/add.php");
+        require("./assets/php/includes/pages/tabelaPecas/modals/edit.php");
+        require("./assets/php/includes/pages/tabelaPecas/modals/delete.php");
         ?>
     </div>
     <!-- partial -->

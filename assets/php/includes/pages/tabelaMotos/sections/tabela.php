@@ -59,11 +59,11 @@
         </div>
     </div>
     <?php
-    require("./assets/php/includes/motos/add-modal.php");
-    require("./assets/php/includes/motos/edit-modal.php");
-    require("./assets/php/includes/motos/proprietarioModal.php");
-    require("./assets/php/includes/motos/ordemservicosModal.php");
-    require("./assets/php/includes/motos/remove-modal.php");
+    require("./assets/php/includes/pages/tabelaMotos/modals/add.php");
+    require("./assets/php/includes/pages/tabelaMotos/modals/edit.php");
+    require("./assets/php/includes/pages/tabelaMotos/modals/owner.php");
+    require("./assets/php/includes/pages/tabelaMotos/modals/services.php");
+    require("./assets/php/includes/pages/tabelaMotos/modals/delete.php");
     ?>
     <!-- Tabela -->
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
