@@ -50,6 +50,9 @@
 			table.alt tfoot td.total {
 				color: greenyellow;
 			}
+			i.fa-solid {
+				padding-right: 15px;
+			}
 		</style>
 		<div id="main" class="wrapper style1">
 			<div class="container">
@@ -117,9 +120,11 @@
 							</tfoot>
 						</table>
 					</div>
-					<a href="#" class="button primary">Adicionar serviço</a>
-					<a href="#" class="button primary">Adicionar adiantamento</a>
-					<a href="#" class="button secondary">Fechar Ordem de serviço</a>
+					<a href="#" class="button primary"><i class="fa-solid fa-file-pdf"></i> Fazer download em PDF</a>
+
+					<a href="#" class="button primary"><i class="fa-solid fa-plus"></i> Adicionar serviço</a>
+					<a href="#" class="button primary"><i class="fa-solid fa-plus"></i> Adicionar adiantamento</a>
+					<a href="#" class="button secondary"> <i class="fa-solid fa-lock"></i>Fechar Ordem de serviço</a>
 					<hr />
 				</section>
 
@@ -129,6 +134,7 @@
 					<p>O <b>Motor de Partida</b> apresenta falhas de funcionamento.</p>
 					<p>O Código da <b>Vela de ignição</b> desta motocicleta está diferente do especificado.</p>
 					<p>O <b>Óleo de Transmissão</b> deste motor já passou do tempo de uso recomendado.</p>
+					<a href="#" class="button primary">Editar detalhes</a>
 					<hr />
 				</section>
 
