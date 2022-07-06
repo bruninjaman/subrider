@@ -382,3 +382,16 @@
 .owner button {
     font-size: 14px;
 }
+
+.owner .btn-info {
+    background-color: rgba(0, 34, 126, 0.692);
+    border: 1px solid #00000096;
+}
+.owner .btn-info.disabled {
+    background-color: rgba(0, 34, 126, 0.692);
+    border: 1px solid #5061ff96;
+}
+
+.owner .btn-info:hover {
+    background-color: rgb(0, 4, 255);
+}

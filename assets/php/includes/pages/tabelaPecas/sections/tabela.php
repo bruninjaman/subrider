@@ -59,7 +59,7 @@
     <!-- partial -->
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-    <script src="./assets/js/tabela_pecas.js"></script>
-    <script src="assets/js/table_sort.js"></script>
-    <script src="./assets/js/table.pagination.js"></script>
+    <script src="./assets/js/tabelaPecas/tabela_pecas.js"></script>
+    <script src="assets/js/global/table_sort.js"></script>
+    <script src="./assets/js/global/table.pagination.js"></script>
 </section>

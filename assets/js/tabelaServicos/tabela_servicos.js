@@ -44,4 +44,5 @@ $(document).ready(function() {
             document.getElementById("deleteEmployeeModal").getElementsByClassName("removeServicoId")[0].value = servicoId;
         });
     };
+    $()
 });
