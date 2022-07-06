@@ -60,7 +60,7 @@ deleteMoto($conn)
    <script src="assets/js/global/breakpoints.min.js"></script>
    <script src="assets/js/global/util.js"></script>
    <script src="assets/js/main.js"></script>
-   <script src="assets/js/table_sort.js"></script>
+   <script src="assets/js/global/table_sort.js"></script>
    </div>
 </body>
 
