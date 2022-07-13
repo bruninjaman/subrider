@@ -1,3 +1,16 @@
+<?php
+session_start();
+//PERM
+require("./assets/php/scripts/perm.php");
+//CONNECTION
+require("./connection/connection.php");
+
+$mysqli_query        = "SELECT Codigo FROM ordem_servicos WHERE motoID = {$_GET["motoID"]} and Codigo = '{$_GET["ordem"]}'";
+$result              = mysqli_query($conn, $mysqli_query);
+$codigo				 = mysqli_fetch_assoc($result)['Codigo'];
+
+?>
+
 <!DOCTYPE HTML>
 <!--
 	Landed by HTML5 UP
@@ -10,6 +23,8 @@
 	<title>Ordens de serviço</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- CSS only -->
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" />
@@ -44,12 +59,15 @@
 				padding: 1px;
 				text-align: center;
 			}
+
 			table.alt tfoot td.pago {
-				color:red;
+				color: red;
 			}
+
 			table.alt tfoot td.total {
 				color: greenyellow;
 			}
+
 			i.fa-solid {
 				padding-right: 15px;
 			}
@@ -57,7 +75,7 @@
 		<div id="main" class="wrapper style1">
 			<div class="container">
 				<header class="major">
-					<h2>Ordem de Serviço Nº 101/2022</h2>
+					<h2>Ordem de Serviço Nº <?php echo $codigo ?></h2>
 				</header>
 				<section>
 					<div class="table-wrapper">
@@ -70,6 +88,10 @@
 								</tr>
 							</thead>
 							<tbody>
+								<?php
+								//ADD ITEMS
+
+								?>
 								<tr>
 									<td>Fluido de Freio</td>
 									<td>Substituição</td>
@@ -121,14 +143,12 @@
 						</table>
 					</div>
 					<a href="#" class="button primary"><i class="fa-solid fa-file-pdf"></i> Fazer download em PDF</a>
-
-					<a href="#" class="button primary"><i class="fa-solid fa-plus"></i> Adicionar serviço</a>
-					<a href="#" class="button primary"><i class="fa-solid fa-plus"></i> Adicionar adiantamento</a>
+					<a href="#add-item" class="button primary"><i class="fa-solid fa-plus"></i> Adicionar Item</a>
 					<a href="#" class="button secondary"> <i class="fa-solid fa-lock"></i>Fechar Ordem de serviço</a>
 					<hr />
 				</section>
 
-				<!-- Text -->
+				<!-- Detalhes 
 				<section>
 					<h3>Detalhes: </h3>
 					<p>O <b>Motor de Partida</b> apresenta falhas de funcionamento.</p>
@@ -136,36 +156,85 @@
 					<p>O <b>Óleo de Transmissão</b> deste motor já passou do tempo de uso recomendado.</p>
 					<a href="#" class="button primary">Editar detalhes</a>
 					<hr />
-				</section>
+				</section> -->
 
-				<!-- Image -->
-				<section>
-					<h3>Informações:</h3>
-					<h4>Motocicleta</h4>
-					<p><span class="image left"><img src="./fotos/motos/61ffdd4406fdc4.21287213IMG_20211214_084044.jpg" alt="" /></span>
-						<bold>Marca:</bold> X
-					</p>
+				<!-- Info Motocicleta -->
+				<?php
+				$mysqli_query        = "SELECT * FROM motocicletas WHERE motoID = {$_GET["motoID"]}";
+				$result              = mysqli_query($conn, $mysqli_query);
+
+				$info_moto = mysqli_fetch_assoc($result);
+				?>
+				<section id="additional-info">
+					<h3>Informações Adicionais: </h3>
+					<span class="image right" style="height:200px;width:250px;"><img src="<?php echo $info_moto["foto"] ?>" alt="" /></span>
 					<p>
-						<bold>Modelo:</bold> X
-					</p>
-					<p>
-						<bold>Proprietario:</bold> X
-					</p>
-					<p>
-						<bold>blablabla:</bold> X
-					</p>
-					<p>
-						<bold>blablabla:</bold> X
+						<bold>Proprietario:</bold> <?php echo $info_moto["proprietario"] ?>
+						<br>
+						<bold>Endereço:</bold> <?php echo $info_moto["endereco"] ?>
+						<br>
+						<bold>Marca:</bold> <?php echo $info_moto["marca"] ?>
+						<br>
+						<bold>Placa:</bold> <?php echo $info_moto["placa"] ?>
+						<br>
+						<bold>Ano:</bold> <?php echo $info_moto["ano"] ?>
+						<br>
+						<bold>Modelo:</bold> <?php echo $info_moto["modelo"] ?>
+						<br>
+						<bold>KM:</bold> <?php echo $info_moto["km"] ?>
 					</p>
 				</section>
-
+				<!-- Modals (ADD BOOTSTRAP MODAL WAY) -->
+				<!-- ADD MODAL -->
+				<div id="add-item" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<form name="add-item" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
+								<div class="modal-header">
+									<h4 class="modal-title">Adicionar item</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<label>Imagem</label>
+										<input type="file" name="addFoto">
+									</div>
+									<fieldset>
+										<legend>Escolha o tipo de item:</legend>
+										<input type="radio" id="adiantamento" name="item_tipo" value="adiantamento">
+										<label for="adiantamento">Adiantamento</label>
+										<input type="radio" id="peca" name="item_tipo" value="peca">
+										<label for="peca">Peça</label>
+										<input type="radio" id="servico" name="item_tipo" value="servico">
+										<label for="servico">Serviço</label>
+									</fieldset>
+									<div class="form-group col-xs-2">
+										<label>Tipo</label>
+										<input type="text" name="addMarca" class="form-control" required>
+									</div>
+									<div class="form-group">
+										<label>Descrição</label>
+										<input type="text" name="addMarca" class="form-control" required>
+									</div>
+									<div class="form-group">
+										<label>Preço</label>
+										<input type="text" name="addPlaca" class="form-control" required>
+									</div>
+								<div class="modal-footer">
+									<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+									<input type="submit" class="btn btn-success" value="Adicionar">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- Adicionar Serviço ou Peça -->
 			</div>
 		</div>
 
 		<?php
 		require("./assets/php/includes/main/footer.php");
 		?>
-
 	</div>
 
 	<!-- Scripts -->
@@ -177,7 +246,6 @@
 	<script src="assets/js/global/breakpoints.min.js"></script>
 	<script src="assets/js/global/util.js"></script>
 	<script src="assets/js/main.js"></script>
-
 </body>
 
 </html>

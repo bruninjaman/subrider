@@ -1,31 +1,31 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Activate tooltip
     $('[data-toggle="tooltip"]').tooltip();
 
     // Select/Deselect checkboxes
-    var checkbox = $('table tbody input[type="checkbox"]');
-    $("#selectAll").click(function() {
-        if (this.checked) {
-            checkbox.each(function() {
-                this.checked = true;
-            });
-        } else {
-            checkbox.each(function() {
-                this.checked = false;
-            });
-        }
-    });
-    checkbox.click(function() {
-        if (!this.checked) {
-            $("#selectAll").prop("checked", false);
-        }
-    });
+    // var checkbox = $('table tbody input[type="checkbox"]');
+    // $("#selectAll").click(function () {
+    //     if (this.checked) {
+    //         checkbox.each(function () {
+    //             this.checked = true;
+    //         });
+    //     } else {
+    //         checkbox.each(function () {
+    //             this.checked = false;
+    //         });
+    //     }
+    // });
+    // checkbox.click(function () {
+    //     if (!this.checked) {
+    //         $("#selectAll").prop("checked", false);
+    //     }
+    // });
 
     var elementedit = document.getElementsByClassName("edit");
     var elementdelete = document.getElementsByClassName("delete");
 
     for (i = 0; i < elementedit.length; i++) {
-        elementedit[i].addEventListener("click", function() {
+        elementedit[i].addEventListener("click", function () {
             var foto = this.parentElement.parentElement.getElementsByClassName("foto")[0].children[0].src;
             var proprietario = this.parentElement.parentElement.getElementsByClassName("prop")[0].innerHTML;
             var endereco = this.parentElement.parentElement.getElementsByClassName("ender")[0].innerHTML;
@@ -51,9 +51,44 @@ $(document).ready(function() {
 
 
     for (i = 0; i < elementdelete.length; i++) {
-        elementdelete[i].addEventListener("click", function() {
+        elementdelete[i].addEventListener("click", function () {
             var motoid = this.parentElement.parentElement.getElementsByClassName("motoId")[0].innerHTML;
             document.getElementById("deleteEmployeeModal").getElementsByClassName("removeMotoId")[0].value = motoid;
         });
     };
+
+    //stackoverflow functions
+    function GetUrlWithParam(url, paramName, paramValue) {
+        if (paramValue == null) {
+            paramValue = '';
+        }
+        var pattern = new RegExp('\\b(' + paramName + '=).*?(&|#|$)');
+        if (url.search(pattern) >= 0) {
+            return url.replace(pattern, '$1' + paramValue + '$2');
+        }
+        url = url.replace(/[?#]$/, '');
+        return url + (url.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue;
+    }
+    function findGetParameter(parameterName) {
+        var result = null,
+            tmp = [];
+        location.search
+            .substr(1)
+            .split("&")
+            .forEach(function (item) {
+              tmp = item.split("=");
+              if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+            });
+        return result;
+    }
+    //motoID for ordem servicos
+    var elementservices = document.getElementsByClassName("services");
+    for (i = 0; i < elementservices.length; i++) {
+        elementservices[i].addEventListener("click", function () {
+            var motoID = this.parentElement.parentElement.getElementsByClassName("motoId")[0].innerHTML;
+            //window.history.replaceState(null, null, "?motoID="+motoID);
+            if(findGetParameter("motoID") != motoID)
+                window.location.href = GetUrlWithParam(window.location.href,"motoID",motoID);
+        });
+    }
 });
