@@ -24,7 +24,8 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<!-- CSS only -->
-	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+	<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" />
@@ -84,11 +85,6 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 			#add-item input {
 				background-color: white;
 				color: black;
-			}
-
-			#add-item input[type="radio"] {
-				border: solid 1px red;
-				
 			}
 			#add-item input:focus {
 				background-color: #ababb3;
@@ -258,10 +254,10 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 											<label for="adiantamento">Adiantamento</label>
 											<input type="radio" id="peca" name="item_tipo" value="peca">
 											<label for="peca">Peça</label>
-											<input type="radio" id="servico" name="item_tipo" value="servico">
+											<input type="radio" id="servico" name="item_tipo" value="servico" checked>
 											<label for="servico">Serviço</label>
 										</fieldset>
-										<div class="form-group col-xs-2">
+										<div class="form-group col-xs-2" id="tipo">
 											<label>Tipo</label>
 											<input type="text" name="addMarca" class="form-control" required>
 										</div>
@@ -296,6 +292,15 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 	<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script>
+		$("#adiantamento").on("click", function(){
+			$("#tipo").hide();
+		});
+		$("#item").on("click", function(){
+			$("#tipo").show();
+		});
+		$("#peca").on("click", function(){ 
+			$("#tipo").show();
+		});
 	</script>
 	<!-- <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
 	<!-- <script src="assets/js/global/jquery.scrolly.min.js"></script>
