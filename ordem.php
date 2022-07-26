@@ -9,23 +9,43 @@ $mysqli_query        = "SELECT Codigo FROM ordem_servicos WHERE motoID = {$_GET[
 $result              = mysqli_query($conn, $mysqli_query);
 $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 
+
+if (isset($_POST["item_tipo"])) {
+
+	$mysqli_query = "INSERT INTO ";
+
+	switch ($_POST["item_tipo"]) {
+		case "peca":
+			$mysqli_query .= "pecas (grupo,parte,item,quantidade,valor,motoID,ordem) ";
+			$mysqli_query .= "VALUES ('".$_POST["pecaGrupo"]."','".$_POST["pecaParte"]."','".$_POST["pecaItem"]."','".$_POST["pecaQuantidade"]."','".$_POST["pecaValor"]."','".$_GET["motoID"]."','".$_GET["ordem"]."') ";
+			var_dump($mysqli_query);
+			break;
+
+		case "servico":
+			$mysqli_query .= "servicos (item,tipo,valor,motoID,ordem) ";
+			$mysqli_query .= "VALUES ('".$_POST["servicoItem"]."','".$_POST["servicoTipo"]."','".$_POST["servicoValor"]."','".$_GET["motoID"]."','".$_GET["ordem"]."') ";
+			var_dump($mysqli_query);
+			break;
+
+		case "adiantamento":
+			$mysqli_query .= "adiantamento (descricao,valor,motoID,ordem) ";
+			$mysqli_query .= "VALUES ('".$_POST["adiantamentoDescricao"]."','".$_POST["adiantamentoValor"]."','".$_GET["motoID"]."','".$_GET["ordem"]."') ";
+			var_dump($mysqli_query);
+			break;
+	}
+
+	mysqli_query($conn, $mysqli_query);
+}
 ?>
 
 <!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 
 <head>
 	<title>Ordens de serviço</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<!-- CSS only -->
-	<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" />
@@ -86,6 +106,7 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 				background-color: white;
 				color: black;
 			}
+
 			#add-item input:focus {
 				background-color: #ababb3;
 				border: 1px solid black;
@@ -100,6 +121,7 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 				background-color: #e44c65;
 
 			}
+
 			/* #add-item input[type=submit]:focus {
 				background-color: #db5e73;
 			} */
@@ -138,61 +160,92 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 							<tbody>
 								<?php
 								//ADD ITEMS
+								// $mysqli_query        = "SELECT * FROM servicos, pecas, adiantamento WHERE motoID = {$_GET["motoID"]}"; //QUERY PROBLEM
+
+
+								//servicos
+								$mysqli_query        = "SELECT * FROM servicos WHERE ordem = '{$_GET["ordem"]}'";
+								$result              = mysqli_query($conn, $mysqli_query);
+
+								//pecas
+								$mysqli_query2        = "SELECT * FROM pecas WHERE ordem = '{$_GET["ordem"]}'";
+								$result2              = mysqli_query($conn, $mysqli_query2);
+
+								//adiantamentos
+								$mysqli_query3       = "SELECT * FROM adiantamento WHERE ordem = '{$_GET["ordem"]}'";
+								$result3              = mysqli_query($conn, $mysqli_query3);
 
 								?>
-								<tr>
-									<td>Fluido de Freio</td>
-									<td>Substituição</td>
-									<td>49,99</td>
-								</tr>
-								<tr>
-									<td>Líquido de Arrefecimento</td>
-									<td>Substituição</td>
-									<td>29,99</td>
-								</tr>
-								<tr>
-									<td>Pintura</td>
-									<td>Polimento</td>
-									<td>49,99</td>
-								</tr>
-								<tr>
-									<td>Sapata de Freio</td>
-									<td>Substituição</td>
-									<td>129,99</td>
-								</tr>
-								<tr>
-									<td>Bateria</td>
-									<td>Recarga</td>
-									<td>29,99</td>
-								</tr>
-								<tr>
-									<td>Pintura e Sapata de freio</td>
-									<td>Adiantamento</td>
-									<td>-150,00</td>
-								</tr>
+								<?php
+								$total = 0;
+								$pago = 0;
+
+								//servicos
+								while ($item = mysqli_fetch_assoc($result)) {
+									if ($item["motoID"] == $_GET["motoID"]) {
+										echo "<tr><td>" . $item["item"] . "</td>";
+										echo "<td>" . $item["tipo"] . "</td>";
+										echo "<td>" . $item["valor"] . "</td></tr>";
+										$total += $item["valor"];
+									}
+								}
+								//pecas
+								while ($item = mysqli_fetch_assoc($result2)) {
+									if ($item["motoID"] == $_GET["motoID"]) {
+										echo "<tr><td>" . $item["item"] . "</td>";
+										echo "<td>" . $item["grupo"] . "/" . $item["parte"] . "</td>";
+										echo "<td>" . $item["valor"] . " x".$item["quantidade"]. "</td></tr>";
+										$total += $item["valor"] * $item["quantidade"];
+									}
+								}
+								//adiantamento
+								while ($item = mysqli_fetch_assoc($result3)) {
+									if ($item["motoID"] == $_GET["motoID"]) {
+										echo "<tr><td>" . $item["descricao"] . "</td>";
+										echo "<td>Adiantamento</td>";
+										echo "<td>" . $item["valor"] . "</td></tr>";
+										$total += $item["valor"];
+										$pago += $item["valor"]; 
+									}
+								}
+								?>
 							</tbody>
 							<tfoot>
 								<tr>
 									<td colspan="1"></td>
 									<td>Subtotal:</td>
-									<td>289,95</td>
+									<td><?php echo $total-$pago ?></td>
 								</tr>
 								<tr>
 									<td colspan="1"></td>
 									<td>Pago:</td>
-									<td class="pago">-150,00</td>
+									<td class="pago"><?php echo  $pago > 0 ? $pago : "Nada" ?>
+									</td>
 								</tr>
 								<tr>
 									<td colspan="1"></td>
 									<td>Total:</td>
-									<td class="total">139,95</td>
+									<td class="total"><?php echo $total ?></td>
 								</tr>
 							</tfoot>
 						</table>
 					</div>
 					<a href="#" class="button primary"><i class="fa-solid fa-file-pdf"></i> Fazer download em PDF</a>
 					<a href="#add-item" class="button primary" data-toggle="modal" data-target="#add-item"><i class="fa-solid fa-plus"></i> Adicionar Item</a>
-					<a href="#" class="button secondary"> <i class="fa-solid fa-lock"></i>Fechar Ordem de serviço</a>
+					<a href="#" class="button secondary">
+					<?php 
+						//open or closed
+						$mysqli_query       = "SELECT Aberto FROM ordem_servicos WHERE Codigo = '{$_GET["ordem"]}'";
+						$result             = mysqli_query($conn, $mysqli_query);
+
+						while($ordem = mysqli_fetch_assoc($result)) {
+							if($ordem["Aberto"] == 1)
+								echo "<i class='fa-solid fa-lock'></i> Fechar Ordem de serviço";
+							else
+								echo "<i class='fa-solid fa-lock-open'></i> Abrir Ordem de serviço";
+						}
+					?>
+				</a>
 					<hr />
 				</section>
 
@@ -231,23 +284,23 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 						<br>
 						<bold>KM:</bold> <?php echo $info_moto["km"] ?>
 					</p>
-					</hr>
-					<!-- Modals (ADD BOOTSTRAP MODAL WAY) -->
 					<!-- ADD MODAL -->
 					<div id="add-item" class="modal fade">
 						<div class="modal-dialog">
 							<div class="modal-content">
-								<form name="add-item" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
+								<form action="<?php echo $_SERVER['PHP_SELF'] . "?motoID=" . $_GET['motoID'] . "&ordem=" . $_GET['ordem']; ?>" method="POST" enctype="multipart/form-data">
 									<div class="modal-header">
 										<h4 class="modal-title">Adicionar item na tabela</h4>
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></button>
 									</div>
 									<div class="modal-body">
+										<!-- Load Image (not required) -->
 										<div class="form-group">
 											<label>Imagem</label>
 											<input type="file" name="addFoto">
 										</div>
 										</br>
+										<!-- Choose item type -->
 										<fieldset>
 											<legend>Escolha o tipo de item:</legend>
 											<input type="radio" id="adiantamento" name="item_tipo" value="adiantamento">
@@ -257,18 +310,56 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 											<input type="radio" id="servico" name="item_tipo" value="servico" checked>
 											<label for="servico">Serviço</label>
 										</fieldset>
-										<div class="form-group col-xs-2" id="tipo">
-											<label>Tipo</label>
-											<input type="text" name="addMarca" class="form-control" required>
+										<!-- Adiantamento -->
+										<div id="adiantamentoFormgroup" style="display:none">
+											<div>
+												<label>Descrição</label>
+												<input type="text" name="adiantamentoDescricao">
+											</div>
+											<div>
+												<label>Valor</label>
+												<input type="text" name="adiantamentoValor">
+											</div>
 										</div>
-										<div class="form-group">
-											<label>Descrição</label>
-											<input type="text" name="addMarca" class="form-control" required>
+										<!-- Peça -->
+										<div id="pecaFormgroup" style="display:none">
+											<div>
+												<label>Grupo</label>
+												<input type="text" name="pecaGrupo">
+											</div>
+											<div>
+												<label>Parte</label>
+												<input type="text" name="pecaParte">
+											</div>
+											<div>
+												<label>Item</label>
+												<input type="text" name="pecaItem">
+											</div>
+											<div>
+												<label>Quantidade</label>
+												<input type="number" name="pecaQuantidade">
+											</div>
+											<div>
+												<label>Valor</label>
+												<input type="text" name="pecaValor">
+											</div>
 										</div>
-										<div class="form-group">
-											<label>Preço</label>
-											<input type="text" name="addPlaca" class="form-control" required>
+										<!-- Serviço -->
+										<div id="servicoFormgroup" style="display:none">
+											<div>
+												<label>Item</label>
+												<input type="text" name="servicoItem">
+											</div>
+											<div>
+												<label>Tipo</label>
+												<input type="text" name="servicoTipo">
+											</div>
+											<div>
+												<label>Valor</label>
+												<input type="text" name="servicoValor">
+											</div>
 										</div>
+										<!-- Submit Add/Cancel  -->
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
 											<input type="submit" class="btn btn-success" value="Adicionar">
@@ -288,20 +379,44 @@ $codigo				 = mysqli_fetch_assoc($result)['Codigo'];
 	</div>
 	<!-- Scripts -->
 	<script src="assets/js/global/jquery.min.js"></script>
-	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-	<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script>
-		$("#adiantamento").on("click", function(){
-			$("#tipo").hide();
+		$("#adiantamento").on("click", function() {
+			//$("#tipo input").val("");
+			$("#adiantamentoFormgroup").show();
+			$("#adiantamentoFormgroup input").val("");
+
+			$("#pecaFormgroup").hide();
+			$("#pecaFormgroup input").val("");
+
+			$("#servicoFormgroup").hide();
+			$("#servicoFormgroup input").val("");
 		});
-		$("#item").on("click", function(){
-			$("#tipo").show();
+
+		$("#servico").on("click", function() {
+			$("#adiantamentoFormgroup").hide();
+			$("#adiantamentoFormgroup input").val("");
+
+			$("#pecaFormgroup").hide();
+			$("#pecaFormgroup input").val("");
+
+			$("#servicoFormgroup").show();
+			$("#servicoFormgroup input").val("");
 		});
-		$("#peca").on("click", function(){ 
-			$("#tipo").show();
+
+		$("#peca").on("click", function() {
+			$("#adiantamentoFormgroup").hide();
+			$("#adiantamentoFormgroup input").val("");
+
+			$("#pecaFormgroup").show();
+			$("#pecaFormgroup input").val("");
+
+			$("#servicoFormgroup").hide();
+			$("#servicoFormgroup input").val("");
 		});
 	</script>
+
+
 	<!-- <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
 	<!-- <script src="assets/js/global/jquery.scrolly.min.js"></script>
 	<script src="assets/js/global/jquery.dropotron.min.js"></script>

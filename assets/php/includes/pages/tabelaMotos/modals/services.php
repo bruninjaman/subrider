@@ -50,12 +50,12 @@ if (isset($_GET["motoID"])) {
                   ?>
                      <div class="form-group">
                         <button type="button" class="btn btn-info btn-block disabled"><?php echo "{$row['Codigo']}" ?></button>
-                        <button type="button" class="btn btn-primary btn-block">
+                        <button type="button" class="btn btn-primary btn-block" onclick="<?php echo "location.href='ordem.php?motoID=".$_GET["motoID"]."&ordem=".$row["Codigo"]."'"; ?>">
                            <?php
                            if ($row['Aberto']) {
-                              echo "Fechar";
+                              echo "<i class='fa-solid fa-lock-open'></i> Aberta";
                            } else {
-                              echo "Reabrir";
+                              echo "<i class='fa-solid fa-lock'></i> Fechada";
                            }
                            ?>
                         </button>
