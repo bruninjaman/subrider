@@ -1,0 +1,23 @@
+SELECT o.servID, o.motoID, o.Codigo, o.Aberto,
+s.item AS servicoItem,
+s.tipo AS servicoTipo,
+s.valor AS servicoValor,
+p.grupo AS produtoGrupo,
+p.parte AS produtoParte,
+p.item AS produtoItem,
+p.foto AS produtoFoto,
+p.valor AS produtoValor,
+p.quantidade AS produtoQuantidade,
+a.desc AS adiantamentoDescricao,
+a.valor AS adiantamentoValor
+FROM ordem_servicos AS o
+LEFT JOIN servicos AS s
+ON s.ordem = '101/2021'
+AND o.Codigo = s.ordem
+LEFT JOIN pecas AS p
+ON p.ordem = '101/2021'
+AND o.Codigo = p.ordem
+LEFT JOIN adiantamento AS a
+ON a.ordem = '101/2021'
+AND o.Codigo = a.ordem
+WHERE o.Codigo = '101/2021'

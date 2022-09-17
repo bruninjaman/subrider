@@ -17,19 +17,19 @@ if (isset($_POST["item_tipo"])) {
 	switch ($_POST["item_tipo"]) {
 		case "peca":
 			$mysqli_query .= "pecas (grupo,parte,item,quantidade,valor,motoID,ordem) ";
-			$mysqli_query .= "VALUES ('".$_POST["pecaGrupo"]."','".$_POST["pecaParte"]."','".$_POST["pecaItem"]."','".$_POST["pecaQuantidade"]."','".$_POST["pecaValor"]."','".$_GET["motoID"]."','".$_GET["ordem"]."') ";
+			$mysqli_query .= "VALUES ('" . $_POST["pecaGrupo"] . "','" . $_POST["pecaParte"] . "','" . $_POST["pecaItem"] . "','" . $_POST["pecaQuantidade"] . "','" . $_POST["pecaValor"] . "','" . $_GET["motoID"] . "','" . $_GET["ordem"] . "') ";
 			var_dump($mysqli_query);
 			break;
 
 		case "servico":
 			$mysqli_query .= "servicos (item,tipo,valor,motoID,ordem) ";
-			$mysqli_query .= "VALUES ('".$_POST["servicoItem"]."','".$_POST["servicoTipo"]."','".$_POST["servicoValor"]."','".$_GET["motoID"]."','".$_GET["ordem"]."') ";
+			$mysqli_query .= "VALUES ('" . $_POST["servicoItem"] . "','" . $_POST["servicoTipo"] . "','" . $_POST["servicoValor"] . "','" . $_GET["motoID"] . "','" . $_GET["ordem"] . "') ";
 			var_dump($mysqli_query);
 			break;
 
 		case "adiantamento":
 			$mysqli_query .= "adiantamento (descricao,valor,motoID,ordem) ";
-			$mysqli_query .= "VALUES ('".$_POST["adiantamentoDescricao"]."','".$_POST["adiantamentoValor"]."','".$_GET["motoID"]."','".$_GET["ordem"]."') ";
+			$mysqli_query .= "VALUES ('" . $_POST["adiantamentoDescricao"] . "','" . $_POST["adiantamentoValor"] . "','" . $_GET["motoID"] . "','" . $_GET["ordem"] . "') ";
 			var_dump($mysqli_query);
 			break;
 	}
@@ -149,103 +149,130 @@ if (isset($_POST["item_tipo"])) {
 				</header>
 				<section>
 					<div class="table-wrapper">
-						<table class="alt">
-							<thead>
-								<tr>
-									<th>Descrição</th>
-									<th>Tipo</th>
-									<th>Preço</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								//ADD ITEMS
-								// $mysqli_query        = "SELECT * FROM servicos, pecas, adiantamento WHERE motoID = {$_GET["motoID"]}"; //QUERY PROBLEM
+						<?php
+						$mysqli_query_new	= "SELECT o.servID, o.motoID, o.Codigo, o.Aberto, ";
+						$mysqli_query_new	.= "s.item AS servicoItem, ";
+						$mysqli_query_new	.= "s.tipo AS servicoTipo, ";
+						$mysqli_query_new	.= "s.valor AS servicoValor, ";
+						$mysqli_query_new	.= "p.grupo AS produtoGrupo, ";
+						$mysqli_query_new	.= "p.parte AS produtoParte, ";
+						$mysqli_query_new	.= "p.item AS produtoItem, ";
+						$mysqli_query_new	.= "p.foto AS produtoFoto, ";
+						$mysqli_query_new	.= "p.valor AS produtoValor, ";
+						$mysqli_query_new	.= "p.quantidade AS produtoQuantidade, ";
+						$mysqli_query_new	.= "a.descricao AS adiantamentoDescricao, ";
+						$mysqli_query_new	.= "a.valor AS adiantamentoValor ";
+						$mysqli_query_new	.= "FROM ordem_servicos AS o ";
+						$mysqli_query_new	.= "LEFT JOIN servicos AS s ";
+						$mysqli_query_new	.= "ON s.ordem = '{$_GET["ordem"]}' ";
+						$mysqli_query_new	.= "AND o.Codigo = s.ordem ";
+						$mysqli_query_new	.= "LEFT JOIN pecas AS p ";
+						$mysqli_query_new	.= "ON p.ordem = '{$_GET["ordem"]}' ";
+						$mysqli_query_new	.= "AND o.Codigo = p.ordem ";
+						$mysqli_query_new	.= "LEFT JOIN adiantamento AS a ";
+						$mysqli_query_new	.= "ON a.ordem = '{$_GET["ordem"]}' ";
+						$mysqli_query_new	.= "AND o.Codigo = a.ordem ";
+						$mysqli_query_new	.= "WHERE o.Codigo = '{$_GET["ordem"]}' ";
 
+						var_dump($mysqli_query_new);
+						$tablerows = mysqli_num_rows($result);
+						if ($tablerows  > 0) {
+						?>
+							<table class="alt">
+								<thead>
+									<tr>
+										<th>Descrição</th>
+										<th>Tipo</th>
+										<th>Preço</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
 
-								//servicos
-								$mysqli_query        = "SELECT * FROM servicos WHERE ordem = '{$_GET["ordem"]}'";
-								$result              = mysqli_query($conn, $mysqli_query);
+									//New Table
+									$result = mysqli_query($conn, $mysqli_query_new);
 
-								//pecas
-								$mysqli_query2        = "SELECT * FROM pecas WHERE ordem = '{$_GET["ordem"]}'";
-								$result2              = mysqli_query($conn, $mysqli_query2);
+									$total = 0;
+									$pago = 0;
+									$tdcount = 0;
 
-								//adiantamentos
-								$mysqli_query3       = "SELECT * FROM adiantamento WHERE ordem = '{$_GET["ordem"]}'";
-								$result3              = mysqli_query($conn, $mysqli_query3);
-
-								?>
-								<?php
-								$total = 0;
-								$pago = 0;
-
-								//servicos
-								while ($item = mysqli_fetch_assoc($result)) {
-									if ($item["motoID"] == $_GET["motoID"]) {
-										echo "<tr><td>" . $item["item"] . "</td>";
-										echo "<td>" . $item["tipo"] . "</td>";
-										echo "<td>" . $item["valor"] . "</td></tr>";
-										$total += $item["valor"];
+									while ($item = mysqli_fetch_assoc($result)) {
+										if ($item["servicoItem"] != null) {
+											echo "<tr><td>" . $item["servicoItem"] . "</td>";
+											echo "<td>" . $item["servicoTipo"] . "</td>";
+											echo "<td>" . $item["servicoValor"] . "</td></tr>";
+											$total += $item["servicoValor"];
+											$tdcount++;
+										}
+										if ($item["produtoItem"] != null) {
+											echo "<tr><td>" . $item["produtoItem"] . "</td>";
+											echo "<td>" . $item["produtoGrupo"] . "/" . $item["produtoParte"] . "</td>";
+											echo "<td>" . $item["produtoValor"] . " x" . $item["produtoQuantidade"] . "</td></tr>";
+											$total += $item["produtoValor"] * $item["produtoQuantidade"];
+											$tdcount++;
+										}
+										if ($item["adiantamentoDescricao"] != null) {
+											echo "<tr><td>" . $item["adiantamentoDescricao"] . "</td>";
+											echo "<td>Adiantamento</td>";
+											echo "<td>" . $item["adiantamentoValor"] . "</td></tr>";
+											$total += $item["adiantamentoValor"];
+											$pago += $item["adiantamentoValor"];
+											$tdcount++;
+										}
 									}
-								}
-								//pecas
-								while ($item = mysqli_fetch_assoc($result2)) {
-									if ($item["motoID"] == $_GET["motoID"]) {
-										echo "<tr><td>" . $item["item"] . "</td>";
-										echo "<td>" . $item["grupo"] . "/" . $item["parte"] . "</td>";
-										echo "<td>" . $item["valor"] . " x".$item["quantidade"]. "</td></tr>";
-										$total += $item["valor"] * $item["quantidade"];
+									if ($tdcount == 0) { // provisório ?
+										echo "<tr><td>Nenhum</td><td>Item</td><td>Adicionado</td></tr>";
 									}
-								}
-								//adiantamento
-								while ($item = mysqli_fetch_assoc($result3)) {
-									if ($item["motoID"] == $_GET["motoID"]) {
-										echo "<tr><td>" . $item["descricao"] . "</td>";
-										echo "<td>Adiantamento</td>";
-										echo "<td>" . $item["valor"] . "</td></tr>";
-										$total += $item["valor"];
-										$pago += $item["valor"]; 
-									}
-								}
-								?>
-							</tbody>
-							<tfoot>
-								<tr>
-									<td colspan="1"></td>
-									<td>Subtotal:</td>
-									<td><?php echo $total-$pago ?></td>
-								</tr>
-								<tr>
-									<td colspan="1"></td>
-									<td>Pago:</td>
-									<td class="pago"><?php echo  $pago > 0 ? $pago : "Nada" ?>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="1"></td>
-									<td>Total:</td>
-									<td class="total"><?php echo $total ?></td>
-								</tr>
-							</tfoot>
-						</table>
+
+									?>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="1"></td>
+										<td>Subtotal:</td>
+										<td><?php echo $total - $pago ?></td>
+									</tr>
+									<tr>
+										<td colspan="1"></td>
+										<td>Pago:</td>
+										<td class="pago"><?php echo  $pago > 0 ? $pago : "Nada" ?>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="1"></td>
+										<td>Total:</td>
+										<td class="total"><?php echo $total ?></td>
+									</tr>
+								</tfoot>
+							</table>
+						<?php
+						} else {
+							echo "no results found";
+						}
+						?>
 					</div>
-					<a href="#" class="button primary"><i class="fa-solid fa-file-pdf"></i> Fazer download em PDF</a>
+					<?php
+					if ($tablerows > 0) {
+					?>
+						<a href="#" class="button primary"><i class="fa-solid fa-file-pdf"></i> Fazer download em PDF</a>
+					<?php
+					}
+					?>
 					<a href="#add-item" class="button primary" data-toggle="modal" data-target="#add-item"><i class="fa-solid fa-plus"></i> Adicionar Item</a>
 					<a href="#" class="button secondary">
-					<?php 
+						<?php
 						//open or closed
 						$mysqli_query       = "SELECT Aberto FROM ordem_servicos WHERE Codigo = '{$_GET["ordem"]}'";
 						$result             = mysqli_query($conn, $mysqli_query);
 
-						while($ordem = mysqli_fetch_assoc($result)) {
-							if($ordem["Aberto"] == 1)
+						while ($ordem = mysqli_fetch_assoc($result)) {
+							if ($ordem["Aberto"] == 1)
 								echo "<i class='fa-solid fa-lock'></i> Fechar Ordem de serviço";
 							else
 								echo "<i class='fa-solid fa-lock-open'></i> Abrir Ordem de serviço";
 						}
-					?>
-				</a>
+						?>
+					</a>
 					<hr />
 				</section>
 
