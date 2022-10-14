@@ -9,6 +9,11 @@ require("./connection/connection.php");
 //FUNCTIONS
 require("./assets/php/scripts/functions.php");
 
+
+$test;
+var_dump($test);
+
+
 //PAGE
 $page = getPage();
 
@@ -43,6 +48,8 @@ if (isset($_POST["service-form"])) {
       if ($last_code < 101)
          $last_code = 100;
       $novo_codigo = ($last_code + 1) . "/" . date("Y");
+   } else {
+      $novo_codigo = 100 . "/" . date("Y");
    }
 
    //Inserir novo código no banco de dados

@@ -18,16 +18,19 @@ if (isset($_POST["item_tipo"])) {
 		case "peca":
 			$mysqli_query .= "pecas (grupo,parte,item,quantidade,valor,motoID,ordem) ";
 			$mysqli_query .= "VALUES ('" . $_POST["pecaGrupo"] . "','" . $_POST["pecaParte"] . "','" . $_POST["pecaItem"] . "','" . $_POST["pecaQuantidade"] . "','" . $_POST["pecaValor"] . "','" . $_GET["motoID"] . "','" . $_GET["ordem"] . "') ";
+			var_dump($mysqli_query);
 			break;
 
 		case "servico":
 			$mysqli_query .= "servicos (item,tipo,valor,motoID,ordem) ";
 			$mysqli_query .= "VALUES ('" . $_POST["servicoItem"] . "','" . $_POST["servicoTipo"] . "','" . $_POST["servicoValor"] . "','" . $_GET["motoID"] . "','" . $_GET["ordem"] . "') ";
+			var_dump($mysqli_query);
 			break;
 
 		case "adiantamento":
 			$mysqli_query .= "adiantamento (descricao,valor,motoID,ordem) ";
 			$mysqli_query .= "VALUES ('" . $_POST["adiantamentoDescricao"] . "','" . $_POST["adiantamentoValor"] . "','" . $_GET["motoID"] . "','" . $_GET["ordem"] . "') ";
+			var_dump($mysqli_query);
 			break;
 	}
 
@@ -147,66 +150,82 @@ if (isset($_POST["item_tipo"])) {
 				<section>
 					<div class="table-wrapper">
 						<?php
-						$query_tableitems	 = "SELECT pecas.item, pecas.valor, pecas.quantidade FROM pecas ";
-						$query_tableitems	 .= "WHERE pecas.ordem = '".$_GET["ordem"]."' ";
-						$query_tableitems	 .= "UNION ALL ";
-						$query_tableitems	 .= "SELECT adiantamento.descricao, adiantamento.valor, 1 FROM adiantamento ";
-						$query_tableitems	 .= "WHERE adiantamento.ordem = '".$_GET["ordem"]."' ";
-						$query_tableitems	 .= "UNION ALL ";
-						$query_tableitems	 .= "SELECT servicos.item, servicos.valor, 1 FROM servicos ";
-						$query_tableitems	 .= "WHERE servicos.ordem = '".$_GET["ordem"]."'";
+						$mysqli_query_adiantamento	= "SELECT * FROM adiantamento ";
+						$mysqli_query_adiantamento	.= "WHERE ordem = '".$codigo."' ";
+						$result              = mysqli_query($conn, $mysqli_query_adiantamento);
 
-						$result = mysqli_query($conn, $query_tableitems);
+						$mysqli_query_pecas	= "SELECT * FROM pecas ";
+						$mysqli_query_pecas	.= "WHERE ordem = '".$codigo."' ";
+						$result2              = mysqli_query($conn, $mysqli_query);
+
+						$mysqli_query_servicos	= "SELECT * FROM servicos ";
+						$mysqli_query_servicos	.= "WHERE ordem = '".$codigo."' ";
+						$result3              = mysqli_query($conn, $mysqli_query);
+
 						$tablerows = mysqli_num_rows($result);
-						if ($tablerows  > 0) {
+						$tablerows2 = mysqli_num_rows($result2);
+						$tablerows3 = mysqli_num_rows($result3);
+						if ($tablerows+$tablerows2+$tablerows3  > 0) {
 						?>
 							<table class="alt">
 								<thead>
 									<tr>
 										<th>Descrição</th>
-										<th>Quantidade</th>
-										<th>Valor</th>
-										<th>Total</th>
+										<th>Tipo</th>
+										<th>Preço</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php 
-										$total = 0;
-										$pago = 0;
-										while($item = mysqli_fetch_assoc($result)) {
-										//$total += $item["valor"];
-										$pago = 0;
-										?>		
+									<?php
 
-										<tr>
-											<td><?php echo $item["item"] ?></td>
-											<td><?php echo $item["quantidade"] == 0 ? 1 : $item["quantidade"] ?></td>
-											<td><?php echo $item["valor"] == 0 ? "Não Definido" : $item["valor"]?></td>
-											<td><?php
-											$valortotal = $item["quantidade"] * $item["valor"];
-											echo $valortotal == 0 ? "Não Definido" : $valortotal;
-											$total += $valortotal;
-											 ?></td>
-										</tr>
+									$total = 0;
+									$pago = 0;
+									$tdcount = 0;
 
-										<?php
+									while ($item = mysqli_fetch_assoc($result)) {
+										if ($item["servicoItem"] != null) {
+											echo "<tr><td>" . $item["servicoItem"] . "</td>";
+											echo "<td>" . $item["servicoTipo"] . "</td>";
+											echo "<td>" . $item["servicoValor"] . "</td></tr>";
+											$total += $item["servicoValor"];
+											$tdcount++;
 										}
+										if ($item["produtoItem"] != null) {
+											echo "<tr><td>" . $item["produtoItem"] . "</td>";
+											echo "<td>" . $item["produtoGrupo"] . "/" . $item["produtoParte"] . "</td>";
+											echo "<td>" . $item["produtoValor"] . " x" . $item["produtoQuantidade"] . "</td></tr>";
+											$total += $item["produtoValor"] * $item["produtoQuantidade"];
+											$tdcount++;
+										}
+										if ($item["adiantamentoDescricao"] != null) {
+											echo "<tr><td>" . $item["adiantamentoDescricao"] . "</td>";
+											echo "<td>Adiantamento</td>";
+											echo "<td>" . $item["adiantamentoValor"] . "</td></tr>";
+											$total += $item["adiantamentoValor"];
+											$pago += $item["adiantamentoValor"];
+											$tdcount++;
+										}
+									}
+									if ($tdcount == 0) { // provisório ?
+										echo "<tr><td>Nenhum</td><td>Item</td><td>Adicionado</td></tr>";
+									}
+
 									?>
 								</tbody>
 								<tfoot>
 									<tr>
-										<td colspan="2"></td>
+										<td colspan="1"></td>
 										<td>Subtotal:</td>
 										<td><?php echo $total - $pago ?></td>
 									</tr>
 									<tr>
-										<td colspan="2"></td>
+										<td colspan="1"></td>
 										<td>Pago:</td>
 										<td class="pago"><?php echo  $pago > 0 ? $pago : "Nada" ?>
 										</td>
 									</tr>
 									<tr>
-										<td colspan="2"></td>
+										<td colspan="1"></td>
 										<td>Total:</td>
 										<td class="total"><?php echo $total ?></td>
 									</tr>
@@ -214,14 +233,7 @@ if (isset($_POST["item_tipo"])) {
 							</table>
 						<?php
 						} else {
-							?>
-							<center>
-								<br>
-								<h2>Tabela Vazia</h2>
-								<br>
-							</center>
-							<?php
-							//echo "no results found";
+							echo "no results found";
 						}
 						?>
 					</div>
