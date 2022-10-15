@@ -36,9 +36,10 @@
                                 <td><?php echo $moto['proprietario']; ?></td>
                                 <td>
                                     <button onclick="location.href='tabelaMotoServices.php?motoID=<?php echo $moto['motoId']?>'"><i class="fa-solid fa-toolbox me-2"></i></i> Serviços</button>
-                                    <button onclick="location.href='tabelaMotoPropietario.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-address-book me-2"></i> Proprietarios</button>
+                                    <button onclick="location.href='tabelaMotoProprietario.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-address-book me-2"></i> Proprietarios</button>
                                     <button onclick="location.href='tabelaMotoEdit.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
-                                    <button onclick="location.href='tabelaMotoDeletar.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
+                                    <!-- <button onclick="location.href='tabelaMotoDeletar.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
+                                    <button onclick="return confirm('Deseja realmente excluir este item?')" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
                                 </td>
                             </tr>
                         <?php
