@@ -6,40 +6,36 @@
                     <thead>
                         <tr>
                             <th>Foto</th>
-                            <th>Endereço</th>
-                            <th>Ano</th>
-                            <th>Modelo</th>
-                            <th>Marca</th>
-                            <th>Placa</th>
-                            <th>KM</th>
-                            <th>Proprietario</th>
-                            <th>Actions</th>
+                            <th>Grupo</th>
+                            <th>Item</th>
+                            <th>Ordem de Serviço</th>
+                            <th>Parte</th>
+                            <th>Quantidade</th>
+                            <th>Valor</th>
+                            <th>Açoes</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $page = 1;
-                        $sql_query = "SELECT * FROM motocicletas ";
+                        $sql_query = "SELECT * FROM pecas ";
                         $sql_query .= "LIMIT " . $page * 5;
                         $result = mysqli_query($conn, $sql_query);
 
-                        while ($moto = mysqli_fetch_assoc($result)) {
+                        while ($peca = mysqli_fetch_assoc($result)) {
                         ?>
                             <tr>
-                                <td><img src='<?php echo $moto['foto']; ?>' style="height:100px;width:100px;"></td>
-                                <td><?php echo $moto['endereco']; ?></td>
-                                <td><?php echo $moto['ano']; ?></td>
-                                <td><?php echo $moto['modelo']; ?></td>
-                                <td><?php echo $moto['marca']; ?></td>
-                                <td><?php echo $moto['placa']; ?></td>
-                                <td><?php echo $moto['km']; ?></td>
-                                <td><?php echo $moto['proprietario']; ?></td>
+                                <td><img src='<?php echo $peca['foto']; ?>' style="height:100px;width:100px;"></td>
+                                <td><?php echo $peca['grupo']; ?></td>
+                                <td><?php echo $peca['item']; ?></td>
+                                <td><?php echo $peca['ordem']; ?></td>
+                                <td><?php echo $peca['quantidade']; ?></td>
+                                <td><?php echo $peca['parte']; ?></td>
+                                <td><?php echo $peca['valor']; ?></td>
                                 <td>
-                                    <button onclick="location.href='tabelaMotoServices.php?motoID=<?php echo $moto['motoId']?>'"><i class="fa-solid fa-toolbox me-2"></i></i> Serviços</button>
-                                    <button onclick="location.href='tabelaMotoPropietario.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-address-book me-2"></i> Proprietarios</button>
-                                    <button onclick="location.href='tabelaMotoEdit.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
-                                    <button onclick="location.href='tabelaMotoDeletar.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
-                                </td>
+                                    <button onclick="location.href='tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId']?>'" ><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
+                                    <!-- <button onclick="location.href='tabelaPecasDeletar.php?pecaID=<?php echo $peca['pecaId']?>'" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
+                                    <button onclick="return confirm('Deseja realmente excluir este item?')" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>                                </td>
                             </tr>
                         <?php
                         }
