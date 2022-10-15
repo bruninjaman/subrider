@@ -1,17 +1,11 @@
-<?php 
-$sql_query = "SELECT * FROM motocicletas ";
-$sql_query .= "WHERE motoId = " . $_GET["motoID"];
-$result = mysqli_query($conn, $sql_query);
-$result = mysqli_fetch_assoc($result);
-?>
 <section id="banner">
     <div class="content">
         <center>
-            <form method="post" action="/add-moto.php">
+            <form method="post" action="assets/php/scripts/tabelaMotos/add-moto.php">
                 <h2>Adicionar</h2>
                 <label>Foto:</label>
                 <input accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file" name="foto"><br>
-                <img id="foto" src="https://spassodourado.com.br/wp-content/uploads/2015/01/default-placeholder.png" style="height:400px;width:400px;" >
+                <img id="foto" name="foto" src="https://spassodourado.com.br/wp-content/uploads/2015/01/default-placeholder.png" style="height:400px;width:400px;" >
 
                 <br><label>Endereço:</label>
                 <input type="text" name="endereco" style="width:400px"><br>

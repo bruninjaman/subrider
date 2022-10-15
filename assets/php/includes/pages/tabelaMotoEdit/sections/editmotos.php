@@ -7,7 +7,7 @@ $result = mysqli_fetch_assoc($result);
 <section id="banner">
     <div class="content">
         <center>
-            <form method="post" action="/edit-moto.php">
+            <form method="post" action="assets/php/scripts/tabelaMotos/edit-moto.php">
                 <h2>Editar</h2>
                 <label>Foto:</label>
                 <input accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file" name="foto"><br>
