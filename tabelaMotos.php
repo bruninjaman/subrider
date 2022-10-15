@@ -28,7 +28,7 @@ require("./assets/php/scripts/functions.php");
     </noscript>
 </head>
 
-<body class="is-prload landing">
+<body class="is-preload landing">
     <div id="page-wrapper">
         <!-- content -->
         <?php 

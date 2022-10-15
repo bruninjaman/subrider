@@ -2,6 +2,13 @@
 
 <?php
 session_start();
+
+//PERM
+require("./assets/php/scripts/perm.php");
+//CONNECTION
+require("./connection/connection.php");
+//FUNCTIONS
+require("./assets/php/scripts/functions.php");
 ?>
 <!--
 	Landed by HTML5 UP
@@ -21,7 +28,7 @@ session_start();
 
 </head>
 
-<body class="is-preload landing">
+<body class="is-prload landing">
     <div id="page-wrapper">
         <!-- content -->
         <?php 
