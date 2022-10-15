@@ -6,7 +6,6 @@
     <nav id="nav">
         <ul>
             <li><a href="index.php">Página Inicial</a></li>
-            <li><a href="elements.html"><a class="button primary" href="#">Cadastrar</a></a></li>
             <li><a class="button secondary" href="index.php">Voltar</a></li>
         </ul>
     </nav>

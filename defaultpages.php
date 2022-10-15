@@ -1,4 +1,8 @@
 <!DOCTYPE HTML>
+
+<?php
+session_start();
+?>
 <!--
 	Landed by HTML5 UP
 	html5up.net | @ajlkn
@@ -7,36 +11,27 @@
 <html>
 
 <head>
-    <title>Cadastrar</title>
+    <title>Subrider</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
+
 </head>
 
 <body class="is-preload landing">
     <div id="page-wrapper">
-        <?php
-        require("./assets/php/includes/pages/cadastrar/header/header.php");
-        require("./assets/php/includes/pages/cadastrar/sections/intro.php");
-        require("./assets/php/includes/pages/cadastrar/sections/form.php");
-        require("./assets/php/includes/main/footer.php");
-        ?>
-
+        <!-- content -->
     </div>
 
     <!-- Scripts -->
     <script src="assets/js/global/jquery.min.js"></script>
-    <script src="assets/js/global/jquery.scrolly.min.js"></script>
-    <script src="assets/js/global/jquery.dropotron.min.js"></script>
-    <script src="assets/js/global/jquery.scrollex.min.js"></script>
     <script src="assets/js/global/browser.min.js"></script>
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
-
 </body>
 
 </html>

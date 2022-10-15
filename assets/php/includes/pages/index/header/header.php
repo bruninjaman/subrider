@@ -31,8 +31,6 @@
             } else {
                 echo '<li>';
                 echo '<a class="button primary" href="login.php">Entrar</a>';
-                echo '</li><li>';
-                echo '<a class="button secondary" href="cadastrar.php">Criar conta</a>';
                 echo '</li>';
             }
             ?>

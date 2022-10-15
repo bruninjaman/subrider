@@ -1,73 +1,64 @@
-<!-- tabela -->
-<section id="one" class=crud-table>
+<section id="banner">
     <div class="content">
-        <div class="container">
+        <div class="table-wrapper">
             <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Gerenciar <b>Motocicletas</b></h2>
-                        </div>
-                        <div class="col-sm-5">
-                            <a data-toggle="modal"><label class="searchbar">Buscar:</label></a><input id='search-box' placeholder='Search'>
-                            <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar moto</span></a>
-                        </div>
-                    </div>
-                </div>
-                <table class="table table-striped table-hover table-sortable" id="table-id">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Foto</th>
-                            <th>Proprietario</th>
                             <th>Endereço</th>
-                            <th>Marca</th>
-                            <th>Placa</th>
                             <th>Ano</th>
                             <th>Modelo</th>
+                            <th>Marca</th>
+                            <th>Placa</th>
                             <th>KM</th>
-                            <th>Ações</th>
+                            <th>Proprietario</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        showMotos($conn, $page);
+                        $page = 1;
+                        $sql_query = "SELECT * FROM motocicletas ";
+                        $sql_query .= "LIMIT " . $page * 5;
+                        $result = mysqli_query($conn, $sql_query);
+
+                        while ($moto = mysqli_fetch_assoc($result)) {
+                        ?>
+                            <tr>
+                                <td><img src='<?php echo $moto['foto']; ?>' style="height:100px;width:100px;"></td>
+                                <td><?php echo $moto['endereco']; ?></td>
+                                <td><?php echo $moto['ano']; ?></td>
+                                <td><?php echo $moto['modelo']; ?></td>
+                                <td><?php echo $moto['marca']; ?></td>
+                                <td><?php echo $moto['placa']; ?></td>
+                                <td><?php echo $moto['km']; ?></td>
+                                <td><?php echo $moto['proprietario']; ?></td>
+                                <td>
+                                    <button onclick="location.href='tabelaMotoServices.php?motoID=<?php echo $moto['motoId']?>'"><i class="fa-solid fa-toolbox me-2"></i></i> Serviços</button>
+                                    <button onclick="location.href='tabelaMotoPropietario.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-address-book me-2"></i> Proprietarios</button>
+                                    <button onclick="location.href='tabelaMotoEdit.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
+                                    <button onclick="location.href='tabelaMotoDeletar.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
+                                </td>
+                            </tr>
+                        <?php
+                        }
                         ?>
                     </tbody>
                 </table>
-                <div class="clearfix">
-                    <!--		Start Pagination -->
-                    <div class='pagination-container'>
-                        <nav>
-                            <ul class="pagination">
-
-                                <li data-page="prev">
-                                    <span>
-                                        < <span class="sr-only">(current)
-                                    </span></span>
-                                </li>
-                                <!--	Here the JS Function Will Add the Rows -->
-                                <li data-page="next" id="prev">
-                                    <span> > <span class="sr-only">(current)</span></span>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-
-                </div> <!-- 		End of Container -->
-                </ul>
+                <div class="w3-twothird">
+                    <ul class="pagination">
+                        <li><a href="javascript:void(0)">«</a></li>
+                        <li><a class="w3-red" href="javascript:void(0)">1</a></li>
+                        <li><a href="javascript:void(0)">2</a></li>
+                        <li><a href="javascript:void(0)">3</a></li>
+                        <li><a href="javascript:void(0)">4</a></li>
+                        <li><a href="javascript:void(0)">5</a></li>
+                        <li><a href="javascript:void(0)">6</a></li>
+                        <li><a href="javascript:void(0)">»</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    <?php
-    require("./assets/php/includes/pages/tabelaMotos/modals/add.php");
-    require("./assets/php/includes/pages/tabelaMotos/modals/edit.php");
-    require("./assets/php/includes/pages/tabelaMotos/modals/owner.php");
-    require("./assets/php/includes/pages/tabelaMotos/modals/services.php");
-    require("./assets/php/includes/pages/tabelaMotos/modals/delete.php");
-    ?>
-    <!-- Tabela -->
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-    <script src="./assets/js/tabelaMotos/tabela_moto.js"></script>
-    <script src="./assets/js/global/table.pagination.js"></script>
 </section>

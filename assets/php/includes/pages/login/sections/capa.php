@@ -8,18 +8,10 @@
         <p>
         <ul>
             <li>
-                Cadastre suas motocicletas.
+                Página de acesso admnistrativo.
             </li>
             <li>
-                Veja todas opções de serviços disponiveis para você.
-            </li>
-
-            <li>
-                Entre em contato conosco para marcar novos serviços.
-            </li>
-
-            <li>
-                Veja como está progredindo e a etapa em que está seu serviço.
+                Entre em contato pelo whatsapp ou email para contactar-nos
             </li>
         </ul>
         </p>

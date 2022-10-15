@@ -7,7 +7,6 @@
         <ul>
             <li><a href="tabelaPecas.php">Tabela de peças</a></li>
             <li><a href="tabelaServicos.php">Tabela de serviços</a></li>
-            <li><a href="#">Tabela de clientes</a></li>
             <?php
             if (isset($_SESSION["user"])) {
                 echo '<li>';

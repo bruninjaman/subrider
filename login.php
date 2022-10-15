@@ -22,7 +22,7 @@
         require("./assets/php/includes/pages/login/header/header.php");
         require("./assets/php/includes/pages/login/sections/capa.php");
         require("./assets/php/includes/pages/login/sections/login.php");
-        require("./assets/php/includes/main/footer.php");
+        require("./assets/php/includes/pages/login/footer/footer.php");
         ?>
 
     </div>

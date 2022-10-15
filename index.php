@@ -33,7 +33,7 @@ session_start();
         require("./assets/php/includes/pages/index/sections/instagram-1.php");
         require("./assets/php/includes/pages/index/sections/instagram-2-feed.php");
         require("./assets/php/includes/pages/index/sections/sobre.php");
-        require("./assets/php/includes/main/footer.php");
+        require("./assets/php/includes/pages/index/footer/footer.php");
         ?>
 
     </div>

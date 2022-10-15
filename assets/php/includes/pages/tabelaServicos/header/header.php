@@ -1,13 +1,12 @@
-<!-- Header is-preload landing -->
+<!-- Header -->
 <header id="header">
     <h1 id="logo">
         <a href="index.php"><img src="./assets/css/images/logo-branco-crop.png" style="height:60px;width:180px;"></a>
     </h1>
     <nav id="nav">
         <ul>
-            <li><a href="tabelaMotos.php">Tabela de motocicletas</a></li>
             <li><a href="tabelaPecas.php">Tabela de peças</a></li>
-            <li><a href="#">Tabela de clientes</a></li>
+            <li><a href="tabelaMotos.php">Tabela de motocicletas</a></li>
             <?php
             if (isset($_SESSION["user"])) {
                 echo '<li>';
