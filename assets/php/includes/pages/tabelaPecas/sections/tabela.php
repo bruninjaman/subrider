@@ -33,6 +33,7 @@
                                 <td><?php echo $peca['parte']; ?></td>
                                 <td><?php echo $peca['valor']; ?></td>
                                 <td>
+                                    <button onclick="location.href='tabelaPecasEdit.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-plus me-2"></i> Adicionar </button>
                                     <button onclick="location.href='tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId']?>'" ><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
                                     <!-- <button onclick="location.href='tabelaPecasDeletar.php?pecaID=<?php echo $peca['pecaId']?>'" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
                                     <button onclick="return confirm('Deseja realmente excluir este item?')" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>                                </td>

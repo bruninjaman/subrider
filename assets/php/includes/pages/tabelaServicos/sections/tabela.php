@@ -27,6 +27,7 @@
                                 <td><?php echo $servico['tipo']; ?></td>
                                 <td><?php echo $servico['valor']; ?></td>
                                 <td>
+                                    <button onclick="location.href='tabelaServicosAdd.php?motoID=<?php echo $moto['motoId']?>'" ><i class="fa-solid fa-plus me-2"></i> Adicionar </button>
                                     <button onclick="location.href='tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId']?>'" ><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
                                     <button onclick="location.href='tabelaServicosDeletar.php?servicoID=<?php echo $servico['servicoId']?>'" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
                                 </td>
