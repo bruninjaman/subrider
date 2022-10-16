@@ -8,4 +8,5 @@ require("../../../../connection/connection.php");
 //FUNCTIONS
 require("../../../../assets/php/scripts/functions.php");
 
+header('location: ../../../../services.php?ordem='. $_GET['ordem']);
 ?>
