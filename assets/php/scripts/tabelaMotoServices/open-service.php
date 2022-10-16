@@ -8,7 +8,4 @@ require("../../../../connection/connection.php");
 //FUNCTIONS
 require("../../../../assets/php/scripts/functions.php");
 
-
-$mysqli_query = "INSERT INTO ordem_servicos ";
-//CREATE SERVICE
 ?>
