@@ -17,11 +17,20 @@ if (isset($_POST['foto'])) {
     $placa = $_POST['placa'];
     $km = $_POST['KM'];
     $proprietario = $_POST['proprietario'];
+    $motoid= $_POST['motoID'];
+    
+    if($_POST['foto'] != '') {
 
-    $mysqli_query = "INSERT INTO motocicletas (foto,endereco,ano,modelo,marca,placa,KM,proprietario) "; //UPDATE
-    $mysqli_query .= "VALUES ('{$foto}','{$endereco}', ";
-    $mysqli_query .= "'{$ano}','{$modelo}','{$marca}','{$placa}','{$km}','{$proprietario}'";
-    $mysqli_query .= ") ";
+    $mysqli_query = "UPDATE motocicletas "; //UPDATE
+    $mysqli_query .= "SET foto = '{$foto}', endereco = '{$endereco}', ";
+    $mysqli_query .= "ano = '{$ano}', modelo = '{$modelo}', marca = '{$marca}', placa = '{$placa}', km = '{$km}', proprietario = '{$proprietario}' ";
+    } else {
+        $mysqli_query = "UPDATE motocicletas "; //UPDATE
+        $mysqli_query .= "SET endereco = '{$endereco}', ";
+        $mysqli_query .= "ano = '{$ano}', modelo = '{$modelo}', marca = '{$marca}', placa = '{$placa}', km = '{$km}', proprietario = '{$proprietario}' ";
+    }
+    $mysqli_query .= "WHERE motoID = '" . $motoid . "'";
+    var_dump($mysqli_query);
     mysqli_query($conn, $mysqli_query);
     header('Location: ../../../../tabelaMotos.php');
 }

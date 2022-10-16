@@ -9,8 +9,9 @@ $result = mysqli_fetch_assoc($result);
         <center>
             <form method="post" action="assets/php/scripts/tabelaMotos/edit-moto.php">
                 <h2>Editar</h2>
+                <input type=hidden name=motoID value="<?php echo $result["motoId"] ?>">
                 <label>Foto:</label>
-                <input accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file" name="foto"><br>
+                <input name="foto" value="<?php echo $result["foto"] ?>" accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file"><br>
                 <img id="foto" src=" <?php echo $result["foto"] ?> " style="height:400px;width:400px;" >
 
                 <br><label>Endereço:</label>
