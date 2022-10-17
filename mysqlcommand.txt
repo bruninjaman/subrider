@@ -1,0 +1,22 @@
+SELECT 1 as type, pecas.grupo grupo, pecas.parte parte, pecas.item item, pecas.foto foto, pecas.valor, pecas.quantidade FROM pecas
+UNION
+SELECT 2, Null, Null, servicos.item, Null, servicos.valor, 1 FROM servicos 
+UNION 
+SELECT 3, null, null, adiantamento.descricao, Null, adiantamento.valor, 1 FROM adiantamento
+
+
+$items_ordem_query = 'SELECT 1 as type, pecas.grupo grupo, pecas.parte parte, pecas.item item, pecas.foto foto, pecas.valor, pecas.quantidade FROM pecas ';
+$items_ordem_query .= "UNION ";
+$items_ordem_query .= "SELECT 2, Null, Null, servicos.item, Null, servicos.valor, 1 FROM servicos ";
+$items_ordem_query .= "UNION ";
+$items_ordem_query .= "SELECT 3, null, null, adiantamento.descricao, Null, adiantamento.valor, 1 FROM adiantamento ";
+
+
+SELECT 1 as type, pecas.grupo grupo, pecas.parte parte, pecas.item item, pecas.foto foto, pecas.valor, pecas.quantidade FROM pecas
+WHERE pecas.ordem = '101/2022'
+UNION
+SELECT 2, Null, Null, servicos.item, Null, servicos.valor, 1 FROM servicos 
+WHERE servicos.ordem = '101/2022'
+UNION 
+SELECT 3, null, null, adiantamento.descricao, Null, adiantamento.valor, 1 FROM adiantamento
+WHERE adiantamento.ordem = '101/2022'
