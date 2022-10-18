@@ -18,9 +18,8 @@
                     </thead>
                     <tbody>
                         <?php
-                        $page = 1;
                         $sql_query = "SELECT * FROM motocicletas ";
-                        $sql_query .= "LIMIT " . $page * 5;
+                        $sql_query .= "LIMIT " . ((isset($_GET['page']) ? $_GET['page'] : 0) * 5) . ", 5";
                         $result = mysqli_query($conn, $sql_query);
 
                         while ($moto = mysqli_fetch_assoc($result)) {
@@ -48,16 +47,16 @@
                         ?>
                     </tbody>
                 </table>
-                <div class="w3-twothird">
+                <div class="pagination-style">
                     <ul class="pagination">
-                        <li><a href="javascript:void(0)">«</a></li>
-                        <li><a class="w3-red" href="javascript:void(0)">1</a></li>
-                        <li><a href="javascript:void(0)">2</a></li>
-                        <li><a href="javascript:void(0)">3</a></li>
-                        <li><a href="javascript:void(0)">4</a></li>
-                        <li><a href="javascript:void(0)">5</a></li>
-                        <li><a href="javascript:void(0)">6</a></li>
-                        <li><a href="javascript:void(0)">»</a></li>
+                        <li><a href="tabelaMotos.php?page=<?php echo isset($_GET['page']) && $_GET['page'] > 0  ? $_GET['page']-1 : 0 ?>">«</a></li>
+                        <li><a href="tabelaMotos.php?page=<?php echo 1 ?>">1</a></li>
+                        <li><a href="tabelaMotos.php?page=<?php echo 2 ?>">2</a></li>
+                        <li><a href="tabelaMotos.php?page=<?php echo 3 ?>">3</a></li>
+                        <li><a href="tabelaMotos.php?page=<?php echo 4 ?>">4</a></li>
+                        <li><a href="tabelaMotos.php?page=<?php echo 5 ?>">5</a></li>
+                        <li><a href="tabelaMotos.php?page=<?php echo 6 ?>">6</a></li>
+                        <li><a href="tabelaMotos.php?page=<?php echo isset($_GET['page']) ? $_GET['page']+1 : 0 ?>">»</a></li>
                     </ul>
                 </div>
             </div>

@@ -20,3 +20,8 @@ WHERE servicos.ordem = '101/2022'
 UNION 
 SELECT 3, null, null, adiantamento.descricao, Null, adiantamento.valor, 1 FROM adiantamento
 WHERE adiantamento.ordem = '101/2022'
+
+
+SELECT * 
+FROM motocicletas
+WHERE (SELECT ordem_servicos.motoID FROM ordem_servicos WHERE ordem_servicos.Codigo = "101/2022") = motocicletas.motoId
