@@ -4,11 +4,11 @@
 session_start();
 
 //PERM
-require("./assets/php/scripts/perm.php");
+require("./scripts/perm.php");
 //CONNECTION
 require("./connection/connection.php");
 //FUNCTIONS
-require("./assets/php/scripts/functions.php");
+require("./scripts/functions.php");
 
 ?>
 <!--
@@ -33,9 +33,9 @@ require("./assets/php/scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./assets/php/includes/pages/tabelaMotoServices/header/header.php");
-        include("./assets/php/includes/pages/tabelaMotoServices/sections/services.php");
-        include("./assets/php/includes/pages/tabelaMotoServices/footer/footer.php");
+        include("./pages/tabelaMotoServices/header/header.php");
+        include("./pages/tabelaMotoServices/sections/services.php");
+        include("./pages/tabelaMotoServices/footer/footer.php");
         ?>
     </div>
 

@@ -4,11 +4,11 @@
 session_start();
 
 //PERM
-require("./assets/php/scripts/perm.php");
+require("./scripts/perm.php");
 //CONNECTION
 require("./connection/connection.php");
 //FUNCTIONS
-require("./assets/php/scripts/functions.php");
+require("./scripts/functions.php");
 ?>
 <!--
 	Landed by HTML5 UP
@@ -28,13 +28,13 @@ require("./assets/php/scripts/functions.php");
     </noscript>
 </head>
 
-<body class="is-prload landing">
+<body class="is-preload landing">
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("assets/php/includes/pages/tabelaServicos/header/header.php");
-        include("assets/php/includes/pages/tabelaServicos/sections/tabela.php");
-        include("assets/php/includes/pages/tabelaServicos/footer/footer.php");
+        include("./pages/tabelaServicos/header/header.php");
+        include("./pages/tabelaServicos/sections/tabela.php");
+        include("./pages/tabelaServicos/footer/footer.php");
     
         ?>
     </div>

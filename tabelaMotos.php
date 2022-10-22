@@ -4,11 +4,11 @@
 session_start();
 
 //PERM
-require("./assets/php/scripts/perm.php");
+require("./scripts/perm.php");
 //CONNECTION
 require("./connection/connection.php");
 //FUNCTIONS
-require("./assets/php/scripts/functions.php");
+require("./scripts/functions.php");
 ?>
 <!--
 	Landed by HTML5 UP
@@ -32,9 +32,9 @@ require("./assets/php/scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("assets/php/includes/pages/tabelaMotos/header/header.php");
-        include("assets/php/includes/pages/tabelaMotos/sections/tabela.php");
-        include("assets/php/includes/pages/tabelaMotos/footer/footer.php");
+        include("./pages/tabelaMotos/header/header.php");
+        include("./pages/tabelaMotos/sections/tabela.php");
+        include("./pages/tabelaMotos/footer/footer.php");
     
         ?>
     </div>

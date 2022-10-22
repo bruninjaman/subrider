@@ -26,14 +26,14 @@ session_start();
 <body class="is-preload landing">
     <div id="page-wrapper">
         <?php
-        require("./assets/php/includes/pages/index/header/header.php");
-        require("./assets/php/includes/pages/index/sections/banner.php");
-        require("./assets/php/includes/pages/index/sections/mapa.php");
-        require("./assets/php/includes/pages/index/sections/youtube.php");
-        require("./assets/php/includes/pages/index/sections/instagram-1.php");
-        require("./assets/php/includes/pages/index/sections/instagram-2-feed.php");
-        require("./assets/php/includes/pages/index/sections/sobre.php");
-        require("./assets/php/includes/pages/index/footer/footer.php");
+        require("./pages/index/header/header.php");
+        require("./pages/index/sections/banner.php");
+        require("./pages/index/sections/mapa.php");
+        require("./pages/index/sections/youtube.php");
+        require("./pages/index/sections/instagram-1.php");
+        require("./pages/index/sections/instagram-2-feed.php");
+        require("./pages/index/sections/sobre.php");
+        require("./pages/index/footer/footer.php");
         ?>
 
     </div>
