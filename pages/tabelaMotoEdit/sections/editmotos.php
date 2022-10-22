@@ -7,7 +7,7 @@ $result = mysqli_fetch_assoc($result);
 <section id="banner">
     <div class="content">
         <center>
-            <form method="post" action="assets/php/scripts/tabelaMotos/edit-moto.php">
+            <form method="post" action="scripts/tabelaMotos/edit-moto.php">
                 <h2>Editar</h2>
                 <input type=hidden name=motoID value="<?php echo $result["motoId"] ?>">
                 <label>Foto:</label>
