@@ -10,3 +10,4 @@ require("functions.php");
 	  else {
 		header("location: ../../../login.php");
 	  }
+?>
