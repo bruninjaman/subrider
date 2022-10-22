@@ -1,19 +1,53 @@
+<?php 
+    $mysqli_query = "SELECT motoID FROM ordem_servicos ";
+    $mysqli_query .= " WHERE Codigo = '". $_GET['ordem'] . "'";
+
+    $motoid = mysqli_query($conn, $mysqli_query);
+    $motoid = mysqli_fetch_assoc($motoid);
+?>
 <section id="banner">
     <div class="content">
         <center>
-            <form method="post" action="#">
+            <form method="post" action="assets\php\scripts\addservices\addservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
                 <h2>Escolha o tipo de item:</h2>
 
-                <input type="radio" id="html" name="fav_language" value="HTML">
-                <label for="html">Peça</label>
-                <input type="radio" id="css" name="fav_language" value="CSS">
-                <label for="css">Serviço</label>
-                <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                <label for="javascript">Adiantamento</label>
+                <input onchange="tipo_item_onchange()" type="radio" id="pecas" name="tipo_item" value="pecas">
+                <label for="pecas">Peça</label>
+                <input onchange="tipo_item_onchange()" type="radio" id="service" name="tipo_item" value="service">
+                <label for="service">Serviço</label>
+                <input onchange="tipo_item_onchange()" type="radio" id="adiantamento" name="tipo_item" value="adiantamento">
+                <label for="adiantamento">Adiantamento</label>
 
-                <div class="formcontent"></div>
+                <div id="form_pecas" style="display: none;">
+                    <labe>Foto:</labe><br>
+                    <input type="file" name="pfoto">
+                    <label>grupo</label><br>
+                    <input type="text" name="pgrupo"><br>
+                    <label>item</label><br>
+                    <input type="text" name="pitem"><br>
+                    <label>parte</label><br>
+                    <input type="text" name="pparte"><br>
+                    <label>quantidade</label><br>
+                    <input type="text" name="pquantidade"><br>
+                    <label>valor</label><br>
+                    <input type="text" name="pvalor"><br>
+                </div>
+                <div id="form_services" style="display: none;">
+                    <label>Tipo</label><br>
+                    <input type="text" name="sgrupo"><br>
+                    <label>Item</label><br>
+                    <input type="text" name="sitem"><br>
+                    <label>Valor</label><br>
+                    <input type="text" name="svalor"><br>
+
+                </div>
+                <div id="form_adiantamento" style="display: none;">
+                    <label>Descrição</label><br>
+                    <input type="text" name="aitem" value="test"><br>
+                    <label>Valor</label><br>
+                    <input type="text" name="avalor" value="test"><br>
+                </div>
                 <br>
-
                 <input class="button primary" type="submit" value="Adicionar">
             </form>
         </center>

@@ -44,6 +44,8 @@ require("./assets/php/scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
+
+    <script src="assets\php\includes\pages\tabelaMotos\sections\delete_confirm.js"></script>
 </body>
 
 </html>
