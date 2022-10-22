@@ -9,9 +9,9 @@ function login($user, $password, $conn) {
     if($rows > 0) {
         $_SESSION["user"] = $result["username"];
 	    $_SESSION["type"] = $result["userType"];
-        header("location: ../../../index.php");
+        header("location: ../index.php");
     } else {
-        header("location: ../../../login.php");
+        header("location: ../login.php");
     }
 }
 

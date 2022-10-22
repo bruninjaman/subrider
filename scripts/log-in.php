@@ -1,6 +1,6 @@
 <?php
 //CONNECTION
-require("../../../connection/connection.php");
+require("../connection/connection.php");
 //FUNCTIONS
 require("functions.php");
 
@@ -8,6 +8,6 @@ require("functions.php");
 		login($_POST["user"],$_POST["pass"],$conn);
       }
 	  else {
-		header("location: ../../../login.php");
+		header("location: ../login.php");
 	  }
 ?>

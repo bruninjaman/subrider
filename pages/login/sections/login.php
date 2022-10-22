@@ -3,7 +3,7 @@
     <div class="content">
         <div class="container">
             <div class="row">
-                <form id="loginform" name="loginform" method="POST" action="assets/php/scripts/log-in.php">
+                <form id="loginform" name="loginform" method="POST" action="scripts/log-in.php">
                     <div class="col-4 col-12-medium">
                         <h2>Entre com sua conta da sub-rider!</h2>
                         <label for="fname">Login:</label>
