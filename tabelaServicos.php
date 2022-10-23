@@ -4,11 +4,11 @@
 session_start();
 
 //PERM
-require("./scripts/perm.php");
+require_once("./scripts/perm.php");
 //CONNECTION
-require("./connection/connection.php");
+require_once("./connection/connection.php");
 //FUNCTIONS
-require("./scripts/functions.php");
+require_once("./scripts/functions.php");
 ?>
 <!--
 	Landed by HTML5 UP

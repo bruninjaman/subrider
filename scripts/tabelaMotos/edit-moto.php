@@ -2,11 +2,11 @@
 session_start();
 
 //PERM
-require("../perm.php");
+require_once("../perm.php");
 //CONNECTION
-require("../../connection/connection.php");
+require_once("../../connection/connection.php");
 //FUNCTIONS
-require("../functions.php");
+require_once("../functions.php");
 
 if (isset($_POST['endereco'])) {
     //Upload picture
@@ -17,7 +17,7 @@ if (isset($_POST['endereco'])) {
 
     //Edit
     $foto = uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path);
-    
+
     die();
     $endereco = $_POST['endereco'];
     $ano = $_POST['ano'];

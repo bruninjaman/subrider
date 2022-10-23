@@ -1,8 +1,8 @@
 <?php
 //CONNECTION
-require("../connection/connection.php");
+require_once("../connection/connection.php");
 //FUNCTIONS
-require("functions.php");
+require_once("functions.php");
 
    if (isset($_POST["user"])) {
 		login($_POST["user"],$_POST["pass"],$conn);

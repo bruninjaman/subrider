@@ -2,11 +2,11 @@
 session_start();
 
 //PERM
-require("../../../../assets/php/scripts/perm.php");
+require_once("../../../../assets/php/scripts/perm.php");
 //CONNECTION
-require("../../../../connection/connection.php");
+require_once("../../../../connection/connection.php");
 //FUNCTIONS
-require("../../../../assets/php/scripts/functions.php");
+require_once("../../../../assets/php/scripts/functions.php");
 
 if (isset($_POST['foto'])) {
     $foto = $_POST['foto'];
