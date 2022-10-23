@@ -38,8 +38,11 @@ require_once("./scripts/functions.php");
     
         ?>
     </div>
-    <!-- Scripts -->
+    <!-- Scripts for main theme -->
     <script src="assets/js/global/jquery.min.js"></script>
+    <script src="assets/js/global/jquery.scrolly.min.js"></script>
+    <script src="assets/js/global/jquery.dropotron.min.js"></script>
+    <script src="assets/js/global/jquery.scrollex.min.js"></script>
     <script src="assets/js/global/browser.min.js"></script>
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
