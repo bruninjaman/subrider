@@ -1,7 +1,14 @@
 <!DOCTYPE HTML>
 
 <?php
-session_start();
+    //PERM
+    //require_once("./scripts/perm.php");
+    //CONNECTION
+    //require_once("./connection/connection.php");
+    //FUNCTIONS
+    //require_once("./scripts/functions.php");
+
+    session_start();
 ?>
 <!--
 	Landed by HTML5 UP
@@ -26,7 +33,7 @@ session_start();
         <!-- content -->
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts for main theme -->
     <script src="assets/js/global/jquery.min.js"></script>
     <script src="assets/js/global/jquery.scrolly.min.js"></script>
     <script src="assets/js/global/jquery.dropotron.min.js"></script>
