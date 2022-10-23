@@ -7,9 +7,9 @@
                     <div class="col-4 col-12-medium">
                         <h2>Entre com sua conta da sub-rider!</h2>
                         <label for="fname">Login:</label>
-                        <input type="text" id="user" name="user"><br>
+                        <input type="text" id="user" name="user" maxlength="25" required><br>
                         <label for="lname">Senha:</label>
-                        <input type="password" id="pass" name="pass"><br>
+                        <input type="password" id="pass" name="pass" maxlength="25" required><br>
                     </div>
                     <div class="col-4 col-12-medium">
                         <a class="button primary" href='javascript:loginform.submit()'>Entrar</a>
