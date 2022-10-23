@@ -8,19 +8,17 @@ require("../../connection/connection.php");
 //FUNCTIONS
 require("../functions.php");
 
-if (isset($_POST['foto'])) {
-    //upload foto
+if (isset($_POST['endereco'])) {
+    //Upload picture
     $fotoName = $_FILES["foto"]["name"];
     $fotoSize = $_FILES["foto"]["size"];
     $fotoTmpname = $_FILES["foto"]["tmp_name"];
     $file_path = "upload/moto/";
-    var_dump($file_path);
-    var_dump("in here");
 
-    uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path); //something is broken
-
-    //edit entry
-    $foto = $_POST['foto'];
+    //Edit
+    $foto = uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path);
+    
+    die();
     $endereco = $_POST['endereco'];
     $ano = $_POST['ano'];
     $modelo = $_POST['modelo'];
@@ -42,6 +40,6 @@ if (isset($_POST['foto'])) {
     }
     $mysqli_query .= "WHERE motoID = '" . $motoid . "'";
     mysqli_query($conn, $mysqli_query);
-    //header('Location: ../../tabelaMotos.php');
+    header('Location: ../../tabelaMotos.php');
 }
 ?>
