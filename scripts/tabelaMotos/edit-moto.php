@@ -13,12 +13,12 @@ if (isset($_POST['endereco'])) {
     $fotoName = $_FILES["foto"]["name"];
     $fotoSize = $_FILES["foto"]["size"];
     $fotoTmpname = $_FILES["foto"]["tmp_name"];
-    $file_path = "upload/moto/";
+    $file_path = "../../upload/moto/";
 
     //Edit
     $foto = uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path);
-
-    die();
+    //remove relative path
+    $foto = trim($foto,"../../");
     $endereco = $_POST['endereco'];
     $ano = $_POST['ano'];
     $modelo = $_POST['modelo'];
@@ -28,7 +28,7 @@ if (isset($_POST['endereco'])) {
     $proprietario = $_POST['proprietario'];
     $motoid= $_POST['motoID'];
     
-    if($_POST['foto'] != '') {
+    if($foto != '') {
 
     $mysqli_query = "UPDATE motocicletas "; //UPDATE
     $mysqli_query .= "SET foto = '{$foto}', endereco = '{$endereco}', ";
