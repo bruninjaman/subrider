@@ -28,13 +28,13 @@ require_once("./scripts/functions.php");
 
 </head>
 
-<body class="is-preload landing">
+<body class="is-prload landing">
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./pages/servicesAdd/header/header.php");
-        include("./pages/servicesAdd/sections/addservices.php");
-        include("./pages/servicesAdd/footer/footer.php");
+        include("./pages/servicesEdit/header/header.php");
+        include("./pages/servicesEdit/sections/editservices.php");
+        include("./pages/servicesEdit/footer/footer.php");
         ?>
     </div>
 
@@ -47,8 +47,6 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
-
-    <script src="./pages/servicesAdd/sections/choose_service.js"></script>
 </body>
 
 </html>

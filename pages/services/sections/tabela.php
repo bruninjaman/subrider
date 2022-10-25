@@ -5,7 +5,7 @@
         <div class="table-wrapper">
             <div class="table-wrapper">
                 <?php
-                $items_ordem_query = 'SELECT 1 as type, pecas.grupo grupo, pecas.parte parte, pecas.item item, pecas.foto foto, pecas.valor, pecas.quantidade,pecas.pecaId FROM pecas ';
+                $items_ordem_query = 'SELECT 1 as type, pecas.grupo grupo, pecas.parte parte, pecas.item item, pecas.foto foto, pecas.valor, pecas.quantidade,pecas.pecaId ID FROM pecas ';
                 $items_ordem_query .= "WHERE pecas.ordem = '" . $_GET['ordem'] . "' ";
                 $items_ordem_query .= "UNION ";
                 $items_ordem_query .= "SELECT 2, Null, Null, servicos.item, Null, servicos.valor, 1, servicos.servicoId FROM servicos ";
@@ -36,8 +36,11 @@
                                 <td><?php echo realFormat($item['valor']); ?></td>
                                 <td><?php echo realFormat($item['valor'] * $item['quantidade']); ?></td>
                                 <td>
+                                    <?php
+                                        $typeAndId = "&type=".$item["type"] ."&id=".$item["ID"];
+                                    ?>
                                     <button onclick="location.href='servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>'"><i class="fa-solid fa-plus me-2"></i> Adicionar </button>
-                                    <button onclick="location.href='#'"><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
+                                    <button onclick="location.href='servicesEdit.php?ordem=<?php echo $_GET['ordem'] . $typeAndId ?>'"><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
                                     <button onclick="location.href='#'"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
                                     <!-- <button onclick="return confirm('Deseja realmente excluir este item?')" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
                                 </td>

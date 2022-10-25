@@ -1,0 +1,105 @@
+<?php
+$mysqli_query = "SELECT motoID FROM ordem_servicos ";
+$mysqli_query .= " WHERE Codigo = '" . $_GET['ordem'] . "'";
+
+$motoid = mysqli_query($conn, $mysqli_query);
+$motoid = mysqli_fetch_assoc($motoid);
+
+
+switch ($_GET["type"]) {
+    case 1:
+        $mysqli_query = "SELECT * FROM pecas";
+        $mysqli_query .= " WHERE pecaId = " . $_GET["id"];
+        break;
+    case 2:
+        $mysqli_query = "SELECT * FROM servicos";
+        $mysqli_query .= " WHERE servicoId = " . $_GET["id"];;
+        break;
+    case 3:
+        $mysqli_query = "SELECT * FROM adiantamento";
+        $mysqli_query .= " WHERE IDadiantamento = " . $_GET["id"];;
+        break;
+}
+$item = mysqli_query($conn, $mysqli_query);
+$item = mysqli_fetch_assoc($item);
+?>
+<section id="banner">
+    <div class="content">
+        <center>
+            <form method="post" action="scripts\addservices\addservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
+                <h2>Escolha o tipo de item:</h2>
+                <?php
+                switch ($_GET["type"]) {
+                    case 1:
+                ?>
+                        <input type="radio" id="pecas" name="tipo_item" value="pecas">
+                        <label for="pecas">Peça</label>
+                    <?php
+                        break;
+                    case 2:
+                    ?>
+                        <input type="radio" id="service" name="tipo_item" value="service">
+                        <label for="service">Serviço</label>
+                    <?php
+                        break;
+                    case 3:
+                    ?>
+                        <input type="radio" id="adiantamento" name="tipo_item" value="adiantamento">
+                        <label for="adiantamento">Adiantamento</label>
+                <?php
+                        break;
+                }
+                ?>
+
+                <?php
+                switch ($_GET["type"]) {
+                    case 1:
+                ?>
+
+                        <div id="form_pecas">
+                            <labe>Foto:</labe><br>
+                            <input value=<?php echo $item["foto"] ?> type="file" name="pfoto">
+                            <label>grupo</label><br>
+                            <input value=<?php echo $item["grupo"] ?> type="text" name="pgrupo"><br>
+                            <label>item</label><br>
+                            <input value=<?php echo $item["item"] ?> type="text" name="pitem"><br>
+                            <label>parte</label><br>
+                            <input value=<?php echo $item["parte"] ?> type="text" name="pparte"><br>
+                            <label>quantidade</label><br>
+                            <input value=<?php echo $item["quantidade"] ?> type="text" name="pquantidade"><br>
+                            <label>valor</label><br>
+                            <input value=<?php echo $item["valor"] ?> type="text" name="pvalor"><br>
+                        </div>
+                    <?php
+                        break;
+                    case 2:
+                    ?>
+                        <div id="form_services">
+                            <label>Tipo</label><br>
+                            <input value=<?php echo $item["tipo"] ?> type="text" name="sgrupo"><br>
+                            <label>Item</label><br>
+                            <input value=<?php echo $item["item"] ?> type="text" name="sitem"><br>
+                            <label>Valor</label><br>
+                            <input value=<?php echo $item["valor"] ?> type="text" name="svalor"><br>
+
+                        </div>
+                    <?php
+                        break;
+                    case 3:
+                    ?>
+                        <div id="form_adiantamento">
+                            <label>Descrição</label><br>
+                            <input value=<?php echo $item["descricao"] ?> type="text" name="aitem"><br>
+                            <label>Valor</label><br>
+                            <input value=<?php echo $item["valor"] ?> type="text" name="avalor"><br>
+                        </div>
+                <?php
+                        break;
+                }
+                ?>
+                <br>
+                <input class="button primary" type="submit" value="Adicionar">
+            </form>
+        </center>
+    </div>
+</section>
