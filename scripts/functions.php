@@ -38,4 +38,8 @@
         };
 
     }
+
+    function realFormat($valor) { //Formato Real
+        return 'R$' . number_format($valor, 2, ',', '.');
+    }
 ?>
