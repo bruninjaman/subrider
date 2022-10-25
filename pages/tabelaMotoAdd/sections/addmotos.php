@@ -1,7 +1,7 @@
 <section id="banner">
     <div class="content">
         <center>
-            <form method="post" action="assets/php/scripts/tabelaMotos/add-moto.php">
+            <form method="post" action="scripts/tabelaMotos/add-moto.php">
                 <h2>Adicionar</h2>
                 <label>Foto:</label>
                 <input accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file" name="foto"><br>

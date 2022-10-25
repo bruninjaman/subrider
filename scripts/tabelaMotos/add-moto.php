@@ -2,11 +2,11 @@
 session_start();
 
 //PERM
-require_once("../../../../assets/php/scripts/perm.php");
+require_once("../../scripts/perm.php");
 //CONNECTION
-require_once("../../../../connection/connection.php");
+require_once("../../connection/connection.php");
 //FUNCTIONS
-require_once("../../../../assets/php/scripts/functions.php");
+require_once("../../scripts/functions.php");
 
 if (isset($_POST['foto'])) {
     $foto = $_POST['foto'];
@@ -23,6 +23,6 @@ if (isset($_POST['foto'])) {
     $mysqli_query .= "'{$ano}','{$modelo}','{$marca}','{$placa}','{$km}','{$proprietario}'";
     $mysqli_query .= ") ";
     mysqli_query($conn, $mysqli_query);
-    header('Location: ../../../../tabelaMotos.php');
+    header('Location: ../../tabelaMotos.php');
 }
 ?>
