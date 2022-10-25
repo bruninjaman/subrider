@@ -20,7 +20,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Foto</th>
                             <th colspan=3>Grupo/Parte/Item</th>
                             <th>Quantidade</th>
                             <th>Valor</th>
@@ -33,25 +32,6 @@
                         while ($item = mysqli_fetch_assoc($result)) {
                         ?>
                             <tr>
-                                <?php
-                                switch ($item['type']) {
-                                    case 1:
-                                ?>
-                                        <td><img src='<?php echo $item['foto']; ?>' style="height:100px;width:100px;"></td>
-                                    <?php
-                                        break;
-                                    case 2:
-                                    ?>
-                                        <td><img src='https://dl.com.br/app/uploads/2018/04/img/ferramenta_sem_cor.png' style="height:100px;width:100px;"></td>
-                                    <?php
-                                        break;
-                                    case 3:
-                                    ?>
-                                        <td><img src='https://www.imagensempng.com.br/wp-content/uploads/2021/09/Carteira-Png.png' style="height:100px;width:100px;"></td>
-                                <?php
-                                        break;
-                                }
-                                ?>
                                 <td colspan=3><?php echo $item['grupo'] != null ? "" . $item['grupo'] : ""; ?><?php echo $item['parte'] != null ? "/" . $item['parte'] . "/" : ""; ?><?php echo $item['item'] != null ? "" . $item['item'] : ""; ?></td>
                                 <td><?php echo $item['quantidade']; ?></td>
                                 <td><?php echo $item['valor']; ?></td>
