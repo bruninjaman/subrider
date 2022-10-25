@@ -2,11 +2,11 @@
 session_start();
 
 //PERM
-require_once("../../../../assets/php/scripts/perm.php");
+require_once("../perm.php");
 //CONNECTION
-require_once("../../../../connection/connection.php");
+require_once("../../connection/connection.php");
 //FUNCTIONS
-require_once("../../../../assets/php/scripts/functions.php");
+require_once("../functions.php");
 
 //CREATE NEW CODE
 $mysqli_query = "SELECT Codigo FROM ordem_servicos ";
@@ -35,5 +35,5 @@ $mysqli_query .= "VALUE ('" . $novo_codigo . "','". $_GET["motoID"] ."') ";
 //CREATE SERVICE
 
 mysqli_query($conn,$mysqli_query);
-header('location: ../../../../services.php?'. $novo_codigo);
+header('location: ../../services.php?ordem='. $novo_codigo);
 ?>
