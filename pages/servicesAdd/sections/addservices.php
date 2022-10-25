@@ -8,7 +8,7 @@
 <section id="banner">
     <div class="content">
         <center>
-            <form method="post" action="assets\php\scripts\addservices\addservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
+            <form method="post" action="scripts\addservices\addservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
                 <h2>Escolha o tipo de item:</h2>
 
                 <input onchange="tipo_item_onchange()" type="radio" id="pecas" name="tipo_item" value="pecas">

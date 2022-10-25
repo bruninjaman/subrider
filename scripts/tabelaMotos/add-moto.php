@@ -8,7 +8,7 @@ require_once("../../connection/connection.php");
 //FUNCTIONS
 require_once("../../scripts/functions.php");
 
-if (isset($_POST['foto'])) {
+if (isset($_FILES["foto"])) {
     //Upload picture
     $fotoName = $_FILES["foto"]["name"];
     $fotoSize = $_FILES["foto"]["size"];

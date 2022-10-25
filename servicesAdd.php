@@ -48,7 +48,7 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <script src="./assets/php/includes/pages/servicesAdd/sections/choose_service.js"></script>
+    <script src="./pages/servicesAdd/sections/choose_service.js"></script>
 </body>
 
 </html>

@@ -2,11 +2,11 @@
 session_start();
 
 //PERM
-require_once("../../../../assets/php/scripts/perm.php");
+require_once("../../scripts/perm.php");
 //CONNECTION
-require_once("../../../../connection/connection.php");
+require_once("../../connection/connection.php");
 //FUNCTIONS
-require_once("../../../../assets/php/scripts/functions.php");
+require_once("../../scripts/functions.php");
 
 if (isset($_POST['tipo_item'])) {
     switch($_POST['tipo_item']) {
@@ -42,7 +42,7 @@ if (isset($_POST['tipo_item'])) {
     }
     //var_dump($mysqli_query);
     mysqli_query($conn, $mysqli_query);
-    header('Location: ../../../../services.php?ordem='. $_GET['ordem']);
+    header('Location: ../../services.php?ordem='. $_GET['ordem']);
 }
 
 ?>

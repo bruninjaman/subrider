@@ -4,7 +4,7 @@
             <form method="post" action="scripts/tabelaMotos/add-moto.php" enctype="multipart/form-data">
                 <h2>Adicionar</h2>
                 <label>Foto:</label>
-                <input accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file" name="foto">
+                <input name="foto" accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file">
                 <br>
                 <img id="foto" src="https://spassodourado.com.br/wp-content/uploads/2015/01/default-placeholder.png" style="height:400px;width:400px;" >
 
