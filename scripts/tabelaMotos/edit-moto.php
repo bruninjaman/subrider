@@ -15,10 +15,11 @@ if (isset($_POST['endereco'])) {
     $fotoTmpname = $_FILES["foto"]["tmp_name"];
     $file_path = "../../upload/moto/";
 
-    //Edit
+    //upload
     $foto = uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path);
     //remove relative path
     $foto = trim($foto,"../../");
+    
     $endereco = $_POST['endereco'];
     $ano = $_POST['ano'];
     $modelo = $_POST['modelo'];
