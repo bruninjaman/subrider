@@ -14,7 +14,6 @@ if (isset($_POST['foto'])) {
     $fotoSize = $_FILES["foto"]["size"];
     $fotoTmpname = $_FILES["foto"]["tmp_name"];
     $file_path = "../../upload/moto/";
-
     //upload
     $foto = uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path);
     //remove relative path

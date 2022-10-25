@@ -49,7 +49,7 @@ require_once("./scripts/functions.php");
     <script src="assets/js/main.js"></script>
     
 
-    <script src="assets\php\includes\pages\tabelaMotos\sections\delete_confirm.js"></script>
+    <script src=".\pages\tabelaMotos\sections\delete_confirm.js"></script>
 </body>
 
 </html>
