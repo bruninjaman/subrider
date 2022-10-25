@@ -33,8 +33,8 @@
                             <tr>
                                 <td colspan=3><?php echo $item['grupo'] != null ? "" . $item['grupo'] : ""; ?><?php echo $item['parte'] != null ? "/" . $item['parte'] . "/" : ""; ?><?php echo $item['item'] != null ? "" . $item['item'] : ""; ?></td>
                                 <td><?php echo $item['quantidade']; ?></td>
-                                <td><?php echo $item['valor']; ?></td>
-                                <td><?php echo $item['valor'] * $item['quantidade']; ?></td>
+                                <td><?php echo 'R$' . number_format($item['valor'], 2, ',', '.'); ?></td>
+                                <td><?php echo 'R$' . number_format($item['valor'] * $item['quantidade'], 2, ',', '.'); ?></td>
                                 <td>
                                     <button onclick="location.href='servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>'"><i class="fa-solid fa-plus me-2"></i> Adicionar </button>
                                     <button onclick="location.href='#'"><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
