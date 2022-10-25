@@ -40,7 +40,7 @@ if (isset($_POST['tipo_item'])) {
             $mysqli_query .= " '". $_POST['avalor'] . "')";
             break;
     }
-    var_dump($mysqli_query);
+    //var_dump($mysqli_query);
     mysqli_query($conn, $mysqli_query);
     header('Location: ../../../../services.php?ordem='. $_GET['ordem']);
 }
