@@ -26,7 +26,7 @@ $item = mysqli_fetch_assoc($item);
 <section id="banner">
     <div class="content">
         <center>
-            <form method="post" action="scripts\addservices\addservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
+            <form method="post" action="scripts\editservices\editservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
                 <h2>Escolha o tipo de item:</h2>
                 <?php
                 switch ($_GET["type"]) {
@@ -34,18 +34,21 @@ $item = mysqli_fetch_assoc($item);
                 ?>
                         <input type="radio" id="pecas" name="tipo_item" value="pecas">
                         <label for="pecas">Peça</label>
+                        <input type="hidden" name="type_pecas">
                     <?php
                         break;
                     case 2:
                     ?>
                         <input type="radio" id="service" name="tipo_item" value="service">
                         <label for="service">Serviço</label>
+                        <input type="hidden" name="type_servicos">
                     <?php
                         break;
                     case 3:
                     ?>
                         <input type="radio" id="adiantamento" name="tipo_item" value="adiantamento">
                         <label for="adiantamento">Adiantamento</label>
+                        <input type="hidden" name="type_adiantamento">
                 <?php
                         break;
                 }
@@ -57,8 +60,6 @@ $item = mysqli_fetch_assoc($item);
                 ?>
 
                         <div id="form_pecas">
-                            <labe>Foto:</labe><br>
-                            <input value=<?php echo $item["foto"] ?> type="file" name="pfoto">
                             <label>grupo</label><br>
                             <input value=<?php echo $item["grupo"] ?> type="text" name="pgrupo"><br>
                             <label>item</label><br>
@@ -98,7 +99,7 @@ $item = mysqli_fetch_assoc($item);
                 }
                 ?>
                 <br>
-                <input class="button primary" type="submit" value="Adicionar">
+                <input class="button primary" type="submit" value="Editar">
             </form>
         </center>
     </div>

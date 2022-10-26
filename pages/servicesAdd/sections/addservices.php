@@ -19,8 +19,6 @@
                 <label for="adiantamento">Adiantamento</label>
 
                 <div id="form_pecas" style="display: none;">
-                    <labe>Foto:</labe><br>
-                    <input type="file" name="pfoto">
                     <label>grupo</label><br>
                     <input type="text" name="pgrupo"><br>
                     <label>item</label><br>
