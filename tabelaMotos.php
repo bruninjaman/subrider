@@ -49,6 +49,7 @@ require_once("./scripts/functions.php");
     <script src="assets/js/main.js"></script>
     
 
+    <!-- Delete button -->
     <script src=".\pages\tabelaMotos\sections\delete_confirm.js"></script>
 </body>
 
