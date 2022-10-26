@@ -26,7 +26,7 @@ $item = mysqli_fetch_assoc($item);
 <section id="banner">
     <div class="content">
         <center>
-            <form method="post" action="scripts\editservices\editservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
+            <form method="post" action="scripts\editservices\editservice.php?ordem=<?php echo $_GET['ordem'] . "&id=" . $_GET["id"] ?>">
                 <h2>Escolha o tipo de item:</h2>
                 <?php
                 switch ($_GET["type"]) {
