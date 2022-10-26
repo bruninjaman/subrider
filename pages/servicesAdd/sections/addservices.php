@@ -41,9 +41,9 @@
                 </div>
                 <div id="form_adiantamento" style="display: none;">
                     <label>Descrição</label><br>
-                    <input type="text" name="aitem" value="test"><br>
+                    <input type="text" name="aitem"><br>
                     <label>Valor</label><br>
-                    <input type="text" name="avalor" value="test"><br>
+                    <input type="text" name="avalor"><br>
                 </div>
                 <br>
                 <input class="button primary" type="submit" value="Adicionar">
