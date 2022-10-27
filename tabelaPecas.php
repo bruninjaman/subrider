@@ -47,6 +47,9 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
+
+    <!-- Delete button -->
+    <script src=".\pages\tabelaPecas\sections\delete_confirm.js"></script>
 </body>
 
 </html>
