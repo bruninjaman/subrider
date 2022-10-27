@@ -1,6 +1,6 @@
-function delete_confirm(question,motoID) {
+function delete_confirm(question,pecaID) {
     if (confirm(question)) {
-        location.href = 'scripts/tabelaMotos/delete-moto.php?motoID='+motoID;
+        location.href = 'scripts/tabelaPecasDelete/delete-peca.php?pecaID='+pecaID;
     } else {
         return false;
     }
