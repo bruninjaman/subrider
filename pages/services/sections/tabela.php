@@ -52,7 +52,7 @@
                 </table>
                 <div class="buttons-table">
                     <a class='button secondary' href="servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>">Adicionar item</a>
-                    <a class='button primary' href="pdf/index.php">Abrir como PDF</a>
+                    <a class='button primary' href="pdf/download.php?ordem=<?php echo $_GET['ordem'] ?>">Baixar como PDF</a>
                 </div>
             </div>
         </div>
