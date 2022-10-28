@@ -48,12 +48,9 @@ if (isset($_POST['avalor']) || isset($_POST['svalor']) || isset($_POST['pvalor']
         $mysqli_query .= " descricao = '{$descricao}' ";
         $mysqli_query .= " WHERE IDadiantamento = '{$id}' ";
     }
-
-
-
-    var_dump($mysqli_query);
-    //mysqli_query($conn, $mysqli_query);
-    //header('Location: ../../services.php?ordem='. $_GET['ordem']);
+    
+    mysqli_query($conn, $mysqli_query);
+    header('Location: ../../services.php?ordem='. $_GET['ordem']);
 }
 
 ?>
