@@ -15,7 +15,7 @@
                 $items_ordem_query .= "WHERE adiantamento.ordem = '" . $_GET['ordem'] . "' ";
                 $result = mysqli_query($conn, $items_ordem_query);
                 ?>
-                <table class="table">
+                <table class="table alt">
                     <thead>
                         <tr>
                             <th colspan=3>Grupo/Parte/Item</th>
