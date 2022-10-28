@@ -20,7 +20,7 @@ $result = mysqli_query($conn, $motocicletas_query);
                             <li><?php echo $moto['ano']?></li>
                             <li><?php echo $moto['modelo']?></li>
                             <li><?php echo $moto['km']?></li>
-                            <li><?php echo $moto['foto']?></li>
+                            <li><img style="height:200px;width:200px;" src="<?php echo $moto['foto']?>"></li>
                         </ol>
                         <?php
                     }

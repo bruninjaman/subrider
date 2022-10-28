@@ -30,7 +30,7 @@
                                 <td><?php echo $moto['modelo']; ?></td>
                                 <td><?php echo $moto['marca']; ?></td>
                                 <td><?php echo $moto['placa']; ?></td>
-                                <td><?php echo $moto['km']; ?></td>
+                                <td><?php echo KMFormat($moto['km']); ?></td>
                                 <td><?php echo $moto['proprietario']; ?></td>
                                 <td>
                                     <button onclick="location.href='tabelaMotoServices.php?motoID=<?php echo $moto['motoId'] ?>'"><i class="fa-solid fa-toolbox me-2"></i></i> Serviços</button>

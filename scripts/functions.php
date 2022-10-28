@@ -42,4 +42,13 @@
     function realFormat($valor) { //Formato Real
         return 'R$' . number_format($valor, 2, ',', '.');
     }
+    function KMFormat($valor) { //Formato Real
+        return number_format($valor, 0, ',', '.') . "km";
+    }
+    function KMUnformat($valor) { //Formato Real
+        $valor = trim($valor,"km");
+        $valor = trim($valor,".");
+        $valor = trim($valor,",");
+        return $valor;
+    }
 ?>

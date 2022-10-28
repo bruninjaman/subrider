@@ -30,7 +30,8 @@ $result = mysqli_fetch_assoc($result);
                 <input type="text" name="placa" style="width:300px" value="<?php echo $result["placa"] ?>"><br>
 
                 <label>KM:</label>
-                <input type="text" name="KM" style="width:150px" value="<?php echo $result["km"] ?>"><br>
+                <small>Não utilize letras ou simbolos.</small>
+                <input type="text" name="KM" style="width:150px" value="<?php echo KMUnformat($result["km"]) ?>"><br>
 
                 <label>Proprietario:</label>
                 <input type="text" name="proprietario" style="width:400px" value="<?php echo $result["proprietario"] ?>"><br>
