@@ -45,6 +45,7 @@
                         ?>
                     </tbody>
                 </table>
+                <link rel="stylesheet" href="./assets/css/pagination.css">
                 <div class="pagination-style">
                     <ul class="pagination">
                         <li><a href="tabelaMotos.php?page=<?php echo isset($_GET['page']) && $_GET['page'] > 0  ? $_GET['page']-1 : 0 ?>">«</a></li>

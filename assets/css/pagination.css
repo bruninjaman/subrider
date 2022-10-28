@@ -1,0 +1,19 @@
+.pagination-style li a:hover {
+    color: white !important;
+    background-color: #e44c65 !important;
+}
+.pagination-style li a {
+    color: white;
+    float: left;
+    padding: 4px 10px;
+    font-size: 16px;
+    border: 1px solid #ddd; /* Gray */
+}
+.pagination-style li {
+    display: inline-block;
+}
+.pagination a {
+    text-decoration: none;
+    list-style: none;
+    border-bottom: none;
+}
