@@ -61,15 +61,15 @@ $item = mysqli_fetch_assoc($item);
 
                         <div id="form_pecas">
                             <label>grupo</label><br>
-                            <input value=<?php echo $item["grupo"] ?> type="text" name="pgrupo"><br>
+                            <input value="<?php echo $item["grupo"] ?>" type="text" name="pgrupo"><br>
                             <label>item</label><br>
-                            <input value=<?php echo $item["item"] ?> type="text" name="pitem"><br>
+                            <input value="<?php echo $item["item"] ?>" type="text" name="pitem"><br>
                             <label>parte</label><br>
-                            <input value=<?php echo $item["parte"] ?> type="text" name="pparte"><br>
+                            <input value="<?php echo $item["parte"] ?>" type="text" name="pparte"><br>
                             <label>quantidade</label><br>
-                            <input value=<?php echo $item["quantidade"] ?> type="text" name="pquantidade"><br>
+                            <input value="<?php echo $item["quantidade"] ?>" type="text" name="pquantidade"><br>
                             <label>valor</label><br>
-                            <input value=<?php echo $item["valor"] ?> type="text" name="pvalor"><br>
+                            <input value="<?php echo $item["valor"] ?>" type="text" name="pvalor"><br>
                         </div>
                     <?php
                         break;
@@ -77,11 +77,11 @@ $item = mysqli_fetch_assoc($item);
                     ?>
                         <div id="form_services">
                             <label>Tipo</label><br>
-                            <input value=<?php echo $item["tipo"] ?> type="text" name="sgrupo"><br>
+                            <input value="<?php echo $item["tipo"] ?>" type="text" name="sgrupo"><br>
                             <label>Item</label><br>
-                            <input value=<?php echo $item["item"] ?> type="text" name="sitem"><br>
+                            <input value="<?php echo $item["item"] ?>" type="text" name="sitem"><br>
                             <label>Valor</label><br>
-                            <input value=<?php echo $item["valor"] ?> type="text" name="svalor"><br>
+                            <input value="<?php echo $item["valor"] ?>" type="text" name="svalor"><br>
 
                         </div>
                     <?php
@@ -90,9 +90,9 @@ $item = mysqli_fetch_assoc($item);
                     ?>
                         <div id="form_adiantamento">
                             <label>Descrição</label><br>
-                            <input value=<?php echo $item["descricao"] ?> type="text" name="aitem"><br>
+                            <input value="<?php echo $item["descricao"] ?>" type="text" name="aitem"><br>
                             <label>Valor</label><br>
-                            <input value=<?php echo $item["valor"] ?> type="text" name="avalor"><br>
+                            <input value="<?php echo $item["valor"] ?>" type="text" name="avalor"><br>
                         </div>
                 <?php
                         break;

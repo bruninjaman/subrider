@@ -12,16 +12,16 @@ $result = mysqli_fetch_assoc($result);
                 <input type=hidden name="servicoID" value="<?php echo $result["servicoId"]; ?>">
 
                 <br><label>item:</label>
-                <input type="text" name="item" style="width:400px" value=" <?php echo $result["item"] ?> "><br>
+                <input type="text" name="item" style="width:400px" value="<?php echo $result["item"] ?>"><br>
 
                 <label>ordem:</label>
-                <input type="text" name="ordem" style="width:200px" value=" <?php echo $result["ordem"] ?> "><br>
+                <input type="text" name="ordem" style="width:200px" value="<?php echo $result["ordem"] ?>"><br>
 
                 <label>tipo:</label>
-                <input type="text" name="tipo" style="width:300px" value=" <?php echo $result["tipo"] ?> "><br>
+                <input type="text" name="tipo" style="width:300px" value="<?php echo $result["tipo"] ?>"><br>
 
                 <label>valor:</label>
-                <input type="text" name="valor" style="width:300px" value=" <?php echo $result["valor"] ?> "><br>
+                <input type="text" name="valor" style="width:300px" value="<?php echo $result["valor"] ?>"><br>
 
                 <input class="button primary" type="submit" value="Editar">
             </form>
