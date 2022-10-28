@@ -32,22 +32,19 @@ $item = mysqli_fetch_assoc($item);
                 switch ($_GET["type"]) {
                     case 1:
                 ?>
-                        <input type="radio" id="pecas" name="tipo_item" value="pecas">
-                        <label for="pecas">Peça</label>
+                        <input type="button" class="button primary fit" id="pecas" name="tipo_item" value="pecas">
                         <input type="hidden" name="type_pecas">
                     <?php
                         break;
                     case 2:
                     ?>
-                        <input type="radio" id="service" name="tipo_item" value="service">
-                        <label for="service">Serviço</label>
+                        <input type="button" class="button primary fit" id="service" name="tipo_item" value="service">
                         <input type="hidden" name="type_servicos">
                     <?php
                         break;
                     case 3:
                     ?>
-                        <input type="radio" id="adiantamento" name="tipo_item" value="adiantamento">
-                        <label for="adiantamento">Adiantamento</label>
+                        <input type="button" class="button primary fit" id="adiantamento" name="tipo_item" value="adiantamento">
                         <input type="hidden" name="type_adiantamento">
                 <?php
                         break;
