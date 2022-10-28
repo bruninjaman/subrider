@@ -12,24 +12,24 @@ if (isset($_POST['avalor']) || isset($_POST['svalor']) || isset($_POST['pvalor']
     $id = $_GET["id"];
     if(isset($_POST['type_pecas'])) {
 
-        $grupo = $_POST["grupo"];
-        $item = $_POST["item"];
-        $parte = $_POST["parte"];
-        $quantidade = $_POST["quantidade"];
+        $grupo = $_POST["pgrupo"];
+        $item = $_POST["pitem"];
+        $parte = $_POST["pparte"];
+        $quantidade = $_POST["pquantidade"];
         $valor = $_POST["pvalor"];
 
         $mysqli_query = " UPDATE pecas ";
         $mysqli_query .= " SET grupo = '{$grupo}', ";
         $mysqli_query .= " item = '{$item}', ";
-        $mysqli_query .= " item = '{$parte}', ";
-        $mysqli_query .= " item = '{$quantidade}', ";
-        $mysqli_query .= " item = '{$valor}' ";
+        $mysqli_query .= " parte = '{$parte}', ";
+        $mysqli_query .= " quantidade = '{$quantidade}', ";
+        $mysqli_query .= " valor = '{$valor}' ";
         $mysqli_query .= " WHERE pecaId = '{$id}' ";
     }
     if(isset($_POST['type_servicos'])) {
 
-        $tipo = $_POST["tipo"];
-        $item = $_POST["item"];
+        $tipo = $_POST["sgrupo"];
+        $item = $_POST["sitem"];
         $valor = $_POST["svalor"];
 
         $mysqli_query = " UPDATE servicos ";
@@ -48,7 +48,7 @@ if (isset($_POST['avalor']) || isset($_POST['svalor']) || isset($_POST['pvalor']
         $mysqli_query .= " descricao = '{$descricao}' ";
         $mysqli_query .= " WHERE IDadiantamento = '{$id}' ";
     }
-    
+
     mysqli_query($conn, $mysqli_query);
     header('Location: ../../services.php?ordem='. $_GET['ordem']);
 }
