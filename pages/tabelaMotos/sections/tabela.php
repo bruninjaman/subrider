@@ -19,7 +19,7 @@
                     <tbody>
                         <?php
                         $sql_query = "SELECT * FROM motocicletas ";
-                        $sql_query .= "LIMIT " . ((isset($_GET['page']) ? $_GET['page']-1 : 0) * 5) . ", 5";
+                        $sql_query .= "LIMIT " . ((isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5) . ", 5";
                         $result = mysqli_query($conn, $sql_query);
                         while ($moto = mysqli_fetch_assoc($result)) {
                         ?>
@@ -45,22 +45,34 @@
                         ?>
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
                 <link rel="stylesheet" href="./assets/css/pagination.css">
                 <?php
                 $sql_query = "SELECT * FROM motocicletas ";
                 $result = mysqli_query($conn, $sql_query);
-                $number_of_page = floor(mysqli_num_rows($result) / 5)+1;
+                $number_of_page = floor(mysqli_num_rows($result) / 5) + 1;
                 ?>
                 <div class="pagination-style">
                     <ul class="pagination">
-                        <li><a href="tabelaMotos.php?page=<?php echo isset($_GET['page']) && $_GET['page'] > 0  ? $_GET['page'] - 1 : 0 ?>">«</a></li>
                         <?php
+                        if (isset($_GET['page']) ? $_GET['page'] : 0 > 1) {
+                        ?>
+                            <li><a href="tabelaMotos.php?page=<?php echo isset($_GET['page']) && $_GET['page'] > 0  ? $_GET['page'] - 1 : 0 ?>">«</a></li>
+                        <?php
+                        }
                         //display the link of the pages in URL  
                         for ($_GET['page'] = 1; $_GET['page'] <= $number_of_page; $_GET['page']++) {
-                         echo '<li><a href = "tabelaMotos.php?page=' . $_GET['page'] . '">' . $_GET['page'] . ' </a></li>';
+                            echo '<li><a href = "tabelaMotos.php?page=' . $_GET['page'] . '">' . $_GET['page'] . ' </a></li>';
                         }
                         ?>
-                        <li><a href="tabelaMotos.php?page=<?php echo isset($_GET['page']) ? $_GET['page'] + 1 : 0 ?>">»</a></li>
+                        <?php
+                        if (isset($_GET['page']) ? $_GET['page'] : 0 <= $number_of_page) {
+                        ?>
+                            <li><a href="tabelaMotos.php?page=<?php echo isset($_GET['page']) ? $_GET['page'] + 1 : 0 ?>">»</a></li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
