@@ -41,6 +41,7 @@ if (isset($_POST['grupo'])) {
     $mysqli_query .= "WHERE pecaId = '" . $pecaId . "'";
 
     mysqli_query($conn, $mysqli_query);
+    mysqli_close($conn);
     header('Location: ../../tabelaPecas.php');
 }
 ?>

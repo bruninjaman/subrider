@@ -50,3 +50,7 @@ require_once("./scripts/functions.php");
 </body>
 
 </html>
+
+<?php
+    mysqli_close($conn);
+?>

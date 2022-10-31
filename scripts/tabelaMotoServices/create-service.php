@@ -35,5 +35,6 @@ $mysqli_query .= "VALUE ('" . $novo_codigo . "','". $_GET["motoID"] ."') ";
 //CREATE SERVICE
 
 mysqli_query($conn,$mysqli_query);
+mysqli_close($conn);
 header('location: ../../services.php?ordem='. $novo_codigo);
 ?>

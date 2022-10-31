@@ -22,6 +22,7 @@ if (isset($_POST['item'])) {
 
     var_dump($mysqli_query);
     mysqli_query($conn, $mysqli_query);
+    mysqli_close($conn);
     header('Location: ../../tabelaServicos.php');
 }
 ?>

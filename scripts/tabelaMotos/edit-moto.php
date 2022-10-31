@@ -41,6 +41,7 @@ if (isset($_POST['endereco'])) {
     }
     $mysqli_query .= "WHERE motoID = '" . $motoid . "'";
     mysqli_query($conn, $mysqli_query);
+    mysqli_close($conn);
     header('Location: ../../tabelaMotos.php');
 }
 ?>

@@ -31,6 +31,7 @@ if (isset($_FILES["foto"])) {
     $mysqli_query .= ") ";
     
     mysqli_query($conn, $mysqli_query);
+    mysqli_close($conn);
     header('Location: ../../tabelaPecas.php');
 }
 ?>

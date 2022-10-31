@@ -146,5 +146,6 @@ $loadhtmlstring .= '
 $dompdf->loadHtml($loadhtmlstring);
 $dompdf->render();
 
+mysqli_close($conn);
 header('content-type: application/pdf');
 echo $dompdf->stream();

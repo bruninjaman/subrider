@@ -50,6 +50,7 @@ if (isset($_POST['avalor']) || isset($_POST['svalor']) || isset($_POST['pvalor']
     }
 
     mysqli_query($conn, $mysqli_query);
+    mysqli_close($conn);
     header('Location: ../../services.php?ordem='. $_GET['ordem']);
 }
 

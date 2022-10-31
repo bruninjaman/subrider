@@ -12,5 +12,6 @@ require_once("../../scripts/functions.php");
 $mysqli_query = "DELETE FROM motocicletas ";
 $mysqli_query .= "WHERE motoId = ". $_GET['motoID'];
 mysqli_query($conn, $mysqli_query);
+mysqli_close($conn);
 header('Location: ../../tabelaMotos.php');
 ?>
