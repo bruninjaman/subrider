@@ -44,35 +44,10 @@
                         ?>
                     </tbody>
                 </table>
-                <!-- Pagination -->
-                <link rel="stylesheet" href="./assets/css/pagination.css">
                 <?php
                 $sql_query = "SELECT * FROM pecas ";
-                $result = mysqli_query($conn, $sql_query);
-                $number_of_page = floor(mysqli_num_rows($result) / 5) + 1;
+                pagination($conn, $sql_query);
                 ?>
-                <div class="pagination-style">
-                    <ul class="pagination">
-                        <?php
-                        if (isset($_GET['page']) ? $_GET['page'] : 0 > 1) {
-                        ?>
-                            <li><a href="tabelaPecas.php?page=<?php echo isset($_GET['page']) && $_GET['page'] > 0  ? $_GET['page'] - 1 : 0 ?>">«</a></li>
-                        <?php
-                        }
-                        //display the link of the pages in URL  
-                        for ($_GET['page'] = 1; $_GET['page'] <= $number_of_page; $_GET['page']++) {
-                            echo '<li><a href = "tabelaPecas.php?page=' . $_GET['page'] . '">' . $_GET['page'] . ' </a></li>';
-                        }
-                        ?>
-                        <?php
-                        if (isset($_GET['page']) ? $_GET['page'] : 0 <= $number_of_page) {
-                        ?>
-                            <li><a href="tabelaPecas.php?page=<?php echo isset($_GET['page']) ? $_GET['page'] + 1 : 0 ?>">»</a></li>
-                        <?php
-                        }
-                        ?>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
