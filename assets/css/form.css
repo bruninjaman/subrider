@@ -1,0 +1,66 @@
+#banner:after {
+    background-color: #181921 !important;
+}
+#banner {
+    background-color: #181921 !important;
+}
+
+.logogray {
+    filter: brightness(0.40);
+    height:40px;
+    width:130px;
+}
+.form {
+    border-radius: 5px;
+    margin-top: 5em;
+    margin-bottom: 5em;
+    box-shadow: 0 0 10px 5px black;
+    background-color: #1b1c24;
+    text-align: left;
+    padding: 30px !important;
+    width: 700px;
+}
+
+.form label {
+    color: gray;
+    margin: 2px;
+    display: inline-block;
+}
+
+.form h2 {
+    float: left;
+}
+
+.form input {
+    background: #17171e !important;
+    background-color: #17171e;
+    display: inline-block;
+    height: 3em;
+    border: 3px solid #2c2d34 !important;
+    border-radius: 5px;
+
+}
+
+.form input[type="number"] {
+    width: 80px;
+}
+
+.form input:focus {
+    border: 3px solid #fb4545;
+}
+
+.form input[type="number"]:focus {
+    border: 3px solid #fb4545;
+}
+
+.form input[type="submit"] {
+    background-color: #00c063 !important;
+    width: 250px;
+}
+
+.form input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    background-color: red;
+    color: red;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
