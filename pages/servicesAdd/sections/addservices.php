@@ -8,18 +8,17 @@ $motoid = mysqli_fetch_assoc($motoid);
 <section id="banner">
     <div class="content form">
         <img class="fit logogray" src="./assets/css/images/logo-branco-crop.png">
-        <h2></h2>
         <center>
             <form method="post" action="scripts\addservices\addservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
                 <div>
                     <div class="row">
                         <div class="col-12">
                             <input onchange="tipo_item_onchange()" type="radio" id="pecas" name="tipo_item" value="pecas">
-                            <label for="pecas">Peça</label>
+                            <label for="pecas"><h4>Peça</h4></label>
                             <input onchange="tipo_item_onchange()" type="radio" id="service" name="tipo_item" value="service">
-                            <label for="service">Serviço</label>
+                            <label for="service"><h4>Serviço</h4></label>
                             <input onchange="tipo_item_onchange()" type="radio" id="adiantamento" name="tipo_item" value="adiantamento">
-                            <label for="adiantamento">Adiantamento</label>
+                            <label for="adiantamento"><h4>Adiantamento</h4></label>
                         </div>
                     </div>
 
@@ -71,12 +70,10 @@ $motoid = mysqli_fetch_assoc($motoid);
                         </div>
                         <div class="row">
                             <div class="col-2">
-                            </div>
-                            <div class="col-2">
                                 <label>Valor</label>
                                 <input type="number" name="svalor">
                             </div>
-                            <div class="col-1">
+                            <div class="col-3">
                             </div>
                             <div class="col-7">
                                 <br>
@@ -87,18 +84,14 @@ $motoid = mysqli_fetch_assoc($motoid);
                     </div>
                     <div id="form_adiantamento" class="row gtr-uniform gtr-50" style="display: none;">
                         <div class="row">
-                            <div class="col-1">
-                            </div>
-                            <div class="col-7">
+                            <div class="col-10">
                                 <label>Descrição</label>
                                 <input type="text" name="aitem">
                             </div>
-                            <div class="col-3">
-                                <label>Valor</label><br>
+                            <div class="col-2">
+                                <label>Valor</label>
                                 <input type="number" name="avalor">
-                            </div>
-                            <div class="col-1">
-                            </div>
+                            </div>                         
                         </div>
                         <div class="row">
                             <div class="col-1">

@@ -1,5 +1,21 @@
+@font-face {
+    font-family: 'Inter-SemiBold';
+    src: url(fonts/Inter-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: 'Inter-Bold';
+    src: url(fonts/Inter-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Inter-Medium';
+    src: url(fonts/Inter-Medium.ttf);
+}
+
 #banner:after {
     background-color: #181921 !important;
+    background-image: none !important;
 }
 #banner {
     background-color: #181921 !important;
@@ -23,22 +39,42 @@
 
 .form label {
     color: gray;
-    margin: 2px;
-    display: inline-block;
+    text-align: left;
+    display: block;
+    font-family: 'Inter-Medium';
 }
 
 .form h2 {
-    float: left;
+    font-family: 'Inter-SemiBold';
+}
+
+.form h4 {
+    font-family: 'Inter-Bold';
+    src: url('./fonts/Inter-Bold.ttf');
+}
+.form .button-title {
+    background-color: #e44c65 !important;
+    font-family: 'Arial Black';
+    width: 15em;
+    height: 3.5em;
+}
+.form input:hover.button-title {
+    background-color: #e44c65 !important;
+    color: white !important;
+    border-color: #17171e !important;
+    font-family: 'Arial Black';
 }
 
 .form input {
     background: #17171e !important;
     background-color: #17171e;
-    display: inline-block;
     height: 3em;
     border: 3px solid #2c2d34 !important;
-    border-radius: 5px;
+    border-radius: 5px !important;
 
+}
+.form input#submit {
+    font-family: 'Inter-SemiBold';
 }
 
 .form input[type="number"] {
@@ -55,6 +91,7 @@
 
 .form input[type="submit"] {
     background-color: #00c063 !important;
+    font-size: 1.2em;
     width: 250px;
 }
 
@@ -63,4 +100,8 @@ input::-webkit-inner-spin-button {
     background-color: red;
     color: red;
     /* <-- Apparently some margin are still there even though it's hidden */
+}
+.form input[type="file"] {
+    background: transparent !important;
+    border: none !important;
 }
