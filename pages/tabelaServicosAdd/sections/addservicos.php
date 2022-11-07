@@ -9,7 +9,6 @@
             </div>
             <div class="row">
                 <div class="col-2">
-
                     <label>valor:</label>
                     <input type="number" name="valor" >
                 </div>

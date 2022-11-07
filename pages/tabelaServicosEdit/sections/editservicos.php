@@ -17,7 +17,7 @@ $result = mysqli_fetch_assoc($result);
             <div class="row">
                 <div class="col-2">
                     <label>valor:</label>
-                    <input type="text" name="number" value="<?php echo $result["valor"] ?>">
+                    <input type="text" name="valor" value="<?php echo $result["valor"] ?>">
                 </div>
                 <div class="col-4">
 
