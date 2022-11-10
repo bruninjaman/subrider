@@ -14,27 +14,38 @@ $motoid = mysqli_fetch_assoc($motoid);
                     <div class="row">
                         <div class="col-12">
                             <input onchange="tipo_item_onchange()" type="radio" id="pecas" name="tipo_item" value="pecas">
-                            <label for="pecas"><h4>Peça</h4></label>
+                            <label for="pecas">
+                                <h4>Peça</h4>
+                            </label>
                             <input onchange="tipo_item_onchange()" type="radio" id="service" name="tipo_item" value="service">
-                            <label for="service"><h4>Serviço</h4></label>
+                            <label for="service">
+                                <h4>Serviço</h4>
+                            </label>
                             <input onchange="tipo_item_onchange()" type="radio" id="adiantamento" name="tipo_item" value="adiantamento">
-                            <label for="adiantamento"><h4>Adiantamento</h4></label>
+                            <label for="adiantamento">
+                                <h4>Adiantamento</h4>
+                            </label>
                         </div>
                     </div>
 
                     <div id="form_pecas" style="display: none;">
                         <div class="row">
-                            <div class="col-4">
-                                <label>Grupo</label>
-                                <input type="text" name="pgrupo">
-                            </div>
-                            <div class="col-4">
-                                <label>Item</label>
-                                <input type="text" name="pitem">
-                            </div>
-                            <div class="col-4">
-                                <label>Parte</label>
-                                <input type="text" name="pparte">
+                            <div class="col-12">
+                                <h3>Selecione uma peça</h3>
+                                <?php
+                                $sql_query = "SELECT * FROM pecas ";
+                                $sql_query .= "ORDER BY pecas.grupo ";
+                                $result = mysqli_query($conn, $sql_query);
+                                ?>
+                                <select name="pecaid">
+                                    <?php
+                                    while ($peca = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                        <option value="<?php echo $peca["pecaId"] ?>"><?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
                         <br>
@@ -59,15 +70,25 @@ $motoid = mysqli_fetch_assoc($motoid);
                     </div>
                     <div id="form_services" class="row gtr-uniform gtr-50" style="display: none;">
                         <div class="row">
-                            <div class="col-6">
-                                <label>Tipo</label>
-                                <input type="text" name="sgrupo">
-                            </div>
-                            <div class="col-6">
-                                <label>Item</label>
-                                <input type="text" name="sitem">
+                            <div class="col-12">
+                                <h3>Selecione um serviço</h3>
+                                <?php
+                                $sql_query = "SELECT * FROM servicos ";
+                                $sql_query .= "ORDER BY servicos.tipo ";
+                                $result = mysqli_query($conn, $sql_query);
+                                ?>
+                                <select name="pecaid">
+                                    <?php
+                                    while ($servico = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                        <option value="<?php echo $servico["servicoId"] ?>"><?php echo $servico["item"] . " - " . $servico["tipo"] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
+                        <br>
                         <div class="row">
                             <div class="col-2">
                                 <label>Valor</label>
@@ -91,7 +112,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                             <div class="col-2">
                                 <label>Valor</label>
                                 <input type="number" name="avalor">
-                            </div>                         
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-1">
