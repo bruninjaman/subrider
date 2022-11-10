@@ -8,25 +8,17 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-5">
+                    <label>tipo:</label>
+                    <input type="text" name="tipo">
+                </div>
+                <div class="col-5">
+                    <label>Item:</label>
+                    <input type="text" name="item">
+                </div>
                 <div class="col-2">
                     <label>valor:</label>
-                    <input type="number" name="valor" >
-                </div>
-                <div class="col-4">
-
-                    <label>Ordem de serviço:</label>
-                    <input type="text" name="ordem" >
-
-                </div>
-                <div class="col-6">
-                    <label>tipo:</label>
-                    <input type="text" name="tipo" >
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <label>Item:</label>
-                    <input type="text" name="item" >
+                    <input type="number" name="valor">
                 </div>
             </div>
             <br>

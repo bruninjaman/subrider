@@ -76,9 +76,6 @@
     border-radius: 5px !important;
 
 }
-.form input#submit {
-    font-family: 'Inter-SemiBold';
-}
 
 .form input[type="number"] {
     width: 80px;
@@ -87,13 +84,14 @@
 .form input:focus {
     border: 3px solid #fb4545;
 }
-
 .form input[type="number"]:focus {
     border: 3px solid #fb4545 !important;
 }
 
 .form input[type="submit"] {
+    font-family: 'Inter-SemiBold';
     background-color: #00c063 !important;
+    border-color: #00c063 !important;
     font-size: 1.2em;
     width: 250px;
 }
