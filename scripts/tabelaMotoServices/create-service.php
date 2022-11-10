@@ -31,7 +31,7 @@ $novo_codigo = $novo_codigo+1 . '/' . date("Y");
 
 $mysqli_query = "INSERT INTO ordem_servicos ";
 $mysqli_query .= "(Codigo, motoID) ";
-$mysqli_query .= "VALUE ('" . $novo_codigo . "','". $_GET["motoID"] ."') ";
+$mysqli_query .= "VALUE ('" . $novo_codigo . "','". $_POST["motoid"] ."') ";
 //CREATE SERVICE
 
 mysqli_query($conn,$mysqli_query);

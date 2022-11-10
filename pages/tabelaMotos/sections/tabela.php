@@ -46,7 +46,7 @@
                 </table>
                 <div class="row">
                     <div class="col-3">
-                        <a class="button primary" href='tabelaMotoAdd.php'>Adicionar Moto</a>
+                        <a class="button primary" href='tabelaMotoAdd.php'>Adicionar Motocicleta</a>
                     </div>
                     <div class="col-9">
                         <?php

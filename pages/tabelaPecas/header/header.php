@@ -5,8 +5,9 @@
     </h1>
     <nav id="nav">
         <ul>
-            <li><a href="tabelaMotos.php">Tabela de motocicletas</a></li>
-            <li><a href="tabelaServicos.php">Tabela de serviços</a></li>
+            <li><a href="tabelaordens.php">Ordens de serviço</a></li>
+            <li><a href="tabelaMotos.php">Motocicletas</a></li>
+            <li><a href="tabelaServicos.php">Serviços</a></li>
             <?php
             if (isset($_SESSION["user"])) {
                 echo '<li>';
