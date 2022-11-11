@@ -67,7 +67,10 @@
                             </tr>
                         <?php
                         }
-                        $subtotal = $adiantamento - $total;
+                        $subtotal = $total - $adiantamento;
+                        if ($subtotal <= 0 ) {
+                            $subtotal = 0;
+                        }
                         ?>
                         <tr class="total">
                             <td colspan="3"></td>
