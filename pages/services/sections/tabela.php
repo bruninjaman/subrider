@@ -42,10 +42,10 @@
                                     <?php
                                     }
                                     ?> -->
-                                    <?php echo $item['Grupo'] != 0 ? "" . $item['Grupo'] : ""; ?>
-                                    <?php echo $item['Parte'] != 0 ? "/" . $item['Parte'] . "/" : ""; ?>
-                                    <?php echo $item['Item'] != 0 ? "" . $item['Item'] : ""; ?>
-                                    <?php echo $item['Descricao'] != 0 ? "" . $item['Descricao'] : ""; ?>
+                                    <?php echo $item['Grupo'] != '0' ? "" . $item['Grupo'] : ""; ?>
+                                    <?php echo $item['Parte'] != '0' ? "/" . $item['Parte'] . "/" : ""; ?>
+                                    <?php echo $item['Item'] != '0' ? "" . $item['Item'] : ""; ?>
+                                    <?php echo $item['Descricao'] != '0' ? "" . $item['Descricao'] : ""; ?>
                                 </td>
                                 <td><?php echo $item['Quantidade']; ?></td>
                                 <td><?php echo realFormat($item['Valor']); ?></td>
