@@ -14,10 +14,10 @@
                     <li>
                         <a href="#">Tabelas</a>
                         <ul>
-                            <li><a href="tabelaPecas.php">Tabela de peças</a></li>
-                            <li><a href="tabelaMotos.php">Tabela de motocicletas</a></li>
-                            <li><a href="tabelaServicos.php">Tabela de serviços</a></li>
-                            <li><a href="#">Tabela de clientes</a></li>
+                            <li><a href="tabelaPecas.php">Peças</a></li>
+                            <li><a href="tabelaMotos.php">Motocicletas</a></li>
+                            <li><a href="tabelaServicos.php">Serviços</a></li>
+                            <li><a href="tabelaOrdens.php">Ordens de serviço</a></li>
                         </ul>
                     </li>';
             }

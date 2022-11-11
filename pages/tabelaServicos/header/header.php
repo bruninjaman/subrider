@@ -5,7 +5,7 @@
     </h1>
     <nav id="nav">
         <ul>
-            <li><a href="tabelaordens.php">Ordens de serviço</a></li>
+            <li><a href="tabelaOrdens.php">Ordens de serviço</a></li>
             <li><a href="tabelaPecas.php">Peças</a></li>
             <li><a href="tabelaMotos.php">Motocicletas</a></li>
             <?php
