@@ -29,27 +29,53 @@
                     </thead>
                     <tbody>
                         <?php
-
+                        $total = 0;
+                        $adiantamento = 0;
                         while ($item = mysqli_fetch_assoc($result)) {
                         ?>
                             <tr>
-                                <td colspan=3><?php echo $item['Grupo'] != 0 ? "" . $item['Grupo'] : ""; ?><?php echo $item['Parte'] != 0 ? "/" . $item['Parte'] . "/" : ""; ?><?php echo $item['Item'] != 0 ? "" . $item['Item'] : ""; ?><?php echo $item['Descricao'] != 0 ? "" . $item['Descricao'] : ""; ?></td>
+                                <td colspan=3>
+                                    <!-- <?php
+                                    if ($item["Foto"] != 0) {
+                                    ?> 
+                                        <img src="./<?php echo $item["Foto"] ?>" style="width: 70px; height: 70px">
+                                    <?php
+                                    }
+                                    ?> -->
+                                    <?php echo $item['Grupo'] != 0 ? "" . $item['Grupo'] : ""; ?>
+                                    <?php echo $item['Parte'] != 0 ? "/" . $item['Parte'] . "/" : ""; ?>
+                                    <?php echo $item['Item'] != 0 ? "" . $item['Item'] : ""; ?>
+                                    <?php echo $item['Descricao'] != 0 ? "" . $item['Descricao'] : ""; ?>
+                                </td>
                                 <td><?php echo $item['Quantidade']; ?></td>
                                 <td><?php echo realFormat($item['Valor']); ?></td>
                                 <td><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
                                 <td>
                                     <?php
+                                    if ($item["Descricao"] == '0') {
+                                        $total = $total + $item['Valor'] * $item['Quantidade'];
                                         //$typeAndId = "&type=".$item["type"] ."&id=".$item["ID"];
+                                    } else {
+                                        $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
+                                    }
                                     ?>
                                     <!-- <button onclick="location.href='servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>'"><i class="fa-solid fa-plus me-2"></i> Adicionar </button> -->
                                     <!-- <button onclick="location.href='servicesEdit.php?ordem=<?php echo $_GET['ordem'] . $typeAndId ?>'"><i class="fa-solid fa-user-pen me-2"></i> Editar </button> -->
-                                    <!-- <button onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item["type"] ?>,<?php echo $item["ID"] ?>,<?php echo "'".$_GET["ordem"]."'" ?>)"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
-                                    <button onclick="return confirm('Deseja realmente excluir este item?')" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
+                                    <!-- <button onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item["type"] ?>,<?php echo $item["ID"] ?>,<?php echo "'" . $_GET["ordem"] . "'" ?>)"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
+                                    <button onclick="return confirm('Deseja realmente excluir este item?')"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
                                 </td>
                             </tr>
                         <?php
                         }
+                        $subtotal = $adiantamento - $total;
                         ?>
+                        <tr class="total">
+                            <td colspan="3"></td>
+                            <td>Subtotal:</td>
+                            <td><?php echo realFormat($subtotal) ?></td>
+                            <td>Total:</td>
+                            <td><?php echo realFormat($total) ?></td>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="buttons-table">

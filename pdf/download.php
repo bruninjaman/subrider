@@ -19,14 +19,8 @@ $dompdf = new Dompdf($options);
 //$dompdf->loadHtml('Teste');
 //$dompdf->loadHtmlFile(__DIR__ . '/ordem.html');
 
-$items_ordem_query = 'SELECT 1 as type, pecas.grupo grupo, pecas.parte parte, pecas.item item, pecas.foto foto, pecas.valor, pecas.quantidade,pecas.pecaId ID FROM pecas ';
-$items_ordem_query .= "WHERE pecas.ordem = '" . $_GET['ordem'] . "' ";
-$items_ordem_query .= "UNION ";
-$items_ordem_query .= "SELECT 2, Null, Null, servicos.item, Null, servicos.valor, 1, servicos.servicoId FROM servicos ";
-$items_ordem_query .= "WHERE servicos.ordem = '" . $_GET['ordem'] . "' ";
-$items_ordem_query .= "UNION ";
-$items_ordem_query .= "SELECT 3, null, null, adiantamento.descricao, Null, adiantamento.valor, 1, adiantamento.IDadiantamento FROM adiantamento ";
-$items_ordem_query .= "WHERE adiantamento.ordem = '" . $_GET['ordem'] . "' ";
+$items_ordem_query = "SELECT * FROM item_ordem ";
+$items_ordem_query .= "WHERE item_ordem.Ordem = '" . $_GET['ordem'] . "' ";
 $result = mysqli_query($conn, $items_ordem_query);
 
 $loadhtmlstring = '<style>
@@ -112,11 +106,13 @@ body {
 }
 </style> ';
 
+$loadhtmlstring .= '<img style="width: 200px; height: 100px;" src="https://www.subrider.com.br/assets/css/images/logo.png">';
+
 $loadhtmlstring .= '
 <table class="table">
 <thead>
     <tr>
-        <th colspan=3>Grupo/Parte/Item</th>
+        <th colspan=3>Descrição</th>
         <th>Quantidade</th>
         <th>Valor unitário</th>
         <th>Valor Total</th>
@@ -124,20 +120,35 @@ $loadhtmlstring .= '
 </thead>
 <tbody>
     ';
-
+    $total = 0;
+    $adiantamento = 0;
     while ($item = mysqli_fetch_assoc($result)) {
-        $grupo = $item['grupo'] != null ? "" . $item['grupo'] : "";
-        $parte = $item['parte'] != null ? "/" . $item['parte'] . "/" : "";
-        $item2 = $item['item'] != null ? "" . $item['item'] : "";
+        $grupo = $item['Grupo'] != 0 ? "" . $item['Grupo'] : "";
+        $parte = $item['Parte'] != 0 ? "/" . $item['Parte'] . "/" : "";
+        $item2 = $item['Item'] != 0 ? "" . $item['Item'] : "";
+        $descricao = $item['Descricao'] != 0 ? "" . $item['Descricao'] : "";
         $loadhtmlstring .= '
         <tr>
-            <td colspan=3>' . $grupo.$parte.$item2 . '</td>
-            <td>' . $item['quantidade'] . '</td>
-            <td>' . realFormat($item['valor']) . '</td>
-            <td>' . realFormat($item['valor'] * $item['quantidade']) . '</td>
+            <td colspan=3>' . $grupo.$parte.$item2.$descricao . '</td>
+            <td>' . $item['Quantidade'] . '</td>
+            <td>' . realFormat($item['Valor']) . '</td>
+            <td>' . realFormat($item['Valor'] * $item['Quantidade']) . '</td>
         </tr>
-    ';
+        ';
+        if ($item["Descricao"] == '0') {
+            $total = $total + $item['Valor'] * $item['Quantidade'];
+        } else {
+            $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
+        }
     }
+    $subtotal = $adiantamento - $total;
+    $loadhtmlstring .= ' <tr class="total">
+    <td colspan="2"></td>
+    <td>Subtotal:</td>
+    <td>'. realFormat($subtotal) .'</td>
+    <td>Total:</td>
+    <td>'. realFormat($total) .'</td>
+</tr>';
     $loadhtmlstring .= '
 </tbody>
 </table>
