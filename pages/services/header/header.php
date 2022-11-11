@@ -6,7 +6,7 @@
     <nav id="nav">
         <ul>
             <li>
-                <a class="button primary" href="tabelaMotos.php">Voltar</a>
+                <a class="button primary" href="tabelaordens.php">Voltar</a>
             </li>
         </ul>
     </nav>
