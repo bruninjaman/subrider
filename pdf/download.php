@@ -123,10 +123,10 @@ $loadhtmlstring .= '
     $total = 0;
     $adiantamento = 0;
     while ($item = mysqli_fetch_assoc($result)) {
-        $grupo = $item['Grupo'] != 0 ? "" . $item['Grupo'] : "";
-        $parte = $item['Parte'] != 0 ? "/" . $item['Parte'] . "/" : "";
-        $item2 = $item['Item'] != 0 ? "" . $item['Item'] : "";
-        $descricao = $item['Descricao'] != 0 ? "" . $item['Descricao'] : "";
+        $grupo = $item['Grupo'] != '0' ? "" . $item['Grupo'] : "";
+        $parte = $item['Parte'] != '0' ? "/" . $item['Parte'] . "/" : "";
+        $item2 = $item['Item'] != '0' ? "" . $item['Item'] : "";
+        $descricao = $item['Descricao'] != '0' ? "" . $item['Descricao'] : "";
         $loadhtmlstring .= '
         <tr>
             <td colspan=3>' . $grupo.$parte.$item2.$descricao . '</td>
@@ -142,6 +142,9 @@ $loadhtmlstring .= '
         }
     }
     $subtotal = $adiantamento - $total;
+    if ($subtotal <= 0 ) {
+        $subtotal = 0;
+    }
     $loadhtmlstring .= ' <tr class="total">
     <td colspan="2"></td>
     <td>Subtotal:</td>
