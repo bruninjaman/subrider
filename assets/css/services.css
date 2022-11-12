@@ -1,5 +1,6 @@
 .total td:first-child {
     border: none;
+    background-color: #191b23;
 }
 .total td:nth-child(2) {
     border: solid 1px rgba(255, 255, 255, 0.3);

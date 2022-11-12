@@ -9,22 +9,9 @@ require_once("../../connection/connection.php");
 require_once("../../scripts/functions.php");
 
 $id = $_GET["id"];
-$type = $_GET["type"];
 
-switch($type) {
-    case 1:
-        $mysqli_query = " DELETE FROM pecas ";
-        $mysqli_query .= " WHERE pecaId = '{$id}'";
-        break;
-    case 2:
-        $mysqli_query = " DELETE FROM servicos ";
-        $mysqli_query .= " WHERE servicoId = '{$id}'";
-        break;
-    case 3:
-        $mysqli_query = " DELETE FROM adiantamento ";
-        $mysqli_query .= " WHERE IDadiantamento = '{$id}'";
-        break;
-}
+$mysqli_query = " DELETE FROM item_ordem ";
+$mysqli_query .= " WHERE item_ordemID = '{$id}'";
 
 mysqli_query($conn, $mysqli_query);
 mysqli_close($conn);

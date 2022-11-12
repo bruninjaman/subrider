@@ -141,7 +141,7 @@ $loadhtmlstring .= '
             $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
         }
     }
-    $subtotal = $adiantamento - $total;
+    $subtotal = $total - $adiantamento;
     if ($subtotal <= 0 ) {
         $subtotal = 0;
     }

@@ -61,8 +61,8 @@
                                     ?>
                                     <!-- <button onclick="location.href='servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>'"><i class="fa-solid fa-plus me-2"></i> Adicionar </button> -->
                                     <!-- <button onclick="location.href='servicesEdit.php?ordem=<?php echo $_GET['ordem'] . $typeAndId ?>'"><i class="fa-solid fa-user-pen me-2"></i> Editar </button> -->
-                                    <!-- <button onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item["type"] ?>,<?php echo $item["ID"] ?>,<?php echo "'" . $_GET["ordem"] . "'" ?>)"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
-                                    <button onclick="return confirm('Deseja realmente excluir este item?')"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
+                                    <button onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
+                                    <!-- <button onclick="return confirm('Deseja realmente excluir este item?')"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
                                 </td>
                             </tr>
                         <?php
