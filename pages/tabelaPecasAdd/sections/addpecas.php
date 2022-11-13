@@ -20,14 +20,12 @@
             <br>
             <div class="row">
                 <div class="col-5">
-
                     <img id="foto" src="https://spassodourado.com.br/wp-content/uploads/2015/01/default-placeholder.png" style="height:200px;width:200px;">
-
                 </div>
                 <div class="col-5">
                     <label>Grupo:</label>
                     <input type="text" name="grupo">
-
+                    
                     <label>Item:</label>
                     <input type="text" name="item">
                 </div>

@@ -61,9 +61,11 @@ function uploadFoto($fotoName, $fotoSize, $fotoTmpname, $file_path)
     //GET FILE DESTINATION
     $file_destination = $file_path . "" . $tmp_name;
 
-    if (file_exists($file_destination)) {
+    // if (file_exists($file_destination)) {
+    if (false) {
         echo "Sorry, file already exists.";
-    } else if ($fotoSize > 500000) {
+    // } else if ($fotoSize > 500000) {
+    } else if (false) {
         echo "Sorry, your file is too large.";
     } else {
         //MOVE FILE TO DIRECTORY
