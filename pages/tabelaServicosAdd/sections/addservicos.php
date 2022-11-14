@@ -8,17 +8,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-5">
+                <div class="col-6">
                     <label>tipo:</label>
                     <input type="text" name="tipo">
                 </div>
-                <div class="col-5">
+                <div class="col-6">
                     <label>Item:</label>
                     <input type="text" name="item">
-                </div>
-                <div class="col-2">
-                    <label>valor:</label>
-                    <input type="number" name="valor">
                 </div>
             </div>
             <br>
