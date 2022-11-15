@@ -15,23 +15,12 @@ $result = mysqli_fetch_assoc($result);
             </div>
             <input type=hidden name="servicoID" value="<?php echo $result["servicoId"]; ?>">
             <div class="row">
-                <div class="col-2">
-                    <label>valor:</label>
-                    <input type="text" name="valor" value="<?php echo $result["valor"] ?>">
-                </div>
-                <div class="col-4">
-
-                    <label>ordem:</label>
-                    <input type="text" name="ordem" value="<?php echo $result["ordem"] ?>">
-                </div>
                 <div class="col-6">
 
                     <label>tipo:</label>
                     <input type="text" name="tipo" value="<?php echo $result["tipo"] ?>">
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
+                <div class="col-6">
 
                     <label>item:</label>
                     <input type="text" name="item" value="<?php echo $result["item"] ?>">

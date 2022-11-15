@@ -16,39 +16,25 @@ $result = mysqli_fetch_assoc($result);
             <input type=hidden name=motoID value="<?php echo $result["pecaId"] ?>">
             <div class="row">
                 <div class="col-12">
-                    <label>Foto:</label>
+                    <div class="upload-image">
+                        <div class="card thmb">
+                            <img src="<?php echo $result["foto"] ?>" alt="preview" />
+                            <input type="file" name="foto" /><i class="fas fa-arrow-circle-up"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-5">
-                    <input name="foto" value="<?php echo $result["foto"] ?>" accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file"><br>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-5">
-                    <img id="foto" src=" <?php echo $result["foto"] ?> " style="height:200px;width:200px;">
-                </div>
-                <div class="col-5">
+                <div class="col-4">
                     <label>Grupo:</label>
                     <input type="text" name="grupo" value="<?php echo $result["grupo"] ?>">
-
+                </div>
+                <div class="col-4">
                     <label>Item:</label>
                     <input type="text" name="item" value="<?php echo $result["item"] ?>">
-                    <label>Ordem:</label>
-                    <input type="text" name="ordem" value="<?php echo $result["ordem"] ?>">
                 </div>
-                <div class="col-2">
-                    <label>quantidade:</label>
-                    <input type="text" name="quantidade" value="<?php echo $result["quantidade"] ?>">
-
-                    <label>valor:</label>
-                    <input type="text" name="valor" value="<?php echo $result["valor"] ?>">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <label>Parte:</label>
+                <div class="col-4">
+                <label>Parte:</label>
                     <input type="text" name="parte" value="<?php echo $result["parte"] ?>">
                 </div>
             </div>

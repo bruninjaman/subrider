@@ -8,9 +8,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
-                    <input name="foto" accept="image/*" onchange="document.getElementById('foto').src = window.URL.createObjectURL(this.files[0])" type="file">
-                </div>
                 <div class="col-6">
                     <label>Grupo:</label>
                     <input type="text" name="grupo">
@@ -22,7 +19,12 @@
                     <input type="text" name="parte">
                 </div>
                 <div class="col-6">
-                    <img id="foto" src="https://spassodourado.com.br/wp-content/uploads/2015/01/default-placeholder.png" style="height:200px;width:200px;">
+                    <div class="upload-image">
+                        <div class="card thmb">
+                            <img src="https://www.abecom.com.br/wp-content/uploads/elementor/thumbs/engrenagem-ou-roda-dentada-ot6vess300oq2nd1xp9ar7ex1cg39ftlquaqn7vsas.jpg" alt="preview" />
+                            <input type="file" name="foto" /><i class="fas fa-arrow-circle-up"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
