@@ -23,6 +23,13 @@ $items_ordem_query = "SELECT * FROM item_ordem ";
 $items_ordem_query .= "WHERE item_ordem.Ordem = '" . $_GET['ordem'] . "' ";
 $result = mysqli_query($conn, $items_ordem_query);
 
+$motoinfo_query = "SELECT * FROM motocicletas ";
+$motoinfo_query .= " WHERE motocicletas.motoId = (
+    SELECT ordem_servicos.motoID FROM ordem_servicos 
+    WHERE ordem_servicos.Codigo = '". $_GET['ordem'] ."')";
+
+$result2 = mysqli_query($conn, $motoinfo_query);
+
 $loadhtmlstring = '<style>
 table {
     border: 1px solid #ccc;
@@ -105,12 +112,34 @@ body {
     line-height: 1.25;
 }
 </style> ';
-
-$loadhtmlstring .= '<img style="width: 200px; height: 100px;" src="https://www.subrider.com.br/assets/css/images/logo.png">';
-
+while ($motoinfo = mysqli_fetch_assoc($result2) ) {
 $loadhtmlstring .= '
 <table class="table">
 <thead>
+    <tr>
+        <th colspan=6>
+        <img style="width: 200px; height: 100px; text-align: left;"  src="https://www.subrider.com.br/assets/css/images/logo.png">
+        Ordem de Serviço - '. $_GET['ordem'] .'</th>
+        </tr>
+    <tr>
+        <th colspan=4>DATA: 00/00/0000</th>
+        <th colspan=2>KM: '.KMFormat($motoinfo["km"]).' </th>
+    </tr>
+    <tr>
+        <th colspan=4>Nome: '.$motoinfo["proprietario"].'</th>
+        <th colspan=2>Fone: '.$motoinfo["telefone"].'</th>
+    </tr>
+    <tr>
+        <th colspan=6>Endereço:'.$motoinfo["endereco"].'</th>
+    </tr>
+    <tr>
+        <th colspan=3>Marca: '.$motoinfo["marca"].'</th>
+        <th colspan=3>Placa: '.$motoinfo["placa"].'</th>
+    </tr>
+    <tr>
+        <th colspan=3>Modelo:'.$motoinfo["modelo"].'</th>
+        <th colspan=3>Ano: '.$motoinfo["ano"].'</th>
+    </tr>
     <tr>
         <th colspan=3>Descrição</th>
         <th>Quantidade</th>
@@ -120,6 +149,7 @@ $loadhtmlstring .= '
 </thead>
 <tbody>
     ';
+}
     $total = 0;
     $adiantamento = 0;
     while ($item = mysqli_fetch_assoc($result)) {
