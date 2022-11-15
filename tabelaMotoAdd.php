@@ -34,9 +34,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./pages/tabelaMotoAdd/header/header.php");
-        include("./pages/tabelaMotoAdd/sections/addmotos.php");
-        include("./pages/tabelaMotoAdd/footer/footer.php");
+        require("./pages/tabelaMotoAdd/header/header.php");
+        require("./pages/tabelaMotoAdd/sections/addmotos.php");
+        require("./pages/tabelaMotoAdd/footer/footer.php");
         ?>
     </div>
 

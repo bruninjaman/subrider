@@ -32,9 +32,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./pages/tabelaPecas/header/header.php");
-        include("./pages/tabelaPecas/sections/tabela.php");
-        include("./pages/tabelaPecas/footer/footer.php");
+        require("./pages/tabelaPecas/header/header.php");
+        require("./pages/tabelaPecas/sections/tabela.php");
+        require("./pages/tabelaPecas/footer/footer.php");
     
         ?>
     </div>

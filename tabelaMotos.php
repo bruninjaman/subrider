@@ -32,9 +32,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./pages/tabelaMotos/header/header.php");
-        include("./pages/tabelaMotos/sections/tabela.php");
-        include("./pages/tabelaMotos/footer/footer.php");
+        require("./pages/tabelaMotos/header/header.php");
+        require("./pages/tabelaMotos/sections/tabela.php");
+        require("./pages/tabelaMotos/footer/footer.php");
     
         ?>
     </div>

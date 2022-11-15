@@ -26,9 +26,9 @@ session_start();
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./pages/tabelaMotoProprietario/header/header.php");
-        include("./pages/tabelaMotoProprietario/sections/proprietarios.php");
-        include("./pages/tabelaMotoProprietario/footer/footer.php");
+        require("./pages/tabelaMotoProprietario/header/header.php");
+        require("./pages/tabelaMotoProprietario/sections/proprietarios.php");
+        require("./pages/tabelaMotoProprietario/footer/footer.php");
         ?>
     </div>
 

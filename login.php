@@ -19,10 +19,10 @@
 <body class="is-preload landing">
     <div id="page-wrapper">
         <?php
-        include("./pages/login/header/header.php");
-        include("./pages/login/sections/capa.php");
-        include("./pages/login/sections/login.php");
-        include("./pages/login/footer/footer.php");
+        require("./pages/login/header/header.php");
+        require("./pages/login/sections/capa.php");
+        require("./pages/login/sections/login.php");
+        require("./pages/login/footer/footer.php");
         ?>
 
     </div>

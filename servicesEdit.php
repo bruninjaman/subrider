@@ -33,9 +33,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./pages/servicesEdit/header/header.php");
-        include("./pages/servicesEdit/sections/editservices.php");
-        include("./pages/servicesEdit/footer/footer.php");
+        require("./pages/servicesEdit/header/header.php");
+        require("./pages/servicesEdit/sections/editservices.php");
+        require("./pages/servicesEdit/footer/footer.php");
         ?>
     </div>
 

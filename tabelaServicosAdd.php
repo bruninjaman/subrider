@@ -33,9 +33,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./pages/tabelaServicosAdd/header/header.php");
-        include("./pages/tabelaServicosAdd/sections/addservicos.php");
-        include("./pages/tabelaServicosAdd/footer/footer.php");
+        require("./pages/tabelaServicosAdd/header/header.php");
+        require("./pages/tabelaServicosAdd/sections/addservicos.php");
+        require("./pages/tabelaServicosAdd/footer/footer.php");
         ?>
     </div>
 

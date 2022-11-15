@@ -33,10 +33,10 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        include("./pages/services/header/header.php");
-        include("./pages/services/sections/tabela.php");
-        include("./pages/services/sections/info.php");
-        include("./pages/services/footer/footer.php");
+        require("./pages/services/header/header.php");
+        require("./pages/services/sections/tabela.php");
+        require("./pages/services/sections/info.php");
+        require("./pages/services/footer/footer.php");
         ?>
     </div>
 
