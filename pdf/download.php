@@ -142,9 +142,6 @@ $loadhtmlstring .= '
         }
     }
     $subtotal = $total - $adiantamento;
-    if ($subtotal <= 0 ) {
-        $subtotal = 0;
-    }
     $loadhtmlstring .= ' <tr class="total">
     <td colspan="2"></td>
     <td>Subtotal:</td>
