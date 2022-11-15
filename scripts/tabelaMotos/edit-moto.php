@@ -27,9 +27,9 @@ if (isset($_POST['endereco'])) {
     $placa = $_POST['placa'];
     $km = $_POST['KM'];
     $proprietario = $_POST['proprietario'];
-    $motoid= $_POST['motoID'];
-    
-    if($foto != '') {
+    $motoid= $_POST['motoID'];    
+
+    if($fotoName != '') {
 
     $mysqli_query = "UPDATE motocicletas "; //UPDATE
     $mysqli_query .= "SET foto = '{$foto}', endereco = '{$endereco}', ";

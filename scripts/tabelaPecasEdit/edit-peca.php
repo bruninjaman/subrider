@@ -28,7 +28,7 @@ if (isset($_POST['grupo'])) {
     $valor = $_POST['valor'];
     $pecaId = $_GET['pecaID'];
 
-    if($foto != '') {
+    if($fotoName != '') {
 
     $mysqli_query = "UPDATE pecas "; //UPDATE
     $mysqli_query .= "SET foto = '{$foto}', grupo = '{$grupo}', ";
