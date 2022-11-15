@@ -1,7 +1,7 @@
 <?php
-function pagination($conn,$sql_query)
+function pagination($conn, $sql_query)
 {
-    ?>
+?>
     <link rel="stylesheet" href="./assets/css/pagination.css">
     <?php
     $result = mysqli_query($conn, $sql_query);
@@ -18,7 +18,7 @@ function pagination($conn,$sql_query)
             //display the link of the pages in URL  
             $page = isset($_GET['page']) ? $_GET['page'] : 0;
             for ($page = 1; $page <= $number_of_page; $page++) {
-                echo '<li><a href = "'. $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . ' </a></li>';
+                echo '<li><a href = "' . $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . ' </a></li>';
             }
             ?>
             <?php
@@ -30,7 +30,7 @@ function pagination($conn,$sql_query)
             ?>
         </ul>
     </div>
-    <?php
+<?php
 }
 function login($user, $password, $conn)
 {
@@ -62,16 +62,14 @@ function uploadFoto($fotoName, $fotoSize, $fotoTmpname, $file_path)
     $file_destination = $file_path . "" . $tmp_name;
 
     // if (file_exists($file_destination)) {
-    if (false) {
-        echo "Sorry, file already exists.";
+    //     echo "Sorry, file already exists.";
     // } else if ($fotoSize > 500000) {
-    } else if (false) {
-        echo "Sorry, your file is too large.";
-    } else {
+    //     echo "Sorry, your file is too large.";
+    // } else {
         //MOVE FILE TO DIRECTORY
         move_uploaded_file($fotoTmpname, $file_destination);
         return $file_destination;
-    };
+    // };
 }
 
 function realFormat($valor)

@@ -19,7 +19,7 @@ if (isset($_POST['grupo'])) {
     $foto = uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path);
     //remove relative path
     $foto = trim($foto,"../../");
-    
+
     $grupo = $_POST['grupo'];
     $item = $_POST['item'];
     $ordem = $_POST['ordem'];
@@ -28,7 +28,7 @@ if (isset($_POST['grupo'])) {
     $valor = $_POST['valor'];
     $pecaId = $_GET['pecaID'];
 
-    if($foto == '') {
+    if($foto != '') {
 
     $mysqli_query = "UPDATE pecas "; //UPDATE
     $mysqli_query .= "SET foto = '{$foto}', grupo = '{$grupo}', ";
@@ -39,7 +39,7 @@ if (isset($_POST['grupo'])) {
         $mysqli_query .= "item = '{$item}', ordem = '{$ordem}', parte = '{$parte}', quantidade = '{$quantidade}', valor = '{$valor}' ";
     }
     $mysqli_query .= "WHERE pecaId = '" . $pecaId . "'";
-
+    
     mysqli_query($conn, $mysqli_query);
     mysqli_close($conn);
     header('Location: ../../tabelaPecas.php');
