@@ -34,7 +34,7 @@ require_once("./scripts/functions.php");
         <!-- content -->
         <?php 
         include("./pages/tabelaPecasAdd/header/header.php");
-        include("./pages/tabelaPecasAdd/sections/addPecas.php");
+        include("./pages/tabelaPecasAdd/sections/addpecas.php");
         include("./pages/tabelaPecasAdd/footer/footer.php");
         ?>
     </div>
