@@ -10,11 +10,11 @@
             <div class="row">
                 <div class="col-6">
                     <label>tipo:</label>
-                    <input type="text" name="tipo">
+                    <input type="text" name="tipo" required>
                 </div>
                 <div class="col-6">
                     <label>Item:</label>
-                    <input type="text" name="item">
+                    <input type="text" name="item" required>
                 </div>
             </div>
             <br>

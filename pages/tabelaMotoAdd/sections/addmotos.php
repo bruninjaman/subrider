@@ -20,35 +20,35 @@
             <div class="row">
                 <div class="col-12">
                     <label>Endereço:</label>
-                    <input type="text" name="endereco">
+                    <input type="text" name="endereco" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-3">
                     <label>Ano:</label>
-                    <input type="text" name="ano">
+                    <input type="text" name="ano" minlength="4" maxlength="4" required>
                 </div>
                 <div class="col-5">
                     <label>Modelo:</label>
-                    <input type="text" name="modelo">
+                    <input type="text" name="modelo" required>
                 </div>
                 <div class="col-4">
                     <label>Marca:</label>
-                    <input type="text" name="marca">
+                    <input type="text" name="marca" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
                     <label>Proprietario:</label>
-                    <input type="text" name="proprietario">
+                    <input type="text" name="proprietario" required>
                 </div>
                 <div class="col-4">
                     <label>Placa:</label>
-                    <input type="text" name="placa">
+                    <input type="text" name="placa" required>
                 </div>
                 <div class="col-2">
                     <label>KM:</label>
-                    <input type="number" name="KM">
+                    <input type="number" name="KM" required>
                 </div>
             </div>
             <hr>

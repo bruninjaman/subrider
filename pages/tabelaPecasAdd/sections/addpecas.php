@@ -10,13 +10,13 @@
             <div class="row">
                 <div class="col-6">
                     <label>Grupo:</label>
-                    <input type="text" name="grupo">
+                    <input type="text" name="grupo" required>
 
                     <label>Item:</label>
-                    <input type="text" name="item">
+                    <input type="text" name="item" required>
 
                     <label>Parte:</label>
-                    <input type="text" name="parte">
+                    <input type="text" name="parte" required>
                 </div>
                 <div class="col-6">
                     <div class="upload-image">

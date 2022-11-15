@@ -27,15 +27,15 @@ $result = mysqli_fetch_assoc($result);
             <div class="row">
                 <div class="col-4">
                     <label>Grupo:</label>
-                    <input type="text" name="grupo" value="<?php echo $result["grupo"] ?>">
+                    <input type="text" name="grupo" value="<?php echo $result["grupo"] ?>" required>
                 </div>
                 <div class="col-4">
                     <label>Item:</label>
-                    <input type="text" name="item" value="<?php echo $result["item"] ?>">
+                    <input type="text" name="item" value="<?php echo $result["item"] ?>" required>
                 </div>
                 <div class="col-4">
                 <label>Parte:</label>
-                    <input type="text" name="parte" value="<?php echo $result["parte"] ?>">
+                    <input type="text" name="parte" value="<?php echo $result["parte"] ?>" required>
                 </div>
             </div>
             <br>

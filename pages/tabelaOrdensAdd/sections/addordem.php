@@ -31,7 +31,7 @@
                     $sql_query = "SELECT * FROM motocicletas";
                     $result = mysqli_query($conn, $sql_query);
                     ?>
-                    <select name="motoid">
+                    <select name="motoid" required>
                         <?php
                         while ($moto = mysqli_fetch_assoc($result)) {
                         ?>

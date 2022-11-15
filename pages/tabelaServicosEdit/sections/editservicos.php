@@ -18,12 +18,12 @@ $result = mysqli_fetch_assoc($result);
                 <div class="col-6">
 
                     <label>tipo:</label>
-                    <input type="text" name="tipo" value="<?php echo $result["tipo"] ?>">
+                    <input type="text" name="tipo" value="<?php echo $result["tipo"] ?>" required>
                 </div>
                 <div class="col-6">
 
                     <label>item:</label>
-                    <input type="text" name="item" value="<?php echo $result["item"] ?>">
+                    <input type="text" name="item" value="<?php echo $result["item"] ?>" required>
                 </div>
             </div>
             <br>
