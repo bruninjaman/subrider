@@ -184,6 +184,8 @@ $loadhtmlstring .= '
 </table>
 ';
 
+// var_dump(htmlspecialchars($loadhtmlstring));
+// die();
 $dompdf->loadHtml($loadhtmlstring);
 $dompdf->render();
 

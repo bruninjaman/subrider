@@ -22,8 +22,8 @@
                                 <td><?php echo $servico['item']; ?></td>
                                 <td><?php echo $servico['tipo']; ?></td>
                                 <td>
-                                    <button onclick="location.href='tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><i class="fa-solid fa-user-pen me-2"></i> Editar </button>
-                                    <button onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $servico['servicoId'] ?>)"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button>
+                                    <button style="background: none; border: none;" onclick="location.href='tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="./assets\css\images\edit.png" style="height: 30x; width: 30px;"> </button>
+                                    <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $servico['servicoId'] ?>)"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
                                 </td>
                             </tr>
                         <?php
