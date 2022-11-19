@@ -96,7 +96,11 @@ $motoid = mysqli_fetch_assoc($motoid);
                                 <label>Valor</label>
                                 <input type="number" name="svalor">
                             </div>
-                            <div class="col-3">
+                            <div class="col-2">
+                                <label>Quantidade</label>
+                                <input type="number" name="squantidade">
+                            </div>
+                            <div class="col-1">
                             </div>
                             <div class="col-7">
                                 <br>

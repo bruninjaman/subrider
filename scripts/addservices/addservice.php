@@ -48,7 +48,7 @@ if (isset($_POST['tipo_item'])) {
                 $tipo = $servico['tipo'];
                 $item = $servico['item'];
                 $parte = 0;
-                $quantidade = 1;
+                $quantidade = $_POST['squantidade'];
                 $valor = $_POST['svalor'];
                 $descricao = 0;
                 $ordem = $_GET["ordem"];
