@@ -24,9 +24,8 @@
                         $total = 0;
                         $adiantamento = 0;
                         while ($item = mysqli_fetch_assoc($result)) {
-                            if ($item["Categoria"] == '3') {
+                            if ($item["Categoria"] != '3') {
                                 $total = $total + $item['Valor'] * $item['Quantidade'];
-                                //$typeAndId = "&type=".$item["type"] ."&id=".$item["ID"];
                             } else {
                                 $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
                             }
