@@ -5,14 +5,6 @@
         <div class="table-wrapper">
             <div class="table-wrapper">
                 <?php
-                // $items_ordem_query = 'SELECT 1 as type, pecas.grupo grupo, pecas.parte parte, pecas.item item, pecas.foto foto, pecas.valor, pecas.quantidade,pecas.pecaId ID FROM pecas ';
-                // $items_ordem_query .= "WHERE pecas.ordem = '" . $_GET['ordem'] . "' ";
-                // $items_ordem_query .= "UNION ";
-                // $items_ordem_query .= "SELECT 2, Null, Null, servicos.item, Null, servicos.valor, 1, servicos.servicoId FROM servicos ";
-                // $items_ordem_query .= "WHERE servicos.ordem = '" . $_GET['ordem'] . "' ";
-                // $items_ordem_query .= "UNION ";
-                // $items_ordem_query .= "SELECT 3, null, null, adiantamento.descricao, Null, adiantamento.valor, 1, adiantamento.IDadiantamento FROM adiantamento ";
-                // $items_ordem_query .= "WHERE adiantamento.ordem = '" . $_GET['ordem'] . "' ";
                 $items_ordem_query = "SELECT * FROM item_ordem ";
                 $items_ordem_query .= "WHERE item_ordem.Ordem = '" . $_GET['ordem'] . "' ";
                 $result = mysqli_query($conn, $items_ordem_query);

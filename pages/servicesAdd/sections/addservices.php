@@ -83,7 +83,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                                     <?php
                                     while ($servico = mysqli_fetch_assoc($result)) {
                                     ?>
-                                        <option value="<?php echo $servico["servicoId"] ?>"><?php echo $servico["item"] . " - " . $servico["tipo"] ?></option>
+                                        <option value="<?php echo $servico["servicoId"] ?>"><?php echo $servico["tipo"] . " - " . $servico["item"] ?></option>
                                     <?php
                                     }
                                     ?>
