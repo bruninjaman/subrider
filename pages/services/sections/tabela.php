@@ -75,28 +75,34 @@
                     </tbody>
                 </table>
                 <br>
-                <table>
-                    <?php
-                    $result = mysqli_query($conn, $items_ordem_query);
-                    while ($item = mysqli_fetch_assoc($result)) {
-                        if ($item['Categoria'] != '3')
-                            continue;
-                    ?>
+                <table class="table">
+                    <tbody>
+
+                        <?php
+                        $result = mysqli_query($conn, $items_ordem_query);
+                        while ($item = mysqli_fetch_assoc($result)) {
+                            if ($item['Categoria'] != '3')
+                                continue;
+                        ?>
+                            <tr>
+                                <td>
+                                    <?php echo $item['Descricao'] ?>
+                                </td>
+                                <td>
+                                    <?php echo realFormat($item['Valor'] * $item['Quantidade']) ?>
+                                </td>
+                                <td>
+                                    <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
                         <tr>
-                            <td>
-                                <?php echo $item['Descricao'] ?>
-                            </td>
-                            <td>
-                                <?php echo realFormat($item['Valor'] * $item['Quantidade']) ?>
-                            </td>
+                            <td class="totalbold">Saldo:</td>
+                            <td class="totalbold"><?php echo realFormat($subtotal) ?></td>
                         </tr>
-                    <?php
-                    }
-                    ?>
-                    <tr class="total">
-                        <td>Saldo:</td>
-                        <td><?php echo realFormat($subtotal) ?></td>
-                    </tr>
+                    </tbody>
                 </table>
                 <div class="buttons-table">
                     <a class='button secondary' href="servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>">Adicionar item</a>
