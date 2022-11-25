@@ -100,7 +100,7 @@
                         ?>
                         <tr>
                             <td class="totalbold">Saldo:</td>
-                            <td class="totalbold"><?php echo realFormat($subtotal) ?></td>
+                            <td class="totalbold" colspan="2"><?php echo realFormat($subtotal) ?></td>
                         </tr>
                     </tbody>
                 </table>
