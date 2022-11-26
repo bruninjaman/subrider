@@ -31,10 +31,13 @@ if (isset($_POST['avalor']) || isset($_POST['svalor']) || isset($_POST['pvalor']
         $tipo = $_POST["sgrupo"];
         $item = $_POST["sitem"];
         $valor = $_POST["svalor"];
+        //Código
+        $scode = $_POST['scode'];
 
         $mysqli_query = " UPDATE servicos ";
         $mysqli_query .= " SET tipo = '{$tipo}', ";
         $mysqli_query .= " item = '{$item}', ";
+        $mysqli_query .= " Codigo = '{$scode}', ";
         $mysqli_query .= " valor = '{$valor}' ";
         $mysqli_query .= " WHERE servicoId = '{$id}' ";
     }

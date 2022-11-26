@@ -10,7 +10,7 @@ $motoid = mysqli_fetch_assoc($motoid);
         <img class="fit logogray" src="./assets/css/images/logo-branco-crop.png">
         <center>
             <form method="post" action="scripts\addservices\addservice.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
-            <!-- <form method="POST" action="addservices.php"> -->
+                <!-- <form method="POST" action="addservices.php"> -->
                 <div>
                     <div class="row">
                         <div class="col-12">
@@ -39,7 +39,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                                 $result = mysqli_query($conn, $sql_query);
                                 ?>
                                 <select name="pecaid">
-                                <!-- <select name="pecaid" onchange='ChangePecaSelect(this.value)'> -->
+                                    <!-- <select name="pecaid" onchange='ChangePecaSelect(this.value)'> -->
                                     <?php
                                     while ($peca = mysqli_fetch_assoc($result)) {
                                     ?>
@@ -51,6 +51,12 @@ $motoid = mysqli_fetch_assoc($motoid);
                             </div>
                         </div>
                         <br>
+                        <div class="row">
+                            <div class="col-8">
+                                <label>Código do Produto</label>
+                                <input type="text" name="scode">
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-2">
                                 <label>Quantidade</label>
@@ -100,9 +106,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                                 <label>Quantidade</label>
                                 <input type="number" name="squantidade">
                             </div>
-                            <div class="col-1">
-                            </div>
-                            <div class="col-7">
+                            <div class="col-8">
                                 <br>
                                 <input id="submit" class="button primary" type="submit" value="Adicionar">
                             </div>

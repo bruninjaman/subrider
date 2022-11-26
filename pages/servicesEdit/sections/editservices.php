@@ -72,6 +72,12 @@ $item = mysqli_fetch_assoc($item);
 
                     <div id="form_pecas">
                         <div class="row">
+                            <div class="col-8">
+                                <label>Especificação do Produto</label>
+                                <input value="<?php echo $item["Codigo"] ?>" type="text" name="scode">
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-4">
                                 <label>Grupo</label><br>
                                 <input value="<?php echo $item["grupo"] ?>" type="text" name="pgrupo"><br>

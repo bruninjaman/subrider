@@ -28,11 +28,13 @@ if (isset($_POST['tipo_item'])) {
                 $valor = $_POST['pvalor'];
                 $descricao = 0;
                 $ordem = $_GET["ordem"];
+                //Código
+                $scode = $_POST['scode'];
             }
             
-            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) ";
+            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria,Codigo) ";
             $mysqli_query .= " VALUES ";
-            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}')";
+            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}','{$scode}')";
             break;
         case 'service':
             $categoria = 1;
@@ -56,7 +58,7 @@ if (isset($_POST['tipo_item'])) {
             
             $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) ";
             $mysqli_query .= " VALUES ";
-            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}')";
+            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}'";
             break;
         case 'adiantamento':
             $categoria = 3;
