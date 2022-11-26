@@ -1,0 +1,247 @@
+<style>
+  @font-face {
+    font-family: rubik;
+    src: url(./Rubik-VariableFont_wght.ttf);
+  }
+  @font-face {
+    font-family: ptsans;
+    src: url(./PTSans-Regular.ttf);
+  }
+  @font-face {
+    font-family: rubik-italic;
+    src: url(./Rubik-Italic-VariableFont_wght.ttf);
+  }
+  .head-content {
+    font-family: 'rubik-italic', sans-serif;
+    font-weight: 300;
+  }
+  #ordem {
+    margin-left: 5em;
+    font-size: 30px;
+  }
+  .adiantamento {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0a1e58;
+  }
+  .concluido {
+    color: green;
+  }
+  .cancelado {
+    color: red;
+  }
+  .saldo {
+    font-size: 30px;
+  }
+  .main-th {
+    color: #0a1e58;
+  }
+  .logo img {
+    width: 200px;
+    height: 100px;
+    position: inline-block;
+  }
+  th,td {
+    padding: 5px;
+  }
+  table thead tr:first-child {
+    height: 160px;
+  }
+  table {
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 1px;
+    background-color: rgb(218, 218, 218);
+    border-radius: 5px;
+  }
+  table thead {
+    background-color: rgb(187 193 209);
+    height: 65px;
+    color: rgb(3, 3, 3);
+    font-size: px;
+    text-align: left;
+    font-family: "rubik", serif;
+  }
+  table tbody {
+    background-color: #eee;
+    text-align: center;
+    font-family: "ptsans", serif;
+  }
+  /*  */
+  table tbody tr td {
+    padding: 5px;
+    font-size: 15px;
+    color: rgb(114, 113, 113);
+  }
+</style>
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="6" class="logo">
+          <img src="https://www.subrider.com.br/assets/css/images/logo.png" />
+          <a id="ordem">Ordem de Serviço - 104/2022</a>
+        </th>
+      </tr>
+      <tr>
+        <th colspan="1">DATA:</th>
+        <th class="head-content" colspan="3">26/11/2022</th>
+        <th>KM:</th>
+        <th class="head-content">0km</th>
+      </tr>
+      <tr>
+        <th colspan="1">Nome:</th>
+        <th colspan="3" class="head-content">Isaías</th>
+        <th>Fone:</th>
+        <th class="head-content">61 95435-5894</th>
+      </tr>
+      <tr>
+        <th colspan="1">Endereço:</th>
+        <th colspan="5" class="head-content">Valparaíso</th>
+      </tr>
+      <tr>
+        <th colspan="1">Marca:</th>
+        <th colspan="2" class="head-content">Yamaha</th>
+        <th colspan="1">Placa:</th>
+        <th colspan="2" class="head-content">PBR 4551</th>
+      </tr>
+      <tr>
+        <th colspan="1">Modelo:</th>
+        <th colspan="2" class="head-content">YBR 125 i</th>
+        <th colspan="1">Ano:</th>
+        <th colspan="2" class="head-content">2018</th>
+      </tr>
+      <tr>
+        <th class="main-th">Ordem</th>
+        <th class="main-th" colspan="2">Descrição</th>
+        <th class="main-th">Quantidade</th>
+        <th class="main-th">Valor unitário</th>
+        <th class="main-th">Valor Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td colspan="2">Motor/Jogo de juntas/Motor</td>
+        <td>1</td>
+        <td>R$65,00</td>
+        <td>R$65,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td colspan="2">Motor/Discos de fricção/Embreagem</td>
+        <td>1</td>
+        <td>R$55,00</td>
+        <td>R$55,00</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td class="concluido" colspan="2">Chassis/Pastilha de freio/Roda dianteira</td>
+        <td>1</td>
+        <td>R$45,00</td>
+        <td>R$45,00</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td class="cancelado" colspan="2">Motor/Óleo do motor/Circuito de lubrificação</td>
+        <td>1</td>
+        <td>R$54,00</td>
+        <td>R$54,00</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td colspan="2">Motor/Kit cilindro/Motor</td>
+        <td>1</td>
+        <td>R$230,00</td>
+        <td>R$230,00</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td class="concluido"  colspan="2">Elétrico/Motor de partida/Partida elétrica</td>
+        <td>1</td>
+        <td>R$208,00</td>
+        <td>R$208,00</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td colspan="2">Chassis/Relação de transmissão/Transmissão</td>
+        <td>1</td>
+        <td>R$157,00</td>
+        <td>R$157,00</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td colspan="2">Elétrico/Bateria/Energia elétrica</td>
+        <td>1</td>
+        <td>R$165,00</td>
+        <td>R$165,00</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td colspan="2">Motor/Filtro de óleo/Circuito de lubrificação</td>
+        <td>1</td>
+        <td>R$16,00</td>
+        <td>R$16,00</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td colspan="2">Elétrico/Lâmpada H4 alógena/Iluminação</td>
+        <td>1</td>
+        <td>R$20,00</td>
+        <td>R$20,00</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td colspan="2">Elétrico/Lâmpada dois polos 12V/Iluminação</td>
+        <td>1</td>
+        <td>R$6,00</td>
+        <td>R$6,00</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td colspan="2">Motor</td>
+        <td>1</td>
+        <td>R$300,00</td>
+        <td>R$300,00</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td colspan="2">Discos de embreagem</td>
+        <td>1</td>
+        <td>R$45,00</td>
+        <td>R$45,00</td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td colspan="2">Pastilha de freio</td>
+        <td>1</td>
+        <td>R$25,00</td>
+        <td>R$25,00</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td colspan="2">Relação de transmissão</td>
+        <td>1</td>
+        <td>R$0,00</td>
+        <td>R$0,00</td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <table class="table">
+    <tbody>
+      <tr>
+        <td class="adiantamento" colspan="2">Pagamento 04/11/22</td>
+        <td>R$386,00</td>
+      </tr>
+      <tr>
+        <td class="adiantamento" colspan="2">Pagamento 08/11/22</td>
+        <td>R$500,00</td>
+      </tr>
+      <tr>
+        <td class="saldo">Saldo:</td>
+        <td colspan="2">R$505,00</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

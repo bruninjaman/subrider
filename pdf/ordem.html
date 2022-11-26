@@ -1,138 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arquivo PDF</title>
 
     <style>
-        table {
-            border: 1px solid #ccc;
-            border-collapse: collapse;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            table-layout: fixed;
-        }
-
-        table caption {
-            font-size: 1.5em;
-            margin: .5em 0 .75em;
-        }
-
-        table tr {
-            background-color: #f8f8f8;
-            border: 1px solid #ddd;
-            padding: .35em;
-        }
-
-        table th,
-        table td {
-            padding: .625em;
-            text-align: center;
-        }
-
-        table th {
-            font-size: .85em;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-        }
-
-        @media screen and (max-width: 600px) {
-            table {
-                border: 0;
-            }
-
-            table caption {
-                font-size: 1.3em;
-            }
-
-            table thead {
-                border: none;
-                clip: rect(0 0 0 0);
-                height: 1px;
-                margin: -1px;
-                overflow: hidden;
-                padding: 0;
-                position: absolute;
-                width: 1px;
-            }
-
-            table tr {
-                border-bottom: 3px solid #ddd;
-                display: block;
-                margin-bottom: .625em;
-            }
-
-            table td {
-                border-bottom: 1px solid #ddd;
-                display: block;
-                font-size: .8em;
-                text-align: right;
-            }
-
-            table td::before {
-                content: attr(data-label);
-                float: left;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-
-            table td:last-child {
-                border-bottom: 0;
-            }
-        }
-        body {
-            font-family: "Open Sans", sans-serif;
-            line-height: 1.25;
-        }
+      .total {
+        font-size: 12px;
+      }
+      .valores {
+        color: black;
+      }
+      .valores-totais {
+        color: black;
+        font-style: bold;
+      }
+      #ordem {
+        text-align: right;
+        margin-left: 512px;
+        position: absolute;
+        margin-top: 12px;
+        font-size: 12px;
+      }
+      .head-content {
+        font-size: 9px;
+        color: rgb(78, 78, 78);
+      }
+      .concluido {
+        color: green;
+      }
+      .cancelado {
+        color: red;
+      }
+      .saldo {
+        font-size: 14px;
+      }
+      .main-th {
+        color: #0a1e58;
+      }
+      thead tr:first-child th {
+        height: 50px;
+      }
+      .logo img {
+        width: 140px;
+        height: 55px;
+        position: absolute;
+      }
+      th,
+      td {
+        padding: 1.3px;
+      }
+      table {
+        width: 100%;
+        table-layout: fixed;
+        border-spacing: 1px;
+        font-size: 10px;
+        background-color: rgb(218, 218, 218);
+        border-radius: 5px;
+      }
+      table thead {
+        background-color: #dadde6;
+        font-size: 11px;
+        color: rgb(3, 3, 3);
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+      table,
+      th,
+      td {
+        border: 0.1px solid white;
+      }
+      table tbody {
+        background-color: #eee;
+        text-align: center;
+        font-family: "ptsans", serif;
+      }
+      /*  */
+      table tbody tr td {
+        padding: 1px;
+        color: #1f274d;
+      }
+      tr:last-child {
+        background-color: #eee;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div class="container">
-        <div class="title">Sub-Rider</div>
-        <div class="subtitle"> Ordem de serviço - 101/2022 </div>
-    </div>
-    <hr>
-    <table class="table">
+  <body>
+    <div>
+      <table class="table">
         <thead>
-            <tr>
-                <th colspan="3">Grupo/Parte/Item</th>
-                <th>Quantidade</th>
-                <th>Valor unitário</th>
-                <th>Valor Total</th>
-            </tr>
+          <tr>
+            <th colspan="6" class="logo">
+              <img
+                src="https://www.subrider.com.br/assets/css/images/logo.png"
+              />
+              <a id="ordem">Ordem de Serviço - 104/2022</a>
+            </th>
+          </tr>
+          <tr>
+            <th>Data:</th>
+            <th class="head-content" colspan="3">26/11/2022</th>
+            <th>Km:</th>
+            <th class="head-content">0km</th>
+          </tr>
+          <tr>
+            <th colspan="1">Nome:</th>
+            <th colspan="3" class="head-content">Isaías</th>
+            <th>Fone:</th>
+            <th class="head-content">61 95435-5894</th>
+          </tr>
+          <tr>
+            <th colspan="1">Endereço:</th>
+            <th colspan="5" class="head-content">Valparaíso</th>
+          </tr>
+          <tr>
+            <th colspan="1">Marca:</th>
+            <th colspan="2" class="head-content">Yamaha</th>
+            <th colspan="1">Placa:</th>
+            <th colspan="2" class="head-content">PBR 4551</th>
+          </tr>
+          <tr>
+            <th colspan="1">Modelo:</th>
+            <th colspan="2" class="head-content">YBR 125 i</th>
+            <th colspan="1">Ano:</th>
+            <th colspan="2" class="head-content">2018</th>
+          </tr>
+          <tr>
+            <th class="main-th">Ordem</th>
+            <th class="main-th" colspan="2">Descrição</th>
+            <th class="main-th">Quantidade</th>
+            <th class="main-th">Valor unitário</th>
+            <th class="main-th">Valor Total</th>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-                <td colspan="3">Motor/cabeçote/Valvula</td>
-                <td>4</td>
-                <td>R$125,00</td>
-                <td>R$500,00</td>
-            </tr>
-            <tr>
-                <td colspan="3">Relação de transmissão</td>
-                <td>1</td>
-                <td>R$22,00</td>
-                <td>R$22,00</td>
-            </tr>
-            <tr>
-                <td colspan="3">Relação de transmissão</td>
-                <td>1</td>
-                <td>R$75,00</td>
-                <td>R$75,00</td>
-            </tr>
-            <tr>
-                <td colspan="3">Adiantamento para comprar o motor</td>
-                <td>1</td>
-                <td>R$200,00</td>
-                <td>R$200,00</td>
-            </tr>
+          <tr>
+            <td>1</td>
+            <td colspan="2">Motor/Jogo de juntas/Motor</td>
+            <td>1</td>
+            <td class="valores">R$65,00</td>
+            <td class="valores-totais">R$65,00</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td colspan="2">Motor/Discos de fricção/Embreagem</td>
+            <td>1</td>
+            <td class="valores">R$55,00</td>
+            <td class="valores-totais">R$55,00</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="concluido" colspan="2">
+              Chassis/Pastilha de freio/Roda dianteira
+            </td>
+            <td>1</td>
+            <td class="valores">R$45,00</td>
+            <td class="valores-totais">R$45,00</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="cancelado" colspan="2">
+              Motor/Óleo do motor/Circuito de lubrificação
+            </td>
+            <td>1</td>
+            <td class="valores">R$54,00</td>
+            <td class="valores-totais">R$54,00</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td colspan="2">Motor/Kit cilindro/Motor</td>
+            <td>1</td>
+            <td class="valores">R$230,00</td>
+            <td class="valores-totais">R$230,00</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td class="concluido" colspan="2">
+              Elétrico/Motor de partida/Partida elétrica
+            </td>
+            <td>1</td>
+            <td class="valores">R$208,00</td>
+            <td class="valores-totais">R$208,00</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td colspan="2">Chassis/Relação de transmissão/Transmissão</td>
+            <td>1</td>
+            <td class="valores">R$157,00</td>
+            <td class="valores-totais">R$157,00</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td colspan="2">Elétrico/Bateria/Energia elétrica</td>
+            <td>1</td>
+            <td class="valores">R$165,00</td>
+            <td class="valores-totais">R$165,00</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td colspan="2">Motor/Filtro de óleo/Circuito de lubrificação</td>
+            <td>1</td>
+            <td class="valores">R$16,00</td>
+            <td class="valores-totais">R$16,00</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td colspan="2">Elétrico/Lâmpada H4 alógena/Iluminação</td>
+            <td>1</td>
+            <td class="valores">R$20,00</td>
+            <td class="valores-totais">R$20,00</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td colspan="2">Elétrico/Lâmpada dois polos 12V/Iluminação</td>
+            <td>1</td>
+            <td class="valores">R$6,00</td>
+            <td class="valores-totais">R$6,00</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td colspan="2">Motor</td>
+            <td>1</td>
+            <td class="valores">R$300,00</td>
+            <td class="valores-totais">R$300,00</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td colspan="2">Discos de embreagem</td>
+            <td>1</td>
+            <td class="valores">R$45,00</td>
+            <td class="valores-totais">R$45,00</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td colspan="2">Pastilha de freio</td>
+            <td>1</td>
+            <td class="valores">R$25,00</td>
+            <td class="valores-totais">R$25,00</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td colspan="2">Relação de transmissão</td>
+            <td>1</td>
+            <td class="valores">R$0,00</td>
+            <td class="valores-totais">R$0,00</td>
+          </tr>
+          <tr class="total">
+            <td colspan="4"></td>
+            <td class="valores-totais">SubTotal:</td>
+            <td class="valores-totais">R$1.391,00</td>
+          </tr>
         </tbody>
-    </table>
-</body>
-
+      </table>
+      <br />
+      <table class="table">
+        <tbody>
+          <tr>
+            <td class="adiantamento" colspan="2">Pagamento 04/11/22</td>
+            <td class="valores">R$386,00</td>
+          </tr>
+          <tr>
+            <td class="adiantamento" colspan="2">Pagamento 08/11/22</td>
+            <td class="valores">R$500,00</td>
+          </tr>
+          <tr>
+            <td class="saldo">Saldo:</td>
+            <td class="valores-totais" colspan="2">R$505,00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
 </html>

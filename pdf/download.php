@@ -26,169 +26,310 @@ $result = mysqli_query($conn, $items_ordem_query);
 $motoinfo_query = "SELECT * FROM motocicletas ";
 $motoinfo_query .= " WHERE motocicletas.motoId = (
     SELECT ordem_servicos.motoID FROM ordem_servicos 
-    WHERE ordem_servicos.Codigo = '". $_GET['ordem'] ."')";
+    WHERE ordem_servicos.Codigo = '" . $_GET['ordem'] . "')";
 
 $result2 = mysqli_query($conn, $motoinfo_query);
 
-$loadhtmlstring = '<style>
-table {
-    border: 1px solid #ccc;
-    border-collapse: collapse;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    table-layout: fixed;
+$data = "26/11/2022"; //GET FROM DATABASE
+
+while ($motoinfo = mysqli_fetch_assoc($result2)) {
+    $km = $motoinfo['km'];
+    $nome = $motoinfo['nome'];
+    $fone = $motoinfo['fone'];
+    $endereco = $motoinfo['endereco'];
+    $marca = $motoinfo['marca'];
+    $placa = $motoinfo['placa'];
+    $modelo = $motoinfo['modelo'];
+    $ano = $motoinfo['ano'];
 }
+$total = 0;
+$adiantamento = 0;
 
-table caption {
-    font-size: 1.5em;
-    margin: .5em 0 .75em;
-}
 
-table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: .35em;
-}
+//HTML antes de adicionar items
+$loadhtmlstring = '<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arquivo PDF</title>
 
-table th,
-table td {
-    padding: .625em;
-    text-align: center;
-}
-
-table th {
-    font-size: .85em;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-}
-
-@media screen and (max-width: 600px) {
-    table {
-        border: 0;
-    }
-
-    table caption {
-        font-size: 1.3em;
-    }
-
-    table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-
-    table tr {
-        border-bottom: 3px solid #ddd;
-        display: block;
-        margin-bottom: .625em;
-    }
-
-    table td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        font-size: .8em;
+    <style>
+      .total {
+        font-size: 12px;
+      }
+      .valores {
+        color: black;
+      }
+      .valores-totais {
+        color: black;
+        font-style: bold;
+      }
+      #ordem {
         text-align: right;
-    }
+        margin-left: 512px;
+        position: absolute;
+        margin-top: 12px;
+        font-size: 12px;
+      }
+      .head-content {
+        font-size: 9px;
+        color: rgb(78, 78, 78);
+      }
+      .concluido {
+        color: green;
+      }
+      .cancelado {
+        color: red;
+      }
+      .saldo {
+        font-size: 14px;
+      }
+      .main-th {
+        color: #0a1e58;
+      }
+      thead tr:first-child th {
+        height: 50px;
+      }
+      .logo img {
+        width: 140px;
+        height: 55px;
+        position: absolute;
+      }
+      th,
+      td {
+        padding: 1.3px;
+      }
+      table {
+        width: 100%;
+        table-layout: fixed;
+        border-spacing: 1px;
+        font-size: 10px;
+        background-color: rgb(218, 218, 218);
+        border-radius: 5px;
+      }
+      table thead {
+        background-color: #dadde6;
+        font-size: 11px;
+        color: rgb(3, 3, 3);
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+      table,
+      th,
+      td {
+        border: 0.1px solid white;
+      }
+      table tbody {
+        background-color: #eee;
+        text-align: center;
+        font-family: "ptsans", serif;
+      }
+      /*  */
+      table tbody tr td {
+        padding: 1px;
+        color: #1f274d;
+      }
+      tr:last-child {
+        background-color: #eee;
+      }
+    </style>
+  </head>
 
-    table td::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
+  <body>
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="6" class="logo">
+              <img
+                src="https://www.subrider.com.br/assets/css/images/logo.png"
+              />
+              <a id="ordem">';
 
-    table td:last-child {
-        border-bottom: 0;
+$loadhtmlstring .= $loadhtmlstring . $_GET['ordem'];
+
+$loadhtmlstring .= '</a>
+</th>
+</tr>
+<tr>
+<th>Data:</th>
+<th class="head-content" colspan="3">';
+
+$loadhtmlstring .= $loadhtmlstring . $data;
+
+$loadhtmlstring .= '<th>Km:</th>
+<th class="head-content">';
+
+$loadhtmlstring .= $loadhtmlstring . $km;
+
+$loadhtmlstring .= '</th>
+</tr>
+<tr>
+  <th colspan="1">Nome:</th>
+  <th colspan="3" class="head-content">';
+
+$loadhtmlstring .= $loadhtmlstring . $nome;
+
+$loadhtmlstring .= '</th>
+<th>Fone:</th>
+<th class="head-content">';
+
+$loadhtmlstring .= $loadhtmlstring . $fone;
+
+$loadhtmlstring .= '</th>
+  </tr>
+  <tr>
+    <th colspan="1">Endereço:</th>
+    <th colspan="5" class="head-content">';
+
+$loadhtmlstring .= $loadhtmlstring . $endereco;
+
+$loadhtmlstring .= '</th>
+  </tr>
+  <tr>
+    <th colspan="1">Marca:</th>
+    <th colspan="2" class="head-content">';
+
+$loadhtmlstring .= $loadhtmlstring . $marca;
+
+$loadhtmlstring .= '</th>
+    <th colspan="1">Placa:</th>
+    <th colspan="2" class="head-content">';
+
+$loadhtmlstring .= $loadhtmlstring . $placa;
+
+$loadhtmlstring .= '</th>
+    </tr>
+    <tr>
+      <th colspan="1">Modelo:</th>
+      <th colspan="2" class="head-content">';
+
+$loadhtmlstring .= $loadhtmlstring . $modelo;
+
+$loadhtmlstring .= '</th>
+    <th colspan="1">Ano:</th>
+    <th colspan="2" class="head-content">';
+
+$loadhtmlstring .= $loadhtmlstring . $ano;
+
+$loadhtmlstring .= '</th>
+    </tr>
+    <tr>
+      <th class="main-th">Ordem</th>
+      <th class="main-th" colspan="2">Descrição</th>
+      <th class="main-th">Quantidade</th>
+      <th class="main-th">Valor unitário</th>
+      <th class="main-th">Valor Total</th>
+    </tr>
+  </thead>
+  <tbody>';
+
+
+
+
+
+
+while ($item = mysqli_fetch_assoc($result)) {
+
+    //item da tabela
+    $loadhtmlstring .= '<tr>
+    <td>1</td>
+    <td colspan="2">';
+
+
+
+    $loadhtmlstring .= $loadhtmlstring . $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : "";
+    $loadhtmlstring .= $loadhtmlstring . $item['Item'] != '0' ? "" . $item['Item'] . "" : "";
+    $loadhtmlstring .= $loadhtmlstring . $item['Parte'] != '0' ? " / " . $item['Parte'] : "";
+    $loadhtmlstring .= $loadhtmlstring . $item['Descricao'] != '0' ? "" . $item['Descricao'] : "";
+    if ($item['Categoria'] == '2')
+        $loadhtmlstring .= $loadhtmlstring . $item['Codigo'] != '0' ? "(" . $item['Codigo'] . ")" : "";
+
+    $loadhtmlstring .= '</td>
+    <td>';
+
+    $loadhtmlstring .= $loadhtmlstring . $item['Quantidade'];
+
+    $loadhtmlstring .= '</td>
+    <td>';
+
+    $loadhtmlstring .= $loadhtmlstring . realFormat($item['Valor']);
+
+    $loadhtmlstring .= '</td>
+    <td>';
+
+    $loadhtmlstring .= $loadhtmlstring . realFormat($item['Valor'] * $item['Quantidade']);
+
+    $loadhtmlstring .= '</td>
+    </tr>';
+    //
+
+    if ($item["Categoria"] != '3') {
+        $total = $total + $item['Valor'] * $item['Quantidade'];
+    } else {
+        $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
     }
 }
-body {
-    font-family: "Open Sans", sans-serif;
-    line-height: 1.25;
-}
-</style> ';
-while ($motoinfo = mysqli_fetch_assoc($result2) ) {
-$loadhtmlstring .= '
-<table class="table">
-<thead>
-    <tr>
-        <th colspan=6>
-        <img style="width: 200px; height: 100px; text-align: left;"  src="https://www.subrider.com.br/assets/css/images/logo.png">
-        Ordem de Serviço - '. $_GET['ordem'] .'</th>
-        </tr>
-    <tr>
-        <th colspan=4>DATA: 00/00/0000</th>
-        <th colspan=2>KM: '.KMFormat($motoinfo["km"]).' </th>
-    </tr>
-    <tr>
-        <th colspan=4>Nome: '.$motoinfo["proprietario"].'</th>
-        <th colspan=2>Fone: '.$motoinfo["telefone"].'</th>
-    </tr>
-    <tr>
-        <th colspan=6>Endereço:'.$motoinfo["endereco"].'</th>
-    </tr>
-    <tr>
-        <th colspan=3>Marca: '.$motoinfo["marca"].'</th>
-        <th colspan=3>Placa: '.$motoinfo["placa"].'</th>
-    </tr>
-    <tr>
-        <th colspan=3>Modelo:'.$motoinfo["modelo"].'</th>
-        <th colspan=3>Ano: '.$motoinfo["ano"].'</th>
-    </tr>
-    <tr>
-        <th colspan=3>Descrição</th>
-        <th>Quantidade</th>
-        <th>Valor unitário</th>
-        <th>Valor Total</th>
-    </tr>
-</thead>
-<tbody>
-    ';
-}
-    $total = 0;
-    $adiantamento = 0;
-    while ($item = mysqli_fetch_assoc($result)) {
-        $grupo = $item['Grupo'] != '0' ? "" . $item['Grupo'] : "";
-        $parte = $item['Parte'] != '0' ? "/" . $item['Parte'] . "/" : "";
-        $item2 = $item['Item'] != '0' ? "" . $item['Item'] : "";
-        $descricao = $item['Descricao'] != '0' ? "" . $item['Descricao'] : "";
-        $loadhtmlstring .= '
-        <tr>
-            <td colspan=3>' . $grupo.$parte.$item2.$descricao . '</td>
-            <td>' . $item['Quantidade'] . '</td>
-            <td>' . realFormat($item['Valor']) . '</td>
-            <td>' . realFormat($item['Valor'] * $item['Quantidade']) . '</td>
-        </tr>
-        ';
-        if ($item["Descricao"] == '0') {
-            $total = $total + $item['Valor'] * $item['Quantidade'];
-        } else {
-            $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
-        }
-    }
-    $subtotal = $total - $adiantamento;
-    $loadhtmlstring .= ' <tr class="total">
-    <td colspan="2"></td>
-    <td>Subtotal:</td>
-    <td>'. realFormat($subtotal) .'</td>
-    <td>Total:</td>
-    <td>'. realFormat($total) .'</td>
-</tr>';
-    $loadhtmlstring .= '
+$saldo = $total - $adiantamento;
+
+$loadhtmlstring .= '<tr class="total">
+<td colspan="4"></td>
+<td class="valores-totais">SubTotal:</td>
+<td class="valores-totais">';
+
+$loadhtmlstring .= $loadhtmlstring . $total;
+
+$loadhtmlstring .= '</td>
+</tr>
 </tbody>
 </table>
-';
+<br />
+<table class="table">
+<tbody>';
+
+$loadhtmlstring .= $loadhtmlstring . $total;
+
+$result = mysqli_query($conn, $items_ordem_query);
+while ($item = mysqli_fetch_assoc($result)) {
+    if ($item['Categoria'] != '3')
+        continue;
+        $loadhtmlstring .= '<tr>
+        <td class="adiantamento" colspan="2">';
+        $loadhtmlstring .= $loadhtmlstring . $item['Descricao'];
+        $loadhtmlstring .= '</td>
+        <td class="valores">';
+        $loadhtmlstring .= $loadhtmlstring . realFormat($item['Valor'] * $item['Quantidade']);
+        $loadhtmlstring .= '</td>
+        </tr>';
+}
+$loadhtmlstring .= '<tr>
+<td class="saldo">Saldo:</td>
+<td class="valores-totais" colspan="2">';
+
+$loadhtmlstring .= $loadhtmlstring . $saldo;
+
+$loadhtmlstring .= '</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>';
 
 // var_dump(htmlspecialchars($loadhtmlstring));
 // die();
+
 $dompdf->loadHtml($loadhtmlstring);
+
+//testing new pdf
+//$dompdf->loadHtmlFile(__DIR__ . '/ordem.html');
+
+
 $dompdf->render();
 
 mysqli_close($conn);
 header('content-type: application/pdf');
-echo $dompdf->stream();
+
+//echo $dompdf->stream();
+echo $dompdf->output();
