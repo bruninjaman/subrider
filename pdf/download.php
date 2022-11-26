@@ -147,7 +147,7 @@ $loadhtmlstring = '<!DOCTYPE html>
               />
               <a id="ordem">';
 
-$loadhtmlstring .= $loadhtmlstring . $_GET['ordem'];
+$loadhtmlstring .= $_GET['ordem'];
 
 $loadhtmlstring .= '</a>
 </th>
@@ -156,12 +156,12 @@ $loadhtmlstring .= '</a>
 <th>Data:</th>
 <th class="head-content" colspan="3">';
 
-$loadhtmlstring .= $loadhtmlstring . $data;
+$loadhtmlstring .=  $data;
 
 $loadhtmlstring .= '<th>Km:</th>
 <th class="head-content">';
 
-$loadhtmlstring .= $loadhtmlstring . $km;
+$loadhtmlstring .= $km;
 
 $loadhtmlstring .= '</th>
 </tr>
@@ -169,13 +169,13 @@ $loadhtmlstring .= '</th>
   <th colspan="1">Nome:</th>
   <th colspan="3" class="head-content">';
 
-$loadhtmlstring .= $loadhtmlstring . $nome;
+$loadhtmlstring .= $nome;
 
 $loadhtmlstring .= '</th>
 <th>Fone:</th>
 <th class="head-content">';
 
-$loadhtmlstring .= $loadhtmlstring . $fone;
+$loadhtmlstring .= $fone;
 
 $loadhtmlstring .= '</th>
   </tr>
@@ -183,7 +183,7 @@ $loadhtmlstring .= '</th>
     <th colspan="1">Endereço:</th>
     <th colspan="5" class="head-content">';
 
-$loadhtmlstring .= $loadhtmlstring . $endereco;
+$loadhtmlstring .= $endereco;
 
 $loadhtmlstring .= '</th>
   </tr>
@@ -191,13 +191,13 @@ $loadhtmlstring .= '</th>
     <th colspan="1">Marca:</th>
     <th colspan="2" class="head-content">';
 
-$loadhtmlstring .= $loadhtmlstring . $marca;
+$loadhtmlstring .= $marca;
 
 $loadhtmlstring .= '</th>
     <th colspan="1">Placa:</th>
     <th colspan="2" class="head-content">';
 
-$loadhtmlstring .= $loadhtmlstring . $placa;
+$loadhtmlstring .= $placa;
 
 $loadhtmlstring .= '</th>
     </tr>
@@ -205,13 +205,13 @@ $loadhtmlstring .= '</th>
       <th colspan="1">Modelo:</th>
       <th colspan="2" class="head-content">';
 
-$loadhtmlstring .= $loadhtmlstring . $modelo;
+$loadhtmlstring .= $modelo;
 
 $loadhtmlstring .= '</th>
     <th colspan="1">Ano:</th>
     <th colspan="2" class="head-content">';
 
-$loadhtmlstring .= $loadhtmlstring . $ano;
+$loadhtmlstring .= $ano;
 
 $loadhtmlstring .= '</th>
     </tr>
@@ -239,27 +239,27 @@ while ($item = mysqli_fetch_assoc($result)) {
 
 
 
-    $loadhtmlstring .= $loadhtmlstring . $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : "";
-    $loadhtmlstring .= $loadhtmlstring . $item['Item'] != '0' ? "" . $item['Item'] . "" : "";
-    $loadhtmlstring .= $loadhtmlstring . $item['Parte'] != '0' ? " / " . $item['Parte'] : "";
-    $loadhtmlstring .= $loadhtmlstring . $item['Descricao'] != '0' ? "" . $item['Descricao'] : "";
+    $loadhtmlstring .= $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : "";
+    $loadhtmlstring .= $item['Item'] != '0' ? "" . $item['Item'] . "" : "";
+    $loadhtmlstring .= $item['Parte'] != '0' ? " / " . $item['Parte'] : "";
+    $loadhtmlstring .= $item['Descricao'] != '0' ? "" . $item['Descricao'] : "";
     if ($item['Categoria'] == '2')
-        $loadhtmlstring .= $loadhtmlstring . $item['Codigo'] != '0' ? "(" . $item['Codigo'] . ")" : "";
+        $loadhtmlstring .= $item['Codigo'] != '0' ? "(" . $item['Codigo'] . ")" : "";
 
     $loadhtmlstring .= '</td>
     <td>';
 
-    $loadhtmlstring .= $loadhtmlstring . $item['Quantidade'];
+    $loadhtmlstring .= $item['Quantidade'];
 
     $loadhtmlstring .= '</td>
     <td>';
 
-    $loadhtmlstring .= $loadhtmlstring . realFormat($item['Valor']);
+    $loadhtmlstring .= realFormat($item['Valor']);
 
     $loadhtmlstring .= '</td>
     <td>';
 
-    $loadhtmlstring .= $loadhtmlstring . realFormat($item['Valor'] * $item['Quantidade']);
+    $loadhtmlstring .= realFormat($item['Valor'] * $item['Quantidade']);
 
     $loadhtmlstring .= '</td>
     </tr>';
@@ -278,7 +278,7 @@ $loadhtmlstring .= '<tr class="total">
 <td class="valores-totais">SubTotal:</td>
 <td class="valores-totais">';
 
-$loadhtmlstring .= $loadhtmlstring . $total;
+$loadhtmlstring .= realFormat($total);
 
 $loadhtmlstring .= '</td>
 </tr>
@@ -288,7 +288,7 @@ $loadhtmlstring .= '</td>
 <table class="table">
 <tbody>';
 
-$loadhtmlstring .= $loadhtmlstring . $total;
+$loadhtmlstring .= $total;
 
 $result = mysqli_query($conn, $items_ordem_query);
 while ($item = mysqli_fetch_assoc($result)) {
@@ -296,10 +296,10 @@ while ($item = mysqli_fetch_assoc($result)) {
         continue;
         $loadhtmlstring .= '<tr>
         <td class="adiantamento" colspan="2">';
-        $loadhtmlstring .= $loadhtmlstring . $item['Descricao'];
+        $loadhtmlstring .= $item['Descricao'];
         $loadhtmlstring .= '</td>
         <td class="valores">';
-        $loadhtmlstring .= $loadhtmlstring . realFormat($item['Valor'] * $item['Quantidade']);
+        $loadhtmlstring .= realFormat($item['Valor'] * $item['Quantidade']);
         $loadhtmlstring .= '</td>
         </tr>';
 }
@@ -307,7 +307,7 @@ $loadhtmlstring .= '<tr>
 <td class="saldo">Saldo:</td>
 <td class="valores-totais" colspan="2">';
 
-$loadhtmlstring .= $loadhtmlstring . $saldo;
+$loadhtmlstring .= realFormat($saldo);
 
 $loadhtmlstring .= '</td>
 </tr>
@@ -328,8 +328,9 @@ $dompdf->loadHtml($loadhtmlstring);
 
 $dompdf->render();
 
-mysqli_close($conn);
 header('content-type: application/pdf');
 
 //echo $dompdf->stream();
 echo $dompdf->output();
+
+mysqli_close($conn);
