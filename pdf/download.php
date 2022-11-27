@@ -33,14 +33,14 @@ $result2 = mysqli_query($conn, $motoinfo_query);
 $data = "26/11/2022"; //GET FROM DATABASE
 
 while ($motoinfo = mysqli_fetch_assoc($result2)) {
-    $km = $motoinfo['km'];
-    $nome = $motoinfo['nome'];
-    $fone = $motoinfo['fone'];
-    $endereco = $motoinfo['endereco'];
-    $marca = $motoinfo['marca'];
-    $placa = $motoinfo['placa'];
-    $modelo = $motoinfo['modelo'];
-    $ano = $motoinfo['ano'];
+  $km = $motoinfo['km'];
+  $nome = $motoinfo['proprietario'];
+  $fone = $motoinfo['telefone'];
+  $endereco = $motoinfo['endereco'];
+  $marca = $motoinfo['marca'];
+  $placa = $motoinfo['placa'];
+  $modelo = $motoinfo['modelo'];
+  $ano = $motoinfo['ano'];
 }
 $total = 0;
 $adiantamento = 0;
@@ -228,48 +228,50 @@ $loadhtmlstring .= '</th>
 
 
 
-
+$total;
+$adiantamento;
 
 while ($item = mysqli_fetch_assoc($result)) {
+  if ($item["Categoria"] != '3') {
+    $total = $total + $item['Valor'] * $item['Quantidade'];
+  } else {
+    $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
+  }
+  if ($item['Categoria'] == '3')
+    continue;
 
-    //item da tabela
-    $loadhtmlstring .= '<tr>
+  //item da tabela
+  $loadhtmlstring .= '<tr>
     <td>1</td>
     <td colspan="2">';
 
 
+  $loadhtmlstring .= $item['Tipo'] != '0' ? "" . $item['Tipo'] . " - " : "";
+  $loadhtmlstring .= $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : "";
+  $loadhtmlstring .= $item['Item'] != '0' ? "" . $item['Item'] . "" : "";
+  $loadhtmlstring .= $item['Parte'] != '0' ? " / " . $item['Parte'] : "";
+  $loadhtmlstring .= $item['Descricao'] != '0' ? "" . $item['Descricao'] : "";
+  if ($item['Categoria'] == '2')
+    $loadhtmlstring .= $item['Codigo'] != '0' ? "(" . $item['Codigo'] . ")" : "";
 
-    $loadhtmlstring .= $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : "";
-    $loadhtmlstring .= $item['Item'] != '0' ? "" . $item['Item'] . "" : "";
-    $loadhtmlstring .= $item['Parte'] != '0' ? " / " . $item['Parte'] : "";
-    $loadhtmlstring .= $item['Descricao'] != '0' ? "" . $item['Descricao'] : "";
-    if ($item['Categoria'] == '2')
-        $loadhtmlstring .= $item['Codigo'] != '0' ? "(" . $item['Codigo'] . ")" : "";
-
-    $loadhtmlstring .= '</td>
+  $loadhtmlstring .= '</td>
     <td>';
 
-    $loadhtmlstring .= $item['Quantidade'];
+  $loadhtmlstring .= $item['Quantidade'];
 
-    $loadhtmlstring .= '</td>
+  $loadhtmlstring .= '</td>
     <td>';
 
-    $loadhtmlstring .= realFormat($item['Valor']);
+  $loadhtmlstring .= realFormat($item['Valor']);
 
-    $loadhtmlstring .= '</td>
+  $loadhtmlstring .= '</td>
     <td>';
 
-    $loadhtmlstring .= realFormat($item['Valor'] * $item['Quantidade']);
+  $loadhtmlstring .= realFormat($item['Valor'] * $item['Quantidade']);
 
-    $loadhtmlstring .= '</td>
+  $loadhtmlstring .= '</td>
     </tr>';
-    //
-
-    if ($item["Categoria"] != '3') {
-        $total = $total + $item['Valor'] * $item['Quantidade'];
-    } else {
-        $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
-    }
+  //
 }
 $saldo = $total - $adiantamento;
 
@@ -292,15 +294,15 @@ $loadhtmlstring .= $total;
 
 $result = mysqli_query($conn, $items_ordem_query);
 while ($item = mysqli_fetch_assoc($result)) {
-    if ($item['Categoria'] != '3')
-        continue;
-        $loadhtmlstring .= '<tr>
+  if ($item['Categoria'] != '3')
+    continue;
+  $loadhtmlstring .= '<tr>
         <td class="adiantamento" colspan="2">';
-        $loadhtmlstring .= $item['Descricao'];
-        $loadhtmlstring .= '</td>
+  $loadhtmlstring .= $item['Descricao'];
+  $loadhtmlstring .= '</td>
         <td class="valores">';
-        $loadhtmlstring .= realFormat($item['Valor'] * $item['Quantidade']);
-        $loadhtmlstring .= '</td>
+  $loadhtmlstring .= realFormat($item['Valor'] * $item['Quantidade']);
+  $loadhtmlstring .= '</td>
         </tr>';
 }
 $loadhtmlstring .= '<tr>

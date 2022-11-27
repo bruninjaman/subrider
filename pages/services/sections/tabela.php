@@ -42,6 +42,7 @@
                                     <?php
                                             }
                                     ?> -->
+                                    <?php echo $item['Tipo'] != '0' ? "" . $item['Tipo'] . " - " : ""; ?>
                                     <?php echo $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : ""; ?>
                                     <?php echo $item['Item'] != '0' ? "" . $item['Item'] . "" : ""; ?>
                                     <?php echo $item['Parte'] != '0' ? " / " . $item['Parte'] : ""; ?>
