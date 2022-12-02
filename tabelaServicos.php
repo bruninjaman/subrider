@@ -23,6 +23,7 @@ require_once("./scripts/functions.php");
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/search.css" />
+    <link rel="stylesheet" href="assets/css/sort.css" />
     <link rel="stylesheet" href="assets/css/fontawesome6.all.min.css" />  
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />

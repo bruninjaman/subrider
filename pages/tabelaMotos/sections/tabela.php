@@ -1,13 +1,3 @@
-<style>
-    th {
-        white-space: nowrap;
-    }
-    .sort {
-        background-color: transparent;
-        border: none;
-        color: white;
-    }
-</style>
 <section id="banner">
     <div class="content">
         <!-- search bar -->
