@@ -30,10 +30,10 @@
 <!-- search bar -->
 <?php
 //Categorias de pesquisa
-$categoriasPesquisa = "SHOW COLUMNS FROM motocicletas";
-$resultCategorias = mysqli_query($conn, $categoriasPesquisa);
+//$categoriasPesquisa = "SHOW COLUMNS FROM motocicletas";
+//$resultCategorias = mysqli_query($conn, $categoriasPesquisa);
 ?>
-<form action="tabelaMotos.php" method="get">
+<form action="" method="get">
     <?php
     if (isset($_GET["page"])) {
         echo "<input type=hidden name='page' value='" . $_GET["page"] . "'>";
@@ -48,7 +48,7 @@ $resultCategorias = mysqli_query($conn, $categoriasPesquisa);
                 //this while is getting all columns from our table
                 while ($categorias = mysqli_fetch_assoc($resultCategorias)) {
                     //black list is used to get rid of tables that we dont want
-                    $blacklist = array("Id", "foto","telefone");
+                    $blacklist = array("Id", "foto","telefone","motoID","ordem","valor","servID","Aberto");
 
                     //this for loop is removing items from our blacklist
                     for ($i = 0; $i < count($blacklist); $i++) {

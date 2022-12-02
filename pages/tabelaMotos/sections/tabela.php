@@ -23,7 +23,7 @@
                     <thead>
                         <tr>
                             <th>Foto</th>
-                            <form action="tabelaMotos.php" method="get">
+                            <form action="" method="get">
                                 <th><button class="sort" type=submit name="orderby" value="endereco">Endereço <i class="fa-solid fa-sort"></i></button> </th>
                                 <th><button class="sort" type=submit name="orderby" value="ano">Ano <i class="fa-solid fa-sort"></i></button></th>
                                 <th><button class="sort" type=submit name="orderby" value="modelo">Modelo <i class="fa-solid fa-sort"></i></button></th>

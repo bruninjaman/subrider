@@ -1,18 +1,34 @@
 <section id="banner">
     <div class="content">
+        <!-- search bar -->
+        <?php
+        //Categorias de pesquisa
+        $categoriasPesquisa = "SHOW COLUMNS FROM servicos";
+        $resultCategorias = mysqli_query($conn, $categoriasPesquisa);
+        include_once("includes\searchbar.php");
+        ?>
         <div class="table-wrapper">
             <div class="table-wrapper">
                 <table class="table" style="width: 800px;">
                     <thead>
                         <tr>
-                            <th>Item</th>
-                            <th>tipo</th>
+                            <form action="" method="get">
+                                <th><button class="sort" type=submit name="orderby" value="item">Item <i class="fa-solid fa-sort"></i></button> </th>
+                                <th><button class="sort" type=submit name="orderby" value="tipo">Tipo <i class="fa-solid fa-sort"></i></button></th>
+                            </form>
                             <th>Açoes</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $sql_query = "SELECT * FROM servicos ";
+                        if(isset($_GET["pesquisa"])){
+                            $sql_query .= " WHERE ".strtolower($_GET['selectPesquisa'])." LIKE '%".$_GET["pesquisa"]."%' ";
+                        }
+                        if(isset($_GET["orderby"])){
+                            $sql_query .= " ORDER BY  ".$_GET["orderby"]."  ";
+                        }
+                        $sql_query_without_limit = $sql_query;
                         $sql_query .= "LIMIT " . ((isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5) . ", 5";
                         $result = mysqli_query($conn, $sql_query);
 
@@ -37,7 +53,7 @@
                     </div>
                     <div class="col-9">
                         <?php
-                        $sql_query = "SELECT * FROM servicos ";
+                        $sql_query = $sql_query_without_limit;
                         pagination($conn, $sql_query);
                         ?>
                     </div>
