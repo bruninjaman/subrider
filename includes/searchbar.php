@@ -1,32 +1,3 @@
-<style>
-    .search input[type=text] {
-        padding: 10px;
-        font-size: 17px;
-        border-top-left-radius: 15px;
-        border-bottom-left-radius: 15px;
-        float: left;
-        width: 80%;
-        height: 100%;
-    }
-
-    .search button[type=submit] {
-        float: left;
-        width: 20%;
-        height: 100%;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
-        padding: 10px;
-        font-size: 17px;
-        border-left: none;
-        /* Prevent double borders */
-        cursor: pointer;
-        background-color: #e44c65;
-    }
-
-    .search button[type=submit]:hover {
-        background-color: #e76278;
-    }
-</style>
 <!-- search bar -->
 <?php
 //Categorias de pesquisa
