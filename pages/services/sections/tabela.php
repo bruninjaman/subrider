@@ -46,12 +46,12 @@
                                     <?php echo $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : ""; ?>
                                     <?php echo $item['Item'] != '0' ? "" . $item['Item'] . "" : ""; ?>
                                     <?php echo $item['Parte'] != '0' ? " / " . $item['Parte'] : ""; ?>
-                                    <?php 
-                                    echo $item['Descricao'] != '0' ? "" . $item['Descricao'] : ""; 
+                                    <?php
+                                    echo $item['Descricao'] != '0' ? "" . $item['Descricao'] : "";
                                     if ($item['Categoria'] == '2')
-                                        echo $item['Codigo']!= '0' ? "(" . $item['Codigo'].")" : ""; 
+                                        echo $item['Codigo'] != '0' ? "(" . $item['Codigo'] . ")" : "";
                                     ?>
-                                    
+
                                 </td>
                                 <td><?php echo $item['Quantidade']; ?></td>
                                 <td><?php echo realFormat($item['Valor']); ?></td>

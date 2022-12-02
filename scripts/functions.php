@@ -9,25 +9,100 @@ function pagination($conn, $sql_query)
     ?>
     <div class="pagination-style">
         <ul class="pagination">
-            <?php
-            if (isset($_GET['page']) ? $_GET['page'] > 1 : false) {
-            ?>
-                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo isset($_GET['page']) && $_GET['page'] > 0  ? $_GET['page'] - 1 : 0 ?>">«</a></li>
-            <?php
-            }
-            //display the link of the pages in URL  
-            $page = isset($_GET['page']) ? $_GET['page'] : 0;
-            for ($page = 1; $page <= $number_of_page; $page++) {
-                echo '<li><a href = "' . $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . ' </a></li>';
-            }
-            ?>
-            <?php
-            if (!isset($_GET['page']) || $_GET['page'] < $number_of_page) {
-            ?>
-                <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?page=<?php echo isset($_GET['page']) ? $_GET['page'] : 0 ?>">»</a></li>
-            <?php
-            }
-            ?>
+            <form method="get" class="pagination">
+                <?php
+                if (isset($_GET['page']) ? $_GET['page'] > 1 : false) {
+                ?>
+                    <form method="get" class="pagination">
+                        <?php
+                        if (isset($_GET['page'])) {
+                        ?>
+                            <input type="hidden" name="page" value="<?php echo $_GET['page'] - 1 ?>">
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['selectPesquisa'])) {
+                        ?>
+                            <input type="hidden" name="selectPesquisa" value="<?php echo $_GET['selectPesquisa'] ?>">
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['pesquisa'])) {
+                        ?>
+                            <input type="hidden" name="pesquisa" value="<?php echo $_GET['pesquisa'] ?>">
+                        <?php
+                        }
+                        ?>
+                        <li><a onclick="this.closest('form').submit();return false;">«</a></li>
+                    </form>
+                <?php
+                }
+                //display the link of the pages in URL  
+                $page = isset($_GET['page']) ? $_GET['page'] : 0;
+                for ($page = 1; $page <= $number_of_page; $page++) {
+                    //echo '<li><a href = "' . $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . ' </a></li>';
+                    //another form for page
+                    //echo '<form method="get" action=""><input type="hidden" name="page" value='.$page.'><li><a onclick="this.closest('."'form'".').submit();return false;">'.$page.' </a></li></form>';
+                ?>
+                    <form method="get" class="pagination">
+                        <?php
+                        if (isset($page)) {
+                        ?>
+                            <input type="hidden" name="page" value="<?php echo $page ?>">
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['selectPesquisa'])) {
+                        ?>
+                            <input type="hidden" name="selectPesquisa" value="<?php echo $_GET['selectPesquisa'] ?>">
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['pesquisa'])) {
+                        ?>
+                            <input type="hidden" name="pesquisa" value="<?php echo $_GET['pesquisa'] ?>">
+                        <?php
+                        }
+                        ?>
+                        <li><a onclick="this.closest('form').submit();return false;"><?php echo $page ?></a></li>
+                    </form>
+                <?php
+                }
+                ?>
+                <?php
+                if (!isset($_GET['page']) || $_GET['page'] < $number_of_page) {
+                ?>
+                    <form method="get" class="pagination">
+                        <?php
+                        if (isset($_GET['page'])) {
+                        ?>
+                            <input type="hidden" name="page" value="<?php echo $_GET['page'] + 1 ?>">
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['selectPesquisa'])) {
+                        ?>
+                            <input type="hidden" name="selectPesquisa" value="<?php echo $_GET['selectPesquisa'] ?>">
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['pesquisa'])) {
+                        ?>
+                            <input type="hidden" name="pesquisa" value="<?php echo $_GET['pesquisa'] ?>">
+                        <?php
+                        }
+                        ?>
+                        <li><a onclick="this.closest('form').submit();return false;">»</a></li>
+                    </form>
+                <?php
+                }
+                ?>
         </ul>
     </div>
 <?php
@@ -66,9 +141,9 @@ function uploadFoto($fotoName, $fotoSize, $fotoTmpname, $file_path)
     // } else if ($fotoSize > 500000) {
     //     echo "Sorry, your file is too large.";
     // } else {
-        //MOVE FILE TO DIRECTORY
-        move_uploaded_file($fotoTmpname, $file_destination);
-        return $file_destination;
+    //MOVE FILE TO DIRECTORY
+    move_uploaded_file($fotoTmpname, $file_destination);
+    return $file_destination;
     // };
 }
 

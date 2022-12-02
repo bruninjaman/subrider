@@ -64,7 +64,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                             </div>
                             <div class="col-2">
                                 <label>Valor</label>
-                                <input type="number" name="pvalor">
+                                <input type="number" name="pvalor" step=".05">
                             </div>
                             <div class="col-1">
                             </div>

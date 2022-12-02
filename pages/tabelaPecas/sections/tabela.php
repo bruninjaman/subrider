@@ -1,5 +1,12 @@
 <section id="banner">
     <div class="content">
+        <!-- search bar -->
+        <?php
+        //Categorias de pesquisa
+        $categoriasPesquisa = "SHOW COLUMNS FROM pecas";
+        $resultCategorias = mysqli_query($conn, $categoriasPesquisa);
+        include_once("includes\searchbar.php");
+        ?>
         <div class="table-wrapper">
             <div class="table-wrapper">
                 <table class="table">

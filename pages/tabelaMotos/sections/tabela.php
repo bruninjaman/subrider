@@ -1,24 +1,52 @@
+<style>
+    th {
+        white-space: nowrap;
+    }
+    .sort {
+        background-color: transparent;
+        border: none;
+        color: white;
+    }
+</style>
 <section id="banner">
     <div class="content">
+        <!-- search bar -->
+        <?php
+        //Categorias de pesquisa
+        $categoriasPesquisa = "SHOW COLUMNS FROM motocicletas";
+        $resultCategorias = mysqli_query($conn, $categoriasPesquisa);
+        include_once("includes\searchbar.php");
+        ?>
         <div class="table-wrapper">
             <div class="table-wrapper">
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Foto</th>
-                            <th>Endereço</th>
-                            <th>Ano</th>
-                            <th>Modelo</th>
-                            <th>Marca</th>
-                            <th>Placa</th>
-                            <th>KM</th>
-                            <th>Proprietario</th>
+                            <form action="tabelaMotos.php" method="get">
+                                <th><button class="sort" type=submit name="orderby" value="endereco">Endereço <i class="fa-solid fa-sort"></i></button> </th>
+                                <th><button class="sort" type=submit name="orderby" value="ano">Ano <i class="fa-solid fa-sort"></i></button></th>
+                                <th><button class="sort" type=submit name="orderby" value="modelo">Modelo <i class="fa-solid fa-sort"></i></button></th>
+                                <th><button class="sort" type=submit name="orderby" value="marca">Marca <i class="fa-solid fa-sort"></i></button></th>
+                                <th><button class="sort" type=submit name="orderby" value="placa">Placa <i class="fa-solid fa-sort"></i></button></th>
+                                <th><button class="sort" type=submit name="orderby" value="km">KM <i class="fa-solid fa-sort"></i></button></th>
+                                <th><button class="sort" type=submit name="orderby" value="proprietario">Proprietario <i class="fa-solid fa-sort"></i></button></th>
+                            </form>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $sql_query = "SELECT * FROM motocicletas ";
+
+                        if(isset($_GET["pesquisa"])){
+                            $sql_query .= " WHERE ".strtolower($_GET['selectPesquisa'])." LIKE '%".$_GET["pesquisa"]."%' ";
+                        }
+                        if(isset($_GET["orderby"])){
+                            $sql_query .= " ORDER BY  ".$_GET["orderby"]."  ";
+                        }
+
+                        $sql_query_without_limit = $sql_query;
                         $sql_query .= "LIMIT " . ((isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5) . ", 5";
                         $result = mysqli_query($conn, $sql_query);
                         while ($moto = mysqli_fetch_assoc($result)) {
@@ -50,7 +78,7 @@
                     </div>
                     <div class="col-9">
                         <?php
-                        $sql_query = "SELECT * FROM motocicletas ";
+                        $sql_query = $sql_query_without_limit;
                         pagination($conn, $sql_query);
                         ?>
                     </div>
