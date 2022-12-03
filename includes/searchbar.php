@@ -1,9 +1,4 @@
 <!-- search bar -->
-<?php
-//Categorias de pesquisa
-//$categoriasPesquisa = "SHOW COLUMNS FROM motocicletas";
-//$resultCategorias = mysqli_query($conn, $categoriasPesquisa);
-?>
 <form action="" method="get">
     <?php
     if (isset($_GET["page"])) {
@@ -19,11 +14,13 @@
                 //this while is getting all columns from our table
                 while ($categorias = mysqli_fetch_assoc($resultCategorias)) {
                     //black list is used to get rid of tables that we dont want
-                    $blacklist = array("Id", "foto","telefone","motoID","ordem","valor","servID","Aberto");
+                    $blacklist = array("Id", "foto","telefone","motoId","ordem","valor","servID","Aberto","pecaId","motoID","quantidade","servicoId");
 
                     //this for loop is removing items from our blacklist
                     for ($i = 0; $i < count($blacklist); $i++) {
-                        if (str_contains($categorias['Field'], $blacklist[$i]))
+                        // if (str_contains($categorias['Field'], $blacklist[$i]))
+                        //     continue 2;
+                        if ($categorias['Field'] == $blacklist[$i])
                             continue 2;
                     }
 
