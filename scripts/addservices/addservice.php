@@ -58,7 +58,7 @@ if (isset($_POST['tipo_item'])) {
             
             $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) ";
             $mysqli_query .= " VALUES ";
-            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}'";
+            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}')";
             break;
         case 'adiantamento':
             $categoria = 3;
@@ -79,6 +79,7 @@ if (isset($_POST['tipo_item'])) {
             break;
     }
 
+    var_dump($mysqli_query);
     mysqli_query($conn, $mysqli_query);
     mysqli_close($conn);
     header('Location: ../../services.php?ordem='. $_GET['ordem']);
