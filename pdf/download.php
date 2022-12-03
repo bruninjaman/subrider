@@ -33,7 +33,7 @@ $result2 = mysqli_query($conn, $motoinfo_query);
 $data = "26/11/2022"; //GET FROM DATABASE
 
 while ($motoinfo = mysqli_fetch_assoc($result2)) {
-  $km = $motoinfo['km'];
+  $km = KMFormat($motoinfo['km']);
   $nome = $motoinfo['proprietario'];
   $fone = $motoinfo['telefone'];
   $endereco = $motoinfo['endereco'];
