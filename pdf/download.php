@@ -35,7 +35,7 @@ $data = "26/11/2022"; //GET FROM DATABASE
 while ($motoinfo = mysqli_fetch_assoc($result2)) {
   $km = KMFormat($motoinfo['km']);
   $nome = $motoinfo['proprietario'];
-  $fone = $motoinfo['telefone'];
+  $fone = "61 91111-1111";
   $endereco = $motoinfo['endereco'];
   $marca = $motoinfo['marca'];
   $placa = $motoinfo['placa'];
@@ -230,8 +230,11 @@ $loadhtmlstring .= '</th>
 
 $total;
 $adiantamento;
+$itemcount = 0;
+
 
 while ($item = mysqli_fetch_assoc($result)) {
+  $itemcount++;
   if ($item["Categoria"] != '3') {
     $total = $total + $item['Valor'] * $item['Quantidade'];
   } else {
@@ -242,7 +245,7 @@ while ($item = mysqli_fetch_assoc($result)) {
 
   //item da tabela
   $loadhtmlstring .= '<tr>
-    <td>1</td>
+    <td>'. $itemcount . '</td>
     <td colspan="2">';
 
 

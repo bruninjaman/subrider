@@ -21,13 +21,11 @@ if (isset($_FILES["foto"])) {
     
     $grupo = $_POST['grupo'];
     $item = $_POST['item'];
-    $quantidade = $_POST['quantidade'];
     $parte = $_POST['parte'];
-    $valor = $_POST['valor'];
 
-    $mysqli_query = "INSERT INTO pecas (foto,grupo,item,quantidade,parte,valor) ";
+    $mysqli_query = "INSERT INTO pecas (foto,grupo,item,parte) ";
     $mysqli_query .= "VALUES ('{$foto}','{$grupo}', ";
-    $mysqli_query .= "'{$item}','{$quantidade}','{$parte}','{$valor}'";
+    $mysqli_query .= "'{$item}','{$parte}'";
     $mysqli_query .= ") ";
     
     mysqli_query($conn, $mysqli_query);

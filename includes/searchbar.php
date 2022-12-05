@@ -14,7 +14,7 @@
                 //this while is getting all columns from our table
                 while ($categorias = mysqli_fetch_assoc($resultCategorias)) {
                     //black list is used to get rid of tables that we dont want
-                    $blacklist = array("Id", "foto","telefone","motoId","ordem","valor","servID","Aberto","pecaId","motoID","quantidade","servicoId");
+                    $blacklist = array("Id", "foto","motoId","ordem","valor","servID","Aberto","pecaId","motoID","quantidade","servicoId");
 
                     //this for loop is removing items from our blacklist
                     for ($i = 0; $i < count($blacklist); $i++) {
