@@ -16,13 +16,12 @@ $options->setIsRemoteEnabled(true);
 
 $dompdf = new Dompdf($options);
 
-//$dompdf->loadHtml('Teste');
-//$dompdf->loadHtmlFile(__DIR__ . '/ordem.html');
-
+//Pegar todos items pertencentes a esta ordem de serviço
 $items_ordem_query = "SELECT * FROM item_ordem ";
 $items_ordem_query .= "WHERE item_ordem.Ordem = '" . $_GET['ordem'] . "' ";
 $result = mysqli_query($conn, $items_ordem_query);
 
+//Pegar informações da moto vinculada a esta ordem de serviço
 $motoinfo_query = "SELECT * FROM motocicletas ";
 $motoinfo_query .= " WHERE motocicletas.motoId = (
     SELECT ordem_servicos.motoID FROM ordem_servicos 
@@ -30,10 +29,21 @@ $motoinfo_query .= " WHERE motocicletas.motoId = (
 
 $result2 = mysqli_query($conn, $motoinfo_query);
 
-$data = "26/11/2022"; //GET FROM DATABASE
+//Pegar informações sobre esta ordem de serviço
+$ordem_query = "SELECT * FROM ordem_servicos ";
+$ordem_query .= " WHERE Codigo =  '". $_GET['ordem'] ."' ";
+$result3 = mysqli_query($conn, $ordem_query);
 
+//Pegar informações de ordem de serviço
+while ($ordeminfo = mysqli_fetch_assoc($result3)) {
+  if ($ordeminfo["Data"] == null || $ordeminfo["KM"] == NULL)
+    header("location: tabelaOrdensEdit.php");
+    $km = KMFormat($ordeminfo['KM']);
+    $data = $ordeminfo['Data'];
+}
+
+//Pegar informações sobre a moto
 while ($motoinfo = mysqli_fetch_assoc($result2)) {
-  $km = KMFormat($motoinfo['km']);
   $nome = $motoinfo['proprietario'];
   $fone = "61 91111-1111";
   $endereco = $motoinfo['endereco'];
@@ -42,6 +52,8 @@ while ($motoinfo = mysqli_fetch_assoc($result2)) {
   $modelo = $motoinfo['modelo'];
   $ano = $motoinfo['ano'];
 }
+
+//Inicializar total e adiantamento em 0
 $total = 0;
 $adiantamento = 0;
 

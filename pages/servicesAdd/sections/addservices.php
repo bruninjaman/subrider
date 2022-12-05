@@ -64,7 +64,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                             </div>
                             <div class="col-2">
                                 <label>Valor</label>
-                                <input type="number" name="pvalor" step=".05">
+                                <input type="number" name="pvalor" step=".01">
                             </div>
                             <div class="col-1">
                             </div>
@@ -100,7 +100,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                         <div class="row">
                             <div class="col-2">
                                 <label>Valor</label>
-                                <input type="number" name="svalor">
+                                <input type="number" name="svalor" step=".01">
                             </div>
                             <div class="col-2">
                                 <label>Quantidade</label>
@@ -121,7 +121,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                             </div>
                             <div class="col-2">
                                 <label>Valor</label>
-                                <input type="number" name="avalor">
+                                <input type="number" name="avalor" step=".01">
                             </div>
                         </div>
                         <div class="row">
