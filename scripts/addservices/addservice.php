@@ -24,15 +24,17 @@ if (isset($_POST['tipo_item'])) {
                 $tipo = 0;
                 $item = $peca['item'];
                 $parte = $peca['parte'];
+                $quantidade = $_POST['pquantidade'];
+                $valor = $_POST['pvalor'];
                 $descricao = 0;
-                $ordem = $_GET["ordem"];
+                $ordem = $_GET["ordem"];            
                 //Código
                 $scode = $_POST['scode'];
             }
             
-            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Descricao,Ordem,Categoria,Codigo) ";
+            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria,Codigo) ";
             $mysqli_query .= " VALUES ";
-            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$descricao}','{$ordem}','{$categoria}','{$scode}')";
+            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}','{$scode}')";
             break;
         case 'service':
             $categoria = 1;
@@ -48,13 +50,15 @@ if (isset($_POST['tipo_item'])) {
                 $tipo = $servico['tipo'];
                 $item = $servico['item'];
                 $parte = 0;
+                $quantidade = $_POST['squantidade'];
+                $valor = $_POST['svalor'];
                 $descricao = 0;
                 $ordem = $_GET["ordem"];
             }
             
-            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Descricao,Ordem,Categoria) ";
+            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) ";
             $mysqli_query .= " VALUES ";
-            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$descricao}','{$ordem}','{$categoria}')";
+            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}')";
             break;
         case 'adiantamento':
             $categoria = 3;
