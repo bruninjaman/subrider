@@ -41,7 +41,13 @@ function pagination($conn, $sql_query)
                 }
                 //display the link of the pages in URL  
                 $page = isset($_GET['page']) ? $_GET['page'] : 0;
-                for ($page = 1; $page <= $number_of_page; $page++) {
+
+                //maxpagenumber
+                $maxPagenumber = 0;
+
+                for ($page = $_GET["page"]; $page <= $number_of_page; $page++) {
+                    if($maxPagenumber >= 5)
+                        break;
                     //echo '<li><a href = "' . $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . ' </a></li>';
                     //another form for page
                     //echo '<form method="get" action=""><input type="hidden" name="page" value='.$page.'><li><a onclick="this.closest('."'form'".').submit();return false;">'.$page.' </a></li></form>';
@@ -71,6 +77,7 @@ function pagination($conn, $sql_query)
                         <li><a onclick="this.closest('form').submit();return false;"><?php echo $page ?></a></li>
                     </form>
                 <?php
+                    $maxPagenumber++; 
                 }
                 ?>
                 <?php
