@@ -37,7 +37,7 @@ $result3 = mysqli_query($conn, $ordem_query);
 //Pegar informações de ordem de serviço
 while ($ordeminfo = mysqli_fetch_assoc($result3)) {
   if ($ordeminfo["Data"] == null || $ordeminfo["KM"] == NULL)
-    header("location: tabelaOrdensEdit.php");
+    header("location: ../tabelaOrdensEdit.php?ordem=" . $_GET['ordem']);
     $km = KMFormat($ordeminfo['KM']);
     $data = $ordeminfo['Data'];
 }

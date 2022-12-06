@@ -1,7 +1,7 @@
 <section id="banner">
     <div class="content form">
         <img class="fit logogray" src="./assets/css/images/logo-branco-crop.png">
-        <form method="post" action=".\scripts\tabelaMotoServices\create-service.php" enctype="multipart/form-data">
+        <form method="post" action=".\scripts\tabelaMotoServices\create-service.php">
             <div class="row">
                 <div class="col-12">
                     <?php
@@ -25,7 +25,7 @@
                     }
                     $novo_codigo = $novo_codigo + 1 . '/' . date("Y");
                     ?>
-                    <h2>Ordem <?php echo $novo_codigo?></h2>
+                    <h2>Ordem <?php echo $novo_codigo ?></h2>
                     <h3>Selecione uma moto</h3>
                     <?php
                     $sql_query = "SELECT * FROM motocicletas";
@@ -40,6 +40,16 @@
                         }
                         ?>
                     </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label>Data: </label>
+                    <input type="date" name="data">
+                </div>
+                <div class="col-4">
+                    <label>Quilometragem:</label>
+                    <input type="number" name="km" style="width:250px;">
                 </div>
             </div>
             <br>
