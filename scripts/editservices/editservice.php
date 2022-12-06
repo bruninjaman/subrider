@@ -8,37 +8,82 @@ require_once("../../connection/connection.php");
 //FUNCTIONS
 require_once("../../scripts/functions.php");
 
-if (isset($_POST['avalor']) || isset($_POST['svalor']) || isset($_POST['pvalor'])) {
-    $id = $_GET["id"];
-    if(isset($_POST['type_pecas'])) {
+if (isset($_POST['tipo_item'])) {
+    switch($_POST['tipo_item']) {
+        case 'pecas':
+            $categoria = 2;
+            //SELECT PECA
+            $sql_query = "SELECT * FROM pecas ";
+            $sql_query .= "WHERE pecas.pecaId = ". $_POST['pecaid'];
+            $result = mysqli_query($conn, $sql_query);
 
-        $grupo = $_POST["pgrupo"];
-        $item = $_POST["pitem"];
-        $parte = $_POST["pparte"];
+            //GIVE RESULTS
+            while ($peca = mysqli_fetch_assoc($result)) {
+                $foto = $peca['foto'];
+                $grupo = $peca['grupo'];
+                $tipo = 0;
+                $item = $peca['item'];
+                $parte = $peca['parte'];
+                $quantidade = $_POST['pquantidade'];
+                $valor = $_POST['pvalor'];
+                $descricao = 0;
+                $ordem = $_GET["ordem"];            
+                //Código
+                $scode = $_POST['scode'];
+            }
+            
+            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria,Codigo) ";
+            $mysqli_query .= " VALUES ";
+            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}','{$scode}')";
+            break;
+        case 'service':
+            $categoria = 1;
+            //SELECT Serviço
+            $sql_query = "SELECT * FROM servicos ";
+            $sql_query .= "WHERE servicos.servicoId = ". $_POST['servicoid'];
+            $result = mysqli_query($conn, $sql_query);
 
-        $mysqli_query = " UPDATE pecas ";
-        $mysqli_query .= " SET grupo = '{$grupo}', ";
-        $mysqli_query .= " item = '{$item}', ";
-        $mysqli_query .= " parte = '{$parte}' ";
-        $mysqli_query .= " WHERE pecaId = '{$id}' ";
+            //GIVE RESULTS
+            while ($servico = mysqli_fetch_assoc($result)) {
+                $foto = 0;
+                $grupo = 0;
+                $tipo = $servico['tipo'];
+                $item = $servico['item'];
+                $parte = 0;
+                $quantidade = $_POST['squantidade'];
+                $valor = $_POST['svalor'];
+                $descricao = 0;
+                $ordem = $_GET["ordem"];
+            }
+            
+            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) ";
+            $mysqli_query .= " VALUES ";
+            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}')";
+            break;
+        case 'adiantamento':
+            $categoria = 3;
+            //GIVE RESULTS
+            $foto = 0;
+            $grupo = 0;
+            $tipo = 0;
+            $item = 0;
+            $parte = 0;
+            $quantidade = 1;
+            $valor = $_POST['avalor'];
+            $descricao = $_POST['aitem'];;
+            $ordem = $_GET["ordem"];
+            
+            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) ";
+            $mysqli_query .= " VALUES ";
+            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}')";
+            break;
     }
-    if(isset($_POST['type_servicos'])) {
-
-        $tipo = $_POST["sgrupo"];
-        $item = $_POST["sitem"];
-        //Código
-        $scode = $_POST['scode'];
-
-        $mysqli_query = " UPDATE servicos ";
-        $mysqli_query .= " SET tipo = '{$tipo}', ";
-        $mysqli_query .= " item = '{$item}', ";
-        $mysqli_query .= " Codigo = '{$scode}', ";
-        $mysqli_query .= " WHERE servicoId = '{$id}' ";
-    }
-
+    var_dump($mysqli_query);
+    die();
+    //update queries
     mysqli_query($conn, $mysqli_query);
     mysqli_close($conn);
     header('Location: ../../services.php?ordem='. $_GET['ordem']);
 }
-
 ?>
+
