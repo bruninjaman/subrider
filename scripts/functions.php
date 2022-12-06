@@ -47,6 +47,8 @@ function pagination($conn, $sql_query)
                 $maxPagenumber = 0;
 
                 for ($p = $page; $p <= $number_of_page; $p++) {
+                    if ($p <= 0)
+                        continue;
                     if($maxPagenumber >= 5)
                         break;
                     //echo '<li><a href = "' . $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . ' </a></li>';
