@@ -1,4 +1,5 @@
 <?php
+
 function pagination($conn, $sql_query)
 {
 ?>
@@ -45,7 +46,7 @@ function pagination($conn, $sql_query)
                 //maxpagenumber
                 $maxPagenumber = 0;
 
-                for ($page = $_GET["page"]; $page <= $number_of_page; $page++) {
+                for ($p = $page; $p <= $number_of_page; $p++) {
                     if($maxPagenumber >= 5)
                         break;
                     //echo '<li><a href = "' . $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . ' </a></li>';
@@ -54,9 +55,9 @@ function pagination($conn, $sql_query)
                 ?>
                     <form method="get" class="pagination">
                         <?php
-                        if (isset($page)) {
+                        if (isset($p)) {
                         ?>
-                            <input type="hidden" name="page" value="<?php echo $page ?>">
+                            <input type="hidden" name="page" value="<?php echo $p ?>">
                         <?php
                         }
                         ?>
@@ -74,7 +75,7 @@ function pagination($conn, $sql_query)
                         <?php
                         }
                         ?>
-                        <li><a onclick="this.closest('form').submit();return false;"><?php echo $page ?></a></li>
+                        <li><a onclick="this.closest('form').submit();return false;"><?php echo $p ?></a></li>
                     </form>
                 <?php
                     $maxPagenumber++; 
