@@ -15,7 +15,7 @@ $result2 = mysqli_fetch_assoc($result2);
     <div class="content form">
         <img class="fit logogray" src="./assets/css/images/logo-branco-crop.png">
         <center>
-            <form method="post" action="scripts\addservices\editservice.php?ordem=<?php echo $_GET['ordem'] . "&item_ordemID=" . $_GET['item_ordemID'] ?>">
+            <form method="post" action="scripts\editservices\editservice.php?ordem=<?php echo $_GET['ordem'] . "&item_ordemID=" . $_GET['item_ordemID'] ?>">
                 <div>
                     <div class="row">
                         <div class="col-12">
