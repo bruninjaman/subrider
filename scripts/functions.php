@@ -2,121 +2,31 @@
 
 function pagination($conn, $sql_query)
 {
-?>
-    <link rel="stylesheet" href="./assets/css/pagination.css">
-    <?php
     $result = mysqli_query($conn, $sql_query);
-    $number_of_page = ceil(mysqli_num_rows($result) / 5);
+    $num_rows = mysqli_num_rows($result);
+    $num_pages = ceil($num_rows / 5);
+    $current_page = $num_pages; // show the last page by default
+    $start_page = max($current_page - 2, 1);
+    $end_page = min($current_page + 2, $num_pages);
     ?>
+    <link rel="stylesheet" href="./assets/css/pagination.css">
     <div class="pagination-style">
         <ul class="pagination">
-            <form method="get" class="pagination">
-                <?php
-                if (isset($_GET['page']) ? $_GET['page'] > 1 : false) {
-                ?>
-                    <form method="get" class="pagination">
-                        <?php
-                        if (isset($_GET['page'])) {
-                        ?>
-                            <input type="hidden" name="page" value="<?php echo $_GET['page'] - 1 ?>">
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if (isset($_GET['selectPesquisa'])) {
-                        ?>
-                            <input type="hidden" name="selectPesquisa" value="<?php echo $_GET['selectPesquisa'] ?>">
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if (isset($_GET['pesquisa'])) {
-                        ?>
-                            <input type="hidden" name="pesquisa" value="<?php echo $_GET['pesquisa'] ?>">
-                        <?php
-                        }
-                        ?>
-                        <li><a onclick="this.closest('form').submit();return false;">«</a></li>
-                    </form>
-                <?php
-                }
-                //display the link of the pages in URL  
-                $page = isset($_GET['page']) ? $_GET['page'] : 0;
-
-                //maxpagenumber
-                $maxPagenumber = 0;
-
-                for ($p = $page; $p <= $number_of_page; $p++) {
-                    if ($p <= 0)
-                        continue;
-                    if($maxPagenumber >= 5)
-                        break;
-                    //echo '<li><a href = "' . $_SERVER['PHP_SELF'] . '?page=' . $page . '">' . $page . ' </a></li>';
-                    //another form for page
-                    //echo '<form method="get" action=""><input type="hidden" name="page" value='.$page.'><li><a onclick="this.closest('."'form'".').submit();return false;">'.$page.' </a></li></form>';
-                ?>
-                    <form method="get" class="pagination">
-                        <?php
-                        if (isset($p)) {
-                        ?>
-                            <input type="hidden" name="page" value="<?php echo $p ?>">
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if (isset($_GET['selectPesquisa'])) {
-                        ?>
-                            <input type="hidden" name="selectPesquisa" value="<?php echo $_GET['selectPesquisa'] ?>">
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if (isset($_GET['pesquisa'])) {
-                        ?>
-                            <input type="hidden" name="pesquisa" value="<?php echo $_GET['pesquisa'] ?>">
-                        <?php
-                        }
-                        ?>
-                        <li><a onclick="this.closest('form').submit();return false;"><?php echo $p ?></a></li>
-                    </form>
-                <?php
-                    $maxPagenumber++; 
-                }
-                ?>
-                <?php
-                if (!isset($_GET['page']) || $_GET['page'] < $number_of_page) {
-                ?>
-                    <form method="get" class="pagination">
-                        <?php
-                        if (isset($_GET['page'])) {
-                        ?>
-                            <input type="hidden" name="page" value="<?php echo $_GET['page'] + 1 ?>">
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if (isset($_GET['selectPesquisa'])) {
-                        ?>
-                            <input type="hidden" name="selectPesquisa" value="<?php echo $_GET['selectPesquisa'] ?>">
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if (isset($_GET['pesquisa'])) {
-                        ?>
-                            <input type="hidden" name="pesquisa" value="<?php echo $_GET['pesquisa'] ?>">
-                        <?php
-                        }
-                        ?>
-                        <li><a onclick="this.closest('form').submit();return false;">»</a></li>
-                    </form>
-                <?php
-                }
-                ?>
+            <?php if ($current_page > 1): ?>
+                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $current_page - 1; ?>">«</a></li>
+            <?php endif; ?>
+            <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+            <?php endfor; ?>
+            <?php if ($current_page < $num_pages): ?>
+                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $current_page + 1; ?>">»</a></li>
+            <?php endif; ?>
         </ul>
     </div>
-<?php
+    <?php
 }
+
+
 function login($user, $password, $conn)
 {
     //check if password and name exist on db
