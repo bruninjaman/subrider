@@ -1,13 +1,36 @@
 <?php
 
-function pagination($conn, $sql_query)
+function pagination($conn, $sql_query, $results_per_page = 5)
 {
+    // Check for "page" parameter in query string
+    if (isset($_GET['page'])) {
+        $current_page = intval($_GET['page']);
+    } else {
+        $current_page = 1;
+    }
+
+    // Execute SQL query and get result
     $result = mysqli_query($conn, $sql_query);
+
+    // Calculate number of pages needed
     $num_rows = mysqli_num_rows($result);
-    $num_pages = ceil($num_rows / 5);
-    $current_page = $num_pages; // show the last page by default
+    $num_pages = ceil($num_rows / $results_per_page);
+
+    // Calculate start and end page numbers for pagination interface
     $start_page = max($current_page - 2, 1);
     $end_page = min($current_page + 2, $num_pages);
+
+    // Limit results based on current page
+    $offset = ($current_page - 1) * $results_per_page;
+    $limited_sql_query = $sql_query . " LIMIT $offset, $results_per_page";
+    $limited_result = mysqli_query($conn, $limited_sql_query);
+
+    // Check for errors
+    if (!$result || !$limited_result) {
+        // Handle errors
+    }
+
+    // Generate pagination interface
     ?>
     <link rel="stylesheet" href="./assets/css/pagination.css">
     <div class="pagination-style">
@@ -25,6 +48,8 @@ function pagination($conn, $sql_query)
     </div>
     <?php
 }
+
+
 
 
 function login($user, $password, $conn)
