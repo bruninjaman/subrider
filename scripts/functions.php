@@ -31,22 +31,45 @@ function pagination($conn, $sql_query, $results_per_page = 5)
     }
 
     // Generate pagination interface
-    ?>
+?>
     <link rel="stylesheet" href="./assets/css/pagination.css">
     <div class="pagination-style">
         <ul class="pagination">
-            <?php if ($current_page > 1): ?>
-                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $current_page - 1; ?>">«</a></li>
-            <?php endif; ?>
-            <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
-                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-            <?php endfor; ?>
-            <?php if ($current_page < $num_pages): ?>
-                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $current_page + 1; ?>">»</a></li>
-            <?php endif; ?>
+        <?php if ($current_page > 1): ?>
+    <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
+        // Remove "page" from the query string
+        unset($_GET['page']);
+        // Append the remaining parameters to the query string
+        echo http_build_query($_GET);
+        // Add the "page" parameter with the new value
+        echo "&page=" . ($current_page - 1);
+        ?>">«</a></li>
+<?php endif; ?>
+<?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+    <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
+        // Remove "page" from the query string
+        unset($_GET['page']);
+        // Append the remaining parameters to the query string
+        echo http_build_query($_GET);
+        // Add the "page" parameter with the new value
+        echo "&page=" . $i;
+        ?>"><?php echo $i; ?></a></li>
+<?php endfor; ?>
+<?php if ($current_page < $num_pages): ?>
+    <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
+        // Remove "page" from the query string
+        unset($_GET['page']);
+        // Append the remaining parameters to the query string
+        echo http_build_query($_GET);
+        // Add the "page" parameter with the new value
+        echo "&page=" . ($current_page + 1);
+        ?>">»</a></li>
+<?php endif; ?>
+
+
         </ul>
     </div>
-    <?php
+<?php
 }
 
 
