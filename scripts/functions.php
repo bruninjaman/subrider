@@ -37,33 +37,33 @@ function pagination($conn, $sql_query, $results_per_page = 5)
         <ul class="pagination">
             <?php if ($current_page > 1) : ?>
                 <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
-                                                                    // Remove "page" from the query string
-                                                                    unset($_GET['page']);
-                                                                    // Append the remaining parameters to the query string
-                                                                    echo http_build_query($_GET);
-                                                                    // Add the "page" parameter with the new value
-                                                                    echo "&page=" . ($current_page - 1);
-                                                                    ?>">«</a></li>
+                // Remove "page" from the query string
+                unset($_GET['page']);
+                // Append the remaining parameters to the query string
+                echo http_build_query($_GET);
+                // Add the "page" parameter with the new value
+                echo "&page=" . ($current_page - 1);
+                ?>">«</a></li>
             <?php endif; ?>
             <?php for ($i = $start_page; $i <= $end_page; $i++) : ?>
                 <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
-                                                                    // Remove "page" from the query string
-                                                                    unset($_GET['page']);
-                                                                    // Append the remaining parameters to the query string
-                                                                    echo http_build_query($_GET);
-                                                                    // Add the "page" parameter with the new value
-                                                                    echo "&page=" . $i;
-                                                                    ?>"><?php echo $i; ?></a></li>
+            // Remove "page" from the query string
+            unset($_GET['page']);
+            // Append the remaining parameters to the query string
+            echo http_build_query($_GET);
+            // Add the "page" parameter with the new value
+            echo "&page=" . $i;
+            ?>"><?php echo $i; ?></a></li>
             <?php endfor; ?>
             <?php if ($current_page < $num_pages) : ?>
                 <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
-                                                                    // Remove "page" from the query string
-                                                                    unset($_GET['page']);
-                                                                    // Append the remaining parameters to the query string
-                                                                    echo http_build_query($_GET);
-                                                                    // Add the "page" parameter with the new value
-                                                                    echo "&page=" . ($current_page + 1);
-                                                                    ?>">»</a></li>
+                // Remove "page" from the query string
+                unset($_GET['page']);
+                // Append the remaining parameters to the query string
+                echo http_build_query($_GET);
+                // Add the "page" parameter with the new value
+                echo "&page=" . ($current_page + 1);
+                ?>">»</a></li>
             <?php endif; ?>
 
 
@@ -94,25 +94,34 @@ function login($user, $password, $conn)
     }
 }
 
-function uploadFoto($fotoName, $fotoSize, $fotoTmpname, $file_path)
-{
-    //ADD UNIQUE ID
+function uploadFoto($fotoName, $fotoSize, $fotoTmpname, $file_path) {
+    // Ensure file size is not too large
+    if ($fotoSize > 800000) {
+        echo "Sorry, your file is too large.";
+        return false;
+    }
+
+    // Ensure file name is unique by adding a unique ID
     $tmp_name = "";
     $tmp_name = uniqid($tmp_name, true);
     $tmp_name = $tmp_name . $fotoName;
 
-    //GET FILE DESTINATION
+    // Get file destination
     $file_destination = $file_path . "" . $tmp_name;
 
-    // if (file_exists($file_destination)) {
-    //     echo "Sorry, file already exists.";
-    // } else if ($fotoSize > 500000) {
-    //     echo "Sorry, your file is too large.";
-    // } else {
-    //MOVE FILE TO DIRECTORY
-    move_uploaded_file($fotoTmpname, $file_destination);
-    return $file_destination;
-    // };
+    // Check if file already exists at destination
+    if (file_exists($file_destination)) {
+        echo "Sorry, file already exists.";
+        return false;
+    }
+
+    // Attempt to move uploaded file to destination
+    if (move_uploaded_file($fotoTmpname, $file_destination)) {
+        return $file_destination;
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+        return false;
+    }
 }
 
 function realFormat($valor)
