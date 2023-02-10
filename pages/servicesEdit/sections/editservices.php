@@ -19,18 +19,42 @@ $result2 = mysqli_fetch_assoc($result2);
                 <div>
                     <div class="row">
                         <div class="col-12">
-                            <input onchange="tipo_item_onchange()" type="radio" id="pecas" name="tipo_item" value="pecas">
+                            <input onchange="tipo_item_onchange()" type="radio" id="pecas" name="tipo_item" 
+                            <?php
+                            if($result2["Categoria"] == 2) {
+                                echo "checked";
+                            }
+                            ?>
+                            value="pecas">
                             <label for="pecas">
                                 <h4>Peça</h4>
                             </label>
-                            <input onchange="tipo_item_onchange()" type="radio" id="service" name="tipo_item" value="service">
+                            <input onchange="tipo_item_onchange()" type="radio" id="service" name="tipo_item"
+                            <?php
+                            if($result2["Categoria"] == 1) {
+                                echo "checked";
+                            }
+                            ?>
+                             value="service">
                             <label for="service">
                                 <h4>Serviço</h4>
                             </label>
-                            <input onchange="tipo_item_onchange()" type="radio" id="adiantamento" name="tipo_item" value="adiantamento">
+                            <input onchange="tipo_item_onchange()" type="radio" id="adiantamento" name="tipo_item"
+                            <?php
+                            if($result2["Categoria"] == 3) {
+                                echo "checked";
+                            }
+                            ?>
+                             value="adiantamento">
                             <label for="adiantamento">
                                 <h4>Adiantamento</h4>
                             </label>
+                            <script>
+                                window.onload = function() { 
+                                    tipo_item_onchange(); 
+                                }
+                            </script>
+
                         </div>
                     </div>
 
@@ -48,10 +72,16 @@ $result2 = mysqli_fetch_assoc($result2);
                                     <?php
                                     while ($peca = mysqli_fetch_assoc($result)) {
                                     ?>
-                                        <option <?php
-                                                
-                                                    echo $result2['Item'] == $peca["item"] ? "selected" : "";
-                                                ?> value="<?php echo $peca["pecaId"] ?>"><?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?></option>
+                                        <option
+                                            <?php
+                                            if( 
+                                            ($result2['Item'] == $peca["item"]  && $result2['Tipo'] == $peca["parte"] ) ||
+                                            ($result2['Item'] == $peca["item"] && $result2['Parte'] == $peca["parte"]) ||
+                                            ($result2['Item'] == $peca["item"] && $result2['Grupo'] == $peca["grupo"] && $result2['Tipo'] == $peca["parte"])){
+                                                echo "selected";
+                                            }                           
+                                            ?>
+                                         value="<?php echo $peca["pecaId"] ?>"><?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?></option>
                                     <?php
                                     }
                                     ?>
@@ -97,10 +127,14 @@ $result2 = mysqli_fetch_assoc($result2);
                                     <?php
                                     while ($servico = mysqli_fetch_assoc($result)) {
                                     ?>
-                                        <option <?php
-                                                
-                                                echo $result2['Tipo'] == $servico["tipo"] ? "selected" : "";
+                                        <option 
+                                        <?php
+                                            if( 
+                                            ($result2['Item'] == $servico["item"] && $result2['Tipo'] == $servico["tipo"] )){
+                                                echo "selected";
+                                            }                           
                                             ?>
+                                        
                                             value="<?php echo $servico["servicoId"] ?>"><?php echo $servico["tipo"] . " - " . $servico["item"] ?></option>
                                     <?php
                                     }
