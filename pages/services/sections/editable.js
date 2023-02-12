@@ -8,13 +8,13 @@ $(document).ready(function () {
         var newData = $(this).text().trim();
         var dateRegex = /^\d{0,2}\/\d{0,2}\/\d{0,4}$/;
         if (!dateRegex.test(newData)) {
-            $("#errorMessage").text("Invalid date format. Please enter a date in the format dd/mm/yyyy.").show();
+            $("#errorMessage").text("Formato de data inválido. Digite a data em formato válido dd/mm/yyyy.").show();
             return;
         }
 
         var parts = newData.split("/");
         if (parts[0].length > 2 || parts[1].length > 2 || parts[2].length > 4) {
-            $("#errorMessage").text("Invalid date format. Please enter a date in the format dd/mm/yyyy.").show();
+            $("#errorMessage").text("Formato de data inválido. Digite a data em formato válido dd/mm/yyyy.").show();
             return;
         }
 
@@ -22,7 +22,7 @@ $(document).ready(function () {
         var month = parseInt(parts[1]);
         var year = parseInt(parts[2]);
         if (day > 31 || day < 1 || month > 12 || month < 1 || year < 1) {
-            $("#errorMessage").text("Invalid date. Please enter a valid day, month, and year.").show();
+            $("#errorMessage").text("Formato de data inválido. Digite a data em formato válido dia, mês, e ano.").show();
             return;
         }
 
@@ -54,7 +54,7 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     console.log("Error updating data: " + error);
-                    $("#errorMessage").text("Error updating data. Please try again later.").show();
+                    $("#errorMessage").text("Erro ao atualizar a data. Tente novamente.").show();
                 }
             });
         }
