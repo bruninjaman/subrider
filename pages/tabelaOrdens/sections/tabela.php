@@ -39,7 +39,7 @@
                         while ($moto = mysqli_fetch_assoc($result)) {
                         ?>
                             <tr>
-                                <td><img src='<?php echo $moto['foto']; ?>' style="height:100px;width:100px;"></td>
+                                <td class="img-table"><img src='<?php echo $moto['foto']; ?>'></td>
                                 <td><?php echo $moto['Codigo']; ?></td>
                                 <td><?php echo $moto['ano']; ?></td>
                                 <td><?php echo $moto['modelo']; ?></td>

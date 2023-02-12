@@ -24,6 +24,7 @@ require_once("./scripts/functions.php");
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/search.css" />
     <link rel="stylesheet" href="assets/css/sort.css" />
+    <link rel="stylesheet" href="assets/css/table.css" />
     <link rel="stylesheet" href="assets/css/fontawesome6.all.min.css" />  
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />

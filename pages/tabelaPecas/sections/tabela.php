@@ -37,7 +37,7 @@
                         while ($peca = mysqli_fetch_assoc($result)) {
                         ?>
                             <tr>
-                                <td><img src='<?php echo $peca['foto']; ?>' style="height:100px;width:100px;"></td>
+                                <td class="img-table"><img src='<?php echo $peca['foto']; ?>'></td>
                                 <td><?php echo $peca['grupo']; ?></td>
                                 <td><?php echo $peca['item']; ?></td>
                                 <td><?php echo $peca['parte']; ?></td>
