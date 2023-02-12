@@ -4,7 +4,20 @@
         top: 100px;
         left: 60px;
         z-index: 2;
-}
+    }
+
+    @media (max-width: 767px) {
+        .youtubeshow {
+            top: 20px;
+            left: 20px;
+            z-index: 2;
+        }
+        .youtubeshow iframe{
+            height: 190px;
+            width: 360px;
+            z-index: 2;
+        }
+    }
 </style>
 <section id="two" class="spotlight style2 right">
     <span class="image fit main">
