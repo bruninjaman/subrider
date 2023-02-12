@@ -20,7 +20,6 @@
     <div id="page-wrapper">
         <?php
         require("./pages/login/header/header.php");
-        require("./pages/login/sections/capa.php");
         require("./pages/login/sections/login.php");
         require("./pages/login/footer/footer.php");
         ?>
