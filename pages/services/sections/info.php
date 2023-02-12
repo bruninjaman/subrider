@@ -1,30 +1,54 @@
 <?php
 $motocicletas_query = "SELECT * ";
 $motocicletas_query .= " FROM motocicletas ";
-$motocicletas_query .= " WHERE (SELECT ordem_servicos.motoID FROM ordem_servicos WHERE ordem_servicos.Codigo = '". $_GET['ordem'] . "') = motocicletas.motoId";
-$result = mysqli_query($conn, $motocicletas_query); 
+$motocicletas_query .= " WHERE (SELECT ordem_servicos.motoID FROM ordem_servicos WHERE ordem_servicos.Codigo = '" . $_GET['ordem'] . "') = motocicletas.motoId";
+$result = mysqli_query($conn, $motocicletas_query);
 ?>
-<hr>
+<style>
+    .motoinfo {
+        list-style-type: none;
+        padding: 0;
+        text-align: left;
+    }
+    .motoinfo li {
+        padding: 5px;
+    }
+    .motoinfobox {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .imagemoto img {
+        width: 300px;
+        height: 300px;
+        margin-right: 100px;
+        border-radius: 25px;
+    }
+</style>
 <section id="banner">
-    <div class="content">
-        <center>
-                <h2>Informações sobre moto no serviço</h2>
-                <?php
-                    while($moto = mysqli_fetch_assoc($result)) {
-                        ?>
-                        <ol>
-                            <li><?php echo $moto['endereco']?></li>
-                            <li><?php echo $moto['proprietario']?></li>
-                            <li><?php echo $moto['marca']?></li>
-                            <li><?php echo $moto['placa']?></li>
-                            <li><?php echo $moto['ano']?></li>
-                            <li><?php echo $moto['modelo']?></li>
-                            <li><?php echo $moto['km']?></li>
-                            <li><img style="height:200px;width:200px;" src="<?php echo $moto['foto']?>"></li>
-                        </ol>
-                        <?php
-                    }
-                ?>
-        </center>
+    <div class="content motoinfobox">
+        <?php
+        while ($moto = mysqli_fetch_assoc($result)) {
+        ?>
+            <div class="row">
+                <div class="col-6">
+                    <span class="imagemoto">
+                        <img src="<?php echo $moto['foto'] ?>">
+                    </span>
+                </div>
+                <div class="col-6">
+                    <ul class="motoinfo">
+                        <li><b>Endereço:</b> <?php echo $moto['endereco'] ?></li>
+                        <li><b>proprietário</b> <?php echo $moto['proprietario'] ?></li>
+                        <li><b>Marca</b> <?php echo $moto['marca'] ?></li>
+                        <li><b>Placa</b> <?php echo $moto['placa'] ?></li>
+                        <li><b>Ano</b> <?php echo $moto['ano'] ?></li>
+                        <li><b>Modelo</b> <?php echo $moto['modelo'] ?></li>
+                        <li><b>KM</b> <?php echo $moto['km'] ?></li>
+                    </ul>
+                </div>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 </section>
