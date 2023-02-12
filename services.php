@@ -52,6 +52,10 @@ require_once("./scripts/functions.php");
     
     <!-- Delete button -->
     <script src=".\pages\services\sections\delete_confirm.js"></script>
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Delete button -->
+    <script src=".\pages\services\sections\editable.js"></script>
 </body>
 
 </html>

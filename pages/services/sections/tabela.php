@@ -1,14 +1,24 @@
+<?php
+$getdate = "SELECT * FROM ordem_servicos ";
+$getdate .= "WHERE ordem_servicos.Codigo = '" . $_GET['ordem'] . "' ";
+$data = mysqli_query($conn, $getdate);
+$data = mysqli_fetch_assoc($data);
+?>
 <section id="banner">
     <div class="content">
         <h2>Ordem de Serviço: <?php echo $_GET['ordem'] ?></h2>
 
+        <h1 id="editableData">Data: <span id="dateValue"><?php echo ($data["Data"] != null) ? date("d/m/Y", strtotime($data["Data"])) : "dd/mm/aaaa"; ?></span></h1>
+        <p id="errorMessage" style="color: red; display: none;"></p>
+
+        <?php
+        $items_ordem_query = "SELECT * FROM item_ordem ";
+        $items_ordem_query .= "WHERE item_ordem.Ordem = '" . $_GET['ordem'] . "' ";
+        $result = mysqli_query($conn, $items_ordem_query);
+        ?>
+
         <div class="table-wrapper">
             <div class="table-wrapper">
-                <?php
-                $items_ordem_query = "SELECT * FROM item_ordem ";
-                $items_ordem_query .= "WHERE item_ordem.Ordem = '" . $_GET['ordem'] . "' ";
-                $result = mysqli_query($conn, $items_ordem_query);
-                ?>
                 <table class="table alt">
                     <thead>
                         <tr>
@@ -58,11 +68,11 @@
                                 <td><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
                                 <td>
                                     <!-- <button onclick="location.href='servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>'"><i class="fa-solid fa-plus me-2"></i> Adicionar </button> -->
-                                    
+
                                     <!-- <button onclick="location.href='servicesEdit.php?ordem=<?php echo $_GET['ordem'] . $typeAndId ?>'"><i class="fa-solid fa-user-pen me-2"></i> Editar </button> -->
                                     <button style="background: none; border: none;" onclick="location.href='servicesEdit.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'"><img src="./assets\css\images\edit.png" style="height: 30x; width: 30px;"> </button>
                                     <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
-                                    
+
                                     <!-- <button onclick="return confirm('Deseja realmente excluir este item?')"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
                                 </td>
                             </tr>
