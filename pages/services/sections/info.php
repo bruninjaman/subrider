@@ -18,10 +18,11 @@ $result = mysqli_query($conn, $motocicletas_query);
         border-radius: 5px;
     }
     .imagemoto img {
-        width: 300px;
-        height: 300px;
         margin-right: 100px;
         border-radius: 25px;
+        width: 90%;
+        height: 50%;
+        object-fit: cover;      
     }
 </style>
 <section id="banner">
