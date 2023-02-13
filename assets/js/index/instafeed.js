@@ -4,6 +4,17 @@ var feed = new Instafeed({
     template: '<div class="item"><a href="{{link}}" target="_blank"><img title="{{caption}}" src="{{image}}" /></a></div>',
     after: function () {
         $(".owl-carousel").owlCarousel();
+    },
+    success: function (data) {
+        // Check if there is already feed data stored in local storage
+        if (localStorage.getItem("instagramFeedData") === null) {
+            // If there isn't, store the feed data in local storage
+            localStorage.setItem("instagramFeedData", JSON.stringify(data));
+        } else {
+            // If there is, retrieve the stored data from local storage and update the feed
+            data = JSON.parse(localStorage.getItem("instagramFeedData"));
+            feed.parse(data);
+        }
     }
 });
 feed.run();

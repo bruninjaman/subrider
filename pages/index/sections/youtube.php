@@ -12,7 +12,8 @@
             left: 20px;
             z-index: 2;
         }
-        .youtubeshow iframe{
+
+        .youtubeshow iframe {
             height: 190px;
             width: 360px;
             z-index: 2;
@@ -49,25 +50,44 @@
             'maxResults' => 10,
         );
 
-        // Perform the search
-        $searchResponse = $youtube->search->listSearch('id,snippet', $params);
+        // Check if the cached video ID is still valid
+        $cacheFile = 'youtube_video_id.txt';
+        if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < 60 * 60 * 24)) {
+            // The cache is still valid, so use the cached video ID
+            $videoId = file_get_contents($cacheFile);
+        } else {
+            // The cache is not valid, so perform a new search and cache the video ID
 
-        // Get the total number of search results
-        $totalResults = count($searchResponse['items']);
+            try {
+                // Perform the search
+                $searchResponse = $youtube->search->listSearch('id,snippet', $params);
 
-        // Generate a random index between 0 and the total number of search results
-        $randomIndex = rand(0, $totalResults - 1);
+                // Get the total number of search results
+                $totalResults = count($searchResponse['items']);
 
-        // Get the random video from the search results
-        $randomVideo = $searchResponse['items'][$randomIndex];
+                // Generate a random index between 0 and the total number of search results
+                $randomIndex = rand(0, $totalResults - 1);
 
-        // Get the video ID
-        $videoId = $randomVideo['id']['videoId'];
+                // Get the random video from the search results
+                $randomVideo = $searchResponse['items'][$randomIndex];
+
+                // Get the video ID
+                $videoId = $randomVideo['id']['videoId'];
+
+                // Cache the video ID
+                file_put_contents($cacheFile, $videoId);
+            } catch (Exception $e) {
+                // If the API call fails, use the cached video ID
+                $videoId = file_get_contents($cacheFile);
+            }
+        }
 
         // Display the video
         echo '<iframe width="840" height="472" src="https://www.youtube.com/embed/' . $videoId . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
         ?>
     </div>
+
     <div class="content">
         <header>
             <h2>Canal de videos no youtube</h2>
