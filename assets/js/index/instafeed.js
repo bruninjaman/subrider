@@ -1,5 +1,5 @@
 var feed = new Instafeed({
-    accessToken: 'IGQVJXaU1pRVBJUHZAwZAS03N0dCbzZAJT2ZA6OERDM2txMC1vdlNUbEtxeGR6ZAENqaHY5c3ZAab3RzMUNIWnNDMEdDbmttbEJYQkZAqeUp4VDR1eHROczZA4T1d1VW5VQWpVQ2VyLXRJSWxUdGNpajVJUG14dwZDZD',
+    accessToken: 'IGQVJVcVBrMm8tNWdaV1VzcEN4bDZASYUpYbTBIeERMZAkZASV3VQNHA5SDM3X1BZANmpONkdnd0lDRmlHSk41YlFnTjVtWHpURml4aV9wRGN6TnN5QlNzQ3VGc19uYmdmU3RZAaWxMcW80ZAVlqak5WZAE9xUQZDZD',
     limit: 21,
     template: '<div class="item"><a href="{{link}}" target="_blank"><img title="{{caption}}" src="{{image}}" /></a></div>',
     after: function () {

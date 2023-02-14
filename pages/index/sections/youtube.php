@@ -1,21 +1,23 @@
 <style>
     .youtubeshow {
         position: absolute;
-        top: 100px;
-        left: 60px;
+        top: 20px;
+        left: 20px;
+        height: 80%;
+        width: 60%;;
         z-index: 2;
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 945px) {
         .youtubeshow {
-            top: 20px;
-            left: 20px;
+            top: 10px;
+            left: 10px;
             z-index: 2;
         }
 
         .youtubeshow iframe {
-            height: 190px;
-            width: 360px;
+            height: 45%;
+            width: 155%;
             z-index: 2;
         }
     }
@@ -83,7 +85,7 @@
         }
 
         // Display the video
-        echo '<iframe width="840" height="472" src="https://www.youtube.com/embed/' . $videoId . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        echo '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' . $videoId . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 
         ?>
     </div>
