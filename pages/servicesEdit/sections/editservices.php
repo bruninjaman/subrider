@@ -62,7 +62,7 @@ $result2 = mysqli_fetch_assoc($result2);
                                 $result = mysqli_query($conn, $sql_query);
                                 ?>
                                 <input type="hidden" name="pecaid" id="pecaid" value="">
-                                <input type="text" list="pecaList" name="pecaInput" value="">
+                                <input type="text" list="pecaList" name="pecaInput" value="<?php echo $result2['Grupo'] . ' - ' . $result2['Item'] . ' - ' . $result2['Parte']; ?>">
                                 <datalist id="pecaList">
                                     <?php while ($peca = mysqli_fetch_assoc($result)) { ?>
                                         <option <?php
