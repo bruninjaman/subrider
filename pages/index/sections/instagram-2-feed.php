@@ -36,7 +36,7 @@
             $data = json_decode($data, true);
 
             // Loop through the feed data and display each post
-            foreach ($data['data'] as $post) {
+            foreach ($data['data'] as $post) {         
                 echo '<div class="item"><a href="' . $post['link'] . '" target="_blank"><img title="' . $post['caption']['text'] . '" src="' . $post['images']['standard_resolution']['url'] . '" /></a></div>';
             }
             ?>

@@ -19,39 +19,33 @@ $result2 = mysqli_fetch_assoc($result2);
                 <div>
                     <div class="row">
                         <div class="col-12">
-                            <input onchange="tipo_item_onchange()" type="radio" id="pecas" name="tipo_item" 
-                            <?php
-                            if($result2["Categoria"] == 2) {
-                                echo "checked";
-                            }
-                            ?>
-                            value="pecas">
+                            <input onchange="tipo_item_onchange()" type="radio" id="pecas" name="tipo_item" <?php
+                                                                                                            if ($result2["Categoria"] == 2) {
+                                                                                                                echo "checked";
+                                                                                                            }
+                                                                                                            ?> value="pecas">
                             <label for="pecas">
                                 <h4>Peça</h4>
                             </label>
-                            <input onchange="tipo_item_onchange()" type="radio" id="service" name="tipo_item"
-                            <?php
-                            if($result2["Categoria"] == 1) {
-                                echo "checked";
-                            }
-                            ?>
-                             value="service">
+                            <input onchange="tipo_item_onchange()" type="radio" id="service" name="tipo_item" <?php
+                                                                                                                if ($result2["Categoria"] == 1) {
+                                                                                                                    echo "checked";
+                                                                                                                }
+                                                                                                                ?> value="service">
                             <label for="service">
                                 <h4>Serviço</h4>
                             </label>
-                            <input onchange="tipo_item_onchange()" type="radio" id="adiantamento" name="tipo_item"
-                            <?php
-                            if($result2["Categoria"] == 3) {
-                                echo "checked";
-                            }
-                            ?>
-                             value="adiantamento">
+                            <input onchange="tipo_item_onchange()" type="radio" id="adiantamento" name="tipo_item" <?php
+                                                                                                                    if ($result2["Categoria"] == 3) {
+                                                                                                                        echo "checked";
+                                                                                                                    }
+                                                                                                                    ?> value="adiantamento">
                             <label for="adiantamento">
                                 <h4>Adiantamento</h4>
                             </label>
                             <script>
-                                window.onload = function() { 
-                                    tipo_item_onchange(); 
+                                window.onload = function() {
+                                    tipo_item_onchange();
                                 }
                             </script>
 
@@ -67,25 +61,35 @@ $result2 = mysqli_fetch_assoc($result2);
                                 $sql_query .= "ORDER BY pecas.grupo ";
                                 $result = mysqli_query($conn, $sql_query);
                                 ?>
-                                <select name="pecaid">
-                                    <!-- <select name="pecaid" onchange='ChangePecaSelect(this.value)'> -->
-                                    <?php
-                                    while ($peca = mysqli_fetch_assoc($result)) {
-                                    ?>
-                                        <option
-                                            <?php
-                                            if( 
-                                            ($result2['Item'] == $peca["item"]  && $result2['Tipo'] == $peca["parte"] ) ||
-                                            ($result2['Item'] == $peca["item"] && $result2['Parte'] == $peca["parte"]) ||
-                                            ($result2['Item'] == $peca["item"] && $result2['Grupo'] == $peca["grupo"] && $result2['Tipo'] == $peca["parte"])){
-                                                echo "selected";
-                                            }                           
-                                            ?>
-                                         value="<?php echo $peca["pecaId"] ?>"><?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?></option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
+                                <input type="hidden" name="pecaid" id="pecaid" value="">
+                                <input type="text" list="pecaList" name="pecaInput" value="">
+                                <datalist id="pecaList">
+                                    <?php while ($peca = mysqli_fetch_assoc($result)) { ?>
+                                        <option <?php
+                                                if (
+                                                    ($result2['Item'] == $peca["item"]  && $result2['Tipo'] == $peca["parte"]) ||
+                                                    ($result2['Item'] == $peca["item"] && $result2['Parte'] == $peca["parte"]) ||
+                                                    ($result2['Item'] == $peca["item"] && $result2['Grupo'] == $peca["grupo"] && $result2['Tipo'] == $peca["parte"])
+                                                ) {
+                                                    echo "selected";
+                                                }
+                                                ?> value="<?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?>" data-id="<?php echo $peca["pecaId"] ?>"></option>
+                                    <?php } ?>
+                                </datalist>
+                                <script>
+                                    const pecaInput = document.querySelector('[name="pecaInput"]');
+                                    const pecaIdInput = document.querySelector('#pecaid');
+                                    const pecaList = document.querySelector('#pecaList');
+
+                                    pecaInput.addEventListener('input', () => {
+                                        const selectedOption = [...pecaList.options].find(option => option.value === pecaInput.value);
+                                        if (selectedOption) {
+                                            pecaIdInput.value = selectedOption.dataset.id;
+                                        }
+                                    });
+                                </script>
+
+
                             </div>
                         </div>
                         <br>
@@ -123,23 +127,30 @@ $result2 = mysqli_fetch_assoc($result2);
                                 $sql_query .= "ORDER BY servicos.tipo ";
                                 $result = mysqli_query($conn, $sql_query);
                                 ?>
-                                <select name="servicoid">
-                                    <?php
-                                    while ($servico = mysqli_fetch_assoc($result)) {
-                                    ?>
-                                        <option 
-                                        <?php
-                                            if( 
-                                            ($result2['Item'] == $servico["item"] && $result2['Tipo'] == $servico["tipo"] )){
-                                                echo "selected";
-                                            }                           
-                                            ?>
-                                        
-                                            value="<?php echo $servico["servicoId"] ?>"><?php echo $servico["tipo"] . " - " . $servico["item"] ?></option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
+                                <input type="hidden" name="servicoid" id="servicoid" value="">
+                                <input type="text" list="servicoList" name="servicoInput" value="<?php echo $result2['Tipo'] . " - " . $result2['Item']; ?>">
+                                <datalist id="servicoList">
+                                    <?php while ($servico = mysqli_fetch_assoc($result)) { ?>
+                                        <option <?php if ($result2['Item'] == $servico['item'] && $result2['Tipo'] == $servico['tipo']) {
+                                                    echo "selected";
+                                                } ?> value="<?php echo $servico['tipo'] . " - " . $servico['item']; ?>" data-id="<?php echo $servico['servicoId']; ?>">
+                                        </option>
+                                    <?php } ?>
+                                </datalist>
+
+                                <script>
+                                    const servicoInput = document.querySelector('[name="servicoInput"]');
+                                    const servicoidInput = document.querySelector('#servicoid');
+                                    const servicoList = document.querySelector('#servicoList');
+
+                                    servicoInput.addEventListener('input', () => {
+                                        const selectedOption = [...servicoList.options].find(option => option.value === servicoInput.value);
+                                        if (selectedOption) {
+                                            servicoidInput.value = selectedOption.dataset.id;
+                                        }
+                                    });
+                                </script>
+
                             </div>
                         </div>
                         <br>
