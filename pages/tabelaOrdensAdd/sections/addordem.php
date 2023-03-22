@@ -31,15 +31,28 @@
                     $sql_query = "SELECT * FROM motocicletas";
                     $result = mysqli_query($conn, $sql_query);
                     ?>
-                    <select name="motoid" required>
-                        <?php
-                        while ($moto = mysqli_fetch_assoc($result)) {
-                        ?>
-                            <option value="<?php echo $moto["motoId"] ?>"><?php echo $moto["modelo"] . " - " . $moto["proprietario"] ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
+                    <label for="moto">Choose a motorcycle:</label>
+                    <input type="text" name="modelo" list="motolist" required>
+                    <datalist id="motolist">
+                        <?php while ($moto = mysqli_fetch_assoc($result)) { ?>
+                            <option value="<?php echo $moto["modelo"] ?>" data-id="<?php echo $moto["motoId"] ?>"><?php echo $moto["modelo"] . " - " . $moto["proprietario"] ?></option>
+                        <?php } ?>
+                    </datalist>
+                    <input type="hidden" name="motoid" id="motoid">
+                    <script>
+                        const input = document.querySelector('input[name="modelo"]');
+                        const motoid = document.querySelector('#motoid');
+
+                        input.addEventListener('input', () => {
+                            const selectedOption = document.querySelector(`datalist#${input.getAttribute('list')} option[value="${input.value}"]`);
+                            if (selectedOption) {
+                                motoid.value = selectedOption.getAttribute('data-id');
+                            } else {
+                                motoid.value = '';
+                            }
+                        });
+                    </script>
+
                 </div>
             </div>
             <div class="row">
