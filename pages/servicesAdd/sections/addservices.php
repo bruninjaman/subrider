@@ -38,16 +38,22 @@ $motoid = mysqli_fetch_assoc($motoid);
                                 $sql_query .= "ORDER BY pecas.grupo ";
                                 $result = mysqli_query($conn, $sql_query);
                                 ?>
-                                <select name="pecaid">
-                                    <!-- <select name="pecaid" onchange='ChangePecaSelect(this.value)'> -->
-                                    <?php
-                                    while ($peca = mysqli_fetch_assoc($result)) {
-                                    ?>
-                                        <option value="<?php echo $peca["pecaId"] ?>"><?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?></option>
-                                    <?php
+                                <input type="text" list="pecaid" name="pecaid_display" onchange="updatePecaid()">
+                                <input type="hidden" name="pecaid" id="pecaid_input">
+                                <datalist id="pecaid">
+                                    <?php while ($peca = mysqli_fetch_assoc($result)) { ?>
+                                        <option value="<?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?>" data-id="<?php echo $peca["pecaId"] ?>"></option>
+                                    <?php } ?>
+                                </datalist>
+
+                                <script>
+                                    function updatePecaid() {
+                                        var selectedOption = document.querySelector('#pecaid option[value="' + document.querySelector('[name=pecaid_display]').value + '"]');
+                                        document.querySelector('#pecaid_input').value = selectedOption.getAttribute('data-id');
                                     }
-                                    ?>
-                                </select>
+                                </script>
+
+
                             </div>
                         </div>
                         <br>
@@ -85,15 +91,21 @@ $motoid = mysqli_fetch_assoc($motoid);
                                 $sql_query .= "ORDER BY servicos.tipo ";
                                 $result = mysqli_query($conn, $sql_query);
                                 ?>
-                                <select name="servicoid">
-                                    <?php
-                                    while ($servico = mysqli_fetch_assoc($result)) {
-                                    ?>
-                                        <option value="<?php echo $servico["servicoId"] ?>"><?php echo $servico["tipo"] . " - " . $servico["item"] ?></option>
-                                    <?php
+                                <input type="hidden" name="servicoid" id="servicoid" value="">
+                                <input type="text" name="servico" list="servicoid_list" onchange="updateServicoid()">
+                                <datalist id="servicoid_list">
+                                    <?php while ($servico = mysqli_fetch_assoc($result)) { ?>
+                                        <option value="<?php echo $servico["tipo"] . " - " . $servico["item"] ?>" data-id="<?php echo $servico["servicoId"] ?>"></option>
+                                    <?php } ?>
+                                </datalist>
+                                <script>
+                                    function updateServicoid() {
+                                        var selectedOption = document.querySelector('#servicoid_list option[value="' + document.querySelector('input[name="servico"]').value + '"]');
+                                        if (selectedOption) {
+                                            document.querySelector('#servicoid').value = selectedOption.getAttribute('data-id');
+                                        }
                                     }
-                                    ?>
-                                </select>
+                                </script>
                             </div>
                         </div>
                         <br>
