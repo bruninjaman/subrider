@@ -4,7 +4,7 @@
         <div id="instafeed" class="owl-carousel owl-theme owl-loaded owl-drag">
             <?php
             // Define the access token
-            $accessToken = 'IGQVJVcVBrMm8tNWdaV1VzcEN4bDZASYUpYbTBIeERMZAkZASV3VQNHA5SDM3X1BZANmpONkdnd0lDRmlHSk41YlFnTjVtWHpURml4aV9wRGN6TnN5QlNzQ3VGc19uYmdmU3RZAaWxMcW80ZAVlqak5WZAE9xUQZDZD';
+            $accessToken = 'IGQVJYOXFYeTlmSXMzQWJ0ZA0xmWUpRemlRTTdrZA0VuR1dja1Fib0RSNFZA5MXFMV3pnY21hRXVCU1JHejFWZAE1ycVNIV3BNaHBTdlE3TVJqczh6WVVCWGhPMDBKaXN6WnVhNjF4aG52ZA3FLVGk1NDlyOQZDZD';
 
             // Define the number of posts to retrieve
             $limit = 21;
