@@ -22,7 +22,7 @@
                     </li>';
             }
             ?>
-            <li><a href="#">Contato</a></li>
+            <li><a href="#footer">Contato</a></li>
             <?php
             if (isset($_SESSION["user"])) {
                 echo '<li>';

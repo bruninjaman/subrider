@@ -40,7 +40,7 @@
         </div>
         <footer class="major">
             <ul class="actions special">
-                <li><a href="contato.php" class="button">Entrar em contato</a></li>
+                <li><a href="#footer" class="button">Entrar em contato</a></li>
             </ul>
         </footer>
     </div>
