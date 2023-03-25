@@ -50,7 +50,9 @@ session_start();
     <script src="assets/js/main.js"></script>
     <!-- Instagram feed script -->
     <script type="text/javascript" src="assets/js/index/instafeed.min.js"></script>
-    <script type="text/javascript" src="assets/js/index/instafeed.js"></script>
+    <!-- <script type="text/javascript" src="assets/js/index/instafeed.js"></script> -->
+    <!-- fancybox script -->
+    <script type="text/javascript" src="assets/js/index/jquery.fancybox.min.js"></script>
 
 </body>
 
