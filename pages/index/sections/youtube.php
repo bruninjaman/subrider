@@ -5,9 +5,9 @@
         gap: 10px;
         background-color: rgba(5, 5, 5, 0.7);
         height: 100%;
-        width: 65%;
-        max-width: 65%;
-        padding: 10px;
+        width: 58%;
+        max-width: 58%;
+        padding: 2%;
     }
 
     #gallery a {
@@ -17,26 +17,19 @@
     #gallery h2 {
         font-size: 18px;
         background-color: rgba(5, 5, 5, 0.7);
-        border-radius: 10px;
+        border-radius: 5px;
+        max-height: 40%;
+        padding: 5%;
         text-align: center;
     }
 
     #gallery div {
         position: relative;
-        padding-top: 56.25%;
-        /* Maintain the aspect ratio */
     }
 
-    img .videothumb {
-        width: 20px;
-        height: 20px;
-    }
-    #gallery div iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
+    .fancybox img {
         width: 100%;
-        height: 100%;
+        height: 50%;
     }
 
     .youtubeshow {
@@ -49,7 +42,7 @@
     }
 
     /* Responsive styles */
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: 980px) {
         #gallery {
             grid-template-columns: repeat(1, 1fr);
             width: 100%;
@@ -60,13 +53,6 @@
 
         #gallery div {
             padding-top: 0;
-        }
-
-        #gallery div iframe {
-            position: static;
-            /* Change position to static to allow for stacking of elements */
-            max-width: 100%;
-            /* Set max-width to allow the iframe to scale down */
         }
 
         .youtubeshow {
