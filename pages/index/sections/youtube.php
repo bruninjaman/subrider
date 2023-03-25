@@ -13,15 +13,26 @@
         background-color: rgba(5, 5, 5, 0.7);
         border-radius: 5px;
         max-height: 80%;
+        margin: 2%;
+        box-shadow: inset 0 0 10px #000000;
+    }
+
+    #gallery article:hover {
+        background-color: rgba(255, 5, 5, 0.4);
     }
 
     #gallery a {
         border-bottom: 0;
     }
 
+
+    #gallery h2:hover {
+        color: rgba(255, 255, 255, 1);
+    }
     #gallery h2 {
         font-size: 18px;
         padding: 5%;
+        color: rgba(255, 255, 255, 0.5);
         text-align: center;
     }
 
