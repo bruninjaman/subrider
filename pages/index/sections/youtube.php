@@ -7,7 +7,7 @@
         height: 100%;
         width: 58%;
         max-width: 58%;
-        padding: 2%;
+        padding: auto;
     }
     #gallery article {
         background-color: rgba(5, 5, 5, 0.7);
