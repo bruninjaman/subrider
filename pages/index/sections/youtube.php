@@ -9,6 +9,11 @@
         max-width: 58%;
         padding: 2%;
     }
+    #gallery article {
+        background-color: rgba(5, 5, 5, 0.7);
+        border-radius: 5px;
+        max-height: 80%;
+    }
 
     #gallery a {
         border-bottom: 0;
@@ -16,9 +21,6 @@
 
     #gallery h2 {
         font-size: 18px;
-        background-color: rgba(5, 5, 5, 0.7);
-        border-radius: 5px;
-        max-height: 40%;
         padding: 5%;
         text-align: center;
     }
@@ -30,6 +32,8 @@
     .fancybox img {
         width: 100%;
         height: 50%;
+        padding: 2%;
+        border-radius: 10px;
     }
 
     .youtubeshow {
@@ -49,6 +53,14 @@
             /* Use full width on smaller screens */
             padding: 10%;
             max-width: 100%;
+        }
+        
+        #gallery article {
+            max-height: 100%;
+            border-radius: 25px;
+        }
+        .fancybox img {
+            border-radius: 20px;
         }
 
         #gallery div {
