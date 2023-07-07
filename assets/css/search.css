@@ -28,29 +28,29 @@
 
 @media screen and (max-width: 736px) {
     .row>.col-4 {
-        width: 70%;
+        width: 60%;
     }
     select#pesquisa {
         height: 75%;
         width: 130%;
     }
     .search input[type=text] {
-        padding: 10px;
-        font-size: 17px;
-        border-top-left-radius: 15px;
-        border-bottom-left-radius: 15px;
+        padding: 2px;
+        font-size: 15px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
         float: left;
         width: 70%;
-        height: 70%;
+        height: 75%;
     }
     .search button[type=submit] {
         float: left;
-        width: 30%;
-        height: 70%;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
-        padding: 10px;
-        font-size: 17px;
+        width: 25%;
+        height: 75%;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding: 2px;
+        font-size: 15px;
         border-left: none;
         /* Prevent double borders */
         cursor: pointer;
