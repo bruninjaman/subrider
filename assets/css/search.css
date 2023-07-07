@@ -25,3 +25,35 @@
 .search button[type=submit]:hover {
     background-color: #e76278;
 }
+
+@media screen and (max-width: 736px) {
+    .row>.col-4 {
+        width: 70%;
+    }
+    select#pesquisa {
+        height: 75%;
+        width: 130%;
+    }
+    .search input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        float: left;
+        width: 70%;
+        height: 70%;
+    }
+    .search button[type=submit] {
+        float: left;
+        width: 30%;
+        height: 70%;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        padding: 10px;
+        font-size: 17px;
+        border-left: none;
+        /* Prevent double borders */
+        cursor: pointer;
+        background-color: #e44c65;
+    }
+}

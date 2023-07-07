@@ -56,6 +56,17 @@
         z-index: 2;
     }
 
+    @media screen and (max-width: 736px) {
+        .youtubevideos {
+            position: absolute;
+            top: 40%;
+            font-size: 5em;
+            font-family: "Calibri", Helvetica, sans-serif;
+            font-weight: 800;
+            left: 26%;
+        }
+    }
+
     /* Responsive styles */
     @media only screen and (max-width: 980px) {
         #gallery {
@@ -96,6 +107,7 @@
 <section id="two" class="spotlight style2 right">
     <span class="image fit main">
         <img src="./assets/css/images/motor v-strom.jpg" alt="" />
+        <h1 class="youtubevideos">Videos</h1>
     </span>
     <div>
         <div id="gallery" class="youtubeshow">

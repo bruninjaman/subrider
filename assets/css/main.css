@@ -3301,7 +3301,7 @@ body.landing #header {
     max-width: 95%;
     padding: 6em;
     position: relative;
-    text-align: right;
+    /* text-align: right; */
     vertical-align: middle;
     z-index: 1;
 }
@@ -3651,7 +3651,7 @@ body.is-touch #banner {
         -ms-transition: -ms-transform 0.5s ease;
         transition: transform 0.5s ease;
         display: block;
-        height: 44px;
+        height: 60px;
         left: 0;
         position: fixed;
         top: 0;
@@ -3664,7 +3664,7 @@ body.is-touch #banner {
         color: #ffffff;
         display: block;
         font-weight: 300;
-        height: 44px;
+        height: 60px;
         line-height: 44px;
         text-align: center;
     }
@@ -3700,9 +3700,9 @@ body.is-touch #banner {
         content: '\f0c9';
         display: block;
         font-size: 18px;
-        height: 44px;
+        height: 60px;
         left: 0;
-        line-height: 44px;
+        line-height: 60px;
         position: absolute;
         text-align: center;
         top: 0;
