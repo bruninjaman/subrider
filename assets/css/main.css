@@ -3619,7 +3619,7 @@ body.is-touch #banner {
         height: calc(100vh - 44px);
     }
     #banner .content {
-        padding: 4.0625em 1.5em 4.875em 1.5em;
+        padding: 3.0625em 0em 3em 0em;
     }
     #banner .content header h2 {
         font-size: 1.5em;
@@ -3788,6 +3788,12 @@ body.is-touch #banner {
         -webkit-transform: translateX(0);
         -ms-transform: translateX(0);
         transform: translateX(0);
+    }
+    /* table */
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+        vertical-align: bottom !important;
+    }
+    table td.img-table img {
     }
     /* Footer */
     #footer {

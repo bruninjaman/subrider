@@ -31,7 +31,7 @@
         width: 60%;
     }
     select#pesquisa {
-        height: 75%;
+        height: 160%;
         width: 130%;
     }
     .search input[type=text] {
@@ -41,12 +41,12 @@
         border-bottom-left-radius: 10px;
         float: left;
         width: 70%;
-        height: 75%;
+        height: 160%;
     }
     .search button[type=submit] {
         float: left;
         width: 25%;
-        height: 75%;
+        height: 160%;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         padding: 2px;
