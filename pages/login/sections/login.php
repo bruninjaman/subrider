@@ -1,11 +1,31 @@
 <style>
+  .spotlight .content-container {
+    position: absolute;
+    top: 75%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  @media screen and (max-width: 736px) {
     .spotlight .content-container {
-  position: absolute;
-  top: 75%;
-  left: 15%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    #loginform label {
+      margin: 0;
+
+    }
+    #loginform .button.primary {
+      width: 100%;
+    }
+    #loginform input {
+      height: 2em;
+    }
+  }
 
 </style>
 <section id="two" class="spotlight style2 right">
@@ -13,28 +33,28 @@
     <img src="./assets/css/images/race-moto.gif" alt="" />
   </span>
   <div class="content">
-        <header>
-            <h2>Acesso administrativo</h2>
-        </header>
-        <p>
-        <ul>
-            <li>
-            Esta página de login é exclusivamente para administradores. No momento, estamos em processo de desenvolvimento e em breve haverá recursos e possibilidades para que os usuários possam acessar a página. Por enquanto, pedimos compreensão e paciência.
-            </li>
-            <br>
-            <li>
-            Se você precisar de mais informações, não hesite em entrar em contato conosco através do nosso e-mail, WhatsApp ou de alguma de nossas redes sociais. Estamos sempre à disposição para responder a qualquer dúvida ou sugestão.
-            </li>
-            <br>
-            <li>
-            Agradecemos a compreensão e esperamos em breve poder oferecer a vocês a melhor experiência em nossa página.
-            </li>
-        </ul>
-        </p>
-        <!-- <ul class="actions">
+    <header>
+      <h2>Acesso administrativo</h2>
+    </header>
+    <p>
+    <ul>
+      <li>
+        Esta página de login é exclusivamente para administradores. No momento, estamos em processo de desenvolvimento e em breve haverá recursos e possibilidades para que os usuários possam acessar a página. Por enquanto, pedimos compreensão e paciência.
+      </li>
+      <br>
+      <li>
+        Se você precisar de mais informações, não hesite em entrar em contato conosco através do nosso e-mail, WhatsApp ou de alguma de nossas redes sociais. Estamos sempre à disposição para responder a qualquer dúvida ou sugestão.
+      </li>
+      <br>
+      <li>
+        Agradecemos a compreensão e esperamos em breve poder oferecer a vocês a melhor experiência em nossa página.
+      </li>
+    </ul>
+    </p>
+    <!-- <ul class="actions">
             <li><a href="#login" class="button">Entrar</a></li>
         </ul> -->
-    </div>
+  </div>
   <div class="content-container">
     <header>
       <h2>Entre na sua conta</h2>
