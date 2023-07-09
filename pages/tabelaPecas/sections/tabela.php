@@ -38,9 +38,9 @@
                         ?>
                             <tr>
                                 <td class="img-table"><img src='<?php echo $peca['foto']; ?>'></td>
-                                <td><?php echo $peca['grupo']; ?></td>
-                                <td><?php echo $peca['item']; ?></td>
-                                <td><?php echo $peca['parte']; ?></td>
+                                <td data-cell="Grupo"><?php echo $peca['grupo']; ?></td>
+                                <td data-cell="Item"><?php echo $peca['item']; ?></td>
+                                <td data-cell="Parte"><?php echo $peca['parte']; ?></td>
                                 <td>
                                     <button style="background: none; border: none;" onclick="location.href='tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId'] ?>'"><img src="./assets\css\images\edit.png" style="height: 30x; width: 30px;"></button>
                                     <!-- <button onclick="location.href='tabelaPecasDeletar.php?pecaID=<?php echo $peca['pecaId'] ?>'" ><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->

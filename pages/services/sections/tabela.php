@@ -63,9 +63,9 @@ $data = mysqli_fetch_assoc($data);
                                     ?>
 
                                 </td>
-                                <td><?php echo $item['Quantidade']; ?></td>
-                                <td><?php echo realFormat($item['Valor']); ?></td>
-                                <td><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
+                                <td data-cell="Quantidade"><?php echo $item['Quantidade']; ?></td>
+                                <td data-cell="Valor Unitário"><?php echo realFormat($item['Valor']); ?></td>
+                                <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
                                 <td>
                                     <!-- <button onclick="location.href='servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>'"><i class="fa-solid fa-plus me-2"></i> Adicionar </button> -->
 

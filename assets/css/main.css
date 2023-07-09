@@ -6,6 +6,9 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
+.servicetable {
+    width: 800px;
+}
 
 html,
 body,
@@ -3794,6 +3797,32 @@ body.is-touch #banner {
         vertical-align: bottom !important;
     }
     table td.img-table img {
+        width: 100%;
+        height: 100%;
+    }
+    table td {
+        display: block;
+        padding: 0.75rem 0rem;
+    }
+    table td:first-child {
+        padding-top: 0rem;
+    }
+    table td:last-child {
+        padding-top: 2rem;
+    }
+    table th {
+        display: none;
+    }
+    table td[data-cell]:before {
+        content: attr(data-cell) ": ";
+        font-weight: 700;
+        text-transform: capitalize;
+    }
+    .servicetable {
+        width: 100%;
+    }
+    .content {
+        width: 100%;
     }
     /* Footer */
     #footer {

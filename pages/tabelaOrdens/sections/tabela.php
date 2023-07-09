@@ -40,11 +40,11 @@
                         ?>
                             <tr>
                                 <td class="img-table"><img src='<?php echo $moto['foto']; ?>'></td>
-                                <td><?php echo $moto['Codigo']; ?></td>
-                                <td><?php echo $moto['ano']; ?></td>
-                                <td><?php echo $moto['modelo']; ?></td>
-                                <td><?php echo $moto['marca']; ?></td>
-                                <td><?php echo $moto['proprietario']; ?></td>
+                                <td data-cell="Ordem"><?php echo $moto['Codigo']; ?></td>
+                                <td data-cell="Ano"><?php echo $moto['ano']; ?></td>
+                                <td data-cell="Modelo"><?php echo $moto['modelo']; ?></td>
+                                <td data-cell="Marca"><?php echo $moto['marca']; ?></td>
+                                <td data-cell="Proprietario" ><?php echo $moto['proprietario']; ?></td>
                                 <td>
                                     <!-- <button onclick="location.href='tabelaMotoServices.php?motoID=<?php echo $moto['motoId'] ?>'"><i class="fa-solid fa-toolbox me-2"></i></i> Serviços</button> -->
                                     <!-- <button onclick="location.href='tabelaMotoProprietario.php?motoID=<?php echo $moto['motoId'] ?>'"><i class="fa-solid fa-address-book me-2"></i> Proprietarios</button> -->

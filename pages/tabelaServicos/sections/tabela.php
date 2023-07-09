@@ -9,7 +9,7 @@
         ?>
         <div class="table-wrapper">
             <div class="table-wrapper">
-                <table class="table" style="width: 800px;">
+                <table class="table servicetable">
                     <thead>
                         <tr>
                             <form action="" method="get">
@@ -35,8 +35,8 @@
                         while ($servico = mysqli_fetch_assoc($result)) {
                         ?>
                             <tr>
-                                <td><?php echo $servico['item']; ?></td>
-                                <td><?php echo $servico['tipo']; ?></td>
+                                <td data-cell="Item"><?php echo $servico['item']; ?></td>
+                                <td data-cell="Tipo"><?php echo $servico['tipo']; ?></td>
                                 <td>
                                     <button style="background: none; border: none;" onclick="location.href='tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="./assets\css\images\edit.png" style="height: 30x; width: 30px;"> </button>
                                     <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $servico['servicoId'] ?>)"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
