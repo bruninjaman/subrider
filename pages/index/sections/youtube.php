@@ -63,7 +63,7 @@
             font-size: 5em;
             font-family: "Calibri", Helvetica, sans-serif;
             font-weight: 800;
-            left: 26%;
+            left: 12rem;
         }
     }
 

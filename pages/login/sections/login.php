@@ -10,6 +10,7 @@
   @media screen and (max-width: 736px) {
     .spotlight .content-container {
       position: absolute;
+      z-index: 999;
       top: 20%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -17,6 +18,7 @@
     }
     #loginform label {
       margin: 0;
+      font-size: 0.8rem;
 
     }
     #loginform .button.primary {
