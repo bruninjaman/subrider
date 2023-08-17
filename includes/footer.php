@@ -6,7 +6,7 @@
         <li><a href="https://www.instagram.com/xandov/" target="_blank" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
     </ul>
     <ul class="copyright">
-        <li><i class="fa-brands fa-whatsapp"></i> WhatsApp: <a>(61) 98128-2136 </a></li>
-        <li>Fale com: <a>Robson Alexandre</a></li>
+        <li><i class="fa-brands fa-whatsapp"></i> <b>WhatsApp:</b> <a>(61) 98128-2136 </a></li>
+        <li><b>Fale com:</b> <a>Robson Alexandre</a></li>
     </ul>
 </footer>

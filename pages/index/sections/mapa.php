@@ -6,7 +6,7 @@
             font-size: 5em;
             font-family: "Calibri", Helvetica, sans-serif;
             font-weight: 800;
-            left: 6rem;
+            left: 2rem;
         }
     }
 </style>

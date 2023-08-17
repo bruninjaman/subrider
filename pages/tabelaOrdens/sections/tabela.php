@@ -55,7 +55,7 @@
                                             border: none;
                                         }
                                     </style>
-                                    <button class="ordembutton" onclick="location.href='services.php?ordem=<?php echo $moto['Codigo'] ?>'"><i class="fa-sharp fa-solid fa-share-from-square me-2"></i><?php echo $moto['Codigo']; ?></button>
+                                    <button class="ordembutton" style="color:white;" onclick="location.href='services.php?ordem=<?php echo $moto['Codigo'] ?>'"><i class="fa-sharp fa-solid fa-share-from-square me-2"></i><?php echo $moto['Codigo']; ?></button>
                                     <button style="background: none; border: none;" onclick="location.href='tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="./assets\css\images\edit.png" style="height: 2em; width: 2em;"> </button>
                                 </td>
                             </tr>

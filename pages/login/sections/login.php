@@ -7,6 +7,11 @@
     text-align: center;
   }
 
+  @media screen and (max-width: 780px) {
+    .image.fit {
+      width: 210%;
+    }
+  }
   @media screen and (max-width: 736px) {
     .spotlight .content-container {
       position: absolute;
