@@ -9,16 +9,16 @@ require_once("../../connection/connection.php");
 require_once("../functions.php");
 
 if (isset($_POST['grupo'])) {
-    //Upload picture
+    // Upload picture
     $fotoName = $_FILES["foto"]["name"];
     $fotoSize = $_FILES["foto"]["size"];
     $fotoTmpname = $_FILES["foto"]["tmp_name"];
     $file_path = "../../upload/moto/";
 
-    //upload
-    $foto = uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path);
-    //remove relative path
-    $foto = trim($foto,"../../");
+    // Upload
+    $foto = uploadFoto($fotoName, $fotoSize, $fotoTmpname, $file_path);
+    // Remove relative path
+    $foto = trim($foto, "../../");
 
     $grupo = $_POST['grupo'];
     $item = $_POST['item'];
@@ -26,20 +26,26 @@ if (isset($_POST['grupo'])) {
     $parte = $_POST['parte'];
     $pecaId = $_GET['pecaID'];
 
-    if($fotoName != '') {
-
-    $mysqli_query = "UPDATE pecas "; //UPDATE
-    $mysqli_query .= "SET foto = '{$foto}', grupo = '{$grupo}', ";
-    $mysqli_query .= "item = '{$item}', ordem = '{$ordem}', parte = '{$parte}' ";
+    // Prepare the SQL statement using a prepared statement
+    if (!empty($fotoName)) {
+        $mysqli_query = "UPDATE pecas SET foto = ?, grupo = ?, item = ?, ordem = ?, parte = ? WHERE pecaId = ?";
+        $stmt = $conn->prepare($mysqli_query);
+        $stmt->bind_param("sssssi", $foto, $grupo, $item, $ordem, $parte, $pecaId);
     } else {
-        $mysqli_query = "UPDATE pecas "; //UPDATE
-        $mysqli_query .= "SET grupo = '{$grupo}', ";
-        $mysqli_query .= "item = '{$item}', ordem = '{$ordem}', parte = '{$parte}' ";
+        $mysqli_query = "UPDATE pecas SET grupo = ?, item = ?, ordem = ?, parte = ? WHERE pecaId = ?";
+        $stmt = $conn->prepare($mysqli_query);
+        $stmt->bind_param("ssssi", $grupo, $item, $ordem, $parte, $pecaId);
     }
-    $mysqli_query .= "WHERE pecaId = '" . $pecaId . "'";
     
-    mysqli_query($conn, $mysqli_query);
+    // Execute the statement
+    $stmt->execute();
+    
+    // Close the statement
+    $stmt->close();
+    
+    // Close the connection
     mysqli_close($conn);
+    
     header('Location: ../../tabelaPecas.php');
 }
 ?>

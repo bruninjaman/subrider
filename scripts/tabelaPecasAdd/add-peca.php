@@ -23,12 +23,16 @@ if (isset($_FILES["foto"])) {
     $item = $_POST['item'];
     $parte = $_POST['parte'];
 
-    $mysqli_query = "INSERT INTO pecas (foto,grupo,item,parte) ";
-    $mysqli_query .= "VALUES ('{$foto}','{$grupo}', ";
-    $mysqli_query .= "'{$item}','{$parte}'";
-    $mysqli_query .= ") ";
+    // Prepare the SQL statement using a prepared statement
+    $stmt = $conn->prepare("INSERT INTO pecas (foto, grupo, item, parte) VALUES (?, ?, ?, ?)");
+    // Bind parameters to the statement
+    $stmt->bind_param("ssss", $foto, $grupo, $item, $parte);
+    // Execute the statement
+    $stmt->execute();
     
-    mysqli_query($conn, $mysqli_query);
+    // Close the statement
+    $stmt->close();
+    // Close the connection
     mysqli_close($conn);
     header('Location: ../../tabelaPecas.php');
 }
