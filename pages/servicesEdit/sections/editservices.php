@@ -121,40 +121,47 @@ $result2 = mysqli_fetch_assoc($result2);
                         </div>
                     </div>
                     <div id="form_services" class="row gtr-uniform gtr-50" style="display: none;">
-                        <div class="row">
-                            <div class="col-12">
-                                <h3>Selecione um serviço</h3>
-                                <?php
-                                $sql_query = "SELECT * FROM servicos ";
-                                $sql_query .= "ORDER BY servicos.tipo ";
-                                $result = mysqli_query($conn, $sql_query);
-                                ?>
-                                <input type="hidden" name="servicoid" id="servicoid" value="">
-                                <input type="text" list="servicoList" name="servicoInput" value="<?php echo $result2['Tipo'] . " - " . $result2['Item']; ?>">
-                                <datalist id="servicoList">
-                                    <?php while ($servico = mysqli_fetch_assoc($result)) { ?>
-                                        <option <?php if ($result2['Item'] == $servico['item'] && $result2['Tipo'] == $servico['tipo']) {
-                                                    echo "selected";
-                                                } ?> value="<?php echo $servico['tipo'] . " - " . $servico['item']; ?>" data-id="<?php echo $servico['servicoId']; ?>">
-                                        </option>
-                                    <?php } ?>
-                                </datalist>
+                    <div class="row">
+        <div class="col-12">
+            <h3>Selecione um serviço</h3>
+            <?php
+            $sql_query = "SELECT * FROM servicos ORDER BY servicos.tipo";
+            $result = mysqli_query($conn, $sql_query);
+            $initialServicoId = '';
+            $initialServicoValue = $result2['Tipo'] . " - " . $result2['Item'];
+            while ($servico = mysqli_fetch_assoc($result)) {
+                $optionValue = $servico["tipo"] . " - " . $servico["item"];
+                if ($optionValue == $initialServicoValue) {
+                    $initialServicoId = $servico["servicoId"];
+                }
+            }
+            ?>
+            <input type="hidden" name="servicoid" id="servicoid" value="<?php echo $initialServicoId; ?>">
+            <input type="text" list="servicoList" name="servicoInput" id="servicoInput" value="<?php echo $initialServicoValue; ?>">
+            <datalist id="servicoList">
+                <?php
+                mysqli_data_seek($result, 0); // Reset the result pointer to the beginning
+                while ($servico = mysqli_fetch_assoc($result)) { ?>
+                    <option value="<?php echo $servico["tipo"] . " - " . $servico["item"]; ?>" data-id="<?php echo $servico["servicoId"]; ?>"></option>
+                <?php } ?>
+            </datalist>
+            <script>
+                const servicoInput = document.querySelector('#servicoInput');
+                const servicoIdInput = document.querySelector('#servicoid');
+                const servicoList = document.querySelector('#servicoList');
 
-                                <script>
-                                    const servicoInput = document.querySelector('[name="servicoInput"]');
-                                    const servicoidInput = document.querySelector('#servicoid');
-                                    const servicoList = document.querySelector('#servicoList');
+                function updateServicoId() {
+                    const selectedOption = [...servicoList.options].find(option => option.value === servicoInput.value);
+                    if (selectedOption) {
+                        servicoIdInput.value = selectedOption.dataset.id;
+                    }
+                }
 
-                                    servicoInput.addEventListener('input', () => {
-                                        const selectedOption = [...servicoList.options].find(option => option.value === servicoInput.value);
-                                        if (selectedOption) {
-                                            servicoidInput.value = selectedOption.dataset.id;
-                                        }
-                                    });
-                                </script>
-
-                            </div>
-                        </div>
+                servicoInput.addEventListener('input', updateServicoId);
+                servicoInput.addEventListener('change', updateServicoId);
+            </script>
+        </div>
+    </div>
                         <br>
                         <div class="row">
                             <div class="col-2">
