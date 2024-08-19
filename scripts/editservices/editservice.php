@@ -70,8 +70,8 @@ if (isset($_POST['tipo_item'])) {
     $mysqli_query .= " SET ";
     $mysqli_query .= " Foto = '{$foto}',Grupo = '{$grupo}',Tipo = '{$tipo}',Item = '{$item}',Parte = '{$parte}',Quantidade = '{$quantidade}',Valor = '{$valor}',Descricao = '{$descricao}',Ordem = '{$ordem}',Categoria = '{$categoria}',Codigo = '{$scode}' ";
     $mysqli_query .= " WHERE item_ordemID = ".$_GET['item_ordemID'];
-    // var_dump($mysqli_query);
-    // die();
+    //var_dump($mysqli_query);
+    //die();
     //update queries
     mysqli_query($conn, $mysqli_query);
     mysqli_close($conn);

@@ -53,45 +53,47 @@ $result2 = mysqli_fetch_assoc($result2);
                     </div>
 
                     <div id="form_pecas" style="display: none;">
-                        <div class="row">
-                            <div class="col-12">
-                                <h3>Selecione uma peça</h3>
-                                <?php
-                                $sql_query = "SELECT * FROM pecas ";
-                                $sql_query .= "ORDER BY pecas.grupo ";
-                                $result = mysqli_query($conn, $sql_query);
-                                ?>
-                                <input type="hidden" name="pecaid" id="pecaid" value="">
-                                <input type="text" list="pecaList" name="pecaInput" value="<?php echo $result2['Grupo'] . ' - ' . $result2['Item'] . ' - ' . $result2['Parte']; ?>">
-                                <datalist id="pecaList">
-                                    <?php while ($peca = mysqli_fetch_assoc($result)) { ?>
-                                        <option <?php
-                                                if (
-                                                    ($result2['Item'] == $peca["item"]  && $result2['Tipo'] == $peca["parte"]) ||
-                                                    ($result2['Item'] == $peca["item"] && $result2['Parte'] == $peca["parte"]) ||
-                                                    ($result2['Item'] == $peca["item"] && $result2['Grupo'] == $peca["grupo"] && $result2['Tipo'] == $peca["parte"])
-                                                ) {
-                                                    echo "selected";
-                                                }
-                                                ?> value="<?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?>" data-id="<?php echo $peca["pecaId"] ?>"></option>
-                                    <?php } ?>
-                                </datalist>
-                                <script>
-                                    const pecaInput = document.querySelector('[name="pecaInput"]');
-                                    const pecaIdInput = document.querySelector('#pecaid');
-                                    const pecaList = document.querySelector('#pecaList');
+                    <div class="row">
+        <div class="col-12">
+            <h3>Selecione uma peça</h3>
+            <?php
+            $sql_query = "SELECT * FROM pecas ORDER BY pecas.grupo";
+            $result = mysqli_query($conn, $sql_query);
+            $initialPecaId = '';
+            $initialPecaValue = $result2['Grupo'] . ' - ' . $result2['Item'] . ' - ' . $result2['Parte'];
+            while ($peca = mysqli_fetch_assoc($result)) {
+                $optionValue = $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"];
+                if ($optionValue == $initialPecaValue) {
+                    $initialPecaId = $peca["pecaId"];
+                }
+            }
+            ?>
+            <input type="hidden" name="pecaid" id="pecaid" value="<?php echo $initialPecaId; ?>">
+            <input type="text" list="pecaList" name="pecaInput" id="pecaInput" value="<?php echo $initialPecaValue; ?>">
+            <datalist id="pecaList">
+                <?php
+                mysqli_data_seek($result, 0); // Reset the result pointer to the beginning
+                while ($peca = mysqli_fetch_assoc($result)) { ?>
+                    <option value="<?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"]; ?>" data-id="<?php echo $peca["pecaId"]; ?>"></option>
+                <?php } ?>
+            </datalist>
+            <script>
+                const pecaInput = document.querySelector('#pecaInput');
+                const pecaIdInput = document.querySelector('#pecaid');
+                const pecaList = document.querySelector('#pecaList');
 
-                                    pecaInput.addEventListener('input', () => {
-                                        const selectedOption = [...pecaList.options].find(option => option.value === pecaInput.value);
-                                        if (selectedOption) {
-                                            pecaIdInput.value = selectedOption.dataset.id;
-                                        }
-                                    });
-                                </script>
+                function updatePecaId() {
+                    const selectedOption = [...pecaList.options].find(option => option.value === pecaInput.value);
+                    if (selectedOption) {
+                        pecaIdInput.value = selectedOption.dataset.id;
+                    }
+                }
 
-
-                            </div>
-                        </div>
+                pecaInput.addEventListener('input', updatePecaId);
+                pecaInput.addEventListener('change', updatePecaId);
+            </script>
+        </div>
+    </div>
                         <br>
                         <div class="row">
                             <div class="col-8">
