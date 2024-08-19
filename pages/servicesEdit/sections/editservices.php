@@ -112,7 +112,7 @@ $result2 = mysqli_fetch_assoc($result2);
                             </div>
                             <div class="col-6">
                                 <br>
-                                <input id="submit" class="button primary" type="submit" value="Adicionar">
+                                <input id="submit" class="button primary" type="submit" value="Editar Peça">
                             </div>
                             <div class="col-1">
                             </div>
@@ -165,7 +165,7 @@ $result2 = mysqli_fetch_assoc($result2);
                             </div>
                             <div class="col-8">
                                 <br>
-                                <input id="submit" class="button primary" type="submit" value="Adicionar">
+                                <input id="submit" class="button primary" type="submit" value="Editar Serviço">
                             </div>
                         </div>
 
@@ -186,7 +186,7 @@ $result2 = mysqli_fetch_assoc($result2);
                             </div>
                             <div class="col-10">
                                 <br>
-                                <input id="submit" class="button primary" type="submit" value="Adicionar">
+                                <input id="submit" class="button primary" type="submit" value="Editar Adiantamento">
                             </div>
                             <div class="col-1">
                             </div>
