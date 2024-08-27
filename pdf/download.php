@@ -277,7 +277,7 @@ while ($item = mysqli_fetch_assoc($result)) {
   $loadhtmlstring .= '</td>
     <td>';
 
-  $loadhtmlstring .= realFormat($item['Valor']);
+  $loadhtmlstring .= ($item['Valor'] == 0) ? 'N/D' : realFormat($item['Valor']);
 
   $loadhtmlstring .= '</td>
     <td>';
