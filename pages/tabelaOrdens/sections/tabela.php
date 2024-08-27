@@ -20,7 +20,7 @@
                                 <th><button class="sort" type=submit name="orderby" value="marca">Marca <i class="fa-solid fa-sort"></i></button></th>
                                 <th><button class="sort" type=submit name="orderby" value="proprietario">Proprietario <i class="fa-solid fa-sort"></i></button></th>
                             </form>
-                            <th>Actions</th>
+                            <th>Ir para ordem</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,8 +55,8 @@
                                             border: none;
                                         }
                                     </style>
-                                    <button class="ordembutton" style="color:white;" onclick="location.href='services.php?ordem=<?php echo $moto['Codigo'] ?>'"><i class="fa-sharp fa-solid fa-share-from-square me-2"></i><?php echo $moto['Codigo']; ?></button>
-                                    <button style="background: none; border: none;" onclick="location.href='tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="./assets\css\images\edit.png" style="height: 2em; width: 2em;"> </button>
+                                    <button class="ordembutton" style="color:white;" onclick="location.href='services.php?ordem=<?php echo $moto['Codigo'] ?>'"><?php echo $moto['Codigo']; ?></button>
+                                    <button class="ordemedit" style="background: none; border: none;" onclick="location.href='tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="./assets\css\images\edit.png" style="height: 2em; width: 2em;"> </button>
                                 </td>
                             </tr>
                         <?php
