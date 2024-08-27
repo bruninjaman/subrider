@@ -66,11 +66,11 @@ $motoid = mysqli_fetch_assoc($motoid);
                         <div class="row">
                             <div class="col-2">
                                 <label>Quantidade</label>
-                                <input type="number" name="pquantidade" value="<?php echo isset($_POST["pecaid"]) ? 1 : 0 ?>">
+                                <input type="number" name="pquantidade" value="1">
                             </div>
                             <div class="col-2">
                                 <label>Valor</label>
-                                <input type="number" name="pvalor" step=".01">
+                                <input type="number" name="pvalor" step=".01" value="0">
                             </div>
                             <div class="col-1">
                             </div>
@@ -112,11 +112,11 @@ $motoid = mysqli_fetch_assoc($motoid);
                         <div class="row">
                             <div class="col-2">
                                 <label>Valor</label>
-                                <input type="number" name="svalor" step=".01">
+                                <input type="number" name="svalor" step=".01" value="0">
                             </div>
                             <div class="col-2">
                                 <label>Quantidade</label>
-                                <input type="number" name="squantidade">
+                                <input type="number" name="squantidade" value="1">
                             </div>
                             <div class="col-8">
                                 <br>
@@ -133,7 +133,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                             </div>
                             <div class="col-2">
                                 <label>Valor</label>
-                                <input type="number" name="avalor" step=".01">
+                                <input type="number" name="avalor" step=".01" value="0">
                             </div>
                         </div>
                         <div class="row">
