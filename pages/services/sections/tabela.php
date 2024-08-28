@@ -9,6 +9,23 @@ $data = mysqli_fetch_assoc($data);
         <h2>Ordem de Serviço: <?php echo $_GET['ordem'] ?></h2>
 
         <h1 id="editableData">Data: <span id="dateValue"><?php echo ($data["Data"] != null) ? date("d/m/Y", strtotime($data["Data"])) : "dd/mm/aaaa"; ?></span></h1>
+
+        <?php
+        $query = "SELECT KM FROM `ordem_servicos` WHERE '" . $_GET['ordem'] . "' = `ordem_servicos`.`Codigo`;";
+        $result = mysqli_query($conn, $query);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $quilometragem = $row['KM'];
+        } else {
+            $quilometragem = "Não encontrado";
+        }
+        if ($quilometragem == null){
+            $quilometragem = "Não encontrado";
+        }
+        ?>
+        <h1>Quilometragem: <span><?php echo $quilometragem; ?></span></h1>
+
         <p id="errorMessage" style="color: red; display: none;"></p>
 
         <?php
@@ -125,6 +142,8 @@ $data = mysqli_fetch_assoc($data);
                 </table>
                 <div class="buttons-table">
                     <a class='button secondary' href="servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>">Adicionar item</a>
+                    <a class='button secondary' href="addparametro.php?ordem=<?php echo $_GET['ordem'] ?>">Medições</a>
+                    <a class='button secondary' href="#>">Relatorio</a>
                     <a class='button primary' href="pdf/download.php?ordem=<?php echo $_GET['ordem'] ?>">Baixar como PDF</a>
                 </div>
             </div>

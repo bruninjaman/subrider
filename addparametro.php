@@ -21,7 +21,7 @@ require_once("./scripts/functions.php");
     <title>Subrider</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/services.css" />
+    <link rel="stylesheet" href="assets/css/form.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
@@ -33,11 +33,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/services/header/header.php");
-        require("./pages/services/sections/tabela.php");
-        require("./pages/services/sections/info.php");
-        require("./pages/services/sections/parameters.php");
-        require("./pages/services/footer/footer.php");
+        require("./pages/addparametro/header/header.php");
+        require("./pages/addparametro/sections/addparametro.php");
+        require("./pages/addparametro/footer/footer.php");
         ?>
     </div>
 
@@ -50,13 +48,6 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
-    
-    <!-- Delete button -->
-    <script src=".\pages\services\sections\delete_confirm.js"></script>
-    <!-- Jquery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Delete button -->
-    <script src=".\pages\services\sections\editable.js"></script>
 </body>
 
 </html>
