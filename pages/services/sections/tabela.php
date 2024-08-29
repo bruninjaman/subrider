@@ -1,3 +1,53 @@
+<style>
+    /* Modal container */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        z-index: 1000;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Black background with opacity */
+    }
+
+    /* Modal content */
+    .modal-content {
+        background-color: #181921;
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        padding: 10px;
+        border-radius: 25px;
+        width: 80%;
+        /* Could be more or less, depending on screen size */
+        max-width: 900px;
+        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    /* Close button (X) */
+    .close {
+        color: #aaa;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
 <?php
 $getdate = "SELECT * FROM ordem_servicos ";
 $getdate .= "WHERE ordem_servicos.Codigo = '" . $_GET['ordem'] . "' ";
@@ -20,7 +70,7 @@ $data = mysqli_fetch_assoc($data);
         } else {
             $quilometragem = "Não encontrado";
         }
-        if ($quilometragem == null){
+        if ($quilometragem == null) {
             $quilometragem = "Não encontrado";
         }
         ?>
@@ -142,11 +192,38 @@ $data = mysqli_fetch_assoc($data);
                 </table>
                 <div class="buttons-table">
                     <a class='button secondary' href="servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>">Adicionar item</a>
-                    <a class='button secondary' href="addparametro.php?ordem=<?php echo $_GET['ordem'] ?>">Medições</a>
-                    <a class='button secondary' href="#>">Relatorio</a>
+                    <!-- "Medições" Button -->
+                    <a class='button secondary' href="javascript:void(0)" onclick="showModal()">Medições</a>
+
+                    <!-- Modal Structure -->
+                    <div id="parametroModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <iframe src="addparametro.php?ordem=<?php echo $_GET['ordem'] ?>" width="100%" height="500px"></iframe>
+                        </div>
+                    </div>
+
+                    <a class='button secondary' href="relatorio.php?ordem=<?php echo $_GET['ordem'] ?>">Relatorio</a>
                     <a class='button primary' href="pdf/download.php?ordem=<?php echo $_GET['ordem'] ?>">Baixar como PDF</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script>
+    function showModal() {
+        document.getElementById("parametroModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("parametroModal").style.display = "none";
+    }
+
+    // Close the modal if the user clicks outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById("parametroModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

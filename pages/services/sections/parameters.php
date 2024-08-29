@@ -1,6 +1,4 @@
 <style>
-    #two div.conte{
-    }
 </style>
 <section id="two">
     <center>

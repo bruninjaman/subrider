@@ -20,7 +20,11 @@ if (isset($_POST['desc'])) {
     
     mysqli_query($conn, $sql_query);
     mysqli_close($conn);
-    header('Location: ../../services.php?ordem='. $_GET['ordem']);
+    echo "<script>
+            window.parent.location.reload(); // Refresh the parent page
+            window.parent.closeModal(); // Close the modal
+          </script>";
+    exit();
 }
 ?>
 
