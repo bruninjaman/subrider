@@ -30,63 +30,98 @@
 </script>
 
 <style>
-  /* Style for the Quill editor to match dark background */
+  /* Style for the modernized form */
+  body {
+    background-color: #1d1f27; /* Dark background */
+    font-family: 'Roboto', sans-serif; /* Modern font */
+    color: #e0e0e0; /* Light text */
+  }
+
+  /* Style for Quill editor */
   #editor {
     background-color: #333; /* Dark background */
     color: #fff; /* Light text color */
     height: 200px;
     overflow-y: auto;
-    padding: 10px;
-
-    /* Ensure default text is NOT bold */
-    font-weight: normal; /* Reset default font weight */
+    padding: 15px;
+    font-size: 14px;
+    border-radius: 8px; /* Rounded edges for modern feel */
+    border: 1px solid #444;
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2); /* Inner shadow */
   }
 
-  /* Ensure the Quill toolbar has proper contrast */
+  /* Styling for toolbar */
   .ql-toolbar {
-    background-color: #444; /* Slightly lighter background for toolbar */
+    background-color: #444; /* Dark toolbar */
+    border: 1px solid #555;
+    border-radius: 8px 8px 0 0; /* Rounded top */
+  }
+
+  /* Button style */
+  .button {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
     border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   }
 
-  /* Ensure Quill container and editor-specific styles are isolated */
-  .ql-container {
-    border: none;
+  .button:hover {
+    background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
   }
 
-  /* Fix for bold text inside the editor */
-  #editor strong,
-  #editor b {
-    font-weight: bold !important; /* Force bold weight to work */
+  /* Input label style */
+  label {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+    color: #e0e0e0; /* Light color */
   }
 
-  /* Change toolbar icons and dropdown colors to fit dark mode */
+  /* Form layout adjustments */
+  .form {
+    margin-top: 20px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-12 {
+    margin-bottom: 20px;
+  }
+
+  .logogray {
+    margin-bottom: 20px;
+    max-width: 150px;
+  }
+
+  /* Adjust Quill icons for dark mode */
   .ql-snow .ql-stroke {
-    stroke: #fff; /* White icons */
+    stroke: #fff;
   }
+
   .ql-snow .ql-fill {
-    fill: #fff; /* White icons */
+    fill: #fff;
   }
 
-  /* Custom styling for dropdowns to be visible on dark background */
-  .ql-snow .ql-picker {
-    color: #fff; /* Text color for dropdown items */
-  }
   .ql-snow .ql-picker-options {
-    background-color: #444; /* Dark dropdown background */
-    color: #fff; /* Light text color */
-  }
-  .ql-snow .ql-picker-label {
-    color: #fff; /* Make the label visible */
+    background-color: #444;
+    color: #fff;
   }
 
-  /* Change hover color for dropdown items */
-  .ql-snow .ql-picker-options .ql-picker-item:hover {
-    background-color: #555; /* Slightly lighter on hover */
+  .ql-snow .ql-picker-label {
+    color: #fff;
   }
 
   .ql-snow .ql-picker-options .ql-selected {
-    background-color: #666; /* Highlight selected item */
-    color: #fff; /* Ensure selected item is white */
+    background-color: #666;
   }
 </style>
 
