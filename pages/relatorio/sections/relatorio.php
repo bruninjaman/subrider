@@ -10,7 +10,10 @@
       modules: {
         toolbar: [
           [{ 'header': [1, 2, 3, false] }], // Header dropdown
+          [{ 'font': [] }], // Font family
+          [{ 'size': ['small', false, 'large', 'huge'] }], // Font size dropdown
           ['bold', 'italic', 'underline'],   // Formatting options
+          [{ 'color': [] }, { 'background': [] }], // Color and background color
           [{ 'list': 'ordered' }, { 'list': 'bullet' }], // Lists
           ['link', 'image'], // Links and images
           ['clean'] // Clear formatting button
