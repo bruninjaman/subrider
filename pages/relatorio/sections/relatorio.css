@@ -1,0 +1,69 @@
+/* Style for the modernized form */
+body {
+    background-color: #1d1f27; /* Dark background */
+    font-family: 'Roboto', sans-serif; /* Modern font */
+    color: #e0e0e0; /* Light text */
+  }
+  /* Styling for toolbar */
+  .ql-toolbar {
+    background-color: #444; /* Dark toolbar */
+    border: 1px solid #555;
+    border-radius: 8px 8px 0 0; /* Rounded top */
+  }
+
+  .form input[type="submit"] {
+    width:350px;
+}
+  /* Input label style */
+  label {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+    color: #e0e0e0; /* Light color */
+  }
+
+  /* Form layout adjustments */
+  .form {
+    margin-top: 20px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-12 {
+    margin-bottom: 20px;
+  }
+
+  .logogray {
+    margin-bottom: 20px;
+    max-width: 150px;
+  }
+
+  /* Adjust Quill icons for dark mode */
+  .ql-snow .ql-stroke {
+    stroke: #fff;
+  }
+
+  .ql-snow .ql-fill {
+    fill: #fff;
+  }
+
+  .ql-snow .ql-picker-options {
+    background-color: #444;
+    color: #fff;
+  }
+
+  .ql-snow .ql-picker-label {
+    color: #fff;
+  }
+
+  .ql-snow .ql-picker {
+    height: auto;
+}
+  .ql-snow .ql-picker-options .ql-selected {
+    background-color: #666;
+  }
+  
