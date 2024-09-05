@@ -19,9 +19,9 @@
 <body class="is-preload landing">
     <div id="page-wrapper">
         <?php
-        require("./pages/login/header/header.php");
-        require("./pages/login/sections/login.php");
-        require("./pages/login/footer/footer.php");
+        require("./pages/login/header.php");
+        require("./pages/login/login.php");
+        require("./pages/login/footer.php");
         ?>
 
     </div>

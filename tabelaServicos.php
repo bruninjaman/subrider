@@ -35,9 +35,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/tabelaServicos/header/header.php");
-        require("./pages/tabelaServicos/sections/tabela.php");
-        require("./pages/tabelaServicos/footer/footer.php");
+        require("./pages/tabelaServicos/header.php");
+        require("./pages/tabelaServicos/tabela.php");
+        require("./pages/tabelaServicos/footer.php");
     
         ?>
     </div>
@@ -52,7 +52,7 @@ require_once("./scripts/functions.php");
     <script src="assets/js/main.js"></script>
 
     <!-- Delete button -->
-    <script src=".\pages\tabelaServicos\sections\delete_confirm.js"></script>
+    <script src=".\pages\tabelaServicos\delete_confirm.js"></script>
 </body>
 
 </html>

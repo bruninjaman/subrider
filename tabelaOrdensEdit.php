@@ -33,9 +33,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/tabelaOrdensEdit/header/header.php");
-        require("./pages/tabelaOrdensEdit/sections/editordem.php");
-        require("./pages/tabelaOrdensEdit/footer/footer.php");
+        require("./pages/tabelaOrdensEdit/header.php");
+        require("./pages/tabelaOrdensEdit/editordem.php");
+        require("./pages/tabelaOrdensEdit/footer.php");
         ?>
     </div>
 

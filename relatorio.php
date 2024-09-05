@@ -33,9 +33,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/relatorio/header/header.php");
-        require("./pages/relatorio/sections/relatorio.php");
-        require("./pages/relatorio/footer/footer.php");
+        require("./pages/relatorio/header.php");
+        require("./pages/relatorio/relatorio.php");
+        require("./pages/relatorio/footer.php");
         ?>
     </div>
 

@@ -33,9 +33,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/tabelaServicosEdit/header/header.php");
-        require("./pages/tabelaServicosEdit/sections/editservicos.php");
-        require("./pages/tabelaServicosEdit/footer/footer.php");
+        require("./pages/tabelaServicosEdit/header.php");
+        require("./pages/tabelaServicosEdit/editservicos.php");
+        require("./pages/tabelaServicosEdit/footer.php");
         ?>
     </div>
 

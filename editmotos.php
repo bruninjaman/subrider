@@ -21,26 +21,25 @@ require_once("./scripts/functions.php");
     <title>Subrider</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/form.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/search.css" />
-    <link rel="stylesheet" href="assets/css/sort.css" />
-    <link rel="stylesheet" href="assets/css/table.css" />
-    <link rel="stylesheet" href="assets/css/fontawesome6.all.min.css" />  
+    <link rel="stylesheet" href="assets/css/upload-image.css" />
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
+
 </head>
 
 <body class="is-preload landing">
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/tabelaPecas/header.php");
-        require("./pages/tabelaPecas/tabela.php");
-        require("./pages/tabelaPecas/footer.php");
-    
+        require("./pages/editmotos/header.php");
+        require("./pages/editmotos/editmotos.php");
+        require("./pages/editmotos/footer.php");
         ?>
     </div>
+
     <!-- Scripts for main theme -->
     <script src="assets/js/global/jquery.min.js"></script>
     <script src="assets/js/global/jquery.scrolly.min.js"></script>
@@ -50,9 +49,7 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
-
-    <!-- Delete button -->
-    <script src=".\pages\tabelaPecas    \delete_confirm.js"></script>
+    <script src="assets/js/global/upload.js"></script>
 </body>
 
 </html>

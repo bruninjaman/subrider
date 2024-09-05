@@ -35,9 +35,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/tabelaMotos/header/header.php");
-        require("./pages/tabelaMotos/sections/tabela.php");
-        require("./pages/tabelaMotos/footer/footer.php");
+        require("./pages/tabelaMotos/header.php");
+        require("./pages/tabelaMotos/tabela.php");
+        require("./pages/tabelaMotos/footer.php");
     
         ?>
     </div>
@@ -53,7 +53,7 @@ require_once("./scripts/functions.php");
     
 
     <!-- Delete button -->
-    <script src=".\pages\tabelaMotos\sections\delete_confirm.js"></script>
+    <script src=".\pages\tabelaMotos\delete_confirm.js"></script>
 </body>
 
 </html>

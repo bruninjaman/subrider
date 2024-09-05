@@ -23,17 +23,17 @@ session_start();
 
 </head>
 
-<body class="is-prload landing">
+<body class="is-preload landing">
     <div id="page-wrapper">
         <?php
-        require("./pages/index/header/header.php");
-        require("./pages/index/sections/banner.php");
-        require("./pages/index/sections/mapa.php");
-        require("./pages/index/sections/youtube.php");
-        require("./pages/index/sections/instagram-1.php");
-        require("./pages/index/sections/instagram-2-feed.php");
-        require("./pages/index/sections/sobre.php");
-        require("./pages/index/footer/footer.php");
+        require("./pages/index/header.php");
+        require("./pages/index/banner.php");
+        require("./pages/index/mapa.php");
+        require("./pages/index/youtube.php");
+        require("./pages/index/instagram-1.php");
+        require("./pages/index/instagram-2-feed.php");
+        require("./pages/index/sobre.php");
+        require("./pages/index/footer.php");
         ?>
 
     </div>

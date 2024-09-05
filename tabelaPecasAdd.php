@@ -34,9 +34,9 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/tabelaPecasAdd/header/header.php");
-        require("./pages/tabelaPecasAdd/sections/addpecas.php");
-        require("./pages/tabelaPecasAdd/footer/footer.php");
+        require("./pages/tabelaPecasAdd/header.php");
+        require("./pages/tabelaPecasAdd/addpecas.php");
+        require("./pages/tabelaPecasAdd/footer.php");
         ?>
     </div>
 

@@ -9,6 +9,7 @@ require_once("./scripts/perm.php");
 require_once("./connection/connection.php");
 //FUNCTIONS
 require_once("./scripts/functions.php");
+
 ?>
 <!--
 	Landed by HTML5 UP
@@ -22,25 +23,22 @@ require_once("./scripts/functions.php");
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/search.css" />
-    <link rel="stylesheet" href="assets/css/sort.css" />
-    <link rel="stylesheet" href="assets/css/table.css" />
-    <link rel="stylesheet" href="assets/css/fontawesome6.all.min.css" />  
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
+
 </head>
 
 <body class="is-preload landing">
     <div id="page-wrapper">
         <!-- content -->
         <?php 
-        require("./pages/tabelaPecas/header.php");
-        require("./pages/tabelaPecas/tabela.php");
-        require("./pages/tabelaPecas/footer.php");
-    
+        require("./pages/tabela_ordemservicos/header.php");
+        require("./pages/tabela_ordemservicos/ordens.php");
+        require("./pages/tabela_ordemservicos/footer.php");
         ?>
     </div>
+
     <!-- Scripts for main theme -->
     <script src="assets/js/global/jquery.min.js"></script>
     <script src="assets/js/global/jquery.scrolly.min.js"></script>
@@ -50,9 +48,6 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
-
-    <!-- Delete button -->
-    <script src=".\pages\tabelaPecas    \delete_confirm.js"></script>
 </body>
 
 </html>
