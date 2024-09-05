@@ -17,7 +17,7 @@ echo "</style>";
   <div class="content form">
     <img class="fit logogray" src="./assets/css/images/logo-branco-crop.png">
     <center>
-      <form method="post" action="scripts/addparametro/add.php?ordem=<?php echo $_GET['ordem'] . '&motoID=' . $motoid['motoID']; ?>">
+      <form method="post" action="scripts/add_medicao/add.php?ordem=<?php echo $_GET['ordem'] . '&motoID=' . $motoid['motoID']; ?>">
         <div>
           <div class="row">
             <div class="col-12">
