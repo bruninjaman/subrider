@@ -1,52 +1,8 @@
-<style>
-    /* Modal container */
-    .modal {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        z-index: 1000;
-        /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Black background with opacity */
-    }
-
-    /* Modal content */
-    .modal-content {
-        background-color: #181921;
-        margin: 15% auto;
-        /* 15% from the top and centered */
-        padding: 10px;
-        border-radius: 25px;
-        width: 80%;
-        /* Could be more or less, depending on screen size */
-        max-width: 900px;
-        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
-        position: relative;
-    }
-
-    /* Close button (X) */
-    .close {
-        color: #aaa;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
-</style>
+<?php
+echo "<style>";
+echo file_get_contents('pages/ordemservico/modal.css');
+echo "</style>";
+?>
 
 <?php
 $getdate = "SELECT * FROM ordem_servicos ";
@@ -112,13 +68,6 @@ $data = mysqli_fetch_assoc($data);
                         ?>
                             <tr>
                                 <td colspan=3>
-                                    <!-- <?php
-                                            if ($item["Foto"] != 0) {
-                                            ?> 
-                                        <img src="./<?php echo $item["Foto"] ?>" style="width: 70px; height: 70px">
-                                    <?php
-                                            }
-                                    ?> -->
                                     <?php echo $item['Tipo'] != '0' ? "" . $item['Tipo'] . " - " : ""; ?>
                                     <?php echo $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : ""; ?>
                                     <?php echo $item['Item'] != '0' ? "" . $item['Item'] . "" : ""; ?>
@@ -134,24 +83,14 @@ $data = mysqli_fetch_assoc($data);
                                 <td data-cell="Valor Unitário"><?php echo ($item['Valor'] <= 0) ? 'N/D' : realFormat($item['Valor']); ?></td>
                                 <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
                                 <td>
-                                    <!-- <button onclick="location.href='servicesAdd.php?ordem=<?php echo $_GET['ordem'] ?>'"><i class="fa-solid fa-plus me-2"></i> Adicionar </button> -->
-
-                                    <!-- <button onclick="location.href='servicesEdit.php?ordem=<?php echo $_GET['ordem'] . $typeAndId ?>'"><i class="fa-solid fa-user-pen me-2"></i> Editar </button> -->
                                     <button style="background: none; border: none;" onclick="location.href='ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'"><img src="./assets\css\images\edit.png" style="height: 30x; width: 30px;"> </button>
                                     <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
-
-                                    <!-- <button onclick="return confirm('Deseja realmente excluir este item?')"><i class="fa-sharp fa-solid fa-delete-left me-2"></i> Deletar</button> -->
                                 </td>
                             </tr>
                         <?php
                         }
                         $subtotal = $total - $adiantamento;
                         ?>
-                        <!-- <tr class="total">
-                            <td colspan="5"></td>
-                            <td>Subtotal:</td>
-                            <td><?php echo realFormat($subtotal) ?></td>
-                        </tr> -->
                         <tr class="total">
                             <td colspan="4"></td>
                             <td>Total:</td>
@@ -190,13 +129,13 @@ $data = mysqli_fetch_assoc($data);
                         </tr>
                     </tbody>
                 </table>
+                <!-- Botões -->
                 <div class="buttons-table">
                     <a class='button secondary' href="ordem_add_item.php?ordem=<?php echo $_GET['ordem'] ?>">Adicionar item</a>
-                    <!-- "Medições" Button -->
                     <a class='button secondary' href="javascript:void(0)" onclick="showModal()">Medições</a>
 
-                    <!-- Modal Structure -->
-                    <div id="parametroModal" class="modal">
+                    <!-- modal -->
+                    <div id="medicoes1" class="modal">
                         <div class="modal-content">
                             <span class="close" onclick="closeModal()">&times;</span>
                             <iframe src="medicoes.php?ordem=<?php echo $_GET['ordem'] ?>" width="100%" height="500px"></iframe>
@@ -210,20 +149,8 @@ $data = mysqli_fetch_assoc($data);
         </div>
     </div>
 </section>
-<script>
-    function showModal() {
-        document.getElementById("parametroModal").style.display = "block";
-    }
-
-    function closeModal() {
-        document.getElementById("parametroModal").style.display = "none";
-    }
-
-    // Close the modal if the user clicks outside of it
-    window.onclick = function(event) {
-        var modal = document.getElementById("parametroModal");
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
+<?php
+echo "<script>";
+echo file_get_contents('pages/ordemservico/modal.js');
+echo "</script>";
+?>

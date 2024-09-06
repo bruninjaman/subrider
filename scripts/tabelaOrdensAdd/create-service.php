@@ -15,18 +15,38 @@ $ordem_result = mysqli_query($conn, $mysqli_query);
 //CHECK ORDEMS
 $existem_ordems = mysqli_num_rows($ordem_result) > 0 ? true : false;
 
-//CREATE A NEW CODE
-$novo_codigo = 100;
+// Get the current year
+$current_year = date("Y");
+
+// CREATE A NEW CODE
+$novo_codigo = 100; // Default starting code
+$last_year = null; // Variable to store the last year's code
+
 if ($existem_ordems) {
     while($ordem = mysqli_fetch_assoc($ordem_result)) {
-        $ordem_splited = explode("/",$ordem['Codigo']);
-        if($ordem_splited[0] > $novo_codigo)
-            $novo_codigo = $ordem_splited[0];
+        $ordem_splited = explode("/", $ordem['Codigo']);
+        $last_code = $ordem_splited[0]; // The numeric part
+        $last_year = $ordem_splited[1]; // The year part
+
+        // Check if the year is the same as the current year
+        if ($last_year == $current_year && $last_code > $novo_codigo) {
+            $novo_codigo = $last_code; // Update to the highest code for this year
+        }
     }
-} else {
-    $novo_codigo = '100' . '/' . date("Y");
 }
-$novo_codigo = $novo_codigo+1 . '/' . date("Y");
+
+// If no codes exist for the current year, start from 100
+if ($last_year != $current_year || !$existem_ordems) {
+    $novo_codigo = 100;
+}
+
+// Increment the code and add the year
+$novo_codigo = ($novo_codigo + 1) . '/' . $current_year;
+
+echo $novo_codigo;
+die();
+
+//$novo_codigo = $novo_codigo+1 . '/' . $current_year;
 
 
 $mysqli_query = "INSERT INTO ordem_servicos ";
