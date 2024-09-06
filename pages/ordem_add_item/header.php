@@ -6,7 +6,7 @@
     <nav id="nav">
         <ul>
             <li>
-                <a class="button primary" href="services.php?ordem=<?php echo $_GET["ordem"]?>">Voltar</a>
+                <a class="button primary" href="ordemservico.php?ordem=<?php echo $_GET["ordem"]?>">Voltar</a>
             </li>
         </ul>
     </nav>

@@ -9,5 +9,5 @@ require_once("../../connection/connection.php");
 require_once("../../scripts/functions.php");
 
 mysqli_close($conn);
-header('location: ../../services.php?ordem='. $_GET['ordem']);
+header('location: ../../ordemservico.php?ordem='. $_GET['ordem']);
 ?>
