@@ -5,17 +5,45 @@ echo "</style>";
 ?>
 
 <?php
-$getdate = "SELECT * FROM ordem_servicos ";
-$getdate .= "WHERE ordem_servicos.Codigo = '" . $_GET['ordem'] . "' ";
-$data = mysqli_query($conn, $getdate);
-$data = mysqli_fetch_assoc($data);
+$get_ordemservicos = "SELECT * FROM ordem_servicos ";
+$get_ordemservicos .= "WHERE ordem_servicos.Codigo = '" . $_GET['ordem'] . "' ";
+$ordem_servicos = mysqli_query($conn, $get_ordemservicos);
+$ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
 ?>
 <section id="banner">
     <div class="content">
         <h2>Ordem de Serviço: <?php echo $_GET['ordem'] ?></h2>
 
-        <h1 id="editableData">Data: <span id="dateValue"><?php echo ($data["Data"] != null) ? date("d/m/Y", strtotime($data["Data"])) : "dd/mm/aaaa"; ?></span></h1>
+        <h1 id="editableData">Data: <span id="dateValue"><?php echo ($ordem_servicos["Data"] != null) ? date("d/m/Y", strtotime($ordem_servicos["Data"])) : "dd/mm/aaaa"; ?></span></h1>
 
+        <!-- definir proprietário -->
+        <style>
+            #editableproprietario {
+                font-size: 25px;
+            }
+        </style>
+        <?php
+        if ($ordem_servicos["proprietario_ordem"] == null) {
+            // pegar o proprietario
+            $get_proprietario_query = "SELECT proprietario ";
+            $get_proprietario_query .= "FROM motocicletas ";
+            $get_proprietario_query .= "WHERE (SELECT ordem_servicos.motoID FROM ordem_servicos WHERE ordem_servicos.Codigo  = '" . $_GET['ordem'] . "') = motocicletas.motoId";
+            $proprietario = mysqli_query($conn, $get_proprietario_query);
+            $proprietario = mysqli_fetch_assoc($proprietario);
+
+            // modificar proprietario da ordem
+            $atualizar_proprietario = "UPDATE ordem_servicos ";
+            $atualizar_proprietario .= "SET ordem_servicos.proprietario_ordem = '" . $proprietario['proprietario'] . "' ";
+            $atualizar_proprietario .= "WHERE ordem_servicos.Codigo = '" . $_GET['ordem'] . "' ";
+            mysqli_query($conn, $atualizar_proprietario);
+
+
+            // atualizar array ordem servicos
+            $ordem_servicos = mysqli_query($conn, $get_ordemservicos);
+            $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
+        }
+        ?>
+        <h2>Proprietário: <span id="editableproprietario"><?php echo ($ordem_servicos["proprietario_ordem"] != null) ? $ordem_servicos["proprietario_ordem"] : "Não definido"; ?></span></h2>
         <?php
         $query = "SELECT KM FROM `ordem_servicos` WHERE '" . $_GET['ordem'] . "' = `ordem_servicos`.`Codigo`;";
         $result = mysqli_query($conn, $query);

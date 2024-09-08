@@ -56,7 +56,9 @@ require_once("./scripts/functions.php");
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Delete button -->
-    <script src=".\pages\ordemservico\editable.js"></script>
+    <script src=".\pages\ordemservico\editable_data.js"></script>
+    <script src=".\pages\ordemservico\editable_proprietario.js"></script>
+    
 </body>
 
 </html>
