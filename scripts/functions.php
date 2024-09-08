@@ -2,75 +2,70 @@
 
 function pagination($conn, $sql_query, $results_per_page = 5)
 {
-    // Check for "page" parameter in query string
-    if (isset($_GET['page'])) {
-        $current_page = intval($_GET['page']);
-    } else {
-        $current_page = 1;
-    }
+    try {
+        // Check for "page" parameter in query string
+        if (isset($_GET['page'])) {
+            $current_page = intval($_GET['page']);
+        } else {
+            $current_page = 1; // Default to first page
+        }
 
-    // Execute SQL query and get result
-    $result = mysqli_query($conn, $sql_query);
+        // Execute SQL query and get result
+        $result = mysqli_query($conn, $sql_query);
 
-    // Calculate number of pages needed
-    $num_rows = mysqli_num_rows($result);
-    $num_pages = ceil($num_rows / $results_per_page);
+        // Check for errors in database query
+        if (!$result) {
+            throw new Exception("Error executing database query: " . mysqli_error($conn));
+        }
 
-    // Calculate start and end page numbers for pagination interface
-    $start_page = max($current_page - 2, 1);
-    $end_page = min($current_page + 2, $num_pages);
+        // Calculate number of pages needed
+        $num_rows = mysqli_num_rows($result);
+        $num_pages = ceil($num_rows / $results_per_page);
 
-    // Limit results based on current page
-    $offset = ($current_page - 1) * $results_per_page;
-    $limited_sql_query = $sql_query . " LIMIT $offset, $results_per_page";
-    $limited_result = mysqli_query($conn, $limited_sql_query);
+        // Adjust current page if it's out of bounds
+        if ($current_page < 1) $current_page = 1;
+        if ($current_page > $num_pages) $current_page = $num_pages;
 
-    // Check for errors
-    if (!$result || !$limited_result) {
-        // Handle errors
-    }
+        // Limit results based on current page
+        $offset = ($current_page - 1) * $results_per_page;
+        $limited_sql_query = $sql_query . " LIMIT $offset, $results_per_page";
+        $limited_result = mysqli_query($conn, $limited_sql_query);
 
-    // Generate pagination interface
-?>
-    <link rel="stylesheet" href="./assets/css/pagination.css">
-    <div class="pagination-style">
-        <ul class="pagination">
+        // Check for errors in database query (for limited results)
+        if (!$limited_result) {
+            throw new Exception("Error executing limited database query: " . mysqli_error($conn));
+        }
+
+        // Generate pagination interface
+        ?>
+        <div class="pagination-style">
             <?php if ($current_page > 1) : ?>
-                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
-                // Remove "page" from the query string
-                unset($_GET['page']);
-                // Append the remaining parameters to the query string
-                echo http_build_query($_GET);
-                // Add the "page" parameter with the new value
-                echo "&page=" . ($current_page - 1);
-                ?>">«</a></li>
+                <!-- Move to the first page -->
+                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=1'">« First</button>
+                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $current_page - 1; ?>'">‹ Prev</button>
             <?php endif; ?>
-            <?php for ($i = $start_page; $i <= $end_page; $i++) : ?>
-                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
-            // Remove "page" from the query string
-            unset($_GET['page']);
-            // Append the remaining parameters to the query string
-            echo http_build_query($_GET);
-            // Add the "page" parameter with the new value
-            echo "&page=" . $i;
-            ?>"><?php echo $i; ?></a></li>
+
+            <!-- Show page numbers -->
+            <?php for ($i = max(1, $current_page - 2); $i <= min($num_pages, $current_page + 2); $i++) : ?>
+                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $i; ?>'"
+                    <?php if ($i == $current_page) echo 'style="font-weight:bold;"'; ?>>
+                    <?php echo $i; ?>
+                </button>
             <?php endfor; ?>
+
             <?php if ($current_page < $num_pages) : ?>
-                <li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php
-                // Remove "page" from the query string
-                unset($_GET['page']);
-                // Append the remaining parameters to the query string
-                echo http_build_query($_GET);
-                // Add the "page" parameter with the new value
-                echo "&page=" . ($current_page + 1);
-                ?>">»</a></li>
+                <!-- Move to the last page -->
+                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $current_page + 1; ?>'">Next ›</button>
+                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $num_pages; ?>'">Last »</button>
             <?php endif; ?>
+        </div>
+        <?php
 
-
-        </ul>
-    </div>
-<?php
+    } catch (Exception $e) {
+        echo "<p style='color: red;'>Error: " . $e->getMessage() . "</p>";
+    }
 }
+
 
 
 
