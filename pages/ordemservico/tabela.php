@@ -43,7 +43,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
             $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
         }
         ?>
-        <h2>Proprietário: <span id="editableproprietario"><?php echo ($ordem_servicos["proprietario_ordem"] != null) ? $ordem_servicos["proprietario_ordem"] : "Não definido"; ?></span></h2>
+        <h1>Proprietário: <span id="editableproprietario"><?php echo ($ordem_servicos["proprietario_ordem"] != null) ? $ordem_servicos["proprietario_ordem"] : "Não definido"; ?></span></h1>
         <?php
         $query = "SELECT KM FROM `ordem_servicos` WHERE '" . $_GET['ordem'] . "' = `ordem_servicos`.`Codigo`;";
         $result = mysqli_query($conn, $query);

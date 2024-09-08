@@ -42,7 +42,7 @@ $result = mysqli_query($conn, $motocicletas_query);
                         <li><b>Proprietário Atual:</b> <?php echo $moto['proprietario'] ?></li>
                         <li><b>Marca:</b> <?php echo $moto['marca'] ?></li>
                         <li><b>Placa:</b> <?php echo $moto['placa'] ?></li>
-                        <li><b>Ano></b> <?php echo $moto['ano'] ?></li>
+                        <li><b>Ano:</b> <?php echo $moto['ano'] ?></li>
                         <li><b>Modelo:</b> <?php echo $moto['modelo'] ?></li>
                         <li><b>Quilometragem:</b> <?php echo $moto['km'] ?></li>
                     </ul>
