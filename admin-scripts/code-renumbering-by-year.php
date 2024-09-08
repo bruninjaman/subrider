@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 /**
  * This script renumbers the "Codigo" field in the "ordem_servicos" table,
  * ensuring that for each year, the numbering starts from 100 and increments sequentially.
@@ -93,4 +93,4 @@ try {
 // Close connection
 mysqli_close($conn);
 
-?>
+?> -->
