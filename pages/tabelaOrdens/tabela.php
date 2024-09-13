@@ -32,6 +32,8 @@
                         }
                         if (isset($_GET["orderby"])) {
                             $sql_query .= " ORDER BY  " . $_GET["orderby"] . "  ";
+                        } else {
+                            $sql_query .= " ORDER BY ordem_servicos.servID DESC "; // Default ordering by latest added
                         }
                         $sql_query_without_limit = $sql_query;
                         $sql_query .= " LIMIT " . ((isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5) . ", 5";

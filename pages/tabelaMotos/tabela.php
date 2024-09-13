@@ -34,6 +34,8 @@
                         }
                         if(isset($_GET["orderby"])){
                             $sql_query .= " ORDER BY  ".$_GET["orderby"]."  ";
+                        } else {
+                            $sql_query .= " ORDER BY motocicletas.motoId DESC "; // Default ordering by latest added (motoId)
                         }
 
                         $sql_query_without_limit = $sql_query;
