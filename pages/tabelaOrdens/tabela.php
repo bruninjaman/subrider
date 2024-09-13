@@ -38,30 +38,38 @@
                         $sql_query_without_limit = $sql_query;
                         $sql_query .= " LIMIT " . ((isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5) . ", 5";
                         $result = mysqli_query($conn, $sql_query);
-                        while ($moto = mysqli_fetch_assoc($result)) {
+                        if (!$result) {
+                            // Exibe uma mensagem genérica ao usuário
+                            echo "<tr><td colspan='7'>Nenhum resultado encontrado.</td></tr>";
+                        } elseif (mysqli_num_rows($result) === 0) {
+                            // Se não houver resultados
+                            echo "<tr><td colspan='7'>Nenhum resultado encontrado.</td></tr>";
+                        } else {
+                            while ($moto = mysqli_fetch_assoc($result)) {
                         ?>
-                            <tr>
-                                <td class="img-table"><img src='<?php echo $moto['foto']; ?>'></td>
-                                <td data-cell="Ordem"><?php echo $moto['Codigo']; ?></td>
-                                <td data-cell="Ano"><?php echo $moto['ano']; ?></td>
-                                <td data-cell="Modelo"><?php echo $moto['modelo']; ?></td>
-                                <td data-cell="Marca"><?php echo $moto['marca']; ?></td>
-                                <td data-cell="Proprietario" ><?php echo $moto['proprietario']; ?></td>
-                                <td>
-                                    <!-- <button onclick="location.href='tabelaMotoServices.php?motoID=<?php echo $moto['motoId'] ?>'"><i class="fa-solid fa-toolbox me-2"></i></i> Serviços</button> -->
-                                    <!-- <button onclick="location.href='tabelaMotoProprietario.php?motoID=<?php echo $moto['motoId'] ?>'"><i class="fa-solid fa-address-book me-2"></i> Proprietarios</button> -->
-                                    <style>
-                                        .ordembutton {
-                                            background-color: transparent;
-                                            font-size: 1.5em;
-                                            border: none;
-                                        }
-                                    </style>
-                                    <button class="ordembutton" style="color:white;" onclick="location.href='ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'"><?php echo $moto['Codigo']; ?></button>
-                                    <button class="ordemedit" style="background: none; border: none;" onclick="location.href='tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="./assets\css\images\edit.png" style="height: 2em; width: 2em;"> </button>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="img-table"><img src='<?php echo $moto['foto']; ?>'></td>
+                                    <td data-cell="Ordem"><?php echo $moto['Codigo']; ?></td>
+                                    <td data-cell="Ano"><?php echo $moto['ano']; ?></td>
+                                    <td data-cell="Modelo"><?php echo $moto['modelo']; ?></td>
+                                    <td data-cell="Marca"><?php echo $moto['marca']; ?></td>
+                                    <td data-cell="Proprietario"><?php echo $moto['proprietario']; ?></td>
+                                    <td>
+                                        <!-- <button onclick="location.href='tabelaMotoServices.php?motoID=<?php echo $moto['motoId'] ?>'"><i class="fa-solid fa-toolbox me-2"></i></i> Serviços</button> -->
+                                        <!-- <button onclick="location.href='tabelaMotoProprietario.php?motoID=<?php echo $moto['motoId'] ?>'"><i class="fa-solid fa-address-book me-2"></i> Proprietarios</button> -->
+                                        <style>
+                                            .ordembutton {
+                                                background-color: transparent;
+                                                font-size: 1.5em;
+                                                border: none;
+                                            }
+                                        </style>
+                                        <button class="ordembutton" style="color:white;" onclick="location.href='ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'"><?php echo $moto['Codigo']; ?></button>
+                                        <button class="ordemedit" style="background: none; border: none;" onclick="location.href='tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="./assets\css\images\edit.png" style="height: 2em; width: 2em;"> </button>
+                                    </td>
+                                </tr>
                         <?php
+                            }
                         }
                         ?>
                     </tbody>

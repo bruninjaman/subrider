@@ -37,6 +37,13 @@
                         $sql_query .= "LIMIT " . ((isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5) . ", 5";
                         $result = mysqli_query($conn, $sql_query);
 
+                        if (!$result) {
+                            // Exibe uma mensagem genérica ao usuário
+                            echo "<tr><td colspan='7'>Nenhum resultado encontrado.</td></tr>";
+                        } elseif (mysqli_num_rows($result) === 0) {
+                            // Se não houver resultados
+                            echo "<tr><td colspan='7'>Nenhum resultado encontrado.</td></tr>";
+                        } else {
                         while ($peca = mysqli_fetch_assoc($result)) {
                         ?>
                             <tr>
@@ -51,6 +58,7 @@
                                 </td>
                             </tr>
                         <?php
+                        }
                         }
                         ?>
                     </tbody>
