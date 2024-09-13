@@ -40,11 +40,12 @@ while ($ordeminfo = mysqli_fetch_assoc($result3)) {
     header("location: ../tabelaOrdensEdit.php?ordem=" . $_GET['ordem']);
     $km = KMFormat($ordeminfo['KM']);
     $data = $ordeminfo['Data'];
+    $nome = $ordeminfo['proprietario_ordem'];
 }
 
 //Pegar informações sobre a moto
 while ($motoinfo = mysqli_fetch_assoc($result2)) {
-  $nome = $motoinfo['proprietario'];
+  //$nome = $motoinfo['proprietario'];
   $fone = "61 91111-1111";
   $endereco = $motoinfo['endereco'];
   $marca = $motoinfo['marca'];

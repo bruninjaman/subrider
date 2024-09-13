@@ -160,7 +160,62 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                 <!-- Botões -->
                 <div class="buttons-table">
                     <a class='button secondary' href="ordem_add_item.php?ordem=<?php echo $_GET['ordem'] ?>">Adicionar item</a>
-                    <a class='button secondary' href="javascript:void(0)" onclick="showModal()">Medições</a>
+                    <!-- <a class='button secondary' href="javascript:void(0)" onclick="showModal()">Medições</a> -->
+
+                    <a id="openModal" class="button secondary">Medições</a>
+
+                    <!-- Modal Structure -->
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <!-- Modal Pages -->
+                            <div class="modal-page" id="page2">
+                                <h2>Menu Cadastro</h2>
+                                <label>Marca: </label>
+                                <input type="text" name="marca">
+                                <label>Modelo: </label>
+                                <input type="text" name="modelo">
+                                <label>Ano: </label>
+                                <input type="text" name="ano">
+                                <a class="button secondary" id="closeModal2">Sair</a>
+                                <a class="button primary" id="next2">OK</a>
+                            </div>
+
+                            <div class="modal-page" id="page3" style="display:none;">
+                                <h2>Selecione uma Opção</h2>
+                                <a class="button secondary" id="btnCabecote">Cabeçote</a>
+                                <a class="button secondary" id="btnMotor">Motor</a>
+                                <a class="button secondary" id="btnVirabrequim">Virabrequim</a>
+                                <a class="button secondary" id="btnEmbreagem">Embreagem</a>
+                                <a class="button secondary" id="btnBombas">Bombas</a>
+                                <a class="button secondary" id="closeModal3">Sair</a>
+                            </div>
+
+                            <div class="modal-page" id="cabecotePage" style="display:none;">
+                                <h2>Informações do Cabeçote</h2>
+                                <a class="button primary" id="backToMenu">Voltar ao Menu</a>
+                            </div>
+
+                            <div class="modal-page" id="motorPage" style="display:none;">
+                                <h2>Informações do Motor</h2>
+                                <a class="button secondary" id="backToMenu">Voltar ao Menu</a>
+                            </div>
+
+                            <div class="modal-page" id="virabrequimPage" style="display:none;">
+                                <h2>Informações do Virabrequim</h2>
+                                <a class="button secondary" id="backToMenu">Voltar ao Menu</a>
+                            </div>
+
+                            <div class="modal-page" id="embreagemPage" style="display:none;">
+                                <h2>Informações da Embreagem</h2>
+                                <a class="button secondary" id="backToMenu">Voltar ao Menu</a>
+                            </div>
+
+                            <div class="modal-page" id="bombasPage" style="display:none;">
+                                <h2>Informações das Bombas</h2>
+                                <a class="button secondary" id="backToMenu">Voltar ao Menu</a>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- modal -->
                     <div id="medicoes1" class="modal">

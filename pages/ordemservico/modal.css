@@ -28,6 +28,18 @@
     position: relative;
 }
 
+/* Hide all pages by default */
+.modal-page {
+    display: none;
+}
+
+.modal-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    border-radius: 10px;
+    margin: auto;
+}
+
 /* Close button (X) */
 .close {
     color: #aaa;
