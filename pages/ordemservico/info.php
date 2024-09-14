@@ -10,22 +10,31 @@ $result = mysqli_query($conn, $motocicletas_query);
         padding: 0;
         text-align: left;
     }
+
     .motoinfo li {
         padding: 5px;
     }
+
     .motoinfobox {
         border: 1px solid #ccc;
         border-radius: 5px;
+        padding: 6em;
     }
+
     .imagemoto img {
         margin-right: 100px;
         border-radius: 25px;
         width: 90%;
         height: 50%;
-        object-fit: cover;      
+        object-fit: cover;
+    }
+
+    #motoinfo {
+        display: inline-block;
+        margin: 30px;
     }
 </style>
-<section id="banner">
+<section id="motoinfo">
     <div class="content motoinfobox">
         <?php
         while ($moto = mysqli_fetch_assoc($result)) {

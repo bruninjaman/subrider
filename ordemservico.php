@@ -36,7 +36,6 @@ require_once("./scripts/functions.php");
         require("./pages/ordemservico/header.php");
         require("./pages/ordemservico/tabela.php");
         require("./pages/ordemservico/info.php");
-        // require("./pages/ordemservico/medicoes.php");
         require("./pages/ordemservico/footer.php");
         ?>
     </div>
