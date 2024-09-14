@@ -2,10 +2,7 @@
     <div class="content">
         <!-- search bar -->
         <?php
-        //Categorias de pesquisa
-        $categoriasPesquisa = "SHOW COLUMNS FROM motocicletas";
-        $resultCategorias = mysqli_query($conn, $categoriasPesquisa);
-        include_once("./includes/searchbar.php");
+        include_once("./includes/searchbar_2.php");
         ?>
         <div class="table-wrapper">
             <div class="table-wrapper">
