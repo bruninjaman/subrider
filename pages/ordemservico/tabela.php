@@ -12,16 +12,20 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
 ?>
 <section id="banner">
     <div class="content">
-        <h2>Ordem de Serviço: <?php echo $_GET['ordem'] ?></h2>
-
-        <h1 id="editableData">Data: <span id="dateValue"><?php echo ($ordem_servicos["Data"] != null) ? date("d/m/Y", strtotime($ordem_servicos["Data"])) : "dd/mm/aaaa"; ?></span></h1>
-
         <!-- definir proprietário -->
         <style>
             #editableproprietario {
                 font-size: 25px;
             }
+            .headers-tabela {
+                background-color: #181921;
+            }
         </style>
+
+        <h2 class="headers-tabela">Ordem de Serviço: <?php echo $_GET['ordem'] ?></h2>
+
+        <h1 class="headers-tabela" id="editableData">Data: <span id="dateValue"><?php echo ($ordem_servicos["Data"] != null) ? date("d/m/Y", strtotime($ordem_servicos["Data"])) : "dd/mm/aaaa"; ?></span></h1>
+
         <?php
         if ($ordem_servicos["proprietario_ordem"] == null) {
             // pegar o proprietario
@@ -43,7 +47,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
             $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
         }
         ?>
-        <h1>Proprietário: <span id="editableproprietario"><?php echo ($ordem_servicos["proprietario_ordem"] != null) ? $ordem_servicos["proprietario_ordem"] : "Não definido"; ?></span></h1>
+        <h1 class="headers-tabela">Proprietário: <span id="editableproprietario"><?php echo ($ordem_servicos["proprietario_ordem"] != null) ? $ordem_servicos["proprietario_ordem"] : "Não definido"; ?></span></h1>
         <?php
         $query = "SELECT KM FROM `ordem_servicos` WHERE '" . $_GET['ordem'] . "' = `ordem_servicos`.`Codigo`;";
         $result = mysqli_query($conn, $query);
@@ -58,7 +62,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
             $quilometragem = "Não encontrado";
         }
         ?>
-        <h1>Quilometragem: <span><?php echo $quilometragem; ?></span></h1>
+        <h1 class="headers-tabela" >Quilometragem: <span><?php echo $quilometragem; ?></span></h1>
 
         <p id="errorMessage" style="color: red; display: none;"></p>
 
