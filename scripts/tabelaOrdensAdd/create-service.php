@@ -50,8 +50,8 @@ $novo_codigo = ($novo_codigo + 1) . '/' . $current_year;
 
 
 $mysqli_query = "INSERT INTO ordem_servicos ";
-$mysqli_query .= "(Codigo, motoID, KM, Data ) ";
-$mysqli_query .= "VALUE ('" . $novo_codigo . "','". $_POST["motoid"] ."','". $_POST["km"] ."','". $_POST["data"] ."') ";
+$mysqli_query .= "(Codigo, motoID, KM, Data, proprietario_ordem) ";
+$mysqli_query .= "VALUES ('" . $novo_codigo . "', '". $_POST["motoid"] ."', '". $_POST["km"] ."', '". $_POST["data"] ."', '". $_POST["proprietario_ordem"] ."') ";
 //CREATE SERVICE
 
 mysqli_query($conn,$mysqli_query);

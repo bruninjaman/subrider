@@ -53,6 +53,12 @@
                     <input type="number" name="km" style="width:250px;" value="<?php echo $result2['KM'] ?>">
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Proprietario: </label>
+                    <input type="text" name="proprietario_ordem" value="<?php echo $result2['proprietario_ordem'] ?>" required>
+                </div>
+            </div>
             <br>
             <input class="button primary" type="submit" value="Salvar Ordem de Serviço" style="width: 100%;">
         </form>

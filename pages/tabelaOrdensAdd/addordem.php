@@ -26,12 +26,11 @@
                     $novo_codigo = $novo_codigo + 1 . '/' . date("Y");
                     ?>
                     <h2>Ordem <?php echo $novo_codigo ?></h2>
-                    <h3>Selecione uma moto</h3>
                     <?php
                     $sql_query = "SELECT * FROM motocicletas";
                     $result = mysqli_query($conn, $sql_query);
                     ?>
-                    <label for="moto">Choose a motorcycle:</label>
+                    <label for="moto">Selecione uma moto:</label>
                     <input type="text" name="modelo" list="motolist" required>
                     <datalist id="motolist">
                         <?php while ($moto = mysqli_fetch_assoc($result)) { ?>
@@ -63,6 +62,12 @@
                 <div class="col-4">
                     <label>Quilometragem:</label>
                     <input type="number" name="km" style="width:250px;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Proprietario: </label>
+                    <input type="text" name="proprietario_ordem" required>
                 </div>
             </div>
             <br>
