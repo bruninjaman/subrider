@@ -43,8 +43,8 @@ if ($last_year != $current_year || !$existem_ordems) {
 // Increment the code and add the year
 $novo_codigo = ($novo_codigo + 1) . '/' . $current_year;
 
-echo $novo_codigo;
-die();
+//echo $novo_codigo;
+//die();
 
 //$novo_codigo = $novo_codigo+1 . '/' . $current_year;
 

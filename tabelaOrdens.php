@@ -53,7 +53,7 @@ require_once("./scripts/functions.php");
     
 
     <!-- Delete button -->
-    <script src=".\pages\tabelaMotos\sections\delete_confirm.js"></script>
+    <script src=".\pages\tabelaOrdens\delete_confirm.js"></script>
 </body>
 
 </html>

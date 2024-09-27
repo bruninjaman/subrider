@@ -81,6 +81,14 @@
         </div>
     </div>
 
+    <div class="row" id="div_ohc">
+        <div class="col-8">
+            <label>EIXO CAMES DIAM MIN</label>
+        </div>
+        <div class="col-4">
+            <input type="number" step="0.01" value="0.15" readonly>
+        </div>
+    </div>
     <div class="row">
         <div class="col-4">
             <label>VÁLVULA ESC LIMITE MIN</label>
@@ -116,3 +124,35 @@
         <a class="button secondary" id="backToMenu">Voltar ao Menu</a>
     </div>
 </form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get references to the checkboxes
+        const dohcCheckbox = document.getElementById("dohc");
+        const ohcCheckbox = document.getElementById("ohc");
+
+        const divOhc = document.getElementById("div_ohc");
+
+        // Add event listeners to handle changes
+        dohcCheckbox.addEventListener("change", function() {
+            if (dohcCheckbox.checked) {
+                // Uncheck OHC if DOHC is checked
+                ohcCheckbox.checked = false;
+            }
+        });
+
+        ohcCheckbox.addEventListener("change", function() {
+            if (ohcCheckbox.checked) {
+                // Uncheck DOHC if OHC is checked
+                dohcCheckbox.checked = false;
+            }
+            if (ohcCheckbox.checked) {
+                // Show the div when the checkbox is checked
+                divOhc.style.display = "block";
+            } else {
+                // Hide the div when the checkbox is unchecked
+                divOhc.style.display = "none";
+            }
+        });
+    });
+</script>
