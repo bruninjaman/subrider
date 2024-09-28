@@ -52,7 +52,7 @@ require_once("./scripts/functions.php");
     <script src="assets/js/main.js"></script>
 
     <!-- Delete button -->
-    <script src=".\pages\tabelaPecas    \delete_confirm.js"></script>
+    <script src=".\pages\tabelaPecas\delete_confirm.js"></script>
 </body>
 
 </html>
