@@ -8,7 +8,7 @@
         include_once("./includes/searchbar.php");
         ?>
         <div class="table-wrapper">
-            <div class="table-wrapper">
+            <div class="table-wrapper" style="overflow: hidden;">
                 <table class="table">
                     <thead>
                         <tr>
@@ -75,7 +75,10 @@
                 </table>
                 <div class="row">
                     <div class="col-3">
-                        <a class="button primary" href='addmotos.php'>Adicionar Motocicleta</a>
+                    <a class="button primary" href='addmotos.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
+    <img src="./assets/css/images/addmoto.png" style="margin-right: 12px;">
+    Adicionar Motocicleta
+</a>
                     </div>
                     <div class="col-9">
                         <?php
