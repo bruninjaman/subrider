@@ -17,6 +17,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
             #editableproprietario {
                 font-size: 25px;
             }
+
             .headers-tabela {
                 background-color: #181921;
             }
@@ -62,7 +63,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
             $quilometragem = "Não encontrado";
         }
         ?>
-        <h1 class="headers-tabela" >Quilometragem: <span><?php echo $quilometragem; ?></span></h1>
+        <h1 class="headers-tabela">Quilometragem: <span><?php echo $quilometragem; ?></span></h1>
 
         <p id="errorMessage" style="color: red; display: none;"></p>
 
@@ -172,49 +173,27 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                     <div id="modal" class="modal">
                         <div class="modal-content content form">
                             <!-- Modal Pages -->
-                            <div class="modal-page" id="page2">
-                                <?php
-                                include("menu_cadastro.php");
-                                ?>
+                            <div class="modal-page" id="page1">
+                                <?php include("menu_escolha.php"); ?>
                             </div>
-
-                            <div class="modal-page" id="page3" style="display:none;">
-                                <?php
-                                include("menu_escolha.php");
-                                ?>
-                            </div>
-
-                            <div class="modal-page" id="cabecotePage" style="display:none;">
-                                <?php
-                                include("menu_cabecote.php");
-                                ?>
+                            <div class="modal-page" id="cabecote" style="display:none;">
+                                <?php include("menu_cabecote.php"); ?>
                             </div>
                             <div class="modal-page" id="motorPage" style="display:none;">
-                                <?php
-                                include("menu_motor.php");
-                                ?>
+                                <?php include("menu_motor.php"); ?>
                             </div>
-
                             <div class="modal-page" id="virabrequimPage" style="display:none;">
-                                <?php
-                                include("menu_virabrequim.php");
-                                ?>
+                                <?php include("menu_virabrequim.php"); ?>
                             </div>
-
                             <div class="modal-page" id="embreagemPage" style="display:none;">
-                                <?php
-                                include("menu_embreagem.php");
-                                ?>
+                                <?php include("menu_embreagem.php"); ?>
                             </div>
-
                             <div class="modal-page" id="bombasPage" style="display:none;">
-                                <?php
-                                include("menu_bomba.php");
-                                ?>
+                                <?php include("menu_bomba.php"); ?>
                             </div>
                         </div>
                     </div>
-
+                    
                     <style>
                         @font-face {
                             font-family: 'Inter-SemiBold';

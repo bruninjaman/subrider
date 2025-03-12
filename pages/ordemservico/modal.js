@@ -1,14 +1,14 @@
 function showModal() {
-    document.getElementById("medicoes1").style.display = "block";
+    document.getElementById("modal").style.display = "flex";
 }
 
 function closeModal() {
-    document.getElementById("medicoes1").style.display = "none";
+    document.getElementById("modal").style.display = "none";
 }
 
 // Close the modal if the user clicks outside of it
 window.onclick = function(event) {
-    var modal = document.getElementById("medicoes1");
+    var modal = document.getElementById("modal");
     if (event.target == modal) {
         modal.style.display = "none";
     }
@@ -36,9 +36,7 @@ closeModalButtons.forEach(button => {
 });
 
 // Event listeners for navigation
-document.getElementById('next2').addEventListener('click', () => changePage(1));
-
-document.getElementById('btnCabecote').addEventListener('click', () => showSpecificPage('cabecotePage'));
+document.getElementById('btnCabecote').addEventListener('click', () => showSpecificPage('cabecote'));
 document.getElementById('btnMotor').addEventListener('click', () => showSpecificPage('motorPage'));
 document.getElementById('btnVirabrequim').addEventListener('click', () => showSpecificPage('virabrequimPage'));
 document.getElementById('btnEmbreagem').addEventListener('click', () => showSpecificPage('embreagemPage'));
@@ -46,7 +44,10 @@ document.getElementById('btnBombas').addEventListener('click', () => showSpecifi
 
 // Back to main menu button
 document.querySelectorAll('#backToMenu').forEach(button => {
-    button.addEventListener('click', () => showPage(1));  // 1 is the index of the main options page
+    button.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent default link behavior
+        showPage(0); // Show the main menu page (assuming page 0 is the main menu)
+    });
 });
 
 // Show a specific page based on its ID

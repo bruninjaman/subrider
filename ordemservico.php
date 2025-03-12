@@ -32,14 +32,23 @@ require_once("./scripts/functions.php");
 <body class="is-preload landing">
     <div id="page-wrapper">
         <!-- content -->
-        <?php 
+        <?php
         require("./pages/ordemservico/header.php");
-        require("./pages/ordemservico/tabela.php");
+        ?>
+        <form action="scripts\ordemservico\register_medicoes.php?ordem=<?php echo (string)$_GET['ordem'] ?>" method="POST">
+            <input type="hidden" id="selected_option" name="selected_option" value="">
+            <?php
+            require("./pages/ordemservico/tabela.php")
+            ?>
+        </form>
+        <?php
         require("./pages/ordemservico/info.php");
         require("./pages/ordemservico/footer.php");
         ?>
     </div>
-
+    
+    <!-- Select option script -->
+    <script src="pages/ordemservico/option_selected.js"></script>
     <!-- Scripts for main theme -->
     <script src="assets/js/global/jquery.min.js"></script>
     <script src="assets/js/global/jquery.scrolly.min.js"></script>
@@ -49,7 +58,7 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
-    
+
     <!-- Delete button -->
     <script src=".\pages\ordemservico\delete_confirm.js"></script>
     <!-- Jquery -->
@@ -57,11 +66,10 @@ require_once("./scripts/functions.php");
     <!-- Delete button -->
     <script src=".\pages\ordemservico\editable_data.js"></script>
     <script src=".\pages\ordemservico\editable_proprietario.js"></script>
-    
-</body>
 
+</body>
 </html>
 
 <?php
-    mysqli_close($conn);
+mysqli_close($conn);
 ?>

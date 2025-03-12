@@ -1,4 +1,3 @@
-<form action="#" method="POST">
     <!-- Title -->
     <div class="row">
         <div class="col-12 text-center">
@@ -12,7 +11,7 @@
             <label for="num_cilindros">Nº CILINDROS</label>
         </div>
         <div class="col-2">
-            <input type="number" id="num_cilindros" name="num_cilindros" class="form-control" value="4" required>
+            <input type="number" name="num_cilindros" class="form-control" value="">
         </div>
         <div class="col-6"></div>
     </div>
@@ -23,13 +22,13 @@
             <label for="num_val_adm">Nº VÁLV ADM/CIL</label>
         </div>
         <div class="col-2">
-            <input type="number" id="num_val_adm" name="num_val_adm" class="form-control" value="2" required>
+            <input type="number" name="num_val_adm" class="form-control" value="">
         </div>
         <div class="col-4 text-right">
             <label for="num_val_esc">Nº VÁLV ESC/CIL</label>
         </div>
         <div class="col-2">
-            <input type="number" id="num_val_esc" name="num_val_esc" class="form-control" value="2" required>
+            <input type="number" name="num_val_esc" class="form-control" value="">
         </div>
     </div>
 
@@ -82,7 +81,7 @@
                 <label>EIXO CAMES DIAM MIN</label>
             </div>
             <div class="col-2">
-                <input type="number" step="0.01" class="form-control" value="0.15" readonly>
+                <input type="number" step="0.01" class="form-control" value="" name="came_diam_min">
             </div>
             <div class="col-4"></div>
         </div>
@@ -97,13 +96,13 @@
                 <label>EIXO CAMES ADM DIAM MIN</label>
             </div>
             <div class="col-4">
-                <input type="number" step="0.01" class="form-control" value="0.15" readonly>
+                <input type="number" step="0.01" class="form-control" value="" name="cames_adm_diam_min">
             </div>
             <div class="col-8 text-right">
                 <label>EIXO CAMES ESC DIAM MIN</label>
             </div>
             <div class="col-4">
-                <input type="number" step="0.01" class="form-control" value="0.15" readonly>
+                <input type="number" step="0.01" class="form-control" value="" name="cames_adm_diam_max">
             </div>
         </div>
         <br>
@@ -115,13 +114,13 @@
             <label>VÁLVULA ADM LIMITE MIN</label>
         </div>
         <div class="col-2">
-            <input type="number" step="0.01" class="form-control" value="0.12" readonly>
+            <input type="number" step="0.01" class="form-control" value="" name="val_adm_limite_min">
         </div>
         <div class="col-2 text-right">
             <label>MAX</label>
         </div>
         <div class="col-2">
-            <input type="number" step="0.01" class="form-control" value="0.18" readonly>
+            <input type="number" step="0.01" class="form-control" value="" name="val_adm_limite_max">
         </div>
         <div class="col-2"></div>
     </div>
@@ -131,13 +130,13 @@
             <label>VÁLVULA ESC LIMITE MIN</label>
         </div>
         <div class="col-2">
-            <input type="number" step="0.01" class="form-control" value="0.15" readonly>
+            <input type="number" step="0.01" class="form-control" value="" name="val_esc_limite_min">
         </div>
         <div class="col-2 text-right">
             <label>MAX</label>
         </div>
         <div class="col-2">
-            <input type="number" step="0.01" class="form-control" value="0.21" readonly>
+            <input type="number" step="0.01" class="form-control" value="" name="val_esc_limite_max">
         </div>
         <div class="col-2"></div>
     </div>
@@ -148,49 +147,48 @@
             <label for="compressao_cilindro">COMPRESSÃO CILINDRO MIN/MAX</label>
         </div>
         <div class="col-2">
-            <input type="number" id="compressao_min" name="compressao_min" class="form-control" value="155" readonly>
+            <input type="number" name="compressao_min" class="form-control" value="">
         </div>
         <div class="col-2">
-            <input type="number" id="compressao_max" name="compressao_max" class="form-control" value="195" readonly>
+            <input type="number"  name="compressao_max" class="form-control" value="">
         </div>
         <div class="col-4"></div>
     </div>
 
     <br>
     <!-- Buttons -->
-     
+
     <div class="row mb-3">
         <div class="col-4"></div>
         <div class="col-2">
-            <a type="submit" class="button primary">Salvar</a>
+            <button type="submit" class="button primary">Salvar</button>
         </div>
         <div class="col-2">
-            <a href="#" class="button secondary" id="backToMenu">Voltar ao Menu</a>
+            <a href="#" class="button secondary" id="backToMenu" style="position: absolute; top: 10px; right: 10px;">Voltar</a>
         </div>
         <div class="col-4"></div>
     </div>
-</form>
 
-<script>
-    function toggleFields() {
-        var ohcField = document.getElementById('ohc_fields');
-        var dohcFields = document.getElementById('dohc_fields');
-        var isOHC = document.getElementById('ohc').checked;
-        var isDOHC = document.getElementById('dohc').checked;
-        var isVareta = document.getElementById('vareta').checked;
+    <script>
+        function toggleFields() {
+            var ohcField = document.getElementById('ohc_fields');
+            var dohcFields = document.getElementById('dohc_fields');
+            var isOHC = document.getElementById('ohc').checked;
+            var isDOHC = document.getElementById('dohc').checked;
+            var isVareta = document.getElementById('vareta').checked;
 
-        if (isVareta) {
-            ohcField.style.display = 'none';
-            dohcFields.style.display = 'none';
-        } else if (isOHC) {
-            ohcField.style.display = 'block';
-            dohcFields.style.display = 'none';
-        } else if (isDOHC) {
-            dohcFields.style.display = 'block';
-            ohcField.style.display = 'none';
-        } else {
-            ohcField.style.display = 'none';
-            dohcFields.style.display = 'none';
+            if (isVareta) {
+                ohcField.style.display = 'none';
+                dohcFields.style.display = 'none';
+            } else if (isOHC) {
+                ohcField.style.display = 'block';
+                dohcFields.style.display = 'none';
+            } else if (isDOHC) {
+                dohcFields.style.display = 'block';
+                ohcField.style.display = 'none';
+            } else {
+                ohcField.style.display = 'none';
+                dohcFields.style.display = 'none';
+            }
         }
-    }
-</script>
+    </script>
