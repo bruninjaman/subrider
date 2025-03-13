@@ -9,6 +9,7 @@
         max-width: 58%;
         padding: auto;
     }
+
     #gallery article {
         background-color: rgba(5, 5, 5, 0.7);
         border-radius: 5px;
@@ -29,6 +30,7 @@
     #gallery h2:hover {
         color: rgba(255, 255, 255, 1);
     }
+
     #gallery h2 {
         font-size: 18px;
         padding: 5%;
@@ -76,11 +78,12 @@
             padding: 10%;
             max-width: 100%;
         }
-        
+
         #gallery article {
             max-height: 100%;
             border-radius: 25px;
         }
+
         .fancybox img {
             border-radius: 20px;
         }
@@ -113,59 +116,108 @@
         <div id="gallery" class="youtubeshow">
             <?php
             require_once './vendor/autoload.php';
-            $apiKey = 'AIzaSyD8gc7DdatHVN1zNAgbJkoMl3Be-z_sm3s';
+
+            // Store API key in environment variable or separate config file
+            $apiKey = getenv('YOUTUBE_API_KEY') ?: 'YOUR_API_KEY'; // Replace with env variable
             $channelId = 'UC_rUL6tWuwx-iACNG_uHZVA';
-            $client = new Google_Client();
-            $client->setDeveloperKey($apiKey);
-            $youtube = new Google_Service_YouTube($client);
-            $params = array(
-                'channelId' => $channelId,
-                'type' => 'video',
-                'order' => 'viewCount',
-                'maxResults' => 10,
-            );
+
+            // Cache settings
             $cacheFile = 'youtube_videos_cache.json';
-            if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < 60 * 60 * 24)) {
-                $videos = json_decode(file_get_contents($cacheFile), true);
-            } else {
+            $cacheDuration = 60 * 60 * 24; // 24 hours
+            $videos = [];
+            $numVideosToShow = 9;
+
+            // Function to sanitize output
+            function sanitizeOutput($string)
+            {
+                return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+            }
+
+            // Check cache first
+            if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheDuration)) {
+                $cachedData = file_get_contents($cacheFile);
+                if ($cachedData !== false) {
+                    $videos = json_decode($cachedData, true) ?: [];
+                }
+            }
+
+            // If cache is empty or expired, fetch from API
+            if (empty($videos)) {
                 try {
+                    $client = new Google_Client();
+                    $client->setDeveloperKey($apiKey);
+                    $youtube = new Google_Service_YouTube($client);
+
+                    $params = [
+                        'channelId' => $channelId,
+                        'type' => 'video',
+                        'order' => 'viewCount',
+                        'maxResults' => 20, // Fetch more than needed for variety
+                    ];
+
                     $searchResponse = $youtube->search->listSearch('id,snippet', $params);
-                    $videos = array();
+
                     foreach ($searchResponse['items'] as $item) {
-                        if ($item['id']['kind'] == 'youtube#video') {
-                            $videoId = $item['id']['videoId'];
-                            $title = $item['snippet']['title'];
-                            $description = $item['snippet']['description'];
-                            $thumbnail = $item['snippet']['thumbnails']['medium']['url'];
-                            $videos[] = array(
-                                'videoId' => $videoId,
-                                'title' => $title,
-                                'description' => $description,
-                                'thumbnail' => $thumbnail,
-                            );
+                        if (isset($item['id']['kind']) && $item['id']['kind'] == 'youtube#video') {
+                            $videoId = $item['id']['videoId'] ?? '';
+                            $title = $item['snippet']['title'] ?? '';
+                            $description = $item['snippet']['description'] ?? '';
+                            $thumbnail = $item['snippet']['thumbnails']['medium']['url'] ?? '';
+
+                            if (!empty($videoId)) {
+                                $videos[] = [
+                                    'videoId' => $videoId,
+                                    'title' => $title,
+                                    'description' => $description,
+                                    'thumbnail' => $thumbnail,
+                                ];
+                            }
                         }
                     }
-                    file_put_contents($cacheFile, json_encode($videos));
+
+                    // Save to cache if we got results
+                    if (!empty($videos)) {
+                        $cacheDir = dirname($cacheFile);
+                        if (!is_dir($cacheDir)) {
+                            mkdir($cacheDir, 0755, true);
+                        }
+                        file_put_contents($cacheFile, json_encode($videos), LOCK_EX);
+                    }
                 } catch (Exception $e) {
-                    $videos = json_decode(file_get_contents($cacheFile), true);
+                    // Log error instead of exposing it
+                    error_log('YouTube API error: ' . $e->getMessage());
+
+                    // Try to load from cache as fallback, even if expired
+                    if (file_exists($cacheFile)) {
+                        $videos = json_decode(file_get_contents($cacheFile), true) ?: [];
+                    }
                 }
             }
-            $totalVideos = count($videos);
 
-            $numVideosToShow = 9;
-            shuffle($videos);
-            for ($i = 0; $i < $numVideosToShow; $i++) {
-                if ($i < count($videos)) {
-                    $video = $videos[$i];
+            // Display videos
+            if (!empty($videos)) {
+                // Shuffle for randomness
+                shuffle($videos);
+
+                // Limit to desired number
+                $videos = array_slice($videos, 0, $numVideosToShow);
+
+                foreach ($videos as $video) {
+                    $videoId = sanitizeOutput($video['videoId']);
+                    $title = sanitizeOutput($video['title']);
+
                     echo '<article class="video">';
                     echo '<figure>';
-                    echo '<a class="fancybox fancybox.iframe" href="//www.youtube.com/embed/' . $video['videoId'] . '"><img class="videoThumb" src="//i1.ytimg.com/vi/' . $video['videoId'] . '/mqdefault.jpg"></a>';
+                    echo '<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/' . $videoId . '">';
+                    echo '<img class="videoThumb" src="https://i1.ytimg.com/vi/' . $videoId . '/mqdefault.jpg" alt="' . $title . '">';
+                    echo '</a>';
                     echo '</figure>';
-                    echo '<h2 class="videoTitle">' . $video['title'] . '</h2>';
+                    echo '<h2 class="videoTitle">' . $title . '</h2>';
                     echo '</article>';
                 }
+            } else {
+                echo '<p>No videos available at this time.</p>';
             }
-
             ?>
         </div>
     </div>
