@@ -65,7 +65,10 @@
                 </table>
                 <div class="row">
                     <div class="col-3">
-                        <a class="button primary" href='tabelaPecasAdd.php'>Adicionar Item</a>
+                        <a class="button primary" href='tabelaPecasAdd.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
+    <img src="./assets/css/images/addpeca.png" style="margin-right: 12px; width: 40px; height: 40px;">
+    Adicionar Item
+</a>
                     </div>
                     <div class="col-9">
                         <?php
