@@ -58,26 +58,13 @@
                         <?php } ?>
                     </datalist>
                     <input type="hidden" name="motoid" id="motoid">
-                    <script>
-                        const input = document.querySelector('input[name="modelo"]');
-                        const motoid = document.querySelector('#motoid');
-
-                        input.addEventListener('input', () => {
-                            const selectedOption = document.querySelector(`datalist#${input.getAttribute('list')} option[value="${input.value}"]`);
-                            if (selectedOption) {
-                                motoid.value = selectedOption.getAttribute('data-id');
-                            } else {
-                                motoid.value = '';
-                            }
-                        });
-                    </script>
 
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">
                     <label>Data: </label>
-                    <input type="date" name="data">
+                    <input type="date" name="data" id="dataInput">
                 </div>
                 <div class="col-4">
                     <label>Quilometragem:</label>
@@ -87,11 +74,33 @@
             <div class="row">
                 <div class="col-12">
                     <label>Proprietario: </label>
-                    <input type="text" name="proprietario_ordem" required>
+                    <input type="text" name="proprietario_ordem" id="proprietario_ordem" required>
                 </div>
             </div>
             <br>
             <input class="button primary" type="submit" value="Abrir Ordem de Serviço" style="width: 100%;">
         </form>
     </div>
+    <script>
+        // Set today's date in the date input field
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dataInput').value = today;
+        });
+
+        const input = document.querySelector('input[name="modelo"]');
+        const motoid = document.querySelector('#motoid');
+        const proprietarioInput = document.querySelector('#proprietario_ordem');
+
+        input.addEventListener('input', () => {
+            const selectedOption = document.querySelector(`datalist#${input.getAttribute('list')} option[value="${input.value}"]`);
+            if (selectedOption) {
+                motoid.value = selectedOption.getAttribute('data-id');
+                proprietarioInput.value = selectedOption.textContent.split(' - ')[1]; // Extract the owner name
+            } else {
+                motoid.value = '';
+                proprietarioInput.value = ''; // Clear the owner name if no selection
+            }
+        });
+    </script>
 </section>
