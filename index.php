@@ -23,7 +23,7 @@ session_start();
 
 </head>
 
-<body class="is-preload landing">
+<body class="is-peload landing">
     <div id="page-wrapper">
         <?php
         require("./pages/index/header.php");

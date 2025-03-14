@@ -117,9 +117,13 @@
             <?php
             require_once './vendor/autoload.php';
 
-            // Store API key in environment variable or separate config file
-            $apiKey = 'AIzaSyD8gc7DdatHVN1zNAgbJkoMl3Be-z_sm3s'; // Replace with env variable
-            $channelId = 'UC_rUL6tWuwx-iACNG_uHZVA';
+            // Load environment variables from .env file
+            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+            $dotenv->load();
+
+            // Store API key in environment variable
+            $apiKey = $_ENV['YOUTUBE_API_KEY'];
+            $channelId = $_ENV['YOUTUBE_CHANNEL_ID'];
 
             // Cache settings
             $cacheFile = 'youtube_videos_cache.json';
