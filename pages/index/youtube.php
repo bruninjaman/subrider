@@ -118,7 +118,7 @@
             require_once './vendor/autoload.php';
 
             // Store API key in environment variable or separate config file
-            $apiKey = getenv('YOUTUBE_API_KEY') ?: 'YOUR_API_KEY'; // Replace with env variable
+            $apiKey = 'AIzaSyD8gc7DdatHVN1zNAgbJkoMl3Be-z_sm3s'; // Replace with env variable
             $channelId = 'UC_rUL6tWuwx-iACNG_uHZVA';
 
             // Cache settings
