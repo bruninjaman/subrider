@@ -35,12 +35,12 @@ require_once("./scripts/functions.php");
         <?php
         require("./pages/ordemservico/header.php");
         ?>
-        <form action="scripts\ordemservico\register_medicoes.php?ordem=<?php echo (string)$_GET['ordem'] ?>" method="POST">
+        <!-- <form action="scripts\ordemservico\register_medicoes.php?ordem=<?php echo (string)$_GET['ordem'] ?>" method="POST"> -->
             <input type="hidden" id="selected_option" name="selected_option" value="">
             <?php
             require("./pages/ordemservico/tabela.php")
             ?>
-        </form>
+        <!-- </form> -->
         <?php
         require("./pages/ordemservico/info.php");
         require("./pages/ordemservico/footer.php");
