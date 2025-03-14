@@ -38,20 +38,41 @@ $motoid = mysqli_fetch_assoc($motoid);
                                 $sql_query .= "ORDER BY pecas.grupo ";
                                 $result = mysqli_query($conn, $sql_query);
                                 ?>
-                                <input type="text" list="pecaid" name="pecaid_display" onchange="updatePecaid()">
-                                <input type="hidden" name="pecaid" id="pecaid_input">
-                                <datalist id="pecaid">
-                                    <?php while ($peca = mysqli_fetch_assoc($result)) { ?>
-                                        <option value="<?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?>" data-id="<?php echo $peca["pecaId"] ?>"></option>
-                                    <?php } ?>
-                                </datalist>
+                                <input type="text" list="pecaid" name="pecaid_display">
+<datalist id="pecaid">
+<?php while ($peca = mysqli_fetch_assoc($result)) { ?>
+<option value="<?php echo $peca["grupo"]." - ".$peca["item"]." - ".$peca["parte"] ?>" data-id="<?php echo $peca["pecaId"] ?>"></option>
+<?php } ?>
+</datalist>
 
-                                <script>
-                                    function updatePecaid() {
-                                        var selectedOption = document.querySelector('#pecaid option[value="' + document.querySelector('[name=pecaid_display]').value + '"]');
-                                        document.querySelector('#pecaid_input').value = selectedOption.getAttribute('data-id');
-                                    }
-                                </script>
+<script>
+// Autocomplete para peças
+const pecaInput = document.querySelector('[name="pecaid_display"]');
+const pecaDatalist = document.getElementById('pecaid');
+const pecaOptions = Array.from(pecaDatalist.options).map(option => ({
+    value: option.value,
+    id: option.getAttribute('data-id')
+}));
+
+pecaInput.addEventListener('input', function(e) {
+    const searchTerms = e.target.value.toLowerCase().split(' ');
+    
+    // Filtrar opções
+    const filtered = pecaOptions.filter(option => {
+        const optionText = option.value.toLowerCase();
+        return searchTerms.every(term => optionText.includes(term));
+    });
+    
+    // Atualizar datalist
+    pecaDatalist.innerHTML = filtered.map(option => 
+        `<option value="${option.value}" data-id="${option.id}"></option>`
+    ).join('');
+    
+    // Atualizar ID correspondente
+    const match = filtered.find(opt => opt.value === e.target.value);
+    document.getElementById('pecaid_input').value = match ? match.id : '';
+});
+</script>
 
 
                             </div>
@@ -91,21 +112,41 @@ $motoid = mysqli_fetch_assoc($motoid);
                                 $sql_query .= "ORDER BY servicos.tipo ";
                                 $result = mysqli_query($conn, $sql_query);
                                 ?>
-                                <input type="hidden" name="servicoid" id="servicoid" value="">
-                                <input type="text" name="servico" list="servicoid_list" onchange="updateServicoid()">
-                                <datalist id="servicoid_list">
-                                    <?php while ($servico = mysqli_fetch_assoc($result)) { ?>
-                                        <option value="<?php echo $servico["tipo"] . " - " . $servico["item"] ?>" data-id="<?php echo $servico["servicoId"] ?>"></option>
-                                    <?php } ?>
-                                </datalist>
-                                <script>
-                                    function updateServicoid() {
-                                        var selectedOption = document.querySelector('#servicoid_list option[value="' + document.querySelector('input[name="servico"]').value + '"]');
-                                        if (selectedOption) {
-                                            document.querySelector('#servicoid').value = selectedOption.getAttribute('data-id');
-                                        }
-                                    }
-                                </script>
+                                <input type="text" name="servico" list="servicoid_list">
+<datalist id="servicoid_list">
+<?php while ($servico = mysqli_fetch_assoc($result)) { ?>
+<option value="<?php echo $servico["tipo"]." - ".$servico["item"] ?>" data-id="<?php echo $servico["servicoId"] ?>"></option>
+<?php } ?>
+</datalist>
+
+<script>
+// Autocomplete para serviços
+const servicoInput = document.querySelector('[name="servico"]');
+const servicoDatalist = document.getElementById('servicoid_list');
+const servicoOptions = Array.from(servicoDatalist.options).map(option => ({
+    value: option.value,
+    id: option.getAttribute('data-id')
+}));
+
+servicoInput.addEventListener('input', function(e) {
+    const searchTerms = e.target.value.toLowerCase().split(' ');
+    
+    // Filtrar opções
+    const filtered = servicoOptions.filter(option => {
+        const optionText = option.value.toLowerCase();
+        return searchTerms.every(term => optionText.includes(term));
+    });
+    
+    // Atualizar datalist
+    servicoDatalist.innerHTML = filtered.map(option => 
+        `<option value="${option.value}" data-id="${option.id}"></option>`
+    ).join('');
+    
+    // Atualizar ID correspondente
+    const match = filtered.find(opt => opt.value === e.target.value);
+    document.getElementById('servicoid').value = match ? match.id : '';
+});
+</script>
                             </div>
                         </div>
                         <br>
