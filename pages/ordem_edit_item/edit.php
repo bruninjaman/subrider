@@ -104,7 +104,7 @@ $result2 = mysqli_fetch_assoc($result2);
                         <div class="row">
                             <div class="col-2">
                                 <label>Quantidade</label>
-                                <input value="<?php echo $result2['Quantidade'] ?>" type="number" name="pquantidade" value="<?php echo isset($_POST["pecaid"]) ? 1 : 0 ?>">
+                                <input value="<?php echo $result2['Quantidade'] ?>" type="number" name="pquantidade">
                             </div>
                             <div class="col-2">
                                 <label>Valor</label>
