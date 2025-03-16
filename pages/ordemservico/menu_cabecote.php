@@ -69,7 +69,20 @@
             <input type="radio" id="ohc" name="valve_type" value="ohc" onchange="toggleFields()">
             <label for="ohc">OHC</label>
         </div>
-        <div class="col-2"></div>
+        <div class="col-2">
+            <div class="col-4 text-right">
+                <label>Tucho Mecânico</label>
+            </div>
+            <div class="col-2">
+                <input type="radio" id="tucho_sim" name="tucho" value="1">
+                <label for="tucho_sim">Sim</label>
+            </div>
+            <div class="col-2">
+                <input type="radio" id="tucho_nao" name="tucho" value="0" checked>
+                <label for="tucho_nao">Não</label>
+            </div>
+            <div class="col-4"></div>
+        </div>
     </div>
 
     <!-- OHC Field -->
@@ -150,7 +163,7 @@
             <input type="number" name="compressao_min" class="form-control" value="">
         </div>
         <div class="col-2">
-            <input type="number"  name="compressao_max" class="form-control" value="">
+            <input type="number" name="compressao_max" class="form-control" value="">
         </div>
         <div class="col-4"></div>
     </div>
