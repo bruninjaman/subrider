@@ -118,9 +118,12 @@ $motoid = mysqli_fetch_assoc($motoid);
                                         <option value="<?php echo $servico["tipo"] . " - " . $servico["item"] ?>" data-id="<?php echo $servico["servicoId"] ?>"></option>
                                     <?php } ?>
                                 </datalist>
+                                <!-- Hidden input for servicoid -->
+                                <input type="hidden" id="servicoid" name="servicoid">
 
                                 <script>
                                     // Autocomplete para serviços
+                                    // Autocomplete for services (servicos)
                                     const servicoInput = document.querySelector('[name="servico"]');
                                     const servicoDatalist = document.getElementById('servicoid_list');
                                     const servicoOptions = Array.from(servicoDatalist.options).map(option => ({
@@ -130,19 +133,15 @@ $motoid = mysqli_fetch_assoc($motoid);
 
                                     servicoInput.addEventListener('input', function(e) {
                                         const searchTerms = e.target.value.toLowerCase().split(' ');
-
-                                        // Filtrar opções
                                         const filtered = servicoOptions.filter(option => {
                                             const optionText = option.value.toLowerCase();
                                             return searchTerms.every(term => optionText.includes(term));
                                         });
 
-                                        // Atualizar datalist
                                         servicoDatalist.innerHTML = filtered.map(option =>
                                             `<option value="${option.value}" data-id="${option.id}"></option>`
                                         ).join('');
 
-                                        // Atualizar ID correspondente
                                         const match = filtered.find(opt => opt.value === e.target.value);
                                         document.getElementById('servicoid').value = match ? match.id : '';
                                     });

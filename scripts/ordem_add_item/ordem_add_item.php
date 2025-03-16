@@ -41,8 +41,7 @@ if (isset($_POST['tipo_item'])) {
             //SELECT Serviço
             $sql_query = "SELECT * FROM servicos ";
             $sql_query .= "WHERE servicos.servicoId = ". $_POST['servicoid'];
-            var_dump($sql_query);
-            die();
+            
             $result = mysqli_query($conn, $sql_query);
 
             //GIVE RESULTS
