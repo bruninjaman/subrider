@@ -10,7 +10,6 @@ $motoid = mysqli_fetch_assoc($motoid);
         <img class="fit logogray" src="./assets/css/images/logo-branco-crop.png">
         <center>
             <form method="post" action="scripts\ordem_add_item\ordem_add_item.php?ordem=<?php echo $_GET['ordem'] . "&motoID=" . $motoid['motoID'] ?>">
-                <!-- <form method="POST" action="addservices.php"> -->
                 <div>
                     <div class="row">
                         <div class="col-12">
@@ -44,6 +43,8 @@ $motoid = mysqli_fetch_assoc($motoid);
                                         <option value="<?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?>" data-id="<?php echo $peca["pecaId"] ?>"></option>
                                     <?php } ?>
                                 </datalist>
+                                <!-- Hidden input for pecaid -->
+                                <input type="hidden" id="pecaid_input" name="pecaid">
 
                                 <script>
                                     // Autocomplete para peças
@@ -73,8 +74,6 @@ $motoid = mysqli_fetch_assoc($motoid);
                                         document.getElementById('pecaid_input').value = match ? match.id : '';
                                     });
                                 </script>
-
-
                             </div>
                         </div>
                         <br>
@@ -123,7 +122,6 @@ $motoid = mysqli_fetch_assoc($motoid);
 
                                 <script>
                                     // Autocomplete para serviços
-                                    // Autocomplete for services (servicos)
                                     const servicoInput = document.querySelector('[name="servico"]');
                                     const servicoDatalist = document.getElementById('servicoid_list');
                                     const servicoOptions = Array.from(servicoDatalist.options).map(option => ({
@@ -163,7 +161,6 @@ $motoid = mysqli_fetch_assoc($motoid);
                                 <input id="submit" class="button primary" type="submit" value="Adicionar">
                             </div>
                         </div>
-
                     </div>
                     <div id="form_adiantamento" class="row gtr-uniform gtr-50" style="display: none;">
                         <div class="row">
@@ -192,9 +189,3 @@ $motoid = mysqli_fetch_assoc($motoid);
         </center>
     </div>
 </section>
-<!-- <script>
-    function ChangePecaSelect(ID) {
-        var pecaID = ID;
-        console.log(pecaID)
-    }
-</script> -->
