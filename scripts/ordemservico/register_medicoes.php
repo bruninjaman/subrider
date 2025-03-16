@@ -261,42 +261,97 @@ if ($option == 'bomba') {
     $folga_lateral_eixo_min = intval($_POST['folga_lateral_eixo_min'] ?? 0);
     $folga_lateral_eixo_max = intval($_POST['folga_lateral_eixo_max'] ?? 0);
     $empenamento_max = intval($_POST['empenamento_max'] ?? 0);
+    $is_reference = true; // Always true as per requirement
 
-    // Prepare the SQL query
-    $query = "INSERT INTO virabrequim (
-        tipo, folga_lateral_biela, folga_bronzina, folga_mancal, 
-        folga_lateral_eixo_min, folga_lateral_eixo_max, empenamento, ordem
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = mysqli_prepare($conn, $query);
-
-    if (!$stmt) {
-        die("Prepare failed: " . mysqli_error($conn));
+    // Check if the type is 'bronzina' and set specific values to null
+    if ($rolamento_type == 'bronzina') {
+        $folga_lateral_biela_max = null;
+        $folga_lateral_eixo_max = null;
+        $empenamento_max = null;
     }
 
-    // Bind parameters
-    mysqli_stmt_bind_param(
-        $stmt,
-        "siiiiiis",
-        $rolamento_type,
-        $folga_lateral_biela,
-        $folga_eixo_bronzina,
-        $folga_eixo_mancal,
-        $folga_lateral_eixo_min,
-        $folga_lateral_eixo_max,
-        $empenamento_max,
-        $ordem
-    );
+    // Check if there is already a record with is_reference = true
+    $checkQuery = "SELECT id FROM virabrequim WHERE is_reference = true LIMIT 1";
+    $checkResult = mysqli_query($conn, $checkQuery);
 
-    // Execute the query
-    if (mysqli_stmt_execute($stmt)) {
-        echo "Data inserted successfully!";
+    if (mysqli_num_rows($checkResult) > 0) {
+        // Update existing record
+        $row = mysqli_fetch_assoc($checkResult);
+        $id = $row['id'];
+
+        $updateQuery = "UPDATE virabrequim SET 
+            tipo = ?, 
+            folga_lateral_biela = ?, 
+            folga_bronzina = ?, 
+            folga_mancal = ?, 
+            folga_lateral_eixo_min = ?, 
+            folga_lateral_eixo_max = ?, 
+            empenamento = ?, 
+            ordem = ? 
+            WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $updateQuery);
+
+        if (!$stmt) {
+            die("Prepare failed: " . mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "siiiiiisi",
+            $rolamento_type,
+            $folga_lateral_biela,
+            $folga_eixo_bronzina,
+            $folga_eixo_mancal,
+            $folga_lateral_eixo_min,
+            $folga_lateral_eixo_max,
+            $empenamento_max,
+            $ordem,
+            $id
+        );
+
+        if (mysqli_stmt_execute($stmt)) {
+            echo "Data updated successfully!";
+        } else {
+            echo "Error: " . mysqli_stmt_error($stmt);
+        }
+
+        mysqli_stmt_close($stmt);
     } else {
-        echo "Error: " . mysqli_stmt_error($stmt);
-    }
+        // Insert new record
+        $insertQuery = "INSERT INTO virabrequim (
+            tipo, folga_lateral_biela, folga_bronzina, folga_mancal, 
+            folga_lateral_eixo_min, folga_lateral_eixo_max, empenamento, ordem, is_reference
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    // Close the statement
-    mysqli_stmt_close($stmt);
+        $stmt = mysqli_prepare($conn, $insertQuery);
+
+        if (!$stmt) {
+            die("Prepare failed: " . mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "siiiiiisi",
+            $rolamento_type,
+            $folga_lateral_biela,
+            $folga_eixo_bronzina,
+            $folga_eixo_mancal,
+            $folga_lateral_eixo_min,
+            $folga_lateral_eixo_max,
+            $empenamento_max,
+            $ordem,
+            $is_reference
+        );
+
+        if (mysqli_stmt_execute($stmt)) {
+            echo "Data inserted successfully!";
+        } else {
+            echo "Error: " . mysqli_stmt_error($stmt);
+        }
+
+        mysqli_stmt_close($stmt);
+    }
 } else if ($option == 'embreagem') {
     // Sanitize input data
     $nr_discos = intval($_POST['nr_discos'] ?? 0);
