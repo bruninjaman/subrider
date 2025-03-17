@@ -29,7 +29,7 @@ require_once("./scripts/functions.php");
 
 </head>
 
-<body class="is-preload landing">
+<body class="is-peload landing">
     <div id="page-wrapper">
         <!-- content -->
         <?php

@@ -168,7 +168,7 @@ if ($option == 'bomba') {
     $compressao_max = floatval($_POST['compressao_max'] ?? 0);
     $tucho = isset($_POST['tucho']) ? 1 : 0; // Handle the tucho field
     $is_reference = 1; // Hardcode is_reference as true
-    $ordem = intval($_POST['ordem'] ?? 0); // Assuming ordem is passed in the POST request
+    $ordem = intval($_GET['ordem'] ?? 0); // Assuming ordem is passed in the POST request
 
     // Handle nullable fields based on valve type
     $cames_adm_diam_min = $cames_adm_diam_max = $came_diam_min = null;
