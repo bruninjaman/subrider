@@ -431,7 +431,7 @@ if ($option == 'bomba') {
 
     // Close the statement
     mysqli_stmt_close($stmt);
-}else if ($option == 'motor') {
+} else if ($option == 'motor') {
     // Sanitize input data
     $nr_cilindros = intval($_POST['nr_cilindros'] ?? 0);
     $curso_pistao = floatval($_POST['curso_pistao'] ?? 0);
@@ -449,7 +449,7 @@ if ($option == 'bomba') {
     $dia_furo_pis_min = floatval($_POST['dia_furo_pis_min'] ?? 0);
     $dia_pino_pis_min = floatval($_POST['dia_pino_pis_min'] ?? 0);
     $folga_pino_pis_max = floatval($_POST['folga_pino_pis_max'] ?? 0);
-    $ordem = $_GET['ordem']; 
+    $ordem = $_GET['ordem'];
 
     // Set is_reference to 1
     $is_reference = 1;
@@ -470,57 +470,56 @@ if ($option == 'bomba') {
             dia_furo_pis_min, dia_pino_pis_min, folga_pino_pis_max, ordem, is_reference
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-$update_query = "UPDATE motor SET 
-nr_cilindros = ?, 
-curso_pistao = ?, 
-diametro_cilindro_max = ?, 
-conicidade_max = ?, 
-ovalizacao_max = ?, 
-diametro_pistao_min = ?, 
-folga_cil_pis_max = ?, 
-aber_anel_1_max = ?, 
-aber_anel_2_max = ?, 
-aber_anel_1_pres_min = ?, 
-aber_anel_2_pres_min = ?, 
-larg_anel_1_min = ?, 
-larg_anel_2_min = ?, 
-dia_furo_pis_min = ?, 
-dia_pino_pis_min = ?, 
-folga_pino_pis_max = ?, 
-ordem = ?, 
-is_reference = ? 
-WHERE id = ?"; // 19 placeholders
-    
-    $stmt = mysqli_prepare($conn, $update_query);
-    
-    if (!$stmt) {
-        die("Prepare failed: " . mysqli_error($conn));
-    
-    }
-    
-    mysqli_stmt_bind_param(
-        $stmt,
-        "idddddddddddddddddsi", // 19 type specifiers
-        $nr_cilindros,
-        $curso_pistao,
-        $diametro_cilindro_max,
-        $conicidade_max,
-        $ovalizacao_max,
-        $diametro_pistao_min,
-        $folga_cil_pis_max,
-        $aber_anel_1_max,
-        $aber_anel_2_max,
-        $aber_anel_1_pres_min,
-        $aber_anel_2_pres_min,
-        $larg_anel_1_min,
-        $larg_anel_2_min,
-        $dia_furo_pis_min,
-        $dia_pino_pis_min,
-        $folga_pino_pis_max,
-        $ordem,
-        $is_reference,
-        $id // Added for the WHERE clause
-    );
+        $update_query = "UPDATE motor SET 
+        nr_cilindros = ?, 
+        curso_pistao = ?, 
+        diametro_cilindro_max = ?, 
+        conicidade_max = ?, 
+        ovalizacao_max = ?, 
+        diametro_pistao_min = ?, 
+        folga_cil_pis_max = ?, 
+        aber_anel_1_max = ?, 
+        aber_anel_2_max = ?, 
+        aber_anel_1_pres_min = ?, 
+        aber_anel_2_pres_min = ?, 
+        larg_anel_1_min = ?, 
+        larg_anel_2_min = ?, 
+        dia_furo_pis_min = ?, 
+        dia_pino_pis_min = ?, 
+        folga_pino_pis_max = ?, 
+        ordem = ?, 
+        is_reference = ? 
+        WHERE id = ?"; // 19 placeholders
+
+        $stmt = mysqli_prepare($conn, $update_query);
+
+        if (!$stmt) {
+            die("Prepare failed: " . mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "idddddddddddddddssi", // 19 type specifiers
+            $nr_cilindros,
+            $curso_pistao,
+            $diametro_cilindro_max,
+            $conicidade_max,
+            $ovalizacao_max,
+            $diametro_pistao_min,
+            $folga_cil_pis_max,
+            $aber_anel_1_max,
+            $aber_anel_2_max,
+            $aber_anel_1_pres_min,
+            $aber_anel_2_pres_min,
+            $larg_anel_1_min,
+            $larg_anel_2_min,
+            $dia_furo_pis_min,
+            $dia_pino_pis_min,
+            $folga_pino_pis_max,
+            $ordem,
+            $is_reference,
+            $id // Added for the WHERE clause
+        );
 
         // Execute the query
         if (mysqli_stmt_execute($stmt)) {
@@ -539,17 +538,17 @@ WHERE id = ?"; // 19 placeholders
             aber_anel_1_pres_min, aber_anel_2_pres_min, larg_anel_1_min, larg_anel_2_min, 
             dia_furo_pis_min, dia_pino_pis_min, folga_pino_pis_max, ordem, is_reference
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
+
         $stmt = mysqli_prepare($conn, $insert_query);
-        
+
         if (!$stmt) {
             die("Prepare failed: " . mysqli_error($conn));
         }
-        
+
         // Bind parameters
         mysqli_stmt_bind_param(
             $stmt,
-            "iddddddddddddddddds", // 19 characters in the type definition string
+            "idddddddddddddddds", // 19 characters in the type definition string
             $nr_cilindros,
             $curso_pistao,
             $diametro_cilindro_max,
@@ -569,7 +568,7 @@ WHERE id = ?"; // 19 placeholders
             $ordem,
             $is_reference
         );
-        
+
         // Execute the query
         if (mysqli_stmt_execute($stmt)) {
             echo "Data inserted successfully!";
