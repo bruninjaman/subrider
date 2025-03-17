@@ -41,6 +41,7 @@ document.getElementById('btnMotor').addEventListener('click', () => showSpecific
 document.getElementById('btnVirabrequim').addEventListener('click', () => showSpecificPage('virabrequimPage'));
 document.getElementById('btnEmbreagem').addEventListener('click', () => showSpecificPage('embreagemPage'));
 document.getElementById('btnBombas').addEventListener('click', () => showSpecificPage('bombasPage'));
+document.getElementById('btnDados').addEventListener('click', () => showSpecificPage('dados'));
 
 // Back to main menu button
 document.querySelectorAll('#backToMenu').forEach(button => {

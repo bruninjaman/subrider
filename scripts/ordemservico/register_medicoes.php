@@ -399,38 +399,95 @@ if ($option == 'bomba') {
     $nr_discos_sep = intval($_POST['nr_discos_sep'] ?? 0);
     $disco_fric_esp_min = floatval($_POST['disco_fric_esp_min'] ?? 0);
     $disco_sep_emp_max = floatval($_POST['disco_sep_emp_max'] ?? 0);
+    $is_reference = true; // Always true in this case
 
-    // Prepare the SQL query
-    $query = "INSERT INTO embreagem (
-        disco_friccao, disco_separador, disco_friccao_espes_min, disco_separador_emp_max, ordem
-    ) VALUES (?, ?, ?, ?, ?)";
+    // Check if a row with the same ordem and is_reference = 1 exists
+    $check_query = "SELECT id FROM embreagem WHERE ordem = ? AND is_reference = 1";
+    $check_stmt = mysqli_prepare($conn, $check_query);
 
-    $stmt = mysqli_prepare($conn, $query);
-
-    if (!$stmt) {
+    if (!$check_stmt) {
         die("Prepare failed: " . mysqli_error($conn));
     }
 
-    // Bind parameters
-    mysqli_stmt_bind_param(
-        $stmt,
-        "iidds",
-        $nr_discos,
-        $nr_discos_sep,
-        $disco_fric_esp_min,
-        $disco_sep_emp_max,
-        $ordem
-    );
+    // Bind the ordem parameter
+    mysqli_stmt_bind_param($check_stmt, "s", $ordem);
 
-    // Execute the query
-    if (mysqli_stmt_execute($stmt)) {
-        echo "Data inserted successfully!";
+    // Execute the check query
+    mysqli_stmt_execute($check_stmt);
+    mysqli_stmt_store_result($check_stmt);
+
+    if (mysqli_stmt_num_rows($check_stmt) > 0) {
+        // Row exists: Perform an UPDATE
+        $update_query = "UPDATE embreagem SET
+            disco_friccao = ?,
+            disco_separador = ?,
+            disco_friccao_espes_min = ?,
+            disco_separador_emp_max = ?
+            WHERE ordem = ? AND is_reference = 1";
+
+        $update_stmt = mysqli_prepare($conn, $update_query);
+
+        if (!$update_stmt) {
+            die("Prepare failed: " . mysqli_error($conn));
+        }
+
+        // Bind parameters for UPDATE
+        mysqli_stmt_bind_param(
+            $update_stmt,
+            "iidds",
+            $nr_discos,
+            $nr_discos_sep,
+            $disco_fric_esp_min,
+            $disco_sep_emp_max,
+            $ordem
+        );
+
+        // Execute the UPDATE
+        if (mysqli_stmt_execute($update_stmt)) {
+            echo "Data updated successfully!";
+        } else {
+            echo "Error: " . mysqli_stmt_error($update_stmt);
+        }
+
+        // Close the UPDATE statement
+        mysqli_stmt_close($update_stmt);
     } else {
-        echo "Error: " . mysqli_stmt_error($stmt);
+        // Row does not exist: Perform an INSERT
+        $insert_query = "INSERT INTO embreagem (
+            disco_friccao, disco_separador, disco_friccao_espes_min, disco_separador_emp_max, ordem, is_reference
+        ) VALUES (?, ?, ?, ?, ?, ?)";
+
+        $insert_stmt = mysqli_prepare($conn, $insert_query);
+
+        if (!$insert_stmt) {
+            die("Prepare failed: " . mysqli_error($conn));
+        }
+
+        // Bind parameters for INSERT
+        mysqli_stmt_bind_param(
+            $insert_stmt,
+            "iiddsi",
+            $nr_discos,
+            $nr_discos_sep,
+            $disco_fric_esp_min,
+            $disco_sep_emp_max,
+            $ordem,
+            $is_reference
+        );
+
+        // Execute the INSERT
+        if (mysqli_stmt_execute($insert_stmt)) {
+            echo "Data inserted successfully!";
+        } else {
+            echo "Error: " . mysqli_stmt_error($insert_stmt);
+        }
+
+        // Close the INSERT statement
+        mysqli_stmt_close($insert_stmt);
     }
 
-    // Close the statement
-    mysqli_stmt_close($stmt);
+    // Close the check statement
+    mysqli_stmt_close($check_stmt);
 } else if ($option == 'motor') {
     // Sanitize input data
     $nr_cilindros = intval($_POST['nr_cilindros'] ?? 0);

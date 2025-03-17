@@ -27,6 +27,9 @@
             <div class="modal-page" id="bombasPage" style="display:none;">
                 <?php include("menu_bomba.php"); ?>
             </div>
+            <div class="modal-page" id="dados" style="display:none;">
+                <?php include("dados.php"); ?>
+            </div>
         </div>
     </div>
 
