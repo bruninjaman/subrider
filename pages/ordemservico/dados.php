@@ -32,14 +32,17 @@ function displayTableData($conn, $tableName, $tableTitle) {
         while ($row = mysqli_fetch_assoc($result)) {
             foreach ($row as $key => $value) {
                 $keyLower = strtolower($key);
-                // Excluir 'id' e 'is_reference'
-                if ($keyLower !== 'id' && $keyLower !== 'is_reference') {
+                // Excluir 'id' e 'is_reference' e só mostrar se value não for null
+                if ($keyLower !== 'id' && 
+                    $keyLower !== 'ordem' && 
+                    $keyLower !== 'is_reference' && 
+                    $value !== null) {
                     echo "<div class='data-item'>";
                     echo "<span class='data-label'>" . 
                          htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
                          ":</span>";
                     echo "<span class='data-value'>" . 
-                         htmlspecialchars($value ?? 'N/A') . 
+                         htmlspecialchars($value) . 
                          "</span>";
                     echo "</div>";
                 }
