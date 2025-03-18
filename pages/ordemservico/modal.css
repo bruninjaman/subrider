@@ -1,43 +1,45 @@
 /* Modal container */
 .modal {
     display: none;
-    /* Hidden by default */
     position: fixed;
     z-index: 1000;
-    /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow: auto; /* Allow scrolling if content exceeds viewport */
     background-color: rgba(0, 0, 0, 0.5);
-    /* Black background with opacity */
 }
 
 /* Modal content */
 .modal-content {
     background-color: #181921;
-    margin: 5% auto;
-    /* 15% from the top and centered */
-    padding: 10px;
+    margin: 3% auto; /* Reduced top margin to allow more space */
+    padding: 15px;
     border-radius: 25px;
-    width: 80%;
-    /* Could be more or less, depending on screen size */
-    max-width: 900px;
+    width: 90%; /* Increased width slightly */
+    max-width: 1000px; /* Increased max-width */
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     position: relative;
+    max-height: 90vh; /* Set max height to 90% of viewport height */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    color: #e5e5e5; /* Light text for dark background */
 }
 
 /* Hide all pages by default */
 .modal-page {
     display: none;
-}
-
-.modal-page {
     padding: 20px;
     font-family: Arial, sans-serif;
     border-radius: 10px;
     margin: auto;
+    overflow-y: auto; /* Enable scrolling within the page */
+    max-height: calc(90vh - 60px); /* Account for padding */
+}
+
+/* Active modal page */
+.modal-page.active {
+    display: block;
 }
 
 /* Close button (X) */
@@ -49,11 +51,86 @@
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 1001; /* Ensure it's above other content */
 }
 
 .close:hover,
 .close:focus {
-    color: #000;
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* Keep original button styling */
+.modal-content .button,
+.modal-content button,
+#closeModal3 {
+    background: none;
+    box-shadow: inset 0 0 0 2px #e5e5e5;
+    color: #e5e5e5;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.8em;
+    font-weight: 600;
+    height: 3.5em;
+    letter-spacing: 0.25em;
+    line-height: 3.5em;
+    padding: 0 1.75em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-radius: 8px;
+    border: none;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    margin: 15px 0;
+}
+
+.modal-content .button:hover,
+.modal-content button:hover,
+#closeModal3:hover {
+    background-color: rgba(229, 229, 229, 0.075);
+}
+
+.modal-content .button.primary,
+.modal-content button.primary,
+#closeModal3 {
+    background-color: #ed4933;
+    box-shadow: none;
+    color: #ffffff !important;
+}
+
+.modal-content .button.primary:hover,
+.modal-content button.primary:hover,
+#closeModal3:hover {
+    background-color: #ef5e4a;
+}
+
+/* Adjust table style for dark mode */
+.modal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.modal-content table th {
+    background-color: #0f1015;
+    color: #fff;
+    padding: 0.75em;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.modal-content table td {
+    padding: 0.75em;
+    border-bottom: 1px solid #333;
+    color: #e5e5e5;
+}
+
+.modal-content table tr:nth-child(even) {
+    background-color: #1e202a;
+}
+
+.modal-content table tr:hover {
+    background-color: #2a2c36;
 }

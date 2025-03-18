@@ -74,19 +74,23 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
 <!-- CSS para estilizar os cards -->
 <style>
 .card {
-    background: #fff;
+    background: #1e2029;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin: 20px 0;
-    padding: 20px;
-    max-width: 500px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    margin: 15px 0;
+    padding: 15px;
+    width: 100%;
+    max-width: 100%;
+    color: #e5e5e5;
+    border: 1px solid #333;
 }
 
 .card-title {
-    color: #333;
-    border-bottom: 2px solid #eee;
+    color: #fff;
+    border-bottom: 2px solid #333;
     padding-bottom: 10px;
     margin-bottom: 15px;
+    font-size: 1.2em;
 }
 
 .card-content {
@@ -94,18 +98,47 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
 }
 
 .data-item {
-    margin: 10px 0;
+    margin: 8px 0;
     display: flex;
     justify-content: space-between;
     gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 5px;
 }
 
 .data-label {
     font-weight: bold;
-    color: #555;
+    color: #aaa;
+    flex: 1;
 }
 
 .data-value {
-    color: #333;
+    color: #e5e5e5;
+    flex: 2;
+    text-align: right;
+}
+
+#closeModal3 {
+    display: block;
+    margin: 20px auto;
+    padding: 0 1.75em;
+    background-color: #ed4933;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.8em;
+    height: 3.5em;
+    line-height: 3.5em;
+    transition: background-color 0.2s ease-in-out;
+    box-shadow: none;
+}
+
+#closeModal3:hover {
+    background-color: #ef5e4a;
 }
 </style>
