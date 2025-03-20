@@ -8,37 +8,47 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
     $ordem = (int)$_GET['ordem'];
 
-    // Handle form submission for adding/updating measured values
+    // Handle form submission for updating values
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === $tableName) {
-        $fields = array_keys($_POST);
-        $updateQuery = "INSERT INTO " . mysqli_real_escape_string($conn, $tableName) . 
-                       " (ordem, is_reference, " . implode(',', array_map('mysqli_real_escape_string', array($conn), $fields)) . ") 
-                        VALUES (?, 0, " . str_repeat('?,', count($fields) - 1) . "?)
-                        ON DUPLICATE KEY UPDATE " . implode(',', array_map(function($field) {
-                            return "$field = VALUES($field)";
-                        }, $fields));
-        
-        $stmt = mysqli_prepare($conn, $updateQuery);
-        if ($stmt) {
-            $params = array_merge([$ordem], array_values($_POST));
-            $types = str_repeat('s', count($params)); // Assuming all fields are strings; adjust if needed
-            mysqli_stmt_bind_param($stmt, $types, ...$params);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
+        if (isset($_POST['update'])) {
+            foreach ($_POST['measured'] as $id => $fields) {
+                $updates = [];
+                $params = [];
+                $types = '';
+                foreach ($fields as $field => $value) {
+                    $updates[] = "`$field` = ?";
+                    $params[] = $value;
+                    $types .= 's'; // Assuming all fields are strings
+                }
+                $params[] = $id;
+                $types .= 'i';
+
+                $updateQuery = "UPDATE " . $tableName . 
+                              " SET " . implode(', ', $updates) . 
+                              " WHERE id = ?";
+                $stmt = mysqli_prepare($conn, $updateQuery);
+                if ($stmt) {
+                    mysqli_stmt_bind_param($stmt, $types, ...$params);
+                    if (mysqli_stmt_execute($stmt)) {
+                        echo "<p class='success-msg'>Alterações salvas com sucesso!</p>";
+                    } else {
+                        echo "<p class='error-msg'>Erro ao salvar alterações: " . mysqli_error($conn) . "</p>";
+                    }
+                    mysqli_stmt_close($stmt);
+                }
+            }
         }
     }
 
-    // Query para valores de referência
-    $refQuery = "SELECT * FROM " . mysqli_real_escape_string($conn, $tableName) . 
-                " WHERE is_reference = 1 AND ordem = ?";
+    // Query for reference values
+    $refQuery = "SELECT * FROM $tableName WHERE is_reference = 1 AND ordem = ?";
     $refStmt = mysqli_prepare($conn, $refQuery);
     mysqli_stmt_bind_param($refStmt, "i", $ordem);
     mysqli_stmt_execute($refStmt);
     $refResult = mysqli_stmt_get_result($refStmt);
 
-    // Query para valores medidos
-    $measQuery = "SELECT * FROM " . mysqli_real_escape_string($conn, $tableName) . 
-                 " WHERE is_reference = 0 AND ordem = ?";
+    // Query for measured values
+    $measQuery = "SELECT * FROM $tableName WHERE is_reference = 0 AND ordem = ? ORDER BY id DESC";
     $measStmt = mysqli_prepare($conn, $measQuery);
     mysqli_stmt_bind_param($measStmt, "i", $ordem);
     mysqli_stmt_execute($measStmt);
@@ -46,13 +56,19 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
     if (mysqli_num_rows($refResult) > 0) {
         $refRow = mysqli_fetch_assoc($refResult);
-        $measRow = mysqli_fetch_assoc($measResult);
 
-        // Início do card com formulário
         echo "<div class='card'>";
         echo "<h2 class='card-title'>" . htmlspecialchars($tableTitle) . "</h2>";
-        echo "<form method='POST' class='card-content'>";
+        echo "<div class='card-content'>";
+
+        echo "<form method='POST' class='table-form'>";
         echo "<input type='hidden' name='table' value='" . htmlspecialchars($tableName) . "'>";
+        echo "<input type='hidden' name='update' value='1'>";
+
+        echo "<div class='table-container'>";
+        echo "<table>";
+        echo "<thead><tr><th>Parâmetro</th><th>Referência</th><th>Medidos</th></tr></thead>";
+        echo "<tbody>";
 
         foreach ($refRow as $key => $value) {
             $keyLower = strtolower($key);
@@ -60,25 +76,42 @@ function displayTableData($conn, $tableName, $tableTitle) {
                 $keyLower !== 'ordem' && 
                 $keyLower !== 'is_reference' && 
                 $value !== null) {
-                echo "<div class='data-item'>";
-                echo "<span class='data-label'>" . 
+                echo "<tr>";
+                echo "<td class='data-label'>" . 
                      htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
-                     ":</span>";
-                echo "<span class='data-value ref-value'>" . 
+                     "</td>";
+                echo "<td class='ref-value'>" . 
                      htmlspecialchars($value) . 
-                     "</span>";
-
-                // Campo editável para valor medido
-                $measValue = ($measRow && isset($measRow[$key])) ? $measRow[$key] : '';
-                echo "<input type='text' class='meas-value' name='" . htmlspecialchars($key) . "' value='" . htmlspecialchars($measValue) . "'>";
+                     "</td>";
                 
-                echo "</div>";
+                echo "<td class='meas-values'>";
+                mysqli_data_seek($measResult, 0);
+                $first = true;
+                while ($measRow = mysqli_fetch_assoc($measResult)) {
+                    if (isset($measRow[$key]) && $measRow[$key] !== null) {
+                        echo "<input type='text' " .
+                             "name='measured[" . $measRow['id'] . "][" . htmlspecialchars($key) . "]' " .
+                             "value='" . htmlspecialchars($measRow[$key]) . "' " .
+                             "class='meas-input" . ($first ? " first" : "") . "'>";
+                        $first = false;
+                    }
+                }
+                if (mysqli_num_rows($measResult) === 0) {
+                    echo "-";
+                }
+                echo "</td>";
+                
+                echo "</tr>";
             }
         }
 
-        // Botão de salvar
-        echo "<button type='submit' class='save-btn'>Salvar</button>";
+        echo "</tbody></table>";
+        echo "</div>";
+
+        echo "<button type='submit' class='save-btn'>Salvar Alterações</button>";
         echo "</form>";
+
+        echo "</div>";
         echo "</div>";
     }
 
@@ -90,7 +123,6 @@ if (!isset($conn) || !$conn) {
     die("Conexão com o banco de dados não estabelecida.");
 }
 
-// Exibir dados de todas as tabelas em formato de cards
 displayTableData($conn, "embreagem", "Embreagem");
 displayTableData($conn, "cabecote", "Cabeçote");
 displayTableData($conn, "bomba", "Bomba");
@@ -100,7 +132,6 @@ displayTableData($conn, "virabrequim", "Virabrequim");
 echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
-<!-- CSS atualizado -->
 <style>
 .card {
     background: #1e2029;
@@ -126,14 +157,24 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
     padding: 10px;
 }
 
-.data-item {
-    margin: 8px 0;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 10px;
+.table-container {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 5px;
-    align-items: center;
+}
+
+th {
+    background: #2a2c35;
+    color: #fff;
 }
 
 .data-label {
@@ -141,15 +182,17 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
     color: #aaa;
 }
 
-.data-value {
+.ref-value {
+    color: #e5e5e5;
     text-align: right;
 }
 
-.ref-value {
-    color: #e5e5e5;
+.meas-values {
+    color: #4CAF50;
+    text-align: right;
 }
 
-.meas-value {
+.meas-input {
     background: #2a2c35;
     border: 1px solid #4CAF50;
     border-radius: 4px;
@@ -157,6 +200,15 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
     color: #fff;
     text-align: right;
     width: 100%;
+    margin: 2px 0;
+}
+
+.meas-input.first {
+    margin-top: 0;
+}
+
+.table-form {
+    margin-top: 15px;
 }
 
 .save-btn {
@@ -196,5 +248,16 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
 
 #closeModal3:hover {
     background-color: #ef5e4a;
+}
+.success-msg {
+    color: #4CAF50;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.error-msg {
+    color: #ed4933;
+    margin: 10px 0;
+    font-weight: bold;
 }
 </style>
