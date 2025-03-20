@@ -6,55 +6,84 @@ function displayTableData($conn, $tableName, $tableTitle) {
         return;
     }
 
-    $query = "SELECT * FROM " . mysqli_real_escape_string($conn, $tableName) . 
-             " WHERE is_reference = 1 AND ordem = ?";
-    
-    $stmt = mysqli_prepare($conn, $query);
-    if ($stmt === false) {
-        die("Erro na preparação da query: " . mysqli_error($conn));
-    }
-
     $ordem = (int)$_GET['ordem'];
-    mysqli_stmt_bind_param($stmt, "i", $ordem);
-    
-    if (!mysqli_stmt_execute($stmt)) {
-        die("Erro ao executar a query: " . mysqli_stmt_error($stmt));
+
+    // Handle form submission for adding/updating measured values
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === $tableName) {
+        $fields = array_keys($_POST);
+        $updateQuery = "INSERT INTO " . mysqli_real_escape_string($conn, $tableName) . 
+                       " (ordem, is_reference, " . implode(',', array_map('mysqli_real_escape_string', array($conn), $fields)) . ") 
+                        VALUES (?, 0, " . str_repeat('?,', count($fields) - 1) . "?)
+                        ON DUPLICATE KEY UPDATE " . implode(',', array_map(function($field) {
+                            return "$field = VALUES($field)";
+                        }, $fields));
+        
+        $stmt = mysqli_prepare($conn, $updateQuery);
+        if ($stmt) {
+            $params = array_merge([$ordem], array_values($_POST));
+            $types = str_repeat('s', count($params)); // Assuming all fields are strings; adjust if needed
+            mysqli_stmt_bind_param($stmt, $types, ...$params);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
     }
 
-    $result = mysqli_stmt_get_result($stmt);
+    // Query para valores de referência
+    $refQuery = "SELECT * FROM " . mysqli_real_escape_string($conn, $tableName) . 
+                " WHERE is_reference = 1 AND ordem = ?";
+    $refStmt = mysqli_prepare($conn, $refQuery);
+    mysqli_stmt_bind_param($refStmt, "i", $ordem);
+    mysqli_stmt_execute($refStmt);
+    $refResult = mysqli_stmt_get_result($refStmt);
 
-    if (mysqli_num_rows($result) > 0) {
-        // Início do card
+    // Query para valores medidos
+    $measQuery = "SELECT * FROM " . mysqli_real_escape_string($conn, $tableName) . 
+                 " WHERE is_reference = 0 AND ordem = ?";
+    $measStmt = mysqli_prepare($conn, $measQuery);
+    mysqli_stmt_bind_param($measStmt, "i", $ordem);
+    mysqli_stmt_execute($measStmt);
+    $measResult = mysqli_stmt_get_result($measStmt);
+
+    if (mysqli_num_rows($refResult) > 0) {
+        $refRow = mysqli_fetch_assoc($refResult);
+        $measRow = mysqli_fetch_assoc($measResult);
+
+        // Início do card com formulário
         echo "<div class='card'>";
         echo "<h2 class='card-title'>" . htmlspecialchars($tableTitle) . "</h2>";
-        echo "<div class='card-content'>";
+        echo "<form method='POST' class='card-content'>";
+        echo "<input type='hidden' name='table' value='" . htmlspecialchars($tableName) . "'>";
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            foreach ($row as $key => $value) {
-                $keyLower = strtolower($key);
-                // Excluir 'id' e 'is_reference' e só mostrar se value não for null
-                if ($keyLower !== 'id' && 
-                    $keyLower !== 'ordem' && 
-                    $keyLower !== 'is_reference' && 
-                    $value !== null) {
-                    echo "<div class='data-item'>";
-                    echo "<span class='data-label'>" . 
-                         htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
-                         ":</span>";
-                    echo "<span class='data-value'>" . 
-                         htmlspecialchars($value) . 
-                         "</span>";
-                    echo "</div>";
-                }
+        foreach ($refRow as $key => $value) {
+            $keyLower = strtolower($key);
+            if ($keyLower !== 'id' && 
+                $keyLower !== 'ordem' && 
+                $keyLower !== 'is_reference' && 
+                $value !== null) {
+                echo "<div class='data-item'>";
+                echo "<span class='data-label'>" . 
+                     htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
+                     ":</span>";
+                echo "<span class='data-value ref-value'>" . 
+                     htmlspecialchars($value) . 
+                     "</span>";
+
+                // Campo editável para valor medido
+                $measValue = ($measRow && isset($measRow[$key])) ? $measRow[$key] : '';
+                echo "<input type='text' class='meas-value' name='" . htmlspecialchars($key) . "' value='" . htmlspecialchars($measValue) . "'>";
+                
+                echo "</div>";
             }
         }
 
-        // Fim do card
-        echo "</div>";
+        // Botão de salvar
+        echo "<button type='submit' class='save-btn'>Salvar</button>";
+        echo "</form>";
         echo "</div>";
     }
 
-    mysqli_stmt_close($stmt);
+    mysqli_stmt_close($refStmt);
+    mysqli_stmt_close($measStmt);
 }
 
 if (!isset($conn) || !$conn) {
@@ -71,7 +100,7 @@ displayTableData($conn, "virabrequim", "Virabrequim");
 echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
-<!-- CSS para estilizar os cards -->
+<!-- CSS atualizado -->
 <style>
 .card {
     background: #1e2029;
@@ -99,23 +128,50 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
 
 .data-item {
     margin: 8px 0;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
     gap: 10px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     padding-bottom: 5px;
+    align-items: center;
 }
 
 .data-label {
     font-weight: bold;
     color: #aaa;
-    flex: 1;
 }
 
 .data-value {
-    color: #e5e5e5;
-    flex: 2;
     text-align: right;
+}
+
+.ref-value {
+    color: #e5e5e5;
+}
+
+.meas-value {
+    background: #2a2c35;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #fff;
+    text-align: right;
+    width: 100%;
+}
+
+.save-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.save-btn:hover {
+    background-color: #45a049;
 }
 
 #closeModal3 {
