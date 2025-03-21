@@ -435,7 +435,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
         // Itens fixos
         echo "<tr class='item-fixo'>";
         echo "<td>Diâmetro eixo cames admissão</td>";
-        echo "<td>" . number_format($cabecote['cames_diam_min'], 2, ',', '.') . "</td>";
+        echo "<td>" . ($cabecote['cames_diam_min'] > 0 ? number_format($cabecote['cames_diam_min'], 2, ',', '.') : '-') . "</td>";
         
         // Cilindros de trás
         for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
@@ -450,7 +450,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
 
         echo "<tr class='item-fixo'>";
         echo "<td>Diâmetro eixo cames escape</td>";
-        echo "<td>" . number_format($cabecote['cames_diam_min'], 2, ',', '.') . "</td>";
+        echo "<td>" . ($cabecote['cames_diam_min'] > 0 ? number_format($cabecote['cames_diam_min'], 2, ',', '.') : '-') . "</td>";
         
         // Cilindros de trás
         for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
@@ -495,7 +495,8 @@ function displayCabecoteMedicoes($conn, $ordem) {
 
         echo "<tr class='item-fixo'>";
         echo "<td>Compressão</td>";
-        echo "<td>" . formatarIntervalo($cabecote['compressao_min'], $cabecote['compressao_max']) . "</td>";
+        echo "<td>" . ($cabecote['compressao_min'] > 0 && $cabecote['compressao_max'] > 0 ? 
+            formatarIntervalo($cabecote['compressao_min'], $cabecote['compressao_max']) : '-') . "</td>";
         
         // Cilindros de trás
         for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
