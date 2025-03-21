@@ -1,12 +1,37 @@
 <?php
 
+// Verificação inicial do parâmetro ordem
+if (!isset($_GET['ordem'])) {
+    die("<div class='error-msg'>Erro: Parâmetro 'ordem' não foi especificado na URL.</div>");
+}
+
+// Usar a ordem como string
+$ordem = $_GET['ordem'];
+
+// Verificação da conexão com o banco de dados
+if (!isset($conn) || !$conn) {
+    die("<div class='error-msg'>Erro: Conexão com o banco de dados não estabelecida.</div>");
+}
+
+// Verificar se existem dados de referência para a ordem especificada
+$checkQuery = "SELECT COUNT(*) as count FROM cabecote WHERE is_reference = 1 AND ordem = ?";
+$checkStmt = mysqli_prepare($conn, $checkQuery);
+mysqli_stmt_bind_param($checkStmt, "s", $ordem);
+mysqli_stmt_execute($checkStmt);
+$checkResult = mysqli_stmt_get_result($checkStmt);
+$checkRow = mysqli_fetch_assoc($checkResult);
+
+if ($checkRow['count'] == 0) {
+    die("<div class='error-msg'>Erro: Não foram encontrados dados de referência para a ordem de serviço #" . $ordem . ".</div>");
+}
+
 function displayTableData($conn, $tableName, $tableTitle) {
     if (!isset($_GET['ordem'])) {
         echo "<p>Parâmetro 'ordem' inválido ou não fornecido.</p>";
         return;
     }
 
-    $ordem = (int)$_GET['ordem'];
+    $ordem = $_GET['ordem'];
 
     // Handle form submission for updating values
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === $tableName) {
@@ -14,7 +39,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
             // Verificar se já existe medição
             $checkQuery = "SELECT COUNT(*) as count FROM $tableName WHERE is_reference = 0 AND ordem = ?";
             $checkStmt = mysqli_prepare($conn, $checkQuery);
-            mysqli_stmt_bind_param($checkStmt, "i", $ordem);
+            mysqli_stmt_bind_param($checkStmt, "s", $ordem);
             mysqli_stmt_execute($checkStmt);
             $checkResult = mysqli_stmt_get_result($checkStmt);
             $checkRow = mysqli_fetch_assoc($checkResult);
@@ -23,7 +48,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
                 // Não existe medição, vamos criar
                 $refQuery = "SELECT * FROM $tableName WHERE is_reference = 1 AND ordem = ?";
                 $refStmt = mysqli_prepare($conn, $refQuery);
-                mysqli_stmt_bind_param($refStmt, "i", $ordem);
+                mysqli_stmt_bind_param($refStmt, "s", $ordem);
                 mysqli_stmt_execute($refStmt);
                 $refResult = mysqli_stmt_get_result($refStmt);
                 $refRow = mysqli_fetch_assoc($refResult);
@@ -88,14 +113,14 @@ function displayTableData($conn, $tableName, $tableTitle) {
     // Query for reference values
     $refQuery = "SELECT * FROM $tableName WHERE is_reference = 1 AND ordem = ?";
     $refStmt = mysqli_prepare($conn, $refQuery);
-    mysqli_stmt_bind_param($refStmt, "i", $ordem);
+    mysqli_stmt_bind_param($refStmt, "s", $ordem);
     mysqli_stmt_execute($refStmt);
     $refResult = mysqli_stmt_get_result($refStmt);
 
     // Query for measured values
     $measQuery = "SELECT * FROM $tableName WHERE is_reference = 0 AND ordem = ? ORDER BY id DESC";
     $measStmt = mysqli_prepare($conn, $measQuery);
-    mysqli_stmt_bind_param($measStmt, "i", $ordem);
+    mysqli_stmt_bind_param($measStmt, "s", $ordem);
     mysqli_stmt_execute($measStmt);
     $measResult = mysqli_stmt_get_result($measStmt);
 
@@ -169,15 +194,340 @@ function displayTableData($conn, $tableName, $tableTitle) {
     mysqli_stmt_close($measStmt);
 }
 
-if (!isset($conn) || !$conn) {
-    die("Conexão com o banco de dados não estabelecida.");
+function displayCabecoteMedicoes($conn, $ordem) {
+    try {
+        // Função auxiliar para calcular o valor médio do intervalo
+        function calcularValorMedio($min, $max) {
+            return (floatval($min) + floatval($max)) / 2;
+        }
+
+        // Função auxiliar para formatar intervalo
+        function formatarIntervalo($min, $max) {
+            return number_format(floatval($min), 2, ',', '.') . " a " . number_format(floatval($max), 2, ',', '.');
+        }
+
+        // Função para calcular Pastilha Corrigida (PC)
+        function calcularPC($folga, $referencia, $pastilha_antiga) {
+            return (floatval($folga) - floatval($referencia)) + floatval($pastilha_antiga);
+        }
+
+        // Buscar dados de referência do cabeçote
+        $query = "SELECT * FROM cabecote WHERE is_reference = 1 AND ordem = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        if (!$stmt) {
+            throw new Exception("Erro ao preparar consulta: " . mysqli_error($conn));
+        }
+        
+        mysqli_stmt_bind_param($stmt, "s", $ordem);
+        if (!mysqli_stmt_execute($stmt)) {
+            throw new Exception("Erro ao executar consulta: " . mysqli_stmt_error($stmt));
+        }
+        
+        $result = mysqli_stmt_get_result($stmt);
+        $cabecote = mysqli_fetch_assoc($result);
+        
+        if (!$cabecote) {
+            echo "<div class='error-msg'>Dados de referência do cabeçote não encontrados para a ordem #" . htmlspecialchars($ordem) . "</div>";
+            return;
+        }
+
+        // Verificar apenas campos essenciais
+        $campos_obrigatorios = ['motor_tipo', 'cilindros', 'val_adm', 'val_esc'];
+        
+        foreach ($campos_obrigatorios as $campo) {
+            if (!isset($cabecote[$campo]) || $cabecote[$campo] === null) {
+                echo "<div class='error-msg'>Campo obrigatório não encontrado: " . htmlspecialchars($campo) . "</div>";
+                return;
+            }
+        }
+
+        // Definir valores padrão para campos opcionais
+        $campos_opcionais = [
+            'val_adm_limite_min' => 0.00,
+            'val_adm_limite_max' => 0.00,
+            'val_esc_limite_min' => 0.00,
+            'val_esc_limite_max' => 0.00,
+            'cames_adm_diam_max' => 0.00,
+            'cames_esc_diam_max' => 0.00,
+            'cames_diam_min' => 0.00,
+            'compressao_min' => 0.00,
+            'compressao_max' => 0.00
+        ];
+
+        foreach ($campos_opcionais as $campo => $valor_padrao) {
+            if (!isset($cabecote[$campo]) || $cabecote[$campo] === null) {
+                $cabecote[$campo] = $valor_padrao;
+            } else {
+                // Converter string com vírgula para float
+                $cabecote[$campo] = str_replace(',', '.', $cabecote[$campo]);
+                $cabecote[$campo] = floatval($cabecote[$campo]);
+            }
+        }
+
+        // Buscar dados medidos do cabeçote
+        $query = "SELECT * FROM cabecote WHERE is_reference = 0 AND ordem = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        if (!$stmt) {
+            throw new Exception("Erro ao preparar consulta de medições: " . mysqli_error($conn));
+        }
+        
+        mysqli_stmt_bind_param($stmt, "s", $ordem);
+        if (!mysqli_stmt_execute($stmt)) {
+            throw new Exception("Erro ao executar consulta de medições: " . mysqli_stmt_error($stmt));
+        }
+        
+        $result = mysqli_stmt_get_result($stmt);
+        $medicoes = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $medicoes[] = $row;
+        }
+
+        echo "<div class='card cabecote-medicoes'>";
+        echo "<h2 class='card-title'>MENU MEDIÇÕES CABEÇOTE</h2>";
+        echo "<div class='legenda'>Valores retirados do banco de dados</div>";
+        echo "<div class='subtitulo'>" . htmlspecialchars($cabecote['motor_tipo']) . "</div>";
+        
+        // Cabeçalho da tabela
+        echo "<div class='table-container'>";
+        echo "<table>";
+        echo "<thead>";
+        
+        // Primeira linha com identificadores de frente/trás
+        echo "<tr class='identificadores'>";
+        echo "<th>ITEM</th>";
+        echo "<th>REFERÊNCIA</th>";
+        
+        // Calcular quantos cilindros são da frente e quantos são de trás
+        $cilindros_tras = ceil($cabecote['cilindros'] / 2);
+        $cilindros_frente = $cabecote['cilindros'] - $cilindros_tras;
+        
+        // Cilindros de trás
+        for ($i = 1; $i <= $cilindros_tras; $i++) {
+            echo "<th class='cilindro-tras'>CILINDRO " . $i . "</th>";
+        }
+        
+        // Cilindros da frente
+        for ($i = $cilindros_tras + 1; $i <= $cabecote['cilindros']; $i++) {
+            echo "<th class='cilindro-frente'>CILINDRO " . $i . "</th>";
+        }
+        echo "</tr>";
+        
+        // Segunda linha com identificadores ESQUERDO/DIREITO
+        echo "<tr class='identificadores'>";
+        echo "<th></th>";
+        echo "<th></th>";
+        
+        // Cilindros de trás
+        for ($i = 1; $i <= $cilindros_tras; $i++) {
+            echo "<th class='cilindro-tras'>ESQUERDO (TRÁS)</th>";
+        }
+        
+        // Cilindros da frente
+        for ($i = $cilindros_tras + 1; $i <= $cabecote['cilindros']; $i++) {
+            echo "<th class='cilindro-frente'>DIREITO (FRENTE)</th>";
+        }
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+
+        // Gerar linhas para cada cilindro
+        for ($cil = 1; $cil <= $cabecote['cilindros']; $cil++) {
+            $is_frente = $cil > $cilindros_tras;
+            $classe_cilindro = $is_frente ? 'cilindro-frente' : 'cilindro-tras';
+            
+            // Título do cilindro
+            echo "<tr class='titulo-cilindro " . $classe_cilindro . "'>";
+            echo "<td colspan='" . ($cabecote['cilindros'] + 2) . "'>CILINDRO " . $cil . "</td>";
+            echo "</tr>";
+            
+            // Válvulas de admissão
+            for ($i = 1; $i <= $cabecote['val_adm']; $i++) {
+                $lado = ($i == 1) ? 'direita' : 'esquerda';
+                
+                // Folga válvula admissão
+                echo "<tr class='valvula-admissao'>";
+                echo "<td>Folga válvula admissão " . $lado . "</td>";
+                echo "<td>" . formatarIntervalo($cabecote['val_adm_limite_min'], $cabecote['val_adm_limite_max']) . "</td>";
+                
+                // Preencher células vazias até o cilindro atual
+                for ($c = 1; $c < $cil; $c++) {
+                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                }
+                
+                // Célula do cilindro atual
+                echo "<td class='" . $classe_cilindro . "'>-</td>";
+                
+                // Preencher células vazias após o cilindro atual
+                for ($c = $cil + 1; $c <= $cabecote['cilindros']; $c++) {
+                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                }
+                echo "</tr>";
+
+                // Pastilha válvula admissão
+                echo "<tr class='valvula-admissao'>";
+                echo "<td>Pastilha válvula admissão " . $lado . "</td>";
+                echo "<td>-</td>";
+                
+                // Preencher células vazias até o cilindro atual
+                for ($c = 1; $c < $cil; $c++) {
+                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                }
+                
+                // Célula do cilindro atual
+                echo "<td class='" . $classe_cilindro . "'>-</td>";
+                
+                // Preencher células vazias após o cilindro atual
+                for ($c = $cil + 1; $c <= $cabecote['cilindros']; $c++) {
+                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                }
+                echo "</tr>";
+            }
+            
+            // Válvulas de escape
+            for ($i = 1; $i <= $cabecote['val_esc']; $i++) {
+                $lado = ($i == 1) ? 'direita' : 'esquerda';
+                
+                // Folga válvula escape
+                echo "<tr class='valvula-escape'>";
+                echo "<td>Folga válvula escape " . $lado . "</td>";
+                echo "<td>" . formatarIntervalo($cabecote['val_esc_limite_min'], $cabecote['val_esc_limite_max']) . "</td>";
+                
+                // Preencher células vazias até o cilindro atual
+                for ($c = 1; $c < $cil; $c++) {
+                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                }
+                
+                // Célula do cilindro atual
+                echo "<td class='" . $classe_cilindro . "'>-</td>";
+                
+                // Preencher células vazias após o cilindro atual
+                for ($c = $cil + 1; $c <= $cabecote['cilindros']; $c++) {
+                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                }
+                echo "</tr>";
+
+                // Pastilha válvula escape
+                echo "<tr class='valvula-escape'>";
+                echo "<td>Pastilha válvula escape " . $lado . "</td>";
+                echo "<td>-</td>";
+                
+                // Preencher células vazias até o cilindro atual
+                for ($c = 1; $c < $cil; $c++) {
+                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                }
+                
+                // Célula do cilindro atual
+                echo "<td class='" . $classe_cilindro . "'>-</td>";
+                
+                // Preencher células vazias após o cilindro atual
+                for ($c = $cil + 1; $c <= $cabecote['cilindros']; $c++) {
+                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                }
+                echo "</tr>";
+            }
+        }
+
+        // Separador entre medições de cilindros e medições gerais
+        echo "<tr class='separador'>";
+        echo "<td colspan='" . ($cabecote['cilindros'] + 2) . "'>MEDIÇÕES GERAIS DO CABEÇOTE</td>";
+        echo "</tr>";
+
+        // Itens fixos
+        echo "<tr class='item-fixo'>";
+        echo "<td>Diâmetro eixo cames admissão</td>";
+        echo "<td>" . number_format($cabecote['cames_diam_min'], 2, ',', '.') . "</td>";
+        
+        // Cilindros de trás
+        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+            echo "<td class='cilindro-tras'>-</td>";
+        }
+        
+        // Cilindros da frente
+        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+            echo "<td class='cilindro-frente'>-</td>";
+        }
+        echo "</tr>";
+
+        echo "<tr class='item-fixo'>";
+        echo "<td>Diâmetro eixo cames escape</td>";
+        echo "<td>" . number_format($cabecote['cames_diam_min'], 2, ',', '.') . "</td>";
+        
+        // Cilindros de trás
+        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+            echo "<td class='cilindro-tras'>-</td>";
+        }
+        
+        // Cilindros da frente
+        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+            echo "<td class='cilindro-frente'>-</td>";
+        }
+        echo "</tr>";
+
+        echo "<tr class='item-fixo'>";
+        echo "<td>Empenamento eixo cames adm/esc</td>";
+        echo "<td>0,10</td>";
+        
+        // Cilindros de trás
+        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+            echo "<td class='cilindro-tras'>-</td>";
+        }
+        
+        // Cilindros da frente
+        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+            echo "<td class='cilindro-frente'>-</td>";
+        }
+        echo "</tr>";
+
+        echo "<tr class='item-fixo'>";
+        echo "<td>Folga eixo de cames/mancal</td>";
+        echo "<td>0,15</td>";
+        
+        // Cilindros de trás
+        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+            echo "<td class='cilindro-tras'>-</td>";
+        }
+        
+        // Cilindros da frente
+        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+            echo "<td class='cilindro-frente'>-</td>";
+        }
+        echo "</tr>";
+
+        echo "<tr class='item-fixo'>";
+        echo "<td>Compressão</td>";
+        echo "<td>" . formatarIntervalo($cabecote['compressao_min'], $cabecote['compressao_max']) . "</td>";
+        
+        // Cilindros de trás
+        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+            echo "<td class='cilindro-tras'>-</td>";
+        }
+        
+        // Cilindros da frente
+        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+            echo "<td class='cilindro-frente'>-</td>";
+        }
+        echo "</tr>";
+
+        echo "</tbody></table>";
+        echo "</div>";
+        echo "</div>";
+        
+    } catch (Exception $e) {
+        echo "<div class='error-msg'>Erro ao exibir medições do cabeçote: " . htmlspecialchars($e->getMessage()) . "</div>";
+    }
 }
 
 displayTableData($conn, "embreagem", "Embreagem");
-displayTableData($conn, "cabecote", "Cabeçote");
 displayTableData($conn, "bomba", "Bomba");
 displayTableData($conn, "motor", "Motor");
 displayTableData($conn, "virabrequim", "Virabrequim");
+
+// Chamar a função de medições do cabeçote
+if (isset($_GET['ordem'])) {
+    displayCabecoteMedicoes($conn, $_GET['ordem']);
+} else {
+    echo "<div class='error-msg'>Erro: Parâmetro 'ordem' não foi especificado.</div>";
+}
 
 echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
@@ -309,5 +659,145 @@ th {
     color: #ed4933;
     margin: 10px 0;
     font-weight: bold;
+}
+
+.cabecote-medicoes {
+    margin-top: 20px;
+}
+
+.cabecote-medicoes .legenda {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.cabecote-medicoes .subtitulo {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #4CAF50;
+}
+
+.cabecote-medicoes .secao {
+    margin-bottom: 30px;
+}
+
+.cabecote-medicoes .secao h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #333;
+}
+
+.cabecote-medicoes table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cabecote-medicoes th {
+    background: #2a2c35;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.cabecote-medicoes td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.cabecote-medicoes .valvula-admissao {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.cabecote-medicoes .valvula-escape {
+    background-color: rgba(233, 30, 99, 0.1);
+}
+
+.cabecote-medicoes .item-fixo {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.cabecote-medicoes td:first-child {
+    font-weight: bold;
+    color: #e5e5e5;
+}
+
+.cabecote-medicoes td:nth-child(2) {
+    color: #4CAF50;
+    text-align: right;
+}
+
+.cabecote-medicoes td:not(:first-child):not(:nth-child(2)) {
+    text-align: right;
+    color: #888;
+}
+
+.cabecote-medicoes td:not(:first-child):not(:nth-child(2)):not(:empty) {
+    color: #fff;
+}
+
+.cabecote-medicoes .identificadores {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.cabecote-medicoes .identificadores th {
+    text-align: center;
+    font-size: 0.9em;
+    padding: 8px;
+}
+
+.cabecote-medicoes .cilindro-tras {
+    background-color: rgba(33, 150, 243, 0.1);
+    border-left: 2px solid #2196F3;
+}
+
+.cabecote-medicoes .cilindro-frente {
+    background-color: rgba(233, 30, 99, 0.1);
+    border-left: 2px solid #E91E63;
+}
+
+.cabecote-medicoes td.cilindro-tras {
+    background-color: rgba(33, 150, 243, 0.05);
+}
+
+.cabecote-medicoes td.cilindro-frente {
+    background-color: rgba(233, 30, 99, 0.05);
+}
+
+.cabecote-medicoes .titulo-cilindro {
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
+
+.cabecote-medicoes .titulo-cilindro.cilindro-tras {
+    background-color: rgba(33, 150, 243, 0.2);
+    border-left: 2px solid #2196F3;
+}
+
+.cabecote-medicoes .titulo-cilindro.cilindro-frente {
+    background-color: rgba(233, 30, 99, 0.2);
+    border-left: 2px solid #E91E63;
+}
+
+.cabecote-medicoes .separador {
+    background-color: rgba(255, 255, 255, 0.15);
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.cabecote-medicoes .separador td {
+    color: #fff;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 </style>
