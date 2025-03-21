@@ -121,7 +121,8 @@ function displayTableData($conn, $tableName, $tableTitle) {
                 $keyLower !== 'ordem' && 
                 $keyLower !== 'is_reference' && 
                 $value !== null &&
-                !($tableName === 'cabecote' && ($keyLower === 'motor_tipo' || $keyLower === 'tipo_val'))) {
+                !($tableName === 'cabecote' && ($keyLower === 'motor_tipo' || $keyLower === 'tipo_val')) &&
+                !($tableName === 'motor' && ($keyLower === 'created_at' || $keyLower === 'updated_at'))) {
                 echo "<tr>";
                 echo "<td class='data-label'>" . 
                      htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
