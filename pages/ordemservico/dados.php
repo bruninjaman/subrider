@@ -344,24 +344,27 @@ function displayCabecoteMedicoes($conn, $ordem) {
             for ($i = 1; $i <= $cabecote['val_adm']; $i++) {
                 $lado = ($i == 1) ? 'direita' : 'esquerda';
                 
-                // Folga válvula admissão
-                echo "<tr class='valvula-admissao'>";
-                echo "<td>Folga válvula admissão " . $lado . "</td>";
-                echo "<td>" . formatarIntervalo($cabecote['val_adm_limite_min'], $cabecote['val_adm_limite_max']) . "</td>";
-                
-                // Preencher células vazias até o cilindro atual
-                for ($c = 1; $c < $cil; $c++) {
-                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                // Só exibe a linha se houver valores válidos
+                if ($cabecote['val_adm_limite_min'] > 0 && $cabecote['val_adm_limite_max'] > 0) {
+                    // Folga válvula admissão
+                    echo "<tr class='valvula-admissao'>";
+                    echo "<td>Folga válvula admissão " . $lado . "</td>";
+                    echo "<td>" . formatarIntervalo($cabecote['val_adm_limite_min'], $cabecote['val_adm_limite_max']) . "</td>";
+                    
+                    // Preencher células vazias até o cilindro atual
+                    for ($c = 1; $c < $cil; $c++) {
+                        echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                    }
+                    
+                    // Célula do cilindro atual
+                    echo "<td class='" . $classe_cilindro . "'>-</td>";
+                    
+                    // Preencher células vazias após o cilindro atual
+                    for ($c = $cil + 1; $c <= $cabecote['cilindros']; $c++) {
+                        echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                    }
+                    echo "</tr>";
                 }
-                
-                // Célula do cilindro atual
-                echo "<td class='" . $classe_cilindro . "'>-</td>";
-                
-                // Preencher células vazias após o cilindro atual
-                for ($c = $cil + 1; $c <= $cabecote['cilindros']; $c++) {
-                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
-                }
-                echo "</tr>";
 
                 // Pastilha válvula admissão
                 echo "<tr class='valvula-admissao'>";
@@ -387,24 +390,27 @@ function displayCabecoteMedicoes($conn, $ordem) {
             for ($i = 1; $i <= $cabecote['val_esc']; $i++) {
                 $lado = ($i == 1) ? 'direita' : 'esquerda';
                 
-                // Folga válvula escape
-                echo "<tr class='valvula-escape'>";
-                echo "<td>Folga válvula escape " . $lado . "</td>";
-                echo "<td>" . formatarIntervalo($cabecote['val_esc_limite_min'], $cabecote['val_esc_limite_max']) . "</td>";
-                
-                // Preencher células vazias até o cilindro atual
-                for ($c = 1; $c < $cil; $c++) {
-                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                // Só exibe a linha se houver valores válidos
+                if ($cabecote['val_esc_limite_min'] > 0 && $cabecote['val_esc_limite_max'] > 0) {
+                    // Folga válvula escape
+                    echo "<tr class='valvula-escape'>";
+                    echo "<td>Folga válvula escape " . $lado . "</td>";
+                    echo "<td>" . formatarIntervalo($cabecote['val_esc_limite_min'], $cabecote['val_esc_limite_max']) . "</td>";
+                    
+                    // Preencher células vazias até o cilindro atual
+                    for ($c = 1; $c < $cil; $c++) {
+                        echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                    }
+                    
+                    // Célula do cilindro atual
+                    echo "<td class='" . $classe_cilindro . "'>-</td>";
+                    
+                    // Preencher células vazias após o cilindro atual
+                    for ($c = $cil + 1; $c <= $cabecote['cilindros']; $c++) {
+                        echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
+                    }
+                    echo "</tr>";
                 }
-                
-                // Célula do cilindro atual
-                echo "<td class='" . $classe_cilindro . "'>-</td>";
-                
-                // Preencher células vazias após o cilindro atual
-                for ($c = $cil + 1; $c <= $cabecote['cilindros']; $c++) {
-                    echo "<td class='" . ($c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente') . "'>-</td>";
-                }
-                echo "</tr>";
 
                 // Pastilha válvula escape
                 echo "<tr class='valvula-escape'>";
@@ -432,37 +438,42 @@ function displayCabecoteMedicoes($conn, $ordem) {
         echo "<td colspan='" . ($cabecote['cilindros'] + 2) . "'>MEDIÇÕES GERAIS DO CABEÇOTE</td>";
         echo "</tr>";
 
-        // Itens fixos
-        echo "<tr class='item-fixo'>";
-        echo "<td>Diâmetro eixo cames admissão</td>";
-        echo "<td>" . ($cabecote['cames_diam_min'] > 0 ? number_format($cabecote['cames_diam_min'], 2, ',', '.') : '-') . "</td>";
-        
-        // Cilindros de trás
-        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
-            echo "<td class='cilindro-tras'>-</td>";
+        // Itens fixos - só exibe se houver valores válidos
+        if ($cabecote['cames_adm_diam_max'] > 0) {
+            echo "<tr class='item-fixo'>";
+            echo "<td>Diâmetro eixo cames admissão</td>";
+            echo "<td>" . number_format($cabecote['cames_adm_diam_max'], 2, ',', '.') . "</td>";
+            
+            // Cilindros de trás
+            for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+                echo "<td class='cilindro-tras'>-</td>";
+            }
+            
+            // Cilindros da frente
+            for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+                echo "<td class='cilindro-frente'>-</td>";
+            }
+            echo "</tr>";
         }
-        
-        // Cilindros da frente
-        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
-            echo "<td class='cilindro-frente'>-</td>";
-        }
-        echo "</tr>";
 
-        echo "<tr class='item-fixo'>";
-        echo "<td>Diâmetro eixo cames escape</td>";
-        echo "<td>" . ($cabecote['cames_diam_min'] > 0 ? number_format($cabecote['cames_diam_min'], 2, ',', '.') : '-') . "</td>";
-        
-        // Cilindros de trás
-        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
-            echo "<td class='cilindro-tras'>-</td>";
+        if ($cabecote['cames_esc_diam_max'] > 0) {
+            echo "<tr class='item-fixo'>";
+            echo "<td>Diâmetro eixo cames escape</td>";
+            echo "<td>" . number_format($cabecote['cames_esc_diam_max'], 2, ',', '.') . "</td>";
+            
+            // Cilindros de trás
+            for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+                echo "<td class='cilindro-tras'>-</td>";
+            }
+            
+            // Cilindros da frente
+            for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+                echo "<td class='cilindro-frente'>-</td>";
+            }
+            echo "</tr>";
         }
-        
-        // Cilindros da frente
-        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
-            echo "<td class='cilindro-frente'>-</td>";
-        }
-        echo "</tr>";
 
+        // Valores fixos que sempre devem aparecer
         echo "<tr class='item-fixo'>";
         echo "<td>Empenamento eixo cames adm/esc</td>";
         echo "<td>0,10</td>";
@@ -493,21 +504,22 @@ function displayCabecoteMedicoes($conn, $ordem) {
         }
         echo "</tr>";
 
-        echo "<tr class='item-fixo'>";
-        echo "<td>Compressão</td>";
-        echo "<td>" . ($cabecote['compressao_min'] > 0 && $cabecote['compressao_max'] > 0 ? 
-            formatarIntervalo($cabecote['compressao_min'], $cabecote['compressao_max']) : '-') . "</td>";
-        
-        // Cilindros de trás
-        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
-            echo "<td class='cilindro-tras'>-</td>";
+        if ($cabecote['compressao_min'] > 0 && $cabecote['compressao_max'] > 0) {
+            echo "<tr class='item-fixo'>";
+            echo "<td>Compressão</td>";
+            echo "<td>" . formatarIntervalo($cabecote['compressao_min'], $cabecote['compressao_max']) . "</td>";
+            
+            // Cilindros de trás
+            for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+                echo "<td class='cilindro-tras'>-</td>";
+            }
+            
+            // Cilindros da frente
+            for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+                echo "<td class='cilindro-frente'>-</td>";
+            }
+            echo "</tr>";
         }
-        
-        // Cilindros da frente
-        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
-            echo "<td class='cilindro-frente'>-</td>";
-        }
-        echo "</tr>";
 
         echo "</tbody></table>";
         echo "</div>";
