@@ -66,4 +66,46 @@ body {
   .ql-snow .ql-picker-options .ql-selected {
     background-color: #666;
   }
+
+  /* Editor container styling */
+  #editor {
+    background-color: #2a2c35;
+    border-radius: 0 0 8px 8px;
+    min-height: 400px;
+    padding: 20px;
+    color: #e0e0e0;
+  }
+
+  /* Custom styling for editor content */
+  .ql-editor h2 {
+    color: #4a90e2;
+    border-bottom: 1px solid #4a90e2;
+    padding-bottom: 10px;
+  }
+
+  .ql-editor h3 {
+    color: #e0e0e0;
+    margin-top: 20px;
+  }
+
+  .ql-editor ul {
+    color: #e0e0e0;
+    padding-left: 20px;
+  }
+
+  /* Enhance toolbar buttons */
+  .ql-toolbar button:hover {
+    background-color: #555;
+    border-radius: 4px;
+  }
+
+  /* Style for color picker and other dropdowns */
+  .ql-picker-options {
+    background-color: #2a2c35 !important;
+    border: 1px solid #444 !important;
+  }
+
+  .ql-picker-item:hover {
+    background-color: #444 !important;
+  }
   

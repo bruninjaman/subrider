@@ -21,11 +21,21 @@ echo "</style>";
         <div>
           <div class="row">
             <div class="col-12">
-              <label for="editor"><h3>Relatório</h3></label>
+              <label for="editor"><h3>Relatório de Ordem de Serviço</h3></label>
               <!-- Quill editor container with dark background and light text -->
               <div id="editor">
-                <p>Relatório da <strong>Subrider</strong>,</p>
-                <p><br /></p>
+                <h2>Relatório de Ordem de Serviço - Subrider</h2>
+                <p><br></p>
+                <h3>Detalhes do Serviço:</h3>
+                <ul>
+                  <li>Data: [DATA]</li>
+                  <li>Ordem de Serviço Nº: <?php echo $_GET['ordem']; ?></li>
+                </ul>
+                <p><br></p>
+                <h3>Descrição do Serviço:</h3>
+                <p><br></p>
+                <h3>Observações:</h3>
+                <p><br></p>
               </div>
 
               <!-- Hidden textarea to store the content for form submission -->
