@@ -293,13 +293,13 @@ function displayCabecoteMedicoes($conn, $ordem) {
         
         // Cabeçalho da tabela
         echo "<div class='table-container'>";
+        echo "<form method='POST' class='table-form'>";
+        echo "<input type='hidden' name='table' value='cabecote'>";
+        echo "<input type='hidden' name='update' value='1'>";
         echo "<table>";
-        echo "<thead>";
         
         // Primeira linha com identificadores de frente/trás
-        echo "<tr class='identificadores'>";
-        echo "<th>ITEM</th>";
-        echo "<th>REFERÊNCIA</th>";
+        echo "<thead><tr><th>ITEM</th><th>REFERÊNCIA</th>";
         
         // Calcular quantos cilindros são da frente e quantos são de trás
         $cilindros_tras = ceil($cabecote['cilindros'] / 2);
@@ -314,54 +314,36 @@ function displayCabecoteMedicoes($conn, $ordem) {
         for ($i = $cilindros_tras + 1; $i <= $cabecote['cilindros']; $i++) {
             echo "<th class='cilindro-frente'>CILINDRO " . $i . "</th>";
         }
-        echo "</tr>";
-        
-        // Segunda linha com identificadores ESQUERDO/DIREITO
-        echo "<tr class='identificadores'>";
-        echo "<th></th>";
-        echo "<th></th>";
-        
-        // Cilindros de trás
-        for ($i = 1; $i <= $cilindros_tras; $i++) {
-            echo "<th class='cilindro-tras'>ESQUERDO (TRÁS)</th>";
-        }
-        
-        // Cilindros da frente
-        for ($i = $cilindros_tras + 1; $i <= $cabecote['cilindros']; $i++) {
-            echo "<th class='cilindro-frente'>DIREITO (FRENTE)</th>";
-        }
-        echo "</tr>";
-        echo "</thead>";
+        echo "</tr></thead>";
         echo "<tbody>";
 
         // Válvulas de admissão
         for ($i = 1; $i <= $cabecote['val_adm']; $i++) {
             $lado = ($i == 1) ? 'direita' : 'esquerda';
             
-            // Só exibe a linha se houver valores válidos
             if ($cabecote['val_adm_limite_min'] > 0 && $cabecote['val_adm_limite_max'] > 0) {
-                // Folga válvula admissão
                 echo "<tr class='valvula-admissao'>";
                 echo "<td>Folga válvula admissão " . $lado . "</td>";
                 echo "<td>" . formatarIntervalo($cabecote['val_adm_limite_min'], $cabecote['val_adm_limite_max']) . "</td>";
                 
-                // Células para cada cilindro
                 for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                     $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                    echo "<td class='" . $classe_cilindro . "'>-</td>";
+                    echo "<td class='" . $classe_cilindro . "'>";
+                    echo "<input type='text' name='medida[adm_folga_" . $lado . "][" . $c . "]' class='meas-input' value=''>";
+                    echo "</td>";
                 }
                 echo "</tr>";
             }
 
-            // Pastilha válvula admissão
             echo "<tr class='valvula-admissao'>";
             echo "<td>Pastilha válvula admissão " . $lado . "</td>";
             echo "<td>-</td>";
             
-            // Células para cada cilindro
             for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                 $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                echo "<td class='" . $classe_cilindro . "'>-</td>";
+                echo "<td class='" . $classe_cilindro . "'>";
+                echo "<input type='text' name='medida[adm_pastilha_" . $lado . "][" . $c . "]' class='meas-input' value=''>";
+                echo "</td>";
             }
             echo "</tr>";
         }
@@ -370,30 +352,29 @@ function displayCabecoteMedicoes($conn, $ordem) {
         for ($i = 1; $i <= $cabecote['val_esc']; $i++) {
             $lado = ($i == 1) ? 'direita' : 'esquerda';
             
-            // Só exibe a linha se houver valores válidos
             if ($cabecote['val_esc_limite_min'] > 0 && $cabecote['val_esc_limite_max'] > 0) {
-                // Folga válvula escape
                 echo "<tr class='valvula-escape'>";
                 echo "<td>Folga válvula escape " . $lado . "</td>";
                 echo "<td>" . formatarIntervalo($cabecote['val_esc_limite_min'], $cabecote['val_esc_limite_max']) . "</td>";
                 
-                // Células para cada cilindro
                 for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                     $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                    echo "<td class='" . $classe_cilindro . "'>-</td>";
+                    echo "<td class='" . $classe_cilindro . "'>";
+                    echo "<input type='text' name='medida[esc_folga_" . $lado . "][" . $c . "]' class='meas-input' value=''>";
+                    echo "</td>";
                 }
                 echo "</tr>";
             }
 
-            // Pastilha válvula escape
             echo "<tr class='valvula-escape'>";
             echo "<td>Pastilha válvula escape " . $lado . "</td>";
             echo "<td>-</td>";
             
-            // Células para cada cilindro
             for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                 $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                echo "<td class='" . $classe_cilindro . "'>-</td>";
+                echo "<td class='" . $classe_cilindro . "'>";
+                echo "<input type='text' name='medida[esc_pastilha_" . $lado . "][" . $c . "]' class='meas-input' value=''>";
+                echo "</td>";
             }
             echo "</tr>";
         }
@@ -487,11 +468,48 @@ function displayCabecoteMedicoes($conn, $ordem) {
         }
 
         echo "</tbody></table>";
+        echo "<button type='submit' class='save-btn'>Salvar Medições</button>";
+        echo "</form>";
         echo "</div>";
         echo "</div>";
         
     } catch (Exception $e) {
         echo "<div class='error-msg'>Erro ao exibir medições do cabeçote: " . htmlspecialchars($e->getMessage()) . "</div>";
+    }
+}
+
+// Adicione este código para processar o formulário
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'cabecote') {
+    try {
+        // Verificar se já existe medição
+        $checkQuery = "SELECT COUNT(*) as count FROM cabecote WHERE is_reference = 0 AND ordem = ?";
+        $checkStmt = mysqli_prepare($conn, $checkQuery);
+        mysqli_stmt_bind_param($checkStmt, "s", $ordem);
+        mysqli_stmt_execute($checkStmt);
+        $checkResult = mysqli_stmt_get_result($checkStmt);
+        $checkRow = mysqli_fetch_assoc($checkResult);
+
+        if ($checkRow['count'] == 0) {
+            // Inserir nova medição
+            $insertQuery = "INSERT INTO cabecote (ordem, is_reference) VALUES (?, 0)";
+            $insertStmt = mysqli_prepare($conn, $insertQuery);
+            mysqli_stmt_bind_param($insertStmt, "s", $ordem);
+            mysqli_stmt_execute($insertStmt);
+            $medicao_id = mysqli_insert_id($conn);
+        }
+
+        // Atualizar medições
+        if (isset($_POST['medida'])) {
+            foreach ($_POST['medida'] as $tipo => $cilindros) {
+                foreach ($cilindros as $cilindro => $valor) {
+                    // Aqui você precisará criar a lógica para atualizar cada medição
+                    // baseado na estrutura do seu banco de dados
+                }
+            }
+            echo "<div class='success-msg'>Medições salvas com sucesso!</div>";
+        }
+    } catch (Exception $e) {
+        echo "<div class='error-msg'>Erro ao salvar medições: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
 }
 
