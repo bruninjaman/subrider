@@ -137,7 +137,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
         echo "<div class='table-container'>";
         echo "<table>";
-        echo "<thead><tr><th>Parâmetro</th><th>Referência</th><th>Medidos</th></tr></thead>";
+        echo "<thead><tr><th>Parâmetro</th><th>Referência</th><th>Real</th></tr></thead>";
         echo "<tbody>";
 
         foreach ($refRow as $key => $value) {
@@ -288,7 +288,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
 
         echo "<div class='card cabecote-medicoes'>";
         echo "<h2 class='card-title'>MENU MEDIÇÕES CABEÇOTE</h2>";
-        echo "<div class='legenda'>Valores retirados do banco de dados</div>";
+        echo "<div class='legenda'>Medição de válvulas para cada cilindro</div>";
         echo "<div class='subtitulo'>" . htmlspecialchars($cabecote['motor_tipo']) . "</div>";
         
         // Cabeçalho da tabela
