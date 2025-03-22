@@ -1,7 +1,7 @@
 /* Style for the modernized form */
 body {
     background-color: #1d1f27; /* Dark background */
-    font-family: 'Roboto', sans-serif; /* Modern font */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #e0e0e0; /* Light text */
   }
   /* Styling for toolbar */
@@ -12,8 +12,9 @@ body {
   }
 
   .form input[type="submit"] {
-    width:350px;
-}
+    width: 350px;
+    margin-top: 20px;
+  }
   /* Input label style */
   label {
     font-weight: bold;
@@ -107,5 +108,36 @@ body {
 
   .ql-picker-item:hover {
     background-color: #444 !important;
+  }
+
+  /* Editor container adjustments */
+  .tox-tinymce {
+    border-radius: 8px !important;
+  }
+
+  /* Editor customization */
+  .ck-editor__editable {
+    min-height: 400px !important;
+    color: #e0e0e0 !important;
+    background-color: #2a2c35 !important;
+  }
+
+  .ck.ck-editor__main>.ck-editor__editable {
+    background: #2a2c35 !important;
+    border: 1px solid #444 !important;
+  }
+
+  .ck.ck-toolbar {
+    background: #444 !important;
+    border: 1px solid #555 !important;
+  }
+
+  .ck.ck-button {
+    color: #e0e0e0 !important;
+    cursor: pointer;
+  }
+
+  .ck.ck-button:hover {
+    background: #555 !important;
   }
   

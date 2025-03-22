@@ -1,33 +1,32 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const toolbarOptions = [
-        ['bold', 'italic', 'underline', 'strike'],
-        ['blockquote', 'code-block'],
-        [{ 'header': 1 }, { 'header': 2 }],
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],
-        [{ 'size': ['small', false, 'large', 'huge'] }],
-        [{ 'color': [] }, { 'background': [] }],
-        ['link', 'image'],
-        ['clean']
-    ];
-
-    const quill = new Quill('#editor', {
-        modules: {
-            toolbar: toolbarOptions
-        },
-        theme: 'snow'
-    });
-
-    // Adicionar data atual automaticamente
-    const dataAtual = new Date().toLocaleDateString('pt-BR');
-    const dataElement = quill.root.querySelector('li');
-    if (dataElement) {
-        dataElement.textContent = `Data: ${dataAtual}`;
-    }
-
-    // On form submission, append Quill's HTML content to a hidden textarea
-    document.querySelector('form').onsubmit = function() {
-        var quillContent = document.querySelector('input[name=desc]');
-        quillContent.value = quill.root.innerHTML;
-    };
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            toolbar: [
+                'heading',
+                '|',
+                'bold',
+                'italic',
+                'bulletedList',
+                'numberedList',
+                '|',
+                'undo',
+                'redo'
+            ],
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Parágrafo', class: 'ck-heading_paragraph' },
+                    { model: 'heading2', view: 'h2', title: 'Título 1', class: 'ck-heading_heading2' },
+                    { model: 'heading3', view: 'h3', title: 'Título 2', class: 'ck-heading_heading3' }
+                ]
+            }
+        })
+        .then(editor => {
+            // Quando o formulário for enviado, pega o conteúdo do editor
+            document.querySelector('form').addEventListener('submit', function() {
+                document.querySelector('input[name=desc]').value = editor.getData();
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
 });

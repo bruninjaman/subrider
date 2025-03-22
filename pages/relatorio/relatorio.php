@@ -2,6 +2,12 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+<!-- Include TinyMCE -->
+<script src="https://cdn.tiny.cloud/1/vyfv561lwa2j1rohg50gvpg3w6rhao6tbw7ax2hwcljwlzu5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Include CKEditor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+
 <?php
 echo "<script>";
 echo file_get_contents('pages/relatorio/relatorio.js');
@@ -22,23 +28,17 @@ echo "</style>";
           <div class="row">
             <div class="col-12">
               <label for="editor"><h3>Relatório de Ordem de Serviço</h3></label>
-              <!-- Quill editor container with dark background and light text -->
+              <!-- Editor container -->
               <div id="editor">
                 <h2>Relatório de Ordem de Serviço - Subrider</h2>
-                <p><br></p>
-                <h3>Detalhes do Serviço:</h3>
-                <ul>
-                  <li>Data: [DATA]</li>
-                  <li>Ordem de Serviço Nº: <?php echo $_GET['ordem']; ?></li>
-                </ul>
-                <p><br></p>
+                <p>Data: <?php echo date('d/m/Y'); ?></p>
+                <p>Ordem de Serviço Nº: <?php echo $_GET['ordem']; ?></p>
+                <p>&nbsp;</p>
                 <h3>Descrição do Serviço:</h3>
-                <p><br></p>
+                <p>&nbsp;</p>
                 <h3>Observações:</h3>
-                <p><br></p>
+                <p>&nbsp;</p>
               </div>
-
-              <!-- Hidden textarea to store the content for form submission -->
               <input type="hidden" name="desc">
             </div>
             <div class="col-12">
