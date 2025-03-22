@@ -534,45 +534,12 @@ if (isset($_GET['ordem'])) {
 echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
-<script>
-function calcularPastilha(input, tipo, lado, cilindro) {
-    console.log('Calculando pastilha:', {tipo, lado, cilindro}); // Debug
+<input type="hidden" id="val_adm_limite_min" value="<?php echo $cabecote['val_adm_limite_min']; ?>">
+<input type="hidden" id="val_adm_limite_max" value="<?php echo $cabecote['val_adm_limite_max']; ?>">
+<input type="hidden" id="val_esc_limite_min" value="<?php echo $cabecote['val_esc_limite_min']; ?>">
+<input type="hidden" id="val_esc_limite_max" value="<?php echo $cabecote['val_esc_limite_max']; ?>">
 
-    // Obter o valor da folga
-    let folgaValue = parseFloat(input.value.replace(',', '.'));
-    console.log('Valor da folga:', folgaValue); // Debug
-
-    if (isNaN(folgaValue)) {
-        document.getElementById(`pastilha_${tipo}_${lado}_${cilindro}`).textContent = '-';
-        return;
-    }
-
-    // Obter os valores de referência do cabeçote
-    let limiteMin = tipo === 'adm' ? <?php echo $cabecote['val_adm_limite_min']; ?> : <?php echo $cabecote['val_esc_limite_min']; ?>;
-    let limiteMax = tipo === 'adm' ? <?php echo $cabecote['val_adm_limite_max']; ?> : <?php echo $cabecote['val_esc_limite_max']; ?>;
-    
-    // Calcular o valor médio do intervalo (referência)
-    let valorReferencia = (limiteMin + limiteMax) / 2;
-    console.log('Valor referência:', valorReferencia); // Debug
-    
-    // Calcular a pastilha (PC = F - R + PA)
-    let pastilhaAntiga = 3.00;
-    let pastilhaCorrigida = (folgaValue - valorReferencia) + pastilhaAntiga;
-    console.log('Pastilha corrigida:', pastilhaCorrigida); // Debug
-    
-    // Atualizar a célula com o valor calculado
-    let celulaPastilha = document.getElementById(`pastilha_${tipo}_${lado}_${cilindro}`);
-    console.log('Elemento célula:', celulaPastilha); // Debug
-
-    if (celulaPastilha) {
-        let valorFormatado = pastilhaCorrigida.toFixed(2).replace('.', ',');
-        celulaPastilha.textContent = valorFormatado;
-        console.log('Valor atualizado:', valorFormatado); // Debug
-    } else {
-        console.log('Célula não encontrada!'); // Debug
-    }
-}
-</script>
+<script src="pages/ordemservico/calcularPastilha.js"></script>
 
 <style>
 .card {
