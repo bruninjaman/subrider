@@ -8,7 +8,7 @@ if (!isset($_GET['ordem'])) {
 // Usar a ordem como string
 $ordem = $_GET['ordem'];
 
-// Verificação da conexão com o banco de dados
+// Verificação da conexão cos com o banco de dados
 if (!isset($conn) || !$conn) {
     die("<div class='error-msg'>Erro: Conexão com o banco de dados não estabelecida.</div>");
 }
@@ -329,7 +329,10 @@ function displayCabecoteMedicoes($conn, $ordem) {
                 for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                     $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                     echo "<td class='" . $classe_cilindro . "'>";
-                    echo "<input type='text' name='medida[adm_folga_" . $lado . "][" . $c . "]' class='meas-input' value=''>";
+                    echo "<input type='text' 
+                        name='medida[adm_folga_" . $lado . "][" . $c . "]' 
+                        class='meas-input folga-input' 
+                        onchange='calcularPastilha(this, \"adm\", \"" . $lado . "\", " . $c . ")'>";
                     echo "</td>";
                 }
                 echo "</tr>";
@@ -341,8 +344,8 @@ function displayCabecoteMedicoes($conn, $ordem) {
             
             for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                 $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                echo "<td class='" . $classe_cilindro . "'>";
-                echo "<input type='text' name='medida[adm_pastilha_" . $lado . "][" . $c . "]' class='meas-input' value=''>";
+                echo "<td class='" . $classe_cilindro . " valor-calculado'>";
+                echo "<div id='pastilha_adm_" . $lado . "_" . $c . "' class='pastilha-valor'>-</div>";
                 echo "</td>";
             }
             echo "</tr>";
@@ -360,7 +363,10 @@ function displayCabecoteMedicoes($conn, $ordem) {
                 for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                     $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                     echo "<td class='" . $classe_cilindro . "'>";
-                    echo "<input type='text' name='medida[esc_folga_" . $lado . "][" . $c . "]' class='meas-input' value=''>";
+                    echo "<input type='text' 
+                        name='medida[esc_folga_" . $lado . "][" . $c . "]' 
+                        class='meas-input folga-input' 
+                        onchange='calcularPastilha(this, \"esc\", \"" . $lado . "\", " . $c . ")'>";
                     echo "</td>";
                 }
                 echo "</tr>";
@@ -372,8 +378,8 @@ function displayCabecoteMedicoes($conn, $ordem) {
             
             for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                 $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                echo "<td class='" . $classe_cilindro . "'>";
-                echo "<input type='text' name='medida[esc_pastilha_" . $lado . "][" . $c . "]' class='meas-input' value=''>";
+                echo "<td class='" . $classe_cilindro . " valor-calculado'>";
+                echo "<div id='pastilha_esc_" . $lado . "_" . $c . "' class='pastilha-valor'>-</div>";
                 echo "</td>";
             }
             echo "</tr>";
@@ -527,6 +533,46 @@ if (isset($_GET['ordem'])) {
 
 echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
+
+<script>
+function calcularPastilha(input, tipo, lado, cilindro) {
+    console.log('Calculando pastilha:', {tipo, lado, cilindro}); // Debug
+
+    // Obter o valor da folga
+    let folgaValue = parseFloat(input.value.replace(',', '.'));
+    console.log('Valor da folga:', folgaValue); // Debug
+
+    if (isNaN(folgaValue)) {
+        document.getElementById(`pastilha_${tipo}_${lado}_${cilindro}`).textContent = '-';
+        return;
+    }
+
+    // Obter os valores de referência do cabeçote
+    let limiteMin = tipo === 'adm' ? <?php echo $cabecote['val_adm_limite_min']; ?> : <?php echo $cabecote['val_esc_limite_min']; ?>;
+    let limiteMax = tipo === 'adm' ? <?php echo $cabecote['val_adm_limite_max']; ?> : <?php echo $cabecote['val_esc_limite_max']; ?>;
+    
+    // Calcular o valor médio do intervalo (referência)
+    let valorReferencia = (limiteMin + limiteMax) / 2;
+    console.log('Valor referência:', valorReferencia); // Debug
+    
+    // Calcular a pastilha (PC = F - R + PA)
+    let pastilhaAntiga = 3.00;
+    let pastilhaCorrigida = (folgaValue - valorReferencia) + pastilhaAntiga;
+    console.log('Pastilha corrigida:', pastilhaCorrigida); // Debug
+    
+    // Atualizar a célula com o valor calculado
+    let celulaPastilha = document.getElementById(`pastilha_${tipo}_${lado}_${cilindro}`);
+    console.log('Elemento célula:', celulaPastilha); // Debug
+
+    if (celulaPastilha) {
+        let valorFormatado = pastilhaCorrigida.toFixed(2).replace('.', ',');
+        celulaPastilha.textContent = valorFormatado;
+        console.log('Valor atualizado:', valorFormatado); // Debug
+    } else {
+        console.log('Célula não encontrada!'); // Debug
+    }
+}
+</script>
 
 <style>
 .card {
@@ -795,5 +841,38 @@ th {
     font-size: 1.1em;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+/* Adicione estes estilos */
+.meas-input[readonly] {
+    background-color: #1a1b23;
+    border-color: #333;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.pastilha-input {
+    background-color: #2a2c35;
+    border-color: #4CAF50;
+    color: #fff;
+    cursor: text;
+}
+
+.folga-input {
+    background-color: #2a2c35;
+    border-color: #4CAF50;
+    color: #fff;
+    cursor: text;
+}
+
+.pastilha-valor {
+    color: #4CAF50;
+    font-weight: bold;
+    min-height: 1em; /* Garante altura mínima mesmo vazio */
+}
+
+.valor-calculado {
+    text-align: right;
+    padding: 8px;
 }
 </style>
