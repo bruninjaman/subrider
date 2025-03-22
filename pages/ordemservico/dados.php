@@ -332,7 +332,10 @@ function displayCabecoteMedicoes($conn, $ordem) {
                     echo "<input type='text' 
                         name='medida[adm_folga_" . $lado . "][" . $c . "]' 
                         class='meas-input folga-input' 
-                        onchange='calcularPastilha(this, \"adm\", \"" . $lado . "\", " . $c . ")'>";
+                        data-cilindro='" . $c . "' 
+                        data-tipo='adm' 
+                        data-lado='" . $lado . "' 
+                        onchange='calcularPastilha(this)'>";
                     echo "</td>";
                 }
                 echo "</tr>";
@@ -344,8 +347,14 @@ function displayCabecoteMedicoes($conn, $ordem) {
             
             for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                 $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                echo "<td class='" . $classe_cilindro . " valor-calculado'>";
-                echo "<div id='pastilha_adm_" . $lado . "_" . $c . "' class='pastilha-valor'>-</div>";
+                echo "<td class='" . $classe_cilindro . "'>";
+                echo "<div class='pastilha-container'>";
+                echo "<input type='text' 
+                    name='medida[adm_pastilha_" . $lado . "][" . $c . "]' 
+                    class='meas-input pastilha-input'>";
+                echo "<div class='pastilha-corrigida' 
+                    id='pc_adm_" . $lado . "_" . $c . "'>-</div>";
+                echo "</div>";
                 echo "</td>";
             }
             echo "</tr>";
@@ -366,7 +375,10 @@ function displayCabecoteMedicoes($conn, $ordem) {
                     echo "<input type='text' 
                         name='medida[esc_folga_" . $lado . "][" . $c . "]' 
                         class='meas-input folga-input' 
-                        onchange='calcularPastilha(this, \"esc\", \"" . $lado . "\", " . $c . ")'>";
+                        data-cilindro='" . $c . "' 
+                        data-tipo='esc' 
+                        data-lado='" . $lado . "' 
+                        onchange='calcularPastilha(this)'>";
                     echo "</td>";
                 }
                 echo "</tr>";
@@ -378,8 +390,14 @@ function displayCabecoteMedicoes($conn, $ordem) {
             
             for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
                 $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                echo "<td class='" . $classe_cilindro . " valor-calculado'>";
-                echo "<div id='pastilha_esc_" . $lado . "_" . $c . "' class='pastilha-valor'>-</div>";
+                echo "<td class='" . $classe_cilindro . "'>";
+                echo "<div class='pastilha-container'>";
+                echo "<input type='text' 
+                    name='medida[esc_pastilha_" . $lado . "][" . $c . "]' 
+                    class='meas-input pastilha-input'>";
+                echo "<div class='pastilha-corrigida' 
+                    id='pc_esc_" . $lado . "_" . $c . "'>-</div>";
+                echo "</div>";
                 echo "</td>";
             }
             echo "</tr>";
@@ -841,5 +859,26 @@ th {
 .valor-calculado {
     text-align: right;
     padding: 8px;
+}
+
+.pastilha-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pastilha-corrigida {
+    font-size: 0.9em;
+    color: #4CAF50;
+    text-align: right;
+    padding: 2px 4px;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 3px;
+}
+
+.pastilha-corrigida::before {
+    content: 'PC: ';
+    color: #888;
+    font-size: 0.9em;
 }
 </style>

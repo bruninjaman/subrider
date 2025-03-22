@@ -1,30 +1,53 @@
-function calcularPastilha(input, tipo, lado, cilindro) {
-    console.log('Calculando pastilha:', {tipo, lado, cilindro});
+function calcularPastilha(input) {
+    // Pegar os dados do elemento usando getAttribute para garantir
+    const cilindro = input.getAttribute('data-cilindro');
+    const tipo = input.getAttribute('data-tipo');
+    const lado = input.getAttribute('data-lado');
+    
+    // Log para debug
+    console.log('Dados do input:', {
+        cilindro: cilindro,
+        tipo: tipo,
+        lado: lado,
+        valor: input.value
+    });
 
-    // Obter o valor da folga
-    let folgaValue = parseFloat(input.value.replace(',', '.'));
-    console.log('Valor da folga:', folgaValue);
-
-    if (isNaN(folgaValue)) {
-        document.getElementById(`pastilha_${tipo}_${lado}_${cilindro}`).textContent = '-';
+    // Verificar se todos os dados necessários estão presentes
+    if (!cilindro || !tipo || !lado) {
+        console.error('Dados necessários não encontrados no input:', {cilindro, tipo, lado});
         return;
     }
 
-    // Obter os valores de referência diretamente da tabela
-    let referenciaCell;
-    const rows = document.querySelectorAll('tr');
-    for (let row of rows) {
-        const firstCell = row.querySelector('td');
-        if (firstCell) {
-            const cellText = firstCell.textContent.trim();
-            if (tipo === 'adm' && cellText === `Folga válvula admissão ${lado}`) {
-                referenciaCell = row.querySelector('td:nth-child(2)');
-                break;
-            } else if (tipo === 'esc' && cellText === `Folga válvula escape ${lado}`) {
-                referenciaCell = row.querySelector('td:nth-child(2)');
-                break;
-            }
-        }
+    // Obter o valor da folga
+    let folgaValue = input.value.trim().replace(',', '.');
+    
+    // Encontrar o input da pastilha atual
+    let pastilhaInput = document.querySelector(`input[name="medida[${tipo}_pastilha_${lado}][${cilindro}]"]`);
+    if (!pastilhaInput) {
+        console.error('Input da pastilha não encontrado');
+        return;
+    }
+    
+    let pastilhaAtual = pastilhaInput.value.trim().replace(',', '.');
+    
+    // Verificar se os valores são numéricos válidos
+    if (!folgaValue || !pastilhaAtual || isNaN(folgaValue) || isNaN(pastilhaAtual)) {
+        document.getElementById(`pc_${tipo}_${lado}_${cilindro}`).textContent = '-';
+        return;
+    }
+    
+    // Converter para números
+    folgaValue = parseFloat(folgaValue);
+    pastilhaAtual = parseFloat(pastilhaAtual);
+
+    // Buscar a referência
+    let textoReferencia = `Folga válvula ${tipo === 'adm' ? 'admissão' : 'escape'} ${lado}`;
+    let referenciaCell = null;
+
+    // Encontrar a célula de referência na mesma linha do input
+    let linha = input.closest('tr');
+    if (linha) {
+        referenciaCell = linha.querySelector('td:nth-child(2)');
     }
 
     if (!referenciaCell) {
@@ -36,25 +59,32 @@ function calcularPastilha(input, tipo, lado, cilindro) {
     let refText = referenciaCell.textContent.trim();
     let [min, max] = refText.split(' a ').map(val => parseFloat(val.replace(',', '.')));
     
+    if (isNaN(min) || isNaN(max)) {
+        console.error('Valores de referência inválidos:', refText);
+        return;
+    }
+    
     // Calcular o valor médio do intervalo (referência)
     let valorReferencia = (min + max) / 2;
-    console.log('Valor referência:', valorReferencia);
     
-    // Calcular a pastilha (PC = F - R + PA)
-    let pastilhaAntiga = 3.00; // Valor fixo da pastilha antiga
-    let pastilhaCorrigida = (folgaValue - valorReferencia) + pastilhaAntiga;
-    console.log('Pastilha corrigida:', pastilhaCorrigida);
+    // Calcular a pastilha nova: (folga - referencia) + pastilha atual
+    let pastilhaCorrigida = (folgaValue - valorReferencia) + pastilhaAtual;
     
-    // Atualizar a célula com o valor calculado
-    let celulaPastilha = document.getElementById(`pastilha_${tipo}_${lado}_${cilindro}`);
-    console.log('Elemento célula:', celulaPastilha);
-
-    if (celulaPastilha) {
+    // Atualizar o valor calculado
+    let celulaPastilhaCorrigida = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
+    if (celulaPastilhaCorrigida) {
         let valorFormatado = pastilhaCorrigida.toFixed(2).replace('.', ',');
-        celulaPastilha.textContent = valorFormatado;
-        console.log('Valor atualizado:', valorFormatado);
+        celulaPastilhaCorrigida.textContent = valorFormatado;
+        
+        console.log('Cálculo realizado:', {
+            folga: folgaValue,
+            pastilhaAtual: pastilhaAtual,
+            valorReferencia: valorReferencia,
+            pastilhaCorrigida: pastilhaCorrigida,
+            valorFormatado: valorFormatado
+        });
     } else {
-        console.error('Célula não encontrada:', `pastilha_${tipo}_${lado}_${cilindro}`);
+        console.error(`Elemento de resultado não encontrado: pc_${tipo}_${lado}_${cilindro}`);
     }
 }
 
