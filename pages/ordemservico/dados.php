@@ -296,23 +296,26 @@ function displayCabecoteMedicoes($conn, $ordem) {
                 echo "</tr>";
             }
 
-            echo "<tr class='valvula-admissao'>";
-            echo "<td>Pastilha válvula admissão " . $lado . "</td>";
-            echo "<td>-</td>";
-            
-            for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
-                $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                echo "<td class='" . $classe_cilindro . "'>";
-                echo "<div class='pastilha-container'>";
-                echo "<input type='text' 
-                    name='medida[adm_pastilha_" . $lado . "][" . $c . "]' 
-                    class='meas-input pastilha-input'>";
-                echo "<div class='pastilha-corrigida' 
-                    id='pc_adm_" . $lado . "_" . $c . "'>-</div>";
-                echo "</div>";
-                echo "</td>";
+            // Só exibe as pastilhas se tiver tucho
+            if (isset($cabecote['tucho']) && $cabecote['tucho'] == 1) {
+                echo "<tr class='valvula-admissao'>";
+                echo "<td>Pastilha válvula admissão " . $lado . "</td>";
+                echo "<td>-</td>";
+                
+                for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
+                    $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
+                    echo "<td class='" . $classe_cilindro . "'>";
+                    echo "<div class='pastilha-container'>";
+                    echo "<input type='text' 
+                        name='medida[adm_pastilha_" . $lado . "][" . $c . "]' 
+                        class='meas-input pastilha-input'>";
+                    echo "<div class='pastilha-corrigida' 
+                        id='pc_adm_" . $lado . "_" . $c . "'>-</div>";
+                    echo "</div>";
+                    echo "</td>";
+                }
+                echo "</tr>";
             }
-            echo "</tr>";
         }
 
         // Válvulas de escape
@@ -339,23 +342,26 @@ function displayCabecoteMedicoes($conn, $ordem) {
                 echo "</tr>";
             }
 
-            echo "<tr class='valvula-escape'>";
-            echo "<td>Pastilha válvula escape " . $lado . "</td>";
-            echo "<td>-</td>";
-            
-            for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
-                $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
-                echo "<td class='" . $classe_cilindro . "'>";
-                echo "<div class='pastilha-container'>";
-                echo "<input type='text' 
-                    name='medida[esc_pastilha_" . $lado . "][" . $c . "]' 
-                    class='meas-input pastilha-input'>";
-                echo "<div class='pastilha-corrigida' 
-                    id='pc_esc_" . $lado . "_" . $c . "'>-</div>";
-                echo "</div>";
-                echo "</td>";
+            // Só exibe as pastilhas se tiver tucho
+            if (isset($cabecote['tucho']) && $cabecote['tucho'] == 1) {
+                echo "<tr class='valvula-escape'>";
+                echo "<td>Pastilha válvula escape " . $lado . "</td>";
+                echo "<td>-</td>";
+                
+                for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
+                    $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
+                    echo "<td class='" . $classe_cilindro . "'>";
+                    echo "<div class='pastilha-container'>";
+                    echo "<input type='text' 
+                        name='medida[esc_pastilha_" . $lado . "][" . $c . "]' 
+                        class='meas-input pastilha-input'>";
+                    echo "<div class='pastilha-corrigida' 
+                        id='pc_esc_" . $lado . "_" . $c . "'>-</div>";
+                    echo "</div>";
+                    echo "</td>";
+                }
+                echo "</tr>";
             }
-            echo "</tr>";
         }
 
         // Adicionar medição de compressão aqui, antes do separador
