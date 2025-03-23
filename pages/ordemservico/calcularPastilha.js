@@ -30,15 +30,27 @@ function calcularPastilha(input) {
     
     let pastilhaAtual = pastilhaInput.value.trim().replace(',', '.');
     
-    // Verificar se os valores são numéricos válidos
-    if (!folgaValue || !pastilhaAtual || isNaN(folgaValue) || isNaN(pastilhaAtual)) {
-        document.getElementById(`pc_${tipo}_${lado}_${cilindro}`).textContent = '-';
+    // Verificar se os valores são numéricos válidos e diferentes de vazio
+    if (!folgaValue || !pastilhaAtual || isNaN(folgaValue) || isNaN(pastilhaAtual) || folgaValue === '' || pastilhaAtual === '') {
+        let celulaPastilhaCorrigida = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
+        if (celulaPastilhaCorrigida) {
+            celulaPastilhaCorrigida.textContent = '-';
+        }
         return;
     }
     
     // Converter para números
     folgaValue = parseFloat(folgaValue);
     pastilhaAtual = parseFloat(pastilhaAtual);
+
+    // Verificar se os valores são zero ou negativos
+    if (folgaValue <= 0 || pastilhaAtual <= 0) {
+        let celulaPastilhaCorrigida = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
+        if (celulaPastilhaCorrigida) {
+            celulaPastilhaCorrigida.textContent = '-';
+        }
+        return;
+    }
 
     // Buscar a referência
     let textoReferencia = `Folga válvula ${tipo === 'adm' ? 'admissão' : 'escape'} ${lado}`;
@@ -59,7 +71,7 @@ function calcularPastilha(input) {
     let refText = referenciaCell.textContent.trim();
     let [min, max] = refText.split(' a ').map(val => parseFloat(val.replace(',', '.')));
     
-    if (isNaN(min) || isNaN(max)) {
+    if (isNaN(min) || isNaN(max) || min <= 0 || max <= 0) {
         console.error('Valores de referência inválidos:', refText);
         return;
     }
