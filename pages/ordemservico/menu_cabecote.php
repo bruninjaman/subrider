@@ -324,7 +324,7 @@
 .tucho-switch {
     position: relative;
     width: 60px;
-    height: 34px;
+    height: 30px;
 }
 
 .tucho-switch-input {
@@ -335,11 +335,11 @@
     display: block;
     overflow: hidden;
     cursor: pointer;
-    height: 34px;
+    height: 30px;
     padding: 0;
-    line-height: 34px;
-    border: 2px solid #FFFFFF;
-    border-radius: 34px;
+    line-height: 30px;
+    border: 2px solid #e44c65;
+    border-radius: 30px;
     background-color: transparent;
     transition: background-color 0.3s ease-in;
 }
@@ -347,33 +347,33 @@
 .tucho-switch-label:before {
     content: "";
     display: block;
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     margin: -2px;
-    background: #FFFFFF;
+    background: #e44c65;
     position: absolute;
     top: 0;
-    bottom: 0;
-    right: 28px;
-    border-radius: 34px;
+    left: 0;
+    border-radius: 50%;
     transition: all 0.3s ease-in 0s; 
 }
 
 .tucho-switch-input:checked + .tucho-switch-label {
-    background-color: #FFFFFF;
+    background-color: #e44c65;
 }
 
 .tucho-switch-input:checked + .tucho-switch-label:before {
-    right: -2px; 
-    background-color: #e44c65;
+    left: calc(100% - 26px);
+    background-color: #FFFFFF;
 }
 
 .tucho-labels {
     display: flex;
     justify-content: space-between;
-    width: 100px;
+    width: 120px;
     color: #FFFFFF;
     font-size: 0.9rem;
+    margin-top: 8px;
 }
 
 .tucho-switch input[type="checkbox"] {
