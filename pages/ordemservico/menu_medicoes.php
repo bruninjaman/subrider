@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="assets/css/shared-menu-styles.css">
 <!-- Botões -->
 <div class="buttons-table">
     <a class='button secondary' href="ordem_add_item.php?ordem=<?php echo $_GET['ordem'] ?>">Adicionar item</a>
