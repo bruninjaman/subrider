@@ -36,75 +36,43 @@ function displayTableData($conn, $tableName, $tableTitle) {
     // Handle form submission for updating values
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === $tableName) {
         if (isset($_POST['update'])) {
-            // Verificar se já existe medição
-            $checkQuery = "SELECT COUNT(*) as count FROM $tableName WHERE is_reference = 0 AND ordem = ?";
-            $checkStmt = mysqli_prepare($conn, $checkQuery);
-            mysqli_stmt_bind_param($checkStmt, "s", $ordem);
-            mysqli_stmt_execute($checkStmt);
-            $checkResult = mysqli_stmt_get_result($checkStmt);
-            $checkRow = mysqli_fetch_assoc($checkResult);
+            // Buscar o ID do registro de referência
+            $refQuery = "SELECT id FROM $tableName WHERE is_reference = 1 AND ordem = ?";
+            $refStmt = mysqli_prepare($conn, $refQuery);
+            mysqli_stmt_bind_param($refStmt, "s", $ordem);
+            mysqli_stmt_execute($refStmt);
+            $refResult = mysqli_stmt_get_result($refStmt);
+            $refRow = mysqli_fetch_assoc($refResult);
             
-            if ($checkRow['count'] == 0) {
-                // Não existe medição, vamos criar
-                $refQuery = "SELECT * FROM $tableName WHERE is_reference = 1 AND ordem = ?";
-                $refStmt = mysqli_prepare($conn, $refQuery);
-                mysqli_stmt_bind_param($refStmt, "s", $ordem);
-                mysqli_stmt_execute($refStmt);
-                $refResult = mysqli_stmt_get_result($refStmt);
-                $refRow = mysqli_fetch_assoc($refResult);
+            if ($refRow) {
+                $refId = $refRow['id'];
                 
-                if ($refRow) {
-                    $fields = [];
-                    $values = [];
+                // Atualizar valores na referência
+                foreach ($_POST['measured'] as $fields) {
+                    $updates = [];
+                    $params = [];
                     $types = '';
-                    foreach ($refRow as $key => $value) {
-                        if (!in_array($key, ['id', 'is_reference']) && $value !== null) {
-                            $fields[] = $key;
-                            $values[] = $value;
-                            $types .= 's';
-                        }
+                    foreach ($fields as $field => $value) {
+                        $updates[] = "`$field` = ?";
+                        $params[] = $value;
+                        $types .= 's';
                     }
-                    
-                    $fields[] = 'is_reference';
-                    $values[] = 0;
+                    $params[] = $refId;
                     $types .= 'i';
-                    
-                    $placeholders = array_fill(0, count($fields), '?');
-                    $insertQuery = "INSERT INTO $tableName (" . implode(', ', $fields) . ") VALUES (" . implode(', ', $placeholders) . ")";
-                    $insertStmt = mysqli_prepare($conn, $insertQuery);
-                    if ($insertStmt) {
-                        mysqli_stmt_bind_param($insertStmt, $types, ...$values);
-                        mysqli_stmt_execute($insertStmt);
-                        mysqli_stmt_close($insertStmt);
-                    }
-                }
-            }
 
-            // Agora atualiza os valores
-            foreach ($_POST['measured'] as $id => $fields) {
-                $updates = [];
-                $params = [];
-                $types = '';
-                foreach ($fields as $field => $value) {
-                    $updates[] = "`$field` = ?";
-                    $params[] = $value;
-                    $types .= 's';
-                }
-                $params[] = $id;
-                $types .= 'i';
-
-                $updateQuery = "UPDATE " . $tableName . 
-                              " SET " . implode(', ', $updates) . 
-                              " WHERE id = ?";
-                $stmt = mysqli_prepare($conn, $updateQuery);
-                if ($stmt) {
-                    mysqli_stmt_bind_param($stmt, $types, ...$params);
-                    if (mysqli_stmt_execute($stmt)) {
-                        echo "<p class='success-msg'>Alterações salvas com sucesso!</p>";
-                    } else {
-                        echo "<p class='error-msg'>Erro ao salvar alterações: " . mysqli_error($conn) . "</p>";
+                    $updateQuery = "UPDATE " . $tableName . 
+                                  " SET " . implode(', ', $updates) . 
+                                  " WHERE id = ?";
+                    $stmt = mysqli_prepare($conn, $updateQuery);
+                    if ($stmt) {
+                        mysqli_stmt_bind_param($stmt, $types, ...$params);
+                        if (mysqli_stmt_execute($stmt)) {
+                            echo "<p class='success-msg'>Alterações salvas com sucesso!</p>";
+                        } else {
+                            echo "<p class='error-msg'>Erro ao salvar alterações: " . mysqli_error($conn) . "</p>";
+                        }
+                        mysqli_stmt_close($stmt);
                     }
-                    mysqli_stmt_close($stmt);
                 }
             }
         }
@@ -137,7 +105,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
         echo "<div class='table-container'>";
         echo "<table>";
-        echo "<thead><tr><th>Parâmetro</th><th>Referência</th><th>Real</th></tr></thead>";
+        echo "<thead><tr><th>Parâmetro</th><th>Referência</th><th>Novo Valor</th></tr></thead>";
         echo "<tbody>";
 
         foreach ($refRow as $key => $value) {
@@ -157,23 +125,10 @@ function displayTableData($conn, $tableName, $tableTitle) {
                      "</td>";
                 
                 echo "<td class='meas-values'>";
-                mysqli_data_seek($measResult, 0);
-                $first = true;
-                while ($measRow = mysqli_fetch_assoc($measResult)) {
-                    if (isset($measRow[$key]) && $measRow[$key] !== null) {
-                        echo "<input type='text' " .
-                             "name='measured[" . $measRow['id'] . "][" . htmlspecialchars($key) . "]' " .
-                             "value='" . htmlspecialchars($measRow[$key]) . "' " .
-                             "class='meas-input" . ($first ? " first" : "") . "'>";
-                        $first = false;
-                    }
-                }
-                if (mysqli_num_rows($measResult) === 0) {
-                    echo "<input type='text' " .
-                         "name='measured[new][" . htmlspecialchars($key) . "]' " .
-                         "value='" . htmlspecialchars($value) . "' " .
-                         "class='meas-input first'>";
-                }
+                echo "<input type='text' " .
+                     "name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
+                     "value='" . htmlspecialchars($value) . "' " .
+                     "class='meas-input first'>";
                 echo "</td>";
                 
                 echo "</tr>";
@@ -541,6 +496,7 @@ displayTableData($conn, "embreagem", "Embreagem");
 displayTableData($conn, "bomba", "Bomba");
 displayTableData($conn, "motor", "Motor");
 displayTableData($conn, "virabrequim", "Virabrequim");
+displayTableData($conn, "cabecote", "Cabeçote");
 
 // Chamar a função de medições do cabeçote
 if (isset($_GET['ordem'])) {
