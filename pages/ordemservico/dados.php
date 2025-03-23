@@ -403,6 +403,23 @@ function displayCabecoteMedicoes($conn, $ordem) {
             echo "</tr>";
         }
 
+        // Adicionar medição de compressão aqui, antes do separador
+        if ($cabecote['compressao_min'] > 0 && $cabecote['compressao_max'] > 0) {
+            echo "<tr class='valvula-admissao'>";
+            echo "<td>Compressão</td>";
+            echo "<td>" . formatarIntervalo($cabecote['compressao_min'], $cabecote['compressao_max']) . "</td>";
+            
+            for ($c = 1; $c <= $cabecote['cilindros']; $c++) {
+                $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
+                echo "<td class='" . $classe_cilindro . "'>";
+                echo "<input type='text' 
+                    name='medida[compressao][" . $c . "]' 
+                    class='meas-input'>";
+                echo "</td>";
+            }
+            echo "</tr>";
+        }
+
         // Separador entre medições de cilindros e medições gerais
         echo "<tr class='separador'>";
         echo "<td colspan='" . ($cabecote['cilindros'] + 2) . "'>MEDIÇÕES GERAIS DO CABEÇOTE</td>";
@@ -473,23 +490,6 @@ function displayCabecoteMedicoes($conn, $ordem) {
             echo "<td class='cilindro-frente'>-</td>";
         }
         echo "</tr>";
-
-        if ($cabecote['compressao_min'] > 0 && $cabecote['compressao_max'] > 0) {
-            echo "<tr class='item-fixo'>";
-            echo "<td>Compressão</td>";
-            echo "<td>" . formatarIntervalo($cabecote['compressao_min'], $cabecote['compressao_max']) . "</td>";
-            
-            // Cilindros de trás
-            for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
-                echo "<td class='cilindro-tras'>-</td>";
-            }
-            
-            // Cilindros da frente
-            for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
-                echo "<td class='cilindro-frente'>-</td>";
-            }
-            echo "</tr>";
-        }
 
         echo "</tbody></table>";
         echo "<button type='submit' class='save-btn'>Salvar Medições</button>";
