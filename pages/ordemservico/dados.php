@@ -244,7 +244,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
         echo "<div class='card cabecote-medicoes'>";
         echo "<h2 class='card-title'>MENU MEDIÇÕES CABEÇOTE</h2>";
         echo "<div class='legenda'>Medição de válvulas para cada cilindro</div>";
-        echo "<div class='subtitulo'>" . htmlspecialchars($cabecote['motor_tipo']) . "</div>";
+        echo "<div> Tipo do motor: <div class='subtitulo'> " . htmlspecialchars($cabecote['motor_tipo']) . "</div></div>";
         
         // Cabeçalho da tabela
         echo "<div class='table-container'>";
