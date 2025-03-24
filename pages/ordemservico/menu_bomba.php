@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="assets/css/menu-styles.css">
+
 <div class="form-container">
     <!-- Title -->
     <div class="row mb-5">

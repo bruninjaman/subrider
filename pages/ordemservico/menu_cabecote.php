@@ -222,49 +222,5 @@
     </form>
 </div>
 
-<script>
-function toggleFields() {
-    const ohcField = document.getElementById('ohc_fields');
-    const dohcFields = document.getElementById('dohc_fields');
-    const isOHC = document.getElementById('ohc').checked;
-    const isDOHC = document.getElementById('dohc').checked;
-    
-    if (isOHC) {
-        ohcField.style.display = 'block';
-        setTimeout(() => ohcField.classList.add('active'), 10);
-        dohcFields.style.display = 'none';
-        dohcFields.classList.remove('active');
-    } else if (isDOHC) {
-        dohcFields.style.display = 'block';
-        setTimeout(() => dohcFields.classList.add('active'), 10);
-        ohcField.style.display = 'none';
-        ohcField.classList.remove('active');
-    } else {
-        ohcField.style.display = 'none';
-        dohcFields.style.display = 'none';
-        ohcField.classList.remove('active');
-        dohcFields.classList.remove('active');
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('cabecoteForm');
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(form);
-        const data = {};
-        
-        for (let [key, value] of formData.entries()) {
-            data[key] = value === '' ? null : value;
-        }
-        
-        console.log(data);
-    });
-
-    const tuchoSwitch = document.getElementById('tucho');
-    tuchoSwitch.addEventListener('change', function() {
-        console.log('Tucho Mecânico:', this.checked);
-    });
-});
-</script>
+<link rel="stylesheet" href="assets/css/menu-styles.css">
+<script src="assets/js/menu-scripts.js"></script>

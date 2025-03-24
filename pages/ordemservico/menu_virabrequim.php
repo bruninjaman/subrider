@@ -91,27 +91,5 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const rolamento1 = document.getElementById('rolamento_1');
-        const rolamento2 = document.getElementById('rolamento_2');
-        const sectionsToHide = [
-            document.getElementById('folga_lateral_biela_section'),
-            document.getElementById('folga_lateral_eixo_section'),
-            document.getElementById('empenamento_max_section')
-        ];
-
-        function toggleSections() {
-            if (rolamento2.checked) {
-                sectionsToHide.forEach(section => section.classList.add('hidden'));
-            } else {
-                sectionsToHide.forEach(section => section.classList.remove('hidden'));
-            }
-        }
-
-        rolamento1.addEventListener('change', toggleSections);
-        rolamento2.addEventListener('change', toggleSections);
-
-        toggleSections();
-    });
-</script>
+<link rel="stylesheet" href="assets/css/menu-styles.css">
+<script src="assets/js/menu-scripts.js"></script>
