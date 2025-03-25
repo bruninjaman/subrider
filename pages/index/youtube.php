@@ -2,40 +2,43 @@
     #gallery {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        background-color: rgba(5, 5, 5, 0.7);
-        height: 100%;
+        gap: 16px;
+        background-color: rgba(15, 15, 15, 0.95);
         width: 58%;
         max-width: 58%;
-        padding: auto;
+        padding: 24px;
+        border-radius: 12px;
     }
 
     #gallery article {
-        background-color: rgba(5, 5, 5, 0.7);
-        border-radius: 5px;
-        max-height: 80%;
-        margin: 2%;
-        box-shadow: inset 0 0 10px #000000;
+        background-color: transparent;
+        border-radius: 12px;
+        transition: transform 0.2s ease-in-out;
+        cursor: pointer;
     }
 
     #gallery article:hover {
-        background-color: rgba(255, 5, 5, 0.4);
+        transform: scale(1.05);
+        background-color: rgba(32, 32, 32, 0.95);
     }
 
     #gallery a {
         border-bottom: 0;
-    }
-
-
-    #gallery h2:hover {
-        color: rgba(255, 255, 255, 1);
+        display: block;
     }
 
     #gallery h2 {
-        font-size: 18px;
-        padding: 5%;
-        color: rgba(255, 255, 255, 0.5);
-        text-align: center;
+        font-size: 14px;
+        padding: 12px;
+        color: rgba(255, 255, 255, 0.9);
+        text-align: left;
+        font-weight: 500;
+        margin: 0;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     #gallery div {
@@ -44,65 +47,86 @@
 
     .fancybox img {
         width: 100%;
-        height: 50%;
-        padding: 2%;
-        border-radius: 10px;
+        height: auto;
+        border-radius: 12px;
+        aspect-ratio: 16/9;
+        object-fit: cover;
     }
 
     .youtubeshow {
         position: absolute;
         top: 0;
         left: 2%;
-        height: 80%;
+        height: auto;
         width: 60%;
         z-index: 2;
     }
 
-    @media screen and (max-width: 736px) {
-        .youtubevideos {
-            position: absolute;
-            top: 40%;
-            font-size: 5em;
-            font-family: "Calibri", Helvetica, sans-serif;
-            font-weight: 800;
-            left: 6rem;
+    .video-duration {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+
+    .video-info {
+        display: flex;
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .channel-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .channel-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-details {
+        flex: 1;
+    }
+
+    .video-metadata {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 4px;
+    }
+
+    @media screen and (max-width: 980px) {
+        #gallery {
+            grid-template-columns: repeat(2, 1fr);
+            width: 100%;
+            max-width: 100%;
+            padding: 16px;
         }
     }
 
-    /* Responsive styles */
-    @media only screen and (max-width: 980px) {
+    @media screen and (max-width: 736px) {
         #gallery {
-            grid-template-columns: repeat(1, 1fr);
-            width: 100%;
-            /* Use full width on smaller screens */
-            padding: 10%;
-            max-width: 100%;
+            grid-template-columns: 1fr;
         }
 
-        #gallery article {
-            max-height: 100%;
-            border-radius: 25px;
-        }
-
-        .fancybox img {
-            border-radius: 20px;
-        }
-
-        #gallery div {
-            padding-top: 0;
+        .youtubevideos {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .youtubeshow {
             position: static;
-            /* Change position to static to allow for stacking of elements */
-            height: auto;
-            /* Remove fixed height to allow the iframe to scale down */
             width: 100%;
-            /* Use full width on smaller screens */
-            margin-bottom: 20px;
-            /* Add some space between the elements */
-            z-index: 0;
-            /* Set z-index to 0 to allow the iframe to be stacked behind the other elements */
+            margin: 0;
+            padding: 16px;
         }
     }
 </style>
@@ -200,10 +224,7 @@
 
             // Display videos
             if (!empty($videos)) {
-                // Shuffle for randomness
                 shuffle($videos);
-
-                // Limit to desired number
                 $videos = array_slice($videos, 0, $numVideosToShow);
 
                 foreach ($videos as $video) {
@@ -211,12 +232,24 @@
                     $title = sanitizeOutput($video['title']);
 
                     echo '<article class="video">';
-                    echo '<figure>';
                     echo '<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/' . $videoId . '">';
+                    echo '<div class="thumbnail-container">';
                     echo '<img class="videoThumb" src="https://i1.ytimg.com/vi/' . $videoId . '/mqdefault.jpg" alt="' . $title . '">';
+                    echo '<span class="video-duration">4:20</span>';
+                    echo '</div>';
                     echo '</a>';
-                    echo '</figure>';
+                    echo '<div class="video-info">';
+                    echo '<div class="channel-avatar">';
+                    echo '<img src="./assets/css/images/logo.jpg" alt="Canal Avatar">';
+                    echo '</div>';
+                    echo '<div class="video-details">';
                     echo '<h2 class="videoTitle">' . $title . '</h2>';
+                    echo '<div class="video-metadata">';
+                    echo 'Subrider Motos<br>';
+                    echo '1.2K visualizações • há 2 dias';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
                     echo '</article>';
                 }
             } else {
