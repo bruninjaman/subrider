@@ -34,13 +34,7 @@ require_once("./scripts/functions.php");
         <!-- content -->
         <?php
         require("./pages/ordemservico/header.php");
-        ?>
-        <!-- <form action="scripts\ordemservico\register_medicoes.php?ordem=<?php echo (string)$_GET['ordem'] ?>" method="POST"> -->
-            <?php
-            require("./pages/ordemservico/tabela.php")
-            ?>
-        <!-- </form> -->
-        <?php
+        require("./pages/ordemservico/tabela.php");
         require("./pages/ordemservico/info.php");
         require("./pages/ordemservico/footer.php");
         ?>

@@ -56,13 +56,13 @@
                 </div>
 
                 <div class="col-md-12" id="folga_lateral_eixo_section">
-                    <div class="floating-input range-input">
+                    <div class="floating-input">
                         <div class="range-fields">
                             <input type="number" name="folga_lateral_eixo_min" class="form-control" placeholder=" ">
                             <span class="range-separator">a</span>
                             <input type="number" name="folga_lateral_eixo_max" class="form-control" placeholder=" ">
                         </div>
-                        <label>Folga Lateral Eixo (mm)</label>
+                        <label for="folga_lateral_eixo_min">Folga Lateral Eixo (mm)</label>
                         <div class="focus-border"></div>
                     </div>
                 </div>
@@ -93,3 +93,14 @@
 
 <link rel="stylesheet" href="assets/css/menu-styles.css">
 <script src="assets/js/menu-scripts.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Adiciona classe active aos elementos com animated-section após um pequeno delay
+    setTimeout(() => {
+        document.querySelectorAll('.animated-section').forEach(section => {
+            section.classList.add('active');
+        });
+    }, 100);
+});
+</script>

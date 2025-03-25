@@ -68,6 +68,39 @@
     color: #e44c65;
 }
 
+/* Range Input Styles */
+.floating-input .range-fields {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0;
+    position: relative;
+    width: 100%;
+}
+
+.floating-input .range-fields input {
+    width: calc(50% - 1rem);
+}
+
+.floating-input .range-separator {
+    color: #e5e5e5;
+    font-size: 1rem;
+}
+
+.floating-input .range-fields:focus-within ~ label,
+.floating-input .range-fields input:not(:placeholder-shown) ~ label {
+    top: -20px;
+    font-size: 0.85rem;
+    color: #e44c65;
+    background: #181921;
+    padding: 0 5px;
+    z-index: 1;
+}
+
+.floating-input .range-fields:focus-within ~ .focus-border {
+    border-color: #e44c65;
+}
+
 /* Seções e Grupos */
 .section-title {
     font-size: 1.2rem;
