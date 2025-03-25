@@ -12,7 +12,7 @@
 </style>
 <section id="one" class="spotlight style1 bottom">
     <span class="image fit main">
-        <img src="./assets/css/images/pic04.jpg" alt="" />
+        <img src="./assets/css/images/sub-rider entrada.jpg" alt="" />
         <h1 class="localizacao">Localização</h1>
     </span>
     <div class="content">

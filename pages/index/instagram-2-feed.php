@@ -3,94 +3,79 @@
         <h2>Instagram Subrider</h2>
         <div id="instafeed" class="owl-carousel owl-theme owl-loaded owl-drag">
             <?php
-            // // Define the access token
-            // $accessToken = 'IGQVJYdTZAqVV9OcVRIcDI0NFRIa0FJLWI4LUpFR00yeG03eF9uQTctdVhqNXVyUDM5MDF1LWpJZAGgxRGlIdFlMTm9WSndNSmc4X25VUC1YdnlxZAEpKazhTSU5JMGJsSWlQYzdYV1Q5NW9wRjc2X3ozZAQZDZD';
+            $instagram_images = [
+                '148589275_896595747769012_3753235257108688971_n..jpg',
+                '261474676_1198066010683425_4546154628925998117_n..jpg',
+                '261962781_598096558169662_1290372496156943896_n..jpg',
+                '261934196_613442609780737_1191985690364385337_n..jpg',
+                '261490504_307548151264999_1988355608404932533_n..jpg',
+                '261548757_2955446608119407_5483122984468588785_n..jpg',
+                '271288347_432691818500932_5087543073350839753_n..jpg',
+                '262169369_4374650655997870_4884467744191961968_n..jpg',
+                '261187398_578241289935103_5528419618173590066_n..jpg',
+                '272036274_4666772380110141_7308838789357310763_n..webp',
+                '271980133_625941612058713_930109940416519662_n..jpg',
+                '272095054_971379680448368_5369506016138860148_n..webp',
+                '273169204_1100381577361436_586033089059493075_n..webp',
+                '278483865_188964307020922_4111360628985490774_n..jpg',
+                '277145677_312188677677933_3101476042461013835_n..jpg',
+                '278508451_725874875234738_2590093110711883942_n..jpg',
+                '311338747_429316972469695_7967545692968914837_n..jpg',
+                '341307480_3056255314508938_5309736330615942229_n..webp',
+                '468707359_2626587897528989_6223114869295883325_n..webp',
+                '368111809_296293609678174_2860804172513601018_n..webp'
+            ];
 
-            // // Define the number of posts to retrieve
-            // $limit = 20;
-
-            // // Define the cache file name
-            // $cacheFile = 'instagram_feed_data.json';
-
-            // // Check if the cached data is still valid
-            // if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < 60 * 60 * 24)) {
-            //     // The cache is still valid, so use the cached data
-            //     $data = file_get_contents($cacheFile);
-            // } else {
-            //     // The cache is not valid, so fetch the new data and cache it
-
-            //     // Fetch the feed data from the Instagram API
-            //     $apiUrl = 'https://api.instagram.com/v1/users/self/media/recent?access_token=' . $accessToken . '&count=' . $limit;
-            //     $ch = curl_init($apiUrl);
-            //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            //     $data = curl_exec($ch);
-            //     curl_close($ch);
-
-            //     // Check if the response from the API is an error
-            //     $json = json_decode($data, true);
-            //     if (!empty($json['meta']['error_type'])) {
-            //         // The API returned an error, so use the cache data
-            //         $data = file_get_contents($cacheFile);
-            //     } else {
-            //         // Cache the data
-            //         file_put_contents($cacheFile, $data);
-            //     }
-            // }
-
-            // // Decode the data into an array
-            // $data = json_decode($data, true);
-
-            // // Loop through the feed data and display each post
-            // foreach ($data['data'] as $post) {
-            //     echo '<div class="item"><a href="' . $post['link'] . '" target="_blank"><img title="' . $post['caption']['text'] . '" src="' . $post['images']['standard_resolution']['url'] . '" /></a></div>';
-            // }
-            
-            // Define the access token and Instagram account ID
-            // $accessToken = 'IGQVJYdTZAqVV9OcVRIcDI0NFRIa0FJLWI4LUpFR00yeG03eF9uQTctdVhqNXVyUDM5MDF1LWpJZAGgxRGlIdFlMTm9WSndNSmc4X25VUC1YdnlxZAEpKazhTSU5JMGJsSWlQYzdYV1Q5NW9wRjc2X3ozZAQZDZD';
-            // $accountId = '31236295';
-            
-            // // Define the number of posts to retrieve
-            // $limit = 20;
-            
-            // // Define the cache file name
-            // $cacheFile = 'instagram_feed_data.txt';
-            
-            // // Check if the cached data is still valid
-            // if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < 60 * 60 * 24)) {
-            //     // The cache is still valid, so use the cached data
-            //     $data = file_get_contents($cacheFile);
-            // } else {
-            //     // The cache is not valid, so fetch the new data and cache it
-            
-            //     // Fetch the feed data from the Instagram Graph API
-            //     $url = "https://graph.instagram.com/{$accountId}/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink&access_token={$accessToken}&limit={$limit}";
-            //     $data = file_get_contents($url);
-            
-            //     // Check if the response from the API is an error
-            //     if (!empty(json_decode($data)->error)) {
-            //         // The API returned an error, so use the cache data
-            //         $data = file_get_contents($cacheFile);
-            //     } else {
-            //         // Cache the data
-            //         file_put_contents($cacheFile, $data);
-            //     }
-            // }
-            
-            // // Decode the data into an array
-            // $data = json_decode($data, true);
-
-            // Loop through the feed data and display each post
-            // foreach ($data['data'] as $post) {
-            //     if ($post['media_type'] == 'VIDEO') {
-            //         $postUrl = $post['thumbnail_url'];
-            //     } else {
-            //         $postUrl = $post['media_url'];
-            //     }
-            //     echo '<div class="item"><a href="' . $post['permalink'] . '" target="_blank"><img title="' . $post['caption'] . '" src="' . $postUrl . '" /></a></div>';
-            // }
-            
+            foreach ($instagram_images as $image) {
+                echo '<div class="item">';
+                echo '<a href="https://www.instagram.com/xandov/" target="_blank">';
+                echo '<img src="./assets/css/images/insta pics/' . $image . '" alt="Instagram Subrider" />';
+                echo '</a>';
+                echo '</div>';
+            }
             ?>
-            <div>Em progresso</div>
         </div>
     </div>
 </section>
+
+<style>
+#instafeed {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+#instafeed .item {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    transition: transform 0.3s ease;
+}
+
+#instafeed .item:hover {
+    transform: scale(1.05);
+}
+
+#instafeed img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    #instafeed .item {
+        flex: 0 0 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    #instafeed .item {
+        flex: 0 0 calc(100% - 20px);
+        max-width: calc(100% - 20px);
+    }
+}
+</style>
