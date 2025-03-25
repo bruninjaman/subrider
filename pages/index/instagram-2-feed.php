@@ -27,7 +27,7 @@
             ];
 
             foreach ($instagram_images as $image) {
-                echo '<div class="item">';
+                echo '<div class="item fade-in">';
                 echo '<a href="https://www.instagram.com/xandov/" target="_blank">';
                 echo '<img src="./assets/css/images/insta pics/' . $image . '" alt="Instagram Subrider" />';
                 echo '</a>';
@@ -50,11 +50,18 @@
 #instafeed .item {
     flex: 0 0 calc(25% - 20px);
     max-width: calc(25% - 20px);
-    transition: transform 0.3s ease;
+    transition: all 0.5s ease;
+    opacity: 1;
 }
 
-#instafeed .item:hover {
-    transform: scale(1.05);
+#instafeed .item.fade-out {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+#instafeed .item.fade-in {
+    opacity: 1;
+    transform: scale(1);
 }
 
 #instafeed img {
@@ -79,3 +86,46 @@
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('#instafeed .item');
+    const totalItems = items.length;
+    
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function updateGallery() {
+        // Adiciona classe fade-out a todos os itens
+        items.forEach(item => {
+            item.classList.add('fade-out');
+        });
+
+        // Espera a animação de fade-out terminar
+        setTimeout(() => {
+            // Embaralha os itens
+            const itemsArray = Array.from(items);
+            shuffleArray(itemsArray);
+            
+            // Reordena os itens no DOM
+            const container = document.getElementById('instafeed');
+            itemsArray.forEach(item => {
+                container.appendChild(item);
+            });
+
+            // Remove a classe fade-out e adiciona fade-in
+            items.forEach(item => {
+                item.classList.remove('fade-out');
+                item.classList.add('fade-in');
+            });
+        }, 500);
+    }
+
+    // Atualiza a galeria a cada 5 segundos
+    setInterval(updateGallery, 5000);
+});
+</script>
