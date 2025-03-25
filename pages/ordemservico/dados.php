@@ -52,11 +52,37 @@ function displayTableData($conn, $tableName, $tableTitle) {
                     $updates = [];
                     $params = [];
                     $types = '';
-                    foreach ($fields as $field => $value) {
-                        $updates[] = "`$field` = ?";
-                        $params[] = $value;
-                        $types .= 's';
+                    
+                    // Verificar se é a tabela virabrequim e se tem o campo tipo
+                    $isVirabrequim = ($tableName === 'virabrequim');
+                    $tipo = null;
+                    
+                    if ($isVirabrequim) {
+                        foreach ($fields as $field => $value) {
+                            if (strtolower($field) === 'tipo') {
+                                $tipo = $value;
+                                break;
+                            }
+                        }
                     }
+                    
+                    foreach ($fields as $field => $value) {
+                        // Se for virabrequim e tipo for Rolamento, alguns campos devem ser NULL
+                        if ($isVirabrequim && $tipo === 'Rolamento' && 
+                            in_array(strtolower($field), [
+                                'folga_lateral_biela',
+                                'folga_lateral_eixo_min',
+                                'folga_lateral_eixo_max',
+                                'empenamento'
+                            ])) {
+                            $updates[] = "`$field` = NULL";
+                        } else {
+                            $updates[] = "`$field` = ?";
+                            $params[] = $value;
+                            $types .= 's';
+                        }
+                    }
+                    
                     $params[] = $refId;
                     $types .= 'i';
 
@@ -65,7 +91,9 @@ function displayTableData($conn, $tableName, $tableTitle) {
                                   " WHERE id = ?";
                     $stmt = mysqli_prepare($conn, $updateQuery);
                     if ($stmt) {
-                        mysqli_stmt_bind_param($stmt, $types, ...$params);
+                        if (count($params) > 0) {
+                            mysqli_stmt_bind_param($stmt, $types, ...$params);
+                        }
                         if (mysqli_stmt_execute($stmt)) {
                             echo "<p class='success-msg'>Alterações salvas com sucesso!</p>";
                         } else {
@@ -110,12 +138,36 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
         foreach ($refRow as $key => $value) {
             $keyLower = strtolower($key);
+            
+            // Verificar se é um campo que deve ser ignorado para rolamento
+            if ($tableName === 'virabrequim') {
+                $tipoAtual = '';
+                foreach ($refRow as $k => $v) {
+                    if (strtolower($k) === 'tipo') {
+                        $tipoAtual = $v;
+                        break;
+                    }
+                }
+                
+                // Se for rolamento e for um dos campos específicos, pular
+                if ($tipoAtual === 'Rolamento' && 
+                    in_array($keyLower, [
+                        'folga_lateral_biela',
+                        'folga_lateral_eixo_min',
+                        'folga_lateral_eixo_max',
+                        'empenamento'
+                    ])) {
+                    continue;
+                }
+            }
+            
             if ($keyLower !== 'id' && 
                 $keyLower !== 'ordem' && 
                 $keyLower !== 'is_reference' && 
                 $value !== null &&
                 !($tableName === 'cabecote' && ($keyLower === 'motor_tipo' || $keyLower === 'tipo_val')) &&
                 !($tableName === 'motor' && ($keyLower === 'created_at' || $keyLower === 'updated_at'))) {
+                
                 echo "<tr>";
                 echo "<td class='data-label'>" . 
                      htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
@@ -144,7 +196,8 @@ function displayTableData($conn, $tableName, $tableTitle) {
                     
                     echo "<td class='meas-values'>";
                     echo "<select name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
-                         "class='meas-input first'>";
+                         "class='meas-input first' " .
+                         "onchange='toggleVirabrequimFields(this.value)'>";
                     echo "<option value='Rolamento' " . ($value == 'Rolamento' ? 'selected' : '') . ">Rolamento</option>";
                     echo "<option value='Bronzina' " . ($value == 'Bronzina' ? 'selected' : '') . ">Bronzina</option>";
                     echo "</select>";
@@ -551,8 +604,6 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
 <input type="hidden" id="val_esc_limite_min" value="<?php echo $cabecote['val_esc_limite_min']; ?>">
 <input type="hidden" id="val_esc_limite_max" value="<?php echo $cabecote['val_esc_limite_max']; ?>">
 
-<script src="pages/ordemservico/calcularPastilha.js"></script>
-
 <style>
 .card {
     background: #1e2029;
@@ -904,5 +955,9 @@ select.meas-input:focus {
 select.meas-input option {
     background: #2a2c35;
     color: #fff;
+}
+
+.virabrequim-field.hidden {
+    display: none;
 }
 </style>
