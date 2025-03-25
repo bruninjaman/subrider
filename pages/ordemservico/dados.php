@@ -120,16 +120,48 @@ function displayTableData($conn, $tableName, $tableTitle) {
                 echo "<td class='data-label'>" . 
                      htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
                      "</td>";
-                echo "<td class='ref-value'>" . 
-                     htmlspecialchars($value) . 
-                     "</td>";
                 
-                echo "<td class='meas-values'>";
-                echo "<input type='text' " .
-                     "name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
-                     "value='" . htmlspecialchars($value) . "' " .
-                     "class='meas-input first'>";
-                echo "</td>";
+                // Tratamento especial para o campo tucho
+                if ($tableName === 'cabecote' && $keyLower === 'tucho') {
+                    $displayValue = ($value == 1) ? 'Sim' : 'Não';
+                    echo "<td class='ref-value'>" . 
+                         htmlspecialchars($displayValue) . 
+                         "</td>";
+                    
+                    echo "<td class='meas-values'>";
+                    echo "<select name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
+                         "class='meas-input first'>";
+                    echo "<option value='1' " . ($value == 1 ? 'selected' : '') . ">Sim</option>";
+                    echo "<option value='0' " . ($value == 0 ? 'selected' : '') . ">Não</option>";
+                    echo "</select>";
+                    echo "</td>";
+                } 
+                // Tratamento especial para o campo tipo do virabrequim
+                else if ($tableName === 'virabrequim' && $keyLower === 'tipo') {
+                    echo "<td class='ref-value'>" . 
+                         htmlspecialchars($value) . 
+                         "</td>";
+                    
+                    echo "<td class='meas-values'>";
+                    echo "<select name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
+                         "class='meas-input first'>";
+                    echo "<option value='Rolamento' " . ($value == 'Rolamento' ? 'selected' : '') . ">Rolamento</option>";
+                    echo "<option value='Bronzina' " . ($value == 'Bronzina' ? 'selected' : '') . ">Bronzina</option>";
+                    echo "</select>";
+                    echo "</td>";
+                }
+                else {
+                    echo "<td class='ref-value'>" . 
+                         htmlspecialchars($value) . 
+                         "</td>";
+                    
+                    echo "<td class='meas-values'>";
+                    echo "<input type='text' " .
+                         "name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
+                         "value='" . htmlspecialchars($value) . "' " .
+                         "class='meas-input first'>";
+                    echo "</td>";
+                }
                 
                 echo "</tr>";
             }
@@ -842,5 +874,35 @@ th {
     content: 'PC: ';
     color: #888;
     font-size: 0.9em;
+}
+
+/* Estilo para o select do campo tucho */
+select.meas-input {
+    background: #2a2c35;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #fff;
+    text-align: right;
+    width: 100%;
+    margin: 2px 0;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8.825L1.175 4 2.238 2.938 6 6.7l3.763-3.763L10.825 4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 30px;
+}
+
+select.meas-input:focus {
+    outline: none;
+    border-color: #45a049;
+}
+
+select.meas-input option {
+    background: #2a2c35;
+    color: #fff;
 }
 </style>
