@@ -60,7 +60,10 @@
                         <div class="range-fields">
                             <input type="number" name="folga_lateral_eixo_min" class="form-control" placeholder=" ">
                             <span class="range-separator">a</span>
-                            <input type="number" name="folga_lateral_eixo_max" class="form-control" placeholder=" ">
+                            <div class="floating-input">
+                                <input type="number" name="folga_lateral_eixo_max" class="form-control" placeholder=" ">
+                                <label>maximo</label>
+                            </div>
                         </div>
                         <label for="folga_lateral_eixo_min">Folga Lateral Eixo (mm)</label>
                         <div class="focus-border"></div>

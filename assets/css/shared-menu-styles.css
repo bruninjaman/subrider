@@ -43,6 +43,17 @@
     transition: all 0.3s ease;
 }
 
+.floating-input input[data-max]::after {
+    content: "max";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
 .floating-input label {
     position: absolute;
     left: 1rem;
@@ -80,6 +91,15 @@
 
 .floating-input .range-fields input {
     width: calc(50% - 1rem);
+}
+
+.floating-input .range-fields .floating-input {
+    width: calc(50% - 1rem);
+    margin-bottom: 0;
+}
+
+.floating-input .range-fields .floating-input input {
+    width: 100%;
 }
 
 .floating-input .range-separator {
