@@ -187,7 +187,7 @@
                     </div>
                 </div>
 
-                <!-- Novos campos para altura dos cames -->
+                <!-- Campos para altura dos cames -->
                 <div class="row g-4 mt-4">
                     <div class="col-md-6">
                         <div class="measure-group">
@@ -215,7 +215,7 @@
                     </div>
                 </div>
 
-                <!-- Novos campos para empenamento e folga -->
+                <!-- Campos para empenamento e folga -->
                 <div class="row g-4 mt-4">
                     <div class="col-md-6">
                         <div class="measure-group">

@@ -166,133 +166,106 @@ if ($option == 'bomba') {
     $val_esc_limite_max = floatval($_POST['val_esc_limite_max'] ?? 0);
     $compressao_min = floatval($_POST['compressao_min'] ?? 0);
     $compressao_max = floatval($_POST['compressao_max'] ?? 0);
-    $tucho = isset($_POST['tucho']) ? 1 : 0; // Handle the tucho field
-    $is_reference = 1; // Hardcode is_reference as true
-    $ordem = $_GET['ordem'];
+    $tucho = isset($_POST['tucho']) ? 1 : 0;
+    $is_reference = 1;
+    $ordem = $_GET['ordem'] ?? '';
 
     // Handle nullable fields based on valve type
-    $cames_adm_diam_min = $cames_adm_diam_max = $came_diam_min = null;
+    $cames_adm_diam_min = null;
+    $cames_adm_diam_max = null;
+    $came_diam_min = null;
+    $came_adm_altura_min = floatval($_POST['came_adm_altura_min'] ?? 0);
+    $came_esc_altura_min = floatval($_POST['came_esc_altura_min'] ?? 0);
+    $eixo_cames_lim_empen = floatval($_POST['eixo_cames_lim_empen'] ?? 0);
+    $folga_eixo_mancal = floatval($_POST['folga_eixo_mancal'] ?? 0);
 
-    if ($valve_type === 'dohc') { // Now checking for string 'dohc'
+    if ($valve_type === 'dohc') {
         $cames_adm_diam_min = !empty($_POST['cames_adm_diam_min']) ? floatval($_POST['cames_adm_diam_min']) : null;
         $cames_adm_diam_max = !empty($_POST['cames_adm_diam_max']) ? floatval($_POST['cames_adm_diam_max']) : null;
-    } else if ($valve_type === 'ohc') { // Now checking for string 'ohc'
+    } elseif ($valve_type === 'ohc') {
         $came_diam_min = !empty($_POST['came_diam_min']) ? floatval($_POST['came_diam_min']) : null;
     }
 
-    // Check if a record with is_reference = 1 and the given ordem already exists
+    // Check if connection exists
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Check if record exists
     $check_query = "SELECT id FROM cabecote WHERE ordem = ? AND is_reference = 1";
     $check_stmt = mysqli_prepare($conn, $check_query);
-
+    
     if (!$check_stmt) {
         die("Prepare failed: " . mysqli_error($conn));
     }
 
-    mysqli_stmt_bind_param($check_stmt, "i", $ordem);
+    mysqli_stmt_bind_param($check_stmt, "s", $ordem);
     mysqli_stmt_execute($check_stmt);
     mysqli_stmt_store_result($check_stmt);
+    
+    $exists = mysqli_stmt_num_rows($check_stmt) > 0;
+    mysqli_stmt_close($check_stmt);
 
-    if (mysqli_stmt_num_rows($check_stmt) > 0) {
-        // Record exists, perform an update
+    if ($exists) {
+        // Update existing record
         $update_query = "UPDATE cabecote SET 
-            motor_tipo = ?, 
-            tipo_val = ?, 
-            cilindros = ?, 
-            val_adm = ?, 
-            val_esc = ?, 
-            cames_diam_min = ?, 
-            cames_adm_diam_min = ?, 
-            cames_adm_diam_max = ?, 
-            val_adm_limite_min = ?, 
-            val_adm_limite_max = ?, 
-            val_esc_limite_min = ?, 
-            val_esc_limite_max = ?, 
-            compressao_min = ?, 
-            compressao_max = ?, 
-            tucho = ?
-        WHERE ordem = ? AND is_reference = 1";
+            motor_tipo = ?, tipo_val = ?, cilindros = ?, val_adm = ?, val_esc = ?,
+            cames_diam_min = ?, cames_adm_diam_min = ?, cames_adm_diam_max = ?,
+            val_adm_limite_min = ?, val_adm_limite_max = ?, val_esc_limite_min = ?,
+            val_esc_limite_max = ?, compressao_min = ?, compressao_max = ?, tucho = ?,
+            came_adm_altura_min = ?, came_esc_altura_min = ?, eixo_cames_lim_empen = ?,
+            folga_eixo_mancal = ?
+            WHERE ordem = ? AND is_reference = 1";
 
-        $update_stmt = mysqli_prepare($conn, $update_query);
-
-        if (!$update_stmt) {
+        $stmt = mysqli_prepare($conn, $update_query);
+        
+        if (!$stmt) {
             die("Prepare failed: " . mysqli_error($conn));
         }
 
-        mysqli_stmt_bind_param(
-            $update_stmt,
-            "ssiiidddddddddsi",
-            $engine_type,
-            $valve_type,
-            $num_cilindros,
-            $num_val_adm,
-            $num_val_esc,
-            $came_diam_min,
-            $cames_adm_diam_min,
-            $cames_adm_diam_max,
-            $val_adm_limite_min,
-            $val_adm_limite_max,
-            $val_esc_limite_min,
-            $val_esc_limite_max,
-            $compressao_min,
-            $compressao_max,
-            $tucho,
-            $ordem
+        mysqli_stmt_bind_param($stmt, "ssiiidddddddddsdddds",
+            $engine_type, $valve_type, $num_cilindros, $num_val_adm, $num_val_esc,
+            $came_diam_min, $cames_adm_diam_min, $cames_adm_diam_max,
+            $val_adm_limite_min, $val_adm_limite_max, $val_esc_limite_min,
+            $val_esc_limite_max, $compressao_min, $compressao_max, $tucho,
+            $came_adm_altura_min, $came_esc_altura_min, $eixo_cames_lim_empen,
+            $folga_eixo_mancal, $ordem
         );
-
-        if (mysqli_stmt_execute($update_stmt)) {
-            echo "Data updated successfully!";
-        } else {
-            echo "Error: " . mysqli_stmt_error($update_stmt);
-        }
-
-        mysqli_stmt_close($update_stmt);
     } else {
-        // Record does not exist, perform an insert
+        // Insert new record
         $insert_query = "INSERT INTO cabecote (
-            motor_tipo, tipo_val, cilindros, val_adm, val_esc, cames_diam_min, cames_adm_diam_min, 
-            cames_adm_diam_max, val_adm_limite_min, val_adm_limite_max, val_esc_limite_min, 
-            val_esc_limite_max, compressao_min, compressao_max, ordem, is_reference, tucho
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            motor_tipo, tipo_val, cilindros, val_adm, val_esc, cames_diam_min,
+            cames_adm_diam_min, cames_adm_diam_max, val_adm_limite_min,
+            val_adm_limite_max, val_esc_limite_min, val_esc_limite_max,
+            compressao_min, compressao_max, ordem, is_reference, tucho,
+            came_adm_altura_min, came_esc_altura_min, eixo_cames_lim_empen,
+            folga_eixo_mancal
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $insert_stmt = mysqli_prepare($conn, $insert_query);
-
-        if (!$insert_stmt) {
+        $stmt = mysqli_prepare($conn, $insert_query);
+        
+        if (!$stmt) {
             die("Prepare failed: " . mysqli_error($conn));
         }
 
-        mysqli_stmt_bind_param(
-            $insert_stmt,
-            "ssiiidddddddddsii",
-            $engine_type,
-            $valve_type,
-            $num_cilindros,
-            $num_val_adm,
-            $num_val_esc,
-            $came_diam_min,
-            $cames_adm_diam_min,
-            $cames_adm_diam_max,
-            $val_adm_limite_min,
-            $val_adm_limite_max,
-            $val_esc_limite_min,
-            $val_esc_limite_max,
-            $compressao_min,
-            $compressao_max,
-            $ordem,
-            $is_reference,
-            $tucho
+        mysqli_stmt_bind_param($stmt, "ssiiidddddddddsdddddi",
+            $engine_type, $valve_type, $num_cilindros, $num_val_adm, $num_val_esc,
+            $came_diam_min, $cames_adm_diam_min, $cames_adm_diam_max,
+            $val_adm_limite_min, $val_adm_limite_max, $val_esc_limite_min,
+            $val_esc_limite_max, $compressao_min, $compressao_max, $ordem,
+            $is_reference, $tucho, $came_adm_altura_min, $came_esc_altura_min,
+            $eixo_cames_lim_empen, $folga_eixo_mancal
         );
-
-        if (mysqli_stmt_execute($insert_stmt)) {
-            echo "Data inserted successfully!";
-        } else {
-            echo "Error: " . mysqli_stmt_error($insert_stmt);
-        }
-
-        mysqli_stmt_close($insert_stmt);
     }
 
-    // Close the check statement
-    mysqli_stmt_close($check_stmt);
+    // Execute the statement and handle result
+    if (mysqli_stmt_execute($stmt)) {
+        echo $exists ? "Data updated successfully!" : "Data inserted successfully!";
+    } else {
+        echo "Error: " . mysqli_stmt_error($stmt);
+    }
+
+    mysqli_stmt_close($stmt);
 } else if ($option == 'virabrequim') {
     // Sanitize input data
     $rolamento_type = $_POST['rolamento_type'] ?? '';
