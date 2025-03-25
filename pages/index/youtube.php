@@ -102,6 +102,22 @@
         margin-top: 4px;
     }
 
+    .channel-name {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .video-description {
+        margin-top: 8px;
+        font-size: 12px;
+        line-height: 1.4;
+        color: rgba(255, 255, 255, 0.6);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
     @media screen and (max-width: 980px) {
         #gallery {
             grid-template-columns: repeat(2, 1fr);
@@ -240,13 +256,13 @@
                     echo '</a>';
                     echo '<div class="video-info">';
                     echo '<div class="channel-avatar">';
-                    echo '<img src="./assets/css/images/logo.jpg" alt="Canal Avatar">';
+                    echo '<img src="https://yt3.googleusercontent.com/ytc/AIdro_loDpUcFuLazvXAyiSh2OcszZvHkz1s0TUG0G0lGWKDaw=s160-c-k-c0x00ffffff-no-rj" alt="Canal Avatar">';
                     echo '</div>';
                     echo '<div class="video-details">';
                     echo '<h2 class="videoTitle">' . $title . '</h2>';
                     echo '<div class="video-metadata">';
-                    echo 'Subrider Motos<br>';
-                    echo '1.2K visualizações • há 2 dias';
+                    echo '<span class="channel-name">Descrição</span><br>';
+                    echo '<div class="video-description">' . (strlen($video['description']) > 100 ? substr(sanitizeOutput($video['description']), 0, 100) . '...' : sanitizeOutput($video['description'])) . '</div>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
