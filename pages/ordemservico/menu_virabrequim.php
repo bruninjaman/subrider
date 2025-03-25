@@ -86,7 +86,7 @@
                 <i class="fas fa-save"></i>
                 <span>Salvar</span>
             </button>
-            <a href="#" class="btn btn-outline" id="backToMenu">
+            <a href="#" class="btn btn-outline button secondary" id="backToMenu">
                 <i class="fas fa-arrow-left"></i>
                 <span>Voltar</span>
             </a>
