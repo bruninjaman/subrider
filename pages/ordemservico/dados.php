@@ -8,7 +8,7 @@ if (!isset($_GET['ordem'])) {
 // Usar a ordem como string
 $ordem = $_GET['ordem'];
 
-// Verificação da conexão cos com o banco de dados
+// Verificação da conexão com o banco de dados
 if (!isset($conn) || !$conn) {
     die("<div class='error-msg'>Erro: Conexão com o banco de dados não estabelecida.</div>");
 }
@@ -20,10 +20,6 @@ mysqli_stmt_bind_param($checkStmt, "s", $ordem);
 mysqli_stmt_execute($checkStmt);
 $checkResult = mysqli_stmt_get_result($checkStmt);
 $checkRow = mysqli_fetch_assoc($checkResult);
-
-if ($checkRow['count'] == 0) {
-    die("<div class='error-msg'>Erro: Não foram encontrados dados de referência para a ordem de serviço #" . $ordem . ".</div>");
-}
 
 function displayTableData($conn, $tableName, $tableTitle) {
     if (!isset($_GET['ordem'])) {
@@ -120,12 +116,12 @@ function displayTableData($conn, $tableName, $tableTitle) {
     mysqli_stmt_execute($measStmt);
     $measResult = mysqli_stmt_get_result($measStmt);
 
+    echo "<div class='card'>";
+    echo "<h2 class='card-title'>" . htmlspecialchars($tableTitle) . "</h2>";
+    echo "<div class='card-content'>";
+
     if (mysqli_num_rows($refResult) > 0) {
         $refRow = mysqli_fetch_assoc($refResult);
-
-        echo "<div class='card'>";
-        echo "<h2 class='card-title'>" . htmlspecialchars($tableTitle) . "</h2>";
-        echo "<div class='card-content'>";
 
         echo "<form method='POST' class='table-form'>";
         echo "<input type='hidden' name='table' value='" . htmlspecialchars($tableName) . "'>";
@@ -225,10 +221,13 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
         echo "<button type='submit' class='save-btn'>Salvar Alterações</button>";
         echo "</form>";
-
-        echo "</div>";
-        echo "</div>";
+    } else {
+        echo "<div class='info-msg'>Nenhum dado de referência encontrado para esta ordem de serviço.</div>";
+        echo "<div class='info-msg'>Por favor, adicione os dados de referência primeiro.</div>";
     }
+
+    echo "</div>";
+    echo "</div>";
 
     mysqli_stmt_close($refStmt);
     mysqli_stmt_close($measStmt);
@@ -794,6 +793,16 @@ th {
     color: #ed4933;
     margin: 10px 0;
     font-weight: bold;
+}
+
+.info-msg {
+    color: #2196F3;
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    background: rgba(33, 150, 243, 0.1);
+    border-radius: 4px;
 }
 
 .cabecote-medicoes {
