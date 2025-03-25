@@ -186,6 +186,62 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Novos campos para altura dos cames -->
+                <div class="row g-4 mt-4">
+                    <div class="col-md-6">
+                        <div class="measure-group">
+                            <span class="measure-label">Came Admissão Altura Mínima (mm)</span>
+                            <div class="measure-inputs">
+                                <div class="floating-input">
+                                    <input type="number" step="0.01" class="form-control" name="came_adm_altura_min" placeholder=" ">
+                                    <label>Altura Mínima</label>
+                                    <div class="focus-border"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="measure-group">
+                            <span class="measure-label">Came Escape Altura Mínima (mm)</span>
+                            <div class="measure-inputs">
+                                <div class="floating-input">
+                                    <input type="number" step="0.01" class="form-control" name="came_esc_altura_min" placeholder=" ">
+                                    <label>Altura Mínima</label>
+                                    <div class="focus-border"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Novos campos para empenamento e folga -->
+                <div class="row g-4 mt-4">
+                    <div class="col-md-6">
+                        <div class="measure-group">
+                            <span class="measure-label">Eixo Cames Limite Empenamento (mm)</span>
+                            <div class="measure-inputs">
+                                <div class="floating-input">
+                                    <input type="number" step="0.01" class="form-control" name="eixo_cames_lim_empen" placeholder=" ">
+                                    <label>Limite</label>
+                                    <div class="focus-border"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="measure-group">
+                            <span class="measure-label">Folga Eixo Cames/Mancal (mm)</span>
+                            <div class="measure-inputs">
+                                <div class="floating-input">
+                                    <input type="number" step="0.01" class="form-control" name="folga_eixo_mancal" placeholder=" ">
+                                    <label>Folga</label>
+                                    <div class="focus-border"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Compressão -->

@@ -513,12 +513,20 @@ function displayCabecoteMedicoes($conn, $ordem) {
         
         // Cilindros de trás
         for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
-            echo "<td class='cilindro-tras'>-</td>";
+            echo "<td class='cilindro-tras'>";
+            echo "<input type='text' 
+                name='medida[eixo_cames_lim_empen][" . $cil . "]' 
+                class='meas-input'>";
+            echo "</td>";
         }
         
         // Cilindros da frente
         for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
-            echo "<td class='cilindro-frente'>-</td>";
+            echo "<td class='cilindro-frente'>";
+            echo "<input type='text' 
+                name='medida[eixo_cames_lim_empen][" . $cil . "]' 
+                class='meas-input'>";
+            echo "</td>";
         }
         echo "</tr>";
 
@@ -528,12 +536,67 @@ function displayCabecoteMedicoes($conn, $ordem) {
         
         // Cilindros de trás
         for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
-            echo "<td class='cilindro-tras'>-</td>";
+            echo "<td class='cilindro-tras'>";
+            echo "<input type='text' 
+                name='medida[folga_eixo_mancal][" . $cil . "]' 
+                class='meas-input'>";
+            echo "</td>";
         }
         
         // Cilindros da frente
         for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
-            echo "<td class='cilindro-frente'>-</td>";
+            echo "<td class='cilindro-frente'>";
+            echo "<input type='text' 
+                name='medida[folga_eixo_mancal][" . $cil . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Adicionar campos para altura dos cames
+        echo "<tr class='item-fixo'>";
+        echo "<td>Came admissão altura min</td>";
+        echo "<td>" . number_format($cabecote['came_adm_altura_min'], 2, ',', '.') . "</td>";
+        
+        // Cilindros de trás
+        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+            echo "<td class='cilindro-tras'>";
+            echo "<input type='text' 
+                name='medida[came_adm_altura_min][" . $cil . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        
+        // Cilindros da frente
+        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+            echo "<td class='cilindro-frente'>";
+            echo "<input type='text' 
+                name='medida[came_adm_altura_min][" . $cil . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        echo "<tr class='item-fixo'>";
+        echo "<td>Came escape altura min</td>";
+        echo "<td>" . number_format($cabecote['came_esc_altura_min'], 2, ',', '.') . "</td>";
+        
+        // Cilindros de trás
+        for ($cil = 1; $cil <= $cilindros_tras; $cil++) {
+            echo "<td class='cilindro-tras'>";
+            echo "<input type='text' 
+                name='medida[came_esc_altura_min][" . $cil . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        
+        // Cilindros da frente
+        for ($cil = $cilindros_tras + 1; $cil <= $cabecote['cilindros']; $cil++) {
+            echo "<td class='cilindro-frente'>";
+            echo "<input type='text' 
+                name='medida[came_esc_altura_min][" . $cil . "]' 
+                class='meas-input'>";
+            echo "</td>";
         }
         echo "</tr>";
 
