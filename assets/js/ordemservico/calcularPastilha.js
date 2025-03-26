@@ -3,14 +3,6 @@ function calcularPastilha(input) {
     const cilindro = input.getAttribute('data-cilindro');
     const tipo = input.getAttribute('data-tipo');
     const lado = input.getAttribute('data-lado');
-    
-    // Log para debug
-    console.log('Dados do input:', {
-        cilindro: cilindro,
-        tipo: tipo,
-        lado: lado,
-        valor: input.value
-    });
 
     // Verificar se todos os dados necessários estão presentes
     if (!cilindro || !tipo || !lado) {
@@ -87,14 +79,6 @@ function calcularPastilha(input) {
     if (celulaPastilhaCorrigida) {
         let valorFormatado = pastilhaCorrigida.toFixed(2).replace('.', ',');
         celulaPastilhaCorrigida.textContent = valorFormatado;
-        
-        console.log('Cálculo realizado:', {
-            folga: folgaValue,
-            pastilhaAtual: pastilhaAtual,
-            valorReferencia: valorReferencia,
-            pastilhaCorrigida: pastilhaCorrigida,
-            valorFormatado: valorFormatado
-        });
     } else {
         console.error(`Elemento de resultado não encontrado: pc_${tipo}_${lado}_${cilindro}`);
     }
