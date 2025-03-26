@@ -88,6 +88,16 @@
                         <div class="focus-border"></div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="floating-input">
+                        <input type="number" 
+                               name="folga_pino_pis_max" 
+                               class="form-control"
+                               placeholder=" ">
+                        <label>Folga Pino pis max (mm)</label>
+                        <div class="focus-border"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
