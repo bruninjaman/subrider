@@ -134,3 +134,14 @@
 .modal-content table tr:hover {
     background-color: #2a2c36;
 }
+
+/* Estilo específico para o botão Voltar */
+#backToMenu {
+    position: absolute;
+    top: 15px;
+    right: 60px; /* Deixando espaço para o botão de fechar (X) */
+    margin: 0; /* Remove a margem padrão dos botões */
+    height: 2.5em; /* Altura reduzida para ficar mais compacto */
+    line-height: 2.5em; /* Ajusta a linha para a nova altura */
+    padding: 0 1em; /* Reduz o padding horizontal */
+}
