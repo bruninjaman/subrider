@@ -661,7 +661,7 @@ if (isset($_GET['ordem'])) {
 echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
-<link rel="stylesheet" href="assets/css/dados.css">
+<link rel="stylesheet" href="assets/css/ordemservico/menus/dados.css">
 
 <input type="hidden" id="val_adm_limite_min" value="<?php echo $cabecote['val_adm_limite_min']; ?>">
 <input type="hidden" id="val_adm_limite_max" value="<?php echo $cabecote['val_adm_limite_max']; ?>">

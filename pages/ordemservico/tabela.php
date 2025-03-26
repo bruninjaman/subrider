@@ -1,6 +1,6 @@
 <?php
 echo "<style>";
-echo file_get_contents('pages/ordemservico/modal.css');
+echo file_get_contents('assets\css\ordemservico\modal.css');
 echo "</style>";
 ?>
 
