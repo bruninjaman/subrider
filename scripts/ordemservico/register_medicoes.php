@@ -462,7 +462,7 @@ if ($option == 'bomba') {
     // Close the check statement
     mysqli_stmt_close($check_stmt);
 } else if ($option == 'motor') {
-    // Sanitize input data
+    // Sanitize input data with null coalescing operator
     $nr_cilindros = intval($_POST['nr_cilindros'] ?? 0);
     $curso_pistao = floatval($_POST['curso_pistao'] ?? 0);
     $diametro_cilindro_max = floatval($_POST['diametro_cilindro_max'] ?? 0);
@@ -479,136 +479,93 @@ if ($option == 'bomba') {
     $dia_furo_pis_min = floatval($_POST['dia_furo_pis_min'] ?? 0);
     $dia_pino_pis_min = floatval($_POST['dia_pino_pis_min'] ?? 0);
     $folga_pino_pis_max = floatval($_POST['folga_pino_pis_max'] ?? 0);
-    $ordem = $_GET['ordem'];
-
-    // Set is_reference to 1
+    $ordem = $_GET['ordem'] ?? '';
     $is_reference = 1;
 
-    // Check if a record with is_reference = 1 already exists
-    $check_query = "SELECT id FROM motor WHERE is_reference = 1 LIMIT 1";
-    $check_result = mysqli_query($conn, $check_query);
-
-    if (mysqli_num_rows($check_result) > 0) {
-        // If a record exists, update it
-        $row = mysqli_fetch_assoc($check_result);
-        $id = $row['id'];
-
-        $insert_query = "INSERT INTO motor (
-            nr_cilindros, curso_pistao, diametro_cilindro_max, conicidade_max, ovalizacao_max, 
-            diametro_pistao_min, folga_cil_pis_max, aber_anel_1_max, aber_anel_2_max, 
-            aber_anel_1_pres_min, aber_anel_2_pres_min, larg_anel_1_min, larg_anel_2_min, 
-            dia_furo_pis_min, dia_pino_pis_min, folga_pino_pis_max, ordem, is_reference
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        $update_query = "UPDATE motor SET 
-        nr_cilindros = ?, 
-        curso_pistao = ?, 
-        diametro_cilindro_max = ?, 
-        conicidade_max = ?, 
-        ovalizacao_max = ?, 
-        diametro_pistao_min = ?, 
-        folga_cil_pis_max = ?, 
-        aber_anel_1_max = ?, 
-        aber_anel_2_max = ?, 
-        aber_anel_1_pres_min = ?, 
-        aber_anel_2_pres_min = ?, 
-        larg_anel_1_min = ?, 
-        larg_anel_2_min = ?, 
-        dia_furo_pis_min = ?, 
-        dia_pino_pis_min = ?, 
-        folga_pino_pis_max = ?, 
-        ordem = ?, 
-        is_reference = ? 
-        WHERE id = ?"; // 19 placeholders
-
-        $stmt = mysqli_prepare($conn, $update_query);
-
-        if (!$stmt) {
-            die("Prepare failed: " . mysqli_error($conn));
-        }
-
-        mysqli_stmt_bind_param(
-            $stmt,
-            "idddddddddddddddssi", // 19 type specifiers
-            $nr_cilindros,
-            $curso_pistao,
-            $diametro_cilindro_max,
-            $conicidade_max,
-            $ovalizacao_max,
-            $diametro_pistao_min,
-            $folga_cil_pis_max,
-            $aber_anel_1_max,
-            $aber_anel_2_max,
-            $aber_anel_1_pres_min,
-            $aber_anel_2_pres_min,
-            $larg_anel_1_min,
-            $larg_anel_2_min,
-            $dia_furo_pis_min,
-            $dia_pino_pis_min,
-            $folga_pino_pis_max,
-            $ordem,
-            $is_reference,
-            $id // Added for the WHERE clause
-        );
-
-        // Execute the query
-        if (mysqli_stmt_execute($stmt)) {
-            echo "Data updated successfully!";
-        } else {
-            echo "Error: " . mysqli_stmt_error($stmt);
-        }
-
-        // Close the statement
-        mysqli_stmt_close($stmt);
-    } else {
-        // If no record exists, insert a new one
-        $insert_query = "INSERT INTO motor (
-            nr_cilindros, curso_pistao, diametro_cilindro_max, conicidade_max, ovalizacao_max, 
-            diametro_pistao_min, folga_cil_pis_max, aber_anel_1_max, aber_anel_2_max, 
-            aber_anel_1_pres_min, aber_anel_2_pres_min, larg_anel_1_min, larg_anel_2_min, 
-            dia_furo_pis_min, dia_pino_pis_min, folga_pino_pis_max, ordem, is_reference
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        $stmt = mysqli_prepare($conn, $insert_query);
-
-        if (!$stmt) {
-            die("Prepare failed: " . mysqli_error($conn));
-        }
-
-        // Bind parameters
-        mysqli_stmt_bind_param(
-            $stmt,
-            "idddddddddddddddds", // 19 characters in the type definition string
-            $nr_cilindros,
-            $curso_pistao,
-            $diametro_cilindro_max,
-            $conicidade_max,
-            $ovalizacao_max,
-            $diametro_pistao_min,
-            $folga_cil_pis_max,
-            $aber_anel_1_max,
-            $aber_anel_2_max,
-            $aber_anel_1_pres_min,
-            $aber_anel_2_pres_min,
-            $larg_anel_1_min,
-            $larg_anel_2_min,
-            $dia_furo_pis_min,
-            $dia_pino_pis_min,
-            $folga_pino_pis_max,
-            $ordem,
-            $is_reference
-        );
-
-        // Execute the query
-        if (mysqli_stmt_execute($stmt)) {
-            echo "Data inserted successfully!";
-        } else {
-            echo "Error: " . mysqli_stmt_error($stmt);
-        }
-
-        // Close the statement
-        mysqli_stmt_close($stmt);
+    // Validate required fields
+    if (empty($ordem)) {
+        die("Erro: Ordem é obrigatória");
     }
+
+    // Prepare parameters array
+    $params = [
+        $nr_cilindros,
+        $curso_pistao,
+        $diametro_cilindro_max,
+        $conicidade_max,
+        $ovalizacao_max,
+        $diametro_pistao_min,
+        $folga_cil_pis_max,
+        $aber_anel_1_max,
+        $aber_anel_2_max,
+        $aber_anel_1_pres_min,
+        $aber_anel_2_pres_min,
+        $larg_anel_1_min,
+        $larg_anel_2_min,
+        $dia_furo_pis_min,
+        $dia_pino_pis_min,
+        $folga_pino_pis_max,
+        $ordem,
+        $is_reference
+    ];
+
+    // Check if reference record exists
+    $check_query = "SELECT id FROM motor WHERE ordem = ? AND is_reference = 1";
+    $check_stmt = mysqli_prepare($conn, $check_query);
+    
+    if (!$check_stmt) {
+        die("Erro na preparação da consulta: " . mysqli_error($conn));
+    }
+
+    mysqli_stmt_bind_param($check_stmt, "s", $ordem);
+    
+    if (!mysqli_stmt_execute($check_stmt)) {
+        die("Erro na execução da verificação: " . mysqli_stmt_error($check_stmt));
+    }
+    
+    mysqli_stmt_store_result($check_stmt);
+    $exists = mysqli_stmt_num_rows($check_stmt) > 0;
+    mysqli_stmt_close($check_stmt);
+
+    // Prepare the appropriate query based on existence
+    if ($exists) {
+        $query = "UPDATE motor SET 
+            nr_cilindros = ?, curso_pistao = ?, diametro_cilindro_max = ?,
+            conicidade_max = ?, ovalizacao_max = ?, diametro_pistao_min = ?,
+            folga_cil_pis_max = ?, aber_anel_1_max = ?, aber_anel_2_max = ?,
+            aber_anel_1_pres_min = ?, aber_anel_2_pres_min = ?, larg_anel_1_min = ?,
+            larg_anel_2_min = ?, dia_furo_pis_min = ?, dia_pino_pis_min = ?,
+            folga_pino_pis_max = ?
+            WHERE ordem = ? AND is_reference = ?";
+        $types = "idddddddddddddddsi";
+    } else {
+        $query = "INSERT INTO motor (
+            nr_cilindros, curso_pistao, diametro_cilindro_max, conicidade_max,
+            ovalizacao_max, diametro_pistao_min, folga_cil_pis_max, aber_anel_1_max,
+            aber_anel_2_max, aber_anel_1_pres_min, aber_anel_2_pres_min,
+            larg_anel_1_min, larg_anel_2_min, dia_furo_pis_min, dia_pino_pis_min,
+            folga_pino_pis_max, ordem, is_reference
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $types = "idddddddddddddddsi";
+    }
+
+    // Prepare and execute the main query
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        die("Erro na preparação da query: " . mysqli_error($conn));
+    }
+
+    // Bind parameters dynamically
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+
+    // Execute and handle result
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Dados do motor salvos com sucesso!";
+    } else {
+        echo "Erro ao salvar os dados: " . mysqli_stmt_error($stmt);
+    }
+
+    mysqli_stmt_close($stmt);
 } else {
     echo "<br>option not set: " . var_export($_POST['selected_option'], true) . PHP_EOL;
 }
