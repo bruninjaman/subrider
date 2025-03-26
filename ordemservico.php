@@ -3,6 +3,15 @@
 <?php
 session_start();
 
+// Carregar variáveis de ambiente
+$envFile = __DIR__ . '/.env';
+if (file_exists($envFile)) {
+    $envVars = parse_ini_file($envFile);
+    $baseAddress = $envVars['BASE_ADDRESS'] ?? '';
+} else {
+    $baseAddress = '';
+}
+
 //PERM
 require_once("./scripts/perm.php");
 //CONNECTION
@@ -51,6 +60,11 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
+
+    <!-- Define baseAddress for JavaScript -->
+    <script>
+        const baseAddress = '<?php echo $baseAddress; ?>';
+    </script>
 
     <!-- Delete button -->
     <script src=".\pages\ordemservico\delete_confirm.js"></script>

@@ -43,7 +43,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: "POST",
-                url: "ajax/update_date.php",
+                url: baseAddress + "/ajax/update_date.php",
                 data: {
                     ordem: ordem,
                     newData: newData

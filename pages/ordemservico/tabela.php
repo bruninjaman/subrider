@@ -1,6 +1,6 @@
 <?php
 echo "<style>";
-echo file_get_contents('assets\css\ordemservico\modal.css');
+echo file_get_contents($baseAddress . '/assets/css/ordemservico/modal.css');
 echo "</style>";
 ?>
 
@@ -116,8 +116,8 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 <td data-cell="Valor Unitário"><?php echo ($item['Valor'] <= 0) ? 'N/D' : realFormat($item['Valor']); ?></td>
                                 <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
                                 <td>
-                                    <button style="background: none; border: none;" onclick="location.href='ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'"><img src="./assets\css\images\edit.png" style="height: 30px; width: 30px;"> </button>
-                                    <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
+                                    <button style="background: none; border: none;" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'"><img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" style="height: 30px; width: 30px;"> </button>
+                                    <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                                 </td>
                             </tr>
                         <?php
@@ -150,7 +150,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                     <?php echo realFormat($item['Valor'] * $item['Quantidade']) ?>
                                 </td>
                                 <td>
-                                    <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
+                                    <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                                 </td>
                             </tr>
                         <?php
@@ -162,7 +162,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                         </tr>
                     </tbody>
                 </table>
-                <form action="scripts\ordemservico\register_medicoes.php?ordem=<?php echo (string)$_GET['ordem'] ?>" method="POST">
+                <form action="<?php echo $baseAddress; ?>/scripts/ordemservico/register_medicoes.php?ordem=<?php echo (string)$_GET['ordem'] ?>" method="POST">
                 <input type="hidden" id="selected_option" name="selected_option" value="">
                     <?php 
                         include('menu_medicoes.php');
@@ -174,6 +174,6 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
 </section>
 <?php
 echo "<script>";
-echo file_get_contents('pages/ordemservico/modal.js');
+echo file_get_contents($baseAddress . '/pages/ordemservico/modal.js');
 echo "</script>";
 ?>

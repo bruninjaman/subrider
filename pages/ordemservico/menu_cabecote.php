@@ -278,5 +278,5 @@
     </form>
 </div>
 
-<link rel="stylesheet" href="assets/css/menu-styles.css">
-<script src="assets/js/menu-scripts.js"></script>
+<link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/menu-styles.css">
+<script src="<?php echo $baseAddress; ?>/assets/js/menu-scripts.js"></script>

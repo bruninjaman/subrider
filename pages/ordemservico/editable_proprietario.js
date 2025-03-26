@@ -30,7 +30,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "POST",
-                url: "ajax/update_proprietario.php",
+                url: baseAddress + "/ajax/update_proprietario.php",
                 data: {
                     ordem: ordem,
                     newProprietario: newData

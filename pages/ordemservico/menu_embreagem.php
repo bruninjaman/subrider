@@ -79,4 +79,4 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="assets/css/menu-styles.css">
+<link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/menu-styles.css">
