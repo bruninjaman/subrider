@@ -704,3 +704,114 @@ select.meas-input option {
 .motor-medicoes .meas-input::placeholder {
     color: #666;
 }
+
+/* Estilos para o menu de medições do virabrequim */
+.virabrequim-medicoes {
+    margin-top: 20px;
+}
+
+.virabrequim-medicoes .legenda {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.virabrequim-medicoes .subtitulo {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #4CAF50;
+}
+
+.virabrequim-medicoes .secao {
+    margin-bottom: 30px;
+}
+
+.virabrequim-medicoes .secao h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #333;
+}
+
+.virabrequim-medicoes table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.virabrequim-medicoes th {
+    background: #2a2c35;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.virabrequim-medicoes td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.virabrequim-medicoes .folga-mancal {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.virabrequim-medicoes .folga-bronzina {
+    background-color: rgba(233, 30, 99, 0.1);
+}
+
+.virabrequim-medicoes .folga-lateral-biela {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.virabrequim-medicoes .folga-lateral-eixo-min {
+    background-color: rgba(255, 152, 0, 0.1);
+}
+
+.virabrequim-medicoes .folga-lateral-eixo-max {
+    background-color: rgba(156, 39, 176, 0.1);
+}
+
+.virabrequim-medicoes .empenamento {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.virabrequim-medicoes td:first-child {
+    font-weight: bold;
+    color: #e5e5e5;
+}
+
+.virabrequim-medicoes td:nth-child(2) {
+    color: #4CAF50;
+    text-align: right;
+}
+
+.virabrequim-medicoes td:not(:first-child):not(:nth-child(2)) {
+    text-align: right;
+    color: #888;
+}
+
+.virabrequim-medicoes td:not(:first-child):not(:nth-child(2)):not(:empty) {
+    color: #fff;
+}
+
+.virabrequim-medicoes .meas-input {
+    background: #2a2c35;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #fff;
+    text-align: right;
+    width: 100%;
+    margin: 2px 0;
+}
+
+.virabrequim-medicoes .meas-input:focus {
+    outline: none;
+    border-color: #45a049;
+}
+
+.virabrequim-medicoes .meas-input::placeholder {
+    color: #666;
+}

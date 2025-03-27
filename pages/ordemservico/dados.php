@@ -1100,13 +1100,156 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['t
     }
 }
 
-displayTableData($conn, "embreagem", "Embreagem");
-displayEmbreagemMedicoes($conn, $_GET['ordem']);
-displayTableData($conn, "bomba", "Bomba");
-displayBombaMedicoes($conn, $_GET['ordem']);
-displayTableData($conn, "motor", "Motor");
-displayMotorMedicoes($conn, $_GET['ordem']);
+function displayVirabrequimMedicoes($conn, $ordem) {
+    try {
+        // Buscar dados de referência do virabrequim
+        $query = "SELECT * FROM virabrequim WHERE is_reference = 1 AND ordem = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        if (!$stmt) {
+            throw new Exception("Erro ao preparar consulta: " . mysqli_error($conn));
+        }
+        
+        mysqli_stmt_bind_param($stmt, "s", $ordem);
+        if (!mysqli_stmt_execute($stmt)) {
+            throw new Exception("Erro ao executar consulta: " . mysqli_stmt_error($stmt));
+        }
+        
+        $result = mysqli_stmt_get_result($stmt);
+        $virabrequim = mysqli_fetch_assoc($result);
+        
+        if (!$virabrequim) {
+            echo "<div class='error-msg'>Dados de referência do virabrequim não encontrados para a ordem #" . htmlspecialchars($ordem) . "</div>";
+            return;
+        }
+
+        // Buscar número de cilindros do cabeçote
+        $queryCilindros = "SELECT cilindros FROM cabecote WHERE is_reference = 1 AND ordem = ?";
+        $stmtCilindros = mysqli_prepare($conn, $queryCilindros);
+        mysqli_stmt_bind_param($stmtCilindros, "s", $ordem);
+        mysqli_stmt_execute($stmtCilindros);
+        $resultCilindros = mysqli_stmt_get_result($stmtCilindros);
+        $cabecote = mysqli_fetch_assoc($resultCilindros);
+        $nr_cilindros = $cabecote['cilindros'];
+
+        echo "<div class='card virabrequim-medicoes'>";
+        echo "<h2 class='card-title'>MENU MEDIÇÕES VIRABREQUIM</h2>";
+        echo "<div class='legenda'>Medição de parâmetros do virabrequim para cada cilindro</div>";
+        echo "<div> Tipo: <div class='subtitulo'> " . htmlspecialchars($virabrequim['tipo']) . "</div></div>";
+        
+        echo "<div class='table-container'>";
+        echo "<form method='POST' class='table-form'>";
+        echo "<input type='hidden' name='table' value='virabrequim'>";
+        echo "<input type='hidden' name='update' value='1'>";
+        echo "<table>";
+        
+        // Cabeçalho da tabela
+        echo "<thead><tr><th>ITEM</th><th>REFERÊNCIA</th>";
+        
+        // Adicionar colunas para cada cilindro
+        for ($i = 1; $i <= $nr_cilindros; $i++) {
+            echo "<th>CILINDRO " . $i . "</th>";
+        }
+        echo "</tr></thead>";
+        echo "<tbody>";
+
+        // Campos comuns para ambos os tipos
+        echo "<tr class='folga-mancal'>";
+        echo "<td>Folga mancal</td>";
+        echo "<td>" . number_format($virabrequim['folga_mancal'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $nr_cilindros; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[folga_mancal][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Campos específicos para Bronzina
+        if ($virabrequim['tipo'] === 'Bronzina') {
+            echo "<tr class='folga-bronzina'>";
+            echo "<td>Folga bronzina</td>";
+            echo "<td>" . number_format($virabrequim['folga_bronzina'], 2, ',', '.') . "</td>";
+            
+            for ($i = 1; $i <= $nr_cilindros; $i++) {
+                echo "<td>";
+                echo "<input type='text' 
+                    name='medida[folga_bronzina][" . $i . "]' 
+                    class='meas-input'>";
+                echo "</td>";
+            }
+            echo "</tr>";
+        }
+
+        // Campos específicos para Rolamento
+        if ($virabrequim['tipo'] === 'Rolamento') {
+            echo "<tr class='folga-lateral-biela'>";
+            echo "<td>Folga lateral biela</td>";
+            echo "<td>" . number_format($virabrequim['folga_lateral_biela'], 2, ',', '.') . "</td>";
+            
+            for ($i = 1; $i <= $nr_cilindros; $i++) {
+                echo "<td>";
+                echo "<input type='text' 
+                    name='medida[folga_lateral_biela][" . $i . "]' 
+                    class='meas-input'>";
+                echo "</td>";
+            }
+            echo "</tr>";
+
+            echo "<tr class='folga-lateral-eixo-min'>";
+            echo "<td>Folga lateral eixo mínima</td>";
+            echo "<td>" . number_format($virabrequim['folga_lateral_eixo_min'], 2, ',', '.') . "</td>";
+            
+            for ($i = 1; $i <= $nr_cilindros; $i++) {
+                echo "<td>";
+                echo "<input type='text' 
+                    name='medida[folga_lateral_eixo_min][" . $i . "]' 
+                    class='meas-input'>";
+                echo "</td>";
+            }
+            echo "</tr>";
+
+            echo "<tr class='folga-lateral-eixo-max'>";
+            echo "<td>Folga lateral eixo máxima</td>";
+            echo "<td>" . number_format($virabrequim['folga_lateral_eixo_max'], 2, ',', '.') . "</td>";
+            
+            for ($i = 1; $i <= $nr_cilindros; $i++) {
+                echo "<td>";
+                echo "<input type='text' 
+                    name='medida[folga_lateral_eixo_max][" . $i . "]' 
+                    class='meas-input'>";
+                echo "</td>";
+            }
+            echo "</tr>";
+
+            echo "<tr class='empenamento'>";
+            echo "<td>Empenamento</td>";
+            echo "<td>" . number_format($virabrequim['empenamento'], 2, ',', '.') . "</td>";
+            
+            for ($i = 1; $i <= $nr_cilindros; $i++) {
+                echo "<td>";
+                echo "<input type='text' 
+                    name='medida[empenamento][" . $i . "]' 
+                    class='meas-input'>";
+                echo "</td>";
+            }
+            echo "</tr>";
+        }
+
+        echo "</tbody></table>";
+        echo "<button type='submit' class='save-btn'>Salvar Medições</button>";
+        echo "</form>";
+        echo "</div>";
+        echo "</div>";
+        
+    } catch (Exception $e) {
+        echo "<div class='error-msg'>Erro ao exibir medições do virabrequim: " . htmlspecialchars($e->getMessage()) . "</div>";
+    }
+}
+
 displayTableData($conn, "virabrequim", "Virabrequim");
+displayVirabrequimMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "cabecote", "Cabeçote");
 
 // Chamar a função de medições do cabeçote
