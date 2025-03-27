@@ -465,3 +465,102 @@ select.meas-input option {
     width: 100%;
     margin: 2px 0;
 }
+
+/* Estilos para o menu de medições da bomba */
+.bomba-medicoes {
+    margin-top: 20px;
+}
+
+.bomba-medicoes .legenda {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.bomba-medicoes .subtitulo {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #4CAF50;
+}
+
+.bomba-medicoes .secao {
+    margin-bottom: 30px;
+}
+
+.bomba-medicoes .secao h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #333;
+}
+
+.bomba-medicoes table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.bomba-medicoes th {
+    background: #2a2c35;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.bomba-medicoes td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.bomba-medicoes .pressao-oleo {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.bomba-medicoes .vazao {
+    background-color: rgba(233, 30, 99, 0.1);
+}
+
+.bomba-medicoes .combustivel {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.bomba-medicoes td:first-child {
+    font-weight: bold;
+    color: #e5e5e5;
+}
+
+.bomba-medicoes td:nth-child(2) {
+    color: #4CAF50;
+    text-align: right;
+}
+
+.bomba-medicoes td:not(:first-child):not(:nth-child(2)) {
+    text-align: right;
+    color: #888;
+}
+
+.bomba-medicoes td:not(:first-child):not(:nth-child(2)):not(:empty) {
+    color: #fff;
+}
+
+.bomba-medicoes .meas-input {
+    background: #2a2c35;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #fff;
+    text-align: right;
+    width: 100%;
+    margin: 2px 0;
+}
+
+.bomba-medicoes .meas-input:focus {
+    outline: none;
+    border-color: #45a049;
+}
+
+.bomba-medicoes .meas-input::placeholder {
+    color: #666;
+}
