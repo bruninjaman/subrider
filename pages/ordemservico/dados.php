@@ -908,8 +908,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['t
 
 displayTableData($conn, "embreagem", "Embreagem");
 displayEmbreagemMedicoes($conn, $_GET['ordem']);
-displayBombaMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "bomba", "Bomba");
+displayBombaMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "motor", "Motor");
 displayTableData($conn, "virabrequim", "Virabrequim");
 displayTableData($conn, "cabecote", "Cabeçote");
