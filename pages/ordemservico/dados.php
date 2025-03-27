@@ -788,11 +788,285 @@ function displayBombaMedicoes($conn, $ordem) {
     }
 }
 
-// Adicione este código para processar o formulário
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'cabecote') {
+function displayMotorMedicoes($conn, $ordem) {
+    try {
+        // Buscar dados de referência do motor
+        $query = "SELECT * FROM motor WHERE is_reference = 1 AND ordem = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        if (!$stmt) {
+            throw new Exception("Erro ao preparar consulta: " . mysqli_error($conn));
+        }
+        
+        mysqli_stmt_bind_param($stmt, "s", $ordem);
+        if (!mysqli_stmt_execute($stmt)) {
+            throw new Exception("Erro ao executar consulta: " . mysqli_stmt_error($stmt));
+        }
+        
+        $result = mysqli_stmt_get_result($stmt);
+        $motor = mysqli_fetch_assoc($result);
+        
+        if (!$motor) {
+            echo "<div class='error-msg'>Dados de referência do motor não encontrados para a ordem #" . htmlspecialchars($ordem) . "</div>";
+            return;
+        }
+
+        echo "<div class='card motor-medicoes'>";
+        echo "<h2 class='card-title'>MENU MEDIÇÕES MOTOR</h2>";
+        echo "<div class='legenda'>Medição de parâmetros do motor para cada cilindro</div>";
+        echo "<div> Número de cilindros: <div class='subtitulo'> " . htmlspecialchars($motor['nr_cilindros']) . "</div></div>";
+        
+        echo "<div class='table-container'>";
+        echo "<form method='POST' class='table-form'>";
+        echo "<input type='hidden' name='table' value='motor'>";
+        echo "<input type='hidden' name='update' value='1'>";
+        echo "<table>";
+        
+        // Cabeçalho da tabela
+        echo "<thead><tr><th>ITEM</th><th>REFERÊNCIA</th>";
+        
+        // Adicionar colunas para cada cilindro
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<th>CILINDRO " . $i . "</th>";
+        }
+        echo "</tr></thead>";
+        echo "<tbody>";
+
+        // Medição de curso do pistão
+        echo "<tr class='curso-pistao'>";
+        echo "<td>Curso do pistão</td>";
+        echo "<td>" . number_format($motor['curso_pistao'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[curso_pistao][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de diâmetro do cilindro
+        echo "<tr class='diametro-cilindro'>";
+        echo "<td>Diâmetro do cilindro máximo</td>";
+        echo "<td>" . number_format($motor['diametro_cilindro_max'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[diametro_cilindro_max][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de conicidade
+        echo "<tr class='conicidade'>";
+        echo "<td>Conicidade máxima</td>";
+        echo "<td>" . number_format($motor['conicidade_max'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[conicidade_max][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de ovalização
+        echo "<tr class='ovalizacao'>";
+        echo "<td>Ovalização máxima</td>";
+        echo "<td>" . number_format($motor['ovalizacao_max'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[ovalizacao_max][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de diâmetro do pistão
+        echo "<tr class='diametro-pistao'>";
+        echo "<td>Diâmetro do pistão mínimo</td>";
+        echo "<td>" . number_format($motor['diametro_pistao_min'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[diametro_pistao_min][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de folga cilindro/pistão
+        echo "<tr class='folga-cil-pis'>";
+        echo "<td>Folga cilindro/pistão máxima</td>";
+        echo "<td>" . number_format($motor['folga_cil_pis_max'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[folga_cil_pis_max][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Separador para medições dos anéis
+        echo "<tr class='separador'>";
+        echo "<td colspan='" . ($motor['nr_cilindros'] + 2) . "'>MEDIÇÕES DOS ANÉIS</td>";
+        echo "</tr>";
+
+        // Medição de abertura do anel 1
+        echo "<tr class='anel-1'>";
+        echo "<td>Abertura do anel 1 máxima</td>";
+        echo "<td>" . number_format($motor['aber_anel_1_max'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[aber_anel_1_max][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de abertura do anel 2
+        echo "<tr class='anel-2'>";
+        echo "<td>Abertura do anel 2 máxima</td>";
+        echo "<td>" . number_format($motor['aber_anel_2_max'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[aber_anel_2_max][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de pressão do anel 1
+        echo "<tr class='anel-1'>";
+        echo "<td>Pressão do anel 1 mínima</td>";
+        echo "<td>" . number_format($motor['aber_anel_1_pres_min'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[aber_anel_1_pres_min][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de pressão do anel 2
+        echo "<tr class='anel-2'>";
+        echo "<td>Pressão do anel 2 mínima</td>";
+        echo "<td>" . number_format($motor['aber_anel_2_pres_min'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[aber_anel_2_pres_min][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de largura do anel 1
+        echo "<tr class='anel-1'>";
+        echo "<td>Largura do anel 1 mínima</td>";
+        echo "<td>" . number_format($motor['larg_anel_1_min'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[larg_anel_1_min][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de largura do anel 2
+        echo "<tr class='anel-2'>";
+        echo "<td>Largura do anel 2 mínima</td>";
+        echo "<td>" . number_format($motor['larg_anel_2_min'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[larg_anel_2_min][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Separador para medições do pino
+        echo "<tr class='separador'>";
+        echo "<td colspan='" . ($motor['nr_cilindros'] + 2) . "'>MEDIÇÕES DO PINO</td>";
+        echo "</tr>";
+
+        // Medição de diâmetro do furo do pistão
+        echo "<tr class='pino'>";
+        echo "<td>Diâmetro do furo do pistão mínimo</td>";
+        echo "<td>" . number_format($motor['dia_furo_pis_min'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[dia_furo_pis_min][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de diâmetro do pino do pistão
+        echo "<tr class='pino'>";
+        echo "<td>Diâmetro do pino do pistão mínimo</td>";
+        echo "<td>" . number_format($motor['dia_pino_pis_min'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[dia_pino_pis_min][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        // Medição de folga do pino do pistão
+        echo "<tr class='pino'>";
+        echo "<td>Folga do pino do pistão máxima</td>";
+        echo "<td>" . number_format($motor['folga_pino_pis_max'], 2, ',', '.') . "</td>";
+        
+        for ($i = 1; $i <= $motor['nr_cilindros']; $i++) {
+            echo "<td>";
+            echo "<input type='text' 
+                name='medida[folga_pino_pis_max][" . $i . "]' 
+                class='meas-input'>";
+            echo "</td>";
+        }
+        echo "</tr>";
+
+        echo "</tbody></table>";
+        echo "<button type='submit' class='save-btn'>Salvar Medições</button>";
+        echo "</form>";
+        echo "</div>";
+        echo "</div>";
+        
+    } catch (Exception $e) {
+        echo "<div class='error-msg'>Erro ao exibir medições do motor: " . htmlspecialchars($e->getMessage()) . "</div>";
+    }
+}
+
+// Processamento do formulário do motor
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'motor') {
     try {
         // Verificar se já existe medição
-        $checkQuery = "SELECT COUNT(*) as count FROM cabecote WHERE is_reference = 0 AND ordem = ?";
+        $checkQuery = "SELECT COUNT(*) as count FROM motor WHERE is_reference = 0 AND ordem = ?";
         $checkStmt = mysqli_prepare($conn, $checkQuery);
         mysqli_stmt_bind_param($checkStmt, "s", $ordem);
         mysqli_stmt_execute($checkStmt);
@@ -801,7 +1075,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['t
 
         if ($checkRow['count'] == 0) {
             // Inserir nova medição
-            $insertQuery = "INSERT INTO cabecote (ordem, is_reference) VALUES (?, 0)";
+            $insertQuery = "INSERT INTO motor (ordem, is_reference) VALUES (?, 0)";
             $insertStmt = mysqli_prepare($conn, $insertQuery);
             mysqli_stmt_bind_param($insertStmt, "s", $ordem);
             mysqli_stmt_execute($insertStmt);
@@ -812,92 +1086,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['t
         if (isset($_POST['medida'])) {
             foreach ($_POST['medida'] as $tipo => $cilindros) {
                 foreach ($cilindros as $cilindro => $valor) {
-                    // Aqui você precisará criar a lógica para atualizar cada medição
-                    // baseado na estrutura do seu banco de dados
+                    $updateQuery = "UPDATE motor SET $tipo = ? WHERE ordem = ? AND is_reference = 0";
+                    $updateStmt = mysqli_prepare($conn, $updateQuery);
+                    mysqli_stmt_bind_param($updateStmt, "ds", $valor, $ordem);
+                    mysqli_stmt_execute($updateStmt);
+                    mysqli_stmt_close($updateStmt);
                 }
-            }
-            echo "<div class='success-msg'>Medições salvas com sucesso!</div>";
-        }
-    } catch (Exception $e) {
-        echo "<div class='error-msg'>Erro ao salvar medições: " . htmlspecialchars($e->getMessage()) . "</div>";
-    }
-}
-
-// Adicione este código para processar o formulário
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'embreagem') {
-    try {
-        // Verificar se já existe medição
-        $checkQuery = "SELECT COUNT(*) as count FROM embreagem WHERE is_reference = 0 AND ordem = ?";
-        $checkStmt = mysqli_prepare($conn, $checkQuery);
-        mysqli_stmt_bind_param($checkStmt, "s", $ordem);
-        mysqli_stmt_execute($checkStmt);
-        $checkResult = mysqli_stmt_get_result($checkStmt);
-        $checkRow = mysqli_fetch_assoc($checkResult);
-
-        if ($checkRow['count'] == 0) {
-            // Inserir nova medição
-            $insertQuery = "INSERT INTO embreagem (ordem, is_reference) VALUES (?, 0)";
-            $insertStmt = mysqli_prepare($conn, $insertQuery);
-            mysqli_stmt_bind_param($insertStmt, "s", $ordem);
-            mysqli_stmt_execute($insertStmt);
-            $medicao_id = mysqli_insert_id($conn);
-        }
-
-        // Atualizar medições
-        if (isset($_POST['medida'])) {
-            foreach ($_POST['medida'] as $tipo => $valores) {
-                foreach ($valores as $disco => $valor) {
-                    if ($tipo === 'disco_friccao_espes') {
-                        $updateQuery = "UPDATE embreagem SET disco_friccao_espes_min = ? WHERE ordem = ? AND is_reference = 0";
-                        $updateStmt = mysqli_prepare($conn, $updateQuery);
-                        mysqli_stmt_bind_param($updateStmt, "ds", $valor, $ordem);
-                    } elseif ($tipo === 'disco_separador_emp') {
-                        $updateQuery = "UPDATE embreagem SET disco_separador_emp_max = ? WHERE ordem = ? AND is_reference = 0";
-                        $updateStmt = mysqli_prepare($conn, $updateQuery);
-                        mysqli_stmt_bind_param($updateStmt, "ds", $valor, $ordem);
-                    }
-                    
-                    if (isset($updateStmt)) {
-                        mysqli_stmt_execute($updateStmt);
-                        mysqli_stmt_close($updateStmt);
-                    }
-                }
-            }
-            echo "<div class='success-msg'>Medições salvas com sucesso!</div>";
-        }
-    } catch (Exception $e) {
-        echo "<div class='error-msg'>Erro ao salvar medições: " . htmlspecialchars($e->getMessage()) . "</div>";
-    }
-}
-
-// Processamento do formulário da bomba
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'bomba') {
-    try {
-        // Verificar se já existe medição
-        $checkQuery = "SELECT COUNT(*) as count FROM bomba WHERE is_reference = 0 AND ordem = ?";
-        $checkStmt = mysqli_prepare($conn, $checkQuery);
-        mysqli_stmt_bind_param($checkStmt, "s", $ordem);
-        mysqli_stmt_execute($checkStmt);
-        $checkResult = mysqli_stmt_get_result($checkStmt);
-        $checkRow = mysqli_fetch_assoc($checkResult);
-
-        if ($checkRow['count'] == 0) {
-            // Inserir nova medição
-            $insertQuery = "INSERT INTO bomba (ordem, is_reference) VALUES (?, 0)";
-            $insertStmt = mysqli_prepare($conn, $insertQuery);
-            mysqli_stmt_bind_param($insertStmt, "s", $ordem);
-            mysqli_stmt_execute($insertStmt);
-            $medicao_id = mysqli_insert_id($conn);
-        }
-
-        // Atualizar medições
-        if (isset($_POST['medida'])) {
-            foreach ($_POST['medida'] as $tipo => $valor) {
-                $updateQuery = "UPDATE bomba SET $tipo = ? WHERE ordem = ? AND is_reference = 0";
-                $updateStmt = mysqli_prepare($conn, $updateQuery);
-                mysqli_stmt_bind_param($updateStmt, "ds", $valor, $ordem);
-                mysqli_stmt_execute($updateStmt);
-                mysqli_stmt_close($updateStmt);
             }
             echo "<div class='success-msg'>Medições salvas com sucesso!</div>";
         }
@@ -911,6 +1105,7 @@ displayEmbreagemMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "bomba", "Bomba");
 displayBombaMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "motor", "Motor");
+displayMotorMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "virabrequim", "Virabrequim");
 displayTableData($conn, "cabecote", "Cabeçote");
 

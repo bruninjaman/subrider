@@ -564,3 +564,143 @@ select.meas-input option {
 .bomba-medicoes .meas-input::placeholder {
     color: #666;
 }
+
+/* Estilos para o menu de medições do motor */
+.motor-medicoes {
+    margin-top: 20px;
+}
+
+.motor-medicoes .legenda {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.motor-medicoes .subtitulo {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #4CAF50;
+}
+
+.motor-medicoes .secao {
+    margin-bottom: 30px;
+}
+
+.motor-medicoes .secao h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #333;
+}
+
+.motor-medicoes table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.motor-medicoes th {
+    background: #2a2c35;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.motor-medicoes td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.motor-medicoes .curso-pistao {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.motor-medicoes .diametro-cilindro {
+    background-color: rgba(233, 30, 99, 0.1);
+}
+
+.motor-medicoes .conicidade {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.motor-medicoes .ovalizacao {
+    background-color: rgba(255, 152, 0, 0.1);
+}
+
+.motor-medicoes .diametro-pistao {
+    background-color: rgba(156, 39, 176, 0.1);
+}
+
+.motor-medicoes .folga-cil-pis {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.motor-medicoes .anel-1 {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.motor-medicoes .anel-2 {
+    background-color: rgba(233, 30, 99, 0.1);
+}
+
+.motor-medicoes .pino {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.motor-medicoes td:first-child {
+    font-weight: bold;
+    color: #e5e5e5;
+}
+
+.motor-medicoes td:nth-child(2) {
+    color: #4CAF50;
+    text-align: right;
+}
+
+.motor-medicoes td:not(:first-child):not(:nth-child(2)) {
+    text-align: right;
+    color: #888;
+}
+
+.motor-medicoes td:not(:first-child):not(:nth-child(2)):not(:empty) {
+    color: #fff;
+}
+
+.motor-medicoes .separador {
+    background-color: rgba(255, 255, 255, 0.15);
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.motor-medicoes .separador td {
+    color: #fff;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.motor-medicoes .meas-input {
+    background: #2a2c35;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #fff;
+    text-align: right;
+    width: 100%;
+    margin: 2px 0;
+}
+
+.motor-medicoes .meas-input:focus {
+    outline: none;
+    border-color: #45a049;
+}
+
+.motor-medicoes .meas-input::placeholder {
+    color: #666;
+}
