@@ -696,6 +696,98 @@ function displayEmbreagemMedicoes($conn, $ordem) {
     }
 }
 
+function displayBombaMedicoes($conn, $ordem) {
+    try {
+        // Buscar dados de referência da bomba
+        $query = "SELECT * FROM bomba WHERE is_reference = 1 AND ordem = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        if (!$stmt) {
+            throw new Exception("Erro ao preparar consulta: " . mysqli_error($conn));
+        }
+        
+        mysqli_stmt_bind_param($stmt, "s", $ordem);
+        if (!mysqli_stmt_execute($stmt)) {
+            throw new Exception("Erro ao executar consulta: " . mysqli_stmt_error($stmt));
+        }
+        
+        $result = mysqli_stmt_get_result($stmt);
+        $bomba = mysqli_fetch_assoc($result);
+        
+        if (!$bomba) {
+            echo "<div class='error-msg'>Dados de referência da bomba não encontrados para a ordem #" . htmlspecialchars($ordem) . "</div>";
+            return;
+        }
+
+        echo "<div class='card bomba-medicoes'>";
+        echo "<h2 class='card-title'>MENU MEDIÇÕES BOMBA</h2>";
+        echo "<div class='legenda'>Medição de pressão e vazão da bomba</div>";
+        
+        echo "<div class='table-container'>";
+        echo "<form method='POST' class='table-form'>";
+        echo "<input type='hidden' name='table' value='bomba'>";
+        echo "<input type='hidden' name='update' value='1'>";
+        echo "<table>";
+        
+        // Cabeçalho da tabela
+        echo "<thead><tr><th>PARÂMETRO</th><th>REFERÊNCIA</th><th>MEDIDA</th></tr></thead>";
+        echo "<tbody>";
+
+        // Pressão de óleo mínima
+        echo "<tr class='pressao-oleo'>";
+        echo "<td>Pressão de óleo mínima</td>";
+        echo "<td>" . number_format($bomba['pressao_oleo_min'], 2, ',', '.') . "</td>";
+        echo "<td>";
+        echo "<input type='text' name='medida[pressao_oleo_min]' class='meas-input'>";
+        echo "</td>";
+        echo "</tr>";
+
+        // Pressão de óleo máxima
+        echo "<tr class='pressao-oleo'>";
+        echo "<td>Pressão de óleo máxima</td>";
+        echo "<td>" . number_format($bomba['pressao_oleo_max'], 2, ',', '.') . "</td>";
+        echo "<td>";
+        echo "<input type='text' name='medida[pressao_oleo_max]' class='meas-input'>";
+        echo "</td>";
+        echo "</tr>";
+
+        // Vazão mínima
+        echo "<tr class='vazao'>";
+        echo "<td>Vazão mínima</td>";
+        echo "<td>" . number_format($bomba['vazao_min'], 2, ',', '.') . "</td>";
+        echo "<td>";
+        echo "<input type='text' name='medida[vazao_min]' class='meas-input'>";
+        echo "</td>";
+        echo "</tr>";
+
+        // Vazão máxima
+        echo "<tr class='vazao'>";
+        echo "<td>Vazão máxima</td>";
+        echo "<td>" . number_format($bomba['vazao_max'], 2, ',', '.') . "</td>";
+        echo "<td>";
+        echo "<input type='text' name='medida[vazao_max]' class='meas-input'>";
+        echo "</td>";
+        echo "</tr>";
+
+        // Pressão de combustível
+        echo "<tr class='combustivel'>";
+        echo "<td>Pressão de combustível</td>";
+        echo "<td>" . number_format($bomba['comb_pressao'], 2, ',', '.') . "</td>";
+        echo "<td>";
+        echo "<input type='text' name='medida[comb_pressao]' class='meas-input'>";
+        echo "</td>";
+        echo "</tr>";
+
+        echo "</tbody></table>";
+        echo "<button type='submit' class='save-btn'>Salvar Medições</button>";
+        echo "</form>";
+        echo "</div>";
+        echo "</div>";
+        
+    } catch (Exception $e) {
+        echo "<div class='error-msg'>Erro ao exibir medições da bomba: " . htmlspecialchars($e->getMessage()) . "</div>";
+    }
+}
+
 // Adicione este código para processar o formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'cabecote') {
     try {
@@ -778,8 +870,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['t
     }
 }
 
+// Processamento do formulário da bomba
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'bomba') {
+    try {
+        // Verificar se já existe medição
+        $checkQuery = "SELECT COUNT(*) as count FROM bomba WHERE is_reference = 0 AND ordem = ?";
+        $checkStmt = mysqli_prepare($conn, $checkQuery);
+        mysqli_stmt_bind_param($checkStmt, "s", $ordem);
+        mysqli_stmt_execute($checkStmt);
+        $checkResult = mysqli_stmt_get_result($checkStmt);
+        $checkRow = mysqli_fetch_assoc($checkResult);
+
+        if ($checkRow['count'] == 0) {
+            // Inserir nova medição
+            $insertQuery = "INSERT INTO bomba (ordem, is_reference) VALUES (?, 0)";
+            $insertStmt = mysqli_prepare($conn, $insertQuery);
+            mysqli_stmt_bind_param($insertStmt, "s", $ordem);
+            mysqli_stmt_execute($insertStmt);
+            $medicao_id = mysqli_insert_id($conn);
+        }
+
+        // Atualizar medições
+        if (isset($_POST['medida'])) {
+            foreach ($_POST['medida'] as $tipo => $valor) {
+                $updateQuery = "UPDATE bomba SET $tipo = ? WHERE ordem = ? AND is_reference = 0";
+                $updateStmt = mysqli_prepare($conn, $updateQuery);
+                mysqli_stmt_bind_param($updateStmt, "ds", $valor, $ordem);
+                mysqli_stmt_execute($updateStmt);
+                mysqli_stmt_close($updateStmt);
+            }
+            echo "<div class='success-msg'>Medições salvas com sucesso!</div>";
+        }
+    } catch (Exception $e) {
+        echo "<div class='error-msg'>Erro ao salvar medições: " . htmlspecialchars($e->getMessage()) . "</div>";
+    }
+}
+
 displayTableData($conn, "embreagem", "Embreagem");
 displayEmbreagemMedicoes($conn, $_GET['ordem']);
+displayBombaMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "bomba", "Bomba");
 displayTableData($conn, "motor", "Motor");
 displayTableData($conn, "virabrequim", "Virabrequim");
