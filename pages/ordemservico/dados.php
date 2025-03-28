@@ -62,34 +62,15 @@ function displayTableData($conn, $tableName, $tableTitle) {
                     $params = [];
                     $types = '';
                     
-                    // Verificar se é a tabela virabrequim e se tem o campo tipo
-                    $isVirabrequim = ($tableName === 'virabrequim');
-                    $tipo = null;
-                    
-                    if ($isVirabrequim) {
-                        foreach ($fields as $field => $value) {
-                            if (strtolower($field) === 'tipo') {
-                                $tipo = $value;
-                                break;
-                            }
-                        }
-                    }
-                    
                     foreach ($fields as $field => $value) {
-                        // Se for virabrequim e tipo for Rolamento, alguns campos devem ser NULL
-                        if ($isVirabrequim && $tipo === 'Rolamento' && 
-                            in_array(strtolower($field), [
-                                'folga_lateral_biela',
-                                'folga_lateral_eixo_min',
-                                'folga_lateral_eixo_max',
-                                'empenamento'
-                            ])) {
-                            $updates[] = "`$field` = NULL";
-                        } else {
-                            $updates[] = "`$field` = ?";
-                            $params[] = $value;
-                            $types .= 's';
+                        // Converter vírgula para ponto se for um número
+                        if (is_numeric(str_replace(',', '.', $value))) {
+                            $value = str_replace(',', '.', $value);
                         }
+                        
+                        $updates[] = "`$field` = ?";
+                        $params[] = $value;
+                        $types .= is_numeric($value) ? 'd' : 's';
                     }
                     
                     $params[] = $refId;
@@ -1084,6 +1065,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['t
         if (isset($_POST['medida'])) {
             foreach ($_POST['medida'] as $tipo => $cilindros) {
                 foreach ($cilindros as $cilindro => $valor) {
+                    // Converter vírgula para ponto e garantir formato decimal
+                    $valor = str_replace(',', '.', $valor);
+                    $valor = floatval($valor);
+                    
                     $updateQuery = "UPDATE motor SET $tipo = ? WHERE ordem = ? AND is_reference = 0";
                     $updateStmt = mysqli_prepare($conn, $updateQuery);
                     mysqli_stmt_bind_param($updateStmt, "ds", $valor, $ordem);
