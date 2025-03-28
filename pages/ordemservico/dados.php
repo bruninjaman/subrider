@@ -371,7 +371,10 @@ function displayCabecoteMedicoes($conn, $ordem) {
                     echo "<div class='pastilha-container'>";
                     echo "<input type='text' 
                         name='medida[adm_pastilha_" . $lado . "][" . $c . "]' 
-                        class='meas-input pastilha-input'>";
+                        class='meas-input pastilha-input' 
+                        data-cilindro='" . $c . "' 
+                        data-tipo='adm' 
+                        data-lado='" . $lado . "'>";
                     echo "<div class='pastilha-corrigida' 
                         id='pc_adm_" . $lado . "_" . $c . "'>-</div>";
                     echo "</div>";
@@ -417,7 +420,10 @@ function displayCabecoteMedicoes($conn, $ordem) {
                     echo "<div class='pastilha-container'>";
                     echo "<input type='text' 
                         name='medida[esc_pastilha_" . $lado . "][" . $c . "]' 
-                        class='meas-input pastilha-input'>";
+                        class='meas-input pastilha-input' 
+                        data-cilindro='" . $c . "' 
+                        data-tipo='esc' 
+                        data-lado='" . $lado . "'>";
                     echo "<div class='pastilha-corrigida' 
                         id='pc_esc_" . $lado . "_" . $c . "'>-</div>";
                     echo "</div>";
@@ -1252,7 +1258,23 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
 <link rel="stylesheet" href="assets/css/ordemservico/menus/dados.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="assets/js/ordemservico/calcularPastilha.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Vincular o evento de cálculo a todos os inputs de folga
+    const folgaInputs = document.querySelectorAll('.folga-input');
+    folgaInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            calcularPastilha(this);
+        });
+        input.addEventListener('input', function() {
+            calcularPastilha(this);
+        });
+    });
+});
+</script>
 
 <input type="hidden" id="val_adm_limite_min" value="<?php echo $cabecote['val_adm_limite_min']; ?>">
 <input type="hidden" id="val_adm_limite_max" value="<?php echo $cabecote['val_adm_limite_max']; ?>">

@@ -1,10 +1,9 @@
 function calcularPastilha(input) {
-    // Pegar os dados do elemento usando getAttribute para garantir
+    // Pegar os dados do elemento
     const cilindro = input.getAttribute('data-cilindro');
     const tipo = input.getAttribute('data-tipo');
     const lado = input.getAttribute('data-lado');
 
-    // Verificar se todos os dados necessários estão presentes
     if (!cilindro || !tipo || !lado) {
         console.error('Dados necessários não encontrados no input:', {cilindro, tipo, lado});
         return;
@@ -13,7 +12,7 @@ function calcularPastilha(input) {
     // Obter o valor da folga
     let folgaValue = input.value.trim().replace(',', '.');
     
-    // Encontrar o input da pastilha atual
+    // Encontrar o input da pastilha atual usando o seletor correto
     let pastilhaInput = document.querySelector(`input[name="medida[${tipo}_pastilha_${lado}][${cilindro}]"]`);
     if (!pastilhaInput) {
         console.error('Input da pastilha não encontrado');
@@ -22,65 +21,34 @@ function calcularPastilha(input) {
     
     let pastilhaAtual = pastilhaInput.value.trim().replace(',', '.');
     
-    // Verificar se os valores são numéricos válidos e diferentes de vazio
-    if (!folgaValue || !pastilhaAtual || isNaN(folgaValue) || isNaN(pastilhaAtual) || folgaValue === '' || pastilhaAtual === '') {
-        let celulaPastilhaCorrigida = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
-        if (celulaPastilhaCorrigida) {
-            celulaPastilhaCorrigida.textContent = '-';
-        }
+    // Verificar valores válidos
+    if (!folgaValue || !pastilhaAtual || isNaN(folgaValue) || isNaN(pastilhaAtual)) {
+        document.getElementById(`pc_${tipo}_${lado}_${cilindro}`).textContent = '-';
         return;
     }
-    
+
     // Converter para números
     folgaValue = parseFloat(folgaValue);
     pastilhaAtual = parseFloat(pastilhaAtual);
 
-    // Verificar se os valores são zero ou negativos
-    if (folgaValue <= 0 || pastilhaAtual <= 0) {
-        let celulaPastilhaCorrigida = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
-        if (celulaPastilhaCorrigida) {
-            celulaPastilhaCorrigida.textContent = '-';
-        }
-        return;
-    }
+    // Obter valores de referência
+    const referenciaMin = tipo === 'adm' ? 
+        parseFloat(document.getElementById('val_adm_limite_min').value) :
+        parseFloat(document.getElementById('val_esc_limite_min').value);
+    const referenciaMax = tipo === 'adm' ? 
+        parseFloat(document.getElementById('val_adm_limite_max').value) :
+        parseFloat(document.getElementById('val_esc_limite_max').value);
 
-    // Buscar a referência
-    let textoReferencia = `Folga válvula ${tipo === 'adm' ? 'admissão' : 'escape'} ${lado}`;
-    let referenciaCell = null;
-
-    // Encontrar a célula de referência na mesma linha do input
-    let linha = input.closest('tr');
-    if (linha) {
-        referenciaCell = linha.querySelector('td:nth-child(2)');
-    }
-
-    if (!referenciaCell) {
-        console.error('Célula de referência não encontrada');
-        return;
-    }
-
-    // Extrair os valores min e max da referência (formato: "0,15 a 0,25")
-    let refText = referenciaCell.textContent.trim();
-    let [min, max] = refText.split(' a ').map(val => parseFloat(val.replace(',', '.')));
+    // Calcular valor médio de referência
+    const valorReferencia = (referenciaMin + referenciaMax) / 2;
     
-    if (isNaN(min) || isNaN(max) || min <= 0 || max <= 0) {
-        console.error('Valores de referência inválidos:', refText);
-        return;
-    }
+    // Calcular pastilha nova
+    const pastilhaCorrigida = (folgaValue - valorReferencia) + pastilhaAtual;
     
-    // Calcular o valor médio do intervalo (referência)
-    let valorReferencia = (min + max) / 2;
-    
-    // Calcular a pastilha nova: (folga - referencia) + pastilha atual
-    let pastilhaCorrigida = (folgaValue - valorReferencia) + pastilhaAtual;
-    
-    // Atualizar o valor calculado
-    let celulaPastilhaCorrigida = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
-    if (celulaPastilhaCorrigida) {
-        let valorFormatado = pastilhaCorrigida.toFixed(2).replace('.', ',');
-        celulaPastilhaCorrigida.textContent = valorFormatado;
-    } else {
-        console.error(`Elemento de resultado não encontrado: pc_${tipo}_${lado}_${cilindro}`);
+    // Atualizar o resultado
+    const elementoResultado = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
+    if (elementoResultado) {
+        elementoResultado.textContent = pastilhaCorrigida.toFixed(2).replace('.', ',');
     }
 }
 
