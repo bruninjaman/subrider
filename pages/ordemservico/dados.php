@@ -1246,19 +1246,18 @@ function displayVirabrequimMedicoes($conn, $ordem) {
     }
 }
 
-displayTableData($conn, "embreagem", "Embreagem");
-displayEmbreagemMedicoes($conn, $_GET['ordem']);
-displayTableData($conn, "bomba", "Bomba");
-displayBombaMedicoes($conn, $_GET['ordem']);
-displayTableData($conn, "motor", "Motor");
-displayMotorMedicoes($conn, $_GET['ordem']);
-displayTableData($conn, "virabrequim", "Virabrequim");
-displayVirabrequimMedicoes($conn, $_GET['ordem']);
-displayTableData($conn, "cabecote", "Cabeçote");
-displayCabecoteMedicoes($conn, $_GET['ordem']);
 
 // Chamar a função de medições do cabeçote
 if (isset($_GET['ordem'])) {
+    displayTableData($conn, "embreagem", "Embreagem");
+    displayEmbreagemMedicoes($conn, $_GET['ordem']);
+    displayTableData($conn, "bomba", "Bomba");
+    displayBombaMedicoes($conn, $_GET['ordem']);
+    displayTableData($conn, "motor", "Motor");
+    displayMotorMedicoes($conn, $_GET['ordem']);
+    displayTableData($conn, "virabrequim", "Virabrequim");
+    displayVirabrequimMedicoes($conn, $_GET['ordem']);
+    displayTableData($conn, "cabecote", "Cabeçote");
     displayCabecoteMedicoes($conn, $_GET['ordem']);
 } else {
     echo "<div class='error-msg'>Erro: Parâmetro 'ordem' não foi especificado.</div>";
