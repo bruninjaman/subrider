@@ -21,6 +21,19 @@ mysqli_stmt_execute($checkStmt);
 $checkResult = mysqli_stmt_get_result($checkStmt);
 $checkRow = mysqli_fetch_assoc($checkResult);
 
+// Funções auxiliares
+function calcularValorMedio($min, $max) {
+    return (floatval($min) + floatval($max)) / 2;
+}
+
+function formatarIntervalo($min, $max) {
+    return number_format(floatval($min), 2, ',', '.') . " a " . number_format(floatval($max), 2, ',', '.');
+}
+
+function calcularPC($folga, $referencia, $pastilha_antiga) {
+    return (floatval($folga) - floatval($referencia)) + floatval($pastilha_antiga);
+}
+
 function displayTableData($conn, $tableName, $tableTitle) {
     if (!isset($_GET['ordem'])) {
         echo "<p>Parâmetro 'ordem' inválido ou não fornecido.</p>";
@@ -235,21 +248,6 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
 function displayCabecoteMedicoes($conn, $ordem) {
     try {
-        // Função auxiliar para calcular o valor médio do intervalo
-        function calcularValorMedio($min, $max) {
-            return (floatval($min) + floatval($max)) / 2;
-        }
-
-        // Função auxiliar para formatar intervalo
-        function formatarIntervalo($min, $max) {
-            return number_format(floatval($min), 2, ',', '.') . " a " . number_format(floatval($max), 2, ',', '.');
-        }
-
-        // Função para calcular Pastilha Corrigida (PC)
-        function calcularPC($folga, $referencia, $pastilha_antiga) {
-            return (floatval($folga) - floatval($referencia)) + floatval($pastilha_antiga);
-        }
-
         // Buscar dados de referência do cabeçote
         $query = "SELECT * FROM cabecote WHERE is_reference = 1 AND ordem = ?";
         $stmt = mysqli_prepare($conn, $query);
@@ -1248,9 +1246,16 @@ function displayVirabrequimMedicoes($conn, $ordem) {
     }
 }
 
+displayTableData($conn, "embreagem", "Embreagem");
+displayEmbreagemMedicoes($conn, $_GET['ordem']);
+displayTableData($conn, "bomba", "Bomba");
+displayBombaMedicoes($conn, $_GET['ordem']);
+displayTableData($conn, "motor", "Motor");
+displayMotorMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "virabrequim", "Virabrequim");
 displayVirabrequimMedicoes($conn, $_GET['ordem']);
 displayTableData($conn, "cabecote", "Cabeçote");
+displayCabecoteMedicoes($conn, $_GET['ordem']);
 
 // Chamar a função de medições do cabeçote
 if (isset($_GET['ordem'])) {
