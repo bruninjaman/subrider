@@ -11,19 +11,20 @@ function calcularPastilha(input) {
         return;
     }
 
-    // Obter o valor da folga
-    let folgaValue = input.value.trim().replace(',', '.');
-    console.log('Valor da folga:', folgaValue);
-    
-    // Encontrar o input da pastilha atual usando o seletor correto
-    let pastilhaInput = document.querySelector(`input[name="medida[${tipo}_pastilha_${lado}][${cilindro}]"]`);
-    if (!pastilhaInput) {
-        console.error('Input da pastilha não encontrado para:', { tipo, lado, cilindro });
+    // Encontrar os inputs relacionados
+    const folgaInput = document.querySelector(`input[name="medida[${tipo}_folga_${lado}][${cilindro}]"]`);
+    const pastilhaInput = document.querySelector(`input[name="medida[${tipo}_pastilha_${lado}][${cilindro}]"]`);
+
+    if (!folgaInput || !pastilhaInput) {
+        console.error('Inputs não encontrados para:', { tipo, lado, cilindro });
         return;
     }
-    
+
+    // Obter os valores
+    let folgaValue = folgaInput.value.trim().replace(',', '.');
     let pastilhaAtual = pastilhaInput.value.trim().replace(',', '.');
-    console.log('Valor da pastilha atual:', pastilhaAtual);
+    
+    console.log('Valores obtidos:', { folgaValue, pastilhaAtual });
     
     // Verificar valores válidos
     if (!folgaValue || !pastilhaAtual || isNaN(folgaValue) || isNaN(pastilhaAtual)) {
@@ -68,4 +69,25 @@ function calcularPastilha(input) {
 jQuery.expr[':'].contains = function(a, i, m) {
     return jQuery(a).text().toUpperCase()
         .indexOf(m[3].toUpperCase()) >= 0;
-}; 
+};
+
+// Inicializar os eventos quando o documento estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    // Vincular eventos para todos os inputs de folga e pastilha
+    const inputs = document.querySelectorAll('.folga-input, .pastilha-input');
+    inputs.forEach(input => {
+        input.addEventListener('change', function() {
+            calcularPastilha(this);
+        });
+        input.addEventListener('input', function() {
+            calcularPastilha(this);
+        });
+    });
+
+    // Inicializar cálculos para inputs que já têm valores
+    inputs.forEach(input => {
+        if (input.value) {
+            calcularPastilha(input);
+        }
+    });
+}); 
