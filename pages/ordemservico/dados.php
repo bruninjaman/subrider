@@ -1258,11 +1258,42 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
 <link rel="stylesheet" href="assets/css/ordemservico/menus/dados.css">
+
+<?php
+// Buscar dados de referência do cabeçote para os valores de limite
+$query = "SELECT val_adm_limite_min, val_adm_limite_max, val_esc_limite_min, val_esc_limite_max 
+          FROM cabecote 
+          WHERE is_reference = 1 AND ordem = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "s", $ordem);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$cabecote_ref = mysqli_fetch_assoc($result);
+?>
+
+<input type="hidden" id="val_adm_limite_min" value="<?php echo $cabecote_ref['val_adm_limite_min']; ?>">
+<input type="hidden" id="val_adm_limite_max" value="<?php echo $cabecote_ref['val_adm_limite_max']; ?>">
+<input type="hidden" id="val_esc_limite_min" value="<?php echo $cabecote_ref['val_esc_limite_min']; ?>">
+<input type="hidden" id="val_esc_limite_max" value="<?php echo $cabecote_ref['val_esc_limite_max']; ?>">
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="assets/js/ordemservico/calcularPastilha.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se os valores de referência estão presentes
+    const valAdmMin = document.getElementById('val_adm_limite_min').value;
+    const valAdmMax = document.getElementById('val_adm_limite_max').value;
+    const valEscMin = document.getElementById('val_esc_limite_min').value;
+    const valEscMax = document.getElementById('val_esc_limite_max').value;
+
+    console.log('Valores de referência carregados:', {
+        valAdmMin,
+        valAdmMax,
+        valEscMin,
+        valEscMax
+    });
+
     // Vincular o evento de cálculo a todos os inputs de folga
     const folgaInputs = document.querySelectorAll('.folga-input');
     folgaInputs.forEach(input => {
@@ -1273,10 +1304,12 @@ document.addEventListener('DOMContentLoaded', function() {
             calcularPastilha(this);
         });
     });
+
+    // Inicializar cálculos para inputs que já têm valores
+    folgaInputs.forEach(input => {
+        if (input.value) {
+            calcularPastilha(input);
+        }
+    });
 });
 </script>
-
-<input type="hidden" id="val_adm_limite_min" value="<?php echo $cabecote['val_adm_limite_min']; ?>">
-<input type="hidden" id="val_adm_limite_max" value="<?php echo $cabecote['val_adm_limite_max']; ?>">
-<input type="hidden" id="val_esc_limite_min" value="<?php echo $cabecote['val_esc_limite_min']; ?>">
-<input type="hidden" id="val_esc_limite_max" value="<?php echo $cabecote['val_esc_limite_max']; ?>">
