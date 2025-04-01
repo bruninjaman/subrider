@@ -1,62 +1,101 @@
-$(document).ready(function () {
-    $("#dateValue").click(function () {
-        $(this).attr("contenteditable", "true").addClass("editing");
-    });
-    $("#dateValue").on("input", function () {
-        $(this).css("color", "yellow");
+class DateEditor {
+    constructor() {
+        this.dateElement = document.getElementById('dateValue');
+        this.errorElement = document.getElementById('errorMessage');
+        this.initializeEventListeners();
+    }
 
-        var newData = $(this).text().trim();
-        var dateRegex = /^\d{0,2}\/\d{0,2}\/\d{0,4}$/;
-        if (!dateRegex.test(newData)) {
-            $("#errorMessage").text("Formato de data inválido. Digite a data em formato válido dd/mm/yyyy.").show();
+    initializeEventListeners() {
+        this.dateElement.addEventListener('click', () => this.enableEditing());
+        this.dateElement.addEventListener('input', () => this.validateInput());
+        this.dateElement.addEventListener('keypress', (event) => this.handleKeyPress(event));
+    }
+
+    enableEditing() {
+        this.dateElement.setAttribute('contenteditable', 'true');
+        this.dateElement.classList.add('editing');
+    }
+
+    validateInput() {
+        this.dateElement.style.color = 'yellow';
+        const newData = this.dateElement.textContent.trim();
+        
+        if (!this.isValidDateFormat(newData)) {
+            this.showError('Formato de data inválido. Digite a data em formato válido dd/mm/yyyy.');
+            return false;
+        }
+
+        if (!this.isValidDate(newData)) {
+            this.showError('Data inválida. Verifique o dia, mês e ano.');
+            return false;
+        }
+
+        this.hideError();
+        return true;
+    }
+
+    isValidDateFormat(dateStr) {
+        const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+        return dateRegex.test(dateStr);
+    }
+
+    isValidDate(dateStr) {
+        const [day, month, year] = dateStr.split('/').map(Number);
+        const date = new Date(year, month - 1, day);
+        return date.getDate() === day && 
+               date.getMonth() === month - 1 && 
+               date.getFullYear() === year;
+    }
+
+    showError(message) {
+        this.errorElement.textContent = message;
+        this.errorElement.style.display = 'block';
+    }
+
+    hideError() {
+        this.errorElement.textContent = '';
+        this.errorElement.style.display = 'none';
+    }
+
+    async saveDate() {
+        if (!this.validateInput()) {
             return;
         }
 
-        var parts = newData.split("/");
-        if (parts[0].length > 2 || parts[1].length > 2 || parts[2].length > 4) {
-            $("#errorMessage").text("Formato de data inválido. Digite a data em formato válido dd/mm/yyyy.").show();
-            return;
-        }
+        const newData = this.dateElement.textContent.trim();
+        const ordem = new URLSearchParams(window.location.search).get('ordem');
 
-        var day = parseInt(parts[0]);
-        var month = parseInt(parts[1]);
-        var year = parseInt(parts[2]);
-        if (day > 31 || day < 1 || month > 12 || month < 1 || year < 1) {
-            $("#errorMessage").text("Formato de data inválido. Digite a data em formato válido dia, mês, e ano.").show();
-            return;
-        }
+        try {
+            const response = await fetch(`${baseAddress}/ajax/update_date.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `ordem=${ordem}&newData=${newData}`
+            });
 
-        $("#errorMessage").text("").hide();
-    });
-
-    var urlParams = new URLSearchParams(window.location.search);
-    var ordem = urlParams.get("ordem");
-    $("#dateValue").keypress(function (event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            $(this).removeAttr("contenteditable").removeClass("editing");
-
-            var newData = $(this).text().trim();
-            if ($("#errorMessage").text().trim() != "") {
-                return;
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
             }
 
-            $.ajax({
-                type: "POST",
-                url: baseAddress + "/ajax/update_date.php",
-                data: {
-                    ordem: ordem,
-                    newData: newData
-                },
-                success: function (result) {
-                    console.log("Data updated successfully: " + result);
-                    $("#dateValue").css("color", "white");
-                },
-                error: function (xhr, status, error) {
-                    console.log("Error updating data: " + error);
-                    $("#errorMessage").text("Erro ao atualizar a data. Tente novamente.").show();
-                }
-            });
+            this.dateElement.style.color = 'white';
+            this.dateElement.removeAttribute('contenteditable');
+            this.dateElement.classList.remove('editing');
+        } catch (error) {
+            console.error('Erro ao atualizar data:', error);
+            this.showError('Erro ao atualizar a data. Tente novamente.');
         }
-    });
+    }
+
+    handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.saveDate();
+        }
+    }
+}
+
+// Inicialização quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', () => {
+    window.dateEditor = new DateEditor();
 });

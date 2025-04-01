@@ -1,49 +1,87 @@
-$(document).ready(function() {
-    $("#editableproprietario").click(function() {
-        $(this).attr("contenteditable", "true").addClass("editing");
-    });
+class ProprietarioEditor {
+    constructor() {
+        this.proprietarioElement = document.getElementById('editableproprietario');
+        this.errorElement = document.getElementById('errorMessage');
+        this.initializeEventListeners();
+    }
 
-    $("#editableproprietario").on("input", function() {
-        $(this).css("color", "yellow");
+    initializeEventListeners() {
+        this.proprietarioElement.addEventListener('click', () => this.enableEditing());
+        this.proprietarioElement.addEventListener('input', () => this.validateInput());
+        this.proprietarioElement.addEventListener('keypress', (event) => this.handleKeyPress(event));
+    }
 
-        var newData = $(this).text().trim();
-        if (newData.length === 0) {
-            $("#errorMessage").text("Proprietário não pode estar vazio.").show();
+    enableEditing() {
+        this.proprietarioElement.setAttribute('contenteditable', 'true');
+        this.proprietarioElement.classList.add('editing');
+    }
+
+    validateInput() {
+        this.proprietarioElement.style.color = 'yellow';
+        const newData = this.proprietarioElement.textContent.trim();
+        
+        if (!this.isValidProprietario(newData)) {
+            this.showError('Proprietário não pode estar vazio.');
+            return false;
+        }
+
+        this.hideError();
+        return true;
+    }
+
+    isValidProprietario(proprietario) {
+        return proprietario.length > 0;
+    }
+
+    showError(message) {
+        this.errorElement.textContent = message;
+        this.errorElement.style.display = 'block';
+    }
+
+    hideError() {
+        this.errorElement.textContent = '';
+        this.errorElement.style.display = 'none';
+    }
+
+    async saveProprietario() {
+        if (!this.validateInput()) {
             return;
         }
 
-        $("#errorMessage").text("").hide();
-    });
+        const newData = this.proprietarioElement.textContent.trim();
+        const ordem = new URLSearchParams(window.location.search).get('ordem');
 
-    var urlParams = new URLSearchParams(window.location.search);
-    var ordem = urlParams.get("ordem");
+        try {
+            const response = await fetch(`${baseAddress}/ajax/update_proprietario.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `ordem=${ordem}&newProprietario=${encodeURIComponent(newData)}`
+            });
 
-    $("#editableproprietario").keypress(function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            $(this).removeAttr("contenteditable").removeClass("editing");
-
-            var newData = $(this).text().trim();
-            if ($("#errorMessage").text().trim() != "") {
-                return;
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
             }
 
-            $.ajax({
-                type: "POST",
-                url: baseAddress + "/ajax/update_proprietario.php",
-                data: {
-                    ordem: ordem,
-                    newProprietario: newData
-                },
-                success: function(result) {
-                    console.log("Proprietário updated successfully: " + result);
-                    $("#editableproprietario").css("color", "white");
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error updating Proprietário: " + error);
-                    $("#errorMessage").text("Erro ao atualizar o proprietário. Tente novamente.").show();
-                }
-            });
+            this.proprietarioElement.style.color = 'white';
+            this.proprietarioElement.removeAttribute('contenteditable');
+            this.proprietarioElement.classList.remove('editing');
+        } catch (error) {
+            console.error('Erro ao atualizar proprietário:', error);
+            this.showError('Erro ao atualizar o proprietário. Tente novamente.');
         }
-    });
+    }
+
+    handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.saveProprietario();
+        }
+    }
+}
+
+// Inicialização quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', () => {
+    window.proprietarioEditor = new ProprietarioEditor();
 });

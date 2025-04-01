@@ -1,73 +1,84 @@
-function showModal() {
-    document.getElementById("modal").style.display = "flex";
-}
+class ModalManager {
+    constructor() {
+        this.modal = document.getElementById('modal');
+        this.currentPage = 0;
+        this.pages = document.querySelectorAll('.modal-page');
+        this.initializeEventListeners();
+    }
 
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
+    initializeEventListeners() {
+        // Botão de abrir modal
+        document.getElementById('openModal').addEventListener('click', () => this.openModal());
 
-// Close the modal if the user clicks outside of it
-window.onclick = function(event) {
-    var modal = document.getElementById("modal");
-    if (event.target == modal) {
-        modal.style.display = "none";
+        // Botões de fechar modal
+        document.querySelectorAll('[id^="closeModal"]').forEach(button => {
+            button.addEventListener('click', () => this.closeModal());
+        });
+
+        // Navegação entre páginas
+        this.initializeNavigationButtons();
+
+        // Botões de voltar ao menu principal
+        document.querySelectorAll('#backToMenu').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                this.showPage(0);
+            });
+        });
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', (event) => {
+            if (event.target === this.modal) {
+                this.closeModal();
+            }
+        });
+    }
+
+    initializeNavigationButtons() {
+        const navigationMap = {
+            'btnCabecote': 'cabecote',
+            'btnMotor': 'motorPage',
+            'btnVirabrequim': 'virabrequimPage',
+            'btnEmbreagem': 'embreagemPage',
+            'btnBombas': 'bombasPage',
+            'btnDados': 'dados'
+        };
+
+        Object.entries(navigationMap).forEach(([buttonId, pageId]) => {
+            document.getElementById(buttonId)?.addEventListener('click', () => this.showSpecificPage(pageId));
+        });
+    }
+
+    openModal() {
+        this.modal.style.display = 'flex';
+        this.currentPage = 0;
+        this.showPage(this.currentPage);
+    }
+
+    closeModal() {
+        this.modal.style.display = 'none';
+        this.currentPage = 0;
+    }
+
+    showSpecificPage(pageId) {
+        this.pages.forEach(page => page.style.display = 'none');
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    showPage(pageIndex) {
+        this.pages.forEach((page, index) => {
+            page.style.display = index === pageIndex ? 'block' : 'none';
+        });
+    }
+
+    changePage(step) {
+        this.currentPage += step;
+        this.currentPage = Math.max(0, Math.min(this.currentPage, this.pages.length - 1));
+        this.showPage(this.currentPage);
     }
 }
 
-// Get elements
-const openModalButton = document.getElementById('openModal');
-const modal = document.getElementById('modal');
-const closeModalButtons = document.querySelectorAll('[id^="closeModal"]');
-const pages = document.querySelectorAll('.modal-page');
-let currentPage = 0;
-
-// Event Listeners for opening and closing the modal
-openModalButton.addEventListener('click', () => {
-    modal.style.display = 'flex';
-    currentPage = 0;  // Reset to the first page when opening
-    showPage(currentPage);
+// Inicialização do modal quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', () => {
+    window.modalManager = new ModalManager();
 });
-
-closeModalButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        modal.style.display = 'none';
-        currentPage = 0;  // Reset the modal to the first page after closing
-    });
-});
-
-// Event listeners for navigation
-document.getElementById('btnCabecote').addEventListener('click', () => showSpecificPage('cabecote'));
-document.getElementById('btnMotor').addEventListener('click', () => showSpecificPage('motorPage'));
-document.getElementById('btnVirabrequim').addEventListener('click', () => showSpecificPage('virabrequimPage'));
-document.getElementById('btnEmbreagem').addEventListener('click', () => showSpecificPage('embreagemPage'));
-document.getElementById('btnBombas').addEventListener('click', () => showSpecificPage('bombasPage'));
-document.getElementById('btnDados').addEventListener('click', () => showSpecificPage('dados'));
-
-// Back to main menu button
-document.querySelectorAll('#backToMenu').forEach(button => {
-    button.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default link behavior
-        showPage(0); // Show the main menu page (assuming page 0 is the main menu)
-    });
-});
-
-// Show a specific page based on its ID
-function showSpecificPage(pageId) {
-    pages.forEach(page => page.style.display = 'none');  // Hide all pages
-    document.getElementById(pageId).style.display = 'block';  // Show the specific page
-}
-
-// Show the current page
-function showPage(pageIndex) {
-    pages.forEach((page, index) => {
-        page.style.display = index === pageIndex ? 'block' : 'none';
-    });
-}
-
-// Change page by incrementing or decrementing currentPage
-function changePage(step) {
-    currentPage += step;
-    if (currentPage < 0) currentPage = 0;
-    if (currentPage >= pages.length) currentPage = pages.length - 1;
-    showPage(currentPage);
-}
