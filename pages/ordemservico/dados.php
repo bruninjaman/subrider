@@ -599,10 +599,21 @@ function displayEmbreagemMedicoes($conn, $ordem) {
     try {
         // Processar salvamento se for POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'embreagem') {
-            $medicoesFriccao = [];
-            $medicoesSeparador = [];
+            // Buscar medições existentes antes de processar o POST
+            $queryMed = "SELECT medicoes_friccao, medicoes_separador FROM embreagem WHERE is_reference = 0 AND ordem = ?";
+            $stmtMed = mysqli_prepare($conn, $queryMed);
+            mysqli_stmt_bind_param($stmtMed, "s", $ordem);
+            mysqli_stmt_execute($stmtMed);
+            $resultMed = mysqli_stmt_get_result($stmtMed);
+            $embreagemMed = mysqli_fetch_assoc($resultMed);
             
-            // Verificar se 'medida' existe e processar os valores
+            $medicoesFriccaoExistentes = $embreagemMed && $embreagemMed['medicoes_friccao'] ? json_decode($embreagemMed['medicoes_friccao'], true) : [];
+            $medicoesSeparadorExistentes = $embreagemMed && $embreagemMed['medicoes_separador'] ? json_decode($embreagemMed['medicoes_separador'], true) : [];
+            
+            $medicoesFriccao = $medicoesFriccaoExistentes;
+            $medicoesSeparador = $medicoesSeparadorExistentes;
+            
+            // Verificar se 'medida' existe e mesclar com valores existentes
             if (isset($_POST['medida'])) {
                 if (isset($_POST['medida']['disco_friccao_espes'])) {
                     foreach ($_POST['medida']['disco_friccao_espes'] as $i => $valor) {
@@ -719,7 +730,7 @@ function displayEmbreagemMedicoes($conn, $ordem) {
         echo "<td colspan='" . ($embreagemRef['disco_friccao'] + 2) . "'>MEDIÇÕES DOS DISCOS SEPARADORES</td>";
         echo "</tr>";
 
-        // Cabeçalho para discos separadores (ajustado dinamicamente)
+        // Cabeçalho para discos separadores
         echo "<thead><tr><th>ITEM</th><th>REFERÊNCIA</th>";
         for ($i = 1; $i <= $embreagemRef['disco_separador']; $i++) {
             echo "<th>DISCO " . $i . "</th>";
