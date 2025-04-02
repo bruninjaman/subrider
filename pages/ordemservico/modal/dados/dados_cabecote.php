@@ -111,7 +111,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
         echo "<table>";
         
         // Cabeçalho da tabela
-        echo "<thead><tr><th>ITEM</th><th>REFERÊNCIA</th>";
+        echo "<thead><tr><th></th><th></th>";
         // Adicionar identificação para cabeçote traseiro
         echo "<th colspan='" . $cilindros_tras . "' class='cabecote-tras-header'>CABEÇOTE TRASEIRO</th>";
         // Adicionar identificação para cabeçote dianteiro
