@@ -3,21 +3,21 @@
 <?php
 session_start();
 
-// Carregar variáveis de ambiente
-$envFile = __DIR__ . '/.env';
-if (file_exists($envFile)) {
-    $envVars = parse_ini_file($envFile);
-    $baseAddress = $envVars['BASE_ADDRESS'] ?? '';
-} else {
-    $baseAddress = '';
-}
+require_once './vendor/autoload.php';
+
+// Load environment variables from .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Usar variável de ambiente
+$baseAddress = $_ENV['BASE_ADDRESS'] ?? '';
 
 //PERM
-require_once("./scripts/perm.php");
+require_once(__DIR__ . "/scripts/perm.php");
 //CONNECTION
-require_once("./connection/connection.php");
+require_once(__DIR__ . "/connection/connection.php");
 //FUNCTIONS
-require_once("./scripts/functions.php");
+require_once(__DIR__ . "/scripts/functions.php");
 ?>
 <!--
 	Landed by HTML5 UP
@@ -30,10 +30,10 @@ require_once("./scripts/functions.php");
     <title>Subrider</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/ordemservico.css" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="<?php echo $baseAddress; ?>/pages/ordemservico/ordemservico.css" />
+    <link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/main.css" />
     <noscript>
-        <link rel="stylesheet" href="assets/css/noscript.css" />
+        <link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/noscript.css" />
     </noscript>
 
 </head>
