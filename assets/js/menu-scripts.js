@@ -83,6 +83,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Função para converter vírgula em ponto decimal
+    function convertCommaToDot(value) {
+        if (typeof value === 'string') {
+            return value.replace(',', '.');
+        }
+        return value;
+    }
+
+    // Função para formatar número com vírgula
+    function formatNumberWithComma(value) {
+        if (typeof value === 'number') {
+            return value.toString().replace('.', ',');
+        }
+        return value;
+    }
+
+    // Adiciona evento para converter valores antes do submit
+    document.addEventListener('submit', function(e) {
+        const form = e.target;
+        const decimalInputs = form.querySelectorAll('input[data-type="decimal"]');
+        
+        decimalInputs.forEach(input => {
+            if (input.value) {
+                input.value = convertCommaToDot(input.value);
+            }
+        });
+    });
+
+    // Adiciona evento para formatar valores ao exibir
+    const decimalInputs = document.querySelectorAll('input[data-type="decimal"]');
+    
+    decimalInputs.forEach(input => {
+        // Formata valor inicial se existir
+        if (input.value) {
+            input.value = formatNumberWithComma(input.value);
+        }
+        
+        // Formata ao perder o foco
+        input.addEventListener('blur', function() {
+            if (this.value) {
+                this.value = formatNumberWithComma(this.value);
+            }
+        });
+    });
+
     // Inicializar todas as funções
     initCabecoteForm();
     initFieldsToggle();

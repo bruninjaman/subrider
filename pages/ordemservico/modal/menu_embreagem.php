@@ -12,10 +12,11 @@
         <div class="row g-4 mb-5">
             <div class="col-md-6">
                 <div class="floating-input">
-                    <input type="number" 
+                    <input type="text" 
                            name="nr_discos" 
                            class="form-control"
                            id="nr_discos"
+                           data-type="decimal"
                            step="1"
                            placeholder=" ">
                     <label for="nr_discos">Número de Discos</label>
@@ -24,10 +25,11 @@
             </div>
             <div class="col-md-6">
                 <div class="floating-input">
-                    <input type="number" 
+                    <input type="text" 
                            name="nr_discos_sep"
                            id="nr_discos_sep" 
                            class="form-control"
+                           data-type="decimal"
                            step="1"
                            placeholder=" ">
                     <label for="nr_discos_sep">Número de Discos Separadores</label>
@@ -42,9 +44,10 @@
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="disco_fric_esp_min" 
                                class="form-control"
+                               data-type="decimal"
                                step="0.1"
                                placeholder=" ">
                         <label>Disco Fricção ESP MIN</label>
@@ -53,9 +56,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="disco_sep_emp_max" 
                                class="form-control"
+                               data-type="decimal"
                                step="0.1"
                                placeholder=" ">
                         <label>Disco SEP EMPEN MAX</label>

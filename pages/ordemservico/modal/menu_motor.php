@@ -12,10 +12,11 @@
         <div class="row g-4 mb-5">
             <div class="col-md-6">
                 <div class="floating-input">
-                    <input type="number" 
+                    <input type="text" 
                            name="nr_cilindros" 
                            class="form-control"
                            id="nr_cilindros"
+                           data-type="decimal"
                            placeholder=" ">
                     <label for="nr_cilindros">Nº Cilindros</label>
                     <div class="focus-border"></div>
@@ -23,10 +24,11 @@
             </div>
             <div class="col-md-6">
                 <div class="floating-input">
-                    <input type="number" 
+                    <input type="text" 
                            name="curso_pistao"
                            id="curso_pistao" 
                            class="form-control"
+                           data-type="decimal"
                            placeholder=" ">
                     <label for="curso_pistao">Curso Pistão (mm)</label>
                     <div class="focus-border"></div>
@@ -40,9 +42,10 @@
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="diametro_cilindro_max" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Diâmetro Cilindro Máx (mm)</label>
                         <div class="focus-border"></div>
@@ -50,9 +53,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="conicidade_max" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Conicidade Máx (mm)</label>
                         <div class="focus-border"></div>
@@ -60,9 +64,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="ovalizacao_max" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Ovalização Máx (mm)</label>
                         <div class="focus-border"></div>
@@ -70,9 +75,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="diametro_pistao_min" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Diâmetro Pistão Min (mm)</label>
                         <div class="focus-border"></div>
@@ -80,9 +86,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="folga_cil_pis_max" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Folga Cilindro/Pistão Máx (mm)</label>
                         <div class="focus-border"></div>
@@ -90,9 +97,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="folga_pino_pis_max" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Folga Pino pis max (mm)</label>
                         <div class="focus-border"></div>
@@ -107,9 +115,10 @@
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="aber_anel_1_max" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Abertura 1º Anel Livre Máx (mm)</label>
                         <div class="focus-border"></div>
@@ -117,9 +126,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="aber_anel_2_max" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Abertura 2º Anel Livre Máx (mm)</label>
                         <div class="focus-border"></div>
@@ -127,9 +137,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="aber_anel_1_pres_min" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Abertura 1º Anel Presa Min (mm)</label>
                         <div class="focus-border"></div>
@@ -137,9 +148,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="aber_anel_2_pres_min" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Abertura 2º Anel Presa Min (mm)</label>
                         <div class="focus-border"></div>
@@ -147,9 +159,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="larg_anel_1_min" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Largura 1º Anel Min (mm)</label>
                         <div class="focus-border"></div>
@@ -157,9 +170,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="larg_anel_2_min" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Largura 2º Anel Min (mm)</label>
                         <div class="focus-border"></div>
@@ -174,9 +188,10 @@
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="dia_furo_pis_min" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Diâmetro Furo Pistão Min (mm)</label>
                         <div class="focus-border"></div>
@@ -184,9 +199,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="dia_pino_pis_min" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Diâmetro Pino Pistão Min (mm)</label>
                         <div class="focus-border"></div>
@@ -194,9 +210,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="folga_pino_pis_max" 
                                class="form-control"
+                               data-type="decimal"
                                placeholder=" ">
                         <label>Folga Pino Pistão Máx (mm)</label>
                         <div class="focus-border"></div>

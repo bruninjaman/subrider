@@ -13,10 +13,11 @@
             <div class="row g-4 mb-5">
                 <div class="col-md-4">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="num_cilindros" 
                                class="form-control"
                                id="num_cilindros"
+                               data-type="decimal"
                                min="1"
                                max="16"
                                placeholder=" ">
@@ -26,10 +27,11 @@
                 </div>
                 <div class="col-md-4">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="num_val_adm"
                                id="num_val_adm" 
                                class="form-control"
+                               data-type="decimal"
                                min="1"
                                max="8"
                                placeholder=" ">
@@ -39,10 +41,11 @@
                 </div>
                 <div class="col-md-4">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="num_val_esc"
                                id="num_val_esc" 
                                class="form-control"
+                               data-type="decimal"
                                min="1"
                                max="8"
                                placeholder=" ">
@@ -107,11 +110,12 @@
             <!-- Campos Condicionais -->
             <div id="ohc_fields" class="animated-section" style="display: none;">
                 <div class="floating-input">
-                    <input type="number" 
+                    <input type="text" 
                            step="0.01" 
                            class="form-control" 
                            name="came_diam_min"
                            id="came_diam_min"
+                           data-type="decimal"
                            placeholder=" ">
                     <label for="came_diam_min">Eixo Cames Diâm. Min</label>
                     <div class="focus-border"></div>
@@ -122,11 +126,12 @@
                 <div class="row g-4">
                     <div class="col-md-6">
                         <div class="floating-input">
-                            <input type="number" 
+                            <input type="text" 
                                    step="0.01" 
                                    class="form-control" 
                                    name="cames_adm_diam_min"
                                    id="cames_adm_diam_min"
+                                   data-type="decimal"
                                    placeholder=" ">
                             <label for="cames_adm_diam_min">Eixo Cames Adm. Diâm. Min</label>
                             <div class="focus-border"></div>
@@ -134,11 +139,12 @@
                     </div>
                     <div class="col-md-6">
                         <div class="floating-input">
-                            <input type="number" 
+                            <input type="text" 
                                    step="0.01" 
                                    class="form-control" 
                                    name="cames_esc_diam_min"
                                    id="cames_esc_diam_min"
+                                   data-type="decimal"
                                    placeholder=" ">
                             <label for="cames_esc_diam_min">Eixo Cames Esc. Diâm. Min</label>
                             <div class="focus-border"></div>
@@ -156,12 +162,12 @@
                             <span class="measure-label">Válvula Adm. Limite (mm)</span>
                             <div class="measure-inputs">
                                 <div class="floating-input">
-                                    <input type="number" step="0.01" class="form-control" name="val_adm_limite_min" placeholder=" ">
+                                    <input type="text" step="0.01" class="form-control" name="val_adm_limite_min" data-type="decimal" placeholder=" ">
                                     <label>Mínimo</label>
                                     <div class="focus-border"></div>
                                 </div>
                                 <div class="floating-input">
-                                    <input type="number" step="0.01" class="form-control" name="val_adm_limite_max" placeholder=" ">
+                                    <input type="text" step="0.01" class="form-control" name="val_adm_limite_max" data-type="decimal" placeholder=" ">
                                     <label>Máximo</label>
                                     <div class="focus-border"></div>
                                 </div>
@@ -173,12 +179,12 @@
                             <span class="measure-label">Válvula Esc. Limite (mm)</span>
                             <div class="measure-inputs">
                                 <div class="floating-input">
-                                    <input type="number" step="0.01" class="form-control" name="val_esc_limite_min" placeholder=" ">
+                                    <input type="text" step="0.01" class="form-control" name="val_esc_limite_min" data-type="decimal" placeholder=" ">
                                     <label>Mínimo</label>
                                     <div class="focus-border"></div>
                                 </div>
                                 <div class="floating-input">
-                                    <input type="number" step="0.01" class="form-control" name="val_esc_limite_max" placeholder=" ">
+                                    <input type="text" step="0.01" class="form-control" name="val_esc_limite_max" data-type="decimal" placeholder=" ">
                                     <label>Máximo</label>
                                     <div class="focus-border"></div>
                                 </div>
@@ -194,7 +200,7 @@
                             <span class="measure-label">Came Admissão Altura Mínima (mm)</span>
                             <div class="measure-inputs">
                                 <div class="floating-input">
-                                    <input type="number" step="0.01" class="form-control" name="came_adm_altura_min" placeholder=" ">
+                                    <input type="text" step="0.01" class="form-control" name="came_adm_altura_min" data-type="decimal" placeholder=" ">
                                     <label>Altura Mínima</label>
                                     <div class="focus-border"></div>
                                 </div>
@@ -206,7 +212,7 @@
                             <span class="measure-label">Came Escape Altura Mínima (mm)</span>
                             <div class="measure-inputs">
                                 <div class="floating-input">
-                                    <input type="number" step="0.01" class="form-control" name="came_esc_altura_min" placeholder=" ">
+                                    <input type="text" step="0.01" class="form-control" name="came_esc_altura_min" data-type="decimal" placeholder=" ">
                                     <label>Altura Mínima</label>
                                     <div class="focus-border"></div>
                                 </div>
@@ -222,7 +228,7 @@
                             <span class="measure-label">Eixo Cames Limite Empenamento (mm)</span>
                             <div class="measure-inputs">
                                 <div class="floating-input">
-                                    <input type="number" step="0.01" class="form-control" name="eixo_cames_lim_empen" placeholder=" ">
+                                    <input type="text" step="0.01" class="form-control" name="eixo_cames_lim_empen" data-type="decimal" placeholder=" ">
                                     <label>Limite</label>
                                     <div class="focus-border"></div>
                                 </div>
@@ -234,7 +240,7 @@
                             <span class="measure-label">Folga Eixo Cames/Mancal (mm)</span>
                             <div class="measure-inputs">
                                 <div class="floating-input">
-                                    <input type="number" step="0.01" class="form-control" name="folga_eixo_mancal" placeholder=" ">
+                                    <input type="text" step="0.01" class="form-control" name="folga_eixo_mancal" data-type="decimal" placeholder=" ">
                                     <label>Folga</label>
                                     <div class="focus-border"></div>
                                 </div>
@@ -250,12 +256,12 @@
                     <span class="measure-label">Compressão Cilindro</span>
                     <div class="measure-inputs">
                         <div class="floating-input">
-                            <input type="number" class="form-control" name="compressao_min" placeholder=" ">
+                            <input type="text" class="form-control" name="compressao_min" data-type="decimal" placeholder=" ">
                             <label>Mínimo</label>
                             <div class="focus-border"></div>
                         </div>
                         <div class="floating-input">
-                            <input type="number" class="form-control" name="compressao_max" placeholder=" ">
+                            <input type="text" class="form-control" name="compressao_max" data-type="decimal" placeholder=" ">
                             <label>Máximo</label>
                             <div class="focus-border"></div>
                         </div>

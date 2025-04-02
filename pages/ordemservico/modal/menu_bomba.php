@@ -16,10 +16,11 @@
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="pressao_oleo_min"
                                id="pressao_oleo_min"
                                class="form-control"
+                               data-type="decimal"
                                step="0.01"
                                placeholder=" ">
                         <label>Pressão Mínima</label>
@@ -28,10 +29,11 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="pressao_oleo_max"
                                id="pressao_oleo_max"
                                class="form-control"
+                               data-type="decimal"
                                step="0.01"
                                placeholder=" ">
                         <label>Pressão Máxima</label>
@@ -47,10 +49,11 @@
             <div class="row g-4">
                 <div class="col-md-12">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="pressao_combustao"
                                id="pressao_combustao"
                                class="form-control"
+                               data-type="decimal"
                                step="0.01"
                                placeholder=" ">
                         <label>Pressão da Bomba de Combustão</label>
@@ -59,10 +62,11 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="vazao_combustao_min"
                                id="vazao_combustao_min"
                                class="form-control"
+                               data-type="decimal"
                                step="0.01"
                                placeholder=" ">
                         <label>Vazão Mínima</label>
@@ -71,10 +75,11 @@
                 </div>
                 <div class="col-md-6">
                     <div class="floating-input">
-                        <input type="number" 
+                        <input type="text" 
                                name="vazao_combustao_max"
                                id="vazao_combustao_max"
                                class="form-control"
+                               data-type="decimal"
                                step="0.01"
                                placeholder=" ">
                         <label>Vazão Máxima</label>
