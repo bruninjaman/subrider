@@ -111,10 +111,22 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<input type='hidden' name='ordem' value='" . htmlspecialchars($ordem) . "'>";
         echo "<table>";
         
+        // Calcular cilindros de trás e frente
+        $cilindros_tras = ceil($motorRef['nr_cilindros'] / 2);
+        $cilindros_frente = $motorRef['nr_cilindros'] - $cilindros_tras;
+        
         // Cabeçalho da tabela
         echo "<thead><tr><th>ITEM</th><th>REFERÊNCIA</th>";
-        for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
-            echo "<th>CILINDRO " . $i . "</th>";
+        // Adicionar identificação para cabeçote traseiro
+        echo "<th colspan='" . $cilindros_tras . "' class='cabecote-tras-header'>CABEÇOTE TRASEIRO</th>";
+        // Adicionar identificação para cabeçote dianteiro
+        echo "<th colspan='" . $cilindros_frente . "' class='cabecote-frente-header'>CABEÇOTE DIANTEIRO</th>";
+        echo "</tr><tr><th>ITEM</th><th>REFERÊNCIA</th>";
+        for ($i = 1; $i <= $cilindros_tras; $i++) {
+            echo "<th class='cilindro-tras'>CILINDRO " . $i . "</th>";
+        }
+        for ($i = $cilindros_tras + 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            echo "<th class='cilindro-frente'>CILINDRO " . $i . "</th>";
         }
         echo "</tr></thead>";
         echo "<tbody>";
@@ -124,8 +136,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Curso do pistão</td>";
         echo "<td>" . number_format($motorRef['curso_pistao'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['curso_pistao'][$i]) && $medicoes['curso_pistao'][$i] !== null ? number_format($medicoes['curso_pistao'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[curso_pistao][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[curso_pistao][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -134,8 +147,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Diâmetro do cilindro máximo</td>";
         echo "<td>" . number_format($motorRef['diametro_cilindro_max'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['diametro_cilindro_max'][$i]) && $medicoes['diametro_cilindro_max'][$i] !== null ? number_format($medicoes['diametro_cilindro_max'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[diametro_cilindro_max][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[diametro_cilindro_max][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -144,8 +158,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Conicidade máxima</td>";
         echo "<td>" . number_format($motorRef['conicidade_max'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['conicidade_max'][$i]) && $medicoes['conicidade_max'][$i] !== null ? number_format($medicoes['conicidade_max'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[conicidade_max][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[conicidade_max][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -154,8 +169,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Ovalização máxima</td>";
         echo "<td>" . number_format($motorRef['ovalizacao_max'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['ovalizacao_max'][$i]) && $medicoes['ovalizacao_max'][$i] !== null ? number_format($medicoes['ovalizacao_max'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[ovalizacao_max][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[ovalizacao_max][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -164,8 +180,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Diâmetro do pistão mínimo</td>";
         echo "<td>" . number_format($motorRef['diametro_pistao_min'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['diametro_pistao_min'][$i]) && $medicoes['diametro_pistao_min'][$i] !== null ? number_format($medicoes['diametro_pistao_min'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[diametro_pistao_min][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[diametro_pistao_min][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -174,8 +191,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Folga cilindro/pistão máxima</td>";
         echo "<td>" . number_format($motorRef['folga_cil_pis_max'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['folga_cil_pis_max'][$i]) && $medicoes['folga_cil_pis_max'][$i] !== null ? number_format($medicoes['folga_cil_pis_max'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[folga_cil_pis_max][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[folga_cil_pis_max][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -189,8 +207,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Abertura do anel 1 máxima</td>";
         echo "<td>" . number_format($motorRef['aber_anel_1_max'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['aber_anel_1_max'][$i]) && $medicoes['aber_anel_1_max'][$i] !== null ? number_format($medicoes['aber_anel_1_max'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[aber_anel_1_max][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[aber_anel_1_max][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -199,8 +218,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Abertura do anel 2 máxima</td>";
         echo "<td>" . number_format($motorRef['aber_anel_2_max'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['aber_anel_2_max'][$i]) && $medicoes['aber_anel_2_max'][$i] !== null ? number_format($medicoes['aber_anel_2_max'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[aber_anel_2_max][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[aber_anel_2_max][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -209,8 +229,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Pressão do anel 1 mínima</td>";
         echo "<td>" . number_format($motorRef['aber_anel_1_pres_min'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['aber_anel_1_pres_min'][$i]) && $medicoes['aber_anel_1_pres_min'][$i] !== null ? number_format($medicoes['aber_anel_1_pres_min'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[aber_anel_1_pres_min][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[aber_anel_1_pres_min][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -219,8 +240,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Pressão do anel 2 mínima</td>";
         echo "<td>" . number_format($motorRef['aber_anel_2_pres_min'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['aber_anel_2_pres_min'][$i]) && $medicoes['aber_anel_2_pres_min'][$i] !== null ? number_format($medicoes['aber_anel_2_pres_min'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[aber_anel_2_pres_min][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[aber_anel_2_pres_min][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -229,8 +251,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Largura do anel 1 mínima</td>";
         echo "<td>" . number_format($motorRef['larg_anel_1_min'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['larg_anel_1_min'][$i]) && $medicoes['larg_anel_1_min'][$i] !== null ? number_format($medicoes['larg_anel_1_min'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[larg_anel_1_min][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[larg_anel_1_min][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -239,8 +262,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Largura do anel 2 mínima</td>";
         echo "<td>" . number_format($motorRef['larg_anel_2_min'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['larg_anel_2_min'][$i]) && $medicoes['larg_anel_2_min'][$i] !== null ? number_format($medicoes['larg_anel_2_min'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[larg_anel_2_min][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[larg_anel_2_min][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -254,8 +278,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Diâmetro do furo do pistão mínimo</td>";
         echo "<td>" . number_format($motorRef['dia_furo_pis_min'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['dia_furo_pis_min'][$i]) && $medicoes['dia_furo_pis_min'][$i] !== null ? number_format($medicoes['dia_furo_pis_min'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[dia_furo_pis_min][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[dia_furo_pis_min][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -264,8 +289,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Diâmetro do pino do pistão mínimo</td>";
         echo "<td>" . number_format($motorRef['dia_pino_pis_min'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['dia_pino_pis_min'][$i]) && $medicoes['dia_pino_pis_min'][$i] !== null ? number_format($medicoes['dia_pino_pis_min'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[dia_pino_pis_min][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[dia_pino_pis_min][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 
@@ -274,8 +300,9 @@ function displayMotorMedicoes($conn, $ordem) {
         echo "<td>Folga do pino do pistão máxima</td>";
         echo "<td>" . number_format($motorRef['folga_pino_pis_max'], 2, ',', '.') . "</td>";
         for ($i = 1; $i <= $motorRef['nr_cilindros']; $i++) {
+            $classe_cilindro = $i <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['folga_pino_pis_max'][$i]) && $medicoes['folga_pino_pis_max'][$i] !== null ? number_format($medicoes['folga_pino_pis_max'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[folga_pino_pis_max][" . $i . "]' class='meas-input' value='$valor'></td>";
+            echo "<td class='" . $classe_cilindro . "'><input type='text' name='medida[folga_pino_pis_max][" . $i . "]' class='meas-input' value='$valor'></td>";
         }
         echo "</tr>";
 

@@ -112,6 +112,11 @@ function displayCabecoteMedicoes($conn, $ordem) {
         
         // Cabeçalho da tabela
         echo "<thead><tr><th>ITEM</th><th>REFERÊNCIA</th>";
+        // Adicionar identificação para cabeçote traseiro
+        echo "<th colspan='" . $cilindros_tras . "' class='cabecote-tras-header'>CABEÇOTE TRASEIRO</th>";
+        // Adicionar identificação para cabeçote dianteiro
+        echo "<th colspan='" . $cilindros_frente . "' class='cabecote-frente-header'>CABEÇOTE DIANTEIRO</th>";
+        echo "</tr><tr><th>ITEM</th><th>REFERÊNCIA</th>";
         for ($i = 1; $i <= $cilindros_tras; $i++) {
             echo "<th class='cilindro-tras'>CILINDRO " . $i . "</th>";
         }
