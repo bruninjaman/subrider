@@ -174,6 +174,6 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
 </section>
 <?php
 echo "<script>";
-echo file_get_contents($baseAddress . '/pages/ordemservico/modal.js');
+echo file_get_contents($baseAddress . '/pages/ordemservico/modal/modal.js');
 echo "</script>";
 ?>
