@@ -4,7 +4,6 @@ function calcularPastilha(input) {
     const tipo = input.getAttribute('data-tipo');
     const lado = input.getAttribute('data-lado');
 
-
     if (!cilindro || !tipo || !lado) {
         console.error('Dados necessários não encontrados no input:', {cilindro, tipo, lado});
         return;
@@ -23,7 +22,6 @@ function calcularPastilha(input) {
     let folgaValue = folgaInput.value.trim().replace(',', '.');
     let pastilhaAtual = pastilhaInput.value.trim().replace(',', '.');
     
-    
     // Verificar valores válidos
     if (!folgaValue || !pastilhaAtual || isNaN(folgaValue) || isNaN(pastilhaAtual)) {
         document.getElementById(`pc_${tipo}_${lado}_${cilindro}`).textContent = '-';
@@ -34,7 +32,7 @@ function calcularPastilha(input) {
     folgaValue = parseFloat(folgaValue);
     pastilhaAtual = parseFloat(pastilhaAtual);
 
-    // Obter valores de referência
+    // Obter valores de referência da folga
     const referenciaMin = tipo === 'adm' ? 
         parseFloat(document.getElementById('val_adm_limite_min').value) :
         parseFloat(document.getElementById('val_esc_limite_min').value);
@@ -42,17 +40,17 @@ function calcularPastilha(input) {
         parseFloat(document.getElementById('val_adm_limite_max').value) :
         parseFloat(document.getElementById('val_esc_limite_max').value);
 
-
-    // Calcular valor médio de referência
-    const valorReferencia = (referenciaMin + referenciaMax) / 2;
+    // Verificar se o valor está dentro da referência
+    const estaDentroReferencia = folgaValue >= referenciaMin && folgaValue <= referenciaMax;
     
-    // Calcular pastilha nova
-    const pastilhaCorrigida = (folgaValue - valorReferencia) + pastilhaAtual;
+    // Calcular pastilha nova usando o valor de referência da folga
+    const pastilhaCorrigida = (folgaValue - referenciaMin) + pastilhaAtual;
     
     // Atualizar o resultado
     const elementoResultado = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
     if (elementoResultado) {
-        elementoResultado.textContent = pastilhaCorrigida.toFixed(2).replace('.', ',');
+        // Só mostra a PC se o valor estiver fora da referência
+        elementoResultado.textContent = estaDentroReferencia ? '-' : pastilhaCorrigida.toFixed(2).replace('.', ',');
     } else {
         console.error('Elemento de resultado não encontrado:', `pc_${tipo}_${lado}_${cilindro}`);
     }
