@@ -95,14 +95,14 @@ function displayCabecoteMedicoes($conn, $ordem) {
         $medicoes = $cabecoteMed && $cabecoteMed['medicoes'] ? json_decode($cabecoteMed['medicoes'], true) : [];
 
         // Calcular cilindros de trás e frente
-        $cilindros_tras = ceil($cabecoteRef['cilindros'] / 2);
-        $cilindros_frente = $cabecoteRef['cilindros'] - $cilindros_tras;
+        $cilindros_tras = ceil((isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0) / 2);
+        $cilindros_frente = (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0) - $cilindros_tras;
 
         // Exibir interface
         echo "<div class='card cabecote-medicoes'>";
         echo "<h2 class='card-title'>MENU MEDIÇÕES CABEÇOTE</h2>";
         echo "<div class='legenda'>Medição de válvulas para cada cilindro</div>";
-        echo "<div> Tipo do motor: <div class='subtitulo'> " . htmlspecialchars($cabecoteRef['motor_tipo']) . "</div></div>";
+        echo "<div> Tipo do motor: <div class='subtitulo'> " . htmlspecialchars(isset($cabecoteRef['motor_tipo']) ? $cabecoteRef['motor_tipo'] : '') . "</div></div>";
         
         echo "<div class='table-container'>";
         echo "<form method='POST' class='table-form'>";
@@ -120,20 +120,22 @@ function displayCabecoteMedicoes($conn, $ordem) {
         for ($i = 1; $i <= $cilindros_tras; $i++) {
             echo "<th class='cilindro-tras'>CILINDRO " . $i . "</th>";
         }
-        for ($i = $cilindros_tras + 1; $i <= $cabecoteRef['cilindros']; $i++) {
+        for ($i = $cilindros_tras + 1; $i <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $i++) {
             echo "<th class='cilindro-frente'>CILINDRO " . $i . "</th>";
         }
         echo "</tr></thead>";
         echo "<tbody>";
 
         // Válvulas de admissão
-        for ($i = 1; $i <= $cabecoteRef['val_adm']; $i++) {
+        for ($i = 1; $i <= (isset($cabecoteRef['val_adm']) ? $cabecoteRef['val_adm'] : 0); $i++) {
             $lado = ($i == 1) ? 'direita' : 'esquerda';
-            if ($cabecoteRef['val_adm_limite_min'] > 0 && $cabecoteRef['val_adm_limite_max'] > 0) {
+            if (isset($cabecoteRef['val_adm_limite_min']) && isset($cabecoteRef['val_adm_limite_max']) && 
+                $cabecoteRef['val_adm_limite_min'] > 0 && $cabecoteRef['val_adm_limite_max'] > 0) {
                 echo "<tr class='valvula-admissao'>";
                 echo "<td>Folga válvula admissão " . $lado . "</td>";
-                echo "<td>" . formatarIntervalo($cabecoteRef['val_adm_limite_min'], $cabecoteRef['val_adm_limite_max']) . "</td>";
-                for ($c = 1; $c <= $cabecoteRef['cilindros']; $c++) {
+                echo "<td>" . (isset($cabecoteRef['val_adm_limite_min']) && isset($cabecoteRef['val_adm_limite_max']) ? 
+                    formatarIntervalo($cabecoteRef['val_adm_limite_min'], $cabecoteRef['val_adm_limite_max']) : '0,00 - 0,00') . "</td>";
+                for ($c = 1; $c <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $c++) {
                     $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                     $valor = isset($medicoes['adm_folga_' . $lado][$c]) && $medicoes['adm_folga_' . $lado][$c] !== null ? number_format($medicoes['adm_folga_' . $lado][$c], 2, ',', '.') : '';
                     echo "<td class='" . $classe_cilindro . "'>";
@@ -147,7 +149,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
                 echo "<tr class='valvula-admissao'>";
                 echo "<td>Pastilha válvula admissão " . $lado . "</td>";
                 echo "<td>-</td>";
-                for ($c = 1; $c <= $cabecoteRef['cilindros']; $c++) {
+                for ($c = 1; $c <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $c++) {
                     $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                     $valor = isset($medicoes['adm_pastilha_' . $lado][$c]) && $medicoes['adm_pastilha_' . $lado][$c] !== null ? number_format($medicoes['adm_pastilha_' . $lado][$c], 2, ',', '.') : '';
                     echo "<td class='" . $classe_cilindro . "'>";
@@ -162,13 +164,15 @@ function displayCabecoteMedicoes($conn, $ordem) {
         }
 
         // Válvulas de escape
-        for ($i = 1; $i <= $cabecoteRef['val_esc']; $i++) {
+        for ($i = 1; $i <= (isset($cabecoteRef['val_esc']) ? $cabecoteRef['val_esc'] : 0); $i++) {
             $lado = ($i == 1) ? 'direita' : 'esquerda';
-            if ($cabecoteRef['val_esc_limite_min'] > 0 && $cabecoteRef['val_esc_limite_max'] > 0) {
+            if (isset($cabecoteRef['val_esc_limite_min']) && isset($cabecoteRef['val_esc_limite_max']) && 
+                $cabecoteRef['val_esc_limite_min'] > 0 && $cabecoteRef['val_esc_limite_max'] > 0) {
                 echo "<tr class='valvula-escape'>";
                 echo "<td>Folga válvula escape " . $lado . "</td>";
-                echo "<td>" . formatarIntervalo($cabecoteRef['val_esc_limite_min'], $cabecoteRef['val_esc_limite_max']) . "</td>";
-                for ($c = 1; $c <= $cabecoteRef['cilindros']; $c++) {
+                echo "<td>" . (isset($cabecoteRef['val_esc_limite_min']) && isset($cabecoteRef['val_esc_limite_max']) ? 
+                    formatarIntervalo($cabecoteRef['val_esc_limite_min'], $cabecoteRef['val_esc_limite_max']) : '0,00 - 0,00') . "</td>";
+                for ($c = 1; $c <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $c++) {
                     $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                     $valor = isset($medicoes['esc_folga_' . $lado][$c]) && $medicoes['esc_folga_' . $lado][$c] !== null ? number_format($medicoes['esc_folga_' . $lado][$c], 2, ',', '.') : '';
                     echo "<td class='" . $classe_cilindro . "'>";
@@ -182,7 +186,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
                 echo "<tr class='valvula-escape'>";
                 echo "<td>Pastilha válvula escape " . $lado . "</td>";
                 echo "<td>-</td>";
-                for ($c = 1; $c <= $cabecoteRef['cilindros']; $c++) {
+                for ($c = 1; $c <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $c++) {
                     $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                     $valor = isset($medicoes['esc_pastilha_' . $lado][$c]) && $medicoes['esc_pastilha_' . $lado][$c] !== null ? number_format($medicoes['esc_pastilha_' . $lado][$c], 2, ',', '.') : '';
                     echo "<td class='" . $classe_cilindro . "'>";
@@ -197,11 +201,13 @@ function displayCabecoteMedicoes($conn, $ordem) {
         }
 
         // Compressão
-        if ($cabecoteRef['compressao_min'] > 0 && $cabecoteRef['compressao_max'] > 0) {
+        if (isset($cabecoteRef['compressao_min']) && isset($cabecoteRef['compressao_max']) && 
+            $cabecoteRef['compressao_min'] > 0 && $cabecoteRef['compressao_max'] > 0) {
             echo "<tr class='valvula-admissao'>";
             echo "<td>Compressão</td>";
-            echo "<td>" . formatarIntervalo($cabecoteRef['compressao_min'], $cabecoteRef['compressao_max']) . "</td>";
-            for ($c = 1; $c <= $cabecoteRef['cilindros']; $c++) {
+            echo "<td>" . (isset($cabecoteRef['compressao_min']) && isset($cabecoteRef['compressao_max']) ? 
+                formatarIntervalo($cabecoteRef['compressao_min'], $cabecoteRef['compressao_max']) : '0,00 - 0,00') . "</td>";
+            for ($c = 1; $c <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $c++) {
                 $classe_cilindro = $c <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                 $valor = isset($medicoes['compressao'][$c]) && $medicoes['compressao'][$c] !== null ? number_format($medicoes['compressao'][$c], 2, ',', '.') : '';
                 echo "<td class='" . $classe_cilindro . "'>";
@@ -213,26 +219,26 @@ function displayCabecoteMedicoes($conn, $ordem) {
 
         // Separador
         echo "<tr class='separador'>";
-        echo "<td colspan='" . ($cabecoteRef['cilindros'] + 2) . "'>MEDIÇÕES GERAIS DO CABEÇOTE</td>";
+        echo "<td colspan='" . ((isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0) + 2) . "'>MEDIÇÕES GERAIS DO CABEÇOTE</td>";
         echo "</tr>";
 
         // Itens fixos
-        if ($cabecoteRef['cames_adm_diam_max'] > 0) {
+        if (isset($cabecoteRef['cames_adm_diam_max']) && $cabecoteRef['cames_adm_diam_max'] > 0) {
             echo "<tr class='item-fixo'>";
             echo "<td>Diâmetro eixo cames admissão</td>";
             echo "<td>" . number_format($cabecoteRef['cames_adm_diam_max'], 2, ',', '.') . "</td>";
-            for ($cil = 1; $cil <= $cabecoteRef['cilindros']; $cil++) {
+            for ($cil = 1; $cil <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $cil++) {
                 $classe_cilindro = $cil <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                 echo "<td class='" . $classe_cilindro . "'>-</td>";
             }
             echo "</tr>";
         }
 
-        if ($cabecoteRef['cames_esc_diam_max'] > 0) {
+        if (isset($cabecoteRef['cames_esc_diam_max']) && $cabecoteRef['cames_esc_diam_max'] > 0) {
             echo "<tr class='item-fixo'>";
             echo "<td>Diâmetro eixo cames escape</td>";
             echo "<td>" . number_format($cabecoteRef['cames_esc_diam_max'], 2, ',', '.') . "</td>";
-            for ($cil = 1; $cil <= $cabecoteRef['cilindros']; $cil++) {
+            for ($cil = 1; $cil <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $cil++) {
                 $classe_cilindro = $cil <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
                 echo "<td class='" . $classe_cilindro . "'>-</td>";
             }
@@ -242,7 +248,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
         echo "<tr class='item-fixo'>";
         echo "<td>Empenamento eixo cames adm/esc</td>";
         echo "<td>0,10</td>";
-        for ($cil = 1; $cil <= $cabecoteRef['cilindros']; $cil++) {
+        for ($cil = 1; $cil <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $cil++) {
             $classe_cilindro = $cil <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['eixo_cames_lim_empen'][$cil]) && $medicoes['eixo_cames_lim_empen'][$cil] !== null ? number_format($medicoes['eixo_cames_lim_empen'][$cil], 2, ',', '.') : '';
             echo "<td class='" . $classe_cilindro . "'>";
@@ -254,7 +260,7 @@ function displayCabecoteMedicoes($conn, $ordem) {
         echo "<tr class='item-fixo'>";
         echo "<td>Folga eixo de cames/mancal</td>";
         echo "<td>0,15</td>";
-        for ($cil = 1; $cil <= $cabecoteRef['cilindros']; $cil++) {
+        for ($cil = 1; $cil <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $cil++) {
             $classe_cilindro = $cil <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['folga_eixo_mancal'][$cil]) && $medicoes['folga_eixo_mancal'][$cil] !== null ? number_format($medicoes['folga_eixo_mancal'][$cil], 2, ',', '.') : '';
             echo "<td class='" . $classe_cilindro . "'>";
@@ -265,8 +271,8 @@ function displayCabecoteMedicoes($conn, $ordem) {
 
         echo "<tr class='item-fixo'>";
         echo "<td>Came admissão altura min</td>";
-        echo "<td>" . number_format($cabecoteRef['came_adm_altura_min'], 2, ',', '.') . "</td>";
-        for ($cil = 1; $cil <= $cabecoteRef['cilindros']; $cil++) {
+        echo "<td>" . (isset($cabecoteRef['came_adm_altura_min']) ? number_format($cabecoteRef['came_adm_altura_min'], 2, ',', '.') : '0,00') . "</td>";
+        for ($cil = 1; $cil <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $cil++) {
             $classe_cilindro = $cil <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['came_adm_altura_min'][$cil]) && $medicoes['came_adm_altura_min'][$cil] !== null ? number_format($medicoes['came_adm_altura_min'][$cil], 2, ',', '.') : '';
             echo "<td class='" . $classe_cilindro . "'>";
@@ -277,8 +283,8 @@ function displayCabecoteMedicoes($conn, $ordem) {
 
         echo "<tr class='item-fixo'>";
         echo "<td>Came escape altura min</td>";
-        echo "<td>" . number_format($cabecoteRef['came_esc_altura_min'], 2, ',', '.') . "</td>";
-        for ($cil = 1; $cil <= $cabecoteRef['cilindros']; $cil++) {
+        echo "<td>" . (isset($cabecoteRef['came_esc_altura_min']) ? number_format($cabecoteRef['came_esc_altura_min'], 2, ',', '.') : '0,00') . "</td>";
+        for ($cil = 1; $cil <= (isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0); $cil++) {
             $classe_cilindro = $cil <= $cilindros_tras ? 'cilindro-tras' : 'cilindro-frente';
             $valor = isset($medicoes['came_esc_altura_min'][$cil]) && $medicoes['came_esc_altura_min'][$cil] !== null ? number_format($medicoes['came_esc_altura_min'][$cil], 2, ',', '.') : '';
             echo "<td class='" . $classe_cilindro . "'>";
