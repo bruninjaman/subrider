@@ -6,7 +6,7 @@
     <nav id="nav">
         <ul>
             <li><a href="index.php">Inicio</a></li>
-            <li><a href="index.php">Sobre nossos serviços</a></li>
+            <li><a href="#four">Sobre nossos serviços</a></li>
             <?php
 
             if (isset($_SESSION["user"])) {
