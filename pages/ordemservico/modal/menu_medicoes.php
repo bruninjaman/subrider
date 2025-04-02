@@ -29,7 +29,7 @@
                 <?php include("menu_bomba.php"); ?>
             </div>
             <div class="modal-page" id="dados" style="display:none;">
-                <?php include("dados.php"); ?>
+                <?php include("dados/dados.php"); ?>
             </div>
         </div>
     </div>
