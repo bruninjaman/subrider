@@ -1407,7 +1407,7 @@ $cabecote_ref = mysqli_fetch_assoc($result);
 <input type="hidden" id="val_esc_limite_max" value="<?php echo $cabecote_ref['val_esc_limite_max']; ?>">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="assets/js/ordemservico/calcularPastilha.js"></script>
+<script src="pages\ordemservico\modal\calcularPastilha.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

@@ -165,7 +165,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                 <form action="<?php echo $baseAddress; ?>/scripts/ordemservico/register_medicoes.php?ordem=<?php echo (string)$_GET['ordem'] ?>" method="POST">
                 <input type="hidden" id="selected_option" name="selected_option" value="">
                     <?php 
-                        include('menu_medicoes.php');
+                        include('modal/menu_medicoes.php');
                     ?>
                 </form>
             </div>
