@@ -50,7 +50,7 @@ require_once(__DIR__ . "/scripts/functions.php");
     </div>
     
     <!-- Select option script -->
-    <script src="pages/ordemservico/option_selected.js"></script>
+    <script src="pages/ordemservico/modal/option_selected.js"></script>
     <!-- Scripts for main theme -->
     <script src="assets/js/global/jquery.min.js"></script>
     <script src="assets/js/global/jquery.scrolly.min.js"></script>

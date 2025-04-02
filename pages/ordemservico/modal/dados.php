@@ -1417,12 +1417,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const valEscMin = document.getElementById('val_esc_limite_min').value;
     const valEscMax = document.getElementById('val_esc_limite_max').value;
 
-    console.log('Valores de referência carregados:', {
-        valAdmMin,
-        valAdmMax,
-        valEscMin,
-        valEscMax
-    });
 
     // Vincular o evento de cálculo a todos os inputs de folga
     const folgaInputs = document.querySelectorAll('.folga-input');

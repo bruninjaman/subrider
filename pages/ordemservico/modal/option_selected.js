@@ -28,7 +28,6 @@ class FormSectionManager {
 
     handleSectionChange(section) {
         // Aqui você pode adicionar lógica adicional para cada mudança de seção
-        console.log(`Seção alterada para: ${section}`);
     }
 }
 

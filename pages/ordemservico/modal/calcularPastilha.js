@@ -4,7 +4,6 @@ function calcularPastilha(input) {
     const tipo = input.getAttribute('data-tipo');
     const lado = input.getAttribute('data-lado');
 
-    console.log('Calculando pastilha para:', { cilindro, tipo, lado });
 
     if (!cilindro || !tipo || !lado) {
         console.error('Dados necessários não encontrados no input:', {cilindro, tipo, lado});
@@ -24,11 +23,9 @@ function calcularPastilha(input) {
     let folgaValue = folgaInput.value.trim().replace(',', '.');
     let pastilhaAtual = pastilhaInput.value.trim().replace(',', '.');
     
-    console.log('Valores obtidos:', { folgaValue, pastilhaAtual });
     
     // Verificar valores válidos
     if (!folgaValue || !pastilhaAtual || isNaN(folgaValue) || isNaN(pastilhaAtual)) {
-        console.log('Valores inválidos:', { folgaValue, pastilhaAtual });
         document.getElementById(`pc_${tipo}_${lado}_${cilindro}`).textContent = '-';
         return;
     }
@@ -45,21 +42,17 @@ function calcularPastilha(input) {
         parseFloat(document.getElementById('val_adm_limite_max').value) :
         parseFloat(document.getElementById('val_esc_limite_max').value);
 
-    console.log('Valores de referência:', { referenciaMin, referenciaMax });
 
     // Calcular valor médio de referência
     const valorReferencia = (referenciaMin + referenciaMax) / 2;
-    console.log('Valor médio de referência:', valorReferencia);
     
     // Calcular pastilha nova
     const pastilhaCorrigida = (folgaValue - valorReferencia) + pastilhaAtual;
-    console.log('Pastilha corrigida calculada:', pastilhaCorrigida);
     
     // Atualizar o resultado
     const elementoResultado = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
     if (elementoResultado) {
         elementoResultado.textContent = pastilhaCorrigida.toFixed(2).replace('.', ',');
-        console.log('Resultado atualizado:', elementoResultado.textContent);
     } else {
         console.error('Elemento de resultado não encontrado:', `pc_${tipo}_${lado}_${cilindro}`);
     }
