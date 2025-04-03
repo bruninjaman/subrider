@@ -127,28 +127,28 @@ function processRecord($table, $fields, $values, $types, $where = null, $id = nu
 function processInfoMotor($post, $ordem) {
     global $conn;
     
-    $motorinfo = isset($post['motorinfo']) ? $post['motorinfo'] : null;
+    // Busca informações da motocicleta no banco de dados
+    $motocicletas_query = "SELECT * FROM motocicletas WHERE (SELECT ordem_servicos.motoID FROM ordem_servicos WHERE ordem_servicos.Codigo = ?) = motocicletas.motoId";
+    $stmt = mysqli_prepare($conn, $motocicletas_query);
+    mysqli_stmt_bind_param($stmt, "s", $ordem);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $moto = mysqli_fetch_assoc($result);
     
-    // Parse motorinfo ou usa valores individuais
-    if (!empty($motorinfo)) {
-        list($marca, $modelo, $ano) = explode(' - ', $motorinfo);
-        $ano = sanitizeInput($ano, 'int');
-        $modelo = sanitizeInput($modelo);
-        $marca = sanitizeInput($marca);
-    } else {
-        $ano = sanitizeInput($post['ano'] ?? null, 'int');
-        $modelo = sanitizeInput($post['modelo'] ?? null);
-        $marca = sanitizeInput($post['marca'] ?? null);
-    }
-    
-    // Verifica se a ordem já existe
-    $recordId = checkRecordExists('infomotor', 'ordem = ?', [$ordem], 's');
-    
-    // Se não existe, insere um novo registro
-    if ($recordId === null) {
-        $fields = ['ano', 'modelo', 'marca', 'ordem'];
-        $values = [$ano, $modelo, $marca, $ordem];
-        return processRecord('infomotor', $fields, $values, 'isss');
+    if ($moto) {
+        $ano = sanitizeInput($moto['ano'], 'int');
+        $modelo = sanitizeInput($moto['modelo']);
+        $marca = sanitizeInput($moto['marca']);
+        
+        // Verifica se a ordem já existe
+        $recordId = checkRecordExists('infomotor', 'ordem = ?', [$ordem], 's');
+        
+        // Se não existe, insere um novo registro
+        if ($recordId === null) {
+            $fields = ['ano', 'modelo', 'marca', 'ordem'];
+            $values = [$ano, $modelo, $marca, $ordem];
+            return processRecord('infomotor', $fields, $values, 'isss');
+        }
     }
     
     return true;
