@@ -115,12 +115,13 @@ function displayMotorMedicoes($conn, $ordem) {
         $cilindros_tras = ceil($motorRef['nr_cilindros'] / 2);
         $cilindros_frente = $motorRef['nr_cilindros'] - $cilindros_tras;
         
-        // Cabeçalho da tabela
-        echo "<thead><tr><th></th><th></th>";
-        // Adicionar identificação para cabeçote traseiro
-        echo "<th colspan='" . $cilindros_tras . "' class='cabecote-tras-header'>CABEÇOTE TRASEIRO</th>";
-        // Adicionar identificação para cabeçote dianteiro
-        echo "<th colspan='" . $cilindros_frente . "' class='cabecote-frente-header'>CABEÇOTE DIANTEIRO</th>";
+        if ($motorRef['nr_cilindros'] > 1) {
+            echo "<thead><tr><th></th><th></th>";
+            // Adicionar identificação para cabeçote traseiro
+            echo "<th colspan='" . $cilindros_tras . "' class='cabecote-tras-header'>CABEÇOTE TRASEIRO</th>";
+            // Adicionar identificação para cabeçote dianteiro
+            echo "<th colspan='" . $cilindros_frente . "' class='cabecote-frente-header'>CABEÇOTE DIANTEIRO</th>";
+        }
         echo "</tr><tr><th>ITEM</th><th>REFERÊNCIA</th>";
         for ($i = 1; $i <= $cilindros_tras; $i++) {
             echo "<th class='cilindro-tras'>CILINDRO " . $i . "</th>";
