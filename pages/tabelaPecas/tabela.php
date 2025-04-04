@@ -142,3 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
     aplicarEventos();
 });
 </script>
+<script src="delete_confirm.js"></script>
+<script src="js/deletePeca.js"></script>
+</section>
