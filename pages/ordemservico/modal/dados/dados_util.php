@@ -1,16 +1,8 @@
 <?php
 
 // Funções auxiliares
-function calcularValorMedio($min, $max) {
-    return (floatval($min) + floatval($max)) / 2;
-}
-
 function formatarIntervalo($min, $max) {
     return number_format(floatval($min), 2, ',', '.') . " a " . number_format(floatval($max), 2, ',', '.');
-}
-
-function calcularPC($folga, $referencia, $pastilha_antiga) {
-    return (floatval($folga) - floatval($referencia)) + floatval($pastilha_antiga);
 }
 
 function displayTableData($conn, $tableName, $tableTitle) {
