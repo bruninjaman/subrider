@@ -59,7 +59,7 @@ $result = mysqli_query($conn, $sql_query);
                             <td data-cell="Item"><?php echo $servico['item']; ?></td>
                             <td data-cell="Tipo"><?php echo $servico['tipo']; ?></td>
                             <td>
-                                <button style="background: none; border: none;" onclick="location.href='../tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="/subrider/assets/css/images/edit.png" style="height: 30px; width: 30px;"></button>
+                                <button style="background: none; border: none;" onclick="location.href='/subrider/tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="/subrider/assets/css/images/edit.png" style="height: 30px; width: 30px;"></button>
                                 <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $servico['servicoId']; ?>')"><img src="/subrider/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                             </td>
                         </tr>
@@ -86,7 +86,7 @@ $result = mysqli_query($conn, $sql_query);
 // Adicionar o script para a função deleteServico
 function deleteServico(servicoID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = 'scripts/tabelaServicosDelete/delete-servico.php?servicoID=' + servicoID;
+        location.href = '/subrider/scripts/tabelaServicos/delete-serv.php?servID=' + servicoID;
         return true;
     }
     return false;
