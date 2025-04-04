@@ -73,9 +73,8 @@ if (isset($_GET['ordem'])) {
 echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
-<link rel="stylesheet" href="assets/css/ordemservico/menus/dados.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="pages/ordemservico/modal/dados/dados.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <?php
 // Buscar dados de referência do cabeçote para os valores de limite
