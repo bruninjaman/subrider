@@ -1,59 +1,93 @@
+.search {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .search input[type=text] {
     padding: 10px;
     font-size: 17px;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
-    float: left;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
     width: 80%;
-    height: 100%;
+    height: 45px;
 }
 
 .search button[type=submit] {
-    float: left;
     width: 20%;
-    height: 100%;
+    height: 45px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     padding: 10px;
     font-size: 17px;
+    border: 1px solid #e44c65;
     border-left: none;
-    /* Prevent double borders */
     cursor: pointer;
     background-color: #e44c65;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search button[type=submit]:hover {
     background-color: #e76278;
 }
 
+.search select {
+    height: 45px;
+    padding: 10px;
+    font-size: 17px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.search select:focus,
+.search input[type=text]:focus {
+    outline: none;
+    border-color: #e44c65;
+}
+
 @media screen and (max-width: 736px) {
-    .row>.col-4 {
-        width: 60%;
+    .search {
+        flex-direction: column;
+        gap: 10px;
     }
-    select#pesquisa {
-        height: 160%;
-        width: 130%;
+
+    .row > .col-3,
+    .row > .col-4 {
+        width: 100%;
+        margin-bottom: 10px;
     }
+
+    .search select {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .search .input-group {
+        display: flex;
+        width: 100%;
+    }
+
     .search input[type=text] {
-        padding: 2px;
         font-size: 15px;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-        float: left;
-        width: 70%;
-        height: 160%;
+        border-radius: 10px 0 0 10px;
+        padding: 8px;
+        height: 40px;
     }
+
     .search button[type=submit] {
-        float: left;
-        width: 25%;
-        height: 160%;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-        padding: 2px;
+        height: 40px;
+        border-radius: 0 10px 10px 0;
+        padding: 8px;
         font-size: 15px;
-        border-left: none;
-        /* Prevent double borders */
-        cursor: pointer;
-        background-color: #e44c65;
     }
 }
