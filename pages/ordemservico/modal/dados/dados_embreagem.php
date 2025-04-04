@@ -84,7 +84,6 @@ function displayEmbreagemMedicoes($conn, $ordem) {
                 'disco_separador' => 0,
                 'disco_separador_emp_max' => 0.0
             ];
-            echo "<div class='warning-msg'>Nenhuma referência encontrada para ordem #" . htmlspecialchars($ordem) . ". Exibindo tabela vazia.</div>";
         }
 
         // Buscar medições existentes

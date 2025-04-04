@@ -97,57 +97,6 @@ $cabecote_ref = mysqli_fetch_assoc($result);
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="pages\ordemservico\modal\calcularPastilha.js"></script>
 
-<style>
-.componentes-container {
-    margin-bottom: 20px;
-}
-
-.componente-dropdown {
-    margin-bottom: 10px;
-}
-
-.dropdown-btn {
-    background-color: #2a2c35;
-    color: #e5e5e5;
-    padding: 12px 20px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dropdown-btn:hover {
-    background-color: #3a3c45;
-}
-
-.dropdown-content {
-    display: none;
-    background-color: #1e2029;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 5px;
-    border: 1px solid #333;
-}
-
-.dropdown-content.active {
-    display: block;
-}
-
-.dropdown-btn i {
-    transition: transform 0.3s;
-}
-
-.dropdown-btn.active i {
-    transform: rotate(180deg);
-}
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

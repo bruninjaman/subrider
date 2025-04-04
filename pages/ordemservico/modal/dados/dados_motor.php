@@ -86,7 +86,6 @@ function displayMotorMedicoes($conn, $ordem) {
                 'dia_pino_pis_min' => 0.0,
                 'folga_pino_pis_max' => 0.0
             ];
-            echo "<div class='warning-msg'>Nenhuma referência encontrada para ordem #" . htmlspecialchars($ordem) . ". Exibindo tabela vazia.</div>";
         }
 
         // Buscar medições existentes

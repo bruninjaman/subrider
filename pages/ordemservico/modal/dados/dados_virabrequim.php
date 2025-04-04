@@ -77,7 +77,6 @@ function displayVirabrequimMedicoes($conn, $ordem) {
                 'folga_lateral_eixo_max' => 0.0,
                 'empenamento' => 0.0
             ];
-            echo "<div class='warning-msg'>Nenhuma referência encontrada para ordem #" . htmlspecialchars($ordem) . ". Exibindo tabela vazia.</div>";
         }
 
         // Buscar número de cilindros do cabeçote

@@ -81,7 +81,6 @@ function displayCabecoteMedicoes($conn, $ordem) {
                 'came_adm_altura_min' => 0.00,
                 'came_esc_altura_min' => 0.00
             ];
-            echo "<div class='warning-msg'>Nenhuma referência encontrada para ordem #" . htmlspecialchars($ordem) . ". Exibindo tabela vazia.</div>";
         }
 
         // Buscar medições existentes

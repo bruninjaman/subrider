@@ -73,7 +73,6 @@ function displayBombaMedicoes($conn, $ordem) {
                 'vazao_max' => 0.0,
                 'comb_pressao' => 0.0
             ];
-            echo "<div class='warning-msg'>Nenhuma referência encontrada para ordem #" . htmlspecialchars($ordem) . ". Exibindo tabela vazia.</div>";
         }
 
         // Buscar medições existentes
