@@ -30,10 +30,12 @@
 .floating-input {
     position: relative;
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 .floating-input input {
     width: 100%;
+    min-width: 200px;
     padding: 1rem;
     border: 2px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.05);
@@ -105,20 +107,6 @@
 .floating-input .range-separator {
     color: #e5e5e5;
     font-size: 1rem;
-}
-
-.floating-input .range-fields:focus-within ~ label,
-.floating-input .range-fields input:not(:placeholder-shown) ~ label {
-    top: -20px;
-    font-size: 0.85rem;
-    color: #e44c65;
-    background: #181921;
-    padding: 0 5px;
-    z-index: 1;
-}
-
-.floating-input .range-fields:focus-within ~ .focus-border {
-    border-color: #e44c65;
 }
 
 /* Seções e Grupos */
@@ -322,18 +310,6 @@
     transform: translateY(0);
 }
 
-/* Media Queries específicos do Cabeçote */
-@media (max-width: 768px) {
-    .custom-radio-group {
-        flex-direction: column;
-    }
-    
-    .custom-radio-group label {
-        width: 100%;
-        text-align: center;
-    }
-}
-
 /* Estilos específicos do Motor */
 .measure-group {
     background: rgba(255, 255, 255, 0.03);
@@ -399,17 +375,17 @@ input[type="file"] {
 /* Fontes específicas */
 @font-face {
     font-family: 'Inter-SemiBold';
-    src: url(fonts/Inter-SemiBold.ttf);
+    src: url(../fonts/Inter-SemiBold.ttf);
 }
 
 @font-face {
     font-family: 'Inter-Bold';
-    src: url(fonts/Inter-Bold.ttf);
+    src: url(../fonts/Inter-Bold.ttf);
 }
 
 @font-face {
     font-family: 'Inter-Medium';
-    src: url(fonts/Inter-Medium.ttf);
+    src: url(../fonts/Inter-Medium.ttf);
 }
 
 label {
@@ -425,13 +401,6 @@ h1 {
     background-color: #181921;
     padding: 10px;
     border-radius: 5px;
-}
-
-/* Media Queries adicionais */
-@media (max-width: 768px) {
-    .measure-inputs {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Estilos específicos do Menu Medições */
@@ -542,22 +511,4 @@ iframe {
 
 .close:hover {
     color: #e44c65;
-}
-
-/* Media Queries adicionais */
-@media (max-width: 768px) {
-    .buttons-table {
-        flex-direction: column;
-    }
-
-    .buttons-table .button {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-    }
-
-    .modal-content {
-        margin: 10% auto;
-        width: 95%;
-    }
 } 
