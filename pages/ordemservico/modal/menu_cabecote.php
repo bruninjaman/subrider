@@ -62,10 +62,10 @@
                     <input type="radio" name="engine_type" id="boxer" value="boxer">
                     <label for="boxer">Boxer</label>
 
-                    <input type="radio" name="engine_type" id="emv" value="emv">
+                    <input type="radio" name="engine_type" id="emv" value="v">
                     <label for="emv">Em V</label>
 
-                    <input type="radio" name="engine_type" id="em_linha" value="em_linha">
+                    <input type="radio" name="engine_type" id="em_linha" value="em linha">
                     <label for="em_linha">Em Linha</label>
                 </div>
             </div>
