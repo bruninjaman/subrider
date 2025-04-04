@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/modal-menus.css">
+<link rel="stylesheet" href="<?php echo $baseAddress; ?>/pages/ordemservico/modal-menus.css">
 <!-- Botões -->
 <div class="buttons-table">
     <a class='button secondary' href="ordem_add_item.php?ordem=<?php echo $_GET['ordem'] ?>">Adicionar item</a>
