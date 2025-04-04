@@ -1,9 +1,8 @@
 <!-- search bar -->
-<form action="" method="get">
-    <input type="hidden" name="page" value="1">
+<form id="form-pesquisa" onsubmit="return false;">
     <div class="row">
         <div class="col-3">
-            <select name="selectPesquisa" id="pesquisa">
+            <select name="selectPesquisa" id="selectPesquisa">
                 <?php
                 //this while is getting all columns from our table
                 while ($categorias = mysqli_fetch_assoc($resultCategorias)) {
@@ -18,10 +17,31 @@
             </select>
         </div>
         <div class="col-4 search">
-            <input type="text" name="pesquisa" placeholder="Pesquisar..">
-            <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="text" name="pesquisa" id="input-pesquisa" placeholder="Pesquisar..">
+            <button type="button" id="btn-pesquisar"><i class="fa fa-search"></i></button>
         </div>
-        
     </div>
 </form>
 <!-- fim da barra de pesquisa -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Evento para o botão de pesquisa
+    document.getElementById('btn-pesquisar').addEventListener('click', function() {
+        var pesquisa = document.getElementById('input-pesquisa').value;
+        var selectPesquisa = document.getElementById('selectPesquisa').value;
+        var orderby = document.querySelector('.sort.active') ? 
+                     document.querySelector('.sort.active').getAttribute('data-orderby') : '';
+        
+        window.carregarTabela(1, pesquisa, selectPesquisa, orderby);
+    });
+
+    // Evento para pressionar Enter no campo de pesquisa
+    document.getElementById('input-pesquisa').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('btn-pesquisar').click();
+        }
+    });
+});
+</script>

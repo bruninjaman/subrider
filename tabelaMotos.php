@@ -52,8 +52,18 @@ require_once("./scripts/functions.php");
     <script src="assets/js/main.js"></script>
     
 
-    <!-- Delete button -->
+    <!-- Funções de exclusão -->
     <script src=".\pages\tabelaMotos\delete_confirm.js"></script>
+    <script>
+    // Função compatível com AJAX
+    function deleteMoto(motoID) {
+        if (confirm('Deseja realmente excluir este item?')) {
+            location.href = 'scripts/tabelaMotos/delete-moto.php?motoID=' + motoID;
+            return true;
+        }
+        return false;
+    }
+    </script>
 </body>
 
 </html>
