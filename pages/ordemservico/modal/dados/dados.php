@@ -28,18 +28,44 @@ require_once 'dados_bomba.php';
 require_once 'dados_motor.php';
 require_once 'dados_virabrequim.php';
 
-// Chamar a função de medições para cada componente
+// Array com os componentes e seus títulos
+$componentes = [
+    'embreagem' => 'Embreagem',
+    'bomba' => 'Bomba',
+    'motor' => 'Motor',
+    'virabrequim' => 'Virabrequim',
+    'cabecote' => 'Cabeçote'
+];
+
+// Criar os dropdowns para cada componente
 if (isset($_GET['ordem'])) {
-    displayTableData($conn, "embreagem", "Embreagem");
-    displayEmbreagemMedicoes($conn, $_GET['ordem']);
-    displayTableData($conn, "bomba", "Bomba");
-    displayBombaMedicoes($conn, $_GET['ordem']);
-    displayTableData($conn, "motor", "Motor");
-    displayMotorMedicoes($conn, $_GET['ordem']);
-    displayTableData($conn, "virabrequim", "Virabrequim");
-    displayVirabrequimMedicoes($conn, $_GET['ordem']);
-    displayTableData($conn, "cabecote", "Cabeçote");
-    displayCabecoteMedicoes($conn, $_GET['ordem']);
+    echo '<div class="componentes-container">';
+    foreach ($componentes as $componente => $titulo) {
+        echo '<div class="componente-dropdown">';
+        echo '<button type="button" class="dropdown-btn">' . $titulo . ' <i class="fas fa-chevron-down"></i></button>';
+        echo '<div class="dropdown-content">';
+        displayTableData($conn, $componente, $titulo);
+        switch ($componente) {
+            case 'embreagem':
+                displayEmbreagemMedicoes($conn, $_GET['ordem']);
+                break;
+            case 'bomba':
+                displayBombaMedicoes($conn, $_GET['ordem']);
+                break;
+            case 'motor':
+                displayMotorMedicoes($conn, $_GET['ordem']);
+                break;
+            case 'virabrequim':
+                displayVirabrequimMedicoes($conn, $_GET['ordem']);
+                break;
+            case 'cabecote':
+                displayCabecoteMedicoes($conn, $_GET['ordem']);
+                break;
+        }
+        echo '</div>';
+        echo '</div>';
+    }
+    echo '</div>';
 } else {
     echo "<div class='error-msg'>Erro: Parâmetro 'ordem' não foi especificado.</div>";
 }
@@ -48,6 +74,7 @@ echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
 <link rel="stylesheet" href="assets/css/ordemservico/menus/dados.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <?php
 // Buscar dados de referência do cabeçote para os valores de limite
@@ -69,6 +96,58 @@ $cabecote_ref = mysqli_fetch_assoc($result);
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="pages\ordemservico\modal\calcularPastilha.js"></script>
 
+<style>
+.componentes-container {
+    margin-bottom: 20px;
+}
+
+.componente-dropdown {
+    margin-bottom: 10px;
+}
+
+.dropdown-btn {
+    background-color: #2a2c35;
+    color: #e5e5e5;
+    padding: 12px 20px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-btn:hover {
+    background-color: #3a3c45;
+}
+
+.dropdown-content {
+    display: none;
+    background-color: #1e2029;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 5px;
+    border: 1px solid #333;
+}
+
+.dropdown-content.active {
+    display: block;
+}
+
+.dropdown-btn i {
+    transition: transform 0.3s;
+}
+
+.dropdown-btn.active i {
+    transform: rotate(180deg);
+}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Verificar se os valores de referência estão presentes
@@ -77,6 +156,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const valEscMin = document.getElementById('val_esc_limite_min').value;
     const valEscMax = document.getElementById('val_esc_limite_max').value;
 
+    // Adicionar funcionalidade aos dropdowns
+    const dropdownBtns = document.querySelectorAll('.dropdown-btn');
+    dropdownBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevenir o comportamento padrão do botão
+            this.classList.toggle('active');
+            const content = this.nextElementSibling;
+            content.classList.toggle('active');
+        });
+    });
 
     // Vincular o evento de cálculo a todos os inputs de folga
     const folgaInputs = document.querySelectorAll('.folga-input');
