@@ -1,6 +1,6 @@
 <?php
 echo "<style>";
-echo file_get_contents($baseAddress . '/assets/css/ordemservico/modal.css');
+echo file_get_contents($baseAddress . '/pages/ordemservico/modal/modal.css');
 echo "</style>";
 ?>
 
