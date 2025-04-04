@@ -52,8 +52,18 @@ require_once("./scripts/functions.php");
     <script src="assets/js/main.js"></script>
     
 
-    <!-- Delete button -->
+    <!-- Funções de exclusão -->
     <script src=".\pages\tabelaOrdens\delete_confirm.js"></script>
+    <script>
+    // Função compatível com AJAX
+    function deleteServico(ordemID, Ordem) {
+        if (confirm('Deseja realmente excluir este item?')) {
+            location.href = 'scripts/tabelaOrdensDelete/delete-service.php?ordemID=' + ordemID + '&Ordem=' + Ordem;
+            return true;
+        }
+        return false;
+    }
+    </script>
 </body>
 
 </html>

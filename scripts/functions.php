@@ -41,13 +41,14 @@ function pagination($conn, $sql_query, $results_per_page = 5)
         <div class="pagination-style">
             <?php if ($current_page > 1) : ?>
                 <!-- Move to the first page -->
-                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=1'">« First</button>
-                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $current_page - 1; ?>'">‹ Prev</button>
+                <button type="button" class="paginacao-btn" data-page="1">« First</button>
+                <button type="button" class="paginacao-btn" data-page="<?php echo $current_page - 1; ?>">‹ Prev</button>
             <?php endif; ?>
 
             <!-- Show page numbers -->
             <?php for ($i = max(1, $current_page - 2); $i <= min($num_pages, $current_page + 2); $i++) : ?>
-                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $i; ?>'"
+                <button type="button" class="paginacao-btn <?php echo ($i == $current_page) ? 'paginacao-ativa' : ''; ?>" 
+                    data-page="<?php echo $i; ?>"
                     <?php if ($i == $current_page) echo 'style="font-weight:bold;"'; ?>>
                     <?php echo $i; ?>
                 </button>
@@ -55,8 +56,8 @@ function pagination($conn, $sql_query, $results_per_page = 5)
 
             <?php if ($current_page < $num_pages) : ?>
                 <!-- Move to the last page -->
-                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $current_page + 1; ?>'">Next ›</button>
-                <button type="button" onclick="location.href='<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo $num_pages; ?>'">Last »</button>
+                <button type="button" class="paginacao-btn" data-page="<?php echo $current_page + 1; ?>">Next ›</button>
+                <button type="button" class="paginacao-btn" data-page="<?php echo $num_pages; ?>">Last »</button>
             <?php endif; ?>
         </div>
         <?php
