@@ -12,7 +12,7 @@
 </style>
 <section id="one" class="spotlight style1 bottom">
     <span class="image fit main">
-        <img src="https://placehold.jp/1200x800.jpg" alt="Mapa Subrider" />
+        <img src="assets/css/images/mapa-subrider.jpg" alt="Mapa Subrider" />
         <h1 class="localizacao">Localização</h1>
     </span>
     <div class="content">
