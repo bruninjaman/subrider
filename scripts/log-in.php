@@ -1,5 +1,9 @@
 <?php
-require_once('../config.php');
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/system/audit.php';
+require_once __DIR__ . '/system/login_attempts.php';
+require_once __DIR__ . '/system/password_policy.php';
+
 //CONNECTION
 // require_once("../connection/connection.php");
 //FUNCTIONS
@@ -10,84 +14,77 @@ ini_set('session.gc_maxlifetime', 30 * 24 * 60 * 60); // 30 dias em segundos
 ini_set('session.cookie_lifetime', 30 * 24 * 60 * 60); // 30 dias em segundos
 session_set_cookie_params(30 * 24 * 60 * 60); // 30 dias em segundos
 
-// Verificar CSRF token
-if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
-    security_log("Tentativa de login com CSRF token inválido", "WARNING");
-    die('Erro de validação');
-}
+// Inicializa classes de segurança
+$loginAttempts = new LoginAttempts($conn);
+$passwordPolicy = new PasswordPolicy($conn);
 
-// Proteção contra força bruta
-$max_attempts = 5;
-$lockout_time = 900; // 15 minutos
+// Limpa tentativas antigas
+$loginAttempts->cleanOldAttempts();
 
-$ip = $_SERVER['REMOTE_ADDR'];
-$attempts_key = "login_attempts_" . $ip;
-$lockout_key = "login_lockout_" . $ip;
-
-// Verificar se está bloqueado
-if (isset($_SESSION[$lockout_key]) && time() < $_SESSION[$lockout_key]) {
-    $remaining = $_SESSION[$lockout_key] - time();
-    security_log("Tentativa de login durante bloqueio - IP: $ip", "WARNING");
-    die("Muitas tentativas. Tente novamente em " . ceil($remaining/60) . " minutos.");
-}
-
-// Limpar bloqueio se já passou o tempo
-if (isset($_SESSION[$lockout_key]) && time() >= $_SESSION[$lockout_key]) {
-    unset($_SESSION[$lockout_key]);
-    unset($_SESSION[$attempts_key]);
-}
-
-// Sanitizar inputs
-$email = sanitize_input($_POST['email']);
-$senha = $_POST['senha'];
-
-// Validar email
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    security_log("Tentativa de login com email inválido: $email", "WARNING");
-    die('Email inválido');
-}
-
-// Buscar usuário
-$stmt = $conn->prepare("SELECT id, senha, nome FROM usuarios WHERE email = ? LIMIT 1");
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows === 1) {
-    $user = $result->fetch_assoc();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
     
-    // Verificar senha
-    if (password_verify($senha, $user['senha'])) {
-        // Login bem sucedido - resetar contadores
-        unset($_SESSION[$attempts_key]);
-        unset($_SESSION[$lockout_key]);
-        
-        // Registrar login
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_nome'] = $user['nome'];
-        
-        security_log("Login bem sucedido para usuário: " . $user['nome'], "INFO");
-        
-        // Regenerar ID da sessão
-        session_regenerate_id(true);
-        
-        header('Location: ../index.php');
+    // Verifica se o usuário está bloqueado
+    $blockStatus = $loginAttempts->isUserBlocked($username);
+    if ($blockStatus['blocked']) {
+        $minutes = ceil($blockStatus['timeRemaining'] / 60);
+        header("Location: /subrider/login.php?error=blocked&time=$minutes");
         exit();
     }
+    
+    try {
+        // Usa prepared statement para prevenir injeção SQL
+        $stmt = mysqli_prepare($conn, "SELECT * FROM login WHERE username = ?");
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        
+        if (!$result) {
+            throw new Exception("Erro ao executar consulta: " . mysqli_error($conn));
+        }
+        
+        if ($user = mysqli_fetch_assoc($result)) {
+            // Verifica a senha usando hash seguro
+            if (password_verify($password, $user['password'])) {
+                // Verifica se a senha precisa ser alterada
+                if ($passwordPolicy->passwordNeedsChange($username)) {
+                    // Inicia a sessão com flag para forçar alteração de senha
+                    session_start();
+                    $_SESSION['force_password_change'] = true;
+                    $_SESSION['user'] = $username;
+                    $_SESSION['type'] = $user['userType'];
+                    
+                    header("Location: /subrider/change_password.php");
+                    exit();
+                }
+                
+                // Login bem sucedido
+                session_start();
+                $_SESSION['user'] = $username;
+                $_SESSION['type'] = $user['userType'];
+                $_SESSION['last_activity'] = time();
+                
+                // Registra tentativa bem sucedida
+                $loginAttempts->recordAttempt($username, true);
+                
+                header("Location: /subrider/index.php");
+                exit();
+            }
+        }
+        
+        // Login falhou
+        $loginAttempts->recordAttempt($username, false);
+        header("Location: /subrider/login.php?error=1");
+        exit();
+        
+    } catch (Exception $e) {
+        error_log("Erro no login: " . $e->getMessage());
+        header("Location: /subrider/login.php?error=system");
+        exit();
+    }
+} else {
+    header("Location: /subrider/login.php");
+    exit();
 }
-
-// Login falhou - incrementar contador
-$_SESSION[$attempts_key] = ($_SESSION[$attempts_key] ?? 0) + 1;
-
-security_log("Falha de login - Email: $email, IP: $ip, Tentativa: " . $_SESSION[$attempts_key], "WARNING");
-
-// Verificar se excedeu tentativas
-if ($_SESSION[$attempts_key] >= $max_attempts) {
-    $_SESSION[$lockout_key] = time() + $lockout_time;
-    security_log("IP bloqueado por excesso de tentativas: $ip", "WARNING");
-    die("Muitas tentativas. Conta bloqueada por 15 minutos.");
-}
-
-header('Location: ../login.php?error=1');
-exit();
 ?>

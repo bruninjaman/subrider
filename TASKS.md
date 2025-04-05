@@ -47,10 +47,10 @@ Todos os arquivos foram atualizados para usar o config.php centralizado.
 - [x] Adicionar CSRF tokens em todos os formulários
 - [x] Implementar verificação de autenticação em todas as páginas
 - [x] Adicionar timeout de sessão
-- [ ] Implementar registro de tentativas de login
+- [x] Implementar registro de tentativas de login
 
 ### Proteção contra Injeção SQL
-- [ ] Refatorar funções em functions.php para usar prepared statements
+- [x] Refatorar funções em functions.php para usar prepared statements
 - [x] Sanitizar inputs em arquivos ajax/*.php
 - [x] Implementar validação de dados em todas as entradas
 - [x] Adicionar escape de caracteres especiais
@@ -66,12 +66,12 @@ Todos os arquivos foram atualizados para usar o config.php centralizado.
 - [x] Desabilitar listagem de diretórios
 - [x] Implementar logs de segurança
 - [x] Configurar headers de segurança no servidor
-- [ ] Implementar rate limiting em APIs
+- [x] Implementar rate limiting em APIs
 - [x] Adicionar validação de uploads de arquivos
 - [x] Implementar HTTPS forçado
 
 ### Outras Melhorias
-- [ ] Implementar sistema de backup
-- [ ] Criar política de senhas fortes
-- [ ] Implementar sistema de auditoria
-- [ ] Documentar procedimentos de segurança 
+- [x] Implementar sistema de backup
+- [x] Criar política de senhas fortes
+- [x] Implementar sistema de auditoria
+- [x] Documentar procedimentos de segurança 
