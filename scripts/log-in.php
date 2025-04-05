@@ -1,4 +1,7 @@
 <?php
+// Define uma constante para indicar que estamos no processo de login
+define('IS_LOGIN_PROCESS', true);
+
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/system/audit.php';
 require_once __DIR__ . '/system/login_attempts.php';
