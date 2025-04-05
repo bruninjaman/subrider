@@ -1,6 +1,34 @@
 <?php
-// Arquivo de configuração comum
-require_once('./scripts/perm.php');
-require_once('./connection/connection.php');
-require_once('./scripts/functions.php');
+// Configurações básicas
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/logs/error.log');
+
+// Timezone
+date_default_timezone_set('America/Sao_Paulo');
+
+// Arquivos de configuração comum
+require_once(__DIR__ . '/scripts/security.php');
+require_once(__DIR__ . '/scripts/perm.php');
+require_once(__DIR__ . '/connection/connection.php');
+require_once(__DIR__ . '/scripts/functions.php');
+
+// Iniciar sessão segura se ainda não foi iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verificar autenticação (exceto para páginas públicas)
+$public_pages = ['login.php', 'index.php'];
+$current_page = basename($_SERVER['PHP_SELF']);
+
+if (!in_array($current_page, $public_pages)) {
+    check_auth();
+}
+
+// Gerar CSRF token para formulários
+if (empty($_SESSION['csrf_token'])) {
+    generate_csrf_token();
+}
 ?> 

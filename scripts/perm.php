@@ -1,9 +1,10 @@
 <?php
 if (!isset($_SESSION["type"])) {
-    header("location: login.php");
-
+    header("Location: /subrider/login.php");
+    exit();
 } else {
-    if($_SESSION["type"]  < 1) {
-        header("location: login.php");
+    if($_SESSION["type"] < 1) {
+        header("Location: /subrider/login.php");
+        exit();
     }
 }

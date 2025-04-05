@@ -1,3 +1,7 @@
+<?php
+require_once('./config.php');
+?>
+
 <style>
   .spotlight .content-container {
     position: absolute;
@@ -66,6 +70,7 @@
       <h2>Entre na sua conta</h2>
     </header>
     <form id="loginform" name="loginform" method="POST" action="scripts/log-in.php">
+      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
       <div class="col-4 col-12-medium">
         <label for="fname">Login:</label>
         <input type="text" id="user" name="user" maxlength="25" required><br>

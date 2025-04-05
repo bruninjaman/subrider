@@ -73,20 +73,42 @@ function pagination($conn, $sql_query, $results_per_page = 5)
 
 function login($user, $password, $conn)
 {
-    //check if password and name exist on db
-    $mysqli_query = "SELECT * FROM login WHERE username = '{$user}' AND password = '{$password}'";
-    $result = mysqli_query($conn, $mysqli_query);
-    session_start();
-    $rows = mysqli_num_rows($result);
-    $result = mysqli_fetch_assoc($result);
-    if ($rows > 0) {
-        //set sesions
-        $_SESSION["user"] = $result["username"];
-        $_SESSION["type"] = $result["userType"];
-        header("location: ../index.php");
-    } else {
-        // NO LOGIN
-        header("location: ../login.php");
+    try {
+        // Usar prepared statement para prevenir injeção SQL
+        $stmt = mysqli_prepare($conn, "SELECT * FROM login WHERE username = ? AND password = ?");
+        mysqli_stmt_bind_param($stmt, "ss", $user, $password);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        
+        if (!$result) {
+            throw new Exception("Erro ao executar consulta: " . mysqli_error($conn));
+        }
+        
+        $rows = mysqli_num_rows($result);
+        $user_data = mysqli_fetch_assoc($result);
+        
+        if ($rows > 0) {
+            // Iniciar sessão se ainda não estiver iniciada
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            
+            // Definir variáveis de sessão
+            $_SESSION["user"] = $user_data["username"];
+            $_SESSION["type"] = $user_data["userType"];
+            
+            // Usar caminho absoluto para redirecionamento
+            header("Location: /subrider/index.php");
+            exit();
+        } else {
+            // Redirecionar para login com caminho absoluto
+            header("Location: /subrider/login.php");
+            exit();
+        }
+    } catch (Exception $e) {
+        error_log("Erro no login: " . $e->getMessage());
+        header("Location: /subrider/login.php?error=1");
+        exit();
     }
 }
 

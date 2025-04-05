@@ -38,4 +38,40 @@
 - [x] pdf/download.php
 
 ### ✅ Refatoração Concluída!
-Todos os arquivos foram atualizados para usar o config.php centralizado. 
+Todos os arquivos foram atualizados para usar o config.php centralizado.
+
+## 🔒 Tarefas de Segurança (Adicionado em 04/04/2024)
+
+### Autenticação e Sessão
+- [x] Implementar proteção contra força bruta no login
+- [x] Adicionar CSRF tokens em todos os formulários
+- [x] Implementar verificação de autenticação em todas as páginas
+- [x] Adicionar timeout de sessão
+- [ ] Implementar registro de tentativas de login
+
+### Proteção contra Injeção SQL
+- [ ] Refatorar funções em functions.php para usar prepared statements
+- [x] Sanitizar inputs em arquivos ajax/*.php
+- [x] Implementar validação de dados em todas as entradas
+- [x] Adicionar escape de caracteres especiais
+
+### Proteção XSS
+- [x] Implementar escape de saída em todas as páginas
+- [x] Adicionar headers de segurança (X-XSS-Protection, etc)
+- [x] Sanitizar dados antes de exibir no frontend
+- [x] Implementar Content Security Policy (CSP)
+
+### Configuração e Hardening
+- [x] Mover arquivos sensíveis para fora do document root
+- [x] Desabilitar listagem de diretórios
+- [x] Implementar logs de segurança
+- [x] Configurar headers de segurança no servidor
+- [ ] Implementar rate limiting em APIs
+- [x] Adicionar validação de uploads de arquivos
+- [x] Implementar HTTPS forçado
+
+### Outras Melhorias
+- [ ] Implementar sistema de backup
+- [ ] Criar política de senhas fortes
+- [ ] Implementar sistema de auditoria
+- [ ] Documentar procedimentos de segurança 

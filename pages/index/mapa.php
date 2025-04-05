@@ -12,7 +12,7 @@
 </style>
 <section id="one" class="spotlight style1 bottom">
     <span class="image fit main">
-        <img src="./assets/css/images/mapa subrider.jpg" alt="" />
+        <img src="https://placehold.jp/1200x800.jpg" alt="Mapa Subrider" />
         <h1 class="localizacao">Localização</h1>
     </span>
     <div class="content">
@@ -21,8 +21,13 @@
                 <div class="col-4 col-12-medium" style="margin-right: 300px;">
                     <div class="mapouter">
                         <div class="gmap_canvas">
-                            <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=brazil%20subrider&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                            <a href="https://123moviesz.nl"></a><br>
+                            <iframe 
+                                width="600" 
+                                height="500" 
+                                style="border:0;" 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.8675949858897!2d-48.0619444!3d-15.8194444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDQ5JzEwLjAiUyA0OMKwMDMnNDMuMCJX!5e0!3m2!1spt-BR!2sbr!4v1630000000000!5m2!1spt-BR!2sbr"
+                                allowfullscreen>
+                            </iframe>
                             <style>
                                 .mapouter {
                                     position: relative;
@@ -39,10 +44,7 @@
                                         width: 100%;
                                     }
                                 }
-                            </style>
-                            <a href="https://googlemapsembedcodegenerator.com
-											"> how to add a map to wordpress </a>
-                            <style>
+
                                 .gmap_canvas {
                                     overflow: hidden;
                                     background: none !important;
