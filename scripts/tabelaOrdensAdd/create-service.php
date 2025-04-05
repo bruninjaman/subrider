@@ -1,12 +1,7 @@
 <?php
 session_start();
 
-//PERM
-require_once("../perm.php");
-//CONNECTION
-require_once("../../connection/connection.php");
-//FUNCTIONS
-require_once("../functions.php");
+require_once(__DIR__ . "/../config.php");
 
 //CREATE NEW CODE
 $mysqli_query = "SELECT Codigo FROM ordem_servicos";

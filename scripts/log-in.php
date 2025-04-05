@@ -1,8 +1,9 @@
 <?php
+require_once(__DIR__ . "/config.php");
 //CONNECTION
-require_once("../connection/connection.php");
+// require_once("../connection/connection.php");
 //FUNCTIONS
-require_once("functions.php");
+// require_once("functions.php");
 
 // Configuração da sessão para 30 dias
 ini_set('session.gc_maxlifetime', 30 * 24 * 60 * 60); // 30 dias em segundos

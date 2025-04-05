@@ -1,14 +1,11 @@
 <?php
+require_once(__DIR__ . "/../config.php");
+
 //AUTOLOAD COMPOSER
 require __DIR__ . "/vendor/autoload.php";
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
-//CONNECTION
-require_once("./../connection/connection.php");
-//FUNCTIONS
-require_once("./../scripts/functions.php");
 
 $options = new Options();
 $options->setChroot(__DIR__);

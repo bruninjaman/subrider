@@ -1,12 +1,7 @@
 <?php
 session_start();
 
-//PERM
-require_once("../../scripts/perm.php");
-//CONNECTION
-require_once("../../connection/connection.php");
-//FUNCTIONS
-require_once("../../scripts/functions.php");
+require_once(__DIR__ . "/../config.php");
 
 // Check if servID is set and is a valid integer
 if (isset($_GET['servID']) && is_numeric($_GET['servID'])) {

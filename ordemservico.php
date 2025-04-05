@@ -12,12 +12,14 @@ $dotenv->load();
 // Usar variável de ambiente
 $baseAddress = $_ENV['BASE_ADDRESS'] ?? '';
 
+require_once('./config.php');
+
 //PERM
-require_once(__DIR__ . "/scripts/perm.php");
+// require_once(__DIR__ . "/scripts/perm.php");
 //CONNECTION
-require_once(__DIR__ . "/connection/connection.php");
+// require_once(__DIR__ . "/connection/connection.php");
 //FUNCTIONS
-require_once(__DIR__ . "/scripts/functions.php");
+// require_once(__DIR__ . "/scripts/functions.php");
 ?>
 <!--
 	Landed by HTML5 UP
