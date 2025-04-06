@@ -21,13 +21,30 @@ class BatchAnnotateFilesRequest extends \Google\Collection
 {
   protected $collection_key = 'requests';
   /**
+   * @var string[]
+   */
+  public $labels;
+  /**
    * @var string
    */
   public $parent;
   protected $requestsType = AnnotateFileRequest::class;
   protected $requestsDataType = 'array';
-  public $requests;
 
+  /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
+  }
   /**
    * @param string
    */

@@ -59,6 +59,14 @@ class ProductView extends \Google\Collection
   /**
    * @var string
    */
+  public $clickPotential;
+  /**
+   * @var string
+   */
+  public $clickPotentialRank;
+  /**
+   * @var string
+   */
   public $condition;
   /**
    * @var string
@@ -70,7 +78,6 @@ class ProductView extends \Google\Collection
   public $currencyCode;
   protected $expirationDateType = Date::class;
   protected $expirationDateDataType = '';
-  public $expirationDate;
   /**
    * @var string[]
    */
@@ -85,7 +92,6 @@ class ProductView extends \Google\Collection
   public $itemGroupId;
   protected $itemIssuesType = ProductViewItemIssue::class;
   protected $itemIssuesDataType = 'array';
-  public $itemIssues;
   /**
    * @var string
    */
@@ -252,6 +258,34 @@ class ProductView extends \Google\Collection
   public function getChannel()
   {
     return $this->channel;
+  }
+  /**
+   * @param string
+   */
+  public function setClickPotential($clickPotential)
+  {
+    $this->clickPotential = $clickPotential;
+  }
+  /**
+   * @return string
+   */
+  public function getClickPotential()
+  {
+    return $this->clickPotential;
+  }
+  /**
+   * @param string
+   */
+  public function setClickPotentialRank($clickPotentialRank)
+  {
+    $this->clickPotentialRank = $clickPotentialRank;
+  }
+  /**
+   * @return string
+   */
+  public function getClickPotentialRank()
+  {
+    return $this->clickPotentialRank;
   }
   /**
    * @param string

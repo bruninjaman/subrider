@@ -25,32 +25,28 @@ class GoogleCloudContactcenterinsightsV1RuntimeAnnotation extends \Google\Model
   public $annotationId;
   protected $answerFeedbackType = GoogleCloudContactcenterinsightsV1AnswerFeedback::class;
   protected $answerFeedbackDataType = '';
-  public $answerFeedback;
   protected $articleSuggestionType = GoogleCloudContactcenterinsightsV1ArticleSuggestionData::class;
   protected $articleSuggestionDataType = '';
-  public $articleSuggestion;
+  protected $conversationSummarizationSuggestionType = GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData::class;
+  protected $conversationSummarizationSuggestionDataType = '';
   /**
    * @var string
    */
   public $createTime;
   protected $dialogflowInteractionType = GoogleCloudContactcenterinsightsV1DialogflowInteractionData::class;
   protected $dialogflowInteractionDataType = '';
-  public $dialogflowInteraction;
   protected $endBoundaryType = GoogleCloudContactcenterinsightsV1AnnotationBoundary::class;
   protected $endBoundaryDataType = '';
-  public $endBoundary;
   protected $faqAnswerType = GoogleCloudContactcenterinsightsV1FaqAnswerData::class;
   protected $faqAnswerDataType = '';
-  public $faqAnswer;
   protected $smartComposeSuggestionType = GoogleCloudContactcenterinsightsV1SmartComposeSuggestionData::class;
   protected $smartComposeSuggestionDataType = '';
-  public $smartComposeSuggestion;
   protected $smartReplyType = GoogleCloudContactcenterinsightsV1SmartReplyData::class;
   protected $smartReplyDataType = '';
-  public $smartReply;
   protected $startBoundaryType = GoogleCloudContactcenterinsightsV1AnnotationBoundary::class;
   protected $startBoundaryDataType = '';
-  public $startBoundary;
+  protected $userInputType = GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput::class;
+  protected $userInputDataType = '';
 
   /**
    * @param string
@@ -93,6 +89,20 @@ class GoogleCloudContactcenterinsightsV1RuntimeAnnotation extends \Google\Model
   public function getArticleSuggestion()
   {
     return $this->articleSuggestion;
+  }
+  /**
+   * @param GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData
+   */
+  public function setConversationSummarizationSuggestion(GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData $conversationSummarizationSuggestion)
+  {
+    $this->conversationSummarizationSuggestion = $conversationSummarizationSuggestion;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData
+   */
+  public function getConversationSummarizationSuggestion()
+  {
+    return $this->conversationSummarizationSuggestion;
   }
   /**
    * @param string
@@ -191,6 +201,20 @@ class GoogleCloudContactcenterinsightsV1RuntimeAnnotation extends \Google\Model
   public function getStartBoundary()
   {
     return $this->startBoundary;
+  }
+  /**
+   * @param GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput
+   */
+  public function setUserInput(GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput $userInput)
+  {
+    $this->userInput = $userInput;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput
+   */
+  public function getUserInput()
+  {
+    return $this->userInput;
   }
 }
 

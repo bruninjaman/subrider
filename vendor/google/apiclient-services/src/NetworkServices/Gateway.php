@@ -21,6 +21,14 @@ class Gateway extends \Google\Collection
 {
   protected $collection_key = 'ports';
   /**
+   * @var string[]
+   */
+  public $addresses;
+  /**
+   * @var string[]
+   */
+  public $certificateUrls;
+  /**
    * @var string
    */
   public $createTime;
@@ -28,6 +36,18 @@ class Gateway extends \Google\Collection
    * @var string
    */
   public $description;
+  /**
+   * @var string
+   */
+  public $envoyHeaders;
+  /**
+   * @var string
+   */
+  public $gatewaySecurityPolicy;
+  /**
+   * @var string
+   */
+  public $ipVersion;
   /**
    * @var string[]
    */
@@ -37,9 +57,17 @@ class Gateway extends \Google\Collection
    */
   public $name;
   /**
+   * @var string
+   */
+  public $network;
+  /**
    * @var int[]
    */
   public $ports;
+  /**
+   * @var string
+   */
+  public $routingMode;
   /**
    * @var string
    */
@@ -55,12 +83,44 @@ class Gateway extends \Google\Collection
   /**
    * @var string
    */
+  public $subnetwork;
+  /**
+   * @var string
+   */
   public $type;
   /**
    * @var string
    */
   public $updateTime;
 
+  /**
+   * @param string[]
+   */
+  public function setAddresses($addresses)
+  {
+    $this->addresses = $addresses;
+  }
+  /**
+   * @return string[]
+   */
+  public function getAddresses()
+  {
+    return $this->addresses;
+  }
+  /**
+   * @param string[]
+   */
+  public function setCertificateUrls($certificateUrls)
+  {
+    $this->certificateUrls = $certificateUrls;
+  }
+  /**
+   * @return string[]
+   */
+  public function getCertificateUrls()
+  {
+    return $this->certificateUrls;
+  }
   /**
    * @param string
    */
@@ -88,6 +148,48 @@ class Gateway extends \Google\Collection
   public function getDescription()
   {
     return $this->description;
+  }
+  /**
+   * @param string
+   */
+  public function setEnvoyHeaders($envoyHeaders)
+  {
+    $this->envoyHeaders = $envoyHeaders;
+  }
+  /**
+   * @return string
+   */
+  public function getEnvoyHeaders()
+  {
+    return $this->envoyHeaders;
+  }
+  /**
+   * @param string
+   */
+  public function setGatewaySecurityPolicy($gatewaySecurityPolicy)
+  {
+    $this->gatewaySecurityPolicy = $gatewaySecurityPolicy;
+  }
+  /**
+   * @return string
+   */
+  public function getGatewaySecurityPolicy()
+  {
+    return $this->gatewaySecurityPolicy;
+  }
+  /**
+   * @param string
+   */
+  public function setIpVersion($ipVersion)
+  {
+    $this->ipVersion = $ipVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getIpVersion()
+  {
+    return $this->ipVersion;
   }
   /**
    * @param string[]
@@ -118,6 +220,20 @@ class Gateway extends \Google\Collection
     return $this->name;
   }
   /**
+   * @param string
+   */
+  public function setNetwork($network)
+  {
+    $this->network = $network;
+  }
+  /**
+   * @return string
+   */
+  public function getNetwork()
+  {
+    return $this->network;
+  }
+  /**
    * @param int[]
    */
   public function setPorts($ports)
@@ -130,6 +246,20 @@ class Gateway extends \Google\Collection
   public function getPorts()
   {
     return $this->ports;
+  }
+  /**
+   * @param string
+   */
+  public function setRoutingMode($routingMode)
+  {
+    $this->routingMode = $routingMode;
+  }
+  /**
+   * @return string
+   */
+  public function getRoutingMode()
+  {
+    return $this->routingMode;
   }
   /**
    * @param string
@@ -172,6 +302,20 @@ class Gateway extends \Google\Collection
   public function getServerTlsPolicy()
   {
     return $this->serverTlsPolicy;
+  }
+  /**
+   * @param string
+   */
+  public function setSubnetwork($subnetwork)
+  {
+    $this->subnetwork = $subnetwork;
+  }
+  /**
+   * @return string
+   */
+  public function getSubnetwork()
+  {
+    return $this->subnetwork;
   }
   /**
    * @param string

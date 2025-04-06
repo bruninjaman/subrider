@@ -26,10 +26,17 @@ class Node extends \Google\Model
   /**
    * @var string
    */
+  public $memcacheFullVersion;
+  /**
+   * @var string
+   */
+  public $memcacheVersion;
+  /**
+   * @var string
+   */
   public $nodeId;
   protected $parametersType = MemcacheParameters::class;
   protected $parametersDataType = '';
-  public $parameters;
   /**
    * @var int
    */
@@ -56,6 +63,34 @@ class Node extends \Google\Model
   public function getHost()
   {
     return $this->host;
+  }
+  /**
+   * @param string
+   */
+  public function setMemcacheFullVersion($memcacheFullVersion)
+  {
+    $this->memcacheFullVersion = $memcacheFullVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getMemcacheFullVersion()
+  {
+    return $this->memcacheFullVersion;
+  }
+  /**
+   * @param string
+   */
+  public function setMemcacheVersion($memcacheVersion)
+  {
+    $this->memcacheVersion = $memcacheVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getMemcacheVersion()
+  {
+    return $this->memcacheVersion;
   }
   /**
    * @param string

@@ -49,7 +49,6 @@ class MetricUpdate extends \Google\Model
   public $meanSum;
   protected $nameType = MetricStructuredName::class;
   protected $nameDataType = '';
-  public $name;
   /**
    * @var array
    */
@@ -58,6 +57,10 @@ class MetricUpdate extends \Google\Model
    * @var array
    */
   public $set;
+  /**
+   * @var array
+   */
+  public $trie;
   /**
    * @var string
    */
@@ -202,6 +205,20 @@ class MetricUpdate extends \Google\Model
   public function getSet()
   {
     return $this->set;
+  }
+  /**
+   * @param array
+   */
+  public function setTrie($trie)
+  {
+    $this->trie = $trie;
+  }
+  /**
+   * @return array
+   */
+  public function getTrie()
+  {
+    return $this->trie;
   }
   /**
    * @param string

@@ -19,26 +19,39 @@ namespace Google\Service\Vault;
 
 class ExportOptions extends \Google\Model
 {
+  protected $calendarOptionsType = CalendarExportOptions::class;
+  protected $calendarOptionsDataType = '';
   protected $driveOptionsType = DriveExportOptions::class;
   protected $driveOptionsDataType = '';
-  public $driveOptions;
+  protected $geminiOptionsType = GeminiExportOptions::class;
+  protected $geminiOptionsDataType = '';
   protected $groupsOptionsType = GroupsExportOptions::class;
   protected $groupsOptionsDataType = '';
-  public $groupsOptions;
   protected $hangoutsChatOptionsType = HangoutsChatExportOptions::class;
   protected $hangoutsChatOptionsDataType = '';
-  public $hangoutsChatOptions;
   protected $mailOptionsType = MailExportOptions::class;
   protected $mailOptionsDataType = '';
-  public $mailOptions;
   /**
    * @var string
    */
   public $region;
   protected $voiceOptionsType = VoiceExportOptions::class;
   protected $voiceOptionsDataType = '';
-  public $voiceOptions;
 
+  /**
+   * @param CalendarExportOptions
+   */
+  public function setCalendarOptions(CalendarExportOptions $calendarOptions)
+  {
+    $this->calendarOptions = $calendarOptions;
+  }
+  /**
+   * @return CalendarExportOptions
+   */
+  public function getCalendarOptions()
+  {
+    return $this->calendarOptions;
+  }
   /**
    * @param DriveExportOptions
    */
@@ -52,6 +65,20 @@ class ExportOptions extends \Google\Model
   public function getDriveOptions()
   {
     return $this->driveOptions;
+  }
+  /**
+   * @param GeminiExportOptions
+   */
+  public function setGeminiOptions(GeminiExportOptions $geminiOptions)
+  {
+    $this->geminiOptions = $geminiOptions;
+  }
+  /**
+   * @return GeminiExportOptions
+   */
+  public function getGeminiOptions()
+  {
+    return $this->geminiOptions;
   }
   /**
    * @param GroupsExportOptions

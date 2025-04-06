@@ -26,7 +26,6 @@ class TranslateTextRequest extends \Google\Collection
   public $contents;
   protected $glossaryConfigType = TranslateTextGlossaryConfig::class;
   protected $glossaryConfigDataType = '';
-  public $glossaryConfig;
   /**
    * @var string[]
    */
@@ -47,6 +46,8 @@ class TranslateTextRequest extends \Google\Collection
    * @var string
    */
   public $targetLanguageCode;
+  protected $transliterationConfigType = TransliterationConfig::class;
+  protected $transliterationConfigDataType = '';
 
   /**
    * @param string[]
@@ -145,6 +146,20 @@ class TranslateTextRequest extends \Google\Collection
   public function getTargetLanguageCode()
   {
     return $this->targetLanguageCode;
+  }
+  /**
+   * @param TransliterationConfig
+   */
+  public function setTransliterationConfig(TransliterationConfig $transliterationConfig)
+  {
+    $this->transliterationConfig = $transliterationConfig;
+  }
+  /**
+   * @return TransliterationConfig
+   */
+  public function getTransliterationConfig()
+  {
+    return $this->transliterationConfig;
   }
 }
 

@@ -19,13 +19,27 @@ namespace Google\Service\Container;
 
 class MonitoringConfig extends \Google\Model
 {
+  protected $advancedDatapathObservabilityConfigType = AdvancedDatapathObservabilityConfig::class;
+  protected $advancedDatapathObservabilityConfigDataType = '';
   protected $componentConfigType = MonitoringComponentConfig::class;
   protected $componentConfigDataType = '';
-  public $componentConfig;
   protected $managedPrometheusConfigType = ManagedPrometheusConfig::class;
   protected $managedPrometheusConfigDataType = '';
-  public $managedPrometheusConfig;
 
+  /**
+   * @param AdvancedDatapathObservabilityConfig
+   */
+  public function setAdvancedDatapathObservabilityConfig(AdvancedDatapathObservabilityConfig $advancedDatapathObservabilityConfig)
+  {
+    $this->advancedDatapathObservabilityConfig = $advancedDatapathObservabilityConfig;
+  }
+  /**
+   * @return AdvancedDatapathObservabilityConfig
+   */
+  public function getAdvancedDatapathObservabilityConfig()
+  {
+    return $this->advancedDatapathObservabilityConfig;
+  }
   /**
    * @param MonitoringComponentConfig
    */

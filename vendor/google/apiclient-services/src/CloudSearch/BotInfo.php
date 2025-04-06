@@ -26,7 +26,6 @@ class BotInfo extends \Google\Collection
   public $appAllowlistStatus;
   protected $appIdType = AppId::class;
   protected $appIdDataType = '';
-  public $appId;
   /**
    * @var string
    */
@@ -57,11 +56,14 @@ class BotInfo extends \Google\Collection
   public $supportHomeScreen;
   protected $supportUrlsType = SupportUrls::class;
   protected $supportUrlsDataType = '';
-  public $supportUrls;
   /**
    * @var string[]
    */
   public $supportedUses;
+  /**
+   * @var string
+   */
+  public $uninstallCapability;
 
   /**
    * @param string
@@ -216,6 +218,20 @@ class BotInfo extends \Google\Collection
   public function getSupportedUses()
   {
     return $this->supportedUses;
+  }
+  /**
+   * @param string
+   */
+  public function setUninstallCapability($uninstallCapability)
+  {
+    $this->uninstallCapability = $uninstallCapability;
+  }
+  /**
+   * @return string
+   */
+  public function getUninstallCapability()
+  {
+    return $this->uninstallCapability;
   }
 }
 

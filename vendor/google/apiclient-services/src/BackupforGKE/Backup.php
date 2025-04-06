@@ -25,7 +25,6 @@ class Backup extends \Google\Model
   public $allNamespaces;
   protected $clusterMetadataType = ClusterMetadata::class;
   protected $clusterMetadataDataType = '';
-  public $clusterMetadata;
   /**
    * @var string
    */
@@ -60,7 +59,6 @@ class Backup extends \Google\Model
   public $description;
   protected $encryptionKeyType = EncryptionKey::class;
   protected $encryptionKeyDataType = '';
-  public $encryptionKey;
   /**
    * @var string
    */
@@ -77,6 +75,10 @@ class Backup extends \Google\Model
    * @var string
    */
   public $name;
+  /**
+   * @var bool
+   */
+  public $permissiveMode;
   /**
    * @var int
    */
@@ -95,10 +97,8 @@ class Backup extends \Google\Model
   public $retainExpireTime;
   protected $selectedApplicationsType = NamespacedNames::class;
   protected $selectedApplicationsDataType = '';
-  public $selectedApplications;
   protected $selectedNamespacesType = Namespaces::class;
   protected $selectedNamespacesDataType = '';
-  public $selectedNamespaces;
   /**
    * @var string
    */
@@ -333,6 +333,20 @@ class Backup extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param bool
+   */
+  public function setPermissiveMode($permissiveMode)
+  {
+    $this->permissiveMode = $permissiveMode;
+  }
+  /**
+   * @return bool
+   */
+  public function getPermissiveMode()
+  {
+    return $this->permissiveMode;
   }
   /**
    * @param int

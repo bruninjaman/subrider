@@ -19,39 +19,33 @@ namespace Google\Service\DisplayVideo;
 
 class AudienceGroupAssignedTargetingOptionDetails extends \Google\Collection
 {
-  protected $collection_key = 'includedFirstAndThirdPartyAudienceGroups';
-  protected $excludedFirstAndThirdPartyAudienceGroupType = FirstAndThirdPartyAudienceGroup::class;
-  protected $excludedFirstAndThirdPartyAudienceGroupDataType = '';
-  public $excludedFirstAndThirdPartyAudienceGroup;
+  protected $collection_key = 'includedFirstPartyAndPartnerAudienceGroups';
+  protected $excludedFirstPartyAndPartnerAudienceGroupType = FirstPartyAndPartnerAudienceGroup::class;
+  protected $excludedFirstPartyAndPartnerAudienceGroupDataType = '';
   protected $excludedGoogleAudienceGroupType = GoogleAudienceGroup::class;
   protected $excludedGoogleAudienceGroupDataType = '';
-  public $excludedGoogleAudienceGroup;
   protected $includedCombinedAudienceGroupType = CombinedAudienceGroup::class;
   protected $includedCombinedAudienceGroupDataType = '';
-  public $includedCombinedAudienceGroup;
   protected $includedCustomListGroupType = CustomListGroup::class;
   protected $includedCustomListGroupDataType = '';
-  public $includedCustomListGroup;
-  protected $includedFirstAndThirdPartyAudienceGroupsType = FirstAndThirdPartyAudienceGroup::class;
-  protected $includedFirstAndThirdPartyAudienceGroupsDataType = 'array';
-  public $includedFirstAndThirdPartyAudienceGroups;
+  protected $includedFirstPartyAndPartnerAudienceGroupsType = FirstPartyAndPartnerAudienceGroup::class;
+  protected $includedFirstPartyAndPartnerAudienceGroupsDataType = 'array';
   protected $includedGoogleAudienceGroupType = GoogleAudienceGroup::class;
   protected $includedGoogleAudienceGroupDataType = '';
-  public $includedGoogleAudienceGroup;
 
   /**
-   * @param FirstAndThirdPartyAudienceGroup
+   * @param FirstPartyAndPartnerAudienceGroup
    */
-  public function setExcludedFirstAndThirdPartyAudienceGroup(FirstAndThirdPartyAudienceGroup $excludedFirstAndThirdPartyAudienceGroup)
+  public function setExcludedFirstPartyAndPartnerAudienceGroup(FirstPartyAndPartnerAudienceGroup $excludedFirstPartyAndPartnerAudienceGroup)
   {
-    $this->excludedFirstAndThirdPartyAudienceGroup = $excludedFirstAndThirdPartyAudienceGroup;
+    $this->excludedFirstPartyAndPartnerAudienceGroup = $excludedFirstPartyAndPartnerAudienceGroup;
   }
   /**
-   * @return FirstAndThirdPartyAudienceGroup
+   * @return FirstPartyAndPartnerAudienceGroup
    */
-  public function getExcludedFirstAndThirdPartyAudienceGroup()
+  public function getExcludedFirstPartyAndPartnerAudienceGroup()
   {
-    return $this->excludedFirstAndThirdPartyAudienceGroup;
+    return $this->excludedFirstPartyAndPartnerAudienceGroup;
   }
   /**
    * @param GoogleAudienceGroup
@@ -96,18 +90,18 @@ class AudienceGroupAssignedTargetingOptionDetails extends \Google\Collection
     return $this->includedCustomListGroup;
   }
   /**
-   * @param FirstAndThirdPartyAudienceGroup[]
+   * @param FirstPartyAndPartnerAudienceGroup[]
    */
-  public function setIncludedFirstAndThirdPartyAudienceGroups($includedFirstAndThirdPartyAudienceGroups)
+  public function setIncludedFirstPartyAndPartnerAudienceGroups($includedFirstPartyAndPartnerAudienceGroups)
   {
-    $this->includedFirstAndThirdPartyAudienceGroups = $includedFirstAndThirdPartyAudienceGroups;
+    $this->includedFirstPartyAndPartnerAudienceGroups = $includedFirstPartyAndPartnerAudienceGroups;
   }
   /**
-   * @return FirstAndThirdPartyAudienceGroup[]
+   * @return FirstPartyAndPartnerAudienceGroup[]
    */
-  public function getIncludedFirstAndThirdPartyAudienceGroups()
+  public function getIncludedFirstPartyAndPartnerAudienceGroups()
   {
-    return $this->includedFirstAndThirdPartyAudienceGroups;
+    return $this->includedFirstPartyAndPartnerAudienceGroups;
   }
   /**
    * @param GoogleAudienceGroup

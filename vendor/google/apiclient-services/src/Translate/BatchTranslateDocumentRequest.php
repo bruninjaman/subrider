@@ -25,22 +25,27 @@ class BatchTranslateDocumentRequest extends \Google\Collection
    */
   public $customizedAttribution;
   /**
+   * @var bool
+   */
+  public $enableRotationCorrection;
+  /**
+   * @var bool
+   */
+  public $enableShadowRemovalNativePdf;
+  /**
    * @var string[]
    */
   public $formatConversions;
   protected $glossariesType = TranslateTextGlossaryConfig::class;
   protected $glossariesDataType = 'map';
-  public $glossaries;
   protected $inputConfigsType = BatchDocumentInputConfig::class;
   protected $inputConfigsDataType = 'array';
-  public $inputConfigs;
   /**
    * @var string[]
    */
   public $models;
   protected $outputConfigType = BatchDocumentOutputConfig::class;
   protected $outputConfigDataType = '';
-  public $outputConfig;
   /**
    * @var string
    */
@@ -63,6 +68,34 @@ class BatchTranslateDocumentRequest extends \Google\Collection
   public function getCustomizedAttribution()
   {
     return $this->customizedAttribution;
+  }
+  /**
+   * @param bool
+   */
+  public function setEnableRotationCorrection($enableRotationCorrection)
+  {
+    $this->enableRotationCorrection = $enableRotationCorrection;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableRotationCorrection()
+  {
+    return $this->enableRotationCorrection;
+  }
+  /**
+   * @param bool
+   */
+  public function setEnableShadowRemovalNativePdf($enableShadowRemovalNativePdf)
+  {
+    $this->enableShadowRemovalNativePdf = $enableShadowRemovalNativePdf;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableShadowRemovalNativePdf()
+  {
+    return $this->enableShadowRemovalNativePdf;
   }
   /**
    * @param string[]

@@ -22,33 +22,28 @@ class RunPivotReportRequest extends \Google\Collection
   protected $collection_key = 'pivots';
   protected $cohortSpecType = CohortSpec::class;
   protected $cohortSpecDataType = '';
-  public $cohortSpec;
+  protected $comparisonsType = Comparison::class;
+  protected $comparisonsDataType = 'array';
   /**
    * @var string
    */
   public $currencyCode;
   protected $dateRangesType = DateRange::class;
   protected $dateRangesDataType = 'array';
-  public $dateRanges;
   protected $dimensionFilterType = FilterExpression::class;
   protected $dimensionFilterDataType = '';
-  public $dimensionFilter;
   protected $dimensionsType = Dimension::class;
   protected $dimensionsDataType = 'array';
-  public $dimensions;
   /**
    * @var bool
    */
   public $keepEmptyRows;
   protected $metricFilterType = FilterExpression::class;
   protected $metricFilterDataType = '';
-  public $metricFilter;
   protected $metricsType = Metric::class;
   protected $metricsDataType = 'array';
-  public $metrics;
   protected $pivotsType = Pivot::class;
   protected $pivotsDataType = 'array';
-  public $pivots;
   /**
    * @var string
    */
@@ -71,6 +66,20 @@ class RunPivotReportRequest extends \Google\Collection
   public function getCohortSpec()
   {
     return $this->cohortSpec;
+  }
+  /**
+   * @param Comparison[]
+   */
+  public function setComparisons($comparisons)
+  {
+    $this->comparisons = $comparisons;
+  }
+  /**
+   * @return Comparison[]
+   */
+  public function getComparisons()
+  {
+    return $this->comparisons;
   }
   /**
    * @param string

@@ -19,16 +19,45 @@ namespace Google\Service\CloudBuild;
 
 class Source extends \Google\Model
 {
+  protected $connectedRepositoryType = ConnectedRepository::class;
+  protected $connectedRepositoryDataType = '';
+  protected $gitSourceType = GitSource::class;
+  protected $gitSourceDataType = '';
   protected $repoSourceType = RepoSource::class;
   protected $repoSourceDataType = '';
-  public $repoSource;
   protected $storageSourceType = StorageSource::class;
   protected $storageSourceDataType = '';
-  public $storageSource;
   protected $storageSourceManifestType = StorageSourceManifest::class;
   protected $storageSourceManifestDataType = '';
-  public $storageSourceManifest;
 
+  /**
+   * @param ConnectedRepository
+   */
+  public function setConnectedRepository(ConnectedRepository $connectedRepository)
+  {
+    $this->connectedRepository = $connectedRepository;
+  }
+  /**
+   * @return ConnectedRepository
+   */
+  public function getConnectedRepository()
+  {
+    return $this->connectedRepository;
+  }
+  /**
+   * @param GitSource
+   */
+  public function setGitSource(GitSource $gitSource)
+  {
+    $this->gitSource = $gitSource;
+  }
+  /**
+   * @return GitSource
+   */
+  public function getGitSource()
+  {
+    return $this->gitSource;
+  }
   /**
    * @param RepoSource
    */

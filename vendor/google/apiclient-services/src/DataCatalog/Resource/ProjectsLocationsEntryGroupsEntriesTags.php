@@ -52,6 +52,7 @@ class ProjectsLocationsEntryGroupsEntriesTags extends \Google\Service\Resource
    * @param GoogleCloudDatacatalogV1Tag $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleCloudDatacatalogV1Tag
+   * @throws \Google\Service\Exception
    */
   public function create($parent, GoogleCloudDatacatalogV1Tag $postBody, $optParams = [])
   {
@@ -65,6 +66,7 @@ class ProjectsLocationsEntryGroupsEntriesTags extends \Google\Service\Resource
    * @param string $name Required. The name of the tag to delete.
    * @param array $optParams Optional parameters.
    * @return DatacatalogEmpty
+   * @throws \Google\Service\Exception
    */
   public function delete($name, $optParams = [])
   {
@@ -86,6 +88,7 @@ class ProjectsLocationsEntryGroupsEntriesTags extends \Google\Service\Resource
    * @opt_param string pageToken Pagination token that specifies the next page to
    * return. If empty, the first page is returned.
    * @return GoogleCloudDatacatalogV1ListTagsResponse
+   * @throws \Google\Service\Exception
    */
   public function listProjectsLocationsEntryGroupsEntriesTags($parent, $optParams = [])
   {
@@ -96,9 +99,9 @@ class ProjectsLocationsEntryGroupsEntriesTags extends \Google\Service\Resource
   /**
    * Updates an existing tag. (tags.patch)
    *
-   * @param string $name The resource name of the tag in URL format where tag ID
-   * is a system-generated identifier. Note: The tag itself might not be stored in
-   * the location specified in its name.
+   * @param string $name Identifier. The resource name of the tag in URL format
+   * where tag ID is a system-generated identifier. Note: The tag itself might not
+   * be stored in the location specified in its name.
    * @param GoogleCloudDatacatalogV1Tag $postBody
    * @param array $optParams Optional parameters.
    *
@@ -108,6 +111,7 @@ class ProjectsLocationsEntryGroupsEntriesTags extends \Google\Service\Resource
    * overwritten. If such fields are non-required and omitted in the request body,
    * their values are emptied.
    * @return GoogleCloudDatacatalogV1Tag
+   * @throws \Google\Service\Exception
    */
   public function patch($name, GoogleCloudDatacatalogV1Tag $postBody, $optParams = [])
   {
@@ -116,19 +120,18 @@ class ProjectsLocationsEntryGroupsEntriesTags extends \Google\Service\Resource
     return $this->call('patch', [$params], GoogleCloudDatacatalogV1Tag::class);
   }
   /**
-   * Reconciles tags created with a given tag template on a given Entry.
-   * Reconciliation is an operation that given a list of tags creates or updates
-   * them on the entry. Additionally, the operation is also able to delete tags
-   * not mentioned in the tag list. It can be achieved by setting
-   * force_delete_missing parameter. Reconciliation is a long-running operation
-   * done in the background, so this method returns long-running operation
-   * resource. The resource can be queried with Operations.GetOperation which
-   * contains metadata and response. (tags.reconcile)
+   * `ReconcileTags` creates or updates a list of tags on the entry. If the
+   * ReconcileTagsRequest.force_delete_missing parameter is set, the operation
+   * deletes tags not included in the input tag list. `ReconcileTags` returns a
+   * long-running operation resource that can be queried with
+   * Operations.GetOperation to return ReconcileTagsMetadata and a
+   * ReconcileTagsResponse message. (tags.reconcile)
    *
    * @param string $parent Required. Name of Entry to be tagged.
    * @param GoogleCloudDatacatalogV1ReconcileTagsRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function reconcile($parent, GoogleCloudDatacatalogV1ReconcileTagsRequest $postBody, $optParams = [])
   {

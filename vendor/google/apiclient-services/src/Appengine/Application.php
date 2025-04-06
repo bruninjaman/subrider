@@ -46,17 +46,18 @@ class Application extends \Google\Collection
   public $defaultHostname;
   protected $dispatchRulesType = UrlDispatchRule::class;
   protected $dispatchRulesDataType = 'array';
-  public $dispatchRules;
   protected $featureSettingsType = FeatureSettings::class;
   protected $featureSettingsDataType = '';
-  public $featureSettings;
   /**
    * @var string
    */
   public $gcrDomain;
+  /**
+   * @var array[]
+   */
+  public $generatedCustomerMetadata;
   protected $iapType = IdentityAwareProxy::class;
   protected $iapDataType = '';
-  public $iap;
   /**
    * @var string
    */
@@ -77,6 +78,10 @@ class Application extends \Google\Collection
    * @var string
    */
   public $servingStatus;
+  /**
+   * @var string
+   */
+  public $sslPolicy;
 
   /**
    * @param string
@@ -205,6 +210,20 @@ class Application extends \Google\Collection
     return $this->gcrDomain;
   }
   /**
+   * @param array[]
+   */
+  public function setGeneratedCustomerMetadata($generatedCustomerMetadata)
+  {
+    $this->generatedCustomerMetadata = $generatedCustomerMetadata;
+  }
+  /**
+   * @return array[]
+   */
+  public function getGeneratedCustomerMetadata()
+  {
+    return $this->generatedCustomerMetadata;
+  }
+  /**
    * @param IdentityAwareProxy
    */
   public function setIap(IdentityAwareProxy $iap)
@@ -287,6 +306,20 @@ class Application extends \Google\Collection
   public function getServingStatus()
   {
     return $this->servingStatus;
+  }
+  /**
+   * @param string
+   */
+  public function setSslPolicy($sslPolicy)
+  {
+    $this->sslPolicy = $sslPolicy;
+  }
+  /**
+   * @return string
+   */
+  public function getSslPolicy()
+  {
+    return $this->sslPolicy;
   }
 }
 

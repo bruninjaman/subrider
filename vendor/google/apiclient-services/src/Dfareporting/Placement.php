@@ -32,23 +32,24 @@ class Placement extends \Google\Collection
    * @var bool
    */
   public $adBlockingOptOut;
+  /**
+   * @var string
+   */
+  public $adServingPlatformId;
   protected $additionalSizesType = Size::class;
   protected $additionalSizesDataType = 'array';
-  public $additionalSizes;
   /**
    * @var string
    */
   public $advertiserId;
   protected $advertiserIdDimensionValueType = DimensionValue::class;
   protected $advertiserIdDimensionValueDataType = '';
-  public $advertiserIdDimensionValue;
   /**
    * @var string
    */
   public $campaignId;
   protected $campaignIdDimensionValueType = DimensionValue::class;
   protected $campaignIdDimensionValueDataType = '';
-  public $campaignIdDimensionValue;
   /**
    * @var string
    */
@@ -61,16 +62,16 @@ class Placement extends \Google\Collection
    * @var string
    */
   public $contentCategoryId;
+  protected $conversionDomainOverrideType = PlacementConversionDomainOverride::class;
+  protected $conversionDomainOverrideDataType = '';
   protected $createInfoType = LastModifiedInfo::class;
   protected $createInfoDataType = '';
-  public $createInfo;
   /**
    * @var string
    */
   public $directorySiteId;
   protected $directorySiteIdDimensionValueType = DimensionValue::class;
   protected $directorySiteIdDimensionValueDataType = '';
-  public $directorySiteIdDimensionValue;
   /**
    * @var string
    */
@@ -81,7 +82,6 @@ class Placement extends \Google\Collection
   public $id;
   protected $idDimensionValueType = DimensionValue::class;
   protected $idDimensionValueDataType = '';
-  public $idDimensionValue;
   /**
    * @var string
    */
@@ -92,17 +92,14 @@ class Placement extends \Google\Collection
   public $kind;
   protected $lastModifiedInfoType = LastModifiedInfo::class;
   protected $lastModifiedInfoDataType = '';
-  public $lastModifiedInfo;
   protected $lookbackConfigurationType = LookbackConfiguration::class;
   protected $lookbackConfigurationDataType = '';
-  public $lookbackConfiguration;
   /**
    * @var string
    */
   public $name;
   protected $partnerWrappingDataType = MeasurementPartnerWrappingData::class;
   protected $partnerWrappingDataDataType = '';
-  public $partnerWrappingData;
   /**
    * @var bool
    */
@@ -117,31 +114,30 @@ class Placement extends \Google\Collection
   public $placementGroupId;
   protected $placementGroupIdDimensionValueType = DimensionValue::class;
   protected $placementGroupIdDimensionValueDataType = '';
-  public $placementGroupIdDimensionValue;
   /**
    * @var string
    */
   public $placementStrategyId;
   protected $pricingScheduleType = PricingSchedule::class;
   protected $pricingScheduleDataType = '';
-  public $pricingSchedule;
   /**
    * @var bool
    */
   public $primary;
   protected $publisherUpdateInfoType = LastModifiedInfo::class;
   protected $publisherUpdateInfoDataType = '';
-  public $publisherUpdateInfo;
   /**
    * @var string
    */
   public $siteId;
   protected $siteIdDimensionValueType = DimensionValue::class;
   protected $siteIdDimensionValueDataType = '';
-  public $siteIdDimensionValue;
+  /**
+   * @var bool
+   */
+  public $siteServed;
   protected $sizeType = Size::class;
   protected $sizeDataType = '';
-  public $size;
   /**
    * @var bool
    */
@@ -160,14 +156,12 @@ class Placement extends \Google\Collection
   public $tagFormats;
   protected $tagSettingType = TagSetting::class;
   protected $tagSettingDataType = '';
-  public $tagSetting;
   /**
    * @var bool
    */
   public $videoActiveViewOptOut;
   protected $videoSettingsType = VideoSettings::class;
   protected $videoSettingsDataType = '';
-  public $videoSettings;
   /**
    * @var string
    */
@@ -218,6 +212,20 @@ class Placement extends \Google\Collection
   public function getAdBlockingOptOut()
   {
     return $this->adBlockingOptOut;
+  }
+  /**
+   * @param string
+   */
+  public function setAdServingPlatformId($adServingPlatformId)
+  {
+    $this->adServingPlatformId = $adServingPlatformId;
+  }
+  /**
+   * @return string
+   */
+  public function getAdServingPlatformId()
+  {
+    return $this->adServingPlatformId;
   }
   /**
    * @param Size[]
@@ -330,6 +338,20 @@ class Placement extends \Google\Collection
   public function getContentCategoryId()
   {
     return $this->contentCategoryId;
+  }
+  /**
+   * @param PlacementConversionDomainOverride
+   */
+  public function setConversionDomainOverride(PlacementConversionDomainOverride $conversionDomainOverride)
+  {
+    $this->conversionDomainOverride = $conversionDomainOverride;
+  }
+  /**
+   * @return PlacementConversionDomainOverride
+   */
+  public function getConversionDomainOverride()
+  {
+    return $this->conversionDomainOverride;
   }
   /**
    * @param LastModifiedInfo
@@ -638,6 +660,20 @@ class Placement extends \Google\Collection
   public function getSiteIdDimensionValue()
   {
     return $this->siteIdDimensionValue;
+  }
+  /**
+   * @param bool
+   */
+  public function setSiteServed($siteServed)
+  {
+    $this->siteServed = $siteServed;
+  }
+  /**
+   * @return bool
+   */
+  public function getSiteServed()
+  {
+    return $this->siteServed;
   }
   /**
    * @param Size

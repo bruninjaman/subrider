@@ -29,20 +29,24 @@ class Runnable extends \Google\Model
   public $background;
   protected $barrierType = Barrier::class;
   protected $barrierDataType = '';
-  public $barrier;
   protected $containerType = Container::class;
   protected $containerDataType = '';
-  public $container;
+  /**
+   * @var string
+   */
+  public $displayName;
   protected $environmentType = Environment::class;
   protected $environmentDataType = '';
-  public $environment;
   /**
    * @var bool
    */
   public $ignoreExitStatus;
+  /**
+   * @var string[]
+   */
+  public $labels;
   protected $scriptType = Script::class;
   protected $scriptDataType = '';
-  public $script;
   /**
    * @var string
    */
@@ -105,6 +109,20 @@ class Runnable extends \Google\Model
     return $this->container;
   }
   /**
+   * @param string
+   */
+  public function setDisplayName($displayName)
+  {
+    $this->displayName = $displayName;
+  }
+  /**
+   * @return string
+   */
+  public function getDisplayName()
+  {
+    return $this->displayName;
+  }
+  /**
    * @param Environment
    */
   public function setEnvironment(Environment $environment)
@@ -131,6 +149,20 @@ class Runnable extends \Google\Model
   public function getIgnoreExitStatus()
   {
     return $this->ignoreExitStatus;
+  }
+  /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
   }
   /**
    * @param Script

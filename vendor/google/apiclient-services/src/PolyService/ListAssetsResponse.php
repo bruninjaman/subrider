@@ -20,9 +20,12 @@ namespace Google\Service\PolyService;
 class ListAssetsResponse extends \Google\Collection
 {
   protected $collection_key = 'assets';
+  /**
+   * @var Asset[]
+   */
+  public $assets;
   protected $assetsType = Asset::class;
   protected $assetsDataType = 'array';
-  public $assets;
   /**
    * @var string
    */

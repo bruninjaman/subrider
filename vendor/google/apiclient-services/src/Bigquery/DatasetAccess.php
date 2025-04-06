@@ -19,9 +19,10 @@ namespace Google\Service\Bigquery;
 
 class DatasetAccess extends \Google\Model
 {
+  protected $conditionType = Expr::class;
+  protected $conditionDataType = '';
   protected $datasetType = DatasetAccessEntry::class;
   protected $datasetDataType = '';
-  public $dataset;
   /**
    * @var string
    */
@@ -40,7 +41,6 @@ class DatasetAccess extends \Google\Model
   public $role;
   protected $routineType = RoutineReference::class;
   protected $routineDataType = '';
-  public $routine;
   /**
    * @var string
    */
@@ -51,8 +51,21 @@ class DatasetAccess extends \Google\Model
   public $userByEmail;
   protected $viewType = TableReference::class;
   protected $viewDataType = '';
-  public $view;
 
+  /**
+   * @param Expr
+   */
+  public function setCondition(Expr $condition)
+  {
+    $this->condition = $condition;
+  }
+  /**
+   * @return Expr
+   */
+  public function getCondition()
+  {
+    return $this->condition;
+  }
   /**
    * @param DatasetAccessEntry
    */

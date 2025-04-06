@@ -17,8 +17,9 @@
 
 namespace Google\Service\Compute;
 
-class HealthCheck extends \Google\Model
+class HealthCheck extends \Google\Collection
 {
+  protected $collection_key = 'sourceRegions';
   /**
    * @var int
    */
@@ -33,20 +34,16 @@ class HealthCheck extends \Google\Model
   public $description;
   protected $grpcHealthCheckType = GRPCHealthCheck::class;
   protected $grpcHealthCheckDataType = '';
-  public $grpcHealthCheck;
   /**
    * @var int
    */
   public $healthyThreshold;
   protected $http2HealthCheckType = HTTP2HealthCheck::class;
   protected $http2HealthCheckDataType = '';
-  public $http2HealthCheck;
   protected $httpHealthCheckType = HTTPHealthCheck::class;
   protected $httpHealthCheckDataType = '';
-  public $httpHealthCheck;
   protected $httpsHealthCheckType = HTTPSHealthCheck::class;
   protected $httpsHealthCheckDataType = '';
-  public $httpsHealthCheck;
   /**
    * @var string
    */
@@ -57,7 +54,6 @@ class HealthCheck extends \Google\Model
   public $kind;
   protected $logConfigType = HealthCheckLogConfig::class;
   protected $logConfigDataType = '';
-  public $logConfig;
   /**
    * @var string
    */
@@ -70,12 +66,14 @@ class HealthCheck extends \Google\Model
    * @var string
    */
   public $selfLink;
+  /**
+   * @var string[]
+   */
+  public $sourceRegions;
   protected $sslHealthCheckType = SSLHealthCheck::class;
   protected $sslHealthCheckDataType = '';
-  public $sslHealthCheck;
   protected $tcpHealthCheckType = TCPHealthCheck::class;
   protected $tcpHealthCheckDataType = '';
-  public $tcpHealthCheck;
   /**
    * @var int
    */
@@ -284,6 +282,20 @@ class HealthCheck extends \Google\Model
   public function getSelfLink()
   {
     return $this->selfLink;
+  }
+  /**
+   * @param string[]
+   */
+  public function setSourceRegions($sourceRegions)
+  {
+    $this->sourceRegions = $sourceRegions;
+  }
+  /**
+   * @return string[]
+   */
+  public function getSourceRegions()
+  {
+    return $this->sourceRegions;
   }
   /**
    * @param SSLHealthCheck

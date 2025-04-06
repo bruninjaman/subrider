@@ -20,24 +20,41 @@ namespace Google\Service\Spanner;
 class CommitRequest extends \Google\Collection
 {
   protected $collection_key = 'mutations';
+  /**
+   * @var string
+   */
+  public $maxCommitDelay;
   protected $mutationsType = Mutation::class;
   protected $mutationsDataType = 'array';
-  public $mutations;
+  protected $precommitTokenType = MultiplexedSessionPrecommitToken::class;
+  protected $precommitTokenDataType = '';
   protected $requestOptionsType = RequestOptions::class;
   protected $requestOptionsDataType = '';
-  public $requestOptions;
   /**
    * @var bool
    */
   public $returnCommitStats;
   protected $singleUseTransactionType = TransactionOptions::class;
   protected $singleUseTransactionDataType = '';
-  public $singleUseTransaction;
   /**
    * @var string
    */
   public $transactionId;
 
+  /**
+   * @param string
+   */
+  public function setMaxCommitDelay($maxCommitDelay)
+  {
+    $this->maxCommitDelay = $maxCommitDelay;
+  }
+  /**
+   * @return string
+   */
+  public function getMaxCommitDelay()
+  {
+    return $this->maxCommitDelay;
+  }
   /**
    * @param Mutation[]
    */
@@ -51,6 +68,20 @@ class CommitRequest extends \Google\Collection
   public function getMutations()
   {
     return $this->mutations;
+  }
+  /**
+   * @param MultiplexedSessionPrecommitToken
+   */
+  public function setPrecommitToken(MultiplexedSessionPrecommitToken $precommitToken)
+  {
+    $this->precommitToken = $precommitToken;
+  }
+  /**
+   * @return MultiplexedSessionPrecommitToken
+   */
+  public function getPrecommitToken()
+  {
+    return $this->precommitToken;
   }
   /**
    * @param RequestOptions

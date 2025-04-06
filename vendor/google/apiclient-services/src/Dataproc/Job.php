@@ -34,13 +34,12 @@ class Job extends \Google\Collection
   public $driverOutputResourceUri;
   protected $driverSchedulingConfigType = DriverSchedulingConfig::class;
   protected $driverSchedulingConfigDataType = '';
-  public $driverSchedulingConfig;
+  protected $flinkJobType = FlinkJob::class;
+  protected $flinkJobDataType = '';
   protected $hadoopJobType = HadoopJob::class;
   protected $hadoopJobDataType = '';
-  public $hadoopJob;
   protected $hiveJobType = HiveJob::class;
   protected $hiveJobDataType = '';
-  public $hiveJob;
   /**
    * @var string
    */
@@ -51,43 +50,30 @@ class Job extends \Google\Collection
   public $labels;
   protected $pigJobType = PigJob::class;
   protected $pigJobDataType = '';
-  public $pigJob;
   protected $placementType = JobPlacement::class;
   protected $placementDataType = '';
-  public $placement;
   protected $prestoJobType = PrestoJob::class;
   protected $prestoJobDataType = '';
-  public $prestoJob;
   protected $pysparkJobType = PySparkJob::class;
   protected $pysparkJobDataType = '';
-  public $pysparkJob;
   protected $referenceType = JobReference::class;
   protected $referenceDataType = '';
-  public $reference;
   protected $schedulingType = JobScheduling::class;
   protected $schedulingDataType = '';
-  public $scheduling;
   protected $sparkJobType = SparkJob::class;
   protected $sparkJobDataType = '';
-  public $sparkJob;
   protected $sparkRJobType = SparkRJob::class;
   protected $sparkRJobDataType = '';
-  public $sparkRJob;
   protected $sparkSqlJobType = SparkSqlJob::class;
   protected $sparkSqlJobDataType = '';
-  public $sparkSqlJob;
   protected $statusType = JobStatus::class;
   protected $statusDataType = '';
-  public $status;
   protected $statusHistoryType = JobStatus::class;
   protected $statusHistoryDataType = 'array';
-  public $statusHistory;
   protected $trinoJobType = TrinoJob::class;
   protected $trinoJobDataType = '';
-  public $trinoJob;
   protected $yarnApplicationsType = YarnApplication::class;
   protected $yarnApplicationsDataType = 'array';
-  public $yarnApplications;
 
   /**
    * @param bool
@@ -144,6 +130,20 @@ class Job extends \Google\Collection
   public function getDriverSchedulingConfig()
   {
     return $this->driverSchedulingConfig;
+  }
+  /**
+   * @param FlinkJob
+   */
+  public function setFlinkJob(FlinkJob $flinkJob)
+  {
+    $this->flinkJob = $flinkJob;
+  }
+  /**
+   * @return FlinkJob
+   */
+  public function getFlinkJob()
+  {
+    return $this->flinkJob;
   }
   /**
    * @param HadoopJob

@@ -22,7 +22,6 @@ class GoogleCloudPaymentsResellerSubscriptionV1Subscription extends \Google\Coll
   protected $collection_key = 'promotions';
   protected $cancellationDetailsType = GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails::class;
   protected $cancellationDetailsDataType = '';
-  public $cancellationDetails;
   /**
    * @var string
    */
@@ -41,7 +40,8 @@ class GoogleCloudPaymentsResellerSubscriptionV1Subscription extends \Google\Coll
   public $freeTrialEndTime;
   protected $lineItemsType = GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem::class;
   protected $lineItemsDataType = 'array';
-  public $lineItems;
+  protected $migrationDetailsType = GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails::class;
+  protected $migrationDetailsDataType = '';
   /**
    * @var string
    */
@@ -60,11 +60,14 @@ class GoogleCloudPaymentsResellerSubscriptionV1Subscription extends \Google\Coll
   public $products;
   protected $promotionSpecsType = GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec::class;
   protected $promotionSpecsDataType = 'array';
-  public $promotionSpecs;
   /**
    * @var string[]
    */
   public $promotions;
+  /**
+   * @var string
+   */
+  public $purchaseTime;
   /**
    * @var string
    */
@@ -75,7 +78,6 @@ class GoogleCloudPaymentsResellerSubscriptionV1Subscription extends \Google\Coll
   public $renewalTime;
   protected $serviceLocationType = GoogleCloudPaymentsResellerSubscriptionV1Location::class;
   protected $serviceLocationDataType = '';
-  public $serviceLocation;
   /**
    * @var string
    */
@@ -86,7 +88,6 @@ class GoogleCloudPaymentsResellerSubscriptionV1Subscription extends \Google\Coll
   public $updateTime;
   protected $upgradeDowngradeDetailsType = GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails::class;
   protected $upgradeDowngradeDetailsDataType = '';
-  public $upgradeDowngradeDetails;
 
   /**
    * @param GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails
@@ -173,6 +174,20 @@ class GoogleCloudPaymentsResellerSubscriptionV1Subscription extends \Google\Coll
     return $this->lineItems;
   }
   /**
+   * @param GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails
+   */
+  public function setMigrationDetails(GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails $migrationDetails)
+  {
+    $this->migrationDetails = $migrationDetails;
+  }
+  /**
+   * @return GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails
+   */
+  public function getMigrationDetails()
+  {
+    return $this->migrationDetails;
+  }
+  /**
    * @param string
    */
   public function setName($name)
@@ -255,6 +270,20 @@ class GoogleCloudPaymentsResellerSubscriptionV1Subscription extends \Google\Coll
   public function getPromotions()
   {
     return $this->promotions;
+  }
+  /**
+   * @param string
+   */
+  public function setPurchaseTime($purchaseTime)
+  {
+    $this->purchaseTime = $purchaseTime;
+  }
+  /**
+   * @return string
+   */
+  public function getPurchaseTime()
+  {
+    return $this->purchaseTime;
   }
   /**
    * @param string

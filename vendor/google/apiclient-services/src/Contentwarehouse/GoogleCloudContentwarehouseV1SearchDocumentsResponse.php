@@ -22,17 +22,18 @@ class GoogleCloudContentwarehouseV1SearchDocumentsResponse extends \Google\Colle
   protected $collection_key = 'matchingDocuments';
   protected $histogramQueryResultsType = GoogleCloudContentwarehouseV1HistogramQueryResult::class;
   protected $histogramQueryResultsDataType = 'array';
-  public $histogramQueryResults;
   protected $matchingDocumentsType = GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument::class;
   protected $matchingDocumentsDataType = 'array';
-  public $matchingDocuments;
   protected $metadataType = GoogleCloudContentwarehouseV1ResponseMetadata::class;
   protected $metadataDataType = '';
-  public $metadata;
   /**
    * @var string
    */
   public $nextPageToken;
+  /**
+   * @var string
+   */
+  public $questionAnswer;
   /**
    * @var int
    */
@@ -93,6 +94,20 @@ class GoogleCloudContentwarehouseV1SearchDocumentsResponse extends \Google\Colle
   public function getNextPageToken()
   {
     return $this->nextPageToken;
+  }
+  /**
+   * @param string
+   */
+  public function setQuestionAnswer($questionAnswer)
+  {
+    $this->questionAnswer = $questionAnswer;
+  }
+  /**
+   * @return string
+   */
+  public function getQuestionAnswer()
+  {
+    return $this->questionAnswer;
   }
   /**
    * @param int

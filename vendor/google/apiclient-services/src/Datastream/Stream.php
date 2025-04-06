@@ -22,10 +22,8 @@ class Stream extends \Google\Collection
   protected $collection_key = 'errors';
   protected $backfillAllType = BackfillAllStrategy::class;
   protected $backfillAllDataType = '';
-  public $backfillAll;
   protected $backfillNoneType = BackfillNoneStrategy::class;
   protected $backfillNoneDataType = '';
-  public $backfillNone;
   /**
    * @var string
    */
@@ -36,14 +34,12 @@ class Stream extends \Google\Collection
   public $customerManagedEncryptionKey;
   protected $destinationConfigType = DestinationConfig::class;
   protected $destinationConfigDataType = '';
-  public $destinationConfig;
   /**
    * @var string
    */
   public $displayName;
   protected $errorsType = Error::class;
   protected $errorsDataType = 'array';
-  public $errors;
   /**
    * @var string[]
    */
@@ -51,10 +47,21 @@ class Stream extends \Google\Collection
   /**
    * @var string
    */
+  public $lastRecoveryTime;
+  /**
+   * @var string
+   */
   public $name;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   protected $sourceConfigType = SourceConfig::class;
   protected $sourceConfigDataType = '';
-  public $sourceConfig;
   /**
    * @var string
    */
@@ -179,6 +186,20 @@ class Stream extends \Google\Collection
   /**
    * @param string
    */
+  public function setLastRecoveryTime($lastRecoveryTime)
+  {
+    $this->lastRecoveryTime = $lastRecoveryTime;
+  }
+  /**
+   * @return string
+   */
+  public function getLastRecoveryTime()
+  {
+    return $this->lastRecoveryTime;
+  }
+  /**
+   * @param string
+   */
   public function setName($name)
   {
     $this->name = $name;
@@ -189,6 +210,34 @@ class Stream extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param SourceConfig

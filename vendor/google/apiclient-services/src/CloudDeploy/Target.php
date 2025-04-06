@@ -26,11 +26,18 @@ class Target extends \Google\Collection
   public $annotations;
   protected $anthosClusterType = AnthosCluster::class;
   protected $anthosClusterDataType = '';
-  public $anthosCluster;
+  protected $associatedEntitiesType = AssociatedEntities::class;
+  protected $associatedEntitiesDataType = 'map';
   /**
    * @var string
    */
   public $createTime;
+  protected $customTargetType = CustomTarget::class;
+  protected $customTargetDataType = '';
+  /**
+   * @var string[]
+   */
+  public $deployParameters;
   /**
    * @var string
    */
@@ -41,14 +48,14 @@ class Target extends \Google\Collection
   public $etag;
   protected $executionConfigsType = ExecutionConfig::class;
   protected $executionConfigsDataType = 'array';
-  public $executionConfigs;
   protected $gkeType = GkeCluster::class;
   protected $gkeDataType = '';
-  public $gke;
   /**
    * @var string[]
    */
   public $labels;
+  protected $multiTargetType = MultiTarget::class;
+  protected $multiTargetDataType = '';
   /**
    * @var string
    */
@@ -59,7 +66,6 @@ class Target extends \Google\Collection
   public $requireApproval;
   protected $runType = CloudRunLocation::class;
   protected $runDataType = '';
-  public $run;
   /**
    * @var string
    */
@@ -102,6 +108,20 @@ class Target extends \Google\Collection
     return $this->anthosCluster;
   }
   /**
+   * @param AssociatedEntities[]
+   */
+  public function setAssociatedEntities($associatedEntities)
+  {
+    $this->associatedEntities = $associatedEntities;
+  }
+  /**
+   * @return AssociatedEntities[]
+   */
+  public function getAssociatedEntities()
+  {
+    return $this->associatedEntities;
+  }
+  /**
    * @param string
    */
   public function setCreateTime($createTime)
@@ -114,6 +134,34 @@ class Target extends \Google\Collection
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * @param CustomTarget
+   */
+  public function setCustomTarget(CustomTarget $customTarget)
+  {
+    $this->customTarget = $customTarget;
+  }
+  /**
+   * @return CustomTarget
+   */
+  public function getCustomTarget()
+  {
+    return $this->customTarget;
+  }
+  /**
+   * @param string[]
+   */
+  public function setDeployParameters($deployParameters)
+  {
+    $this->deployParameters = $deployParameters;
+  }
+  /**
+   * @return string[]
+   */
+  public function getDeployParameters()
+  {
+    return $this->deployParameters;
   }
   /**
    * @param string
@@ -184,6 +232,20 @@ class Target extends \Google\Collection
   public function getLabels()
   {
     return $this->labels;
+  }
+  /**
+   * @param MultiTarget
+   */
+  public function setMultiTarget(MultiTarget $multiTarget)
+  {
+    $this->multiTarget = $multiTarget;
+  }
+  /**
+   * @return MultiTarget
+   */
+  public function getMultiTarget()
+  {
+    return $this->multiTarget;
   }
   /**
    * @param string

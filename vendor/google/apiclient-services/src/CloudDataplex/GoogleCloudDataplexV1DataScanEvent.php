@@ -19,12 +19,18 @@ namespace Google\Service\CloudDataplex;
 
 class GoogleCloudDataplexV1DataScanEvent extends \Google\Model
 {
+  /**
+   * @var string
+   */
+  public $createTime;
   protected $dataProfileType = GoogleCloudDataplexV1DataScanEventDataProfileResult::class;
   protected $dataProfileDataType = '';
-  public $dataProfile;
+  protected $dataProfileConfigsType = GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs::class;
+  protected $dataProfileConfigsDataType = '';
   protected $dataQualityType = GoogleCloudDataplexV1DataScanEventDataQualityResult::class;
   protected $dataQualityDataType = '';
-  public $dataQuality;
+  protected $dataQualityConfigsType = GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs::class;
+  protected $dataQualityConfigsDataType = '';
   /**
    * @var string
    */
@@ -41,6 +47,8 @@ class GoogleCloudDataplexV1DataScanEvent extends \Google\Model
    * @var string
    */
   public $message;
+  protected $postScanActionsResultType = GoogleCloudDataplexV1DataScanEventPostScanActionsResult::class;
+  protected $postScanActionsResultDataType = '';
   /**
    * @var string
    */
@@ -67,6 +75,20 @@ class GoogleCloudDataplexV1DataScanEvent extends \Google\Model
   public $type;
 
   /**
+   * @param string
+   */
+  public function setCreateTime($createTime)
+  {
+    $this->createTime = $createTime;
+  }
+  /**
+   * @return string
+   */
+  public function getCreateTime()
+  {
+    return $this->createTime;
+  }
+  /**
    * @param GoogleCloudDataplexV1DataScanEventDataProfileResult
    */
   public function setDataProfile(GoogleCloudDataplexV1DataScanEventDataProfileResult $dataProfile)
@@ -81,6 +103,20 @@ class GoogleCloudDataplexV1DataScanEvent extends \Google\Model
     return $this->dataProfile;
   }
   /**
+   * @param GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs
+   */
+  public function setDataProfileConfigs(GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs $dataProfileConfigs)
+  {
+    $this->dataProfileConfigs = $dataProfileConfigs;
+  }
+  /**
+   * @return GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs
+   */
+  public function getDataProfileConfigs()
+  {
+    return $this->dataProfileConfigs;
+  }
+  /**
    * @param GoogleCloudDataplexV1DataScanEventDataQualityResult
    */
   public function setDataQuality(GoogleCloudDataplexV1DataScanEventDataQualityResult $dataQuality)
@@ -93,6 +129,20 @@ class GoogleCloudDataplexV1DataScanEvent extends \Google\Model
   public function getDataQuality()
   {
     return $this->dataQuality;
+  }
+  /**
+   * @param GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs
+   */
+  public function setDataQualityConfigs(GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs $dataQualityConfigs)
+  {
+    $this->dataQualityConfigs = $dataQualityConfigs;
+  }
+  /**
+   * @return GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs
+   */
+  public function getDataQualityConfigs()
+  {
+    return $this->dataQualityConfigs;
   }
   /**
    * @param string
@@ -149,6 +199,20 @@ class GoogleCloudDataplexV1DataScanEvent extends \Google\Model
   public function getMessage()
   {
     return $this->message;
+  }
+  /**
+   * @param GoogleCloudDataplexV1DataScanEventPostScanActionsResult
+   */
+  public function setPostScanActionsResult(GoogleCloudDataplexV1DataScanEventPostScanActionsResult $postScanActionsResult)
+  {
+    $this->postScanActionsResult = $postScanActionsResult;
+  }
+  /**
+   * @return GoogleCloudDataplexV1DataScanEventPostScanActionsResult
+   */
+  public function getPostScanActionsResult()
+  {
+    return $this->postScanActionsResult;
   }
   /**
    * @param string

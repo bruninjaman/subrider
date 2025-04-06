@@ -26,24 +26,20 @@ class JobConfigurationTableCopy extends \Google\Collection
   public $createDisposition;
   protected $destinationEncryptionConfigurationType = EncryptionConfiguration::class;
   protected $destinationEncryptionConfigurationDataType = '';
-  public $destinationEncryptionConfiguration;
   /**
-   * @var array
+   * @var string
    */
   public $destinationExpirationTime;
   protected $destinationTableType = TableReference::class;
   protected $destinationTableDataType = '';
-  public $destinationTable;
   /**
    * @var string
    */
   public $operationType;
   protected $sourceTableType = TableReference::class;
   protected $sourceTableDataType = '';
-  public $sourceTable;
   protected $sourceTablesType = TableReference::class;
   protected $sourceTablesDataType = 'array';
-  public $sourceTables;
   /**
    * @var string
    */
@@ -78,14 +74,14 @@ class JobConfigurationTableCopy extends \Google\Collection
     return $this->destinationEncryptionConfiguration;
   }
   /**
-   * @param array
+   * @param string
    */
   public function setDestinationExpirationTime($destinationExpirationTime)
   {
     $this->destinationExpirationTime = $destinationExpirationTime;
   }
   /**
-   * @return array
+   * @return string
    */
   public function getDestinationExpirationTime()
   {

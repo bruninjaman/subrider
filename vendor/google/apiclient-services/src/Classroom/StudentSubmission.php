@@ -25,9 +25,10 @@ class StudentSubmission extends \Google\Collection
    */
   public $alternateLink;
   public $assignedGrade;
+  protected $assignedRubricGradesType = RubricGrade::class;
+  protected $assignedRubricGradesDataType = 'map';
   protected $assignmentSubmissionType = AssignmentSubmission::class;
   protected $assignmentSubmissionDataType = '';
-  public $assignmentSubmission;
   /**
    * @var bool
    */
@@ -49,6 +50,8 @@ class StudentSubmission extends \Google\Collection
    */
   public $creationTime;
   public $draftGrade;
+  protected $draftRubricGradesType = RubricGrade::class;
+  protected $draftRubricGradesDataType = 'map';
   /**
    * @var string
    */
@@ -59,17 +62,14 @@ class StudentSubmission extends \Google\Collection
   public $late;
   protected $multipleChoiceSubmissionType = MultipleChoiceSubmission::class;
   protected $multipleChoiceSubmissionDataType = '';
-  public $multipleChoiceSubmission;
   protected $shortAnswerSubmissionType = ShortAnswerSubmission::class;
   protected $shortAnswerSubmissionDataType = '';
-  public $shortAnswerSubmission;
   /**
    * @var string
    */
   public $state;
   protected $submissionHistoryType = SubmissionHistory::class;
   protected $submissionHistoryDataType = 'array';
-  public $submissionHistory;
   /**
    * @var string
    */
@@ -100,6 +100,20 @@ class StudentSubmission extends \Google\Collection
   public function getAssignedGrade()
   {
     return $this->assignedGrade;
+  }
+  /**
+   * @param RubricGrade[]
+   */
+  public function setAssignedRubricGrades($assignedRubricGrades)
+  {
+    $this->assignedRubricGrades = $assignedRubricGrades;
+  }
+  /**
+   * @return RubricGrade[]
+   */
+  public function getAssignedRubricGrades()
+  {
+    return $this->assignedRubricGrades;
   }
   /**
    * @param AssignmentSubmission
@@ -192,6 +206,20 @@ class StudentSubmission extends \Google\Collection
   public function getDraftGrade()
   {
     return $this->draftGrade;
+  }
+  /**
+   * @param RubricGrade[]
+   */
+  public function setDraftRubricGrades($draftRubricGrades)
+  {
+    $this->draftRubricGrades = $draftRubricGrades;
+  }
+  /**
+   * @return RubricGrade[]
+   */
+  public function getDraftRubricGrades()
+  {
+    return $this->draftRubricGrades;
   }
   /**
    * @param string

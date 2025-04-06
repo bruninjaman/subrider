@@ -26,10 +26,8 @@ class ExternalDataConfiguration extends \Google\Collection
   public $autodetect;
   protected $avroOptionsType = AvroOptions::class;
   protected $avroOptionsDataType = '';
-  public $avroOptions;
   protected $bigtableOptionsType = BigtableOptions::class;
   protected $bigtableOptionsDataType = '';
-  public $bigtableOptions;
   /**
    * @var string
    */
@@ -40,21 +38,36 @@ class ExternalDataConfiguration extends \Google\Collection
   public $connectionId;
   protected $csvOptionsType = CsvOptions::class;
   protected $csvOptionsDataType = '';
-  public $csvOptions;
+  /**
+   * @var string
+   */
+  public $dateFormat;
+  /**
+   * @var string
+   */
+  public $datetimeFormat;
   /**
    * @var string[]
    */
   public $decimalTargetTypes;
+  /**
+   * @var string
+   */
+  public $fileSetSpecType;
   protected $googleSheetsOptionsType = GoogleSheetsOptions::class;
   protected $googleSheetsOptionsDataType = '';
-  public $googleSheetsOptions;
   protected $hivePartitioningOptionsType = HivePartitioningOptions::class;
   protected $hivePartitioningOptionsDataType = '';
-  public $hivePartitioningOptions;
   /**
    * @var bool
    */
   public $ignoreUnknownValues;
+  /**
+   * @var string
+   */
+  public $jsonExtension;
+  protected $jsonOptionsType = JsonOptions::class;
+  protected $jsonOptionsDataType = '';
   /**
    * @var int
    */
@@ -69,14 +82,12 @@ class ExternalDataConfiguration extends \Google\Collection
   public $objectMetadata;
   protected $parquetOptionsType = ParquetOptions::class;
   protected $parquetOptionsDataType = '';
-  public $parquetOptions;
   /**
    * @var string
    */
   public $referenceFileSchemaUri;
   protected $schemaType = TableSchema::class;
   protected $schemaDataType = '';
-  public $schema;
   /**
    * @var string
    */
@@ -85,6 +96,18 @@ class ExternalDataConfiguration extends \Google\Collection
    * @var string[]
    */
   public $sourceUris;
+  /**
+   * @var string
+   */
+  public $timeFormat;
+  /**
+   * @var string
+   */
+  public $timeZone;
+  /**
+   * @var string
+   */
+  public $timestampFormat;
 
   /**
    * @param bool
@@ -171,6 +194,34 @@ class ExternalDataConfiguration extends \Google\Collection
     return $this->csvOptions;
   }
   /**
+   * @param string
+   */
+  public function setDateFormat($dateFormat)
+  {
+    $this->dateFormat = $dateFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getDateFormat()
+  {
+    return $this->dateFormat;
+  }
+  /**
+   * @param string
+   */
+  public function setDatetimeFormat($datetimeFormat)
+  {
+    $this->datetimeFormat = $datetimeFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getDatetimeFormat()
+  {
+    return $this->datetimeFormat;
+  }
+  /**
    * @param string[]
    */
   public function setDecimalTargetTypes($decimalTargetTypes)
@@ -183,6 +234,20 @@ class ExternalDataConfiguration extends \Google\Collection
   public function getDecimalTargetTypes()
   {
     return $this->decimalTargetTypes;
+  }
+  /**
+   * @param string
+   */
+  public function setFileSetSpecType($fileSetSpecType)
+  {
+    $this->fileSetSpecType = $fileSetSpecType;
+  }
+  /**
+   * @return string
+   */
+  public function getFileSetSpecType()
+  {
+    return $this->fileSetSpecType;
   }
   /**
    * @param GoogleSheetsOptions
@@ -225,6 +290,34 @@ class ExternalDataConfiguration extends \Google\Collection
   public function getIgnoreUnknownValues()
   {
     return $this->ignoreUnknownValues;
+  }
+  /**
+   * @param string
+   */
+  public function setJsonExtension($jsonExtension)
+  {
+    $this->jsonExtension = $jsonExtension;
+  }
+  /**
+   * @return string
+   */
+  public function getJsonExtension()
+  {
+    return $this->jsonExtension;
+  }
+  /**
+   * @param JsonOptions
+   */
+  public function setJsonOptions(JsonOptions $jsonOptions)
+  {
+    $this->jsonOptions = $jsonOptions;
+  }
+  /**
+   * @return JsonOptions
+   */
+  public function getJsonOptions()
+  {
+    return $this->jsonOptions;
   }
   /**
    * @param int
@@ -337,6 +430,48 @@ class ExternalDataConfiguration extends \Google\Collection
   public function getSourceUris()
   {
     return $this->sourceUris;
+  }
+  /**
+   * @param string
+   */
+  public function setTimeFormat($timeFormat)
+  {
+    $this->timeFormat = $timeFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getTimeFormat()
+  {
+    return $this->timeFormat;
+  }
+  /**
+   * @param string
+   */
+  public function setTimeZone($timeZone)
+  {
+    $this->timeZone = $timeZone;
+  }
+  /**
+   * @return string
+   */
+  public function getTimeZone()
+  {
+    return $this->timeZone;
+  }
+  /**
+   * @param string
+   */
+  public function setTimestampFormat($timestampFormat)
+  {
+    $this->timestampFormat = $timestampFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getTimestampFormat()
+  {
+    return $this->timestampFormat;
   }
 }
 

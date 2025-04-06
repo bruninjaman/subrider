@@ -21,17 +21,18 @@ class RRSetRoutingPolicy extends \Google\Model
 {
   protected $geoType = RRSetRoutingPolicyGeoPolicy::class;
   protected $geoDataType = '';
-  public $geo;
+  /**
+   * @var string
+   */
+  public $healthCheck;
   /**
    * @var string
    */
   public $kind;
   protected $primaryBackupType = RRSetRoutingPolicyPrimaryBackupPolicy::class;
   protected $primaryBackupDataType = '';
-  public $primaryBackup;
   protected $wrrType = RRSetRoutingPolicyWrrPolicy::class;
   protected $wrrDataType = '';
-  public $wrr;
 
   /**
    * @param RRSetRoutingPolicyGeoPolicy
@@ -46,6 +47,20 @@ class RRSetRoutingPolicy extends \Google\Model
   public function getGeo()
   {
     return $this->geo;
+  }
+  /**
+   * @param string
+   */
+  public function setHealthCheck($healthCheck)
+  {
+    $this->healthCheck = $healthCheck;
+  }
+  /**
+   * @return string
+   */
+  public function getHealthCheck()
+  {
+    return $this->healthCheck;
   }
   /**
    * @param string

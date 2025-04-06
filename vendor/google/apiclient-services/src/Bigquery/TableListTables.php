@@ -21,7 +21,6 @@ class TableListTables extends \Google\Model
 {
   protected $clusteringType = Clustering::class;
   protected $clusteringDataType = '';
-  public $clustering;
   /**
    * @var string
    */
@@ -48,20 +47,20 @@ class TableListTables extends \Google\Model
   public $labels;
   protected $rangePartitioningType = RangePartitioning::class;
   protected $rangePartitioningDataType = '';
-  public $rangePartitioning;
+  /**
+   * @var bool
+   */
+  public $requirePartitionFilter;
   protected $tableReferenceType = TableReference::class;
   protected $tableReferenceDataType = '';
-  public $tableReference;
   protected $timePartitioningType = TimePartitioning::class;
   protected $timePartitioningDataType = '';
-  public $timePartitioning;
   /**
    * @var string
    */
   public $type;
   protected $viewType = TableListTablesView::class;
   protected $viewDataType = '';
-  public $view;
 
   /**
    * @param Clustering
@@ -174,6 +173,20 @@ class TableListTables extends \Google\Model
   public function getRangePartitioning()
   {
     return $this->rangePartitioning;
+  }
+  /**
+   * @param bool
+   */
+  public function setRequirePartitionFilter($requirePartitionFilter)
+  {
+    $this->requirePartitionFilter = $requirePartitionFilter;
+  }
+  /**
+   * @return bool
+   */
+  public function getRequirePartitionFilter()
+  {
+    return $this->requirePartitionFilter;
   }
   /**
    * @param TableReference

@@ -23,6 +23,10 @@ class GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy 
   /**
    * @var string
    */
+  public $assetType;
+  /**
+   * @var string
+   */
   public $attachedResource;
   /**
    * @var string[]
@@ -34,12 +38,25 @@ class GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy 
   public $organization;
   protected $policyType = Policy::class;
   protected $policyDataType = '';
-  public $policy;
   /**
    * @var string
    */
   public $project;
 
+  /**
+   * @param string
+   */
+  public function setAssetType($assetType)
+  {
+    $this->assetType = $assetType;
+  }
+  /**
+   * @return string
+   */
+  public function getAssetType()
+  {
+    return $this->assetType;
+  }
   /**
    * @param string
    */

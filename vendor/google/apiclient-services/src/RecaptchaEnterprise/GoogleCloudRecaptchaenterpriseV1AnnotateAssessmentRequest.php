@@ -23,6 +23,10 @@ class GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest extends \Google\
   /**
    * @var string
    */
+  public $accountId;
+  /**
+   * @var string
+   */
   public $annotation;
   /**
    * @var string
@@ -34,8 +38,21 @@ class GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest extends \Google\
   public $reasons;
   protected $transactionEventType = GoogleCloudRecaptchaenterpriseV1TransactionEvent::class;
   protected $transactionEventDataType = '';
-  public $transactionEvent;
 
+  /**
+   * @param string
+   */
+  public function setAccountId($accountId)
+  {
+    $this->accountId = $accountId;
+  }
+  /**
+   * @return string
+   */
+  public function getAccountId()
+  {
+    return $this->accountId;
+  }
   /**
    * @param string
    */

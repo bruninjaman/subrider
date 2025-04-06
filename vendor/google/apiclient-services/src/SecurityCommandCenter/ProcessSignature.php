@@ -21,10 +21,12 @@ class ProcessSignature extends \Google\Model
 {
   protected $memoryHashSignatureType = MemoryHashSignature::class;
   protected $memoryHashSignatureDataType = '';
-  public $memoryHashSignature;
+  /**
+   * @var string
+   */
+  public $signatureType;
   protected $yaraRuleSignatureType = YaraRuleSignature::class;
   protected $yaraRuleSignatureDataType = '';
-  public $yaraRuleSignature;
 
   /**
    * @param MemoryHashSignature
@@ -39,6 +41,20 @@ class ProcessSignature extends \Google\Model
   public function getMemoryHashSignature()
   {
     return $this->memoryHashSignature;
+  }
+  /**
+   * @param string
+   */
+  public function setSignatureType($signatureType)
+  {
+    $this->signatureType = $signatureType;
+  }
+  /**
+   * @return string
+   */
+  public function getSignatureType()
+  {
+    return $this->signatureType;
   }
   /**
    * @param YaraRuleSignature

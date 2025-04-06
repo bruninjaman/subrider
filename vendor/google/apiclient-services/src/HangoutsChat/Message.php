@@ -19,26 +19,25 @@ namespace Google\Service\HangoutsChat;
 
 class Message extends \Google\Collection
 {
-  protected $collection_key = 'cardsV2';
+  protected $collection_key = 'emojiReactionSummaries';
+  protected $accessoryWidgetsType = AccessoryWidget::class;
+  protected $accessoryWidgetsDataType = 'array';
   protected $actionResponseType = ActionResponse::class;
   protected $actionResponseDataType = '';
-  public $actionResponse;
   protected $annotationsType = Annotation::class;
   protected $annotationsDataType = 'array';
-  public $annotations;
   /**
    * @var string
    */
   public $argumentText;
+  protected $attachedGifsType = AttachedGif::class;
+  protected $attachedGifsDataType = 'array';
   protected $attachmentType = Attachment::class;
   protected $attachmentDataType = 'array';
-  public $attachment;
   protected $cardsType = Card::class;
   protected $cardsDataType = 'array';
-  public $cards;
   protected $cardsV2Type = CardWithId::class;
   protected $cardsV2DataType = 'array';
-  public $cardsV2;
   /**
    * @var string
    */
@@ -50,39 +49,64 @@ class Message extends \Google\Collection
   /**
    * @var string
    */
+  public $deleteTime;
+  protected $deletionMetadataType = DeletionMetadata::class;
+  protected $deletionMetadataDataType = '';
+  protected $emojiReactionSummariesType = EmojiReactionSummary::class;
+  protected $emojiReactionSummariesDataType = 'array';
+  /**
+   * @var string
+   */
   public $fallbackText;
+  /**
+   * @var string
+   */
+  public $formattedText;
   /**
    * @var string
    */
   public $lastUpdateTime;
   protected $matchedUrlType = MatchedUrl::class;
   protected $matchedUrlDataType = '';
-  public $matchedUrl;
   /**
    * @var string
    */
   public $name;
+  protected $privateMessageViewerType = User::class;
+  protected $privateMessageViewerDataType = '';
+  protected $quotedMessageMetadataType = QuotedMessageMetadata::class;
+  protected $quotedMessageMetadataDataType = '';
   protected $senderType = User::class;
   protected $senderDataType = '';
-  public $sender;
   protected $slashCommandType = SlashCommand::class;
   protected $slashCommandDataType = '';
-  public $slashCommand;
   protected $spaceType = Space::class;
   protected $spaceDataType = '';
-  public $space;
   /**
    * @var string
    */
   public $text;
   protected $threadType = Thread::class;
   protected $threadDataType = '';
-  public $thread;
   /**
    * @var bool
    */
   public $threadReply;
 
+  /**
+   * @param AccessoryWidget[]
+   */
+  public function setAccessoryWidgets($accessoryWidgets)
+  {
+    $this->accessoryWidgets = $accessoryWidgets;
+  }
+  /**
+   * @return AccessoryWidget[]
+   */
+  public function getAccessoryWidgets()
+  {
+    return $this->accessoryWidgets;
+  }
   /**
    * @param ActionResponse
    */
@@ -124,6 +148,20 @@ class Message extends \Google\Collection
   public function getArgumentText()
   {
     return $this->argumentText;
+  }
+  /**
+   * @param AttachedGif[]
+   */
+  public function setAttachedGifs($attachedGifs)
+  {
+    $this->attachedGifs = $attachedGifs;
+  }
+  /**
+   * @return AttachedGif[]
+   */
+  public function getAttachedGifs()
+  {
+    return $this->attachedGifs;
   }
   /**
    * @param Attachment[]
@@ -198,6 +236,48 @@ class Message extends \Google\Collection
   /**
    * @param string
    */
+  public function setDeleteTime($deleteTime)
+  {
+    $this->deleteTime = $deleteTime;
+  }
+  /**
+   * @return string
+   */
+  public function getDeleteTime()
+  {
+    return $this->deleteTime;
+  }
+  /**
+   * @param DeletionMetadata
+   */
+  public function setDeletionMetadata(DeletionMetadata $deletionMetadata)
+  {
+    $this->deletionMetadata = $deletionMetadata;
+  }
+  /**
+   * @return DeletionMetadata
+   */
+  public function getDeletionMetadata()
+  {
+    return $this->deletionMetadata;
+  }
+  /**
+   * @param EmojiReactionSummary[]
+   */
+  public function setEmojiReactionSummaries($emojiReactionSummaries)
+  {
+    $this->emojiReactionSummaries = $emojiReactionSummaries;
+  }
+  /**
+   * @return EmojiReactionSummary[]
+   */
+  public function getEmojiReactionSummaries()
+  {
+    return $this->emojiReactionSummaries;
+  }
+  /**
+   * @param string
+   */
   public function setFallbackText($fallbackText)
   {
     $this->fallbackText = $fallbackText;
@@ -208,6 +288,20 @@ class Message extends \Google\Collection
   public function getFallbackText()
   {
     return $this->fallbackText;
+  }
+  /**
+   * @param string
+   */
+  public function setFormattedText($formattedText)
+  {
+    $this->formattedText = $formattedText;
+  }
+  /**
+   * @return string
+   */
+  public function getFormattedText()
+  {
+    return $this->formattedText;
   }
   /**
    * @param string
@@ -250,6 +344,34 @@ class Message extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param User
+   */
+  public function setPrivateMessageViewer(User $privateMessageViewer)
+  {
+    $this->privateMessageViewer = $privateMessageViewer;
+  }
+  /**
+   * @return User
+   */
+  public function getPrivateMessageViewer()
+  {
+    return $this->privateMessageViewer;
+  }
+  /**
+   * @param QuotedMessageMetadata
+   */
+  public function setQuotedMessageMetadata(QuotedMessageMetadata $quotedMessageMetadata)
+  {
+    $this->quotedMessageMetadata = $quotedMessageMetadata;
+  }
+  /**
+   * @return QuotedMessageMetadata
+   */
+  public function getQuotedMessageMetadata()
+  {
+    return $this->quotedMessageMetadata;
   }
   /**
    * @param User

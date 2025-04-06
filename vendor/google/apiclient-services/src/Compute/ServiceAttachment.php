@@ -22,14 +22,12 @@ class ServiceAttachment extends \Google\Collection
   protected $collection_key = 'natSubnets';
   protected $connectedEndpointsType = ServiceAttachmentConnectedEndpoint::class;
   protected $connectedEndpointsDataType = 'array';
-  public $connectedEndpoints;
   /**
    * @var string
    */
   public $connectionPreference;
   protected $consumerAcceptListsType = ServiceAttachmentConsumerProjectLimit::class;
   protected $consumerAcceptListsDataType = 'array';
-  public $consumerAcceptLists;
   /**
    * @var string[]
    */
@@ -74,9 +72,16 @@ class ServiceAttachment extends \Google\Collection
    * @var string
    */
   public $producerForwardingRule;
+  /**
+   * @var string
+   */
+  public $propagatedConnectionLimit;
   protected $pscServiceAttachmentIdType = Uint128::class;
   protected $pscServiceAttachmentIdDataType = '';
-  public $pscServiceAttachmentId;
+  /**
+   * @var bool
+   */
+  public $reconcileConnections;
   /**
    * @var string
    */
@@ -287,6 +292,20 @@ class ServiceAttachment extends \Google\Collection
     return $this->producerForwardingRule;
   }
   /**
+   * @param string
+   */
+  public function setPropagatedConnectionLimit($propagatedConnectionLimit)
+  {
+    $this->propagatedConnectionLimit = $propagatedConnectionLimit;
+  }
+  /**
+   * @return string
+   */
+  public function getPropagatedConnectionLimit()
+  {
+    return $this->propagatedConnectionLimit;
+  }
+  /**
    * @param Uint128
    */
   public function setPscServiceAttachmentId(Uint128 $pscServiceAttachmentId)
@@ -299,6 +318,20 @@ class ServiceAttachment extends \Google\Collection
   public function getPscServiceAttachmentId()
   {
     return $this->pscServiceAttachmentId;
+  }
+  /**
+   * @param bool
+   */
+  public function setReconcileConnections($reconcileConnections)
+  {
+    $this->reconcileConnections = $reconcileConnections;
+  }
+  /**
+   * @return bool
+   */
+  public function getReconcileConnections()
+  {
+    return $this->reconcileConnections;
   }
   /**
    * @param string

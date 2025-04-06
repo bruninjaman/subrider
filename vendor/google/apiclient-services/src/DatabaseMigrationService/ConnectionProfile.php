@@ -21,10 +21,8 @@ class ConnectionProfile extends \Google\Model
 {
   protected $alloydbType = AlloyDbConnectionProfile::class;
   protected $alloydbDataType = '';
-  public $alloydb;
   protected $cloudsqlType = CloudSqlConnectionProfile::class;
   protected $cloudsqlDataType = '';
-  public $cloudsql;
   /**
    * @var string
    */
@@ -35,28 +33,38 @@ class ConnectionProfile extends \Google\Model
   public $displayName;
   protected $errorType = Status::class;
   protected $errorDataType = '';
-  public $error;
   /**
    * @var string[]
    */
   public $labels;
   protected $mysqlType = MySqlConnectionProfile::class;
   protected $mysqlDataType = '';
-  public $mysql;
   /**
    * @var string
    */
   public $name;
   protected $oracleType = OracleConnectionProfile::class;
   protected $oracleDataType = '';
-  public $oracle;
   protected $postgresqlType = PostgreSqlConnectionProfile::class;
   protected $postgresqlDataType = '';
-  public $postgresql;
   /**
    * @var string
    */
   public $provider;
+  /**
+   * @var string
+   */
+  public $role;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
+  protected $sqlserverType = SqlServerConnectionProfile::class;
+  protected $sqlserverDataType = '';
   /**
    * @var string
    */
@@ -219,6 +227,62 @@ class ConnectionProfile extends \Google\Model
   public function getProvider()
   {
     return $this->provider;
+  }
+  /**
+   * @param string
+   */
+  public function setRole($role)
+  {
+    $this->role = $role;
+  }
+  /**
+   * @return string
+   */
+  public function getRole()
+  {
+    return $this->role;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
+  }
+  /**
+   * @param SqlServerConnectionProfile
+   */
+  public function setSqlserver(SqlServerConnectionProfile $sqlserver)
+  {
+    $this->sqlserver = $sqlserver;
+  }
+  /**
+   * @return SqlServerConnectionProfile
+   */
+  public function getSqlserver()
+  {
+    return $this->sqlserver;
   }
   /**
    * @param string

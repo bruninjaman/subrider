@@ -33,6 +33,7 @@ class DynamiteMessagesScoringInfo extends \Google\Model
    * @var bool
    */
   public $creatorInSearcherContactList;
+  public $crowdingMultiplier;
   /**
    * @var string
    */
@@ -40,6 +41,7 @@ class DynamiteMessagesScoringInfo extends \Google\Model
   public $finalScore;
   public $freshnessScore;
   public $joinedSpaceAffinityScore;
+  public $lastReadTimestampAgeInDays;
   public $messageAgeInDays;
   public $messageSenderAffinityScore;
   /**
@@ -111,6 +113,14 @@ class DynamiteMessagesScoringInfo extends \Google\Model
   {
     return $this->creatorInSearcherContactList;
   }
+  public function setCrowdingMultiplier($crowdingMultiplier)
+  {
+    $this->crowdingMultiplier = $crowdingMultiplier;
+  }
+  public function getCrowdingMultiplier()
+  {
+    return $this->crowdingMultiplier;
+  }
   /**
    * @param string
    */
@@ -148,6 +158,14 @@ class DynamiteMessagesScoringInfo extends \Google\Model
   public function getJoinedSpaceAffinityScore()
   {
     return $this->joinedSpaceAffinityScore;
+  }
+  public function setLastReadTimestampAgeInDays($lastReadTimestampAgeInDays)
+  {
+    $this->lastReadTimestampAgeInDays = $lastReadTimestampAgeInDays;
+  }
+  public function getLastReadTimestampAgeInDays()
+  {
+    return $this->lastReadTimestampAgeInDays;
   }
   public function setMessageAgeInDays($messageAgeInDays)
   {

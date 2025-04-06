@@ -17,8 +17,9 @@
 
 namespace Google\Service\AnalyticsData;
 
-class ResponseMetaData extends \Google\Model
+class ResponseMetaData extends \Google\Collection
 {
+  protected $collection_key = 'samplingMetadatas';
   /**
    * @var string
    */
@@ -31,9 +32,10 @@ class ResponseMetaData extends \Google\Model
    * @var string
    */
   public $emptyReason;
+  protected $samplingMetadatasType = SamplingMetadata::class;
+  protected $samplingMetadatasDataType = 'array';
   protected $schemaRestrictionResponseType = SchemaRestrictionResponse::class;
   protected $schemaRestrictionResponseDataType = '';
-  public $schemaRestrictionResponse;
   /**
    * @var bool
    */
@@ -84,6 +86,20 @@ class ResponseMetaData extends \Google\Model
   public function getEmptyReason()
   {
     return $this->emptyReason;
+  }
+  /**
+   * @param SamplingMetadata[]
+   */
+  public function setSamplingMetadatas($samplingMetadatas)
+  {
+    $this->samplingMetadatas = $samplingMetadatas;
+  }
+  /**
+   * @return SamplingMetadata[]
+   */
+  public function getSamplingMetadatas()
+  {
+    return $this->samplingMetadatas;
   }
   /**
    * @param SchemaRestrictionResponse

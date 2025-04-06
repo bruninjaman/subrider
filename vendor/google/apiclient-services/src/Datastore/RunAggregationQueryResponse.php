@@ -21,10 +21,10 @@ class RunAggregationQueryResponse extends \Google\Model
 {
   protected $batchType = AggregationResultBatch::class;
   protected $batchDataType = '';
-  public $batch;
+  protected $explainMetricsType = ExplainMetrics::class;
+  protected $explainMetricsDataType = '';
   protected $queryType = AggregationQuery::class;
   protected $queryDataType = '';
-  public $query;
   /**
    * @var string
    */
@@ -43,6 +43,20 @@ class RunAggregationQueryResponse extends \Google\Model
   public function getBatch()
   {
     return $this->batch;
+  }
+  /**
+   * @param ExplainMetrics
+   */
+  public function setExplainMetrics(ExplainMetrics $explainMetrics)
+  {
+    $this->explainMetrics = $explainMetrics;
+  }
+  /**
+   * @return ExplainMetrics
+   */
+  public function getExplainMetrics()
+  {
+    return $this->explainMetrics;
   }
   /**
    * @param AggregationQuery

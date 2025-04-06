@@ -26,24 +26,20 @@ class UptimeCheckConfig extends \Google\Collection
   public $checkerType;
   protected $contentMatchersType = ContentMatcher::class;
   protected $contentMatchersDataType = 'array';
-  public $contentMatchers;
   /**
    * @var string
    */
   public $displayName;
   protected $httpCheckType = HttpCheck::class;
   protected $httpCheckDataType = '';
-  public $httpCheck;
   protected $internalCheckersType = InternalChecker::class;
   protected $internalCheckersDataType = 'array';
-  public $internalCheckers;
   /**
    * @var bool
    */
   public $isInternal;
   protected $monitoredResourceType = MonitoredResource::class;
   protected $monitoredResourceDataType = '';
-  public $monitoredResource;
   /**
    * @var string
    */
@@ -54,14 +50,14 @@ class UptimeCheckConfig extends \Google\Collection
   public $period;
   protected $resourceGroupType = ResourceGroup::class;
   protected $resourceGroupDataType = '';
-  public $resourceGroup;
   /**
    * @var string[]
    */
   public $selectedRegions;
+  protected $syntheticMonitorType = SyntheticMonitorTarget::class;
+  protected $syntheticMonitorDataType = '';
   protected $tcpCheckType = TcpCheck::class;
   protected $tcpCheckDataType = '';
-  public $tcpCheck;
   /**
    * @var string
    */
@@ -224,6 +220,20 @@ class UptimeCheckConfig extends \Google\Collection
   public function getSelectedRegions()
   {
     return $this->selectedRegions;
+  }
+  /**
+   * @param SyntheticMonitorTarget
+   */
+  public function setSyntheticMonitor(SyntheticMonitorTarget $syntheticMonitor)
+  {
+    $this->syntheticMonitor = $syntheticMonitor;
+  }
+  /**
+   * @return SyntheticMonitorTarget
+   */
+  public function getSyntheticMonitor()
+  {
+    return $this->syntheticMonitor;
   }
   /**
    * @param TcpCheck

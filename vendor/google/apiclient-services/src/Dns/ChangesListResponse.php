@@ -22,10 +22,6 @@ class ChangesListResponse extends \Google\Collection
   protected $collection_key = 'changes';
   protected $changesType = Change::class;
   protected $changesDataType = 'array';
-  public $changes;
-  protected $headerType = ResponseHeader::class;
-  protected $headerDataType = '';
-  public $header;
   /**
    * @var string
    */
@@ -48,20 +44,6 @@ class ChangesListResponse extends \Google\Collection
   public function getChanges()
   {
     return $this->changes;
-  }
-  /**
-   * @param ResponseHeader
-   */
-  public function setHeader(ResponseHeader $header)
-  {
-    $this->header = $header;
-  }
-  /**
-   * @return ResponseHeader
-   */
-  public function getHeader()
-  {
-    return $this->header;
   }
   /**
    * @param string

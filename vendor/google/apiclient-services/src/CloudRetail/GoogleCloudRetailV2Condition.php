@@ -22,10 +22,12 @@ class GoogleCloudRetailV2Condition extends \Google\Collection
   protected $collection_key = 'queryTerms';
   protected $activeTimeRangeType = GoogleCloudRetailV2ConditionTimeRange::class;
   protected $activeTimeRangeDataType = 'array';
-  public $activeTimeRange;
+  /**
+   * @var string[]
+   */
+  public $pageCategories;
   protected $queryTermsType = GoogleCloudRetailV2ConditionQueryTerm::class;
   protected $queryTermsDataType = 'array';
-  public $queryTerms;
 
   /**
    * @param GoogleCloudRetailV2ConditionTimeRange[]
@@ -40,6 +42,20 @@ class GoogleCloudRetailV2Condition extends \Google\Collection
   public function getActiveTimeRange()
   {
     return $this->activeTimeRange;
+  }
+  /**
+   * @param string[]
+   */
+  public function setPageCategories($pageCategories)
+  {
+    $this->pageCategories = $pageCategories;
+  }
+  /**
+   * @return string[]
+   */
+  public function getPageCategories()
+  {
+    return $this->pageCategories;
   }
   /**
    * @param GoogleCloudRetailV2ConditionQueryTerm[]

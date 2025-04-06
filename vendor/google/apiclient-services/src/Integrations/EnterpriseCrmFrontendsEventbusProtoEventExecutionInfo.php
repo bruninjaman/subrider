@@ -24,26 +24,28 @@ class EnterpriseCrmFrontendsEventbusProtoEventExecutionInfo extends \Google\Coll
    * @var string
    */
   public $clientId;
+  protected $cloudLoggingDetailsType = EnterpriseCrmEventbusProtoCloudLoggingDetails::class;
+  protected $cloudLoggingDetailsDataType = '';
   /**
    * @var string
    */
   public $createTime;
   protected $errorCodeType = CrmlogErrorCode::class;
   protected $errorCodeDataType = '';
-  public $errorCode;
   protected $errorsType = EnterpriseCrmEventbusProtoErrorDetail::class;
   protected $errorsDataType = 'array';
-  public $errors;
   protected $eventExecutionDetailsType = EnterpriseCrmFrontendsEventbusProtoEventExecutionDetails::class;
   protected $eventExecutionDetailsDataType = '';
-  public $eventExecutionDetails;
   /**
    * @var string
    */
   public $eventExecutionInfoId;
   protected $executionTraceInfoType = EnterpriseCrmEventbusProtoExecutionTraceInfo::class;
   protected $executionTraceInfoDataType = '';
-  public $executionTraceInfo;
+  /**
+   * @var string
+   */
+  public $integrationVersionUserLabel;
   /**
    * @var string
    */
@@ -56,16 +58,16 @@ class EnterpriseCrmFrontendsEventbusProtoEventExecutionInfo extends \Google\Coll
    * @var string
    */
   public $product;
+  protected $replayInfoType = EnterpriseCrmFrontendsEventbusProtoEventExecutionInfoReplayInfo::class;
+  protected $replayInfoDataType = '';
   /**
    * @var string
    */
   public $requestId;
   protected $requestParamsType = EnterpriseCrmFrontendsEventbusProtoEventParameters::class;
   protected $requestParamsDataType = '';
-  public $requestParams;
   protected $responseParamsType = EnterpriseCrmFrontendsEventbusProtoEventParameters::class;
   protected $responseParamsDataType = '';
-  public $responseParams;
   /**
    * @var string
    */
@@ -104,6 +106,20 @@ class EnterpriseCrmFrontendsEventbusProtoEventExecutionInfo extends \Google\Coll
   public function getClientId()
   {
     return $this->clientId;
+  }
+  /**
+   * @param EnterpriseCrmEventbusProtoCloudLoggingDetails
+   */
+  public function setCloudLoggingDetails(EnterpriseCrmEventbusProtoCloudLoggingDetails $cloudLoggingDetails)
+  {
+    $this->cloudLoggingDetails = $cloudLoggingDetails;
+  }
+  /**
+   * @return EnterpriseCrmEventbusProtoCloudLoggingDetails
+   */
+  public function getCloudLoggingDetails()
+  {
+    return $this->cloudLoggingDetails;
   }
   /**
    * @param string
@@ -192,6 +208,20 @@ class EnterpriseCrmFrontendsEventbusProtoEventExecutionInfo extends \Google\Coll
   /**
    * @param string
    */
+  public function setIntegrationVersionUserLabel($integrationVersionUserLabel)
+  {
+    $this->integrationVersionUserLabel = $integrationVersionUserLabel;
+  }
+  /**
+   * @return string
+   */
+  public function getIntegrationVersionUserLabel()
+  {
+    return $this->integrationVersionUserLabel;
+  }
+  /**
+   * @param string
+   */
   public function setLastModifiedTime($lastModifiedTime)
   {
     $this->lastModifiedTime = $lastModifiedTime;
@@ -230,6 +260,20 @@ class EnterpriseCrmFrontendsEventbusProtoEventExecutionInfo extends \Google\Coll
   public function getProduct()
   {
     return $this->product;
+  }
+  /**
+   * @param EnterpriseCrmFrontendsEventbusProtoEventExecutionInfoReplayInfo
+   */
+  public function setReplayInfo(EnterpriseCrmFrontendsEventbusProtoEventExecutionInfoReplayInfo $replayInfo)
+  {
+    $this->replayInfo = $replayInfo;
+  }
+  /**
+   * @return EnterpriseCrmFrontendsEventbusProtoEventExecutionInfoReplayInfo
+   */
+  public function getReplayInfo()
+  {
+    return $this->replayInfo;
   }
   /**
    * @param string

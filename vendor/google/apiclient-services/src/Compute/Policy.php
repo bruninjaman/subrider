@@ -19,20 +19,15 @@ namespace Google\Service\Compute;
 
 class Policy extends \Google\Collection
 {
-  protected $collection_key = 'rules';
+  protected $collection_key = 'bindings';
   protected $auditConfigsType = AuditConfig::class;
   protected $auditConfigsDataType = 'array';
-  public $auditConfigs;
   protected $bindingsType = Binding::class;
   protected $bindingsDataType = 'array';
-  public $bindings;
   /**
    * @var string
    */
   public $etag;
-  protected $rulesType = Rule::class;
-  protected $rulesDataType = 'array';
-  public $rules;
   /**
    * @var int
    */
@@ -79,20 +74,6 @@ class Policy extends \Google\Collection
   public function getEtag()
   {
     return $this->etag;
-  }
-  /**
-   * @param Rule[]
-   */
-  public function setRules($rules)
-  {
-    $this->rules = $rules;
-  }
-  /**
-   * @return Rule[]
-   */
-  public function getRules()
-  {
-    return $this->rules;
   }
   /**
    * @param int

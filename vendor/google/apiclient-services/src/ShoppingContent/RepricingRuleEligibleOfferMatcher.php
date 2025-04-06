@@ -19,19 +19,28 @@ namespace Google\Service\ShoppingContent;
 
 class RepricingRuleEligibleOfferMatcher extends \Google\Model
 {
+  /**
+   * @var RepricingRuleEligibleOfferMatcherStringMatcher
+   */
+  public $brandMatcher;
   protected $brandMatcherType = RepricingRuleEligibleOfferMatcherStringMatcher::class;
   protected $brandMatcherDataType = '';
-  public $brandMatcher;
+  /**
+   * @var RepricingRuleEligibleOfferMatcherStringMatcher
+   */
+  public $itemGroupIdMatcher;
   protected $itemGroupIdMatcherType = RepricingRuleEligibleOfferMatcherStringMatcher::class;
   protected $itemGroupIdMatcherDataType = '';
-  public $itemGroupIdMatcher;
   /**
    * @var string
    */
   public $matcherOption;
+  /**
+   * @var RepricingRuleEligibleOfferMatcherStringMatcher
+   */
+  public $offerIdMatcher;
   protected $offerIdMatcherType = RepricingRuleEligibleOfferMatcherStringMatcher::class;
   protected $offerIdMatcherDataType = '';
-  public $offerIdMatcher;
   /**
    * @var bool
    */

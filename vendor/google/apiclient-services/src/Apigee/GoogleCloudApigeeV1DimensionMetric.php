@@ -20,14 +20,31 @@ namespace Google\Service\Apigee;
 class GoogleCloudApigeeV1DimensionMetric extends \Google\Collection
 {
   protected $collection_key = 'metrics';
+  /**
+   * @var string[]
+   */
+  public $individualNames;
   protected $metricsType = GoogleCloudApigeeV1Metric::class;
   protected $metricsDataType = 'array';
-  public $metrics;
   /**
    * @var string
    */
   public $name;
 
+  /**
+   * @param string[]
+   */
+  public function setIndividualNames($individualNames)
+  {
+    $this->individualNames = $individualNames;
+  }
+  /**
+   * @return string[]
+   */
+  public function getIndividualNames()
+  {
+    return $this->individualNames;
+  }
   /**
    * @param GoogleCloudApigeeV1Metric[]
    */

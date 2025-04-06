@@ -17,14 +17,17 @@
 
 namespace Google\Service\Contentwarehouse;
 
-class GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument extends \Google\Model
+class GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument extends \Google\Collection
 {
+  protected $collection_key = 'matchedTokenPageIndices';
   protected $documentType = GoogleCloudContentwarehouseV1Document::class;
   protected $documentDataType = '';
-  public $document;
+  /**
+   * @var string[]
+   */
+  public $matchedTokenPageIndices;
   protected $qaResultType = GoogleCloudContentwarehouseV1QAResult::class;
   protected $qaResultDataType = '';
-  public $qaResult;
   /**
    * @var string
    */
@@ -43,6 +46,20 @@ class GoogleCloudContentwarehouseV1SearchDocumentsResponseMatchingDocument exten
   public function getDocument()
   {
     return $this->document;
+  }
+  /**
+   * @param string[]
+   */
+  public function setMatchedTokenPageIndices($matchedTokenPageIndices)
+  {
+    $this->matchedTokenPageIndices = $matchedTokenPageIndices;
+  }
+  /**
+   * @return string[]
+   */
+  public function getMatchedTokenPageIndices()
+  {
+    return $this->matchedTokenPageIndices;
   }
   /**
    * @param GoogleCloudContentwarehouseV1QAResult

@@ -17,15 +17,30 @@
 
 namespace Google\Service\GKEHub;
 
-class ServiceMeshMembershipState extends \Google\Model
+class ServiceMeshMembershipState extends \Google\Collection
 {
+  protected $collection_key = 'conditions';
+  protected $conditionsType = ServiceMeshCondition::class;
+  protected $conditionsDataType = 'array';
   protected $controlPlaneManagementType = ServiceMeshControlPlaneManagement::class;
   protected $controlPlaneManagementDataType = '';
-  public $controlPlaneManagement;
   protected $dataPlaneManagementType = ServiceMeshDataPlaneManagement::class;
   protected $dataPlaneManagementDataType = '';
-  public $dataPlaneManagement;
 
+  /**
+   * @param ServiceMeshCondition[]
+   */
+  public function setConditions($conditions)
+  {
+    $this->conditions = $conditions;
+  }
+  /**
+   * @return ServiceMeshCondition[]
+   */
+  public function getConditions()
+  {
+    return $this->conditions;
+  }
   /**
    * @param ServiceMeshControlPlaneManagement
    */

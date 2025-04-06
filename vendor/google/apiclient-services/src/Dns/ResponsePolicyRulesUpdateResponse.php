@@ -19,27 +19,9 @@ namespace Google\Service\Dns;
 
 class ResponsePolicyRulesUpdateResponse extends \Google\Model
 {
-  protected $headerType = ResponseHeader::class;
-  protected $headerDataType = '';
-  public $header;
   protected $responsePolicyRuleType = ResponsePolicyRule::class;
   protected $responsePolicyRuleDataType = '';
-  public $responsePolicyRule;
 
-  /**
-   * @param ResponseHeader
-   */
-  public function setHeader(ResponseHeader $header)
-  {
-    $this->header = $header;
-  }
-  /**
-   * @return ResponseHeader
-   */
-  public function getHeader()
-  {
-    return $this->header;
-  }
   /**
    * @param ResponsePolicyRule
    */

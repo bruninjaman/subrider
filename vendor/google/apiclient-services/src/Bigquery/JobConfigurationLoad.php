@@ -34,10 +34,16 @@ class JobConfigurationLoad extends \Google\Collection
   public $autodetect;
   protected $clusteringType = Clustering::class;
   protected $clusteringDataType = '';
-  public $clustering;
+  /**
+   * @var string
+   */
+  public $columnNameCharacterMap;
   protected $connectionPropertiesType = ConnectionProperty::class;
   protected $connectionPropertiesDataType = 'array';
-  public $connectionProperties;
+  /**
+   * @var bool
+   */
+  public $copyFilesOnly;
   /**
    * @var string
    */
@@ -47,18 +53,23 @@ class JobConfigurationLoad extends \Google\Collection
    */
   public $createSession;
   /**
+   * @var string
+   */
+  public $dateFormat;
+  /**
+   * @var string
+   */
+  public $datetimeFormat;
+  /**
    * @var string[]
    */
   public $decimalTargetTypes;
   protected $destinationEncryptionConfigurationType = EncryptionConfiguration::class;
   protected $destinationEncryptionConfigurationDataType = '';
-  public $destinationEncryptionConfiguration;
   protected $destinationTableType = TableReference::class;
   protected $destinationTableDataType = '';
-  public $destinationTable;
   protected $destinationTablePropertiesType = DestinationTableProperties::class;
   protected $destinationTablePropertiesDataType = '';
-  public $destinationTableProperties;
   /**
    * @var string
    */
@@ -67,9 +78,12 @@ class JobConfigurationLoad extends \Google\Collection
    * @var string
    */
   public $fieldDelimiter;
+  /**
+   * @var string
+   */
+  public $fileSetSpecType;
   protected $hivePartitioningOptionsType = HivePartitioningOptions::class;
   protected $hivePartitioningOptionsDataType = '';
-  public $hivePartitioningOptions;
   /**
    * @var bool
    */
@@ -88,7 +102,6 @@ class JobConfigurationLoad extends \Google\Collection
   public $nullMarker;
   protected $parquetOptionsType = ParquetOptions::class;
   protected $parquetOptionsDataType = '';
-  public $parquetOptions;
   /**
    * @var bool
    */
@@ -103,14 +116,12 @@ class JobConfigurationLoad extends \Google\Collection
   public $quote;
   protected $rangePartitioningType = RangePartitioning::class;
   protected $rangePartitioningDataType = '';
-  public $rangePartitioning;
   /**
    * @var string
    */
   public $referenceFileSchemaUri;
   protected $schemaType = TableSchema::class;
   protected $schemaDataType = '';
-  public $schema;
   /**
    * @var string
    */
@@ -135,9 +146,20 @@ class JobConfigurationLoad extends \Google\Collection
    * @var string[]
    */
   public $sourceUris;
+  /**
+   * @var string
+   */
+  public $timeFormat;
   protected $timePartitioningType = TimePartitioning::class;
   protected $timePartitioningDataType = '';
-  public $timePartitioning;
+  /**
+   * @var string
+   */
+  public $timeZone;
+  /**
+   * @var string
+   */
+  public $timestampFormat;
   /**
    * @var bool
    */
@@ -204,6 +226,20 @@ class JobConfigurationLoad extends \Google\Collection
     return $this->clustering;
   }
   /**
+   * @param string
+   */
+  public function setColumnNameCharacterMap($columnNameCharacterMap)
+  {
+    $this->columnNameCharacterMap = $columnNameCharacterMap;
+  }
+  /**
+   * @return string
+   */
+  public function getColumnNameCharacterMap()
+  {
+    return $this->columnNameCharacterMap;
+  }
+  /**
    * @param ConnectionProperty[]
    */
   public function setConnectionProperties($connectionProperties)
@@ -216,6 +252,20 @@ class JobConfigurationLoad extends \Google\Collection
   public function getConnectionProperties()
   {
     return $this->connectionProperties;
+  }
+  /**
+   * @param bool
+   */
+  public function setCopyFilesOnly($copyFilesOnly)
+  {
+    $this->copyFilesOnly = $copyFilesOnly;
+  }
+  /**
+   * @return bool
+   */
+  public function getCopyFilesOnly()
+  {
+    return $this->copyFilesOnly;
   }
   /**
    * @param string
@@ -244,6 +294,34 @@ class JobConfigurationLoad extends \Google\Collection
   public function getCreateSession()
   {
     return $this->createSession;
+  }
+  /**
+   * @param string
+   */
+  public function setDateFormat($dateFormat)
+  {
+    $this->dateFormat = $dateFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getDateFormat()
+  {
+    return $this->dateFormat;
+  }
+  /**
+   * @param string
+   */
+  public function setDatetimeFormat($datetimeFormat)
+  {
+    $this->datetimeFormat = $datetimeFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getDatetimeFormat()
+  {
+    return $this->datetimeFormat;
   }
   /**
    * @param string[]
@@ -328,6 +406,20 @@ class JobConfigurationLoad extends \Google\Collection
   public function getFieldDelimiter()
   {
     return $this->fieldDelimiter;
+  }
+  /**
+   * @param string
+   */
+  public function setFileSetSpecType($fileSetSpecType)
+  {
+    $this->fileSetSpecType = $fileSetSpecType;
+  }
+  /**
+   * @return string
+   */
+  public function getFileSetSpecType()
+  {
+    return $this->fileSetSpecType;
   }
   /**
    * @param HivePartitioningOptions
@@ -582,6 +674,20 @@ class JobConfigurationLoad extends \Google\Collection
     return $this->sourceUris;
   }
   /**
+   * @param string
+   */
+  public function setTimeFormat($timeFormat)
+  {
+    $this->timeFormat = $timeFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getTimeFormat()
+  {
+    return $this->timeFormat;
+  }
+  /**
    * @param TimePartitioning
    */
   public function setTimePartitioning(TimePartitioning $timePartitioning)
@@ -594,6 +700,34 @@ class JobConfigurationLoad extends \Google\Collection
   public function getTimePartitioning()
   {
     return $this->timePartitioning;
+  }
+  /**
+   * @param string
+   */
+  public function setTimeZone($timeZone)
+  {
+    $this->timeZone = $timeZone;
+  }
+  /**
+   * @return string
+   */
+  public function getTimeZone()
+  {
+    return $this->timeZone;
+  }
+  /**
+   * @param string
+   */
+  public function setTimestampFormat($timestampFormat)
+  {
+    $this->timestampFormat = $timestampFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getTimestampFormat()
+  {
+    return $this->timestampFormat;
   }
   /**
    * @param bool

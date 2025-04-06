@@ -22,10 +22,8 @@ class EnterpriseCrmFrontendsEventbusProtoTriggerConfig extends \Google\Collectio
   protected $collection_key = 'startTasks';
   protected $alertConfigType = EnterpriseCrmEventbusProtoWorkflowAlertConfig::class;
   protected $alertConfigDataType = 'array';
-  public $alertConfig;
   protected $cloudSchedulerConfigType = EnterpriseCrmEventbusProtoCloudSchedulerConfig::class;
   protected $cloudSchedulerConfigDataType = '';
-  public $cloudSchedulerConfig;
   /**
    * @var string
    */
@@ -37,32 +35,41 @@ class EnterpriseCrmFrontendsEventbusProtoTriggerConfig extends \Google\Collectio
   /**
    * @var string
    */
+  public $errorCatcherId;
+  protected $inputVariablesType = EnterpriseCrmFrontendsEventbusProtoTriggerConfigVariables::class;
+  protected $inputVariablesDataType = '';
+  /**
+   * @var string
+   */
   public $label;
   /**
    * @var string
    */
   public $nextTasksExecutionPolicy;
+  protected $outputVariablesType = EnterpriseCrmFrontendsEventbusProtoTriggerConfigVariables::class;
+  protected $outputVariablesDataType = '';
   /**
    * @var bool
    */
   public $pauseWorkflowExecutions;
   protected $positionType = EnterpriseCrmEventbusProtoCoordinate::class;
   protected $positionDataType = '';
-  public $position;
   /**
    * @var string[]
    */
   public $properties;
   protected $startTasksType = EnterpriseCrmEventbusProtoNextTask::class;
   protected $startTasksDataType = 'array';
-  public $startTasks;
   protected $triggerCriteriaType = EnterpriseCrmEventbusProtoTriggerCriteria::class;
   protected $triggerCriteriaDataType = '';
-  public $triggerCriteria;
   /**
    * @var string
    */
   public $triggerId;
+  /**
+   * @var string
+   */
+  public $triggerName;
   /**
    * @var string
    */
@@ -131,6 +138,34 @@ class EnterpriseCrmFrontendsEventbusProtoTriggerConfig extends \Google\Collectio
   /**
    * @param string
    */
+  public function setErrorCatcherId($errorCatcherId)
+  {
+    $this->errorCatcherId = $errorCatcherId;
+  }
+  /**
+   * @return string
+   */
+  public function getErrorCatcherId()
+  {
+    return $this->errorCatcherId;
+  }
+  /**
+   * @param EnterpriseCrmFrontendsEventbusProtoTriggerConfigVariables
+   */
+  public function setInputVariables(EnterpriseCrmFrontendsEventbusProtoTriggerConfigVariables $inputVariables)
+  {
+    $this->inputVariables = $inputVariables;
+  }
+  /**
+   * @return EnterpriseCrmFrontendsEventbusProtoTriggerConfigVariables
+   */
+  public function getInputVariables()
+  {
+    return $this->inputVariables;
+  }
+  /**
+   * @param string
+   */
   public function setLabel($label)
   {
     $this->label = $label;
@@ -155,6 +190,20 @@ class EnterpriseCrmFrontendsEventbusProtoTriggerConfig extends \Google\Collectio
   public function getNextTasksExecutionPolicy()
   {
     return $this->nextTasksExecutionPolicy;
+  }
+  /**
+   * @param EnterpriseCrmFrontendsEventbusProtoTriggerConfigVariables
+   */
+  public function setOutputVariables(EnterpriseCrmFrontendsEventbusProtoTriggerConfigVariables $outputVariables)
+  {
+    $this->outputVariables = $outputVariables;
+  }
+  /**
+   * @return EnterpriseCrmFrontendsEventbusProtoTriggerConfigVariables
+   */
+  public function getOutputVariables()
+  {
+    return $this->outputVariables;
   }
   /**
    * @param bool
@@ -239,6 +288,20 @@ class EnterpriseCrmFrontendsEventbusProtoTriggerConfig extends \Google\Collectio
   public function getTriggerId()
   {
     return $this->triggerId;
+  }
+  /**
+   * @param string
+   */
+  public function setTriggerName($triggerName)
+  {
+    $this->triggerName = $triggerName;
+  }
+  /**
+   * @return string
+   */
+  public function getTriggerName()
+  {
+    return $this->triggerName;
   }
   /**
    * @param string

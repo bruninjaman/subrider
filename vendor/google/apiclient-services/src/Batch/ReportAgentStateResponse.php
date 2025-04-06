@@ -30,7 +30,10 @@ class ReportAgentStateResponse extends \Google\Collection
   public $minReportInterval;
   protected $tasksType = AgentTask::class;
   protected $tasksDataType = 'array';
-  public $tasks;
+  /**
+   * @var bool
+   */
+  public $useBatchMonitoredResource;
 
   /**
    * @param string
@@ -73,6 +76,20 @@ class ReportAgentStateResponse extends \Google\Collection
   public function getTasks()
   {
     return $this->tasks;
+  }
+  /**
+   * @param bool
+   */
+  public function setUseBatchMonitoredResource($useBatchMonitoredResource)
+  {
+    $this->useBatchMonitoredResource = $useBatchMonitoredResource;
+  }
+  /**
+   * @return bool
+   */
+  public function getUseBatchMonitoredResource()
+  {
+    return $this->useBatchMonitoredResource;
   }
 }
 

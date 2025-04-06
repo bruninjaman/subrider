@@ -21,13 +21,12 @@ class DiscoverConnectionProfileResponse extends \Google\Model
 {
   protected $mysqlRdbmsType = MysqlRdbms::class;
   protected $mysqlRdbmsDataType = '';
-  public $mysqlRdbms;
   protected $oracleRdbmsType = OracleRdbms::class;
   protected $oracleRdbmsDataType = '';
-  public $oracleRdbms;
   protected $postgresqlRdbmsType = PostgresqlRdbms::class;
   protected $postgresqlRdbmsDataType = '';
-  public $postgresqlRdbms;
+  protected $sqlServerRdbmsType = SqlServerRdbms::class;
+  protected $sqlServerRdbmsDataType = '';
 
   /**
    * @param MysqlRdbms
@@ -70,6 +69,20 @@ class DiscoverConnectionProfileResponse extends \Google\Model
   public function getPostgresqlRdbms()
   {
     return $this->postgresqlRdbms;
+  }
+  /**
+   * @param SqlServerRdbms
+   */
+  public function setSqlServerRdbms(SqlServerRdbms $sqlServerRdbms)
+  {
+    $this->sqlServerRdbms = $sqlServerRdbms;
+  }
+  /**
+   * @return SqlServerRdbms
+   */
+  public function getSqlServerRdbms()
+  {
+    return $this->sqlServerRdbms;
   }
 }
 

@@ -17,16 +17,34 @@
 
 namespace Google\Service\ServiceManagement;
 
-class MethodSettings extends \Google\Model
+class MethodSettings extends \Google\Collection
 {
+  protected $collection_key = 'autoPopulatedFields';
+  /**
+   * @var string[]
+   */
+  public $autoPopulatedFields;
   protected $longRunningType = LongRunning::class;
   protected $longRunningDataType = '';
-  public $longRunning;
   /**
    * @var string
    */
   public $selector;
 
+  /**
+   * @param string[]
+   */
+  public function setAutoPopulatedFields($autoPopulatedFields)
+  {
+    $this->autoPopulatedFields = $autoPopulatedFields;
+  }
+  /**
+   * @return string[]
+   */
+  public function getAutoPopulatedFields()
+  {
+    return $this->autoPopulatedFields;
+  }
   /**
    * @param LongRunning
    */

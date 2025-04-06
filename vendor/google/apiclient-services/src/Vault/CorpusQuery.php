@@ -19,22 +19,33 @@ namespace Google\Service\Vault;
 
 class CorpusQuery extends \Google\Model
 {
+  protected $calendarQueryType = HeldCalendarQuery::class;
+  protected $calendarQueryDataType = '';
   protected $driveQueryType = HeldDriveQuery::class;
   protected $driveQueryDataType = '';
-  public $driveQuery;
   protected $groupsQueryType = HeldGroupsQuery::class;
   protected $groupsQueryDataType = '';
-  public $groupsQuery;
   protected $hangoutsChatQueryType = HeldHangoutsChatQuery::class;
   protected $hangoutsChatQueryDataType = '';
-  public $hangoutsChatQuery;
   protected $mailQueryType = HeldMailQuery::class;
   protected $mailQueryDataType = '';
-  public $mailQuery;
   protected $voiceQueryType = HeldVoiceQuery::class;
   protected $voiceQueryDataType = '';
-  public $voiceQuery;
 
+  /**
+   * @param HeldCalendarQuery
+   */
+  public function setCalendarQuery(HeldCalendarQuery $calendarQuery)
+  {
+    $this->calendarQuery = $calendarQuery;
+  }
+  /**
+   * @return HeldCalendarQuery
+   */
+  public function getCalendarQuery()
+  {
+    return $this->calendarQuery;
+  }
   /**
    * @param HeldDriveQuery
    */

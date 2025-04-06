@@ -19,14 +19,19 @@ namespace Google\Service\Dfareporting;
 
 class Conversion extends \Google\Collection
 {
-  protected $collection_key = 'encryptedUserIdCandidates';
+  protected $collection_key = 'userIdentifiers';
+  /**
+   * @var string
+   */
+  public $adUserDataConsent;
+  protected $cartDataType = CartData::class;
+  protected $cartDataDataType = '';
   /**
    * @var bool
    */
   public $childDirectedTreatment;
   protected $customVariablesType = CustomFloodlightVariable::class;
   protected $customVariablesDataType = 'array';
-  public $customVariables;
   /**
    * @var string
    */
@@ -91,8 +96,38 @@ class Conversion extends \Google\Collection
    * @var bool
    */
   public $treatmentForUnderage;
+  protected $userIdentifiersType = UserIdentifier::class;
+  protected $userIdentifiersDataType = 'array';
   public $value;
 
+  /**
+   * @param string
+   */
+  public function setAdUserDataConsent($adUserDataConsent)
+  {
+    $this->adUserDataConsent = $adUserDataConsent;
+  }
+  /**
+   * @return string
+   */
+  public function getAdUserDataConsent()
+  {
+    return $this->adUserDataConsent;
+  }
+  /**
+   * @param CartData
+   */
+  public function setCartData(CartData $cartData)
+  {
+    $this->cartData = $cartData;
+  }
+  /**
+   * @return CartData
+   */
+  public function getCartData()
+  {
+    return $this->cartData;
+  }
   /**
    * @param bool
    */
@@ -344,6 +379,20 @@ class Conversion extends \Google\Collection
   public function getTreatmentForUnderage()
   {
     return $this->treatmentForUnderage;
+  }
+  /**
+   * @param UserIdentifier[]
+   */
+  public function setUserIdentifiers($userIdentifiers)
+  {
+    $this->userIdentifiers = $userIdentifiers;
+  }
+  /**
+   * @return UserIdentifier[]
+   */
+  public function getUserIdentifiers()
+  {
+    return $this->userIdentifiers;
   }
   public function setValue($value)
   {

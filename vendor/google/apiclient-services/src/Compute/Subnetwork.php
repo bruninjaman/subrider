@@ -70,7 +70,6 @@ class Subnetwork extends \Google\Collection
   public $kind;
   protected $logConfigType = SubnetworkLogConfig::class;
   protected $logConfigDataType = '';
-  public $logConfig;
   /**
    * @var string
    */
@@ -98,10 +97,13 @@ class Subnetwork extends \Google\Collection
   /**
    * @var string
    */
+  public $reservedInternalRange;
+  /**
+   * @var string
+   */
   public $role;
   protected $secondaryIpRangesType = SubnetworkSecondaryRange::class;
   protected $secondaryIpRangesDataType = 'array';
-  public $secondaryIpRanges;
   /**
    * @var string
    */
@@ -380,6 +382,20 @@ class Subnetwork extends \Google\Collection
   public function getRegion()
   {
     return $this->region;
+  }
+  /**
+   * @param string
+   */
+  public function setReservedInternalRange($reservedInternalRange)
+  {
+    $this->reservedInternalRange = $reservedInternalRange;
+  }
+  /**
+   * @return string
+   */
+  public function getReservedInternalRange()
+  {
+    return $this->reservedInternalRange;
   }
   /**
    * @param string

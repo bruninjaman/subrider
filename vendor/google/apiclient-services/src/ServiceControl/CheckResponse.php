@@ -19,30 +19,30 @@ namespace Google\Service\ServiceControl;
 
 class CheckResponse extends \Google\Model
 {
-  protected $esfMigrationServerOverrideType = EsfMigrationServerOverride::class;
-  protected $esfMigrationServerOverrideDataType = '';
-  public $esfMigrationServerOverride;
+  /**
+   * @var array[]
+   */
+  public $dynamicMetadata;
   /**
    * @var string[]
    */
   public $headers;
   protected $statusType = Status::class;
   protected $statusDataType = '';
-  public $status;
 
   /**
-   * @param EsfMigrationServerOverride
+   * @param array[]
    */
-  public function setEsfMigrationServerOverride(EsfMigrationServerOverride $esfMigrationServerOverride)
+  public function setDynamicMetadata($dynamicMetadata)
   {
-    $this->esfMigrationServerOverride = $esfMigrationServerOverride;
+    $this->dynamicMetadata = $dynamicMetadata;
   }
   /**
-   * @return EsfMigrationServerOverride
+   * @return array[]
    */
-  public function getEsfMigrationServerOverride()
+  public function getDynamicMetadata()
   {
-    return $this->esfMigrationServerOverride;
+    return $this->dynamicMetadata;
   }
   /**
    * @param string[]

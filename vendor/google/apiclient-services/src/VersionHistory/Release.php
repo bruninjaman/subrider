@@ -28,9 +28,12 @@ class Release extends \Google\Model
    * @var string
    */
   public $name;
+  /**
+   * @var bool
+   */
+  public $pinnable;
   protected $servingType = Interval::class;
   protected $servingDataType = '';
-  public $serving;
   /**
    * @var string
    */
@@ -71,6 +74,20 @@ class Release extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param bool
+   */
+  public function setPinnable($pinnable)
+  {
+    $this->pinnable = $pinnable;
+  }
+  /**
+   * @return bool
+   */
+  public function getPinnable()
+  {
+    return $this->pinnable;
   }
   /**
    * @param Interval

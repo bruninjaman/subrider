@@ -5,6 +5,20 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/logs/error.log');
 
+// Configurações do Banco de Dados
+define('DB_HOST', 'localhost');
+define('DB_USER', 'subrider_user');
+define('DB_PASS', 'sua_senha_aqui');
+define('DB_NAME', 'subrider_db');
+
+// Email do Administrador
+define('ADMIN_EMAIL', 'admin@subrider.com');
+
+// Outras configurações
+define('UPLOAD_DIR', __DIR__ . '/uploads');
+define('BACKUP_DIR', __DIR__ . '/backups');
+define('MAX_BACKUPS', 30);
+
 // Timezone
 date_default_timezone_set('America/Sao_Paulo');
 

@@ -1,0 +1,89 @@
+/* Notificações */
+.notification-dropdown {
+    width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e3e6f0;
+    transition: background-color 0.3s;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fc;
+}
+
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.notification-text {
+    color: #858796;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: #858796;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Badge de notificações */
+.nav-item .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(25%, -25%);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Animação de fade para notificações */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.notification-item {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Estilo para notificações lidas */
+.notification-item.bg-light {
+    opacity: 0.7;
+}
+
+.notification-item.bg-light:hover {
+    opacity: 1;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .notification-dropdown {
+        width: 100%;
+        position: fixed !important;
+        top: 56px !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+        border-radius: 0;
+        max-height: calc(100vh - 56px);
+    }
+} 

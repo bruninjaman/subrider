@@ -17,8 +17,9 @@
 
 namespace Google\Service\GKEHub;
 
-class Feature extends \Google\Model
+class Feature extends \Google\Collection
 {
+  protected $collection_key = 'unreachable';
   /**
    * @var string
    */
@@ -29,36 +30,32 @@ class Feature extends \Google\Model
   public $deleteTime;
   protected $fleetDefaultMemberConfigType = CommonFleetDefaultMemberConfigSpec::class;
   protected $fleetDefaultMemberConfigDataType = '';
-  public $fleetDefaultMemberConfig;
   /**
    * @var string[]
    */
   public $labels;
   protected $membershipSpecsType = MembershipFeatureSpec::class;
   protected $membershipSpecsDataType = 'map';
-  public $membershipSpecs;
   protected $membershipStatesType = MembershipFeatureState::class;
   protected $membershipStatesDataType = 'map';
-  public $membershipStates;
   /**
    * @var string
    */
   public $name;
   protected $resourceStateType = FeatureResourceState::class;
   protected $resourceStateDataType = '';
-  public $resourceState;
   protected $scopeSpecsType = ScopeFeatureSpec::class;
   protected $scopeSpecsDataType = 'map';
-  public $scopeSpecs;
   protected $scopeStatesType = ScopeFeatureState::class;
   protected $scopeStatesDataType = 'map';
-  public $scopeStates;
   protected $specType = CommonFeatureSpec::class;
   protected $specDataType = '';
-  public $spec;
   protected $stateType = CommonFeatureState::class;
   protected $stateDataType = '';
-  public $state;
+  /**
+   * @var string[]
+   */
+  public $unreachable;
   /**
    * @var string
    */
@@ -231,6 +228,20 @@ class Feature extends \Google\Model
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param string[]
+   */
+  public function setUnreachable($unreachable)
+  {
+    $this->unreachable = $unreachable;
+  }
+  /**
+   * @return string[]
+   */
+  public function getUnreachable()
+  {
+    return $this->unreachable;
   }
   /**
    * @param string

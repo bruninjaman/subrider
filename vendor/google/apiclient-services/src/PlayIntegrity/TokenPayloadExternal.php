@@ -21,19 +21,16 @@ class TokenPayloadExternal extends \Google\Model
 {
   protected $accountDetailsType = AccountDetails::class;
   protected $accountDetailsDataType = '';
-  public $accountDetails;
   protected $appIntegrityType = AppIntegrity::class;
   protected $appIntegrityDataType = '';
-  public $appIntegrity;
   protected $deviceIntegrityType = DeviceIntegrity::class;
   protected $deviceIntegrityDataType = '';
-  public $deviceIntegrity;
+  protected $environmentDetailsType = EnvironmentDetails::class;
+  protected $environmentDetailsDataType = '';
   protected $requestDetailsType = RequestDetails::class;
   protected $requestDetailsDataType = '';
-  public $requestDetails;
   protected $testingDetailsType = TestingDetails::class;
   protected $testingDetailsDataType = '';
-  public $testingDetails;
 
   /**
    * @param AccountDetails
@@ -76,6 +73,20 @@ class TokenPayloadExternal extends \Google\Model
   public function getDeviceIntegrity()
   {
     return $this->deviceIntegrity;
+  }
+  /**
+   * @param EnvironmentDetails
+   */
+  public function setEnvironmentDetails(EnvironmentDetails $environmentDetails)
+  {
+    $this->environmentDetails = $environmentDetails;
+  }
+  /**
+   * @return EnvironmentDetails
+   */
+  public function getEnvironmentDetails()
+  {
+    return $this->environmentDetails;
   }
   /**
    * @param RequestDetails

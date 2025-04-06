@@ -26,36 +26,42 @@ class GoogleCloudDataplexV1DataQualityRule extends \Google\Model
   /**
    * @var string
    */
+  public $description;
+  /**
+   * @var string
+   */
   public $dimension;
   /**
    * @var bool
    */
   public $ignoreNull;
+  /**
+   * @var string
+   */
+  public $name;
   protected $nonNullExpectationType = GoogleCloudDataplexV1DataQualityRuleNonNullExpectation::class;
   protected $nonNullExpectationDataType = '';
-  public $nonNullExpectation;
   protected $rangeExpectationType = GoogleCloudDataplexV1DataQualityRuleRangeExpectation::class;
   protected $rangeExpectationDataType = '';
-  public $rangeExpectation;
   protected $regexExpectationType = GoogleCloudDataplexV1DataQualityRuleRegexExpectation::class;
   protected $regexExpectationDataType = '';
-  public $regexExpectation;
   protected $rowConditionExpectationType = GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation::class;
   protected $rowConditionExpectationDataType = '';
-  public $rowConditionExpectation;
   protected $setExpectationType = GoogleCloudDataplexV1DataQualityRuleSetExpectation::class;
   protected $setExpectationDataType = '';
-  public $setExpectation;
+  protected $sqlAssertionType = GoogleCloudDataplexV1DataQualityRuleSqlAssertion::class;
+  protected $sqlAssertionDataType = '';
   protected $statisticRangeExpectationType = GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation::class;
   protected $statisticRangeExpectationDataType = '';
-  public $statisticRangeExpectation;
+  /**
+   * @var bool
+   */
+  public $suspended;
   protected $tableConditionExpectationType = GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation::class;
   protected $tableConditionExpectationDataType = '';
-  public $tableConditionExpectation;
   public $threshold;
   protected $uniquenessExpectationType = GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation::class;
   protected $uniquenessExpectationDataType = '';
-  public $uniquenessExpectation;
 
   /**
    * @param string
@@ -70,6 +76,20 @@ class GoogleCloudDataplexV1DataQualityRule extends \Google\Model
   public function getColumn()
   {
     return $this->column;
+  }
+  /**
+   * @param string
+   */
+  public function setDescription($description)
+  {
+    $this->description = $description;
+  }
+  /**
+   * @return string
+   */
+  public function getDescription()
+  {
+    return $this->description;
   }
   /**
    * @param string
@@ -98,6 +118,20 @@ class GoogleCloudDataplexV1DataQualityRule extends \Google\Model
   public function getIgnoreNull()
   {
     return $this->ignoreNull;
+  }
+  /**
+   * @param string
+   */
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
+  /**
+   * @return string
+   */
+  public function getName()
+  {
+    return $this->name;
   }
   /**
    * @param GoogleCloudDataplexV1DataQualityRuleNonNullExpectation
@@ -170,6 +204,20 @@ class GoogleCloudDataplexV1DataQualityRule extends \Google\Model
     return $this->setExpectation;
   }
   /**
+   * @param GoogleCloudDataplexV1DataQualityRuleSqlAssertion
+   */
+  public function setSqlAssertion(GoogleCloudDataplexV1DataQualityRuleSqlAssertion $sqlAssertion)
+  {
+    $this->sqlAssertion = $sqlAssertion;
+  }
+  /**
+   * @return GoogleCloudDataplexV1DataQualityRuleSqlAssertion
+   */
+  public function getSqlAssertion()
+  {
+    return $this->sqlAssertion;
+  }
+  /**
    * @param GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation
    */
   public function setStatisticRangeExpectation(GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation $statisticRangeExpectation)
@@ -182,6 +230,20 @@ class GoogleCloudDataplexV1DataQualityRule extends \Google\Model
   public function getStatisticRangeExpectation()
   {
     return $this->statisticRangeExpectation;
+  }
+  /**
+   * @param bool
+   */
+  public function setSuspended($suspended)
+  {
+    $this->suspended = $suspended;
+  }
+  /**
+   * @return bool
+   */
+  public function getSuspended()
+  {
+    return $this->suspended;
   }
   /**
    * @param GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation

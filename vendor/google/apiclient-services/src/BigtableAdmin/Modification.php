@@ -21,7 +21,6 @@ class Modification extends \Google\Model
 {
   protected $createType = ColumnFamily::class;
   protected $createDataType = '';
-  public $create;
   /**
    * @var bool
    */
@@ -32,7 +31,10 @@ class Modification extends \Google\Model
   public $id;
   protected $updateType = ColumnFamily::class;
   protected $updateDataType = '';
-  public $update;
+  /**
+   * @var string
+   */
+  public $updateMask;
 
   /**
    * @param ColumnFamily
@@ -89,6 +91,20 @@ class Modification extends \Google\Model
   public function getUpdate()
   {
     return $this->update;
+  }
+  /**
+   * @param string
+   */
+  public function setUpdateMask($updateMask)
+  {
+    $this->updateMask = $updateMask;
+  }
+  /**
+   * @return string
+   */
+  public function getUpdateMask()
+  {
+    return $this->updateMask;
   }
 }
 

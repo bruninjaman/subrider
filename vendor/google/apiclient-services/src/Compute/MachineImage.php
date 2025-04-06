@@ -38,14 +38,12 @@ class MachineImage extends \Google\Collection
   public $id;
   protected $instancePropertiesType = InstanceProperties::class;
   protected $instancePropertiesDataType = '';
-  public $instanceProperties;
   /**
    * @var string
    */
   public $kind;
   protected $machineImageEncryptionKeyType = CustomerEncryptionKey::class;
   protected $machineImageEncryptionKeyDataType = '';
-  public $machineImageEncryptionKey;
   /**
    * @var string
    */
@@ -53,24 +51,25 @@ class MachineImage extends \Google\Collection
   /**
    * @var bool
    */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
   public $satisfiesPzs;
   protected $savedDisksType = SavedDisk::class;
   protected $savedDisksDataType = 'array';
-  public $savedDisks;
   /**
    * @var string
    */
   public $selfLink;
   protected $sourceDiskEncryptionKeysType = SourceDiskEncryptionKey::class;
   protected $sourceDiskEncryptionKeysDataType = 'array';
-  public $sourceDiskEncryptionKeys;
   /**
    * @var string
    */
   public $sourceInstance;
   protected $sourceInstancePropertiesType = SourceInstanceProperties::class;
   protected $sourceInstancePropertiesDataType = '';
-  public $sourceInstanceProperties;
   /**
    * @var string
    */
@@ -195,6 +194,20 @@ class MachineImage extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
   }
   /**
    * @param bool

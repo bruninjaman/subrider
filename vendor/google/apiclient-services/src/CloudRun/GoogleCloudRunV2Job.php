@@ -26,7 +26,6 @@ class GoogleCloudRunV2Job extends \Google\Collection
   public $annotations;
   protected $binaryAuthorizationType = GoogleCloudRunV2BinaryAuthorization::class;
   protected $binaryAuthorizationDataType = '';
-  public $binaryAuthorization;
   /**
    * @var string
    */
@@ -37,7 +36,6 @@ class GoogleCloudRunV2Job extends \Google\Collection
   public $clientVersion;
   protected $conditionsType = GoogleCloudRunV2Condition::class;
   protected $conditionsDataType = 'array';
-  public $conditions;
   /**
    * @var string
    */
@@ -76,7 +74,6 @@ class GoogleCloudRunV2Job extends \Google\Collection
   public $lastModifier;
   protected $latestCreatedExecutionType = GoogleCloudRunV2ExecutionReference::class;
   protected $latestCreatedExecutionDataType = '';
-  public $latestCreatedExecution;
   /**
    * @var string
    */
@@ -93,12 +90,22 @@ class GoogleCloudRunV2Job extends \Google\Collection
    * @var bool
    */
   public $reconciling;
+  /**
+   * @var string
+   */
+  public $runExecutionToken;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
+  /**
+   * @var string
+   */
+  public $startExecutionToken;
   protected $templateType = GoogleCloudRunV2ExecutionTemplate::class;
   protected $templateDataType = '';
-  public $template;
   protected $terminalConditionType = GoogleCloudRunV2Condition::class;
   protected $terminalConditionDataType = '';
-  public $terminalCondition;
   /**
    * @var string
    */
@@ -373,6 +380,48 @@ class GoogleCloudRunV2Job extends \Google\Collection
   public function getReconciling()
   {
     return $this->reconciling;
+  }
+  /**
+   * @param string
+   */
+  public function setRunExecutionToken($runExecutionToken)
+  {
+    $this->runExecutionToken = $runExecutionToken;
+  }
+  /**
+   * @return string
+   */
+  public function getRunExecutionToken()
+  {
+    return $this->runExecutionToken;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
+  }
+  /**
+   * @param string
+   */
+  public function setStartExecutionToken($startExecutionToken)
+  {
+    $this->startExecutionToken = $startExecutionToken;
+  }
+  /**
+   * @return string
+   */
+  public function getStartExecutionToken()
+  {
+    return $this->startExecutionToken;
   }
   /**
    * @param GoogleCloudRunV2ExecutionTemplate

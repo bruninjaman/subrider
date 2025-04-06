@@ -30,7 +30,6 @@ class VolumeConfig extends \Google\Collection
   public $id;
   protected $lunRangesType = LunRange::class;
   protected $lunRangesDataType = 'array';
-  public $lunRanges;
   /**
    * @var string[]
    */
@@ -41,7 +40,6 @@ class VolumeConfig extends \Google\Collection
   public $name;
   protected $nfsExportsType = NfsExport::class;
   protected $nfsExportsDataType = 'array';
-  public $nfsExports;
   /**
    * @var string
    */
@@ -58,10 +56,6 @@ class VolumeConfig extends \Google\Collection
    * @var bool
    */
   public $snapshotsEnabled;
-  /**
-   * @var string
-   */
-  public $storageAggregatePool;
   /**
    * @var string
    */
@@ -210,20 +204,6 @@ class VolumeConfig extends \Google\Collection
   public function getSnapshotsEnabled()
   {
     return $this->snapshotsEnabled;
-  }
-  /**
-   * @param string
-   */
-  public function setStorageAggregatePool($storageAggregatePool)
-  {
-    $this->storageAggregatePool = $storageAggregatePool;
-  }
-  /**
-   * @return string
-   */
-  public function getStorageAggregatePool()
-  {
-    return $this->storageAggregatePool;
   }
   /**
    * @param string

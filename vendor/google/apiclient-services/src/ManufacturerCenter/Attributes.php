@@ -22,7 +22,6 @@ class Attributes extends \Google\Collection
   protected $collection_key = 'videoLink';
   protected $additionalImageLinkType = Image::class;
   protected $additionalImageLinkDataType = 'array';
-  public $additionalImageLink;
   /**
    * @var string
    */
@@ -33,14 +32,14 @@ class Attributes extends \Google\Collection
   public $brand;
   protected $capacityType = Capacity::class;
   protected $capacityDataType = '';
-  public $capacity;
+  protected $certificationType = GoogleShoppingManufacturersV1ProductCertification::class;
+  protected $certificationDataType = 'array';
   /**
    * @var string
    */
   public $color;
   protected $countType = Count::class;
   protected $countDataType = '';
-  public $count;
   /**
    * @var string
    */
@@ -55,7 +54,6 @@ class Attributes extends \Google\Collection
   public $excludedDestination;
   protected $featureDescriptionType = FeatureDescription::class;
   protected $featureDescriptionDataType = 'array';
-  public $featureDescription;
   /**
    * @var string
    */
@@ -70,18 +68,20 @@ class Attributes extends \Google\Collection
   public $gender;
   protected $groceryType = Grocery::class;
   protected $groceryDataType = '';
-  public $grocery;
   /**
    * @var string[]
    */
   public $gtin;
   protected $imageLinkType = Image::class;
   protected $imageLinkDataType = '';
-  public $imageLink;
   /**
    * @var string[]
    */
   public $includedDestination;
+  /**
+   * @var string[]
+   */
+  public $intendedCountry;
   /**
    * @var string
    */
@@ -96,14 +96,12 @@ class Attributes extends \Google\Collection
   public $mpn;
   protected $nutritionType = Nutrition::class;
   protected $nutritionDataType = '';
-  public $nutrition;
   /**
    * @var string
    */
   public $pattern;
   protected $productDetailType = ProductDetail::class;
   protected $productDetailDataType = 'array';
-  public $productDetail;
   /**
    * @var string[]
    */
@@ -150,7 +148,6 @@ class Attributes extends \Google\Collection
   public $sizeType;
   protected $suggestedRetailPriceType = Price::class;
   protected $suggestedRetailPriceDataType = '';
-  public $suggestedRetailPrice;
   /**
    * @var string
    */
@@ -167,6 +164,10 @@ class Attributes extends \Google\Collection
    * @var string[]
    */
   public $videoLink;
+  /**
+   * @var string
+   */
+  public $virtualModelLink;
 
   /**
    * @param Image[]
@@ -223,6 +224,20 @@ class Attributes extends \Google\Collection
   public function getCapacity()
   {
     return $this->capacity;
+  }
+  /**
+   * @param GoogleShoppingManufacturersV1ProductCertification[]
+   */
+  public function setCertification($certification)
+  {
+    $this->certification = $certification;
+  }
+  /**
+   * @return GoogleShoppingManufacturersV1ProductCertification[]
+   */
+  public function getCertification()
+  {
+    return $this->certification;
   }
   /**
    * @param string
@@ -405,6 +420,20 @@ class Attributes extends \Google\Collection
   public function getIncludedDestination()
   {
     return $this->includedDestination;
+  }
+  /**
+   * @param string[]
+   */
+  public function setIntendedCountry($intendedCountry)
+  {
+    $this->intendedCountry = $intendedCountry;
+  }
+  /**
+   * @return string[]
+   */
+  public function getIntendedCountry()
+  {
+    return $this->intendedCountry;
   }
   /**
    * @param string
@@ -713,6 +742,20 @@ class Attributes extends \Google\Collection
   public function getVideoLink()
   {
     return $this->videoLink;
+  }
+  /**
+   * @param string
+   */
+  public function setVirtualModelLink($virtualModelLink)
+  {
+    $this->virtualModelLink = $virtualModelLink;
+  }
+  /**
+   * @return string
+   */
+  public function getVirtualModelLink()
+  {
+    return $this->virtualModelLink;
   }
 }
 

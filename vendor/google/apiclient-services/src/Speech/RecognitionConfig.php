@@ -22,7 +22,6 @@ class RecognitionConfig extends \Google\Collection
   protected $collection_key = 'speechContexts';
   protected $adaptationType = SpeechAdaptation::class;
   protected $adaptationDataType = '';
-  public $adaptation;
   /**
    * @var string[]
    */
@@ -33,7 +32,6 @@ class RecognitionConfig extends \Google\Collection
   public $audioChannelCount;
   protected $diarizationConfigType = SpeakerDiarizationConfig::class;
   protected $diarizationConfigDataType = '';
-  public $diarizationConfig;
   /**
    * @var bool
    */
@@ -72,7 +70,6 @@ class RecognitionConfig extends \Google\Collection
   public $maxAlternatives;
   protected $metadataType = RecognitionMetadata::class;
   protected $metadataDataType = '';
-  public $metadata;
   /**
    * @var string
    */
@@ -87,7 +84,8 @@ class RecognitionConfig extends \Google\Collection
   public $sampleRateHertz;
   protected $speechContextsType = SpeechContext::class;
   protected $speechContextsDataType = 'array';
-  public $speechContexts;
+  protected $transcriptNormalizationType = TranscriptNormalization::class;
+  protected $transcriptNormalizationDataType = '';
   /**
    * @var bool
    */
@@ -344,6 +342,20 @@ class RecognitionConfig extends \Google\Collection
   public function getSpeechContexts()
   {
     return $this->speechContexts;
+  }
+  /**
+   * @param TranscriptNormalization
+   */
+  public function setTranscriptNormalization(TranscriptNormalization $transcriptNormalization)
+  {
+    $this->transcriptNormalization = $transcriptNormalization;
+  }
+  /**
+   * @return TranscriptNormalization
+   */
+  public function getTranscriptNormalization()
+  {
+    return $this->transcriptNormalization;
   }
   /**
    * @param bool

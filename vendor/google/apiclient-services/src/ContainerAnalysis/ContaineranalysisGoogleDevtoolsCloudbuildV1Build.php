@@ -22,13 +22,10 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1Build extends \Google\Collectio
   protected $collection_key = 'warnings';
   protected $approvalType = ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval::class;
   protected $approvalDataType = '';
-  public $approval;
   protected $artifactsType = ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts::class;
   protected $artifactsDataType = '';
-  public $artifacts;
   protected $availableSecretsType = ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets::class;
   protected $availableSecretsDataType = '';
-  public $availableSecrets;
   /**
    * @var string
    */
@@ -37,13 +34,16 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1Build extends \Google\Collectio
    * @var string
    */
   public $createTime;
+  protected $dependenciesType = ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency::class;
+  protected $dependenciesDataType = 'array';
   protected $failureInfoType = ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo::class;
   protected $failureInfoDataType = '';
-  public $failureInfo;
   /**
    * @var string
    */
   public $finishTime;
+  protected $gitConfigType = ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig::class;
+  protected $gitConfigDataType = '';
   /**
    * @var string
    */
@@ -66,7 +66,6 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1Build extends \Google\Collectio
   public $name;
   protected $optionsType = ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions::class;
   protected $optionsDataType = '';
-  public $options;
   /**
    * @var string
    */
@@ -77,20 +76,16 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1Build extends \Google\Collectio
   public $queueTtl;
   protected $resultsType = ContaineranalysisGoogleDevtoolsCloudbuildV1Results::class;
   protected $resultsDataType = '';
-  public $results;
   protected $secretsType = ContaineranalysisGoogleDevtoolsCloudbuildV1Secret::class;
   protected $secretsDataType = 'array';
-  public $secrets;
   /**
    * @var string
    */
   public $serviceAccount;
   protected $sourceType = ContaineranalysisGoogleDevtoolsCloudbuildV1Source::class;
   protected $sourceDataType = '';
-  public $source;
   protected $sourceProvenanceType = ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance::class;
   protected $sourceProvenanceDataType = '';
-  public $sourceProvenance;
   /**
    * @var string
    */
@@ -105,7 +100,6 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1Build extends \Google\Collectio
   public $statusDetail;
   protected $stepsType = ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep::class;
   protected $stepsDataType = 'array';
-  public $steps;
   /**
    * @var string[]
    */
@@ -120,10 +114,8 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1Build extends \Google\Collectio
   public $timeout;
   protected $timingType = ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::class;
   protected $timingDataType = 'map';
-  public $timing;
   protected $warningsType = ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning::class;
   protected $warningsDataType = 'array';
-  public $warnings;
 
   /**
    * @param ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval
@@ -196,6 +188,20 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1Build extends \Google\Collectio
     return $this->createTime;
   }
   /**
+   * @param ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency[]
+   */
+  public function setDependencies($dependencies)
+  {
+    $this->dependencies = $dependencies;
+  }
+  /**
+   * @return ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency[]
+   */
+  public function getDependencies()
+  {
+    return $this->dependencies;
+  }
+  /**
    * @param ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo
    */
   public function setFailureInfo(ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo $failureInfo)
@@ -222,6 +228,20 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1Build extends \Google\Collectio
   public function getFinishTime()
   {
     return $this->finishTime;
+  }
+  /**
+   * @param ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig
+   */
+  public function setGitConfig(ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig $gitConfig)
+  {
+    $this->gitConfig = $gitConfig;
+  }
+  /**
+   * @return ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig
+   */
+  public function getGitConfig()
+  {
+    return $this->gitConfig;
   }
   /**
    * @param string

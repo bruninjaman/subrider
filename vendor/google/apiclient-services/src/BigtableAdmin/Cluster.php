@@ -21,14 +21,12 @@ class Cluster extends \Google\Model
 {
   protected $clusterConfigType = ClusterConfig::class;
   protected $clusterConfigDataType = '';
-  public $clusterConfig;
   /**
    * @var string
    */
   public $defaultStorageType;
   protected $encryptionConfigType = EncryptionConfig::class;
   protected $encryptionConfigDataType = '';
-  public $encryptionConfig;
   /**
    * @var string
    */
@@ -37,6 +35,10 @@ class Cluster extends \Google\Model
    * @var string
    */
   public $name;
+  /**
+   * @var string
+   */
+  public $nodeScalingFactor;
   /**
    * @var int
    */
@@ -115,6 +117,20 @@ class Cluster extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param string
+   */
+  public function setNodeScalingFactor($nodeScalingFactor)
+  {
+    $this->nodeScalingFactor = $nodeScalingFactor;
+  }
+  /**
+   * @return string
+   */
+  public function getNodeScalingFactor()
+  {
+    return $this->nodeScalingFactor;
   }
   /**
    * @param int

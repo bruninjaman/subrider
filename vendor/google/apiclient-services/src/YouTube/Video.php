@@ -21,17 +21,14 @@ class Video extends \Google\Model
 {
   protected $ageGatingType = VideoAgeGating::class;
   protected $ageGatingDataType = '';
-  public $ageGating;
   protected $contentDetailsType = VideoContentDetails::class;
   protected $contentDetailsDataType = '';
-  public $contentDetails;
   /**
    * @var string
    */
   public $etag;
   protected $fileDetailsType = VideoFileDetails::class;
   protected $fileDetailsDataType = '';
-  public $fileDetails;
   /**
    * @var string
    */
@@ -42,40 +39,30 @@ class Video extends \Google\Model
   public $kind;
   protected $liveStreamingDetailsType = VideoLiveStreamingDetails::class;
   protected $liveStreamingDetailsDataType = '';
-  public $liveStreamingDetails;
   protected $localizationsType = VideoLocalization::class;
   protected $localizationsDataType = 'map';
-  public $localizations;
   protected $monetizationDetailsType = VideoMonetizationDetails::class;
   protected $monetizationDetailsDataType = '';
-  public $monetizationDetails;
+  protected $paidProductPlacementDetailsType = VideoPaidProductPlacementDetails::class;
+  protected $paidProductPlacementDetailsDataType = '';
   protected $playerType = VideoPlayer::class;
   protected $playerDataType = '';
-  public $player;
   protected $processingDetailsType = VideoProcessingDetails::class;
   protected $processingDetailsDataType = '';
-  public $processingDetails;
   protected $projectDetailsType = VideoProjectDetails::class;
   protected $projectDetailsDataType = '';
-  public $projectDetails;
   protected $recordingDetailsType = VideoRecordingDetails::class;
   protected $recordingDetailsDataType = '';
-  public $recordingDetails;
   protected $snippetType = VideoSnippet::class;
   protected $snippetDataType = '';
-  public $snippet;
   protected $statisticsType = VideoStatistics::class;
   protected $statisticsDataType = '';
-  public $statistics;
   protected $statusType = VideoStatus::class;
   protected $statusDataType = '';
-  public $status;
   protected $suggestionsType = VideoSuggestions::class;
   protected $suggestionsDataType = '';
-  public $suggestions;
   protected $topicDetailsType = VideoTopicDetails::class;
   protected $topicDetailsDataType = '';
-  public $topicDetails;
 
   /**
    * @param VideoAgeGating
@@ -202,6 +189,20 @@ class Video extends \Google\Model
   public function getMonetizationDetails()
   {
     return $this->monetizationDetails;
+  }
+  /**
+   * @param VideoPaidProductPlacementDetails
+   */
+  public function setPaidProductPlacementDetails(VideoPaidProductPlacementDetails $paidProductPlacementDetails)
+  {
+    $this->paidProductPlacementDetails = $paidProductPlacementDetails;
+  }
+  /**
+   * @return VideoPaidProductPlacementDetails
+   */
+  public function getPaidProductPlacementDetails()
+  {
+    return $this->paidProductPlacementDetails;
   }
   /**
    * @param VideoPlayer

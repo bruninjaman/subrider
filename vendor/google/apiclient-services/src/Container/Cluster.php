@@ -22,32 +22,28 @@ class Cluster extends \Google\Collection
   protected $collection_key = 'nodePools';
   protected $addonsConfigType = AddonsConfig::class;
   protected $addonsConfigDataType = '';
-  public $addonsConfig;
   protected $authenticatorGroupsConfigType = AuthenticatorGroupsConfig::class;
   protected $authenticatorGroupsConfigDataType = '';
-  public $authenticatorGroupsConfig;
   protected $autopilotType = Autopilot::class;
   protected $autopilotDataType = '';
-  public $autopilot;
   protected $autoscalingType = ClusterAutoscaling::class;
   protected $autoscalingDataType = '';
-  public $autoscaling;
   protected $binaryAuthorizationType = BinaryAuthorization::class;
   protected $binaryAuthorizationDataType = '';
-  public $binaryAuthorization;
   /**
    * @var string
    */
   public $clusterIpv4Cidr;
+  protected $compliancePostureConfigType = CompliancePostureConfig::class;
+  protected $compliancePostureConfigDataType = '';
   protected $conditionsType = StatusCondition::class;
   protected $conditionsDataType = 'array';
-  public $conditions;
   protected $confidentialNodesType = ConfidentialNodes::class;
   protected $confidentialNodesDataType = '';
-  public $confidentialNodes;
+  protected $controlPlaneEndpointsConfigType = ControlPlaneEndpointsConfig::class;
+  protected $controlPlaneEndpointsConfigDataType = '';
   protected $costManagementConfigType = CostManagementConfig::class;
   protected $costManagementConfigDataType = '';
-  public $costManagementConfig;
   /**
    * @var string
    */
@@ -66,14 +62,14 @@ class Cluster extends \Google\Collection
   public $currentNodeVersion;
   protected $databaseEncryptionType = DatabaseEncryption::class;
   protected $databaseEncryptionDataType = '';
-  public $databaseEncryption;
   protected $defaultMaxPodsConstraintType = MaxPodsConstraint::class;
   protected $defaultMaxPodsConstraintDataType = '';
-  public $defaultMaxPodsConstraint;
   /**
    * @var string
    */
   public $description;
+  protected $enableK8sBetaApisType = K8sBetaAPIConfig::class;
+  protected $enableK8sBetaApisDataType = '';
   /**
    * @var bool
    */
@@ -86,6 +82,8 @@ class Cluster extends \Google\Collection
    * @var string
    */
   public $endpoint;
+  protected $enterpriseConfigType = EnterpriseConfig::class;
+  protected $enterpriseConfigDataType = '';
   /**
    * @var string
    */
@@ -94,13 +92,14 @@ class Cluster extends \Google\Collection
    * @var string
    */
   public $expireTime;
+  protected $fleetType = Fleet::class;
+  protected $fleetDataType = '';
   /**
    * @var string
    */
   public $id;
   protected $identityServiceConfigType = IdentityServiceConfig::class;
   protected $identityServiceConfigDataType = '';
-  public $identityServiceConfig;
   /**
    * @var string
    */
@@ -115,14 +114,12 @@ class Cluster extends \Google\Collection
   public $instanceGroupUrls;
   protected $ipAllocationPolicyType = IPAllocationPolicy::class;
   protected $ipAllocationPolicyDataType = '';
-  public $ipAllocationPolicy;
   /**
    * @var string
    */
   public $labelFingerprint;
   protected $legacyAbacType = LegacyAbac::class;
   protected $legacyAbacDataType = '';
-  public $legacyAbac;
   /**
    * @var string
    */
@@ -133,26 +130,20 @@ class Cluster extends \Google\Collection
   public $locations;
   protected $loggingConfigType = LoggingConfig::class;
   protected $loggingConfigDataType = '';
-  public $loggingConfig;
   /**
    * @var string
    */
   public $loggingService;
   protected $maintenancePolicyType = MaintenancePolicy::class;
   protected $maintenancePolicyDataType = '';
-  public $maintenancePolicy;
   protected $masterAuthType = MasterAuth::class;
   protected $masterAuthDataType = '';
-  public $masterAuth;
   protected $masterAuthorizedNetworksConfigType = MasterAuthorizedNetworksConfig::class;
   protected $masterAuthorizedNetworksConfigDataType = '';
-  public $masterAuthorizedNetworksConfig;
   protected $meshCertificatesType = MeshCertificates::class;
   protected $meshCertificatesDataType = '';
-  public $meshCertificates;
   protected $monitoringConfigType = MonitoringConfig::class;
   protected $monitoringConfigDataType = '';
-  public $monitoringConfig;
   /**
    * @var string
    */
@@ -167,42 +158,48 @@ class Cluster extends \Google\Collection
   public $network;
   protected $networkConfigType = NetworkConfig::class;
   protected $networkConfigDataType = '';
-  public $networkConfig;
   protected $networkPolicyType = NetworkPolicy::class;
   protected $networkPolicyDataType = '';
-  public $networkPolicy;
   protected $nodeConfigType = NodeConfig::class;
   protected $nodeConfigDataType = '';
-  public $nodeConfig;
   /**
    * @var int
    */
   public $nodeIpv4CidrSize;
   protected $nodePoolAutoConfigType = NodePoolAutoConfig::class;
   protected $nodePoolAutoConfigDataType = '';
-  public $nodePoolAutoConfig;
   protected $nodePoolDefaultsType = NodePoolDefaults::class;
   protected $nodePoolDefaultsDataType = '';
-  public $nodePoolDefaults;
   protected $nodePoolsType = NodePool::class;
   protected $nodePoolsDataType = 'array';
-  public $nodePools;
   protected $notificationConfigType = NotificationConfig::class;
   protected $notificationConfigDataType = '';
-  public $notificationConfig;
+  protected $parentProductConfigType = ParentProductConfig::class;
+  protected $parentProductConfigDataType = '';
   protected $privateClusterConfigType = PrivateClusterConfig::class;
   protected $privateClusterConfigDataType = '';
-  public $privateClusterConfig;
+  protected $rbacBindingConfigType = RBACBindingConfig::class;
+  protected $rbacBindingConfigDataType = '';
   protected $releaseChannelType = ReleaseChannel::class;
   protected $releaseChannelDataType = '';
-  public $releaseChannel;
   /**
    * @var string[]
    */
   public $resourceLabels;
   protected $resourceUsageExportConfigType = ResourceUsageExportConfig::class;
   protected $resourceUsageExportConfigDataType = '';
-  public $resourceUsageExportConfig;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
+  protected $secretManagerConfigType = SecretManagerConfig::class;
+  protected $secretManagerConfigDataType = '';
+  protected $securityPostureConfigType = SecurityPostureConfig::class;
+  protected $securityPostureConfigDataType = '';
   /**
    * @var string
    */
@@ -213,7 +210,6 @@ class Cluster extends \Google\Collection
   public $servicesIpv4Cidr;
   protected $shieldedNodesType = ShieldedNodes::class;
   protected $shieldedNodesDataType = '';
-  public $shieldedNodes;
   /**
    * @var string
    */
@@ -230,12 +226,12 @@ class Cluster extends \Google\Collection
    * @var string
    */
   public $tpuIpv4CidrBlock;
+  protected $userManagedKeysConfigType = UserManagedKeysConfig::class;
+  protected $userManagedKeysConfigDataType = '';
   protected $verticalPodAutoscalingType = VerticalPodAutoscaling::class;
   protected $verticalPodAutoscalingDataType = '';
-  public $verticalPodAutoscaling;
   protected $workloadIdentityConfigType = WorkloadIdentityConfig::class;
   protected $workloadIdentityConfigDataType = '';
-  public $workloadIdentityConfig;
   /**
    * @var string
    */
@@ -326,6 +322,20 @@ class Cluster extends \Google\Collection
     return $this->clusterIpv4Cidr;
   }
   /**
+   * @param CompliancePostureConfig
+   */
+  public function setCompliancePostureConfig(CompliancePostureConfig $compliancePostureConfig)
+  {
+    $this->compliancePostureConfig = $compliancePostureConfig;
+  }
+  /**
+   * @return CompliancePostureConfig
+   */
+  public function getCompliancePostureConfig()
+  {
+    return $this->compliancePostureConfig;
+  }
+  /**
    * @param StatusCondition[]
    */
   public function setConditions($conditions)
@@ -352,6 +362,20 @@ class Cluster extends \Google\Collection
   public function getConfidentialNodes()
   {
     return $this->confidentialNodes;
+  }
+  /**
+   * @param ControlPlaneEndpointsConfig
+   */
+  public function setControlPlaneEndpointsConfig(ControlPlaneEndpointsConfig $controlPlaneEndpointsConfig)
+  {
+    $this->controlPlaneEndpointsConfig = $controlPlaneEndpointsConfig;
+  }
+  /**
+   * @return ControlPlaneEndpointsConfig
+   */
+  public function getControlPlaneEndpointsConfig()
+  {
+    return $this->controlPlaneEndpointsConfig;
   }
   /**
    * @param CostManagementConfig
@@ -466,6 +490,20 @@ class Cluster extends \Google\Collection
     return $this->description;
   }
   /**
+   * @param K8sBetaAPIConfig
+   */
+  public function setEnableK8sBetaApis(K8sBetaAPIConfig $enableK8sBetaApis)
+  {
+    $this->enableK8sBetaApis = $enableK8sBetaApis;
+  }
+  /**
+   * @return K8sBetaAPIConfig
+   */
+  public function getEnableK8sBetaApis()
+  {
+    return $this->enableK8sBetaApis;
+  }
+  /**
    * @param bool
    */
   public function setEnableKubernetesAlpha($enableKubernetesAlpha)
@@ -508,6 +546,20 @@ class Cluster extends \Google\Collection
     return $this->endpoint;
   }
   /**
+   * @param EnterpriseConfig
+   */
+  public function setEnterpriseConfig(EnterpriseConfig $enterpriseConfig)
+  {
+    $this->enterpriseConfig = $enterpriseConfig;
+  }
+  /**
+   * @return EnterpriseConfig
+   */
+  public function getEnterpriseConfig()
+  {
+    return $this->enterpriseConfig;
+  }
+  /**
    * @param string
    */
   public function setEtag($etag)
@@ -534,6 +586,20 @@ class Cluster extends \Google\Collection
   public function getExpireTime()
   {
     return $this->expireTime;
+  }
+  /**
+   * @param Fleet
+   */
+  public function setFleet(Fleet $fleet)
+  {
+    $this->fleet = $fleet;
+  }
+  /**
+   * @return Fleet
+   */
+  public function getFleet()
+  {
+    return $this->fleet;
   }
   /**
    * @param string
@@ -928,6 +994,20 @@ class Cluster extends \Google\Collection
     return $this->notificationConfig;
   }
   /**
+   * @param ParentProductConfig
+   */
+  public function setParentProductConfig(ParentProductConfig $parentProductConfig)
+  {
+    $this->parentProductConfig = $parentProductConfig;
+  }
+  /**
+   * @return ParentProductConfig
+   */
+  public function getParentProductConfig()
+  {
+    return $this->parentProductConfig;
+  }
+  /**
    * @param PrivateClusterConfig
    */
   public function setPrivateClusterConfig(PrivateClusterConfig $privateClusterConfig)
@@ -940,6 +1020,20 @@ class Cluster extends \Google\Collection
   public function getPrivateClusterConfig()
   {
     return $this->privateClusterConfig;
+  }
+  /**
+   * @param RBACBindingConfig
+   */
+  public function setRbacBindingConfig(RBACBindingConfig $rbacBindingConfig)
+  {
+    $this->rbacBindingConfig = $rbacBindingConfig;
+  }
+  /**
+   * @return RBACBindingConfig
+   */
+  public function getRbacBindingConfig()
+  {
+    return $this->rbacBindingConfig;
   }
   /**
    * @param ReleaseChannel
@@ -982,6 +1076,62 @@ class Cluster extends \Google\Collection
   public function getResourceUsageExportConfig()
   {
     return $this->resourceUsageExportConfig;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
+  }
+  /**
+   * @param SecretManagerConfig
+   */
+  public function setSecretManagerConfig(SecretManagerConfig $secretManagerConfig)
+  {
+    $this->secretManagerConfig = $secretManagerConfig;
+  }
+  /**
+   * @return SecretManagerConfig
+   */
+  public function getSecretManagerConfig()
+  {
+    return $this->secretManagerConfig;
+  }
+  /**
+   * @param SecurityPostureConfig
+   */
+  public function setSecurityPostureConfig(SecurityPostureConfig $securityPostureConfig)
+  {
+    $this->securityPostureConfig = $securityPostureConfig;
+  }
+  /**
+   * @return SecurityPostureConfig
+   */
+  public function getSecurityPostureConfig()
+  {
+    return $this->securityPostureConfig;
   }
   /**
    * @param string
@@ -1080,6 +1230,20 @@ class Cluster extends \Google\Collection
   public function getTpuIpv4CidrBlock()
   {
     return $this->tpuIpv4CidrBlock;
+  }
+  /**
+   * @param UserManagedKeysConfig
+   */
+  public function setUserManagedKeysConfig(UserManagedKeysConfig $userManagedKeysConfig)
+  {
+    $this->userManagedKeysConfig = $userManagedKeysConfig;
+  }
+  /**
+   * @return UserManagedKeysConfig
+   */
+  public function getUserManagedKeysConfig()
+  {
+    return $this->userManagedKeysConfig;
   }
   /**
    * @param VerticalPodAutoscaling

@@ -17,8 +17,6 @@
 
 namespace Google\Service\Appengine\Resource;
 
-use Google\Service\Appengine\Application;
-
 /**
  * The "applications" collection of methods.
  * Typical usage is:
@@ -29,23 +27,6 @@ use Google\Service\Appengine\Application;
  */
 class ProjectsLocationsApplications extends \Google\Service\Resource
 {
-  /**
-   * Gets information about an application. (applications.get)
-   *
-   * @param string $projectsId Part of `name`. Name of the Application resource to
-   * get. Example: apps/myapp.
-   * @param string $locationsId Part of `name`. See documentation of `projectsId`.
-   * @param string $applicationsId Part of `name`. See documentation of
-   * `projectsId`.
-   * @param array $optParams Optional parameters.
-   * @return Application
-   */
-  public function get($projectsId, $locationsId, $applicationsId, $optParams = [])
-  {
-    $params = ['projectsId' => $projectsId, 'locationsId' => $locationsId, 'applicationsId' => $applicationsId];
-    $params = array_merge($params, $optParams);
-    return $this->call('get', [$params], Application::class);
-  }
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.

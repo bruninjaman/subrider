@@ -26,10 +26,8 @@ class Subscription extends \Google\Collection
   public $archived;
   protected $basePlansType = BasePlan::class;
   protected $basePlansDataType = 'array';
-  public $basePlans;
   protected $listingsType = SubscriptionListing::class;
   protected $listingsDataType = 'array';
-  public $listings;
   /**
    * @var string
    */
@@ -38,9 +36,10 @@ class Subscription extends \Google\Collection
    * @var string
    */
   public $productId;
+  protected $restrictedPaymentCountriesType = RestrictedPaymentCountries::class;
+  protected $restrictedPaymentCountriesDataType = '';
   protected $taxAndComplianceSettingsType = SubscriptionTaxAndComplianceSettings::class;
   protected $taxAndComplianceSettingsDataType = '';
-  public $taxAndComplianceSettings;
 
   /**
    * @param bool
@@ -111,6 +110,20 @@ class Subscription extends \Google\Collection
   public function getProductId()
   {
     return $this->productId;
+  }
+  /**
+   * @param RestrictedPaymentCountries
+   */
+  public function setRestrictedPaymentCountries(RestrictedPaymentCountries $restrictedPaymentCountries)
+  {
+    $this->restrictedPaymentCountries = $restrictedPaymentCountries;
+  }
+  /**
+   * @return RestrictedPaymentCountries
+   */
+  public function getRestrictedPaymentCountries()
+  {
+    return $this->restrictedPaymentCountries;
   }
   /**
    * @param SubscriptionTaxAndComplianceSettings

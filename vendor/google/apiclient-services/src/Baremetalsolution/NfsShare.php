@@ -22,7 +22,6 @@ class NfsShare extends \Google\Collection
   protected $collection_key = 'allowedClients';
   protected $allowedClientsType = AllowedClient::class;
   protected $allowedClientsDataType = 'array';
-  public $allowedClients;
   /**
    * @var string
    */
@@ -39,6 +38,10 @@ class NfsShare extends \Google\Collection
    * @var string
    */
   public $nfsShareId;
+  /**
+   * @var string
+   */
+  public $pod;
   /**
    * @var string
    */
@@ -125,6 +128,20 @@ class NfsShare extends \Google\Collection
   public function getNfsShareId()
   {
     return $this->nfsShareId;
+  }
+  /**
+   * @param string
+   */
+  public function setPod($pod)
+  {
+    $this->pod = $pod;
+  }
+  /**
+   * @return string
+   */
+  public function getPod()
+  {
+    return $this->pod;
   }
   /**
    * @param string

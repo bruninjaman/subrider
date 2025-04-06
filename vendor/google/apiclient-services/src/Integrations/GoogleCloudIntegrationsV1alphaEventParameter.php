@@ -23,9 +23,12 @@ class GoogleCloudIntegrationsV1alphaEventParameter extends \Google\Model
    * @var string
    */
   public $key;
+  /**
+   * @var bool
+   */
+  public $masked;
   protected $valueType = GoogleCloudIntegrationsV1alphaValueType::class;
   protected $valueDataType = '';
-  public $value;
 
   /**
    * @param string
@@ -40,6 +43,20 @@ class GoogleCloudIntegrationsV1alphaEventParameter extends \Google\Model
   public function getKey()
   {
     return $this->key;
+  }
+  /**
+   * @param bool
+   */
+  public function setMasked($masked)
+  {
+    $this->masked = $masked;
+  }
+  /**
+   * @return bool
+   */
+  public function getMasked()
+  {
+    return $this->masked;
   }
   /**
    * @param GoogleCloudIntegrationsV1alphaValueType

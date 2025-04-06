@@ -21,36 +21,30 @@ class Question extends \Google\Model
 {
   protected $choiceQuestionType = ChoiceQuestion::class;
   protected $choiceQuestionDataType = '';
-  public $choiceQuestion;
   protected $dateQuestionType = DateQuestion::class;
   protected $dateQuestionDataType = '';
-  public $dateQuestion;
   protected $fileUploadQuestionType = FileUploadQuestion::class;
   protected $fileUploadQuestionDataType = '';
-  public $fileUploadQuestion;
   protected $gradingType = Grading::class;
   protected $gradingDataType = '';
-  public $grading;
   /**
    * @var string
    */
   public $questionId;
+  protected $ratingQuestionType = RatingQuestion::class;
+  protected $ratingQuestionDataType = '';
   /**
    * @var bool
    */
   public $required;
   protected $rowQuestionType = RowQuestion::class;
   protected $rowQuestionDataType = '';
-  public $rowQuestion;
   protected $scaleQuestionType = ScaleQuestion::class;
   protected $scaleQuestionDataType = '';
-  public $scaleQuestion;
   protected $textQuestionType = TextQuestion::class;
   protected $textQuestionDataType = '';
-  public $textQuestion;
   protected $timeQuestionType = TimeQuestion::class;
   protected $timeQuestionDataType = '';
-  public $timeQuestion;
 
   /**
    * @param ChoiceQuestion
@@ -121,6 +115,20 @@ class Question extends \Google\Model
   public function getQuestionId()
   {
     return $this->questionId;
+  }
+  /**
+   * @param RatingQuestion
+   */
+  public function setRatingQuestion(RatingQuestion $ratingQuestion)
+  {
+    $this->ratingQuestion = $ratingQuestion;
+  }
+  /**
+   * @return RatingQuestion
+   */
+  public function getRatingQuestion()
+  {
+    return $this->ratingQuestion;
   }
   /**
    * @param bool

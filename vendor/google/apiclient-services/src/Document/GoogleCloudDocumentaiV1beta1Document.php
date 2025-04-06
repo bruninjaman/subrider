@@ -20,47 +20,57 @@ namespace Google\Service\Document;
 class GoogleCloudDocumentaiV1beta1Document extends \Google\Collection
 {
   protected $collection_key = 'textStyles';
+  protected $chunkedDocumentType = GoogleCloudDocumentaiV1beta1DocumentChunkedDocument::class;
+  protected $chunkedDocumentDataType = '';
   /**
    * @var string
    */
   public $content;
+  protected $documentLayoutType = GoogleCloudDocumentaiV1beta1DocumentDocumentLayout::class;
+  protected $documentLayoutDataType = '';
   protected $entitiesType = GoogleCloudDocumentaiV1beta1DocumentEntity::class;
   protected $entitiesDataType = 'array';
-  public $entities;
   protected $entityRelationsType = GoogleCloudDocumentaiV1beta1DocumentEntityRelation::class;
   protected $entityRelationsDataType = 'array';
-  public $entityRelations;
   protected $errorType = GoogleRpcStatus::class;
   protected $errorDataType = '';
-  public $error;
   /**
    * @var string
    */
   public $mimeType;
   protected $pagesType = GoogleCloudDocumentaiV1beta1DocumentPage::class;
   protected $pagesDataType = 'array';
-  public $pages;
   protected $revisionsType = GoogleCloudDocumentaiV1beta1DocumentRevision::class;
   protected $revisionsDataType = 'array';
-  public $revisions;
   protected $shardInfoType = GoogleCloudDocumentaiV1beta1DocumentShardInfo::class;
   protected $shardInfoDataType = '';
-  public $shardInfo;
   /**
    * @var string
    */
   public $text;
   protected $textChangesType = GoogleCloudDocumentaiV1beta1DocumentTextChange::class;
   protected $textChangesDataType = 'array';
-  public $textChanges;
   protected $textStylesType = GoogleCloudDocumentaiV1beta1DocumentStyle::class;
   protected $textStylesDataType = 'array';
-  public $textStyles;
   /**
    * @var string
    */
   public $uri;
 
+  /**
+   * @param GoogleCloudDocumentaiV1beta1DocumentChunkedDocument
+   */
+  public function setChunkedDocument(GoogleCloudDocumentaiV1beta1DocumentChunkedDocument $chunkedDocument)
+  {
+    $this->chunkedDocument = $chunkedDocument;
+  }
+  /**
+   * @return GoogleCloudDocumentaiV1beta1DocumentChunkedDocument
+   */
+  public function getChunkedDocument()
+  {
+    return $this->chunkedDocument;
+  }
   /**
    * @param string
    */
@@ -74,6 +84,20 @@ class GoogleCloudDocumentaiV1beta1Document extends \Google\Collection
   public function getContent()
   {
     return $this->content;
+  }
+  /**
+   * @param GoogleCloudDocumentaiV1beta1DocumentDocumentLayout
+   */
+  public function setDocumentLayout(GoogleCloudDocumentaiV1beta1DocumentDocumentLayout $documentLayout)
+  {
+    $this->documentLayout = $documentLayout;
+  }
+  /**
+   * @return GoogleCloudDocumentaiV1beta1DocumentDocumentLayout
+   */
+  public function getDocumentLayout()
+  {
+    return $this->documentLayout;
   }
   /**
    * @param GoogleCloudDocumentaiV1beta1DocumentEntity[]

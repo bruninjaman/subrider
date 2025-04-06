@@ -17,11 +17,13 @@
 
 namespace Google\Service\Logging;
 
-class LogEntry extends \Google\Model
+class LogEntry extends \Google\Collection
 {
+  protected $collection_key = 'errorGroups';
+  protected $errorGroupsType = LogErrorGroup::class;
+  protected $errorGroupsDataType = 'array';
   protected $httpRequestType = HttpRequest::class;
   protected $httpRequestDataType = '';
-  public $httpRequest;
   /**
    * @var string
    */
@@ -40,10 +42,8 @@ class LogEntry extends \Google\Model
   public $logName;
   protected $metadataType = MonitoredResourceMetadata::class;
   protected $metadataDataType = '';
-  public $metadata;
   protected $operationType = LogEntryOperation::class;
   protected $operationDataType = '';
-  public $operation;
   /**
    * @var array[]
    */
@@ -54,21 +54,18 @@ class LogEntry extends \Google\Model
   public $receiveTimestamp;
   protected $resourceType = MonitoredResource::class;
   protected $resourceDataType = '';
-  public $resource;
   /**
    * @var string
    */
   public $severity;
   protected $sourceLocationType = LogEntrySourceLocation::class;
   protected $sourceLocationDataType = '';
-  public $sourceLocation;
   /**
    * @var string
    */
   public $spanId;
   protected $splitType = LogSplit::class;
   protected $splitDataType = '';
-  public $split;
   /**
    * @var string
    */
@@ -86,6 +83,20 @@ class LogEntry extends \Google\Model
    */
   public $traceSampled;
 
+  /**
+   * @param LogErrorGroup[]
+   */
+  public function setErrorGroups($errorGroups)
+  {
+    $this->errorGroups = $errorGroups;
+  }
+  /**
+   * @return LogErrorGroup[]
+   */
+  public function getErrorGroups()
+  {
+    return $this->errorGroups;
+  }
   /**
    * @param HttpRequest
    */

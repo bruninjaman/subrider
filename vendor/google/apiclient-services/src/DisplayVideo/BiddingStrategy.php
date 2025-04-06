@@ -21,13 +21,12 @@ class BiddingStrategy extends \Google\Model
 {
   protected $fixedBidType = FixedBidStrategy::class;
   protected $fixedBidDataType = '';
-  public $fixedBid;
   protected $maximizeSpendAutoBidType = MaximizeSpendBidStrategy::class;
   protected $maximizeSpendAutoBidDataType = '';
-  public $maximizeSpendAutoBid;
   protected $performanceGoalAutoBidType = PerformanceGoalBidStrategy::class;
   protected $performanceGoalAutoBidDataType = '';
-  public $performanceGoalAutoBid;
+  protected $youtubeAndPartnersBidType = YoutubeAndPartnersBiddingStrategy::class;
+  protected $youtubeAndPartnersBidDataType = '';
 
   /**
    * @param FixedBidStrategy
@@ -70,6 +69,20 @@ class BiddingStrategy extends \Google\Model
   public function getPerformanceGoalAutoBid()
   {
     return $this->performanceGoalAutoBid;
+  }
+  /**
+   * @param YoutubeAndPartnersBiddingStrategy
+   */
+  public function setYoutubeAndPartnersBid(YoutubeAndPartnersBiddingStrategy $youtubeAndPartnersBid)
+  {
+    $this->youtubeAndPartnersBid = $youtubeAndPartnersBid;
+  }
+  /**
+   * @return YoutubeAndPartnersBiddingStrategy
+   */
+  public function getYoutubeAndPartnersBid()
+  {
+    return $this->youtubeAndPartnersBid;
   }
 }
 

@@ -1,12 +1,16 @@
 <?php
 require_once __DIR__ . '/../connection/BaseRepository.php';
+require_once __DIR__ . '/HistoricoProprietarioRepository.php';
 
 /**
  * Repositório para gerenciar motocicletas
  */
 class MotocicletaRepository extends BaseRepository {
+    private $historicoRepository;
+    
     public function __construct() {
         parent::__construct('motocicletas');
+        $this->historicoRepository = new HistoricoProprietarioRepository();
     }
     
     /**
@@ -16,7 +20,10 @@ class MotocicletaRepository extends BaseRepository {
      * @return array|null Dados da motocicleta ou null se não encontrada
      */
     public function findByPlaca($placa) {
-        $sql = "SELECT * FROM {$this->table} WHERE placa = ?";
+        $sql = "SELECT m.*, p.nome as proprietario_nome 
+                FROM {$this->table} m 
+                LEFT JOIN proprietarios p ON m.proprietario_id = p.id 
+                WHERE m.placa = ?";
         $result = $this->db->query($sql, [$placa]);
         return $result ? $result->fetch_assoc() : null;
     }
@@ -24,18 +31,67 @@ class MotocicletaRepository extends BaseRepository {
     /**
      * Busca motocicletas por proprietário
      * 
-     * @param string $proprietario Nome do proprietário
+     * @param int $proprietarioId ID do proprietário
      * @return array Lista de motocicletas
      */
-    public function findByProprietario($proprietario) {
-        $sql = "SELECT * FROM {$this->table} WHERE proprietario LIKE ?";
-        $result = $this->db->query($sql, ["%{$proprietario}%"]);
+    public function findByProprietarioId($proprietarioId) {
+        $sql = "SELECT * FROM {$this->table} WHERE proprietario_id = ?";
+        $result = $this->db->query($sql, [$proprietarioId]);
         
         $motos = [];
         while ($row = $result->fetch_assoc()) {
             $motos[] = $row;
         }
         return $motos;
+    }
+    
+    /**
+     * Atualiza o proprietário de uma motocicleta
+     * 
+     * @param int $motoId ID da motocicleta
+     * @param int $proprietarioId ID do novo proprietário
+     * @param string $observacao Observação opcional
+     * @return bool Sucesso da operação
+     */
+    public function updateProprietario($motoId, $proprietarioId, $observacao = '') {
+        try {
+            // Atualiza o proprietário na tabela de motocicletas
+            $success = $this->update($motoId, ['proprietario_id' => $proprietarioId]);
+            
+            if ($success) {
+                // Registra no histórico
+                return $this->historicoRepository->registrarTransferencia(
+                    $motoId, 
+                    $proprietarioId, 
+                    $observacao
+                );
+            }
+            
+            return false;
+        } catch (Exception $e) {
+            error_log("Erro ao atualizar proprietário: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Busca o histórico de proprietários de uma motocicleta
+     * 
+     * @param int $motoId ID da motocicleta
+     * @return array Histórico de proprietários
+     */
+    public function getHistoricoProprietarios($motoId) {
+        return $this->historicoRepository->buscarHistoricoMoto($motoId);
+    }
+    
+    /**
+     * Busca o proprietário atual de uma motocicleta
+     * 
+     * @param int $motoId ID da motocicleta
+     * @return array|null Dados do proprietário atual
+     */
+    public function getProprietarioAtual($motoId) {
+        return $this->historicoRepository->buscarProprietarioAtual($motoId);
     }
     
     /**

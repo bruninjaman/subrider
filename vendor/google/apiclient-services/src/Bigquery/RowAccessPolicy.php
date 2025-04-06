@@ -17,8 +17,9 @@
 
 namespace Google\Service\Bigquery;
 
-class RowAccessPolicy extends \Google\Model
+class RowAccessPolicy extends \Google\Collection
 {
+  protected $collection_key = 'grantees';
   /**
    * @var string
    */
@@ -32,12 +33,15 @@ class RowAccessPolicy extends \Google\Model
    */
   public $filterPredicate;
   /**
+   * @var string[]
+   */
+  public $grantees;
+  /**
    * @var string
    */
   public $lastModifiedTime;
   protected $rowAccessPolicyReferenceType = RowAccessPolicyReference::class;
   protected $rowAccessPolicyReferenceDataType = '';
-  public $rowAccessPolicyReference;
 
   /**
    * @param string
@@ -80,6 +84,20 @@ class RowAccessPolicy extends \Google\Model
   public function getFilterPredicate()
   {
     return $this->filterPredicate;
+  }
+  /**
+   * @param string[]
+   */
+  public function setGrantees($grantees)
+  {
+    $this->grantees = $grantees;
+  }
+  /**
+   * @return string[]
+   */
+  public function getGrantees()
+  {
+    return $this->grantees;
   }
   /**
    * @param string

@@ -21,26 +21,26 @@ class CompilationResultAction extends \Google\Model
 {
   protected $assertionType = Assertion::class;
   protected $assertionDataType = '';
-  public $assertion;
   protected $canonicalTargetType = Target::class;
   protected $canonicalTargetDataType = '';
-  public $canonicalTarget;
   protected $declarationType = Declaration::class;
   protected $declarationDataType = '';
-  public $declaration;
   /**
    * @var string
    */
   public $filePath;
+  /**
+   * @var string
+   */
+  public $internalMetadata;
+  protected $notebookType = Notebook::class;
+  protected $notebookDataType = '';
   protected $operationsType = Operations::class;
   protected $operationsDataType = '';
-  public $operations;
   protected $relationType = Relation::class;
   protected $relationDataType = '';
-  public $relation;
   protected $targetType = Target::class;
   protected $targetDataType = '';
-  public $target;
 
   /**
    * @param Assertion
@@ -97,6 +97,34 @@ class CompilationResultAction extends \Google\Model
   public function getFilePath()
   {
     return $this->filePath;
+  }
+  /**
+   * @param string
+   */
+  public function setInternalMetadata($internalMetadata)
+  {
+    $this->internalMetadata = $internalMetadata;
+  }
+  /**
+   * @return string
+   */
+  public function getInternalMetadata()
+  {
+    return $this->internalMetadata;
+  }
+  /**
+   * @param Notebook
+   */
+  public function setNotebook(Notebook $notebook)
+  {
+    $this->notebook = $notebook;
+  }
+  /**
+   * @return Notebook
+   */
+  public function getNotebook()
+  {
+    return $this->notebook;
   }
   /**
    * @param Operations

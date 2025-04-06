@@ -19,14 +19,17 @@ namespace Google\Service\Dataproc;
 
 class ListWorkflowTemplatesResponse extends \Google\Collection
 {
-  protected $collection_key = 'templates';
+  protected $collection_key = 'unreachable';
   /**
    * @var string
    */
   public $nextPageToken;
   protected $templatesType = WorkflowTemplate::class;
   protected $templatesDataType = 'array';
-  public $templates;
+  /**
+   * @var string[]
+   */
+  public $unreachable;
 
   /**
    * @param string
@@ -55,6 +58,20 @@ class ListWorkflowTemplatesResponse extends \Google\Collection
   public function getTemplates()
   {
     return $this->templates;
+  }
+  /**
+   * @param string[]
+   */
+  public function setUnreachable($unreachable)
+  {
+    $this->unreachable = $unreachable;
+  }
+  /**
+   * @return string[]
+   */
+  public function getUnreachable()
+  {
+    return $this->unreachable;
   }
 }
 

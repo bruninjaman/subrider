@@ -32,8 +32,14 @@ class BackendRule extends \Google\Model
    * @var string
    */
   public $jwtAudience;
+  /**
+   * @var string
+   */
+  public $loadBalancingPolicy;
   public $minDeadline;
   public $operationDeadline;
+  protected $overridesByRequestProtocolType = BackendRule::class;
+  protected $overridesByRequestProtocolDataType = 'map';
   /**
    * @var string
    */
@@ -97,6 +103,20 @@ class BackendRule extends \Google\Model
   {
     return $this->jwtAudience;
   }
+  /**
+   * @param string
+   */
+  public function setLoadBalancingPolicy($loadBalancingPolicy)
+  {
+    $this->loadBalancingPolicy = $loadBalancingPolicy;
+  }
+  /**
+   * @return string
+   */
+  public function getLoadBalancingPolicy()
+  {
+    return $this->loadBalancingPolicy;
+  }
   public function setMinDeadline($minDeadline)
   {
     $this->minDeadline = $minDeadline;
@@ -112,6 +132,20 @@ class BackendRule extends \Google\Model
   public function getOperationDeadline()
   {
     return $this->operationDeadline;
+  }
+  /**
+   * @param BackendRule[]
+   */
+  public function setOverridesByRequestProtocol($overridesByRequestProtocol)
+  {
+    $this->overridesByRequestProtocol = $overridesByRequestProtocol;
+  }
+  /**
+   * @return BackendRule[]
+   */
+  public function getOverridesByRequestProtocol()
+  {
+    return $this->overridesByRequestProtocol;
   }
   /**
    * @param string

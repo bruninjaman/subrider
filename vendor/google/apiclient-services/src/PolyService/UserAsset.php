@@ -19,9 +19,12 @@ namespace Google\Service\PolyService;
 
 class UserAsset extends \Google\Model
 {
+  /**
+   * @var Asset
+   */
+  public $asset;
   protected $assetType = Asset::class;
   protected $assetDataType = '';
-  public $asset;
 
   /**
    * @param Asset

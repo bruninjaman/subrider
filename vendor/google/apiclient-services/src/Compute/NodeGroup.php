@@ -21,7 +21,6 @@ class NodeGroup extends \Google\Model
 {
   protected $autoscalingPolicyType = NodeGroupAutoscalingPolicy::class;
   protected $autoscalingPolicyDataType = '';
-  public $autoscalingPolicy;
   /**
    * @var string
    */
@@ -49,10 +48,13 @@ class NodeGroup extends \Google\Model
   /**
    * @var string
    */
+  public $maintenanceInterval;
+  /**
+   * @var string
+   */
   public $maintenancePolicy;
   protected $maintenanceWindowType = NodeGroupMaintenanceWindow::class;
   protected $maintenanceWindowDataType = '';
-  public $maintenanceWindow;
   /**
    * @var string
    */
@@ -67,7 +69,6 @@ class NodeGroup extends \Google\Model
   public $selfLink;
   protected $shareSettingsType = ShareSettings::class;
   protected $shareSettingsDataType = '';
-  public $shareSettings;
   /**
    * @var int
    */
@@ -178,6 +179,20 @@ class NodeGroup extends \Google\Model
   public function getLocationHint()
   {
     return $this->locationHint;
+  }
+  /**
+   * @param string
+   */
+  public function setMaintenanceInterval($maintenanceInterval)
+  {
+    $this->maintenanceInterval = $maintenanceInterval;
+  }
+  /**
+   * @return string
+   */
+  public function getMaintenanceInterval()
+  {
+    return $this->maintenanceInterval;
   }
   /**
    * @param string

@@ -26,10 +26,12 @@ class JobConfigurationQuery extends \Google\Collection
   public $allowLargeResults;
   protected $clusteringType = Clustering::class;
   protected $clusteringDataType = '';
-  public $clustering;
   protected $connectionPropertiesType = ConnectionProperty::class;
   protected $connectionPropertiesDataType = 'array';
-  public $connectionProperties;
+  /**
+   * @var bool
+   */
+  public $continuous;
   /**
    * @var string
    */
@@ -40,13 +42,10 @@ class JobConfigurationQuery extends \Google\Collection
   public $createSession;
   protected $defaultDatasetType = DatasetReference::class;
   protected $defaultDatasetDataType = '';
-  public $defaultDataset;
   protected $destinationEncryptionConfigurationType = EncryptionConfiguration::class;
   protected $destinationEncryptionConfigurationDataType = '';
-  public $destinationEncryptionConfiguration;
   protected $destinationTableType = TableReference::class;
   protected $destinationTableDataType = '';
-  public $destinationTable;
   /**
    * @var bool
    */
@@ -77,20 +76,20 @@ class JobConfigurationQuery extends \Google\Collection
   public $query;
   protected $queryParametersType = QueryParameter::class;
   protected $queryParametersDataType = 'array';
-  public $queryParameters;
   protected $rangePartitioningType = RangePartitioning::class;
   protected $rangePartitioningDataType = '';
-  public $rangePartitioning;
   /**
    * @var string[]
    */
   public $schemaUpdateOptions;
+  protected $scriptOptionsType = ScriptOptions::class;
+  protected $scriptOptionsDataType = '';
+  protected $systemVariablesType = SystemVariables::class;
+  protected $systemVariablesDataType = '';
   protected $tableDefinitionsType = ExternalDataConfiguration::class;
   protected $tableDefinitionsDataType = 'map';
-  public $tableDefinitions;
   protected $timePartitioningType = TimePartitioning::class;
   protected $timePartitioningDataType = '';
-  public $timePartitioning;
   /**
    * @var bool
    */
@@ -101,11 +100,14 @@ class JobConfigurationQuery extends \Google\Collection
   public $useQueryCache;
   protected $userDefinedFunctionResourcesType = UserDefinedFunctionResource::class;
   protected $userDefinedFunctionResourcesDataType = 'array';
-  public $userDefinedFunctionResources;
   /**
    * @var string
    */
   public $writeDisposition;
+  /**
+   * @var bool
+   */
+  public $writeIncrementalResults;
 
   /**
    * @param bool
@@ -148,6 +150,20 @@ class JobConfigurationQuery extends \Google\Collection
   public function getConnectionProperties()
   {
     return $this->connectionProperties;
+  }
+  /**
+   * @param bool
+   */
+  public function setContinuous($continuous)
+  {
+    $this->continuous = $continuous;
+  }
+  /**
+   * @return bool
+   */
+  public function getContinuous()
+  {
+    return $this->continuous;
   }
   /**
    * @param string
@@ -360,6 +376,34 @@ class JobConfigurationQuery extends \Google\Collection
     return $this->schemaUpdateOptions;
   }
   /**
+   * @param ScriptOptions
+   */
+  public function setScriptOptions(ScriptOptions $scriptOptions)
+  {
+    $this->scriptOptions = $scriptOptions;
+  }
+  /**
+   * @return ScriptOptions
+   */
+  public function getScriptOptions()
+  {
+    return $this->scriptOptions;
+  }
+  /**
+   * @param SystemVariables
+   */
+  public function setSystemVariables(SystemVariables $systemVariables)
+  {
+    $this->systemVariables = $systemVariables;
+  }
+  /**
+   * @return SystemVariables
+   */
+  public function getSystemVariables()
+  {
+    return $this->systemVariables;
+  }
+  /**
    * @param ExternalDataConfiguration[]
    */
   public function setTableDefinitions($tableDefinitions)
@@ -442,6 +486,20 @@ class JobConfigurationQuery extends \Google\Collection
   public function getWriteDisposition()
   {
     return $this->writeDisposition;
+  }
+  /**
+   * @param bool
+   */
+  public function setWriteIncrementalResults($writeIncrementalResults)
+  {
+    $this->writeIncrementalResults = $writeIncrementalResults;
+  }
+  /**
+   * @return bool
+   */
+  public function getWriteIncrementalResults()
+  {
+    return $this->writeIncrementalResults;
   }
 }
 

@@ -37,6 +37,14 @@ class TaskGroup extends \Google\Collection
    */
   public $requireHostsFile;
   /**
+   * @var bool
+   */
+  public $runAsNonRoot;
+  /**
+   * @var string
+   */
+  public $schedulingPolicy;
+  /**
    * @var string
    */
   public $taskCount;
@@ -46,10 +54,8 @@ class TaskGroup extends \Google\Collection
   public $taskCountPerNode;
   protected $taskEnvironmentsType = Environment::class;
   protected $taskEnvironmentsDataType = 'array';
-  public $taskEnvironments;
   protected $taskSpecType = TaskSpec::class;
   protected $taskSpecDataType = '';
-  public $taskSpec;
 
   /**
    * @param string
@@ -106,6 +112,34 @@ class TaskGroup extends \Google\Collection
   public function getRequireHostsFile()
   {
     return $this->requireHostsFile;
+  }
+  /**
+   * @param bool
+   */
+  public function setRunAsNonRoot($runAsNonRoot)
+  {
+    $this->runAsNonRoot = $runAsNonRoot;
+  }
+  /**
+   * @return bool
+   */
+  public function getRunAsNonRoot()
+  {
+    return $this->runAsNonRoot;
+  }
+  /**
+   * @param string
+   */
+  public function setSchedulingPolicy($schedulingPolicy)
+  {
+    $this->schedulingPolicy = $schedulingPolicy;
+  }
+  /**
+   * @return string
+   */
+  public function getSchedulingPolicy()
+  {
+    return $this->schedulingPolicy;
   }
   /**
    * @param string

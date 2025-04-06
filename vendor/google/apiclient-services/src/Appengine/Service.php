@@ -20,6 +20,10 @@ namespace Google\Service\Appengine;
 class Service extends \Google\Model
 {
   /**
+   * @var array[]
+   */
+  public $generatedCustomerMetadata;
+  /**
    * @var string
    */
   public $id;
@@ -33,11 +37,23 @@ class Service extends \Google\Model
   public $name;
   protected $networkSettingsType = NetworkSettings::class;
   protected $networkSettingsDataType = '';
-  public $networkSettings;
   protected $splitType = TrafficSplit::class;
   protected $splitDataType = '';
-  public $split;
 
+  /**
+   * @param array[]
+   */
+  public function setGeneratedCustomerMetadata($generatedCustomerMetadata)
+  {
+    $this->generatedCustomerMetadata = $generatedCustomerMetadata;
+  }
+  /**
+   * @return array[]
+   */
+  public function getGeneratedCustomerMetadata()
+  {
+    return $this->generatedCustomerMetadata;
+  }
   /**
    * @param string
    */

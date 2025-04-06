@@ -29,7 +29,6 @@ class CertificateTemplate extends \Google\Model
   public $description;
   protected $identityConstraintsType = CertificateIdentityConstraints::class;
   protected $identityConstraintsDataType = '';
-  public $identityConstraints;
   /**
    * @var string[]
    */
@@ -37,13 +36,15 @@ class CertificateTemplate extends \Google\Model
   /**
    * @var string
    */
+  public $maximumLifetime;
+  /**
+   * @var string
+   */
   public $name;
   protected $passthroughExtensionsType = CertificateExtensionConstraints::class;
   protected $passthroughExtensionsDataType = '';
-  public $passthroughExtensions;
   protected $predefinedValuesType = X509Parameters::class;
   protected $predefinedValuesDataType = '';
-  public $predefinedValues;
   /**
    * @var string
    */
@@ -104,6 +105,20 @@ class CertificateTemplate extends \Google\Model
   public function getLabels()
   {
     return $this->labels;
+  }
+  /**
+   * @param string
+   */
+  public function setMaximumLifetime($maximumLifetime)
+  {
+    $this->maximumLifetime = $maximumLifetime;
+  }
+  /**
+   * @return string
+   */
+  public function getMaximumLifetime()
+  {
+    return $this->maximumLifetime;
   }
   /**
    * @param string

@@ -19,30 +19,17 @@ namespace Google\Service\Contentwarehouse;
 
 class GoogleCloudContentwarehouseV1RunPipelineRequest extends \Google\Model
 {
-  protected $classifySplitAndExtractPipelineType = GoogleCloudContentwarehouseV1ClassifySplitAndExtractPipeline::class;
-  protected $classifySplitAndExtractPipelineDataType = '';
-  public $classifySplitAndExtractPipeline;
   protected $exportCdwPipelineType = GoogleCloudContentwarehouseV1ExportToCdwPipeline::class;
   protected $exportCdwPipelineDataType = '';
-  public $exportCdwPipeline;
   protected $gcsIngestPipelineType = GoogleCloudContentwarehouseV1GcsIngestPipeline::class;
   protected $gcsIngestPipelineDataType = '';
-  public $gcsIngestPipeline;
+  protected $gcsIngestWithDocAiProcessorsPipelineType = GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline::class;
+  protected $gcsIngestWithDocAiProcessorsPipelineDataType = '';
+  protected $processWithDocAiPipelineType = GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline::class;
+  protected $processWithDocAiPipelineDataType = '';
+  protected $requestMetadataType = GoogleCloudContentwarehouseV1RequestMetadata::class;
+  protected $requestMetadataDataType = '';
 
-  /**
-   * @param GoogleCloudContentwarehouseV1ClassifySplitAndExtractPipeline
-   */
-  public function setClassifySplitAndExtractPipeline(GoogleCloudContentwarehouseV1ClassifySplitAndExtractPipeline $classifySplitAndExtractPipeline)
-  {
-    $this->classifySplitAndExtractPipeline = $classifySplitAndExtractPipeline;
-  }
-  /**
-   * @return GoogleCloudContentwarehouseV1ClassifySplitAndExtractPipeline
-   */
-  public function getClassifySplitAndExtractPipeline()
-  {
-    return $this->classifySplitAndExtractPipeline;
-  }
   /**
    * @param GoogleCloudContentwarehouseV1ExportToCdwPipeline
    */
@@ -70,6 +57,48 @@ class GoogleCloudContentwarehouseV1RunPipelineRequest extends \Google\Model
   public function getGcsIngestPipeline()
   {
     return $this->gcsIngestPipeline;
+  }
+  /**
+   * @param GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline
+   */
+  public function setGcsIngestWithDocAiProcessorsPipeline(GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline $gcsIngestWithDocAiProcessorsPipeline)
+  {
+    $this->gcsIngestWithDocAiProcessorsPipeline = $gcsIngestWithDocAiProcessorsPipeline;
+  }
+  /**
+   * @return GoogleCloudContentwarehouseV1GcsIngestWithDocAiProcessorsPipeline
+   */
+  public function getGcsIngestWithDocAiProcessorsPipeline()
+  {
+    return $this->gcsIngestWithDocAiProcessorsPipeline;
+  }
+  /**
+   * @param GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline
+   */
+  public function setProcessWithDocAiPipeline(GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline $processWithDocAiPipeline)
+  {
+    $this->processWithDocAiPipeline = $processWithDocAiPipeline;
+  }
+  /**
+   * @return GoogleCloudContentwarehouseV1ProcessWithDocAiPipeline
+   */
+  public function getProcessWithDocAiPipeline()
+  {
+    return $this->processWithDocAiPipeline;
+  }
+  /**
+   * @param GoogleCloudContentwarehouseV1RequestMetadata
+   */
+  public function setRequestMetadata(GoogleCloudContentwarehouseV1RequestMetadata $requestMetadata)
+  {
+    $this->requestMetadata = $requestMetadata;
+  }
+  /**
+   * @return GoogleCloudContentwarehouseV1RequestMetadata
+   */
+  public function getRequestMetadata()
+  {
+    return $this->requestMetadata;
   }
 }
 

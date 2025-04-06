@@ -30,7 +30,6 @@ class ResourceSearchResult extends \Google\Collection
   public $assetType;
   protected $attachedResourcesType = AttachedResource::class;
   protected $attachedResourcesDataType = 'array';
-  public $attachedResources;
   /**
    * @var string
    */
@@ -43,6 +42,10 @@ class ResourceSearchResult extends \Google\Collection
    * @var string
    */
   public $displayName;
+  protected $effectiveTagsType = EffectiveTagDetails::class;
+  protected $effectiveTagsDataType = 'array';
+  protected $enrichmentsType = AssetEnrichment::class;
+  protected $enrichmentsDataType = 'array';
   /**
    * @var string[]
    */
@@ -89,7 +92,10 @@ class ResourceSearchResult extends \Google\Collection
   public $project;
   protected $relationshipsType = RelatedResources::class;
   protected $relationshipsDataType = 'map';
-  public $relationships;
+  /**
+   * @var string[]
+   */
+  public $sccSecurityMarks;
   /**
    * @var string
    */
@@ -106,13 +112,14 @@ class ResourceSearchResult extends \Google\Collection
    * @var string[]
    */
   public $tagValues;
+  protected $tagsType = Tag::class;
+  protected $tagsDataType = 'array';
   /**
    * @var string
    */
   public $updateTime;
   protected $versionedResourcesType = VersionedResource::class;
   protected $versionedResourcesDataType = 'array';
-  public $versionedResources;
 
   /**
    * @param array[]
@@ -197,6 +204,34 @@ class ResourceSearchResult extends \Google\Collection
   public function getDisplayName()
   {
     return $this->displayName;
+  }
+  /**
+   * @param EffectiveTagDetails[]
+   */
+  public function setEffectiveTags($effectiveTags)
+  {
+    $this->effectiveTags = $effectiveTags;
+  }
+  /**
+   * @return EffectiveTagDetails[]
+   */
+  public function getEffectiveTags()
+  {
+    return $this->effectiveTags;
+  }
+  /**
+   * @param AssetEnrichment[]
+   */
+  public function setEnrichments($enrichments)
+  {
+    $this->enrichments = $enrichments;
+  }
+  /**
+   * @return AssetEnrichment[]
+   */
+  public function getEnrichments()
+  {
+    return $this->enrichments;
   }
   /**
    * @param string[]
@@ -367,6 +402,20 @@ class ResourceSearchResult extends \Google\Collection
     return $this->relationships;
   }
   /**
+   * @param string[]
+   */
+  public function setSccSecurityMarks($sccSecurityMarks)
+  {
+    $this->sccSecurityMarks = $sccSecurityMarks;
+  }
+  /**
+   * @return string[]
+   */
+  public function getSccSecurityMarks()
+  {
+    return $this->sccSecurityMarks;
+  }
+  /**
    * @param string
    */
   public function setState($state)
@@ -421,6 +470,20 @@ class ResourceSearchResult extends \Google\Collection
   public function getTagValues()
   {
     return $this->tagValues;
+  }
+  /**
+   * @param Tag[]
+   */
+  public function setTags($tags)
+  {
+    $this->tags = $tags;
+  }
+  /**
+   * @return Tag[]
+   */
+  public function getTags()
+  {
+    return $this->tags;
   }
   /**
    * @param string

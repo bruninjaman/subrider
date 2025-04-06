@@ -2,6 +2,7 @@
 session_start();
 
 require_once(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/../../classes/HistoricoMoto.php");
 
 // Funções de validação
 function validateMotoData($data) {
@@ -46,29 +47,11 @@ function sanitizeMotoData($data, $conn) {
     return $clean;
 }
 
-function logAudit($conn, $motoId, $oldData, $newData) {
-    $userId = $_SESSION['userId'];
-    $changes = [];
-    
-    foreach ($newData as $key => $value) {
-        if ($oldData[$key] != $value) {
-            $changes[] = "$key: {$oldData[$key]} -> $value";
-        }
-    }
-    
-    if (!empty($changes)) {
-        $changes = mysqli_real_escape_string($conn, implode(", ", $changes));
-        $query = "INSERT INTO auditoria (userId, acao, tabela, registro, alteracoes, data) 
-                 VALUES ('$userId', 'UPDATE', 'motocicletas', '$motoId', '$changes', NOW())";
-        mysqli_query($conn, $query);
-    }
-}
-
 if (isset($_POST['endereco'])) {
     $errors = validateMotoData($_POST);
     
     if (empty($errors)) {
-        // Buscar dados antigos para auditoria
+        // Buscar dados antigos para histórico
         $motoId = $_POST['motoID'];
         $oldDataQuery = "SELECT * FROM motocicletas WHERE motoId = '$motoId'";
         $oldDataResult = mysqli_query($conn, $oldDataQuery);
@@ -106,9 +89,39 @@ if (isset($_POST['endereco'])) {
                        " WHERE motoId = '$motoId'";
         
         if (mysqli_query($conn, $mysqli_query)) {
-            // Registrar auditoria
-            $newData = array_merge($data, ['foto' => $foto ?? $oldData['foto']]);
-            logAudit($conn, $motoId, $oldData, $newData);
+            // Registrar alterações no histórico
+            $historico = new HistoricoMoto($conn, $motoId, $_SESSION['userId']);
+            
+            // Campos a serem monitorados
+            $campos = [
+                'endereco' => 'Endereço',
+                'ano' => 'Ano',
+                'modelo' => 'Modelo',
+                'marca' => 'Marca',
+                'placa' => 'Placa',
+                'km' => 'Quilometragem',
+                'proprietario' => 'Proprietário'
+            ];
+            
+            // Registrar cada alteração
+            foreach ($campos as $campo => $label) {
+                if ($oldData[$campo] != $data[$campo]) {
+                    $historico->registrarAlteracao(
+                        $label,
+                        $oldData[$campo],
+                        $data[$campo]
+                    );
+                }
+            }
+            
+            // Se houver nova foto
+            if (isset($foto)) {
+                $historico->registrarAlteracao(
+                    'Foto',
+                    $oldData['foto'],
+                    $foto
+                );
+            }
             
             $_SESSION['success_message'] = "Moto atualizada com sucesso!";
         } else {

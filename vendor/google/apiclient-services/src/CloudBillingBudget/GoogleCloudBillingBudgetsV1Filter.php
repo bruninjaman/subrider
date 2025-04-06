@@ -34,7 +34,6 @@ class GoogleCloudBillingBudgetsV1Filter extends \Google\Collection
   public $creditTypesTreatment;
   protected $customPeriodType = GoogleCloudBillingBudgetsV1CustomPeriod::class;
   protected $customPeriodDataType = '';
-  public $customPeriod;
   /**
    * @var array[]
    */
@@ -43,6 +42,10 @@ class GoogleCloudBillingBudgetsV1Filter extends \Google\Collection
    * @var string[]
    */
   public $projects;
+  /**
+   * @var string[]
+   */
+  public $resourceAncestors;
   /**
    * @var string[]
    */
@@ -135,6 +138,20 @@ class GoogleCloudBillingBudgetsV1Filter extends \Google\Collection
   public function getProjects()
   {
     return $this->projects;
+  }
+  /**
+   * @param string[]
+   */
+  public function setResourceAncestors($resourceAncestors)
+  {
+    $this->resourceAncestors = $resourceAncestors;
+  }
+  /**
+   * @return string[]
+   */
+  public function getResourceAncestors()
+  {
+    return $this->resourceAncestors;
   }
   /**
    * @param string[]

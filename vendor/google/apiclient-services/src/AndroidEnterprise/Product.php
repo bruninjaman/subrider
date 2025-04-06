@@ -22,13 +22,10 @@ class Product extends \Google\Collection
   protected $collection_key = 'screenshotUrls';
   protected $appRestrictionsSchemaType = AppRestrictionsSchema::class;
   protected $appRestrictionsSchemaDataType = '';
-  public $appRestrictionsSchema;
   protected $appTracksType = TrackInfo::class;
   protected $appTracksDataType = 'array';
-  public $appTracks;
   protected $appVersionType = AppVersion::class;
   protected $appVersionDataType = 'array';
-  public $appVersion;
   /**
    * @var string
    */
@@ -68,6 +65,10 @@ class Product extends \Google\Collection
   /**
    * @var string
    */
+  public $fullDescription;
+  /**
+   * @var string
+   */
   public $iconUrl;
   /**
    * @var string
@@ -79,7 +80,6 @@ class Product extends \Google\Collection
   public $minAndroidSdkVersion;
   protected $permissionsType = ProductPermission::class;
   protected $permissionsDataType = 'array';
-  public $permissions;
   /**
    * @var string
    */
@@ -102,7 +102,6 @@ class Product extends \Google\Collection
   public $screenshotUrls;
   protected $signingCertificateType = ProductSigningCertificate::class;
   protected $signingCertificateDataType = '';
-  public $signingCertificate;
   /**
    * @var string
    */
@@ -283,6 +282,20 @@ class Product extends \Google\Collection
   public function getFeatures()
   {
     return $this->features;
+  }
+  /**
+   * @param string
+   */
+  public function setFullDescription($fullDescription)
+  {
+    $this->fullDescription = $fullDescription;
+  }
+  /**
+   * @return string
+   */
+  public function getFullDescription()
+  {
+    return $this->fullDescription;
   }
   /**
    * @param string

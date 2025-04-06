@@ -24,9 +24,12 @@ class ListRepricingRuleReportsResponse extends \Google\Collection
    * @var string
    */
   public $nextPageToken;
+  /**
+   * @var RepricingRuleReport[]
+   */
+  public $repricingRuleReports;
   protected $repricingRuleReportsType = RepricingRuleReport::class;
   protected $repricingRuleReportsDataType = 'array';
-  public $repricingRuleReports;
 
   /**
    * @param string

@@ -21,6 +21,10 @@ class ConnectivityTest extends \Google\Collection
 {
   protected $collection_key = 'relatedProjects';
   /**
+   * @var bool
+   */
+  public $bypassFirewallChecks;
+  /**
    * @var string
    */
   public $createTime;
@@ -30,7 +34,6 @@ class ConnectivityTest extends \Google\Collection
   public $description;
   protected $destinationType = Endpoint::class;
   protected $destinationDataType = '';
-  public $destination;
   /**
    * @var string
    */
@@ -43,25 +46,45 @@ class ConnectivityTest extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $probingDetailsType = ProbingDetails::class;
+  protected $probingDetailsDataType = '';
   /**
    * @var string
    */
   public $protocol;
   protected $reachabilityDetailsType = ReachabilityDetails::class;
   protected $reachabilityDetailsDataType = '';
-  public $reachabilityDetails;
   /**
    * @var string[]
    */
   public $relatedProjects;
+  protected $returnReachabilityDetailsType = ReachabilityDetails::class;
+  protected $returnReachabilityDetailsDataType = '';
+  /**
+   * @var bool
+   */
+  public $roundTrip;
   protected $sourceType = Endpoint::class;
   protected $sourceDataType = '';
-  public $source;
   /**
    * @var string
    */
   public $updateTime;
 
+  /**
+   * @param bool
+   */
+  public function setBypassFirewallChecks($bypassFirewallChecks)
+  {
+    $this->bypassFirewallChecks = $bypassFirewallChecks;
+  }
+  /**
+   * @return bool
+   */
+  public function getBypassFirewallChecks()
+  {
+    return $this->bypassFirewallChecks;
+  }
   /**
    * @param string
    */
@@ -147,6 +170,20 @@ class ConnectivityTest extends \Google\Collection
     return $this->name;
   }
   /**
+   * @param ProbingDetails
+   */
+  public function setProbingDetails(ProbingDetails $probingDetails)
+  {
+    $this->probingDetails = $probingDetails;
+  }
+  /**
+   * @return ProbingDetails
+   */
+  public function getProbingDetails()
+  {
+    return $this->probingDetails;
+  }
+  /**
    * @param string
    */
   public function setProtocol($protocol)
@@ -187,6 +224,34 @@ class ConnectivityTest extends \Google\Collection
   public function getRelatedProjects()
   {
     return $this->relatedProjects;
+  }
+  /**
+   * @param ReachabilityDetails
+   */
+  public function setReturnReachabilityDetails(ReachabilityDetails $returnReachabilityDetails)
+  {
+    $this->returnReachabilityDetails = $returnReachabilityDetails;
+  }
+  /**
+   * @return ReachabilityDetails
+   */
+  public function getReturnReachabilityDetails()
+  {
+    return $this->returnReachabilityDetails;
+  }
+  /**
+   * @param bool
+   */
+  public function setRoundTrip($roundTrip)
+  {
+    $this->roundTrip = $roundTrip;
+  }
+  /**
+   * @return bool
+   */
+  public function getRoundTrip()
+  {
+    return $this->roundTrip;
   }
   /**
    * @param Endpoint

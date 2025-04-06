@@ -21,10 +21,10 @@ class DeprecatedEvent extends \Google\Model
 {
   protected $actionType = FormAction::class;
   protected $actionDataType = '';
-  public $action;
+  protected $appCommandMetadataType = AppCommandMetadata::class;
+  protected $appCommandMetadataDataType = '';
   protected $commonType = CommonEventObject::class;
   protected $commonDataType = '';
-  public $common;
   /**
    * @var string
    */
@@ -43,10 +43,10 @@ class DeprecatedEvent extends \Google\Model
   public $isDialogEvent;
   protected $messageType = Message::class;
   protected $messageDataType = '';
-  public $message;
   protected $spaceType = Space::class;
   protected $spaceDataType = '';
-  public $space;
+  protected $threadType = Thread::class;
+  protected $threadDataType = '';
   /**
    * @var string
    */
@@ -61,7 +61,6 @@ class DeprecatedEvent extends \Google\Model
   public $type;
   protected $userType = User::class;
   protected $userDataType = '';
-  public $user;
 
   /**
    * @param FormAction
@@ -76,6 +75,20 @@ class DeprecatedEvent extends \Google\Model
   public function getAction()
   {
     return $this->action;
+  }
+  /**
+   * @param AppCommandMetadata
+   */
+  public function setAppCommandMetadata(AppCommandMetadata $appCommandMetadata)
+  {
+    $this->appCommandMetadata = $appCommandMetadata;
+  }
+  /**
+   * @return AppCommandMetadata
+   */
+  public function getAppCommandMetadata()
+  {
+    return $this->appCommandMetadata;
   }
   /**
    * @param CommonEventObject
@@ -174,6 +187,20 @@ class DeprecatedEvent extends \Google\Model
   public function getSpace()
   {
     return $this->space;
+  }
+  /**
+   * @param Thread
+   */
+  public function setThread(Thread $thread)
+  {
+    $this->thread = $thread;
+  }
+  /**
+   * @return Thread
+   */
+  public function getThread()
+  {
+    return $this->thread;
   }
   /**
    * @param string

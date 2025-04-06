@@ -21,17 +21,18 @@ class SourceConfig extends \Google\Model
 {
   protected $mysqlSourceConfigType = MysqlSourceConfig::class;
   protected $mysqlSourceConfigDataType = '';
-  public $mysqlSourceConfig;
   protected $oracleSourceConfigType = OracleSourceConfig::class;
   protected $oracleSourceConfigDataType = '';
-  public $oracleSourceConfig;
   protected $postgresqlSourceConfigType = PostgresqlSourceConfig::class;
   protected $postgresqlSourceConfigDataType = '';
-  public $postgresqlSourceConfig;
+  protected $salesforceSourceConfigType = SalesforceSourceConfig::class;
+  protected $salesforceSourceConfigDataType = '';
   /**
    * @var string
    */
   public $sourceConnectionProfile;
+  protected $sqlServerSourceConfigType = SqlServerSourceConfig::class;
+  protected $sqlServerSourceConfigDataType = '';
 
   /**
    * @param MysqlSourceConfig
@@ -76,6 +77,20 @@ class SourceConfig extends \Google\Model
     return $this->postgresqlSourceConfig;
   }
   /**
+   * @param SalesforceSourceConfig
+   */
+  public function setSalesforceSourceConfig(SalesforceSourceConfig $salesforceSourceConfig)
+  {
+    $this->salesforceSourceConfig = $salesforceSourceConfig;
+  }
+  /**
+   * @return SalesforceSourceConfig
+   */
+  public function getSalesforceSourceConfig()
+  {
+    return $this->salesforceSourceConfig;
+  }
+  /**
    * @param string
    */
   public function setSourceConnectionProfile($sourceConnectionProfile)
@@ -88,6 +103,20 @@ class SourceConfig extends \Google\Model
   public function getSourceConnectionProfile()
   {
     return $this->sourceConnectionProfile;
+  }
+  /**
+   * @param SqlServerSourceConfig
+   */
+  public function setSqlServerSourceConfig(SqlServerSourceConfig $sqlServerSourceConfig)
+  {
+    $this->sqlServerSourceConfig = $sqlServerSourceConfig;
+  }
+  /**
+   * @return SqlServerSourceConfig
+   */
+  public function getSqlServerSourceConfig()
+  {
+    return $this->sqlServerSourceConfig;
   }
 }
 

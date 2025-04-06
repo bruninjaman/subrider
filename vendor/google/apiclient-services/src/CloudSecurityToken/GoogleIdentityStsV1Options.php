@@ -17,16 +17,10 @@
 
 namespace Google\Service\CloudSecurityToken;
 
-class GoogleIdentityStsV1Options extends \Google\Collection
+class GoogleIdentityStsV1Options extends \Google\Model
 {
-  protected $collection_key = 'audiences';
   protected $accessBoundaryType = GoogleIdentityStsV1AccessBoundary::class;
   protected $accessBoundaryDataType = '';
-  public $accessBoundary;
-  /**
-   * @var string[]
-   */
-  public $audiences;
   /**
    * @var string
    */
@@ -45,20 +39,6 @@ class GoogleIdentityStsV1Options extends \Google\Collection
   public function getAccessBoundary()
   {
     return $this->accessBoundary;
-  }
-  /**
-   * @param string[]
-   */
-  public function setAudiences($audiences)
-  {
-    $this->audiences = $audiences;
-  }
-  /**
-   * @return string[]
-   */
-  public function getAudiences()
-  {
-    return $this->audiences;
   }
   /**
    * @param string

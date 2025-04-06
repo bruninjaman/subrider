@@ -30,14 +30,12 @@ class ApplicationReport extends \Google\Collection
   public $displayName;
   protected $eventsType = ApplicationEvent::class;
   protected $eventsDataType = 'array';
-  public $events;
   /**
    * @var string
    */
   public $installerPackageName;
   protected $keyedAppStatesType = KeyedAppState::class;
   protected $keyedAppStatesDataType = 'array';
-  public $keyedAppStates;
   /**
    * @var string
    */
@@ -54,6 +52,10 @@ class ApplicationReport extends \Google\Collection
    * @var string
    */
   public $state;
+  /**
+   * @var string
+   */
+  public $userFacingType;
   /**
    * @var int
    */
@@ -188,6 +190,20 @@ class ApplicationReport extends \Google\Collection
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param string
+   */
+  public function setUserFacingType($userFacingType)
+  {
+    $this->userFacingType = $userFacingType;
+  }
+  /**
+   * @return string
+   */
+  public function getUserFacingType()
+  {
+    return $this->userFacingType;
   }
   /**
    * @param int

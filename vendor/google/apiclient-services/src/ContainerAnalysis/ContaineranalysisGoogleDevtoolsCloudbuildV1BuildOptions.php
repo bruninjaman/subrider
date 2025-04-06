@@ -21,6 +21,14 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions extends \Google\Co
 {
   protected $collection_key = 'volumes';
   /**
+   * @var bool
+   */
+  public $automapSubstitutions;
+  /**
+   * @var string
+   */
+  public $defaultLogsBucketBehavior;
+  /**
    * @var string
    */
   public $diskSizeGb;
@@ -28,6 +36,10 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions extends \Google\Co
    * @var bool
    */
   public $dynamicSubstitutions;
+  /**
+   * @var bool
+   */
+  public $enableStructuredLogging;
   /**
    * @var string[]
    */
@@ -46,7 +58,10 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions extends \Google\Co
   public $machineType;
   protected $poolType = ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption::class;
   protected $poolDataType = '';
-  public $pool;
+  /**
+   * @var string
+   */
+  public $pubsubTopic;
   /**
    * @var string
    */
@@ -65,12 +80,39 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions extends \Google\Co
   public $substitutionOption;
   protected $volumesType = ContaineranalysisGoogleDevtoolsCloudbuildV1Volume::class;
   protected $volumesDataType = 'array';
-  public $volumes;
   /**
    * @var string
    */
   public $workerPool;
 
+  /**
+   * @param bool
+   */
+  public function setAutomapSubstitutions($automapSubstitutions)
+  {
+    $this->automapSubstitutions = $automapSubstitutions;
+  }
+  /**
+   * @return bool
+   */
+  public function getAutomapSubstitutions()
+  {
+    return $this->automapSubstitutions;
+  }
+  /**
+   * @param string
+   */
+  public function setDefaultLogsBucketBehavior($defaultLogsBucketBehavior)
+  {
+    $this->defaultLogsBucketBehavior = $defaultLogsBucketBehavior;
+  }
+  /**
+   * @return string
+   */
+  public function getDefaultLogsBucketBehavior()
+  {
+    return $this->defaultLogsBucketBehavior;
+  }
   /**
    * @param string
    */
@@ -98,6 +140,20 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions extends \Google\Co
   public function getDynamicSubstitutions()
   {
     return $this->dynamicSubstitutions;
+  }
+  /**
+   * @param bool
+   */
+  public function setEnableStructuredLogging($enableStructuredLogging)
+  {
+    $this->enableStructuredLogging = $enableStructuredLogging;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableStructuredLogging()
+  {
+    return $this->enableStructuredLogging;
   }
   /**
    * @param string[]
@@ -168,6 +224,20 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions extends \Google\Co
   public function getPool()
   {
     return $this->pool;
+  }
+  /**
+   * @param string
+   */
+  public function setPubsubTopic($pubsubTopic)
+  {
+    $this->pubsubTopic = $pubsubTopic;
+  }
+  /**
+   * @return string
+   */
+  public function getPubsubTopic()
+  {
+    return $this->pubsubTopic;
   }
   /**
    * @param string

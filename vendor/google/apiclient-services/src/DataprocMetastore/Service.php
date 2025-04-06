@@ -31,26 +31,28 @@ class Service extends \Google\Model
    * @var string
    */
   public $databaseType;
+  /**
+   * @var bool
+   */
+  public $deletionProtection;
   protected $encryptionConfigType = EncryptionConfig::class;
   protected $encryptionConfigDataType = '';
-  public $encryptionConfig;
   /**
    * @var string
    */
   public $endpointUri;
   protected $hiveMetastoreConfigType = HiveMetastoreConfig::class;
   protected $hiveMetastoreConfigDataType = '';
-  public $hiveMetastoreConfig;
   /**
    * @var string[]
    */
   public $labels;
   protected $maintenanceWindowType = MaintenanceWindow::class;
   protected $maintenanceWindowDataType = '';
-  public $maintenanceWindow;
+  protected $metadataIntegrationType = MetadataIntegration::class;
+  protected $metadataIntegrationDataType = '';
   protected $metadataManagementActivityType = MetadataManagementActivity::class;
   protected $metadataManagementActivityDataType = '';
-  public $metadataManagementActivity;
   /**
    * @var string
    */
@@ -61,7 +63,6 @@ class Service extends \Google\Model
   public $network;
   protected $networkConfigType = NetworkConfig::class;
   protected $networkConfigDataType = '';
-  public $networkConfig;
   /**
    * @var int
    */
@@ -70,6 +71,10 @@ class Service extends \Google\Model
    * @var string
    */
   public $releaseChannel;
+  protected $scalingConfigType = ScalingConfig::class;
+  protected $scalingConfigDataType = '';
+  protected $scheduledBackupType = ScheduledBackup::class;
+  protected $scheduledBackupDataType = '';
   /**
    * @var string
    */
@@ -80,7 +85,6 @@ class Service extends \Google\Model
   public $stateMessage;
   protected $telemetryConfigType = TelemetryConfig::class;
   protected $telemetryConfigDataType = '';
-  public $telemetryConfig;
   /**
    * @var string
    */
@@ -135,6 +139,20 @@ class Service extends \Google\Model
   public function getDatabaseType()
   {
     return $this->databaseType;
+  }
+  /**
+   * @param bool
+   */
+  public function setDeletionProtection($deletionProtection)
+  {
+    $this->deletionProtection = $deletionProtection;
+  }
+  /**
+   * @return bool
+   */
+  public function getDeletionProtection()
+  {
+    return $this->deletionProtection;
   }
   /**
    * @param EncryptionConfig
@@ -205,6 +223,20 @@ class Service extends \Google\Model
   public function getMaintenanceWindow()
   {
     return $this->maintenanceWindow;
+  }
+  /**
+   * @param MetadataIntegration
+   */
+  public function setMetadataIntegration(MetadataIntegration $metadataIntegration)
+  {
+    $this->metadataIntegration = $metadataIntegration;
+  }
+  /**
+   * @return MetadataIntegration
+   */
+  public function getMetadataIntegration()
+  {
+    return $this->metadataIntegration;
   }
   /**
    * @param MetadataManagementActivity
@@ -289,6 +321,34 @@ class Service extends \Google\Model
   public function getReleaseChannel()
   {
     return $this->releaseChannel;
+  }
+  /**
+   * @param ScalingConfig
+   */
+  public function setScalingConfig(ScalingConfig $scalingConfig)
+  {
+    $this->scalingConfig = $scalingConfig;
+  }
+  /**
+   * @return ScalingConfig
+   */
+  public function getScalingConfig()
+  {
+    return $this->scalingConfig;
+  }
+  /**
+   * @param ScheduledBackup
+   */
+  public function setScheduledBackup(ScheduledBackup $scheduledBackup)
+  {
+    $this->scheduledBackup = $scheduledBackup;
+  }
+  /**
+   * @return ScheduledBackup
+   */
+  public function getScheduledBackup()
+  {
+    return $this->scheduledBackup;
   }
   /**
    * @param string

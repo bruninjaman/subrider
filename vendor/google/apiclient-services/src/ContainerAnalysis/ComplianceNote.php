@@ -22,11 +22,14 @@ class ComplianceNote extends \Google\Collection
   protected $collection_key = 'version';
   protected $cisBenchmarkType = CisBenchmark::class;
   protected $cisBenchmarkDataType = '';
-  public $cisBenchmark;
   /**
    * @var string
    */
   public $description;
+  /**
+   * @var string
+   */
+  public $impact;
   /**
    * @var string
    */
@@ -45,7 +48,6 @@ class ComplianceNote extends \Google\Collection
   public $title;
   protected $versionType = ComplianceVersion::class;
   protected $versionDataType = 'array';
-  public $version;
 
   /**
    * @param CisBenchmark
@@ -74,6 +76,20 @@ class ComplianceNote extends \Google\Collection
   public function getDescription()
   {
     return $this->description;
+  }
+  /**
+   * @param string
+   */
+  public function setImpact($impact)
+  {
+    $this->impact = $impact;
+  }
+  /**
+   * @return string
+   */
+  public function getImpact()
+  {
+    return $this->impact;
   }
   /**
    * @param string

@@ -21,7 +21,6 @@ class DiscoverConnectionProfileRequest extends \Google\Model
 {
   protected $connectionProfileType = ConnectionProfile::class;
   protected $connectionProfileDataType = '';
-  public $connectionProfile;
   /**
    * @var string
    */
@@ -36,13 +35,12 @@ class DiscoverConnectionProfileRequest extends \Google\Model
   public $hierarchyDepth;
   protected $mysqlRdbmsType = MysqlRdbms::class;
   protected $mysqlRdbmsDataType = '';
-  public $mysqlRdbms;
   protected $oracleRdbmsType = OracleRdbms::class;
   protected $oracleRdbmsDataType = '';
-  public $oracleRdbms;
   protected $postgresqlRdbmsType = PostgresqlRdbms::class;
   protected $postgresqlRdbmsDataType = '';
-  public $postgresqlRdbms;
+  protected $sqlServerRdbmsType = SqlServerRdbms::class;
+  protected $sqlServerRdbmsDataType = '';
 
   /**
    * @param ConnectionProfile
@@ -141,6 +139,20 @@ class DiscoverConnectionProfileRequest extends \Google\Model
   public function getPostgresqlRdbms()
   {
     return $this->postgresqlRdbms;
+  }
+  /**
+   * @param SqlServerRdbms
+   */
+  public function setSqlServerRdbms(SqlServerRdbms $sqlServerRdbms)
+  {
+    $this->sqlServerRdbms = $sqlServerRdbms;
+  }
+  /**
+   * @return SqlServerRdbms
+   */
+  public function getSqlServerRdbms()
+  {
+    return $this->sqlServerRdbms;
   }
 }
 

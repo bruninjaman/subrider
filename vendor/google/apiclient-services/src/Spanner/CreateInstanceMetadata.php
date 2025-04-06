@@ -27,9 +27,12 @@ class CreateInstanceMetadata extends \Google\Model
    * @var string
    */
   public $endTime;
+  /**
+   * @var string
+   */
+  public $expectedFulfillmentPeriod;
   protected $instanceType = Instance::class;
   protected $instanceDataType = '';
-  public $instance;
   /**
    * @var string
    */
@@ -62,6 +65,20 @@ class CreateInstanceMetadata extends \Google\Model
   public function getEndTime()
   {
     return $this->endTime;
+  }
+  /**
+   * @param string
+   */
+  public function setExpectedFulfillmentPeriod($expectedFulfillmentPeriod)
+  {
+    $this->expectedFulfillmentPeriod = $expectedFulfillmentPeriod;
+  }
+  /**
+   * @return string
+   */
+  public function getExpectedFulfillmentPeriod()
+  {
+    return $this->expectedFulfillmentPeriod;
   }
   /**
    * @param Instance

@@ -38,24 +38,20 @@ class Instance extends \Google\Collection
   public $displayName;
   protected $instanceMessagesType = InstanceMessage::class;
   protected $instanceMessagesDataType = 'array';
-  public $instanceMessages;
   /**
    * @var string[]
    */
   public $labels;
   protected $maintenancePolicyType = GoogleCloudMemcacheV1MaintenancePolicy::class;
   protected $maintenancePolicyDataType = '';
-  public $maintenancePolicy;
   protected $maintenanceScheduleType = MaintenanceSchedule::class;
   protected $maintenanceScheduleDataType = '';
-  public $maintenanceSchedule;
   /**
    * @var string
    */
   public $memcacheFullVersion;
   protected $memcacheNodesType = Node::class;
   protected $memcacheNodesDataType = 'array';
-  public $memcacheNodes;
   /**
    * @var string
    */
@@ -66,14 +62,24 @@ class Instance extends \Google\Collection
   public $name;
   protected $nodeConfigType = NodeConfig::class;
   protected $nodeConfigDataType = '';
-  public $nodeConfig;
   /**
    * @var int
    */
   public $nodeCount;
   protected $parametersType = MemcacheParameters::class;
   protected $parametersDataType = '';
-  public $parameters;
+  /**
+   * @var string[]
+   */
+  public $reservedIpRangeId;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * @var string
    */
@@ -296,6 +302,48 @@ class Instance extends \Google\Collection
   public function getParameters()
   {
     return $this->parameters;
+  }
+  /**
+   * @param string[]
+   */
+  public function setReservedIpRangeId($reservedIpRangeId)
+  {
+    $this->reservedIpRangeId = $reservedIpRangeId;
+  }
+  /**
+   * @return string[]
+   */
+  public function getReservedIpRangeId()
+  {
+    return $this->reservedIpRangeId;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param string

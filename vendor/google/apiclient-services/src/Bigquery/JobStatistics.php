@@ -26,24 +26,28 @@ class JobStatistics extends \Google\Collection
   public $completionRatio;
   protected $copyType = JobStatistics5::class;
   protected $copyDataType = '';
-  public $copy;
   /**
    * @var string
    */
   public $creationTime;
   protected $dataMaskingStatisticsType = DataMaskingStatistics::class;
   protected $dataMaskingStatisticsDataType = '';
-  public $dataMaskingStatistics;
+  /**
+   * @var string
+   */
+  public $edition;
   /**
    * @var string
    */
   public $endTime;
   protected $extractType = JobStatistics4::class;
   protected $extractDataType = '';
-  public $extract;
+  /**
+   * @var string
+   */
+  public $finalExecutionDurationMs;
   protected $loadType = JobStatistics3::class;
   protected $loadDataType = '';
-  public $load;
   /**
    * @var string
    */
@@ -54,27 +58,22 @@ class JobStatistics extends \Google\Collection
   public $parentJobId;
   protected $queryType = JobStatistics2::class;
   protected $queryDataType = '';
-  public $query;
   /**
    * @var string[]
    */
   public $quotaDeferments;
   protected $reservationUsageType = JobStatisticsReservationUsage::class;
   protected $reservationUsageDataType = 'array';
-  public $reservationUsage;
   /**
    * @var string
    */
   public $reservationId;
   protected $rowLevelSecurityStatisticsType = RowLevelSecurityStatistics::class;
   protected $rowLevelSecurityStatisticsDataType = '';
-  public $rowLevelSecurityStatistics;
   protected $scriptStatisticsType = ScriptStatistics::class;
   protected $scriptStatisticsDataType = '';
-  public $scriptStatistics;
   protected $sessionInfoType = SessionInfo::class;
   protected $sessionInfoDataType = '';
-  public $sessionInfo;
   /**
    * @var string
    */
@@ -89,7 +88,6 @@ class JobStatistics extends \Google\Collection
   public $totalSlotMs;
   protected $transactionInfoType = TransactionInfo::class;
   protected $transactionInfoDataType = '';
-  public $transactionInfo;
 
   public function setCompletionRatio($completionRatio)
   {
@@ -144,6 +142,20 @@ class JobStatistics extends \Google\Collection
   /**
    * @param string
    */
+  public function setEdition($edition)
+  {
+    $this->edition = $edition;
+  }
+  /**
+   * @return string
+   */
+  public function getEdition()
+  {
+    return $this->edition;
+  }
+  /**
+   * @param string
+   */
   public function setEndTime($endTime)
   {
     $this->endTime = $endTime;
@@ -168,6 +180,20 @@ class JobStatistics extends \Google\Collection
   public function getExtract()
   {
     return $this->extract;
+  }
+  /**
+   * @param string
+   */
+  public function setFinalExecutionDurationMs($finalExecutionDurationMs)
+  {
+    $this->finalExecutionDurationMs = $finalExecutionDurationMs;
+  }
+  /**
+   * @return string
+   */
+  public function getFinalExecutionDurationMs()
+  {
+    return $this->finalExecutionDurationMs;
   }
   /**
    * @param JobStatistics3

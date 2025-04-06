@@ -22,22 +22,18 @@ class Kubernetes extends \Google\Collection
   protected $collection_key = 'roles';
   protected $accessReviewsType = AccessReview::class;
   protected $accessReviewsDataType = 'array';
-  public $accessReviews;
   protected $bindingsType = GoogleCloudSecuritycenterV1Binding::class;
   protected $bindingsDataType = 'array';
-  public $bindings;
   protected $nodePoolsType = NodePool::class;
   protected $nodePoolsDataType = 'array';
-  public $nodePools;
   protected $nodesType = Node::class;
   protected $nodesDataType = 'array';
-  public $nodes;
+  protected $objectsType = SecuritycenterObject::class;
+  protected $objectsDataType = 'array';
   protected $podsType = Pod::class;
   protected $podsDataType = 'array';
-  public $pods;
   protected $rolesType = Role::class;
   protected $rolesDataType = 'array';
-  public $roles;
 
   /**
    * @param AccessReview[]
@@ -94,6 +90,20 @@ class Kubernetes extends \Google\Collection
   public function getNodes()
   {
     return $this->nodes;
+  }
+  /**
+   * @param SecuritycenterObject[]
+   */
+  public function setObjects($objects)
+  {
+    $this->objects = $objects;
+  }
+  /**
+   * @return SecuritycenterObject[]
+   */
+  public function getObjects()
+  {
+    return $this->objects;
   }
   /**
    * @param Pod[]

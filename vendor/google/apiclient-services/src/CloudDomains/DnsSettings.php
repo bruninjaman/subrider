@@ -22,13 +22,14 @@ class DnsSettings extends \Google\Collection
   protected $collection_key = 'glueRecords';
   protected $customDnsType = CustomDns::class;
   protected $customDnsDataType = '';
-  public $customDns;
   protected $glueRecordsType = GlueRecord::class;
   protected $glueRecordsDataType = 'array';
-  public $glueRecords;
   protected $googleDomainsDnsType = GoogleDomainsDns::class;
   protected $googleDomainsDnsDataType = '';
-  public $googleDomainsDns;
+  /**
+   * @var bool
+   */
+  public $googleDomainsRedirectsDataAvailable;
 
   /**
    * @param CustomDns
@@ -71,6 +72,20 @@ class DnsSettings extends \Google\Collection
   public function getGoogleDomainsDns()
   {
     return $this->googleDomainsDns;
+  }
+  /**
+   * @param bool
+   */
+  public function setGoogleDomainsRedirectsDataAvailable($googleDomainsRedirectsDataAvailable)
+  {
+    $this->googleDomainsRedirectsDataAvailable = $googleDomainsRedirectsDataAvailable;
+  }
+  /**
+   * @return bool
+   */
+  public function getGoogleDomainsRedirectsDataAvailable()
+  {
+    return $this->googleDomainsRedirectsDataAvailable;
   }
 }
 

@@ -19,19 +19,31 @@ namespace Google\Service\Dataflow;
 
 class WorkerMessageResponse extends \Google\Model
 {
+  protected $streamingScalingReportResponseType = StreamingScalingReportResponse::class;
+  protected $streamingScalingReportResponseDataType = '';
   protected $workerHealthReportResponseType = WorkerHealthReportResponse::class;
   protected $workerHealthReportResponseDataType = '';
-  public $workerHealthReportResponse;
   protected $workerMetricsResponseType = ResourceUtilizationReportResponse::class;
   protected $workerMetricsResponseDataType = '';
-  public $workerMetricsResponse;
   protected $workerShutdownNoticeResponseType = WorkerShutdownNoticeResponse::class;
   protected $workerShutdownNoticeResponseDataType = '';
-  public $workerShutdownNoticeResponse;
   protected $workerThreadScalingReportResponseType = WorkerThreadScalingReportResponse::class;
   protected $workerThreadScalingReportResponseDataType = '';
-  public $workerThreadScalingReportResponse;
 
+  /**
+   * @param StreamingScalingReportResponse
+   */
+  public function setStreamingScalingReportResponse(StreamingScalingReportResponse $streamingScalingReportResponse)
+  {
+    $this->streamingScalingReportResponse = $streamingScalingReportResponse;
+  }
+  /**
+   * @return StreamingScalingReportResponse
+   */
+  public function getStreamingScalingReportResponse()
+  {
+    return $this->streamingScalingReportResponse;
+  }
   /**
    * @param WorkerHealthReportResponse
    */

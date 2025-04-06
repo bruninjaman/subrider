@@ -23,10 +23,13 @@ class GoogleCloudApigeeV1SecurityProfile extends \Google\Collection
   /**
    * @var string
    */
+  public $description;
+  /**
+   * @var string
+   */
   public $displayName;
   protected $environmentsType = GoogleCloudApigeeV1SecurityProfileEnvironment::class;
   protected $environmentsDataType = 'array';
-  public $environments;
   /**
    * @var int
    */
@@ -39,6 +42,8 @@ class GoogleCloudApigeeV1SecurityProfile extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $profileConfigType = GoogleCloudApigeeV1ProfileConfig::class;
+  protected $profileConfigDataType = '';
   /**
    * @var string
    */
@@ -57,8 +62,21 @@ class GoogleCloudApigeeV1SecurityProfile extends \Google\Collection
   public $revisionUpdateTime;
   protected $scoringConfigsType = GoogleCloudApigeeV1SecurityProfileScoringConfig::class;
   protected $scoringConfigsDataType = 'array';
-  public $scoringConfigs;
 
+  /**
+   * @param string
+   */
+  public function setDescription($description)
+  {
+    $this->description = $description;
+  }
+  /**
+   * @return string
+   */
+  public function getDescription()
+  {
+    return $this->description;
+  }
   /**
    * @param string
    */
@@ -128,6 +146,20 @@ class GoogleCloudApigeeV1SecurityProfile extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param GoogleCloudApigeeV1ProfileConfig
+   */
+  public function setProfileConfig(GoogleCloudApigeeV1ProfileConfig $profileConfig)
+  {
+    $this->profileConfig = $profileConfig;
+  }
+  /**
+   * @return GoogleCloudApigeeV1ProfileConfig
+   */
+  public function getProfileConfig()
+  {
+    return $this->profileConfig;
   }
   /**
    * @param string

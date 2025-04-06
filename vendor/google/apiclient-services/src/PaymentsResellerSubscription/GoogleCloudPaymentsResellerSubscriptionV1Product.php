@@ -20,24 +20,57 @@ namespace Google\Service\PaymentsResellerSubscription;
 class GoogleCloudPaymentsResellerSubscriptionV1Product extends \Google\Collection
 {
   protected $collection_key = 'titles';
+  protected $bundleDetailsType = ProductBundleDetails::class;
+  protected $bundleDetailsDataType = '';
+  protected $finiteBillingCycleDetailsType = GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails::class;
+  protected $finiteBillingCycleDetailsDataType = '';
   /**
    * @var string
    */
   public $name;
   protected $priceConfigsType = GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig::class;
   protected $priceConfigsDataType = 'array';
-  public $priceConfigs;
+  /**
+   * @var string
+   */
+  public $productType;
   /**
    * @var string[]
    */
   public $regionCodes;
   protected $subscriptionBillingCycleDurationType = GoogleCloudPaymentsResellerSubscriptionV1Duration::class;
   protected $subscriptionBillingCycleDurationDataType = '';
-  public $subscriptionBillingCycleDuration;
   protected $titlesType = GoogleTypeLocalizedText::class;
   protected $titlesDataType = 'array';
-  public $titles;
 
+  /**
+   * @param ProductBundleDetails
+   */
+  public function setBundleDetails(ProductBundleDetails $bundleDetails)
+  {
+    $this->bundleDetails = $bundleDetails;
+  }
+  /**
+   * @return ProductBundleDetails
+   */
+  public function getBundleDetails()
+  {
+    return $this->bundleDetails;
+  }
+  /**
+   * @param GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails
+   */
+  public function setFiniteBillingCycleDetails(GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails $finiteBillingCycleDetails)
+  {
+    $this->finiteBillingCycleDetails = $finiteBillingCycleDetails;
+  }
+  /**
+   * @return GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails
+   */
+  public function getFiniteBillingCycleDetails()
+  {
+    return $this->finiteBillingCycleDetails;
+  }
   /**
    * @param string
    */
@@ -65,6 +98,20 @@ class GoogleCloudPaymentsResellerSubscriptionV1Product extends \Google\Collectio
   public function getPriceConfigs()
   {
     return $this->priceConfigs;
+  }
+  /**
+   * @param string
+   */
+  public function setProductType($productType)
+  {
+    $this->productType = $productType;
+  }
+  /**
+   * @return string
+   */
+  public function getProductType()
+  {
+    return $this->productType;
   }
   /**
    * @param string[]

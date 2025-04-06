@@ -22,14 +22,16 @@ class GlobalSetPolicyRequest extends \Google\Collection
   protected $collection_key = 'bindings';
   protected $bindingsType = Binding::class;
   protected $bindingsDataType = 'array';
-  public $bindings;
   /**
    * @var string
    */
   public $etag;
   protected $policyType = Policy::class;
   protected $policyDataType = '';
-  public $policy;
+  /**
+   * @var string
+   */
+  public $updateMask;
 
   /**
    * @param Binding[]
@@ -72,6 +74,20 @@ class GlobalSetPolicyRequest extends \Google\Collection
   public function getPolicy()
   {
     return $this->policy;
+  }
+  /**
+   * @param string
+   */
+  public function setUpdateMask($updateMask)
+  {
+    $this->updateMask = $updateMask;
+  }
+  /**
+   * @return string
+   */
+  public function getUpdateMask()
+  {
+    return $this->updateMask;
   }
 }
 

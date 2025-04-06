@@ -21,13 +21,12 @@ class CommonFeatureState extends \Google\Model
 {
   protected $appdevexperienceType = AppDevExperienceFeatureState::class;
   protected $appdevexperienceDataType = '';
-  public $appdevexperience;
+  protected $clusterupgradeType = ClusterUpgradeFleetState::class;
+  protected $clusterupgradeDataType = '';
   protected $fleetobservabilityType = FleetObservabilityFeatureState::class;
   protected $fleetobservabilityDataType = '';
-  public $fleetobservability;
   protected $stateType = FeatureState::class;
   protected $stateDataType = '';
-  public $state;
 
   /**
    * @param AppDevExperienceFeatureState
@@ -42,6 +41,20 @@ class CommonFeatureState extends \Google\Model
   public function getAppdevexperience()
   {
     return $this->appdevexperience;
+  }
+  /**
+   * @param ClusterUpgradeFleetState
+   */
+  public function setClusterupgrade(ClusterUpgradeFleetState $clusterupgrade)
+  {
+    $this->clusterupgrade = $clusterupgrade;
+  }
+  /**
+   * @return ClusterUpgradeFleetState
+   */
+  public function getClusterupgrade()
+  {
+    return $this->clusterupgrade;
   }
   /**
    * @param FleetObservabilityFeatureState

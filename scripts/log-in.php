@@ -11,6 +11,7 @@ require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/system/audit.php';
 require_once __DIR__ . '/system/login_attempts.php';
 require_once __DIR__ . '/system/password_policy.php';
+require_once __DIR__ . '/system/session_manager.php';
 
 //CONNECTION
 // require_once("../connection/connection.php");
@@ -20,6 +21,7 @@ require_once __DIR__ . '/system/password_policy.php';
 // Inicializa classes de segurança
 $loginAttempts = new LoginAttempts($conn);
 $passwordPolicy = new PasswordPolicy($conn);
+$sessionManager = SessionManager::getInstance();
 
 // Limpa tentativas antigas
 $loginAttempts->cleanOldAttempts();
@@ -52,10 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verificação temporária para senhas em texto puro
             if ($password === $user['password']) {
                 // Login bem sucedido
-                session_start();
-                $_SESSION['user'] = $username;
-                $_SESSION['type'] = $user['userType'];
-                $_SESSION['last_activity'] = time();
+                $sessionManager->startSession();
+                $sessionManager->setUserSession($user['id'], $username, $user['userType']);
                 
                 // Registra tentativa bem sucedida
                 $loginAttempts->recordAttempt($username, true);

@@ -21,17 +21,22 @@ class GoogleCloudContactcenterinsightsV1IngestConversationsRequest extends \Goog
 {
   protected $conversationConfigType = GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig::class;
   protected $conversationConfigDataType = '';
-  public $conversationConfig;
   protected $gcsSourceType = GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource::class;
   protected $gcsSourceDataType = '';
-  public $gcsSource;
   /**
    * @var string
    */
   public $parent;
+  protected $redactionConfigType = GoogleCloudContactcenterinsightsV1RedactionConfig::class;
+  protected $redactionConfigDataType = '';
+  /**
+   * @var int
+   */
+  public $sampleSize;
+  protected $speechConfigType = GoogleCloudContactcenterinsightsV1SpeechConfig::class;
+  protected $speechConfigDataType = '';
   protected $transcriptObjectConfigType = GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjectConfig::class;
   protected $transcriptObjectConfigDataType = '';
-  public $transcriptObjectConfig;
 
   /**
    * @param GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig
@@ -74,6 +79,48 @@ class GoogleCloudContactcenterinsightsV1IngestConversationsRequest extends \Goog
   public function getParent()
   {
     return $this->parent;
+  }
+  /**
+   * @param GoogleCloudContactcenterinsightsV1RedactionConfig
+   */
+  public function setRedactionConfig(GoogleCloudContactcenterinsightsV1RedactionConfig $redactionConfig)
+  {
+    $this->redactionConfig = $redactionConfig;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1RedactionConfig
+   */
+  public function getRedactionConfig()
+  {
+    return $this->redactionConfig;
+  }
+  /**
+   * @param int
+   */
+  public function setSampleSize($sampleSize)
+  {
+    $this->sampleSize = $sampleSize;
+  }
+  /**
+   * @return int
+   */
+  public function getSampleSize()
+  {
+    return $this->sampleSize;
+  }
+  /**
+   * @param GoogleCloudContactcenterinsightsV1SpeechConfig
+   */
+  public function setSpeechConfig(GoogleCloudContactcenterinsightsV1SpeechConfig $speechConfig)
+  {
+    $this->speechConfig = $speechConfig;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1SpeechConfig
+   */
+  public function getSpeechConfig()
+  {
+    return $this->speechConfig;
   }
   /**
    * @param GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjectConfig

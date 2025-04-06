@@ -22,13 +22,16 @@ class GrpcRouteRouteAction extends \Google\Collection
   protected $collection_key = 'destinations';
   protected $destinationsType = GrpcRouteDestination::class;
   protected $destinationsDataType = 'array';
-  public $destinations;
   protected $faultInjectionPolicyType = GrpcRouteFaultInjectionPolicy::class;
   protected $faultInjectionPolicyDataType = '';
-  public $faultInjectionPolicy;
+  /**
+   * @var string
+   */
+  public $idleTimeout;
   protected $retryPolicyType = GrpcRouteRetryPolicy::class;
   protected $retryPolicyDataType = '';
-  public $retryPolicy;
+  protected $statefulSessionAffinityType = GrpcRouteStatefulSessionAffinityPolicy::class;
+  protected $statefulSessionAffinityDataType = '';
   /**
    * @var string
    */
@@ -63,6 +66,20 @@ class GrpcRouteRouteAction extends \Google\Collection
     return $this->faultInjectionPolicy;
   }
   /**
+   * @param string
+   */
+  public function setIdleTimeout($idleTimeout)
+  {
+    $this->idleTimeout = $idleTimeout;
+  }
+  /**
+   * @return string
+   */
+  public function getIdleTimeout()
+  {
+    return $this->idleTimeout;
+  }
+  /**
    * @param GrpcRouteRetryPolicy
    */
   public function setRetryPolicy(GrpcRouteRetryPolicy $retryPolicy)
@@ -75,6 +92,20 @@ class GrpcRouteRouteAction extends \Google\Collection
   public function getRetryPolicy()
   {
     return $this->retryPolicy;
+  }
+  /**
+   * @param GrpcRouteStatefulSessionAffinityPolicy
+   */
+  public function setStatefulSessionAffinity(GrpcRouteStatefulSessionAffinityPolicy $statefulSessionAffinity)
+  {
+    $this->statefulSessionAffinity = $statefulSessionAffinity;
+  }
+  /**
+   * @return GrpcRouteStatefulSessionAffinityPolicy
+   */
+  public function getStatefulSessionAffinity()
+  {
+    return $this->statefulSessionAffinity;
   }
   /**
    * @param string

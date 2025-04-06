@@ -22,7 +22,6 @@ class GoogleCloudContentwarehouseV1Document extends \Google\Collection
   protected $collection_key = 'properties';
   protected $cloudAiDocumentType = GoogleCloudDocumentaiV1Document::class;
   protected $cloudAiDocumentDataType = '';
-  public $cloudAiDocument;
   /**
    * @var string
    */
@@ -46,11 +45,19 @@ class GoogleCloudContentwarehouseV1Document extends \Google\Collection
   /**
    * @var string
    */
+  public $dispositionTime;
+  /**
+   * @var string
+   */
   public $documentSchemaName;
   /**
    * @var string
    */
   public $inlineRawDocument;
+  /**
+   * @var bool
+   */
+  public $legalHold;
   /**
    * @var string
    */
@@ -61,7 +68,6 @@ class GoogleCloudContentwarehouseV1Document extends \Google\Collection
   public $plainText;
   protected $propertiesType = GoogleCloudContentwarehouseV1Property::class;
   protected $propertiesDataType = 'array';
-  public $properties;
   /**
    * @var string
    */
@@ -182,6 +188,20 @@ class GoogleCloudContentwarehouseV1Document extends \Google\Collection
   /**
    * @param string
    */
+  public function setDispositionTime($dispositionTime)
+  {
+    $this->dispositionTime = $dispositionTime;
+  }
+  /**
+   * @return string
+   */
+  public function getDispositionTime()
+  {
+    return $this->dispositionTime;
+  }
+  /**
+   * @param string
+   */
   public function setDocumentSchemaName($documentSchemaName)
   {
     $this->documentSchemaName = $documentSchemaName;
@@ -206,6 +226,20 @@ class GoogleCloudContentwarehouseV1Document extends \Google\Collection
   public function getInlineRawDocument()
   {
     return $this->inlineRawDocument;
+  }
+  /**
+   * @param bool
+   */
+  public function setLegalHold($legalHold)
+  {
+    $this->legalHold = $legalHold;
+  }
+  /**
+   * @return bool
+   */
+  public function getLegalHold()
+  {
+    return $this->legalHold;
   }
   /**
    * @param string

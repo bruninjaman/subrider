@@ -21,13 +21,10 @@ class TestSpecification extends \Google\Model
 {
   protected $androidInstrumentationTestType = AndroidInstrumentationTest::class;
   protected $androidInstrumentationTestDataType = '';
-  public $androidInstrumentationTest;
   protected $androidRoboTestType = AndroidRoboTest::class;
   protected $androidRoboTestDataType = '';
-  public $androidRoboTest;
   protected $androidTestLoopType = AndroidTestLoop::class;
   protected $androidTestLoopDataType = '';
-  public $androidTestLoop;
   /**
    * @var bool
    */
@@ -36,18 +33,16 @@ class TestSpecification extends \Google\Model
    * @var bool
    */
   public $disableVideoRecording;
+  protected $iosRoboTestType = IosRoboTest::class;
+  protected $iosRoboTestDataType = '';
   protected $iosTestLoopType = IosTestLoop::class;
   protected $iosTestLoopDataType = '';
-  public $iosTestLoop;
   protected $iosTestSetupType = IosTestSetup::class;
   protected $iosTestSetupDataType = '';
-  public $iosTestSetup;
   protected $iosXcTestType = IosXcTest::class;
   protected $iosXcTestDataType = '';
-  public $iosXcTest;
   protected $testSetupType = TestSetup::class;
   protected $testSetupDataType = '';
-  public $testSetup;
   /**
    * @var string
    */
@@ -122,6 +117,20 @@ class TestSpecification extends \Google\Model
   public function getDisableVideoRecording()
   {
     return $this->disableVideoRecording;
+  }
+  /**
+   * @param IosRoboTest
+   */
+  public function setIosRoboTest(IosRoboTest $iosRoboTest)
+  {
+    $this->iosRoboTest = $iosRoboTest;
+  }
+  /**
+   * @return IosRoboTest
+   */
+  public function getIosRoboTest()
+  {
+    return $this->iosRoboTest;
   }
   /**
    * @param IosTestLoop

@@ -22,17 +22,16 @@ class Query extends \Google\Collection
   protected $collection_key = 'projection';
   protected $distinctOnType = PropertyReference::class;
   protected $distinctOnDataType = 'array';
-  public $distinctOn;
   /**
    * @var string
    */
   public $endCursor;
   protected $filterType = Filter::class;
   protected $filterDataType = '';
-  public $filter;
+  protected $findNearestType = FindNearest::class;
+  protected $findNearestDataType = '';
   protected $kindType = KindExpression::class;
   protected $kindDataType = 'array';
-  public $kind;
   /**
    * @var int
    */
@@ -43,10 +42,8 @@ class Query extends \Google\Collection
   public $offset;
   protected $orderType = PropertyOrder::class;
   protected $orderDataType = 'array';
-  public $order;
   protected $projectionType = Projection::class;
   protected $projectionDataType = 'array';
-  public $projection;
   /**
    * @var string
    */
@@ -93,6 +90,20 @@ class Query extends \Google\Collection
   public function getFilter()
   {
     return $this->filter;
+  }
+  /**
+   * @param FindNearest
+   */
+  public function setFindNearest(FindNearest $findNearest)
+  {
+    $this->findNearest = $findNearest;
+  }
+  /**
+   * @return FindNearest
+   */
+  public function getFindNearest()
+  {
+    return $this->findNearest;
   }
   /**
    * @param KindExpression[]

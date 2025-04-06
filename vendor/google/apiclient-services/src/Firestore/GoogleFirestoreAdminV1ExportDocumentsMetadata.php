@@ -42,10 +42,12 @@ class GoogleFirestoreAdminV1ExportDocumentsMetadata extends \Google\Collection
   public $outputUriPrefix;
   protected $progressBytesType = GoogleFirestoreAdminV1Progress::class;
   protected $progressBytesDataType = '';
-  public $progressBytes;
   protected $progressDocumentsType = GoogleFirestoreAdminV1Progress::class;
   protected $progressDocumentsDataType = '';
-  public $progressDocuments;
+  /**
+   * @var string
+   */
+  public $snapshotTime;
   /**
    * @var string
    */
@@ -148,6 +150,20 @@ class GoogleFirestoreAdminV1ExportDocumentsMetadata extends \Google\Collection
   public function getProgressDocuments()
   {
     return $this->progressDocuments;
+  }
+  /**
+   * @param string
+   */
+  public function setSnapshotTime($snapshotTime)
+  {
+    $this->snapshotTime = $snapshotTime;
+  }
+  /**
+   * @return string
+   */
+  public function getSnapshotTime()
+  {
+    return $this->snapshotTime;
   }
   /**
    * @param string

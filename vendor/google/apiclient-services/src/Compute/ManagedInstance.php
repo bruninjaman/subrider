@@ -34,23 +34,24 @@ class ManagedInstance extends \Google\Collection
   public $instance;
   protected $instanceHealthType = ManagedInstanceInstanceHealth::class;
   protected $instanceHealthDataType = 'array';
-  public $instanceHealth;
   /**
    * @var string
    */
   public $instanceStatus;
   protected $lastAttemptType = ManagedInstanceLastAttempt::class;
   protected $lastAttemptDataType = '';
-  public $lastAttempt;
+  /**
+   * @var string
+   */
+  public $name;
   protected $preservedStateFromConfigType = PreservedState::class;
   protected $preservedStateFromConfigDataType = '';
-  public $preservedStateFromConfig;
   protected $preservedStateFromPolicyType = PreservedState::class;
   protected $preservedStateFromPolicyDataType = '';
-  public $preservedStateFromPolicy;
+  protected $propertiesFromFlexibilityPolicyType = ManagedInstancePropertiesFromFlexibilityPolicy::class;
+  protected $propertiesFromFlexibilityPolicyDataType = '';
   protected $versionType = ManagedInstanceVersion::class;
   protected $versionDataType = '';
-  public $version;
 
   /**
    * @param string
@@ -137,6 +138,20 @@ class ManagedInstance extends \Google\Collection
     return $this->lastAttempt;
   }
   /**
+   * @param string
+   */
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
+  /**
+   * @return string
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
+  /**
    * @param PreservedState
    */
   public function setPreservedStateFromConfig(PreservedState $preservedStateFromConfig)
@@ -163,6 +178,20 @@ class ManagedInstance extends \Google\Collection
   public function getPreservedStateFromPolicy()
   {
     return $this->preservedStateFromPolicy;
+  }
+  /**
+   * @param ManagedInstancePropertiesFromFlexibilityPolicy
+   */
+  public function setPropertiesFromFlexibilityPolicy(ManagedInstancePropertiesFromFlexibilityPolicy $propertiesFromFlexibilityPolicy)
+  {
+    $this->propertiesFromFlexibilityPolicy = $propertiesFromFlexibilityPolicy;
+  }
+  /**
+   * @return ManagedInstancePropertiesFromFlexibilityPolicy
+   */
+  public function getPropertiesFromFlexibilityPolicy()
+  {
+    return $this->propertiesFromFlexibilityPolicy;
   }
   /**
    * @param ManagedInstanceVersion

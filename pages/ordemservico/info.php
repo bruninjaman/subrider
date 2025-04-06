@@ -33,6 +33,27 @@ $result = mysqli_query($conn, $motocicletas_query);
         display: inline-block;
         margin: 30px;
     }
+
+    .acoes-os {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    .btn-imprimir {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-imprimir:hover {
+        background-color: #45a049;
+    }
 </style>
 <section id="motoinfo">
     <div class="content motoinfobox">
@@ -55,6 +76,11 @@ $result = mysqli_query($conn, $motocicletas_query);
                         <li><b>Modelo:</b> <?php echo $moto['modelo'] ?></li>
                         <li><b>Quilometragem:</b> <?php echo $moto['km'] ?></li>
                     </ul>
+                    <div class="acoes-os">
+                        <a href="scripts/gerar_pdf_os.php?id=<?php echo $_GET['ordem']; ?>" class="btn-imprimir" target="_blank">
+                            <i class="fas fa-print"></i> Imprimir OS
+                        </a>
+                    </div>
                 </div>
             </div>
         <?php

@@ -26,10 +26,8 @@ class Device extends \Google\Collection
   public $apiLevel;
   protected $applicationReportsType = ApplicationReport::class;
   protected $applicationReportsDataType = 'array';
-  public $applicationReports;
   protected $appliedPasswordPoliciesType = PasswordRequirements::class;
   protected $appliedPasswordPoliciesDataType = 'array';
-  public $appliedPasswordPolicies;
   /**
    * @var string
    */
@@ -44,16 +42,14 @@ class Device extends \Google\Collection
   public $appliedState;
   protected $commonCriteriaModeInfoType = CommonCriteriaModeInfo::class;
   protected $commonCriteriaModeInfoDataType = '';
-  public $commonCriteriaModeInfo;
   protected $deviceSettingsType = DeviceSettings::class;
   protected $deviceSettingsDataType = '';
-  public $deviceSettings;
   protected $disabledReasonType = UserFacingMessage::class;
   protected $disabledReasonDataType = '';
-  public $disabledReason;
   protected $displaysType = Display::class;
   protected $displaysDataType = 'array';
-  public $displays;
+  protected $dpcMigrationInfoType = DpcMigrationInfo::class;
+  protected $dpcMigrationInfoDataType = '';
   /**
    * @var string
    */
@@ -68,10 +64,8 @@ class Device extends \Google\Collection
   public $enrollmentTokenName;
   protected $hardwareInfoType = HardwareInfo::class;
   protected $hardwareInfoDataType = '';
-  public $hardwareInfo;
   protected $hardwareStatusSamplesType = HardwareStatus::class;
   protected $hardwareStatusSamplesDataType = 'array';
-  public $hardwareStatusSamples;
   /**
    * @var string
    */
@@ -90,20 +84,16 @@ class Device extends \Google\Collection
   public $managementMode;
   protected $memoryEventsType = MemoryEvent::class;
   protected $memoryEventsDataType = 'array';
-  public $memoryEvents;
   protected $memoryInfoType = MemoryInfo::class;
   protected $memoryInfoDataType = '';
-  public $memoryInfo;
   /**
    * @var string
    */
   public $name;
   protected $networkInfoType = NetworkInfo::class;
   protected $networkInfoDataType = '';
-  public $networkInfo;
   protected $nonComplianceDetailsType = NonComplianceDetail::class;
   protected $nonComplianceDetailsDataType = 'array';
-  public $nonComplianceDetails;
   /**
    * @var string
    */
@@ -118,17 +108,14 @@ class Device extends \Google\Collection
   public $policyName;
   protected $powerManagementEventsType = PowerManagementEvent::class;
   protected $powerManagementEventsDataType = 'array';
-  public $powerManagementEvents;
   /**
    * @var string[]
    */
   public $previousDeviceNames;
   protected $securityPostureType = SecurityPosture::class;
   protected $securityPostureDataType = '';
-  public $securityPosture;
   protected $softwareInfoType = SoftwareInfo::class;
   protected $softwareInfoDataType = '';
-  public $softwareInfo;
   /**
    * @var string
    */
@@ -139,7 +126,6 @@ class Device extends \Google\Collection
   public $systemProperties;
   protected $userType = User::class;
   protected $userDataType = '';
-  public $user;
   /**
    * @var string
    */
@@ -284,6 +270,20 @@ class Device extends \Google\Collection
   public function getDisplays()
   {
     return $this->displays;
+  }
+  /**
+   * @param DpcMigrationInfo
+   */
+  public function setDpcMigrationInfo(DpcMigrationInfo $dpcMigrationInfo)
+  {
+    $this->dpcMigrationInfo = $dpcMigrationInfo;
+  }
+  /**
+   * @return DpcMigrationInfo
+   */
+  public function getDpcMigrationInfo()
+  {
+    return $this->dpcMigrationInfo;
   }
   /**
    * @param string

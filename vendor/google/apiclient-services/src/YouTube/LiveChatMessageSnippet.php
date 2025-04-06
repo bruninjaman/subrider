@@ -29,10 +29,8 @@ class LiveChatMessageSnippet extends \Google\Model
   public $displayMessage;
   protected $fanFundingEventDetailsType = LiveChatFanFundingEventDetails::class;
   protected $fanFundingEventDetailsDataType = '';
-  public $fanFundingEventDetails;
   protected $giftMembershipReceivedDetailsType = LiveChatGiftMembershipReceivedDetails::class;
   protected $giftMembershipReceivedDetailsDataType = '';
-  public $giftMembershipReceivedDetails;
   /**
    * @var bool
    */
@@ -43,39 +41,32 @@ class LiveChatMessageSnippet extends \Google\Model
   public $liveChatId;
   protected $memberMilestoneChatDetailsType = LiveChatMemberMilestoneChatDetails::class;
   protected $memberMilestoneChatDetailsDataType = '';
-  public $memberMilestoneChatDetails;
   protected $membershipGiftingDetailsType = LiveChatMembershipGiftingDetails::class;
   protected $membershipGiftingDetailsDataType = '';
-  public $membershipGiftingDetails;
   protected $messageDeletedDetailsType = LiveChatMessageDeletedDetails::class;
   protected $messageDeletedDetailsDataType = '';
-  public $messageDeletedDetails;
   protected $messageRetractedDetailsType = LiveChatMessageRetractedDetails::class;
   protected $messageRetractedDetailsDataType = '';
-  public $messageRetractedDetails;
   protected $newSponsorDetailsType = LiveChatNewSponsorDetails::class;
   protected $newSponsorDetailsDataType = '';
-  public $newSponsorDetails;
+  protected $pollDetailsType = LiveChatPollDetails::class;
+  protected $pollDetailsDataType = '';
   /**
    * @var string
    */
   public $publishedAt;
   protected $superChatDetailsType = LiveChatSuperChatDetails::class;
   protected $superChatDetailsDataType = '';
-  public $superChatDetails;
   protected $superStickerDetailsType = LiveChatSuperStickerDetails::class;
   protected $superStickerDetailsDataType = '';
-  public $superStickerDetails;
   protected $textMessageDetailsType = LiveChatTextMessageDetails::class;
   protected $textMessageDetailsDataType = '';
-  public $textMessageDetails;
   /**
    * @var string
    */
   public $type;
   protected $userBannedDetailsType = LiveChatUserBannedMessageDetails::class;
   protected $userBannedDetailsDataType = '';
-  public $userBannedDetails;
 
   /**
    * @param string
@@ -230,6 +221,20 @@ class LiveChatMessageSnippet extends \Google\Model
   public function getNewSponsorDetails()
   {
     return $this->newSponsorDetails;
+  }
+  /**
+   * @param LiveChatPollDetails
+   */
+  public function setPollDetails(LiveChatPollDetails $pollDetails)
+  {
+    $this->pollDetails = $pollDetails;
+  }
+  /**
+   * @return LiveChatPollDetails
+   */
+  public function getPollDetails()
+  {
+    return $this->pollDetails;
   }
   /**
    * @param string

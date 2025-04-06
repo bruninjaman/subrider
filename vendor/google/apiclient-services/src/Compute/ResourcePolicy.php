@@ -27,16 +27,16 @@ class ResourcePolicy extends \Google\Model
    * @var string
    */
   public $description;
+  protected $diskConsistencyGroupPolicyType = ResourcePolicyDiskConsistencyGroupPolicy::class;
+  protected $diskConsistencyGroupPolicyDataType = '';
   protected $groupPlacementPolicyType = ResourcePolicyGroupPlacementPolicy::class;
   protected $groupPlacementPolicyDataType = '';
-  public $groupPlacementPolicy;
   /**
    * @var string
    */
   public $id;
   protected $instanceSchedulePolicyType = ResourcePolicyInstanceSchedulePolicy::class;
   protected $instanceSchedulePolicyDataType = '';
-  public $instanceSchedulePolicy;
   /**
    * @var string
    */
@@ -51,14 +51,12 @@ class ResourcePolicy extends \Google\Model
   public $region;
   protected $resourceStatusType = ResourcePolicyResourceStatus::class;
   protected $resourceStatusDataType = '';
-  public $resourceStatus;
   /**
    * @var string
    */
   public $selfLink;
   protected $snapshotSchedulePolicyType = ResourcePolicySnapshotSchedulePolicy::class;
   protected $snapshotSchedulePolicyDataType = '';
-  public $snapshotSchedulePolicy;
   /**
    * @var string
    */
@@ -91,6 +89,20 @@ class ResourcePolicy extends \Google\Model
   public function getDescription()
   {
     return $this->description;
+  }
+  /**
+   * @param ResourcePolicyDiskConsistencyGroupPolicy
+   */
+  public function setDiskConsistencyGroupPolicy(ResourcePolicyDiskConsistencyGroupPolicy $diskConsistencyGroupPolicy)
+  {
+    $this->diskConsistencyGroupPolicy = $diskConsistencyGroupPolicy;
+  }
+  /**
+   * @return ResourcePolicyDiskConsistencyGroupPolicy
+   */
+  public function getDiskConsistencyGroupPolicy()
+  {
+    return $this->diskConsistencyGroupPolicy;
   }
   /**
    * @param ResourcePolicyGroupPlacementPolicy

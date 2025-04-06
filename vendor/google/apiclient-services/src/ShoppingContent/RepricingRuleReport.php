@@ -20,19 +20,28 @@ namespace Google\Service\ShoppingContent;
 class RepricingRuleReport extends \Google\Collection
 {
   protected $collection_key = 'inapplicableProducts';
+  /**
+   * @var RepricingRuleReportBuyboxWinningRuleStats
+   */
+  public $buyboxWinningRuleStats;
   protected $buyboxWinningRuleStatsType = RepricingRuleReportBuyboxWinningRuleStats::class;
   protected $buyboxWinningRuleStatsDataType = '';
-  public $buyboxWinningRuleStats;
+  /**
+   * @var Date
+   */
+  public $date;
   protected $dateType = Date::class;
   protected $dateDataType = '';
-  public $date;
   /**
    * @var string[]
    */
   public $impactedProducts;
+  /**
+   * @var InapplicabilityDetails[]
+   */
+  public $inapplicabilityDetails;
   protected $inapplicabilityDetailsType = InapplicabilityDetails::class;
   protected $inapplicabilityDetailsDataType = 'array';
-  public $inapplicabilityDetails;
   /**
    * @var string[]
    */
@@ -45,9 +54,12 @@ class RepricingRuleReport extends \Google\Collection
    * @var string
    */
   public $ruleId;
+  /**
+   * @var PriceAmount
+   */
+  public $totalGmv;
   protected $totalGmvType = PriceAmount::class;
   protected $totalGmvDataType = '';
-  public $totalGmv;
   /**
    * @var string
    */

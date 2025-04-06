@@ -20,10 +20,16 @@ namespace Google\Service\Integrations;
 class GoogleCloudIntegrationsV1alphaIntegrationVersion extends \Google\Collection
 {
   protected $collection_key = 'triggerConfigsInternal';
+  protected $cloudLoggingDetailsType = GoogleCloudIntegrationsV1alphaCloudLoggingDetails::class;
+  protected $cloudLoggingDetailsDataType = '';
   /**
    * @var string
    */
   public $createTime;
+  /**
+   * @var string
+   */
+  public $createdFromTemplate;
   /**
    * @var string
    */
@@ -32,12 +38,18 @@ class GoogleCloudIntegrationsV1alphaIntegrationVersion extends \Google\Collectio
    * @var string
    */
   public $description;
+  /**
+   * @var bool
+   */
+  public $enableVariableMasking;
+  protected $errorCatcherConfigsType = GoogleCloudIntegrationsV1alphaErrorCatcherConfig::class;
+  protected $errorCatcherConfigsDataType = 'array';
+  protected $integrationConfigParametersType = GoogleCloudIntegrationsV1alphaIntegrationConfigParameter::class;
+  protected $integrationConfigParametersDataType = 'array';
   protected $integrationParametersType = GoogleCloudIntegrationsV1alphaIntegrationParameter::class;
   protected $integrationParametersDataType = 'array';
-  public $integrationParameters;
   protected $integrationParametersInternalType = EnterpriseCrmFrontendsEventbusProtoWorkflowParameters::class;
   protected $integrationParametersInternalDataType = '';
-  public $integrationParametersInternal;
   /**
    * @var string
    */
@@ -61,6 +73,10 @@ class GoogleCloudIntegrationsV1alphaIntegrationVersion extends \Google\Collectio
   /**
    * @var string
    */
+  public $runAsServiceAccount;
+  /**
+   * @var string
+   */
   public $snapshotNumber;
   /**
    * @var string
@@ -72,19 +88,14 @@ class GoogleCloudIntegrationsV1alphaIntegrationVersion extends \Google\Collectio
   public $status;
   protected $taskConfigsType = GoogleCloudIntegrationsV1alphaTaskConfig::class;
   protected $taskConfigsDataType = 'array';
-  public $taskConfigs;
   protected $taskConfigsInternalType = EnterpriseCrmFrontendsEventbusProtoTaskConfig::class;
   protected $taskConfigsInternalDataType = 'array';
-  public $taskConfigsInternal;
   protected $teardownType = EnterpriseCrmEventbusProtoTeardown::class;
   protected $teardownDataType = '';
-  public $teardown;
   protected $triggerConfigsType = GoogleCloudIntegrationsV1alphaTriggerConfig::class;
   protected $triggerConfigsDataType = 'array';
-  public $triggerConfigs;
   protected $triggerConfigsInternalType = EnterpriseCrmFrontendsEventbusProtoTriggerConfig::class;
   protected $triggerConfigsInternalDataType = 'array';
-  public $triggerConfigsInternal;
   /**
    * @var string
    */
@@ -94,6 +105,20 @@ class GoogleCloudIntegrationsV1alphaIntegrationVersion extends \Google\Collectio
    */
   public $userLabel;
 
+  /**
+   * @param GoogleCloudIntegrationsV1alphaCloudLoggingDetails
+   */
+  public function setCloudLoggingDetails(GoogleCloudIntegrationsV1alphaCloudLoggingDetails $cloudLoggingDetails)
+  {
+    $this->cloudLoggingDetails = $cloudLoggingDetails;
+  }
+  /**
+   * @return GoogleCloudIntegrationsV1alphaCloudLoggingDetails
+   */
+  public function getCloudLoggingDetails()
+  {
+    return $this->cloudLoggingDetails;
+  }
   /**
    * @param string
    */
@@ -107,6 +132,20 @@ class GoogleCloudIntegrationsV1alphaIntegrationVersion extends \Google\Collectio
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * @param string
+   */
+  public function setCreatedFromTemplate($createdFromTemplate)
+  {
+    $this->createdFromTemplate = $createdFromTemplate;
+  }
+  /**
+   * @return string
+   */
+  public function getCreatedFromTemplate()
+  {
+    return $this->createdFromTemplate;
   }
   /**
    * @param string
@@ -135,6 +174,48 @@ class GoogleCloudIntegrationsV1alphaIntegrationVersion extends \Google\Collectio
   public function getDescription()
   {
     return $this->description;
+  }
+  /**
+   * @param bool
+   */
+  public function setEnableVariableMasking($enableVariableMasking)
+  {
+    $this->enableVariableMasking = $enableVariableMasking;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableVariableMasking()
+  {
+    return $this->enableVariableMasking;
+  }
+  /**
+   * @param GoogleCloudIntegrationsV1alphaErrorCatcherConfig[]
+   */
+  public function setErrorCatcherConfigs($errorCatcherConfigs)
+  {
+    $this->errorCatcherConfigs = $errorCatcherConfigs;
+  }
+  /**
+   * @return GoogleCloudIntegrationsV1alphaErrorCatcherConfig[]
+   */
+  public function getErrorCatcherConfigs()
+  {
+    return $this->errorCatcherConfigs;
+  }
+  /**
+   * @param GoogleCloudIntegrationsV1alphaIntegrationConfigParameter[]
+   */
+  public function setIntegrationConfigParameters($integrationConfigParameters)
+  {
+    $this->integrationConfigParameters = $integrationConfigParameters;
+  }
+  /**
+   * @return GoogleCloudIntegrationsV1alphaIntegrationConfigParameter[]
+   */
+  public function getIntegrationConfigParameters()
+  {
+    return $this->integrationConfigParameters;
   }
   /**
    * @param GoogleCloudIntegrationsV1alphaIntegrationParameter[]
@@ -233,6 +314,20 @@ class GoogleCloudIntegrationsV1alphaIntegrationVersion extends \Google\Collectio
   public function getParentTemplateId()
   {
     return $this->parentTemplateId;
+  }
+  /**
+   * @param string
+   */
+  public function setRunAsServiceAccount($runAsServiceAccount)
+  {
+    $this->runAsServiceAccount = $runAsServiceAccount;
+  }
+  /**
+   * @return string
+   */
+  public function getRunAsServiceAccount()
+  {
+    return $this->runAsServiceAccount;
   }
   /**
    * @param string

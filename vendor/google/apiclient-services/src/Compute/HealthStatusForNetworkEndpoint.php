@@ -21,20 +21,20 @@ class HealthStatusForNetworkEndpoint extends \Google\Model
 {
   protected $backendServiceType = BackendServiceReference::class;
   protected $backendServiceDataType = '';
-  public $backendService;
   protected $forwardingRuleType = ForwardingRuleReference::class;
   protected $forwardingRuleDataType = '';
-  public $forwardingRule;
   protected $healthCheckType = HealthCheckReference::class;
   protected $healthCheckDataType = '';
-  public $healthCheck;
   protected $healthCheckServiceType = HealthCheckServiceReference::class;
   protected $healthCheckServiceDataType = '';
-  public $healthCheckService;
   /**
    * @var string
    */
   public $healthState;
+  /**
+   * @var string
+   */
+  public $ipv6HealthState;
 
   /**
    * @param BackendServiceReference
@@ -105,6 +105,20 @@ class HealthStatusForNetworkEndpoint extends \Google\Model
   public function getHealthState()
   {
     return $this->healthState;
+  }
+  /**
+   * @param string
+   */
+  public function setIpv6HealthState($ipv6HealthState)
+  {
+    $this->ipv6HealthState = $ipv6HealthState;
+  }
+  /**
+   * @return string
+   */
+  public function getIpv6HealthState()
+  {
+    return $this->ipv6HealthState;
   }
 }
 

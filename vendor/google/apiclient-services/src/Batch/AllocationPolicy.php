@@ -19,23 +19,25 @@ namespace Google\Service\Batch;
 
 class AllocationPolicy extends \Google\Collection
 {
-  protected $collection_key = 'instances';
+  protected $collection_key = 'tags';
   protected $instancesType = InstancePolicyOrTemplate::class;
   protected $instancesDataType = 'array';
-  public $instances;
   /**
    * @var string[]
    */
   public $labels;
   protected $locationType = LocationPolicy::class;
   protected $locationDataType = '';
-  public $location;
   protected $networkType = NetworkPolicy::class;
   protected $networkDataType = '';
-  public $network;
+  protected $placementType = PlacementPolicy::class;
+  protected $placementDataType = '';
   protected $serviceAccountType = ServiceAccount::class;
   protected $serviceAccountDataType = '';
-  public $serviceAccount;
+  /**
+   * @var string[]
+   */
+  public $tags;
 
   /**
    * @param InstancePolicyOrTemplate[]
@@ -94,6 +96,20 @@ class AllocationPolicy extends \Google\Collection
     return $this->network;
   }
   /**
+   * @param PlacementPolicy
+   */
+  public function setPlacement(PlacementPolicy $placement)
+  {
+    $this->placement = $placement;
+  }
+  /**
+   * @return PlacementPolicy
+   */
+  public function getPlacement()
+  {
+    return $this->placement;
+  }
+  /**
    * @param ServiceAccount
    */
   public function setServiceAccount(ServiceAccount $serviceAccount)
@@ -106,6 +122,20 @@ class AllocationPolicy extends \Google\Collection
   public function getServiceAccount()
   {
     return $this->serviceAccount;
+  }
+  /**
+   * @param string[]
+   */
+  public function setTags($tags)
+  {
+    $this->tags = $tags;
+  }
+  /**
+   * @return string[]
+   */
+  public function getTags()
+  {
+    return $this->tags;
   }
 }
 

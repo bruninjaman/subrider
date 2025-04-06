@@ -19,17 +19,17 @@ namespace Google\Service\DLP;
 
 class GooglePrivacyDlpV2TableDataProfile extends \Google\Collection
 {
-  protected $collection_key = 'predictedInfoTypes';
+  protected $collection_key = 'relatedResources';
   protected $configSnapshotType = GooglePrivacyDlpV2DataProfileConfigSnapshot::class;
   protected $configSnapshotDataType = '';
-  public $configSnapshot;
   /**
    * @var string
    */
   public $createTime;
   protected $dataRiskLevelType = GooglePrivacyDlpV2DataRiskLevel::class;
   protected $dataRiskLevelDataType = '';
-  public $dataRiskLevel;
+  protected $dataSourceTypeType = GooglePrivacyDlpV2DataSourceType::class;
+  protected $dataSourceTypeDataType = '';
   /**
    * @var string
    */
@@ -68,21 +68,20 @@ class GooglePrivacyDlpV2TableDataProfile extends \Google\Collection
   public $name;
   protected $otherInfoTypesType = GooglePrivacyDlpV2OtherInfoTypeSummary::class;
   protected $otherInfoTypesDataType = 'array';
-  public $otherInfoTypes;
   protected $predictedInfoTypesType = GooglePrivacyDlpV2InfoTypeSummary::class;
   protected $predictedInfoTypesDataType = 'array';
-  public $predictedInfoTypes;
   /**
    * @var string
    */
   public $profileLastGenerated;
   protected $profileStatusType = GooglePrivacyDlpV2ProfileStatus::class;
   protected $profileStatusDataType = '';
-  public $profileStatus;
   /**
    * @var string
    */
   public $projectDataProfile;
+  protected $relatedResourcesType = GooglePrivacyDlpV2RelatedResource::class;
+  protected $relatedResourcesDataType = 'array';
   /**
    * @var string[]
    */
@@ -101,7 +100,6 @@ class GooglePrivacyDlpV2TableDataProfile extends \Google\Collection
   public $scannedColumnCount;
   protected $sensitivityScoreType = GooglePrivacyDlpV2SensitivityScore::class;
   protected $sensitivityScoreDataType = '';
-  public $sensitivityScore;
   /**
    * @var string
    */
@@ -156,6 +154,20 @@ class GooglePrivacyDlpV2TableDataProfile extends \Google\Collection
   public function getDataRiskLevel()
   {
     return $this->dataRiskLevel;
+  }
+  /**
+   * @param GooglePrivacyDlpV2DataSourceType
+   */
+  public function setDataSourceType(GooglePrivacyDlpV2DataSourceType $dataSourceType)
+  {
+    $this->dataSourceType = $dataSourceType;
+  }
+  /**
+   * @return GooglePrivacyDlpV2DataSourceType
+   */
+  public function getDataSourceType()
+  {
+    return $this->dataSourceType;
   }
   /**
    * @param string
@@ -352,6 +364,20 @@ class GooglePrivacyDlpV2TableDataProfile extends \Google\Collection
   public function getProjectDataProfile()
   {
     return $this->projectDataProfile;
+  }
+  /**
+   * @param GooglePrivacyDlpV2RelatedResource[]
+   */
+  public function setRelatedResources($relatedResources)
+  {
+    $this->relatedResources = $relatedResources;
+  }
+  /**
+   * @return GooglePrivacyDlpV2RelatedResource[]
+   */
+  public function getRelatedResources()
+  {
+    return $this->relatedResources;
   }
   /**
    * @param string[]

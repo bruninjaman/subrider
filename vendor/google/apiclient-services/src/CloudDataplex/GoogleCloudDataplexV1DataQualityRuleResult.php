@@ -22,6 +22,10 @@ class GoogleCloudDataplexV1DataQualityRuleResult extends \Google\Model
   /**
    * @var string
    */
+  public $assertionRowCount;
+  /**
+   * @var string
+   */
   public $evaluatedCount;
   /**
    * @var string
@@ -42,8 +46,21 @@ class GoogleCloudDataplexV1DataQualityRuleResult extends \Google\Model
   public $passedCount;
   protected $ruleType = GoogleCloudDataplexV1DataQualityRule::class;
   protected $ruleDataType = '';
-  public $rule;
 
+  /**
+   * @param string
+   */
+  public function setAssertionRowCount($assertionRowCount)
+  {
+    $this->assertionRowCount = $assertionRowCount;
+  }
+  /**
+   * @return string
+   */
+  public function getAssertionRowCount()
+  {
+    return $this->assertionRowCount;
+  }
   /**
    * @param string
    */

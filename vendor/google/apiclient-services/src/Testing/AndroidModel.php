@@ -40,6 +40,8 @@ class AndroidModel extends \Google\Collection
    * @var string
    */
   public $id;
+  protected $labInfoType = LabInfo::class;
+  protected $labInfoDataType = '';
   /**
    * @var bool
    */
@@ -54,7 +56,6 @@ class AndroidModel extends \Google\Collection
   public $name;
   protected $perVersionInfoType = PerAndroidVersionInfo::class;
   protected $perVersionInfoDataType = 'array';
-  public $perVersionInfo;
   /**
    * @var int
    */
@@ -153,6 +154,20 @@ class AndroidModel extends \Google\Collection
   public function getId()
   {
     return $this->id;
+  }
+  /**
+   * @param LabInfo
+   */
+  public function setLabInfo(LabInfo $labInfo)
+  {
+    $this->labInfo = $labInfo;
+  }
+  /**
+   * @return LabInfo
+   */
+  public function getLabInfo()
+  {
+    return $this->labInfo;
   }
   /**
    * @param bool

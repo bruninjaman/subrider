@@ -19,9 +19,12 @@ namespace Google\Service\BigtableAdmin;
 
 class Backup extends \Google\Model
 {
+  /**
+   * @var string
+   */
+  public $backupType;
   protected $encryptionInfoType = EncryptionInfo::class;
   protected $encryptionInfoDataType = '';
-  public $encryptionInfo;
   /**
    * @var string
    */
@@ -30,6 +33,10 @@ class Backup extends \Google\Model
    * @var string
    */
   public $expireTime;
+  /**
+   * @var string
+   */
+  public $hotToStandardTime;
   /**
    * @var string
    */
@@ -55,6 +62,20 @@ class Backup extends \Google\Model
    */
   public $state;
 
+  /**
+   * @param string
+   */
+  public function setBackupType($backupType)
+  {
+    $this->backupType = $backupType;
+  }
+  /**
+   * @return string
+   */
+  public function getBackupType()
+  {
+    return $this->backupType;
+  }
   /**
    * @param EncryptionInfo
    */
@@ -96,6 +117,20 @@ class Backup extends \Google\Model
   public function getExpireTime()
   {
     return $this->expireTime;
+  }
+  /**
+   * @param string
+   */
+  public function setHotToStandardTime($hotToStandardTime)
+  {
+    $this->hotToStandardTime = $hotToStandardTime;
+  }
+  /**
+   * @return string
+   */
+  public function getHotToStandardTime()
+  {
+    return $this->hotToStandardTime;
   }
   /**
    * @param string

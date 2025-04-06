@@ -20,31 +20,13 @@ namespace Google\Service\Dns;
 class ResponsePolicyRulesListResponse extends \Google\Collection
 {
   protected $collection_key = 'responsePolicyRules';
-  protected $headerType = ResponseHeader::class;
-  protected $headerDataType = '';
-  public $header;
   /**
    * @var string
    */
   public $nextPageToken;
   protected $responsePolicyRulesType = ResponsePolicyRule::class;
   protected $responsePolicyRulesDataType = 'array';
-  public $responsePolicyRules;
 
-  /**
-   * @param ResponseHeader
-   */
-  public function setHeader(ResponseHeader $header)
-  {
-    $this->header = $header;
-  }
-  /**
-   * @return ResponseHeader
-   */
-  public function getHeader()
-  {
-    return $this->header;
-  }
   /**
    * @param string
    */

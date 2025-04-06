@@ -22,7 +22,6 @@ class Entity extends \Google\Collection
   protected $collection_key = 'mentions';
   protected $mentionsType = EntityMention::class;
   protected $mentionsDataType = 'array';
-  public $mentions;
   /**
    * @var string[]
    */
@@ -31,13 +30,8 @@ class Entity extends \Google\Collection
    * @var string
    */
   public $name;
-  /**
-   * @var float
-   */
-  public $salience;
   protected $sentimentType = Sentiment::class;
   protected $sentimentDataType = '';
-  public $sentiment;
   /**
    * @var string
    */
@@ -84,20 +78,6 @@ class Entity extends \Google\Collection
   public function getName()
   {
     return $this->name;
-  }
-  /**
-   * @param float
-   */
-  public function setSalience($salience)
-  {
-    $this->salience = $salience;
-  }
-  /**
-   * @return float
-   */
-  public function getSalience()
-  {
-    return $this->salience;
   }
   /**
    * @param Sentiment

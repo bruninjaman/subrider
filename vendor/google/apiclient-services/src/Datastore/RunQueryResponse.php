@@ -21,10 +21,10 @@ class RunQueryResponse extends \Google\Model
 {
   protected $batchType = QueryResultBatch::class;
   protected $batchDataType = '';
-  public $batch;
+  protected $explainMetricsType = ExplainMetrics::class;
+  protected $explainMetricsDataType = '';
   protected $queryType = Query::class;
   protected $queryDataType = '';
-  public $query;
   /**
    * @var string
    */
@@ -43,6 +43,20 @@ class RunQueryResponse extends \Google\Model
   public function getBatch()
   {
     return $this->batch;
+  }
+  /**
+   * @param ExplainMetrics
+   */
+  public function setExplainMetrics(ExplainMetrics $explainMetrics)
+  {
+    $this->explainMetrics = $explainMetrics;
+  }
+  /**
+   * @return ExplainMetrics
+   */
+  public function getExplainMetrics()
+  {
+    return $this->explainMetrics;
   }
   /**
    * @param Query

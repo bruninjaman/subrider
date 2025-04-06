@@ -21,21 +21,22 @@ class GoogleCloudDataplexV1DiscoveryEvent extends \Google\Model
 {
   protected $actionType = GoogleCloudDataplexV1DiscoveryEventActionDetails::class;
   protected $actionDataType = '';
-  public $action;
   /**
    * @var string
    */
   public $assetId;
   protected $configType = GoogleCloudDataplexV1DiscoveryEventConfigDetails::class;
   protected $configDataType = '';
-  public $config;
   /**
    * @var string
    */
   public $dataLocation;
+  /**
+   * @var string
+   */
+  public $datascanId;
   protected $entityType = GoogleCloudDataplexV1DiscoveryEventEntityDetails::class;
   protected $entityDataType = '';
-  public $entity;
   /**
    * @var string
    */
@@ -46,7 +47,8 @@ class GoogleCloudDataplexV1DiscoveryEvent extends \Google\Model
   public $message;
   protected $partitionType = GoogleCloudDataplexV1DiscoveryEventPartitionDetails::class;
   protected $partitionDataType = '';
-  public $partition;
+  protected $tableType = GoogleCloudDataplexV1DiscoveryEventTableDetails::class;
+  protected $tableDataType = '';
   /**
    * @var string
    */
@@ -113,6 +115,20 @@ class GoogleCloudDataplexV1DiscoveryEvent extends \Google\Model
     return $this->dataLocation;
   }
   /**
+   * @param string
+   */
+  public function setDatascanId($datascanId)
+  {
+    $this->datascanId = $datascanId;
+  }
+  /**
+   * @return string
+   */
+  public function getDatascanId()
+  {
+    return $this->datascanId;
+  }
+  /**
    * @param GoogleCloudDataplexV1DiscoveryEventEntityDetails
    */
   public function setEntity(GoogleCloudDataplexV1DiscoveryEventEntityDetails $entity)
@@ -167,6 +183,20 @@ class GoogleCloudDataplexV1DiscoveryEvent extends \Google\Model
   public function getPartition()
   {
     return $this->partition;
+  }
+  /**
+   * @param GoogleCloudDataplexV1DiscoveryEventTableDetails
+   */
+  public function setTable(GoogleCloudDataplexV1DiscoveryEventTableDetails $table)
+  {
+    $this->table = $table;
+  }
+  /**
+   * @return GoogleCloudDataplexV1DiscoveryEventTableDetails
+   */
+  public function getTable()
+  {
+    return $this->table;
   }
   /**
    * @param string

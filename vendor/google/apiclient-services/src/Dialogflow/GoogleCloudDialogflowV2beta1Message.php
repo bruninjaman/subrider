@@ -17,8 +17,9 @@
 
 namespace Google\Service\Dialogflow;
 
-class GoogleCloudDialogflowV2beta1Message extends \Google\Model
+class GoogleCloudDialogflowV2beta1Message extends \Google\Collection
 {
+  protected $collection_key = 'responseMessages';
   /**
    * @var string
    */
@@ -33,7 +34,6 @@ class GoogleCloudDialogflowV2beta1Message extends \Google\Model
   public $languageCode;
   protected $messageAnnotationType = GoogleCloudDialogflowV2beta1MessageAnnotation::class;
   protected $messageAnnotationDataType = '';
-  public $messageAnnotation;
   /**
    * @var string
    */
@@ -46,13 +46,14 @@ class GoogleCloudDialogflowV2beta1Message extends \Google\Model
    * @var string
    */
   public $participantRole;
+  protected $responseMessagesType = GoogleCloudDialogflowV2beta1ResponseMessage::class;
+  protected $responseMessagesDataType = 'array';
   /**
    * @var string
    */
   public $sendTime;
   protected $sentimentAnalysisType = GoogleCloudDialogflowV2beta1SentimentAnalysisResult::class;
   protected $sentimentAnalysisDataType = '';
-  public $sentimentAnalysis;
 
   /**
    * @param string
@@ -151,6 +152,20 @@ class GoogleCloudDialogflowV2beta1Message extends \Google\Model
   public function getParticipantRole()
   {
     return $this->participantRole;
+  }
+  /**
+   * @param GoogleCloudDialogflowV2beta1ResponseMessage[]
+   */
+  public function setResponseMessages($responseMessages)
+  {
+    $this->responseMessages = $responseMessages;
+  }
+  /**
+   * @return GoogleCloudDialogflowV2beta1ResponseMessage[]
+   */
+  public function getResponseMessages()
+  {
+    return $this->responseMessages;
   }
   /**
    * @param string

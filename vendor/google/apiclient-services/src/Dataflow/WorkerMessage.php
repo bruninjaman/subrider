@@ -19,33 +19,47 @@ namespace Google\Service\Dataflow;
 
 class WorkerMessage extends \Google\Model
 {
+  protected $dataSamplingReportType = DataSamplingReport::class;
+  protected $dataSamplingReportDataType = '';
   /**
    * @var string[]
    */
   public $labels;
+  protected $perWorkerMetricsType = PerWorkerMetrics::class;
+  protected $perWorkerMetricsDataType = '';
+  protected $streamingScalingReportType = StreamingScalingReport::class;
+  protected $streamingScalingReportDataType = '';
   /**
    * @var string
    */
   public $time;
   protected $workerHealthReportType = WorkerHealthReport::class;
   protected $workerHealthReportDataType = '';
-  public $workerHealthReport;
   protected $workerLifecycleEventType = WorkerLifecycleEvent::class;
   protected $workerLifecycleEventDataType = '';
-  public $workerLifecycleEvent;
   protected $workerMessageCodeType = WorkerMessageCode::class;
   protected $workerMessageCodeDataType = '';
-  public $workerMessageCode;
   protected $workerMetricsType = ResourceUtilizationReport::class;
   protected $workerMetricsDataType = '';
-  public $workerMetrics;
   protected $workerShutdownNoticeType = WorkerShutdownNotice::class;
   protected $workerShutdownNoticeDataType = '';
-  public $workerShutdownNotice;
   protected $workerThreadScalingReportType = WorkerThreadScalingReport::class;
   protected $workerThreadScalingReportDataType = '';
-  public $workerThreadScalingReport;
 
+  /**
+   * @param DataSamplingReport
+   */
+  public function setDataSamplingReport(DataSamplingReport $dataSamplingReport)
+  {
+    $this->dataSamplingReport = $dataSamplingReport;
+  }
+  /**
+   * @return DataSamplingReport
+   */
+  public function getDataSamplingReport()
+  {
+    return $this->dataSamplingReport;
+  }
   /**
    * @param string[]
    */
@@ -59,6 +73,34 @@ class WorkerMessage extends \Google\Model
   public function getLabels()
   {
     return $this->labels;
+  }
+  /**
+   * @param PerWorkerMetrics
+   */
+  public function setPerWorkerMetrics(PerWorkerMetrics $perWorkerMetrics)
+  {
+    $this->perWorkerMetrics = $perWorkerMetrics;
+  }
+  /**
+   * @return PerWorkerMetrics
+   */
+  public function getPerWorkerMetrics()
+  {
+    return $this->perWorkerMetrics;
+  }
+  /**
+   * @param StreamingScalingReport
+   */
+  public function setStreamingScalingReport(StreamingScalingReport $streamingScalingReport)
+  {
+    $this->streamingScalingReport = $streamingScalingReport;
+  }
+  /**
+   * @return StreamingScalingReport
+   */
+  public function getStreamingScalingReport()
+  {
+    return $this->streamingScalingReport;
   }
   /**
    * @param string

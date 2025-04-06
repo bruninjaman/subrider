@@ -20,9 +20,6 @@ namespace Google\Service\Dns;
 class PoliciesListResponse extends \Google\Collection
 {
   protected $collection_key = 'policies';
-  protected $headerType = ResponseHeader::class;
-  protected $headerDataType = '';
-  public $header;
   /**
    * @var string
    */
@@ -33,22 +30,7 @@ class PoliciesListResponse extends \Google\Collection
   public $nextPageToken;
   protected $policiesType = Policy::class;
   protected $policiesDataType = 'array';
-  public $policies;
 
-  /**
-   * @param ResponseHeader
-   */
-  public function setHeader(ResponseHeader $header)
-  {
-    $this->header = $header;
-  }
-  /**
-   * @return ResponseHeader
-   */
-  public function getHeader()
-  {
-    return $this->header;
-  }
   /**
    * @param string
    */

@@ -20,49 +20,55 @@ namespace Google\Service\Dataproc;
 class OrderedJob extends \Google\Collection
 {
   protected $collection_key = 'prerequisiteStepIds';
+  protected $flinkJobType = FlinkJob::class;
+  protected $flinkJobDataType = '';
   protected $hadoopJobType = HadoopJob::class;
   protected $hadoopJobDataType = '';
-  public $hadoopJob;
   protected $hiveJobType = HiveJob::class;
   protected $hiveJobDataType = '';
-  public $hiveJob;
   /**
    * @var string[]
    */
   public $labels;
   protected $pigJobType = PigJob::class;
   protected $pigJobDataType = '';
-  public $pigJob;
   /**
    * @var string[]
    */
   public $prerequisiteStepIds;
   protected $prestoJobType = PrestoJob::class;
   protected $prestoJobDataType = '';
-  public $prestoJob;
   protected $pysparkJobType = PySparkJob::class;
   protected $pysparkJobDataType = '';
-  public $pysparkJob;
   protected $schedulingType = JobScheduling::class;
   protected $schedulingDataType = '';
-  public $scheduling;
   protected $sparkJobType = SparkJob::class;
   protected $sparkJobDataType = '';
-  public $sparkJob;
   protected $sparkRJobType = SparkRJob::class;
   protected $sparkRJobDataType = '';
-  public $sparkRJob;
   protected $sparkSqlJobType = SparkSqlJob::class;
   protected $sparkSqlJobDataType = '';
-  public $sparkSqlJob;
   /**
    * @var string
    */
   public $stepId;
   protected $trinoJobType = TrinoJob::class;
   protected $trinoJobDataType = '';
-  public $trinoJob;
 
+  /**
+   * @param FlinkJob
+   */
+  public function setFlinkJob(FlinkJob $flinkJob)
+  {
+    $this->flinkJob = $flinkJob;
+  }
+  /**
+   * @return FlinkJob
+   */
+  public function getFlinkJob()
+  {
+    return $this->flinkJob;
+  }
   /**
    * @param HadoopJob
    */

@@ -21,7 +21,10 @@ class DeployJobRunMetadata extends \Google\Model
 {
   protected $cloudRunType = CloudRunMetadata::class;
   protected $cloudRunDataType = '';
-  public $cloudRun;
+  protected $customType = CustomMetadata::class;
+  protected $customDataType = '';
+  protected $customTargetType = CustomTargetDeployMetadata::class;
+  protected $customTargetDataType = '';
 
   /**
    * @param CloudRunMetadata
@@ -36,6 +39,34 @@ class DeployJobRunMetadata extends \Google\Model
   public function getCloudRun()
   {
     return $this->cloudRun;
+  }
+  /**
+   * @param CustomMetadata
+   */
+  public function setCustom(CustomMetadata $custom)
+  {
+    $this->custom = $custom;
+  }
+  /**
+   * @return CustomMetadata
+   */
+  public function getCustom()
+  {
+    return $this->custom;
+  }
+  /**
+   * @param CustomTargetDeployMetadata
+   */
+  public function setCustomTarget(CustomTargetDeployMetadata $customTarget)
+  {
+    $this->customTarget = $customTarget;
+  }
+  /**
+   * @return CustomTargetDeployMetadata
+   */
+  public function getCustomTarget()
+  {
+    return $this->customTarget;
   }
 }
 

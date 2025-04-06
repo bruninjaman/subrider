@@ -30,6 +30,14 @@ class Execution extends \Google\Model
   /**
    * @var string
    */
+  public $createTime;
+  /**
+   * @var bool
+   */
+  public $disableConcurrencyQuotaOverflowBuffering;
+  /**
+   * @var string
+   */
   public $duration;
   /**
    * @var string
@@ -37,7 +45,10 @@ class Execution extends \Google\Model
   public $endTime;
   protected $errorType = Error::class;
   protected $errorDataType = '';
-  public $error;
+  /**
+   * @var string
+   */
+  public $executionHistoryLevel;
   /**
    * @var string[]
    */
@@ -58,9 +69,10 @@ class Execution extends \Google\Model
    * @var string
    */
   public $state;
+  protected $stateErrorType = StateError::class;
+  protected $stateErrorDataType = '';
   protected $statusType = Status::class;
   protected $statusDataType = '';
-  public $status;
   /**
    * @var string
    */
@@ -93,6 +105,34 @@ class Execution extends \Google\Model
   public function getCallLogLevel()
   {
     return $this->callLogLevel;
+  }
+  /**
+   * @param string
+   */
+  public function setCreateTime($createTime)
+  {
+    $this->createTime = $createTime;
+  }
+  /**
+   * @return string
+   */
+  public function getCreateTime()
+  {
+    return $this->createTime;
+  }
+  /**
+   * @param bool
+   */
+  public function setDisableConcurrencyQuotaOverflowBuffering($disableConcurrencyQuotaOverflowBuffering)
+  {
+    $this->disableConcurrencyQuotaOverflowBuffering = $disableConcurrencyQuotaOverflowBuffering;
+  }
+  /**
+   * @return bool
+   */
+  public function getDisableConcurrencyQuotaOverflowBuffering()
+  {
+    return $this->disableConcurrencyQuotaOverflowBuffering;
   }
   /**
    * @param string
@@ -135,6 +175,20 @@ class Execution extends \Google\Model
   public function getError()
   {
     return $this->error;
+  }
+  /**
+   * @param string
+   */
+  public function setExecutionHistoryLevel($executionHistoryLevel)
+  {
+    $this->executionHistoryLevel = $executionHistoryLevel;
+  }
+  /**
+   * @return string
+   */
+  public function getExecutionHistoryLevel()
+  {
+    return $this->executionHistoryLevel;
   }
   /**
    * @param string[]
@@ -205,6 +259,20 @@ class Execution extends \Google\Model
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param StateError
+   */
+  public function setStateError(StateError $stateError)
+  {
+    $this->stateError = $stateError;
+  }
+  /**
+   * @return StateError
+   */
+  public function getStateError()
+  {
+    return $this->stateError;
   }
   /**
    * @param Status

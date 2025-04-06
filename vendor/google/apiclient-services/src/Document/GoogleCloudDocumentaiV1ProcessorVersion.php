@@ -25,14 +25,14 @@ class GoogleCloudDocumentaiV1ProcessorVersion extends \Google\Model
   public $createTime;
   protected $deprecationInfoType = GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo::class;
   protected $deprecationInfoDataType = '';
-  public $deprecationInfo;
   /**
    * @var string
    */
   public $displayName;
   protected $documentSchemaType = GoogleCloudDocumentaiV1DocumentSchema::class;
   protected $documentSchemaDataType = '';
-  public $documentSchema;
+  protected $genAiModelInfoType = GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo::class;
+  protected $genAiModelInfoDataType = '';
   /**
    * @var bool
    */
@@ -47,11 +47,22 @@ class GoogleCloudDocumentaiV1ProcessorVersion extends \Google\Model
   public $kmsKeyVersionName;
   protected $latestEvaluationType = GoogleCloudDocumentaiV1EvaluationReference::class;
   protected $latestEvaluationDataType = '';
-  public $latestEvaluation;
+  /**
+   * @var string
+   */
+  public $modelType;
   /**
    * @var string
    */
   public $name;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * @var string
    */
@@ -114,6 +125,20 @@ class GoogleCloudDocumentaiV1ProcessorVersion extends \Google\Model
     return $this->documentSchema;
   }
   /**
+   * @param GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo
+   */
+  public function setGenAiModelInfo(GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo $genAiModelInfo)
+  {
+    $this->genAiModelInfo = $genAiModelInfo;
+  }
+  /**
+   * @return GoogleCloudDocumentaiV1ProcessorVersionGenAiModelInfo
+   */
+  public function getGenAiModelInfo()
+  {
+    return $this->genAiModelInfo;
+  }
+  /**
    * @param bool
    */
   public function setGoogleManaged($googleManaged)
@@ -172,6 +197,20 @@ class GoogleCloudDocumentaiV1ProcessorVersion extends \Google\Model
   /**
    * @param string
    */
+  public function setModelType($modelType)
+  {
+    $this->modelType = $modelType;
+  }
+  /**
+   * @return string
+   */
+  public function getModelType()
+  {
+    return $this->modelType;
+  }
+  /**
+   * @param string
+   */
   public function setName($name)
   {
     $this->name = $name;
@@ -182,6 +221,34 @@ class GoogleCloudDocumentaiV1ProcessorVersion extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param string

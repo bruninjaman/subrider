@@ -22,31 +22,26 @@ class AlertPolicy extends \Google\Collection
   protected $collection_key = 'notificationChannels';
   protected $alertStrategyType = AlertStrategy::class;
   protected $alertStrategyDataType = '';
-  public $alertStrategy;
   /**
    * @var string
    */
   public $combiner;
   protected $conditionsType = Condition::class;
   protected $conditionsDataType = 'array';
-  public $conditions;
   protected $creationRecordType = MutationRecord::class;
   protected $creationRecordDataType = '';
-  public $creationRecord;
   /**
    * @var string
    */
   public $displayName;
   protected $documentationType = Documentation::class;
   protected $documentationDataType = '';
-  public $documentation;
   /**
    * @var bool
    */
   public $enabled;
   protected $mutationRecordType = MutationRecord::class;
   protected $mutationRecordDataType = '';
-  public $mutationRecord;
   /**
    * @var string
    */
@@ -56,12 +51,15 @@ class AlertPolicy extends \Google\Collection
    */
   public $notificationChannels;
   /**
+   * @var string
+   */
+  public $severity;
+  /**
    * @var string[]
    */
   public $userLabels;
   protected $validityType = Status::class;
   protected $validityDataType = '';
-  public $validity;
 
   /**
    * @param AlertStrategy
@@ -202,6 +200,20 @@ class AlertPolicy extends \Google\Collection
   public function getNotificationChannels()
   {
     return $this->notificationChannels;
+  }
+  /**
+   * @param string
+   */
+  public function setSeverity($severity)
+  {
+    $this->severity = $severity;
+  }
+  /**
+   * @return string
+   */
+  public function getSeverity()
+  {
+    return $this->severity;
   }
   /**
    * @param string[]

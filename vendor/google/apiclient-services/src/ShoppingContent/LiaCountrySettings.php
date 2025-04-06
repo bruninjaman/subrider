@@ -21,7 +21,6 @@ class LiaCountrySettings extends \Google\Model
 {
   protected $aboutType = LiaAboutPageSettings::class;
   protected $aboutDataType = '';
-  public $about;
   /**
    * @var string
    */
@@ -32,13 +31,12 @@ class LiaCountrySettings extends \Google\Model
   public $hostedLocalStorefrontActive;
   protected $inventoryType = LiaInventorySettings::class;
   protected $inventoryDataType = '';
-  public $inventory;
+  protected $omnichannelExperienceType = LiaOmnichannelExperience::class;
+  protected $omnichannelExperienceDataType = '';
   protected $onDisplayToOrderType = LiaOnDisplayToOrderSettings::class;
   protected $onDisplayToOrderDataType = '';
-  public $onDisplayToOrder;
   protected $posDataProviderType = LiaPosDataProvider::class;
   protected $posDataProviderDataType = '';
-  public $posDataProvider;
   /**
    * @var bool
    */
@@ -99,6 +97,20 @@ class LiaCountrySettings extends \Google\Model
   public function getInventory()
   {
     return $this->inventory;
+  }
+  /**
+   * @param LiaOmnichannelExperience
+   */
+  public function setOmnichannelExperience(LiaOmnichannelExperience $omnichannelExperience)
+  {
+    $this->omnichannelExperience = $omnichannelExperience;
+  }
+  /**
+   * @return LiaOmnichannelExperience
+   */
+  public function getOmnichannelExperience()
+  {
+    return $this->omnichannelExperience;
   }
   /**
    * @param LiaOnDisplayToOrderSettings

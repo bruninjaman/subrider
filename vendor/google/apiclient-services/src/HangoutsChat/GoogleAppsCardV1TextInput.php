@@ -21,14 +21,12 @@ class GoogleAppsCardV1TextInput extends \Google\Model
 {
   protected $autoCompleteActionType = GoogleAppsCardV1Action::class;
   protected $autoCompleteActionDataType = '';
-  public $autoCompleteAction;
   /**
    * @var string
    */
   public $hintText;
   protected $initialSuggestionsType = GoogleAppsCardV1Suggestions::class;
   protected $initialSuggestionsDataType = '';
-  public $initialSuggestions;
   /**
    * @var string
    */
@@ -39,11 +37,16 @@ class GoogleAppsCardV1TextInput extends \Google\Model
   public $name;
   protected $onChangeActionType = GoogleAppsCardV1Action::class;
   protected $onChangeActionDataType = '';
-  public $onChangeAction;
+  /**
+   * @var string
+   */
+  public $placeholderText;
   /**
    * @var string
    */
   public $type;
+  protected $validationType = GoogleAppsCardV1Validation::class;
+  protected $validationDataType = '';
   /**
    * @var string
    */
@@ -136,6 +139,20 @@ class GoogleAppsCardV1TextInput extends \Google\Model
   /**
    * @param string
    */
+  public function setPlaceholderText($placeholderText)
+  {
+    $this->placeholderText = $placeholderText;
+  }
+  /**
+   * @return string
+   */
+  public function getPlaceholderText()
+  {
+    return $this->placeholderText;
+  }
+  /**
+   * @param string
+   */
   public function setType($type)
   {
     $this->type = $type;
@@ -146,6 +163,20 @@ class GoogleAppsCardV1TextInput extends \Google\Model
   public function getType()
   {
     return $this->type;
+  }
+  /**
+   * @param GoogleAppsCardV1Validation
+   */
+  public function setValidation(GoogleAppsCardV1Validation $validation)
+  {
+    $this->validation = $validation;
+  }
+  /**
+   * @return GoogleAppsCardV1Validation
+   */
+  public function getValidation()
+  {
+    return $this->validation;
   }
   /**
    * @param string

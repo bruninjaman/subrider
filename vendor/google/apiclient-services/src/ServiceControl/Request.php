@@ -21,7 +21,6 @@ class Request extends \Google\Model
 {
   protected $authType = Auth::class;
   protected $authDataType = '';
-  public $auth;
   /**
    * @var string[]
    */
@@ -38,6 +37,10 @@ class Request extends \Google\Model
    * @var string
    */
   public $method;
+  /**
+   * @var string
+   */
+  public $origin;
   /**
    * @var string
    */
@@ -136,6 +139,20 @@ class Request extends \Google\Model
   public function getMethod()
   {
     return $this->method;
+  }
+  /**
+   * @param string
+   */
+  public function setOrigin($origin)
+  {
+    $this->origin = $origin;
+  }
+  /**
+   * @return string
+   */
+  public function getOrigin()
+  {
+    return $this->origin;
   }
   /**
    * @param string

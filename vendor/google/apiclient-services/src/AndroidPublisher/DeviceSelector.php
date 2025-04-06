@@ -19,22 +19,19 @@ namespace Google\Service\AndroidPublisher;
 
 class DeviceSelector extends \Google\Collection
 {
-  protected $collection_key = 'requiredSystemFeatures';
+  protected $collection_key = 'systemOnChips';
   protected $deviceRamType = DeviceRam::class;
   protected $deviceRamDataType = '';
-  public $deviceRam;
   protected $excludedDeviceIdsType = DeviceId::class;
   protected $excludedDeviceIdsDataType = 'array';
-  public $excludedDeviceIds;
   protected $forbiddenSystemFeaturesType = SystemFeature::class;
   protected $forbiddenSystemFeaturesDataType = 'array';
-  public $forbiddenSystemFeatures;
   protected $includedDeviceIdsType = DeviceId::class;
   protected $includedDeviceIdsDataType = 'array';
-  public $includedDeviceIds;
   protected $requiredSystemFeaturesType = SystemFeature::class;
   protected $requiredSystemFeaturesDataType = 'array';
-  public $requiredSystemFeatures;
+  protected $systemOnChipsType = SystemOnChip::class;
+  protected $systemOnChipsDataType = 'array';
 
   /**
    * @param DeviceRam
@@ -105,6 +102,20 @@ class DeviceSelector extends \Google\Collection
   public function getRequiredSystemFeatures()
   {
     return $this->requiredSystemFeatures;
+  }
+  /**
+   * @param SystemOnChip[]
+   */
+  public function setSystemOnChips($systemOnChips)
+  {
+    $this->systemOnChips = $systemOnChips;
+  }
+  /**
+   * @return SystemOnChip[]
+   */
+  public function getSystemOnChips()
+  {
+    return $this->systemOnChips;
   }
 }
 

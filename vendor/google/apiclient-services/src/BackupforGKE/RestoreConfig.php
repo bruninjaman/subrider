@@ -19,7 +19,7 @@ namespace Google\Service\BackupforGKE;
 
 class RestoreConfig extends \Google\Collection
 {
-  protected $collection_key = 'substitutionRules';
+  protected $collection_key = 'volumeDataRestorePolicyBindings';
   /**
    * @var bool
    */
@@ -30,24 +30,32 @@ class RestoreConfig extends \Google\Collection
   public $clusterResourceConflictPolicy;
   protected $clusterResourceRestoreScopeType = ClusterResourceRestoreScope::class;
   protected $clusterResourceRestoreScopeDataType = '';
-  public $clusterResourceRestoreScope;
+  protected $excludedNamespacesType = Namespaces::class;
+  protected $excludedNamespacesDataType = '';
   /**
    * @var string
    */
   public $namespacedResourceRestoreMode;
+  /**
+   * @var bool
+   */
+  public $noNamespaces;
+  protected $restoreOrderType = RestoreOrder::class;
+  protected $restoreOrderDataType = '';
   protected $selectedApplicationsType = NamespacedNames::class;
   protected $selectedApplicationsDataType = '';
-  public $selectedApplications;
   protected $selectedNamespacesType = Namespaces::class;
   protected $selectedNamespacesDataType = '';
-  public $selectedNamespaces;
   protected $substitutionRulesType = SubstitutionRule::class;
   protected $substitutionRulesDataType = 'array';
-  public $substitutionRules;
+  protected $transformationRulesType = TransformationRule::class;
+  protected $transformationRulesDataType = 'array';
   /**
    * @var string
    */
   public $volumeDataRestorePolicy;
+  protected $volumeDataRestorePolicyBindingsType = VolumeDataRestorePolicyBinding::class;
+  protected $volumeDataRestorePolicyBindingsDataType = 'array';
 
   /**
    * @param bool
@@ -92,6 +100,20 @@ class RestoreConfig extends \Google\Collection
     return $this->clusterResourceRestoreScope;
   }
   /**
+   * @param Namespaces
+   */
+  public function setExcludedNamespaces(Namespaces $excludedNamespaces)
+  {
+    $this->excludedNamespaces = $excludedNamespaces;
+  }
+  /**
+   * @return Namespaces
+   */
+  public function getExcludedNamespaces()
+  {
+    return $this->excludedNamespaces;
+  }
+  /**
    * @param string
    */
   public function setNamespacedResourceRestoreMode($namespacedResourceRestoreMode)
@@ -104,6 +126,34 @@ class RestoreConfig extends \Google\Collection
   public function getNamespacedResourceRestoreMode()
   {
     return $this->namespacedResourceRestoreMode;
+  }
+  /**
+   * @param bool
+   */
+  public function setNoNamespaces($noNamespaces)
+  {
+    $this->noNamespaces = $noNamespaces;
+  }
+  /**
+   * @return bool
+   */
+  public function getNoNamespaces()
+  {
+    return $this->noNamespaces;
+  }
+  /**
+   * @param RestoreOrder
+   */
+  public function setRestoreOrder(RestoreOrder $restoreOrder)
+  {
+    $this->restoreOrder = $restoreOrder;
+  }
+  /**
+   * @return RestoreOrder
+   */
+  public function getRestoreOrder()
+  {
+    return $this->restoreOrder;
   }
   /**
    * @param NamespacedNames
@@ -148,6 +198,20 @@ class RestoreConfig extends \Google\Collection
     return $this->substitutionRules;
   }
   /**
+   * @param TransformationRule[]
+   */
+  public function setTransformationRules($transformationRules)
+  {
+    $this->transformationRules = $transformationRules;
+  }
+  /**
+   * @return TransformationRule[]
+   */
+  public function getTransformationRules()
+  {
+    return $this->transformationRules;
+  }
+  /**
    * @param string
    */
   public function setVolumeDataRestorePolicy($volumeDataRestorePolicy)
@@ -160,6 +224,20 @@ class RestoreConfig extends \Google\Collection
   public function getVolumeDataRestorePolicy()
   {
     return $this->volumeDataRestorePolicy;
+  }
+  /**
+   * @param VolumeDataRestorePolicyBinding[]
+   */
+  public function setVolumeDataRestorePolicyBindings($volumeDataRestorePolicyBindings)
+  {
+    $this->volumeDataRestorePolicyBindings = $volumeDataRestorePolicyBindings;
+  }
+  /**
+   * @return VolumeDataRestorePolicyBinding[]
+   */
+  public function getVolumeDataRestorePolicyBindings()
+  {
+    return $this->volumeDataRestorePolicyBindings;
   }
 }
 

@@ -21,7 +21,8 @@ class Queue extends \Google\Model
 {
   protected $appEngineRoutingOverrideType = AppEngineRouting::class;
   protected $appEngineRoutingOverrideDataType = '';
-  public $appEngineRoutingOverride;
+  protected $httpTargetType = HttpTarget::class;
+  protected $httpTargetDataType = '';
   /**
    * @var string
    */
@@ -32,13 +33,10 @@ class Queue extends \Google\Model
   public $purgeTime;
   protected $rateLimitsType = RateLimits::class;
   protected $rateLimitsDataType = '';
-  public $rateLimits;
   protected $retryConfigType = RetryConfig::class;
   protected $retryConfigDataType = '';
-  public $retryConfig;
   protected $stackdriverLoggingConfigType = StackdriverLoggingConfig::class;
   protected $stackdriverLoggingConfigDataType = '';
-  public $stackdriverLoggingConfig;
   /**
    * @var string
    */
@@ -57,6 +55,20 @@ class Queue extends \Google\Model
   public function getAppEngineRoutingOverride()
   {
     return $this->appEngineRoutingOverride;
+  }
+  /**
+   * @param HttpTarget
+   */
+  public function setHttpTarget(HttpTarget $httpTarget)
+  {
+    $this->httpTarget = $httpTarget;
+  }
+  /**
+   * @return HttpTarget
+   */
+  public function getHttpTarget()
+  {
+    return $this->httpTarget;
   }
   /**
    * @param string

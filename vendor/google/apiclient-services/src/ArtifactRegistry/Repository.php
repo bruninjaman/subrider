@@ -19,6 +19,12 @@ namespace Google\Service\ArtifactRegistry;
 
 class Repository extends \Google\Model
 {
+  protected $cleanupPoliciesType = CleanupPolicy::class;
+  protected $cleanupPoliciesDataType = 'map';
+  /**
+   * @var bool
+   */
+  public $cleanupPolicyDryRun;
   /**
    * @var string
    */
@@ -27,6 +33,12 @@ class Repository extends \Google\Model
    * @var string
    */
   public $description;
+  /**
+   * @var bool
+   */
+  public $disallowUnspecifiedMode;
+  protected $dockerConfigType = DockerRepositoryConfig::class;
+  protected $dockerConfigDataType = '';
   /**
    * @var string
    */
@@ -41,7 +53,6 @@ class Repository extends \Google\Model
   public $labels;
   protected $mavenConfigType = MavenRepositoryConfig::class;
   protected $mavenConfigDataType = '';
-  public $mavenConfig;
   /**
    * @var string
    */
@@ -50,9 +61,16 @@ class Repository extends \Google\Model
    * @var string
    */
   public $name;
+  /**
+   * @var string
+   */
+  public $registryUri;
   protected $remoteRepositoryConfigType = RemoteRepositoryConfig::class;
   protected $remoteRepositoryConfigDataType = '';
-  public $remoteRepositoryConfig;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
   /**
    * @var bool
    */
@@ -67,8 +85,37 @@ class Repository extends \Google\Model
   public $updateTime;
   protected $virtualRepositoryConfigType = VirtualRepositoryConfig::class;
   protected $virtualRepositoryConfigDataType = '';
-  public $virtualRepositoryConfig;
+  protected $vulnerabilityScanningConfigType = VulnerabilityScanningConfig::class;
+  protected $vulnerabilityScanningConfigDataType = '';
 
+  /**
+   * @param CleanupPolicy[]
+   */
+  public function setCleanupPolicies($cleanupPolicies)
+  {
+    $this->cleanupPolicies = $cleanupPolicies;
+  }
+  /**
+   * @return CleanupPolicy[]
+   */
+  public function getCleanupPolicies()
+  {
+    return $this->cleanupPolicies;
+  }
+  /**
+   * @param bool
+   */
+  public function setCleanupPolicyDryRun($cleanupPolicyDryRun)
+  {
+    $this->cleanupPolicyDryRun = $cleanupPolicyDryRun;
+  }
+  /**
+   * @return bool
+   */
+  public function getCleanupPolicyDryRun()
+  {
+    return $this->cleanupPolicyDryRun;
+  }
   /**
    * @param string
    */
@@ -96,6 +143,34 @@ class Repository extends \Google\Model
   public function getDescription()
   {
     return $this->description;
+  }
+  /**
+   * @param bool
+   */
+  public function setDisallowUnspecifiedMode($disallowUnspecifiedMode)
+  {
+    $this->disallowUnspecifiedMode = $disallowUnspecifiedMode;
+  }
+  /**
+   * @return bool
+   */
+  public function getDisallowUnspecifiedMode()
+  {
+    return $this->disallowUnspecifiedMode;
+  }
+  /**
+   * @param DockerRepositoryConfig
+   */
+  public function setDockerConfig(DockerRepositoryConfig $dockerConfig)
+  {
+    $this->dockerConfig = $dockerConfig;
+  }
+  /**
+   * @return DockerRepositoryConfig
+   */
+  public function getDockerConfig()
+  {
+    return $this->dockerConfig;
   }
   /**
    * @param string
@@ -182,6 +257,20 @@ class Repository extends \Google\Model
     return $this->name;
   }
   /**
+   * @param string
+   */
+  public function setRegistryUri($registryUri)
+  {
+    $this->registryUri = $registryUri;
+  }
+  /**
+   * @return string
+   */
+  public function getRegistryUri()
+  {
+    return $this->registryUri;
+  }
+  /**
    * @param RemoteRepositoryConfig
    */
   public function setRemoteRepositoryConfig(RemoteRepositoryConfig $remoteRepositoryConfig)
@@ -194,6 +283,20 @@ class Repository extends \Google\Model
   public function getRemoteRepositoryConfig()
   {
     return $this->remoteRepositoryConfig;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
   }
   /**
    * @param bool
@@ -250,6 +353,20 @@ class Repository extends \Google\Model
   public function getVirtualRepositoryConfig()
   {
     return $this->virtualRepositoryConfig;
+  }
+  /**
+   * @param VulnerabilityScanningConfig
+   */
+  public function setVulnerabilityScanningConfig(VulnerabilityScanningConfig $vulnerabilityScanningConfig)
+  {
+    $this->vulnerabilityScanningConfig = $vulnerabilityScanningConfig;
+  }
+  /**
+   * @return VulnerabilityScanningConfig
+   */
+  public function getVulnerabilityScanningConfig()
+  {
+    return $this->vulnerabilityScanningConfig;
   }
 }
 

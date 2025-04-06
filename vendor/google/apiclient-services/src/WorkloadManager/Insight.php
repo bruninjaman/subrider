@@ -19,17 +19,37 @@ namespace Google\Service\WorkloadManager;
 
 class Insight extends \Google\Model
 {
+  /**
+   * @var string
+   */
+  public $instanceId;
   protected $sapDiscoveryType = SapDiscovery::class;
   protected $sapDiscoveryDataType = '';
-  public $sapDiscovery;
   protected $sapValidationType = SapValidation::class;
   protected $sapValidationDataType = '';
-  public $sapValidation;
   /**
    * @var string
    */
   public $sentTime;
+  protected $sqlserverValidationType = SqlserverValidation::class;
+  protected $sqlserverValidationDataType = '';
+  protected $torsoValidationType = TorsoValidation::class;
+  protected $torsoValidationDataType = '';
 
+  /**
+   * @param string
+   */
+  public function setInstanceId($instanceId)
+  {
+    $this->instanceId = $instanceId;
+  }
+  /**
+   * @return string
+   */
+  public function getInstanceId()
+  {
+    return $this->instanceId;
+  }
   /**
    * @param SapDiscovery
    */
@@ -71,6 +91,34 @@ class Insight extends \Google\Model
   public function getSentTime()
   {
     return $this->sentTime;
+  }
+  /**
+   * @param SqlserverValidation
+   */
+  public function setSqlserverValidation(SqlserverValidation $sqlserverValidation)
+  {
+    $this->sqlserverValidation = $sqlserverValidation;
+  }
+  /**
+   * @return SqlserverValidation
+   */
+  public function getSqlserverValidation()
+  {
+    return $this->sqlserverValidation;
+  }
+  /**
+   * @param TorsoValidation
+   */
+  public function setTorsoValidation(TorsoValidation $torsoValidation)
+  {
+    $this->torsoValidation = $torsoValidation;
+  }
+  /**
+   * @return TorsoValidation
+   */
+  public function getTorsoValidation()
+  {
+    return $this->torsoValidation;
   }
 }
 

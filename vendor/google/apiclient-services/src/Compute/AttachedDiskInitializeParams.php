@@ -41,6 +41,10 @@ class AttachedDiskInitializeParams extends \Google\Collection
    */
   public $diskType;
   /**
+   * @var bool
+   */
+  public $enableConfidentialCompute;
+  /**
    * @var string[]
    */
   public $labels;
@@ -57,6 +61,14 @@ class AttachedDiskInitializeParams extends \Google\Collection
    */
   public $provisionedIops;
   /**
+   * @var string
+   */
+  public $provisionedThroughput;
+  /**
+   * @var string[]
+   */
+  public $replicaZones;
+  /**
    * @var string[]
    */
   public $resourceManagerTags;
@@ -70,14 +82,16 @@ class AttachedDiskInitializeParams extends \Google\Collection
   public $sourceImage;
   protected $sourceImageEncryptionKeyType = CustomerEncryptionKey::class;
   protected $sourceImageEncryptionKeyDataType = '';
-  public $sourceImageEncryptionKey;
   /**
    * @var string
    */
   public $sourceSnapshot;
   protected $sourceSnapshotEncryptionKeyType = CustomerEncryptionKey::class;
   protected $sourceSnapshotEncryptionKeyDataType = '';
-  public $sourceSnapshotEncryptionKey;
+  /**
+   * @var string
+   */
+  public $storagePool;
 
   /**
    * @param string
@@ -150,6 +164,20 @@ class AttachedDiskInitializeParams extends \Google\Collection
     return $this->diskType;
   }
   /**
+   * @param bool
+   */
+  public function setEnableConfidentialCompute($enableConfidentialCompute)
+  {
+    $this->enableConfidentialCompute = $enableConfidentialCompute;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableConfidentialCompute()
+  {
+    return $this->enableConfidentialCompute;
+  }
+  /**
    * @param string[]
    */
   public function setLabels($labels)
@@ -204,6 +232,34 @@ class AttachedDiskInitializeParams extends \Google\Collection
   public function getProvisionedIops()
   {
     return $this->provisionedIops;
+  }
+  /**
+   * @param string
+   */
+  public function setProvisionedThroughput($provisionedThroughput)
+  {
+    $this->provisionedThroughput = $provisionedThroughput;
+  }
+  /**
+   * @return string
+   */
+  public function getProvisionedThroughput()
+  {
+    return $this->provisionedThroughput;
+  }
+  /**
+   * @param string[]
+   */
+  public function setReplicaZones($replicaZones)
+  {
+    $this->replicaZones = $replicaZones;
+  }
+  /**
+   * @return string[]
+   */
+  public function getReplicaZones()
+  {
+    return $this->replicaZones;
   }
   /**
    * @param string[]
@@ -288,6 +344,20 @@ class AttachedDiskInitializeParams extends \Google\Collection
   public function getSourceSnapshotEncryptionKey()
   {
     return $this->sourceSnapshotEncryptionKey;
+  }
+  /**
+   * @param string
+   */
+  public function setStoragePool($storagePool)
+  {
+    $this->storagePool = $storagePool;
+  }
+  /**
+   * @return string
+   */
+  public function getStoragePool()
+  {
+    return $this->storagePool;
   }
 }
 

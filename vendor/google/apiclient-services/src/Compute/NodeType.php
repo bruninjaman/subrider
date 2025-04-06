@@ -29,7 +29,6 @@ class NodeType extends \Google\Model
   public $creationTimestamp;
   protected $deprecatedType = DeprecationStatus::class;
   protected $deprecatedDataType = '';
-  public $deprecated;
   /**
    * @var string
    */
@@ -50,6 +49,10 @@ class NodeType extends \Google\Model
    * @var int
    */
   public $localSsdGb;
+  /**
+   * @var int
+   */
+  public $maxVms;
   /**
    * @var int
    */
@@ -178,6 +181,20 @@ class NodeType extends \Google\Model
   public function getLocalSsdGb()
   {
     return $this->localSsdGb;
+  }
+  /**
+   * @param int
+   */
+  public function setMaxVms($maxVms)
+  {
+    $this->maxVms = $maxVms;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxVms()
+  {
+    return $this->maxVms;
   }
   /**
    * @param int

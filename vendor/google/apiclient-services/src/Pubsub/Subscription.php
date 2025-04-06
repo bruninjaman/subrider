@@ -17,18 +17,21 @@
 
 namespace Google\Service\Pubsub;
 
-class Subscription extends \Google\Model
+class Subscription extends \Google\Collection
 {
+  protected $collection_key = 'messageTransforms';
   /**
    * @var int
    */
   public $ackDeadlineSeconds;
+  protected $analyticsHubSubscriptionInfoType = AnalyticsHubSubscriptionInfo::class;
+  protected $analyticsHubSubscriptionInfoDataType = '';
   protected $bigqueryConfigType = BigQueryConfig::class;
   protected $bigqueryConfigDataType = '';
-  public $bigqueryConfig;
+  protected $cloudStorageConfigType = CloudStorageConfig::class;
+  protected $cloudStorageConfigDataType = '';
   protected $deadLetterPolicyType = DeadLetterPolicy::class;
   protected $deadLetterPolicyDataType = '';
-  public $deadLetterPolicy;
   /**
    * @var bool
    */
@@ -43,7 +46,6 @@ class Subscription extends \Google\Model
   public $enableMessageOrdering;
   protected $expirationPolicyType = ExpirationPolicy::class;
   protected $expirationPolicyDataType = '';
-  public $expirationPolicy;
   /**
    * @var string
    */
@@ -56,20 +58,20 @@ class Subscription extends \Google\Model
    * @var string
    */
   public $messageRetentionDuration;
+  protected $messageTransformsType = MessageTransform::class;
+  protected $messageTransformsDataType = 'array';
   /**
    * @var string
    */
   public $name;
   protected $pushConfigType = PushConfig::class;
   protected $pushConfigDataType = '';
-  public $pushConfig;
   /**
    * @var bool
    */
   public $retainAckedMessages;
   protected $retryPolicyType = RetryPolicy::class;
   protected $retryPolicyDataType = '';
-  public $retryPolicy;
   /**
    * @var string
    */
@@ -98,6 +100,20 @@ class Subscription extends \Google\Model
     return $this->ackDeadlineSeconds;
   }
   /**
+   * @param AnalyticsHubSubscriptionInfo
+   */
+  public function setAnalyticsHubSubscriptionInfo(AnalyticsHubSubscriptionInfo $analyticsHubSubscriptionInfo)
+  {
+    $this->analyticsHubSubscriptionInfo = $analyticsHubSubscriptionInfo;
+  }
+  /**
+   * @return AnalyticsHubSubscriptionInfo
+   */
+  public function getAnalyticsHubSubscriptionInfo()
+  {
+    return $this->analyticsHubSubscriptionInfo;
+  }
+  /**
    * @param BigQueryConfig
    */
   public function setBigqueryConfig(BigQueryConfig $bigqueryConfig)
@@ -110,6 +126,20 @@ class Subscription extends \Google\Model
   public function getBigqueryConfig()
   {
     return $this->bigqueryConfig;
+  }
+  /**
+   * @param CloudStorageConfig
+   */
+  public function setCloudStorageConfig(CloudStorageConfig $cloudStorageConfig)
+  {
+    $this->cloudStorageConfig = $cloudStorageConfig;
+  }
+  /**
+   * @return CloudStorageConfig
+   */
+  public function getCloudStorageConfig()
+  {
+    return $this->cloudStorageConfig;
   }
   /**
    * @param DeadLetterPolicy
@@ -222,6 +252,20 @@ class Subscription extends \Google\Model
   public function getMessageRetentionDuration()
   {
     return $this->messageRetentionDuration;
+  }
+  /**
+   * @param MessageTransform[]
+   */
+  public function setMessageTransforms($messageTransforms)
+  {
+    $this->messageTransforms = $messageTransforms;
+  }
+  /**
+   * @return MessageTransform[]
+   */
+  public function getMessageTransforms()
+  {
+    return $this->messageTransforms;
   }
   /**
    * @param string

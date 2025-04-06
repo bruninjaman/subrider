@@ -35,6 +35,8 @@ class CryptoKey extends \Google\Model
    * @var bool
    */
   public $importOnly;
+  protected $keyAccessJustificationsPolicyType = KeyAccessJustificationsPolicy::class;
+  protected $keyAccessJustificationsPolicyDataType = '';
   /**
    * @var string[]
    */
@@ -49,7 +51,6 @@ class CryptoKey extends \Google\Model
   public $nextRotationTime;
   protected $primaryType = CryptoKeyVersion::class;
   protected $primaryDataType = '';
-  public $primary;
   /**
    * @var string
    */
@@ -60,7 +61,6 @@ class CryptoKey extends \Google\Model
   public $rotationPeriod;
   protected $versionTemplateType = CryptoKeyVersionTemplate::class;
   protected $versionTemplateDataType = '';
-  public $versionTemplate;
 
   /**
    * @param string
@@ -117,6 +117,20 @@ class CryptoKey extends \Google\Model
   public function getImportOnly()
   {
     return $this->importOnly;
+  }
+  /**
+   * @param KeyAccessJustificationsPolicy
+   */
+  public function setKeyAccessJustificationsPolicy(KeyAccessJustificationsPolicy $keyAccessJustificationsPolicy)
+  {
+    $this->keyAccessJustificationsPolicy = $keyAccessJustificationsPolicy;
+  }
+  /**
+   * @return KeyAccessJustificationsPolicy
+   */
+  public function getKeyAccessJustificationsPolicy()
+  {
+    return $this->keyAccessJustificationsPolicy;
   }
   /**
    * @param string[]

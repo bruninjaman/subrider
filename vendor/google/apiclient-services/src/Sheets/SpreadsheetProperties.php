@@ -25,17 +25,18 @@ class SpreadsheetProperties extends \Google\Model
   public $autoRecalc;
   protected $defaultFormatType = CellFormat::class;
   protected $defaultFormatDataType = '';
-  public $defaultFormat;
+  /**
+   * @var bool
+   */
+  public $importFunctionsExternalUrlAccessAllowed;
   protected $iterativeCalculationSettingsType = IterativeCalculationSettings::class;
   protected $iterativeCalculationSettingsDataType = '';
-  public $iterativeCalculationSettings;
   /**
    * @var string
    */
   public $locale;
   protected $spreadsheetThemeType = SpreadsheetTheme::class;
   protected $spreadsheetThemeDataType = '';
-  public $spreadsheetTheme;
   /**
    * @var string
    */
@@ -72,6 +73,20 @@ class SpreadsheetProperties extends \Google\Model
   public function getDefaultFormat()
   {
     return $this->defaultFormat;
+  }
+  /**
+   * @param bool
+   */
+  public function setImportFunctionsExternalUrlAccessAllowed($importFunctionsExternalUrlAccessAllowed)
+  {
+    $this->importFunctionsExternalUrlAccessAllowed = $importFunctionsExternalUrlAccessAllowed;
+  }
+  /**
+   * @return bool
+   */
+  public function getImportFunctionsExternalUrlAccessAllowed()
+  {
+    return $this->importFunctionsExternalUrlAccessAllowed;
   }
   /**
    * @param IterativeCalculationSettings

@@ -17,8 +17,9 @@
 
 namespace Google\Service\CloudSearch;
 
-class AppsDynamiteSharedBackendUploadMetadata extends \Google\Model
+class AppsDynamiteSharedBackendUploadMetadata extends \Google\Collection
 {
+  protected $collection_key = 'experiment';
   /**
    * @var string
    */
@@ -41,20 +42,22 @@ class AppsDynamiteSharedBackendUploadMetadata extends \Google\Model
   public $dlpScanOutcome;
   protected $dlpScanSummaryType = DlpScanSummary::class;
   protected $dlpScanSummaryDataType = '';
-  public $dlpScanSummary;
+  /**
+   * @var string[]
+   */
+  public $experiment;
   protected $groupIdType = GroupId::class;
   protected $groupIdDataType = '';
-  public $groupId;
   /**
    * @var bool
    */
   public $isClientSideTranscodedVideo;
+  protected $migratedFromHangoutsMetadataType = AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata::class;
+  protected $migratedFromHangoutsMetadataDataType = '';
   protected $originalDimensionType = AppsDynamiteSharedDimension::class;
   protected $originalDimensionDataType = '';
-  public $originalDimension;
   protected $quoteReplyMessageIdType = MessageId::class;
   protected $quoteReplyMessageIdDataType = '';
-  public $quoteReplyMessageId;
   /**
    * @var string
    */
@@ -165,6 +168,20 @@ class AppsDynamiteSharedBackendUploadMetadata extends \Google\Model
     return $this->dlpScanSummary;
   }
   /**
+   * @param string[]
+   */
+  public function setExperiment($experiment)
+  {
+    $this->experiment = $experiment;
+  }
+  /**
+   * @return string[]
+   */
+  public function getExperiment()
+  {
+    return $this->experiment;
+  }
+  /**
    * @param GroupId
    */
   public function setGroupId(GroupId $groupId)
@@ -191,6 +208,20 @@ class AppsDynamiteSharedBackendUploadMetadata extends \Google\Model
   public function getIsClientSideTranscodedVideo()
   {
     return $this->isClientSideTranscodedVideo;
+  }
+  /**
+   * @param AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata
+   */
+  public function setMigratedFromHangoutsMetadata(AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata $migratedFromHangoutsMetadata)
+  {
+    $this->migratedFromHangoutsMetadata = $migratedFromHangoutsMetadata;
+  }
+  /**
+   * @return AppsDynamiteSharedBackendUploadMetadataMigratedFromHangoutsMetadata
+   */
+  public function getMigratedFromHangoutsMetadata()
+  {
+    return $this->migratedFromHangoutsMetadata;
   }
   /**
    * @param AppsDynamiteSharedDimension

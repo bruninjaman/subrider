@@ -25,10 +25,8 @@ class GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport extends \Google\Mod
   public $accountId;
   protected $aggregatorInfoType = GoogleAdsHomeservicesLocalservicesV1AggregatorInfo::class;
   protected $aggregatorInfoDataType = '';
-  public $aggregatorInfo;
   protected $bookingLeadType = GoogleAdsHomeservicesLocalservicesV1BookingLead::class;
   protected $bookingLeadDataType = '';
-  public $bookingLead;
   /**
    * @var string
    */
@@ -52,6 +50,10 @@ class GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport extends \Google\Mod
   /**
    * @var string
    */
+  public $googleAdsLeadId;
+  /**
+   * @var string
+   */
   public $leadCategory;
   /**
    * @var string
@@ -68,13 +70,10 @@ class GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport extends \Google\Mod
   public $leadType;
   protected $messageLeadType = GoogleAdsHomeservicesLocalservicesV1MessageLead::class;
   protected $messageLeadDataType = '';
-  public $messageLead;
   protected $phoneLeadType = GoogleAdsHomeservicesLocalservicesV1PhoneLead::class;
   protected $phoneLeadDataType = '';
-  public $phoneLead;
   protected $timezoneType = GoogleTypeTimeZone::class;
   protected $timezoneDataType = '';
-  public $timezone;
 
   /**
    * @param string
@@ -187,6 +186,20 @@ class GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport extends \Google\Mod
   public function getGeo()
   {
     return $this->geo;
+  }
+  /**
+   * @param string
+   */
+  public function setGoogleAdsLeadId($googleAdsLeadId)
+  {
+    $this->googleAdsLeadId = $googleAdsLeadId;
+  }
+  /**
+   * @return string
+   */
+  public function getGoogleAdsLeadId()
+  {
+    return $this->googleAdsLeadId;
   }
   /**
    * @param string

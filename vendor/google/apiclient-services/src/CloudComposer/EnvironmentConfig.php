@@ -22,17 +22,21 @@ class EnvironmentConfig extends \Google\Model
   /**
    * @var string
    */
+  public $airflowByoidUri;
+  /**
+   * @var string
+   */
   public $airflowUri;
   /**
    * @var string
    */
   public $dagGcsPrefix;
+  protected $dataRetentionConfigType = DataRetentionConfig::class;
+  protected $dataRetentionConfigDataType = '';
   protected $databaseConfigType = DatabaseConfig::class;
   protected $databaseConfigDataType = '';
-  public $databaseConfig;
   protected $encryptionConfigType = EncryptionConfig::class;
   protected $encryptionConfigDataType = '';
-  public $encryptionConfig;
   /**
    * @var string
    */
@@ -43,36 +47,45 @@ class EnvironmentConfig extends \Google\Model
   public $gkeCluster;
   protected $maintenanceWindowType = MaintenanceWindow::class;
   protected $maintenanceWindowDataType = '';
-  public $maintenanceWindow;
   protected $masterAuthorizedNetworksConfigType = MasterAuthorizedNetworksConfig::class;
   protected $masterAuthorizedNetworksConfigDataType = '';
-  public $masterAuthorizedNetworksConfig;
   protected $nodeConfigType = NodeConfig::class;
   protected $nodeConfigDataType = '';
-  public $nodeConfig;
   /**
    * @var int
    */
   public $nodeCount;
   protected $privateEnvironmentConfigType = PrivateEnvironmentConfig::class;
   protected $privateEnvironmentConfigDataType = '';
-  public $privateEnvironmentConfig;
   protected $recoveryConfigType = RecoveryConfig::class;
   protected $recoveryConfigDataType = '';
-  public $recoveryConfig;
+  /**
+   * @var string
+   */
+  public $resilienceMode;
   protected $softwareConfigType = SoftwareConfig::class;
   protected $softwareConfigDataType = '';
-  public $softwareConfig;
   protected $webServerConfigType = WebServerConfig::class;
   protected $webServerConfigDataType = '';
-  public $webServerConfig;
   protected $webServerNetworkAccessControlType = WebServerNetworkAccessControl::class;
   protected $webServerNetworkAccessControlDataType = '';
-  public $webServerNetworkAccessControl;
   protected $workloadsConfigType = WorkloadsConfig::class;
   protected $workloadsConfigDataType = '';
-  public $workloadsConfig;
 
+  /**
+   * @param string
+   */
+  public function setAirflowByoidUri($airflowByoidUri)
+  {
+    $this->airflowByoidUri = $airflowByoidUri;
+  }
+  /**
+   * @return string
+   */
+  public function getAirflowByoidUri()
+  {
+    return $this->airflowByoidUri;
+  }
   /**
    * @param string
    */
@@ -100,6 +113,20 @@ class EnvironmentConfig extends \Google\Model
   public function getDagGcsPrefix()
   {
     return $this->dagGcsPrefix;
+  }
+  /**
+   * @param DataRetentionConfig
+   */
+  public function setDataRetentionConfig(DataRetentionConfig $dataRetentionConfig)
+  {
+    $this->dataRetentionConfig = $dataRetentionConfig;
+  }
+  /**
+   * @return DataRetentionConfig
+   */
+  public function getDataRetentionConfig()
+  {
+    return $this->dataRetentionConfig;
   }
   /**
    * @param DatabaseConfig
@@ -240,6 +267,20 @@ class EnvironmentConfig extends \Google\Model
   public function getRecoveryConfig()
   {
     return $this->recoveryConfig;
+  }
+  /**
+   * @param string
+   */
+  public function setResilienceMode($resilienceMode)
+  {
+    $this->resilienceMode = $resilienceMode;
+  }
+  /**
+   * @return string
+   */
+  public function getResilienceMode()
+  {
+    return $this->resilienceMode;
   }
   /**
    * @param SoftwareConfig

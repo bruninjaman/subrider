@@ -21,7 +21,10 @@ class GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest extends 
 {
   protected $bigQueryDestinationType = GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQueryDestination::class;
   protected $bigQueryDestinationDataType = '';
-  public $bigQueryDestination;
+  /**
+   * @var string
+   */
+  public $exportSchemaVersion;
   /**
    * @var string
    */
@@ -52,6 +55,20 @@ class GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest extends 
   public function getBigQueryDestination()
   {
     return $this->bigQueryDestination;
+  }
+  /**
+   * @param string
+   */
+  public function setExportSchemaVersion($exportSchemaVersion)
+  {
+    $this->exportSchemaVersion = $exportSchemaVersion;
+  }
+  /**
+   * @return string
+   */
+  public function getExportSchemaVersion()
+  {
+    return $this->exportSchemaVersion;
   }
   /**
    * @param string

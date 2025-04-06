@@ -22,35 +22,34 @@ class HttpRouteRouteAction extends \Google\Collection
   protected $collection_key = 'destinations';
   protected $corsPolicyType = HttpRouteCorsPolicy::class;
   protected $corsPolicyDataType = '';
-  public $corsPolicy;
   protected $destinationsType = HttpRouteDestination::class;
   protected $destinationsDataType = 'array';
-  public $destinations;
+  protected $directResponseType = HttpRouteHttpDirectResponse::class;
+  protected $directResponseDataType = '';
   protected $faultInjectionPolicyType = HttpRouteFaultInjectionPolicy::class;
   protected $faultInjectionPolicyDataType = '';
-  public $faultInjectionPolicy;
+  /**
+   * @var string
+   */
+  public $idleTimeout;
   protected $redirectType = HttpRouteRedirect::class;
   protected $redirectDataType = '';
-  public $redirect;
   protected $requestHeaderModifierType = HttpRouteHeaderModifier::class;
   protected $requestHeaderModifierDataType = '';
-  public $requestHeaderModifier;
   protected $requestMirrorPolicyType = HttpRouteRequestMirrorPolicy::class;
   protected $requestMirrorPolicyDataType = '';
-  public $requestMirrorPolicy;
   protected $responseHeaderModifierType = HttpRouteHeaderModifier::class;
   protected $responseHeaderModifierDataType = '';
-  public $responseHeaderModifier;
   protected $retryPolicyType = HttpRouteRetryPolicy::class;
   protected $retryPolicyDataType = '';
-  public $retryPolicy;
+  protected $statefulSessionAffinityType = HttpRouteStatefulSessionAffinityPolicy::class;
+  protected $statefulSessionAffinityDataType = '';
   /**
    * @var string
    */
   public $timeout;
   protected $urlRewriteType = HttpRouteURLRewrite::class;
   protected $urlRewriteDataType = '';
-  public $urlRewrite;
 
   /**
    * @param HttpRouteCorsPolicy
@@ -81,6 +80,20 @@ class HttpRouteRouteAction extends \Google\Collection
     return $this->destinations;
   }
   /**
+   * @param HttpRouteHttpDirectResponse
+   */
+  public function setDirectResponse(HttpRouteHttpDirectResponse $directResponse)
+  {
+    $this->directResponse = $directResponse;
+  }
+  /**
+   * @return HttpRouteHttpDirectResponse
+   */
+  public function getDirectResponse()
+  {
+    return $this->directResponse;
+  }
+  /**
    * @param HttpRouteFaultInjectionPolicy
    */
   public function setFaultInjectionPolicy(HttpRouteFaultInjectionPolicy $faultInjectionPolicy)
@@ -93,6 +106,20 @@ class HttpRouteRouteAction extends \Google\Collection
   public function getFaultInjectionPolicy()
   {
     return $this->faultInjectionPolicy;
+  }
+  /**
+   * @param string
+   */
+  public function setIdleTimeout($idleTimeout)
+  {
+    $this->idleTimeout = $idleTimeout;
+  }
+  /**
+   * @return string
+   */
+  public function getIdleTimeout()
+  {
+    return $this->idleTimeout;
   }
   /**
    * @param HttpRouteRedirect
@@ -163,6 +190,20 @@ class HttpRouteRouteAction extends \Google\Collection
   public function getRetryPolicy()
   {
     return $this->retryPolicy;
+  }
+  /**
+   * @param HttpRouteStatefulSessionAffinityPolicy
+   */
+  public function setStatefulSessionAffinity(HttpRouteStatefulSessionAffinityPolicy $statefulSessionAffinity)
+  {
+    $this->statefulSessionAffinity = $statefulSessionAffinity;
+  }
+  /**
+   * @return HttpRouteStatefulSessionAffinityPolicy
+   */
+  public function getStatefulSessionAffinity()
+  {
+    return $this->statefulSessionAffinity;
   }
   /**
    * @param string

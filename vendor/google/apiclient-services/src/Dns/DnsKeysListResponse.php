@@ -22,10 +22,6 @@ class DnsKeysListResponse extends \Google\Collection
   protected $collection_key = 'dnsKeys';
   protected $dnsKeysType = DnsKey::class;
   protected $dnsKeysDataType = 'array';
-  public $dnsKeys;
-  protected $headerType = ResponseHeader::class;
-  protected $headerDataType = '';
-  public $header;
   /**
    * @var string
    */
@@ -48,20 +44,6 @@ class DnsKeysListResponse extends \Google\Collection
   public function getDnsKeys()
   {
     return $this->dnsKeys;
-  }
-  /**
-   * @param ResponseHeader
-   */
-  public function setHeader(ResponseHeader $header)
-  {
-    $this->header = $header;
-  }
-  /**
-   * @return ResponseHeader
-   */
-  public function getHeader()
-  {
-    return $this->header;
   }
   /**
    * @param string

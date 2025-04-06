@@ -19,17 +19,37 @@ namespace Google\Service\Datastream;
 
 class MysqlSourceConfig extends \Google\Model
 {
+  protected $binaryLogPositionType = BinaryLogPosition::class;
+  protected $binaryLogPositionDataType = '';
   protected $excludeObjectsType = MysqlRdbms::class;
   protected $excludeObjectsDataType = '';
-  public $excludeObjects;
+  protected $gtidType = Gtid::class;
+  protected $gtidDataType = '';
   protected $includeObjectsType = MysqlRdbms::class;
   protected $includeObjectsDataType = '';
-  public $includeObjects;
+  /**
+   * @var int
+   */
+  public $maxConcurrentBackfillTasks;
   /**
    * @var int
    */
   public $maxConcurrentCdcTasks;
 
+  /**
+   * @param BinaryLogPosition
+   */
+  public function setBinaryLogPosition(BinaryLogPosition $binaryLogPosition)
+  {
+    $this->binaryLogPosition = $binaryLogPosition;
+  }
+  /**
+   * @return BinaryLogPosition
+   */
+  public function getBinaryLogPosition()
+  {
+    return $this->binaryLogPosition;
+  }
   /**
    * @param MysqlRdbms
    */
@@ -45,6 +65,20 @@ class MysqlSourceConfig extends \Google\Model
     return $this->excludeObjects;
   }
   /**
+   * @param Gtid
+   */
+  public function setGtid(Gtid $gtid)
+  {
+    $this->gtid = $gtid;
+  }
+  /**
+   * @return Gtid
+   */
+  public function getGtid()
+  {
+    return $this->gtid;
+  }
+  /**
    * @param MysqlRdbms
    */
   public function setIncludeObjects(MysqlRdbms $includeObjects)
@@ -57,6 +91,20 @@ class MysqlSourceConfig extends \Google\Model
   public function getIncludeObjects()
   {
     return $this->includeObjects;
+  }
+  /**
+   * @param int
+   */
+  public function setMaxConcurrentBackfillTasks($maxConcurrentBackfillTasks)
+  {
+    $this->maxConcurrentBackfillTasks = $maxConcurrentBackfillTasks;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxConcurrentBackfillTasks()
+  {
+    return $this->maxConcurrentBackfillTasks;
   }
   /**
    * @param int

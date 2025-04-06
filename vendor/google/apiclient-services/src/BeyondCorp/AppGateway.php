@@ -22,7 +22,6 @@ class AppGateway extends \Google\Collection
   protected $collection_key = 'allocatedConnections';
   protected $allocatedConnectionsType = AllocatedConnection::class;
   protected $allocatedConnectionsDataType = 'array';
-  public $allocatedConnections;
   /**
    * @var string
    */
@@ -43,6 +42,14 @@ class AppGateway extends \Google\Collection
    * @var string
    */
   public $name;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * @var string
    */
@@ -147,6 +154,34 @@ class AppGateway extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param string

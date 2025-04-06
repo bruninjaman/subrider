@@ -21,13 +21,12 @@ class CertificateConfig extends \Google\Model
 {
   protected $publicKeyType = PublicKey::class;
   protected $publicKeyDataType = '';
-  public $publicKey;
   protected $subjectConfigType = SubjectConfig::class;
   protected $subjectConfigDataType = '';
-  public $subjectConfig;
+  protected $subjectKeyIdType = CertificateConfigKeyId::class;
+  protected $subjectKeyIdDataType = '';
   protected $x509ConfigType = X509Parameters::class;
   protected $x509ConfigDataType = '';
-  public $x509Config;
 
   /**
    * @param PublicKey
@@ -56,6 +55,20 @@ class CertificateConfig extends \Google\Model
   public function getSubjectConfig()
   {
     return $this->subjectConfig;
+  }
+  /**
+   * @param CertificateConfigKeyId
+   */
+  public function setSubjectKeyId(CertificateConfigKeyId $subjectKeyId)
+  {
+    $this->subjectKeyId = $subjectKeyId;
+  }
+  /**
+   * @return CertificateConfigKeyId
+   */
+  public function getSubjectKeyId()
+  {
+    return $this->subjectKeyId;
   }
   /**
    * @param X509Parameters

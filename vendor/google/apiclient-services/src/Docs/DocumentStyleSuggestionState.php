@@ -21,7 +21,6 @@ class DocumentStyleSuggestionState extends \Google\Model
 {
   protected $backgroundSuggestionStateType = BackgroundSuggestionState::class;
   protected $backgroundSuggestionStateDataType = '';
-  public $backgroundSuggestionState;
   /**
    * @var bool
    */
@@ -46,6 +45,10 @@ class DocumentStyleSuggestionState extends \Google\Model
    * @var bool
    */
   public $firstPageHeaderIdSuggested;
+  /**
+   * @var bool
+   */
+  public $flipPageOrientationSuggested;
   /**
    * @var bool
    */
@@ -76,7 +79,6 @@ class DocumentStyleSuggestionState extends \Google\Model
   public $pageNumberStartSuggested;
   protected $pageSizeSuggestionStateType = SizeSuggestionState::class;
   protected $pageSizeSuggestionStateDataType = '';
-  public $pageSizeSuggestionState;
   /**
    * @var bool
    */
@@ -187,6 +189,20 @@ class DocumentStyleSuggestionState extends \Google\Model
   public function getFirstPageHeaderIdSuggested()
   {
     return $this->firstPageHeaderIdSuggested;
+  }
+  /**
+   * @param bool
+   */
+  public function setFlipPageOrientationSuggested($flipPageOrientationSuggested)
+  {
+    $this->flipPageOrientationSuggested = $flipPageOrientationSuggested;
+  }
+  /**
+   * @return bool
+   */
+  public function getFlipPageOrientationSuggested()
+  {
+    return $this->flipPageOrientationSuggested;
   }
   /**
    * @param bool

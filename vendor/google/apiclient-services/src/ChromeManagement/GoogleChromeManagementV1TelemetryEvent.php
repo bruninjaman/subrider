@@ -19,34 +19,83 @@ namespace Google\Service\ChromeManagement;
 
 class GoogleChromeManagementV1TelemetryEvent extends \Google\Model
 {
+  protected $appInstallEventType = GoogleChromeManagementV1TelemetryAppInstallEvent::class;
+  protected $appInstallEventDataType = '';
+  protected $appLaunchEventType = GoogleChromeManagementV1TelemetryAppLaunchEvent::class;
+  protected $appLaunchEventDataType = '';
+  protected $appUninstallEventType = GoogleChromeManagementV1TelemetryAppUninstallEvent::class;
+  protected $appUninstallEventDataType = '';
   protected $audioSevereUnderrunEventType = GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent::class;
   protected $audioSevereUnderrunEventDataType = '';
-  public $audioSevereUnderrunEvent;
   protected $deviceType = GoogleChromeManagementV1TelemetryDeviceInfo::class;
   protected $deviceDataType = '';
-  public $device;
   /**
    * @var string
    */
   public $eventType;
   protected $httpsLatencyChangeEventType = GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent::class;
   protected $httpsLatencyChangeEventDataType = '';
-  public $httpsLatencyChangeEvent;
   /**
    * @var string
    */
   public $name;
+  protected $networkStateChangeEventType = GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent::class;
+  protected $networkStateChangeEventDataType = '';
   /**
    * @var string
    */
   public $reportTime;
   protected $usbPeripheralsEventType = GoogleChromeManagementV1TelemetryUsbPeripheralsEvent::class;
   protected $usbPeripheralsEventDataType = '';
-  public $usbPeripheralsEvent;
   protected $userType = GoogleChromeManagementV1TelemetryUserInfo::class;
   protected $userDataType = '';
-  public $user;
+  protected $vpnConnectionStateChangeEventType = GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent::class;
+  protected $vpnConnectionStateChangeEventDataType = '';
+  protected $wifiSignalStrengthEventType = GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent::class;
+  protected $wifiSignalStrengthEventDataType = '';
 
+  /**
+   * @param GoogleChromeManagementV1TelemetryAppInstallEvent
+   */
+  public function setAppInstallEvent(GoogleChromeManagementV1TelemetryAppInstallEvent $appInstallEvent)
+  {
+    $this->appInstallEvent = $appInstallEvent;
+  }
+  /**
+   * @return GoogleChromeManagementV1TelemetryAppInstallEvent
+   */
+  public function getAppInstallEvent()
+  {
+    return $this->appInstallEvent;
+  }
+  /**
+   * @param GoogleChromeManagementV1TelemetryAppLaunchEvent
+   */
+  public function setAppLaunchEvent(GoogleChromeManagementV1TelemetryAppLaunchEvent $appLaunchEvent)
+  {
+    $this->appLaunchEvent = $appLaunchEvent;
+  }
+  /**
+   * @return GoogleChromeManagementV1TelemetryAppLaunchEvent
+   */
+  public function getAppLaunchEvent()
+  {
+    return $this->appLaunchEvent;
+  }
+  /**
+   * @param GoogleChromeManagementV1TelemetryAppUninstallEvent
+   */
+  public function setAppUninstallEvent(GoogleChromeManagementV1TelemetryAppUninstallEvent $appUninstallEvent)
+  {
+    $this->appUninstallEvent = $appUninstallEvent;
+  }
+  /**
+   * @return GoogleChromeManagementV1TelemetryAppUninstallEvent
+   */
+  public function getAppUninstallEvent()
+  {
+    return $this->appUninstallEvent;
+  }
   /**
    * @param GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent
    */
@@ -118,6 +167,20 @@ class GoogleChromeManagementV1TelemetryEvent extends \Google\Model
     return $this->name;
   }
   /**
+   * @param GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
+   */
+  public function setNetworkStateChangeEvent(GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent $networkStateChangeEvent)
+  {
+    $this->networkStateChangeEvent = $networkStateChangeEvent;
+  }
+  /**
+   * @return GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
+   */
+  public function getNetworkStateChangeEvent()
+  {
+    return $this->networkStateChangeEvent;
+  }
+  /**
    * @param string
    */
   public function setReportTime($reportTime)
@@ -158,6 +221,34 @@ class GoogleChromeManagementV1TelemetryEvent extends \Google\Model
   public function getUser()
   {
     return $this->user;
+  }
+  /**
+   * @param GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
+   */
+  public function setVpnConnectionStateChangeEvent(GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent $vpnConnectionStateChangeEvent)
+  {
+    $this->vpnConnectionStateChangeEvent = $vpnConnectionStateChangeEvent;
+  }
+  /**
+   * @return GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
+   */
+  public function getVpnConnectionStateChangeEvent()
+  {
+    return $this->vpnConnectionStateChangeEvent;
+  }
+  /**
+   * @param GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent
+   */
+  public function setWifiSignalStrengthEvent(GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent $wifiSignalStrengthEvent)
+  {
+    $this->wifiSignalStrengthEvent = $wifiSignalStrengthEvent;
+  }
+  /**
+   * @return GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent
+   */
+  public function getWifiSignalStrengthEvent()
+  {
+    return $this->wifiSignalStrengthEvent;
   }
 }
 

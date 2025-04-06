@@ -22,10 +22,14 @@ class CompilationResult extends \Google\Collection
   protected $collection_key = 'compilationErrors';
   protected $codeCompilationConfigType = CodeCompilationConfig::class;
   protected $codeCompilationConfigDataType = '';
-  public $codeCompilationConfig;
   protected $compilationErrorsType = CompilationError::class;
   protected $compilationErrorsDataType = 'array';
-  public $compilationErrors;
+  /**
+   * @var string
+   */
+  public $createTime;
+  protected $dataEncryptionStateType = DataEncryptionState::class;
+  protected $dataEncryptionStateDataType = '';
   /**
    * @var string
    */
@@ -34,6 +38,10 @@ class CompilationResult extends \Google\Collection
    * @var string
    */
   public $gitCommitish;
+  /**
+   * @var string
+   */
+  public $internalMetadata;
   /**
    * @var string
    */
@@ -82,6 +90,34 @@ class CompilationResult extends \Google\Collection
   /**
    * @param string
    */
+  public function setCreateTime($createTime)
+  {
+    $this->createTime = $createTime;
+  }
+  /**
+   * @return string
+   */
+  public function getCreateTime()
+  {
+    return $this->createTime;
+  }
+  /**
+   * @param DataEncryptionState
+   */
+  public function setDataEncryptionState(DataEncryptionState $dataEncryptionState)
+  {
+    $this->dataEncryptionState = $dataEncryptionState;
+  }
+  /**
+   * @return DataEncryptionState
+   */
+  public function getDataEncryptionState()
+  {
+    return $this->dataEncryptionState;
+  }
+  /**
+   * @param string
+   */
   public function setDataformCoreVersion($dataformCoreVersion)
   {
     $this->dataformCoreVersion = $dataformCoreVersion;
@@ -106,6 +142,20 @@ class CompilationResult extends \Google\Collection
   public function getGitCommitish()
   {
     return $this->gitCommitish;
+  }
+  /**
+   * @param string
+   */
+  public function setInternalMetadata($internalMetadata)
+  {
+    $this->internalMetadata = $internalMetadata;
+  }
+  /**
+   * @return string
+   */
+  public function getInternalMetadata()
+  {
+    return $this->internalMetadata;
   }
   /**
    * @param string

@@ -20,31 +20,43 @@ namespace Google\Service\Compute;
 class HttpRouteRule extends \Google\Collection
 {
   protected $collection_key = 'matchRules';
+  protected $customErrorResponsePolicyType = CustomErrorResponsePolicy::class;
+  protected $customErrorResponsePolicyDataType = '';
   /**
    * @var string
    */
   public $description;
   protected $headerActionType = HttpHeaderAction::class;
   protected $headerActionDataType = '';
-  public $headerAction;
   protected $matchRulesType = HttpRouteRuleMatch::class;
   protected $matchRulesDataType = 'array';
-  public $matchRules;
   /**
    * @var int
    */
   public $priority;
   protected $routeActionType = HttpRouteAction::class;
   protected $routeActionDataType = '';
-  public $routeAction;
   /**
    * @var string
    */
   public $service;
   protected $urlRedirectType = HttpRedirectAction::class;
   protected $urlRedirectDataType = '';
-  public $urlRedirect;
 
+  /**
+   * @param CustomErrorResponsePolicy
+   */
+  public function setCustomErrorResponsePolicy(CustomErrorResponsePolicy $customErrorResponsePolicy)
+  {
+    $this->customErrorResponsePolicy = $customErrorResponsePolicy;
+  }
+  /**
+   * @return CustomErrorResponsePolicy
+   */
+  public function getCustomErrorResponsePolicy()
+  {
+    return $this->customErrorResponsePolicy;
+  }
   /**
    * @param string
    */

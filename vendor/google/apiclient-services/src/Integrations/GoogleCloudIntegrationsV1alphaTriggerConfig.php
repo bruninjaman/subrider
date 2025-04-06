@@ -22,14 +22,18 @@ class GoogleCloudIntegrationsV1alphaTriggerConfig extends \Google\Collection
   protected $collection_key = 'startTasks';
   protected $alertConfigType = GoogleCloudIntegrationsV1alphaIntegrationAlertConfig::class;
   protected $alertConfigDataType = 'array';
-  public $alertConfig;
   protected $cloudSchedulerConfigType = GoogleCloudIntegrationsV1alphaCloudSchedulerConfig::class;
   protected $cloudSchedulerConfigDataType = '';
-  public $cloudSchedulerConfig;
   /**
    * @var string
    */
   public $description;
+  /**
+   * @var string
+   */
+  public $errorCatcherId;
+  protected $inputVariablesType = GoogleCloudIntegrationsV1alphaTriggerConfigVariables::class;
+  protected $inputVariablesDataType = '';
   /**
    * @var string
    */
@@ -38,13 +42,20 @@ class GoogleCloudIntegrationsV1alphaTriggerConfig extends \Google\Collection
    * @var string
    */
   public $nextTasksExecutionPolicy;
+  protected $outputVariablesType = GoogleCloudIntegrationsV1alphaTriggerConfigVariables::class;
+  protected $outputVariablesDataType = '';
+  protected $positionType = GoogleCloudIntegrationsV1alphaCoordinate::class;
+  protected $positionDataType = '';
   /**
    * @var string[]
    */
   public $properties;
   protected $startTasksType = GoogleCloudIntegrationsV1alphaNextTask::class;
   protected $startTasksDataType = 'array';
-  public $startTasks;
+  /**
+   * @var string
+   */
+  public $trigger;
   /**
    * @var string
    */
@@ -103,6 +114,34 @@ class GoogleCloudIntegrationsV1alphaTriggerConfig extends \Google\Collection
   /**
    * @param string
    */
+  public function setErrorCatcherId($errorCatcherId)
+  {
+    $this->errorCatcherId = $errorCatcherId;
+  }
+  /**
+   * @return string
+   */
+  public function getErrorCatcherId()
+  {
+    return $this->errorCatcherId;
+  }
+  /**
+   * @param GoogleCloudIntegrationsV1alphaTriggerConfigVariables
+   */
+  public function setInputVariables(GoogleCloudIntegrationsV1alphaTriggerConfigVariables $inputVariables)
+  {
+    $this->inputVariables = $inputVariables;
+  }
+  /**
+   * @return GoogleCloudIntegrationsV1alphaTriggerConfigVariables
+   */
+  public function getInputVariables()
+  {
+    return $this->inputVariables;
+  }
+  /**
+   * @param string
+   */
   public function setLabel($label)
   {
     $this->label = $label;
@@ -127,6 +166,34 @@ class GoogleCloudIntegrationsV1alphaTriggerConfig extends \Google\Collection
   public function getNextTasksExecutionPolicy()
   {
     return $this->nextTasksExecutionPolicy;
+  }
+  /**
+   * @param GoogleCloudIntegrationsV1alphaTriggerConfigVariables
+   */
+  public function setOutputVariables(GoogleCloudIntegrationsV1alphaTriggerConfigVariables $outputVariables)
+  {
+    $this->outputVariables = $outputVariables;
+  }
+  /**
+   * @return GoogleCloudIntegrationsV1alphaTriggerConfigVariables
+   */
+  public function getOutputVariables()
+  {
+    return $this->outputVariables;
+  }
+  /**
+   * @param GoogleCloudIntegrationsV1alphaCoordinate
+   */
+  public function setPosition(GoogleCloudIntegrationsV1alphaCoordinate $position)
+  {
+    $this->position = $position;
+  }
+  /**
+   * @return GoogleCloudIntegrationsV1alphaCoordinate
+   */
+  public function getPosition()
+  {
+    return $this->position;
   }
   /**
    * @param string[]
@@ -155,6 +222,20 @@ class GoogleCloudIntegrationsV1alphaTriggerConfig extends \Google\Collection
   public function getStartTasks()
   {
     return $this->startTasks;
+  }
+  /**
+   * @param string
+   */
+  public function setTrigger($trigger)
+  {
+    $this->trigger = $trigger;
+  }
+  /**
+   * @return string
+   */
+  public function getTrigger()
+  {
+    return $this->trigger;
   }
   /**
    * @param string

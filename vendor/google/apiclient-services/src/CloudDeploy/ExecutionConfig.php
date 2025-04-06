@@ -26,14 +26,12 @@ class ExecutionConfig extends \Google\Collection
   public $artifactStorage;
   protected $defaultPoolType = DefaultPool::class;
   protected $defaultPoolDataType = '';
-  public $defaultPool;
   /**
    * @var string
    */
   public $executionTimeout;
   protected $privatePoolType = PrivatePool::class;
   protected $privatePoolDataType = '';
-  public $privatePool;
   /**
    * @var string
    */
@@ -42,6 +40,10 @@ class ExecutionConfig extends \Google\Collection
    * @var string[]
    */
   public $usages;
+  /**
+   * @var bool
+   */
+  public $verbose;
   /**
    * @var string
    */
@@ -130,6 +132,20 @@ class ExecutionConfig extends \Google\Collection
   public function getUsages()
   {
     return $this->usages;
+  }
+  /**
+   * @param bool
+   */
+  public function setVerbose($verbose)
+  {
+    $this->verbose = $verbose;
+  }
+  /**
+   * @return bool
+   */
+  public function getVerbose()
+  {
+    return $this->verbose;
   }
   /**
    * @param string

@@ -21,10 +21,10 @@ class ColumnFamily extends \Google\Model
 {
   protected $gcRuleType = GcRule::class;
   protected $gcRuleDataType = '';
-  public $gcRule;
   protected $statsType = ColumnFamilyStats::class;
   protected $statsDataType = '';
-  public $stats;
+  protected $valueTypeType = Type::class;
+  protected $valueTypeDataType = '';
 
   /**
    * @param GcRule
@@ -53,6 +53,20 @@ class ColumnFamily extends \Google\Model
   public function getStats()
   {
     return $this->stats;
+  }
+  /**
+   * @param Type
+   */
+  public function setValueType(Type $valueType)
+  {
+    $this->valueType = $valueType;
+  }
+  /**
+   * @return Type
+   */
+  public function getValueType()
+  {
+    return $this->valueType;
   }
 }
 

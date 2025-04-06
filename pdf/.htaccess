@@ -1,0 +1,29 @@
+Options -Indexes
+
+# Permitir apenas usuários autenticados
+AuthType Basic
+AuthName "Área Restrita"
+Require valid-user
+
+# Permitir apenas arquivos PDF
+<FilesMatch "\.(?i:pdf)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Negar acesso a todos os outros tipos de arquivo
+<FilesMatch "^(?!.*\.pdf$).*$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Limitar o tempo de vida dos arquivos PDF (7 dias)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/pdf "access plus 7 days"
+</IfModule>
+
+# Comprimir arquivos PDF
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/pdf
+</IfModule> 

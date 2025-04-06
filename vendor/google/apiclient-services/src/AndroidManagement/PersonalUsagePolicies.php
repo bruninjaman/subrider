@@ -34,11 +34,14 @@ class PersonalUsagePolicies extends \Google\Collection
   public $maxDaysWithWorkOff;
   protected $personalApplicationsType = PersonalApplicationPolicy::class;
   protected $personalApplicationsDataType = 'array';
-  public $personalApplications;
   /**
    * @var string
    */
   public $personalPlayStoreMode;
+  /**
+   * @var string
+   */
+  public $privateSpacePolicy;
   /**
    * @var bool
    */
@@ -113,6 +116,20 @@ class PersonalUsagePolicies extends \Google\Collection
   public function getPersonalPlayStoreMode()
   {
     return $this->personalPlayStoreMode;
+  }
+  /**
+   * @param string
+   */
+  public function setPrivateSpacePolicy($privateSpacePolicy)
+  {
+    $this->privateSpacePolicy = $privateSpacePolicy;
+  }
+  /**
+   * @return string
+   */
+  public function getPrivateSpacePolicy()
+  {
+    return $this->privateSpacePolicy;
   }
   /**
    * @param bool

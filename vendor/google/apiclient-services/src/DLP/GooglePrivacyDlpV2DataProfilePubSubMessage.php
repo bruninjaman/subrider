@@ -23,9 +23,10 @@ class GooglePrivacyDlpV2DataProfilePubSubMessage extends \Google\Model
    * @var string
    */
   public $event;
+  protected $fileStoreProfileType = GooglePrivacyDlpV2FileStoreDataProfile::class;
+  protected $fileStoreProfileDataType = '';
   protected $profileType = GooglePrivacyDlpV2TableDataProfile::class;
   protected $profileDataType = '';
-  public $profile;
 
   /**
    * @param string
@@ -40,6 +41,20 @@ class GooglePrivacyDlpV2DataProfilePubSubMessage extends \Google\Model
   public function getEvent()
   {
     return $this->event;
+  }
+  /**
+   * @param GooglePrivacyDlpV2FileStoreDataProfile
+   */
+  public function setFileStoreProfile(GooglePrivacyDlpV2FileStoreDataProfile $fileStoreProfile)
+  {
+    $this->fileStoreProfile = $fileStoreProfile;
+  }
+  /**
+   * @return GooglePrivacyDlpV2FileStoreDataProfile
+   */
+  public function getFileStoreProfile()
+  {
+    return $this->fileStoreProfile;
   }
   /**
    * @param GooglePrivacyDlpV2TableDataProfile

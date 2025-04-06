@@ -20,9 +20,12 @@ namespace Google\Service\Compute;
 class Project extends \Google\Collection
 {
   protected $collection_key = 'quotas';
+  /**
+   * @var string
+   */
+  public $cloudArmorTier;
   protected $commonInstanceMetadataType = Metadata::class;
   protected $commonInstanceMetadataDataType = '';
-  public $commonInstanceMetadata;
   /**
    * @var string
    */
@@ -57,14 +60,12 @@ class Project extends \Google\Collection
   public $name;
   protected $quotasType = Quota::class;
   protected $quotasDataType = 'array';
-  public $quotas;
   /**
    * @var string
    */
   public $selfLink;
   protected $usageExportLocationType = UsageExportLocation::class;
   protected $usageExportLocationDataType = '';
-  public $usageExportLocation;
   /**
    * @var string
    */
@@ -74,6 +75,20 @@ class Project extends \Google\Collection
    */
   public $xpnProjectStatus;
 
+  /**
+   * @param string
+   */
+  public function setCloudArmorTier($cloudArmorTier)
+  {
+    $this->cloudArmorTier = $cloudArmorTier;
+  }
+  /**
+   * @return string
+   */
+  public function getCloudArmorTier()
+  {
+    return $this->cloudArmorTier;
+  }
   /**
    * @param Metadata
    */

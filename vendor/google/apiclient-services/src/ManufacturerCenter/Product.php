@@ -22,17 +22,18 @@ class Product extends \Google\Collection
   protected $collection_key = 'issues';
   protected $attributesType = Attributes::class;
   protected $attributesDataType = '';
-  public $attributes;
   /**
    * @var string
    */
   public $contentLanguage;
   protected $destinationStatusesType = DestinationStatus::class;
   protected $destinationStatusesDataType = 'array';
-  public $destinationStatuses;
+  /**
+   * @var string
+   */
+  public $feedLabel;
   protected $issuesType = Issue::class;
   protected $issuesDataType = 'array';
-  public $issues;
   /**
    * @var string
    */
@@ -91,6 +92,20 @@ class Product extends \Google\Collection
   public function getDestinationStatuses()
   {
     return $this->destinationStatuses;
+  }
+  /**
+   * @param string
+   */
+  public function setFeedLabel($feedLabel)
+  {
+    $this->feedLabel = $feedLabel;
+  }
+  /**
+   * @return string
+   */
+  public function getFeedLabel()
+  {
+    return $this->feedLabel;
   }
   /**
    * @param Issue[]

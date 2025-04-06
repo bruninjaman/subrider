@@ -22,17 +22,12 @@ class Official extends \Google\Collection
   protected $collection_key = 'urls';
   protected $addressType = SimpleAddressType::class;
   protected $addressDataType = 'array';
-  public $address;
   protected $channelsType = Channel::class;
   protected $channelsDataType = 'array';
-  public $channels;
   /**
    * @var string[]
    */
   public $emails;
-  protected $geocodingSummariesType = GeocodingSummary::class;
-  protected $geocodingSummariesDataType = 'array';
-  public $geocodingSummaries;
   /**
    * @var string
    */
@@ -95,20 +90,6 @@ class Official extends \Google\Collection
   public function getEmails()
   {
     return $this->emails;
-  }
-  /**
-   * @param GeocodingSummary[]
-   */
-  public function setGeocodingSummaries($geocodingSummaries)
-  {
-    $this->geocodingSummaries = $geocodingSummaries;
-  }
-  /**
-   * @return GeocodingSummary[]
-   */
-  public function getGeocodingSummaries()
-  {
-    return $this->geocodingSummaries;
   }
   /**
    * @param string

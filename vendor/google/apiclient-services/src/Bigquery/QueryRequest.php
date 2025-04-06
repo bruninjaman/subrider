@@ -22,18 +22,32 @@ class QueryRequest extends \Google\Collection
   protected $collection_key = 'queryParameters';
   protected $connectionPropertiesType = ConnectionProperty::class;
   protected $connectionPropertiesDataType = 'array';
-  public $connectionProperties;
+  /**
+   * @var bool
+   */
+  public $continuous;
   /**
    * @var bool
    */
   public $createSession;
   protected $defaultDatasetType = DatasetReference::class;
   protected $defaultDatasetDataType = '';
-  public $defaultDataset;
+  protected $destinationEncryptionConfigurationType = EncryptionConfiguration::class;
+  protected $destinationEncryptionConfigurationDataType = '';
   /**
    * @var bool
    */
   public $dryRun;
+  protected $formatOptionsType = DataFormatOptions::class;
+  protected $formatOptionsDataType = '';
+  /**
+   * @var string
+   */
+  public $jobCreationMode;
+  /**
+   * @var string
+   */
+  public $jobTimeoutMs;
   /**
    * @var string
    */
@@ -68,7 +82,6 @@ class QueryRequest extends \Google\Collection
   public $query;
   protected $queryParametersType = QueryParameter::class;
   protected $queryParametersDataType = 'array';
-  public $queryParameters;
   /**
    * @var string
    */
@@ -85,6 +98,10 @@ class QueryRequest extends \Google\Collection
    * @var bool
    */
   public $useQueryCache;
+  /**
+   * @var bool
+   */
+  public $writeIncrementalResults;
 
   /**
    * @param ConnectionProperty[]
@@ -99,6 +116,20 @@ class QueryRequest extends \Google\Collection
   public function getConnectionProperties()
   {
     return $this->connectionProperties;
+  }
+  /**
+   * @param bool
+   */
+  public function setContinuous($continuous)
+  {
+    $this->continuous = $continuous;
+  }
+  /**
+   * @return bool
+   */
+  public function getContinuous()
+  {
+    return $this->continuous;
   }
   /**
    * @param bool
@@ -129,6 +160,20 @@ class QueryRequest extends \Google\Collection
     return $this->defaultDataset;
   }
   /**
+   * @param EncryptionConfiguration
+   */
+  public function setDestinationEncryptionConfiguration(EncryptionConfiguration $destinationEncryptionConfiguration)
+  {
+    $this->destinationEncryptionConfiguration = $destinationEncryptionConfiguration;
+  }
+  /**
+   * @return EncryptionConfiguration
+   */
+  public function getDestinationEncryptionConfiguration()
+  {
+    return $this->destinationEncryptionConfiguration;
+  }
+  /**
    * @param bool
    */
   public function setDryRun($dryRun)
@@ -141,6 +186,48 @@ class QueryRequest extends \Google\Collection
   public function getDryRun()
   {
     return $this->dryRun;
+  }
+  /**
+   * @param DataFormatOptions
+   */
+  public function setFormatOptions(DataFormatOptions $formatOptions)
+  {
+    $this->formatOptions = $formatOptions;
+  }
+  /**
+   * @return DataFormatOptions
+   */
+  public function getFormatOptions()
+  {
+    return $this->formatOptions;
+  }
+  /**
+   * @param string
+   */
+  public function setJobCreationMode($jobCreationMode)
+  {
+    $this->jobCreationMode = $jobCreationMode;
+  }
+  /**
+   * @return string
+   */
+  public function getJobCreationMode()
+  {
+    return $this->jobCreationMode;
+  }
+  /**
+   * @param string
+   */
+  public function setJobTimeoutMs($jobTimeoutMs)
+  {
+    $this->jobTimeoutMs = $jobTimeoutMs;
+  }
+  /**
+   * @return string
+   */
+  public function getJobTimeoutMs()
+  {
+    return $this->jobTimeoutMs;
   }
   /**
    * @param string
@@ -323,6 +410,20 @@ class QueryRequest extends \Google\Collection
   public function getUseQueryCache()
   {
     return $this->useQueryCache;
+  }
+  /**
+   * @param bool
+   */
+  public function setWriteIncrementalResults($writeIncrementalResults)
+  {
+    $this->writeIncrementalResults = $writeIncrementalResults;
+  }
+  /**
+   * @return bool
+   */
+  public function getWriteIncrementalResults()
+  {
+    return $this->writeIncrementalResults;
   }
 }
 

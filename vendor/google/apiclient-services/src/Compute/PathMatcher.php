@@ -20,34 +20,45 @@ namespace Google\Service\Compute;
 class PathMatcher extends \Google\Collection
 {
   protected $collection_key = 'routeRules';
+  protected $defaultCustomErrorResponsePolicyType = CustomErrorResponsePolicy::class;
+  protected $defaultCustomErrorResponsePolicyDataType = '';
   protected $defaultRouteActionType = HttpRouteAction::class;
   protected $defaultRouteActionDataType = '';
-  public $defaultRouteAction;
   /**
    * @var string
    */
   public $defaultService;
   protected $defaultUrlRedirectType = HttpRedirectAction::class;
   protected $defaultUrlRedirectDataType = '';
-  public $defaultUrlRedirect;
   /**
    * @var string
    */
   public $description;
   protected $headerActionType = HttpHeaderAction::class;
   protected $headerActionDataType = '';
-  public $headerAction;
   /**
    * @var string
    */
   public $name;
   protected $pathRulesType = PathRule::class;
   protected $pathRulesDataType = 'array';
-  public $pathRules;
   protected $routeRulesType = HttpRouteRule::class;
   protected $routeRulesDataType = 'array';
-  public $routeRules;
 
+  /**
+   * @param CustomErrorResponsePolicy
+   */
+  public function setDefaultCustomErrorResponsePolicy(CustomErrorResponsePolicy $defaultCustomErrorResponsePolicy)
+  {
+    $this->defaultCustomErrorResponsePolicy = $defaultCustomErrorResponsePolicy;
+  }
+  /**
+   * @return CustomErrorResponsePolicy
+   */
+  public function getDefaultCustomErrorResponsePolicy()
+  {
+    return $this->defaultCustomErrorResponsePolicy;
+  }
   /**
    * @param HttpRouteAction
    */

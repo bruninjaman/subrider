@@ -22,7 +22,6 @@ class TrafficStats extends \Google\Collection
   protected $collection_key = 'spammyFeedbackLoops';
   protected $deliveryErrorsType = DeliveryError::class;
   protected $deliveryErrorsDataType = 'array';
-  public $deliveryErrors;
   public $dkimSuccessRatio;
   public $dmarcSuccessRatio;
   /**
@@ -32,7 +31,6 @@ class TrafficStats extends \Google\Collection
   public $inboundEncryptionRatio;
   protected $ipReputationsType = IpReputation::class;
   protected $ipReputationsDataType = 'array';
-  public $ipReputations;
   /**
    * @var string
    */
@@ -40,9 +38,10 @@ class TrafficStats extends \Google\Collection
   public $outboundEncryptionRatio;
   protected $spammyFeedbackLoopsType = FeedbackLoop::class;
   protected $spammyFeedbackLoopsDataType = 'array';
-  public $spammyFeedbackLoops;
   public $spfSuccessRatio;
   public $userReportedSpamRatio;
+  public $userReportedSpamRatioLowerBound;
+  public $userReportedSpamRatioUpperBound;
 
   /**
    * @param DeliveryError[]
@@ -161,6 +160,22 @@ class TrafficStats extends \Google\Collection
   public function getUserReportedSpamRatio()
   {
     return $this->userReportedSpamRatio;
+  }
+  public function setUserReportedSpamRatioLowerBound($userReportedSpamRatioLowerBound)
+  {
+    $this->userReportedSpamRatioLowerBound = $userReportedSpamRatioLowerBound;
+  }
+  public function getUserReportedSpamRatioLowerBound()
+  {
+    return $this->userReportedSpamRatioLowerBound;
+  }
+  public function setUserReportedSpamRatioUpperBound($userReportedSpamRatioUpperBound)
+  {
+    $this->userReportedSpamRatioUpperBound = $userReportedSpamRatioUpperBound;
+  }
+  public function getUserReportedSpamRatioUpperBound()
+  {
+    return $this->userReportedSpamRatioUpperBound;
   }
 }
 

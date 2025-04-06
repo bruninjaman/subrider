@@ -25,13 +25,12 @@ class Report extends \Google\Model
   public $accountId;
   protected $criteriaType = ReportCriteria::class;
   protected $criteriaDataType = '';
-  public $criteria;
   protected $crossDimensionReachCriteriaType = ReportCrossDimensionReachCriteria::class;
   protected $crossDimensionReachCriteriaDataType = '';
-  public $crossDimensionReachCriteria;
+  protected $crossMediaReachCriteriaType = ReportCrossMediaReachCriteria::class;
+  protected $crossMediaReachCriteriaDataType = '';
   protected $deliveryType = ReportDelivery::class;
   protected $deliveryDataType = '';
-  public $delivery;
   /**
    * @var string
    */
@@ -42,7 +41,6 @@ class Report extends \Google\Model
   public $fileName;
   protected $floodlightCriteriaType = ReportFloodlightCriteria::class;
   protected $floodlightCriteriaDataType = '';
-  public $floodlightCriteria;
   /**
    * @var string
    */
@@ -67,21 +65,12 @@ class Report extends \Google\Model
    * @var string
    */
   public $ownerProfileId;
-  protected $pathAttributionCriteriaType = ReportPathAttributionCriteria::class;
-  protected $pathAttributionCriteriaDataType = '';
-  public $pathAttributionCriteria;
-  protected $pathCriteriaType = ReportPathCriteria::class;
-  protected $pathCriteriaDataType = '';
-  public $pathCriteria;
   protected $pathToConversionCriteriaType = ReportPathToConversionCriteria::class;
   protected $pathToConversionCriteriaDataType = '';
-  public $pathToConversionCriteria;
   protected $reachCriteriaType = ReportReachCriteria::class;
   protected $reachCriteriaDataType = '';
-  public $reachCriteria;
   protected $scheduleType = ReportSchedule::class;
   protected $scheduleDataType = '';
-  public $schedule;
   /**
    * @var string
    */
@@ -132,6 +121,20 @@ class Report extends \Google\Model
   public function getCrossDimensionReachCriteria()
   {
     return $this->crossDimensionReachCriteria;
+  }
+  /**
+   * @param ReportCrossMediaReachCriteria
+   */
+  public function setCrossMediaReachCriteria(ReportCrossMediaReachCriteria $crossMediaReachCriteria)
+  {
+    $this->crossMediaReachCriteria = $crossMediaReachCriteria;
+  }
+  /**
+   * @return ReportCrossMediaReachCriteria
+   */
+  public function getCrossMediaReachCriteria()
+  {
+    return $this->crossMediaReachCriteria;
   }
   /**
    * @param ReportDelivery
@@ -272,34 +275,6 @@ class Report extends \Google\Model
   public function getOwnerProfileId()
   {
     return $this->ownerProfileId;
-  }
-  /**
-   * @param ReportPathAttributionCriteria
-   */
-  public function setPathAttributionCriteria(ReportPathAttributionCriteria $pathAttributionCriteria)
-  {
-    $this->pathAttributionCriteria = $pathAttributionCriteria;
-  }
-  /**
-   * @return ReportPathAttributionCriteria
-   */
-  public function getPathAttributionCriteria()
-  {
-    return $this->pathAttributionCriteria;
-  }
-  /**
-   * @param ReportPathCriteria
-   */
-  public function setPathCriteria(ReportPathCriteria $pathCriteria)
-  {
-    $this->pathCriteria = $pathCriteria;
-  }
-  /**
-   * @return ReportPathCriteria
-   */
-  public function getPathCriteria()
-  {
-    return $this->pathCriteria;
   }
   /**
    * @param ReportPathToConversionCriteria

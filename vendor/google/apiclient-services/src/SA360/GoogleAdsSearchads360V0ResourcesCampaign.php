@@ -23,6 +23,10 @@ class GoogleAdsSearchads360V0ResourcesCampaign extends \Google\Collection
   /**
    * @var string
    */
+  public $accessibleBiddingStrategy;
+  /**
+   * @var string
+   */
   public $adServingOptimizationStatus;
   /**
    * @var string
@@ -52,9 +56,16 @@ class GoogleAdsSearchads360V0ResourcesCampaign extends \Google\Collection
    * @var string
    */
   public $createTime;
+  /**
+   * @var string
+   */
+  public $creationTime;
   protected $dynamicSearchAdsSettingType = GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting::class;
   protected $dynamicSearchAdsSettingDataType = '';
-  public $dynamicSearchAdsSetting;
+  /**
+   * @var string[]
+   */
+  public $effectiveLabels;
   /**
    * @var string
    */
@@ -73,10 +84,8 @@ class GoogleAdsSearchads360V0ResourcesCampaign extends \Google\Collection
   public $finalUrlSuffix;
   protected $frequencyCapsType = GoogleAdsSearchads360V0CommonFrequencyCapEntry::class;
   protected $frequencyCapsDataType = 'array';
-  public $frequencyCaps;
   protected $geoTargetTypeSettingType = GoogleAdsSearchads360V0ResourcesCampaignGeoTargetTypeSetting::class;
   protected $geoTargetTypeSettingDataType = '';
-  public $geoTargetTypeSetting;
   /**
    * @var string
    */
@@ -91,49 +100,38 @@ class GoogleAdsSearchads360V0ResourcesCampaign extends \Google\Collection
   public $lastModifiedTime;
   protected $manualCpaType = GoogleAdsSearchads360V0CommonManualCpa::class;
   protected $manualCpaDataType = '';
-  public $manualCpa;
   protected $manualCpcType = GoogleAdsSearchads360V0CommonManualCpc::class;
   protected $manualCpcDataType = '';
-  public $manualCpc;
   protected $manualCpmType = GoogleAdsSearchads360V0CommonManualCpm::class;
   protected $manualCpmDataType = '';
-  public $manualCpm;
   protected $maximizeConversionValueType = GoogleAdsSearchads360V0CommonMaximizeConversionValue::class;
   protected $maximizeConversionValueDataType = '';
-  public $maximizeConversionValue;
   protected $maximizeConversionsType = GoogleAdsSearchads360V0CommonMaximizeConversions::class;
   protected $maximizeConversionsDataType = '';
-  public $maximizeConversions;
   /**
    * @var string
    */
   public $name;
   protected $networkSettingsType = GoogleAdsSearchads360V0ResourcesCampaignNetworkSettings::class;
   protected $networkSettingsDataType = '';
-  public $networkSettings;
   protected $optimizationGoalSettingType = GoogleAdsSearchads360V0ResourcesCampaignOptimizationGoalSetting::class;
   protected $optimizationGoalSettingDataType = '';
-  public $optimizationGoalSetting;
   protected $percentCpcType = GoogleAdsSearchads360V0CommonPercentCpc::class;
   protected $percentCpcDataType = '';
-  public $percentCpc;
   protected $realTimeBiddingSettingType = GoogleAdsSearchads360V0CommonRealTimeBiddingSetting::class;
   protected $realTimeBiddingSettingDataType = '';
-  public $realTimeBiddingSetting;
   /**
    * @var string
    */
   public $resourceName;
   protected $selectiveOptimizationType = GoogleAdsSearchads360V0ResourcesCampaignSelectiveOptimization::class;
   protected $selectiveOptimizationDataType = '';
-  public $selectiveOptimization;
   /**
    * @var string
    */
   public $servingStatus;
   protected $shoppingSettingType = GoogleAdsSearchads360V0ResourcesCampaignShoppingSetting::class;
   protected $shoppingSettingDataType = '';
-  public $shoppingSetting;
   /**
    * @var string
    */
@@ -144,34 +142,41 @@ class GoogleAdsSearchads360V0ResourcesCampaign extends \Google\Collection
   public $status;
   protected $targetCpaType = GoogleAdsSearchads360V0CommonTargetCpa::class;
   protected $targetCpaDataType = '';
-  public $targetCpa;
   protected $targetCpmType = GoogleAdsSearchads360V0CommonTargetCpm::class;
   protected $targetCpmDataType = '';
-  public $targetCpm;
   protected $targetImpressionShareType = GoogleAdsSearchads360V0CommonTargetImpressionShare::class;
   protected $targetImpressionShareDataType = '';
-  public $targetImpressionShare;
   protected $targetRoasType = GoogleAdsSearchads360V0CommonTargetRoas::class;
   protected $targetRoasDataType = '';
-  public $targetRoas;
   protected $targetSpendType = GoogleAdsSearchads360V0CommonTargetSpend::class;
   protected $targetSpendDataType = '';
-  public $targetSpend;
   protected $trackingSettingType = GoogleAdsSearchads360V0ResourcesCampaignTrackingSetting::class;
   protected $trackingSettingDataType = '';
-  public $trackingSetting;
   /**
    * @var string
    */
   public $trackingUrlTemplate;
   protected $urlCustomParametersType = GoogleAdsSearchads360V0CommonCustomParameter::class;
   protected $urlCustomParametersDataType = 'array';
-  public $urlCustomParameters;
   /**
    * @var bool
    */
   public $urlExpansionOptOut;
 
+  /**
+   * @param string
+   */
+  public function setAccessibleBiddingStrategy($accessibleBiddingStrategy)
+  {
+    $this->accessibleBiddingStrategy = $accessibleBiddingStrategy;
+  }
+  /**
+   * @return string
+   */
+  public function getAccessibleBiddingStrategy()
+  {
+    return $this->accessibleBiddingStrategy;
+  }
   /**
    * @param string
    */
@@ -285,6 +290,20 @@ class GoogleAdsSearchads360V0ResourcesCampaign extends \Google\Collection
     return $this->createTime;
   }
   /**
+   * @param string
+   */
+  public function setCreationTime($creationTime)
+  {
+    $this->creationTime = $creationTime;
+  }
+  /**
+   * @return string
+   */
+  public function getCreationTime()
+  {
+    return $this->creationTime;
+  }
+  /**
    * @param GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting
    */
   public function setDynamicSearchAdsSetting(GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting $dynamicSearchAdsSetting)
@@ -297,6 +316,20 @@ class GoogleAdsSearchads360V0ResourcesCampaign extends \Google\Collection
   public function getDynamicSearchAdsSetting()
   {
     return $this->dynamicSearchAdsSetting;
+  }
+  /**
+   * @param string[]
+   */
+  public function setEffectiveLabels($effectiveLabels)
+  {
+    $this->effectiveLabels = $effectiveLabels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getEffectiveLabels()
+  {
+    return $this->effectiveLabels;
   }
   /**
    * @param string

@@ -29,11 +29,18 @@ class GoogleCloudContactcenterinsightsV1IssueModel extends \Google\Model
   public $displayName;
   protected $inputDataConfigType = GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig::class;
   protected $inputDataConfigDataType = '';
-  public $inputDataConfig;
   /**
    * @var string
    */
   public $issueCount;
+  /**
+   * @var string
+   */
+  public $languageCode;
+  /**
+   * @var string
+   */
+  public $modelType;
   /**
    * @var string
    */
@@ -44,7 +51,6 @@ class GoogleCloudContactcenterinsightsV1IssueModel extends \Google\Model
   public $state;
   protected $trainingStatsType = GoogleCloudContactcenterinsightsV1IssueModelLabelStats::class;
   protected $trainingStatsDataType = '';
-  public $trainingStats;
   /**
    * @var string
    */
@@ -105,6 +111,34 @@ class GoogleCloudContactcenterinsightsV1IssueModel extends \Google\Model
   public function getIssueCount()
   {
     return $this->issueCount;
+  }
+  /**
+   * @param string
+   */
+  public function setLanguageCode($languageCode)
+  {
+    $this->languageCode = $languageCode;
+  }
+  /**
+   * @return string
+   */
+  public function getLanguageCode()
+  {
+    return $this->languageCode;
+  }
+  /**
+   * @param string
+   */
+  public function setModelType($modelType)
+  {
+    $this->modelType = $modelType;
+  }
+  /**
+   * @return string
+   */
+  public function getModelType()
+  {
+    return $this->modelType;
   }
   /**
    * @param string

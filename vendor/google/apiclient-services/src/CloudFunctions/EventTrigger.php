@@ -26,7 +26,6 @@ class EventTrigger extends \Google\Collection
   public $channel;
   protected $eventFiltersType = EventFilter::class;
   protected $eventFiltersDataType = 'array';
-  public $eventFilters;
   /**
    * @var string
    */
@@ -39,6 +38,10 @@ class EventTrigger extends \Google\Collection
    * @var string
    */
   public $retryPolicy;
+  /**
+   * @var string
+   */
+  public $service;
   /**
    * @var string
    */
@@ -121,6 +124,20 @@ class EventTrigger extends \Google\Collection
   public function getRetryPolicy()
   {
     return $this->retryPolicy;
+  }
+  /**
+   * @param string
+   */
+  public function setService($service)
+  {
+    $this->service = $service;
+  }
+  /**
+   * @return string
+   */
+  public function getService()
+  {
+    return $this->service;
   }
   /**
    * @param string

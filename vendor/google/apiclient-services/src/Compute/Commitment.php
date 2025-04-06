@@ -35,11 +35,19 @@ class Commitment extends \Google\Collection
   /**
    * @var string
    */
+  public $customEndTimestamp;
+  /**
+   * @var string
+   */
   public $description;
   /**
    * @var string
    */
   public $endTimestamp;
+  /**
+   * @var string[]
+   */
+  public $existingReservations;
   /**
    * @var string
    */
@@ -50,7 +58,6 @@ class Commitment extends \Google\Collection
   public $kind;
   protected $licenseResourceType = LicenseResourceCommitment::class;
   protected $licenseResourceDataType = '';
-  public $licenseResource;
   /**
    * @var string[]
    */
@@ -69,10 +76,10 @@ class Commitment extends \Google\Collection
   public $region;
   protected $reservationsType = Reservation::class;
   protected $reservationsDataType = 'array';
-  public $reservations;
+  protected $resourceStatusType = CommitmentResourceStatus::class;
+  protected $resourceStatusDataType = '';
   protected $resourcesType = ResourceCommitment::class;
   protected $resourcesDataType = 'array';
-  public $resources;
   /**
    * @var string
    */
@@ -143,6 +150,20 @@ class Commitment extends \Google\Collection
   /**
    * @param string
    */
+  public function setCustomEndTimestamp($customEndTimestamp)
+  {
+    $this->customEndTimestamp = $customEndTimestamp;
+  }
+  /**
+   * @return string
+   */
+  public function getCustomEndTimestamp()
+  {
+    return $this->customEndTimestamp;
+  }
+  /**
+   * @param string
+   */
   public function setDescription($description)
   {
     $this->description = $description;
@@ -167,6 +188,20 @@ class Commitment extends \Google\Collection
   public function getEndTimestamp()
   {
     return $this->endTimestamp;
+  }
+  /**
+   * @param string[]
+   */
+  public function setExistingReservations($existingReservations)
+  {
+    $this->existingReservations = $existingReservations;
+  }
+  /**
+   * @return string[]
+   */
+  public function getExistingReservations()
+  {
+    return $this->existingReservations;
   }
   /**
    * @param string
@@ -279,6 +314,20 @@ class Commitment extends \Google\Collection
   public function getReservations()
   {
     return $this->reservations;
+  }
+  /**
+   * @param CommitmentResourceStatus
+   */
+  public function setResourceStatus(CommitmentResourceStatus $resourceStatus)
+  {
+    $this->resourceStatus = $resourceStatus;
+  }
+  /**
+   * @return CommitmentResourceStatus
+   */
+  public function getResourceStatus()
+  {
+    return $this->resourceStatus;
   }
   /**
    * @param ResourceCommitment[]

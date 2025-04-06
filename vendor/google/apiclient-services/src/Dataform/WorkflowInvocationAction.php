@@ -21,24 +21,26 @@ class WorkflowInvocationAction extends \Google\Model
 {
   protected $bigqueryActionType = BigQueryAction::class;
   protected $bigqueryActionDataType = '';
-  public $bigqueryAction;
   protected $canonicalTargetType = Target::class;
   protected $canonicalTargetDataType = '';
-  public $canonicalTarget;
   /**
    * @var string
    */
   public $failureReason;
+  /**
+   * @var string
+   */
+  public $internalMetadata;
   protected $invocationTimingType = Interval::class;
   protected $invocationTimingDataType = '';
-  public $invocationTiming;
+  protected $notebookActionType = NotebookAction::class;
+  protected $notebookActionDataType = '';
   /**
    * @var string
    */
   public $state;
   protected $targetType = Target::class;
   protected $targetDataType = '';
-  public $target;
 
   /**
    * @param BigQueryAction
@@ -83,6 +85,20 @@ class WorkflowInvocationAction extends \Google\Model
     return $this->failureReason;
   }
   /**
+   * @param string
+   */
+  public function setInternalMetadata($internalMetadata)
+  {
+    $this->internalMetadata = $internalMetadata;
+  }
+  /**
+   * @return string
+   */
+  public function getInternalMetadata()
+  {
+    return $this->internalMetadata;
+  }
+  /**
    * @param Interval
    */
   public function setInvocationTiming(Interval $invocationTiming)
@@ -95,6 +111,20 @@ class WorkflowInvocationAction extends \Google\Model
   public function getInvocationTiming()
   {
     return $this->invocationTiming;
+  }
+  /**
+   * @param NotebookAction
+   */
+  public function setNotebookAction(NotebookAction $notebookAction)
+  {
+    $this->notebookAction = $notebookAction;
+  }
+  /**
+   * @return NotebookAction
+   */
+  public function getNotebookAction()
+  {
+    return $this->notebookAction;
   }
   /**
    * @param string

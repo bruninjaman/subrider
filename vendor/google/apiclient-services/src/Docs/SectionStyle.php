@@ -22,7 +22,6 @@ class SectionStyle extends \Google\Collection
   protected $collection_key = 'columnProperties';
   protected $columnPropertiesType = SectionColumnProperties::class;
   protected $columnPropertiesDataType = 'array';
-  public $columnProperties;
   /**
    * @var string
    */
@@ -55,24 +54,22 @@ class SectionStyle extends \Google\Collection
    * @var string
    */
   public $firstPageHeaderId;
+  /**
+   * @var bool
+   */
+  public $flipPageOrientation;
   protected $marginBottomType = Dimension::class;
   protected $marginBottomDataType = '';
-  public $marginBottom;
   protected $marginFooterType = Dimension::class;
   protected $marginFooterDataType = '';
-  public $marginFooter;
   protected $marginHeaderType = Dimension::class;
   protected $marginHeaderDataType = '';
-  public $marginHeader;
   protected $marginLeftType = Dimension::class;
   protected $marginLeftDataType = '';
-  public $marginLeft;
   protected $marginRightType = Dimension::class;
   protected $marginRightDataType = '';
-  public $marginRight;
   protected $marginTopType = Dimension::class;
   protected $marginTopDataType = '';
-  public $marginTop;
   /**
    * @var int
    */
@@ -211,6 +208,20 @@ class SectionStyle extends \Google\Collection
   public function getFirstPageHeaderId()
   {
     return $this->firstPageHeaderId;
+  }
+  /**
+   * @param bool
+   */
+  public function setFlipPageOrientation($flipPageOrientation)
+  {
+    $this->flipPageOrientation = $flipPageOrientation;
+  }
+  /**
+   * @return bool
+   */
+  public function getFlipPageOrientation()
+  {
+    return $this->flipPageOrientation;
   }
   /**
    * @param Dimension

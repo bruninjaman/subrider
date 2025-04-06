@@ -22,14 +22,14 @@ class GooglePrivacyDlpV2DataProfileJobConfig extends \Google\Collection
   protected $collection_key = 'inspectTemplates';
   protected $dataProfileActionsType = GooglePrivacyDlpV2DataProfileAction::class;
   protected $dataProfileActionsDataType = 'array';
-  public $dataProfileActions;
   /**
    * @var string[]
    */
   public $inspectTemplates;
   protected $locationType = GooglePrivacyDlpV2DataProfileLocation::class;
   protected $locationDataType = '';
-  public $location;
+  protected $otherCloudStartingLocationType = GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation::class;
+  protected $otherCloudStartingLocationDataType = '';
   /**
    * @var string
    */
@@ -76,6 +76,20 @@ class GooglePrivacyDlpV2DataProfileJobConfig extends \Google\Collection
   public function getLocation()
   {
     return $this->location;
+  }
+  /**
+   * @param GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation
+   */
+  public function setOtherCloudStartingLocation(GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation $otherCloudStartingLocation)
+  {
+    $this->otherCloudStartingLocation = $otherCloudStartingLocation;
+  }
+  /**
+   * @return GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation
+   */
+  public function getOtherCloudStartingLocation()
+  {
+    return $this->otherCloudStartingLocation;
   }
   /**
    * @param string

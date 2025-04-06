@@ -19,6 +19,8 @@ namespace Google\Service\Compute;
 
 class Reservation extends \Google\Model
 {
+  protected $aggregateReservationType = AllocationAggregateReservation::class;
+  protected $aggregateReservationDataType = '';
   /**
    * @var string
    */
@@ -43,9 +45,12 @@ class Reservation extends \Google\Model
    * @var string
    */
   public $name;
+  /**
+   * @var string[]
+   */
+  public $resourcePolicies;
   protected $resourceStatusType = AllocationResourceStatus::class;
   protected $resourceStatusDataType = '';
-  public $resourceStatus;
   /**
    * @var bool
    */
@@ -56,10 +61,8 @@ class Reservation extends \Google\Model
   public $selfLink;
   protected $shareSettingsType = ShareSettings::class;
   protected $shareSettingsDataType = '';
-  public $shareSettings;
   protected $specificReservationType = AllocationSpecificSKUReservation::class;
   protected $specificReservationDataType = '';
-  public $specificReservation;
   /**
    * @var bool
    */
@@ -73,6 +76,20 @@ class Reservation extends \Google\Model
    */
   public $zone;
 
+  /**
+   * @param AllocationAggregateReservation
+   */
+  public function setAggregateReservation(AllocationAggregateReservation $aggregateReservation)
+  {
+    $this->aggregateReservation = $aggregateReservation;
+  }
+  /**
+   * @return AllocationAggregateReservation
+   */
+  public function getAggregateReservation()
+  {
+    return $this->aggregateReservation;
+  }
   /**
    * @param string
    */
@@ -156,6 +173,20 @@ class Reservation extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param string[]
+   */
+  public function setResourcePolicies($resourcePolicies)
+  {
+    $this->resourcePolicies = $resourcePolicies;
+  }
+  /**
+   * @return string[]
+   */
+  public function getResourcePolicies()
+  {
+    return $this->resourcePolicies;
   }
   /**
    * @param AllocationResourceStatus

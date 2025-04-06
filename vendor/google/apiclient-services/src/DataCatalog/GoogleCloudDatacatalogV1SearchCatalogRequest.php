@@ -20,6 +20,10 @@ namespace Google\Service\DataCatalog;
 class GoogleCloudDatacatalogV1SearchCatalogRequest extends \Google\Model
 {
   /**
+   * @var bool
+   */
+  public $adminSearch;
+  /**
    * @var string
    */
   public $orderBy;
@@ -37,8 +41,21 @@ class GoogleCloudDatacatalogV1SearchCatalogRequest extends \Google\Model
   public $query;
   protected $scopeType = GoogleCloudDatacatalogV1SearchCatalogRequestScope::class;
   protected $scopeDataType = '';
-  public $scope;
 
+  /**
+   * @param bool
+   */
+  public function setAdminSearch($adminSearch)
+  {
+    $this->adminSearch = $adminSearch;
+  }
+  /**
+   * @return bool
+   */
+  public function getAdminSearch()
+  {
+    return $this->adminSearch;
+  }
   /**
    * @param string
    */

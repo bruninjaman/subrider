@@ -22,14 +22,12 @@ class GoogleCloudDialogflowV2ConversationModel extends \Google\Collection
   protected $collection_key = 'datasets';
   protected $articleSuggestionModelMetadataType = GoogleCloudDialogflowV2ArticleSuggestionModelMetadata::class;
   protected $articleSuggestionModelMetadataDataType = '';
-  public $articleSuggestionModelMetadata;
   /**
    * @var string
    */
   public $createTime;
   protected $datasetsType = GoogleCloudDialogflowV2InputDataset::class;
   protected $datasetsDataType = 'array';
-  public $datasets;
   /**
    * @var string
    */
@@ -42,9 +40,16 @@ class GoogleCloudDialogflowV2ConversationModel extends \Google\Collection
    * @var string
    */
   public $name;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   protected $smartReplyModelMetadataType = GoogleCloudDialogflowV2SmartReplyModelMetadata::class;
   protected $smartReplyModelMetadataDataType = '';
-  public $smartReplyModelMetadata;
   /**
    * @var string
    */
@@ -133,6 +138,34 @@ class GoogleCloudDialogflowV2ConversationModel extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param GoogleCloudDialogflowV2SmartReplyModelMetadata

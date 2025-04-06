@@ -21,22 +21,20 @@ class MembershipFeatureState extends \Google\Model
 {
   protected $appdevexperienceType = AppDevExperienceFeatureState::class;
   protected $appdevexperienceDataType = '';
-  public $appdevexperience;
+  protected $clusterupgradeType = ClusterUpgradeMembershipState::class;
+  protected $clusterupgradeDataType = '';
   protected $configmanagementType = ConfigManagementMembershipState::class;
   protected $configmanagementDataType = '';
-  public $configmanagement;
   protected $fleetobservabilityType = FleetObservabilityMembershipState::class;
   protected $fleetobservabilityDataType = '';
-  public $fleetobservability;
   protected $identityserviceType = IdentityServiceMembershipState::class;
   protected $identityserviceDataType = '';
-  public $identityservice;
+  protected $policycontrollerType = PolicyControllerMembershipState::class;
+  protected $policycontrollerDataType = '';
   protected $servicemeshType = ServiceMeshMembershipState::class;
   protected $servicemeshDataType = '';
-  public $servicemesh;
   protected $stateType = FeatureState::class;
   protected $stateDataType = '';
-  public $state;
 
   /**
    * @param AppDevExperienceFeatureState
@@ -51,6 +49,20 @@ class MembershipFeatureState extends \Google\Model
   public function getAppdevexperience()
   {
     return $this->appdevexperience;
+  }
+  /**
+   * @param ClusterUpgradeMembershipState
+   */
+  public function setClusterupgrade(ClusterUpgradeMembershipState $clusterupgrade)
+  {
+    $this->clusterupgrade = $clusterupgrade;
+  }
+  /**
+   * @return ClusterUpgradeMembershipState
+   */
+  public function getClusterupgrade()
+  {
+    return $this->clusterupgrade;
   }
   /**
    * @param ConfigManagementMembershipState
@@ -93,6 +105,20 @@ class MembershipFeatureState extends \Google\Model
   public function getIdentityservice()
   {
     return $this->identityservice;
+  }
+  /**
+   * @param PolicyControllerMembershipState
+   */
+  public function setPolicycontroller(PolicyControllerMembershipState $policycontroller)
+  {
+    $this->policycontroller = $policycontroller;
+  }
+  /**
+   * @return PolicyControllerMembershipState
+   */
+  public function getPolicycontroller()
+  {
+    return $this->policycontroller;
   }
   /**
    * @param ServiceMeshMembershipState

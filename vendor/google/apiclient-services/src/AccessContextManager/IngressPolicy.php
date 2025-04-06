@@ -21,10 +21,12 @@ class IngressPolicy extends \Google\Model
 {
   protected $ingressFromType = IngressFrom::class;
   protected $ingressFromDataType = '';
-  public $ingressFrom;
   protected $ingressToType = IngressTo::class;
   protected $ingressToDataType = '';
-  public $ingressTo;
+  /**
+   * @var string
+   */
+  public $title;
 
   /**
    * @param IngressFrom
@@ -53,6 +55,20 @@ class IngressPolicy extends \Google\Model
   public function getIngressTo()
   {
     return $this->ingressTo;
+  }
+  /**
+   * @param string
+   */
+  public function setTitle($title)
+  {
+    $this->title = $title;
+  }
+  /**
+   * @return string
+   */
+  public function getTitle()
+  {
+    return $this->title;
   }
 }
 

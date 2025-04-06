@@ -36,9 +36,12 @@ class AutoprovisioningNodePoolDefaults extends \Google\Collection
    * @var string
    */
   public $imageType;
+  /**
+   * @var bool
+   */
+  public $insecureKubeletReadonlyPortEnabled;
   protected $managementType = NodeManagement::class;
   protected $managementDataType = '';
-  public $management;
   /**
    * @var string
    */
@@ -53,10 +56,8 @@ class AutoprovisioningNodePoolDefaults extends \Google\Collection
   public $serviceAccount;
   protected $shieldedInstanceConfigType = ShieldedInstanceConfig::class;
   protected $shieldedInstanceConfigDataType = '';
-  public $shieldedInstanceConfig;
   protected $upgradeSettingsType = UpgradeSettings::class;
   protected $upgradeSettingsDataType = '';
-  public $upgradeSettings;
 
   /**
    * @param string
@@ -113,6 +114,20 @@ class AutoprovisioningNodePoolDefaults extends \Google\Collection
   public function getImageType()
   {
     return $this->imageType;
+  }
+  /**
+   * @param bool
+   */
+  public function setInsecureKubeletReadonlyPortEnabled($insecureKubeletReadonlyPortEnabled)
+  {
+    $this->insecureKubeletReadonlyPortEnabled = $insecureKubeletReadonlyPortEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getInsecureKubeletReadonlyPortEnabled()
+  {
+    return $this->insecureKubeletReadonlyPortEnabled;
   }
   /**
    * @param NodeManagement

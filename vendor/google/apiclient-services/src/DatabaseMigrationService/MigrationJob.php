@@ -19,9 +19,12 @@ namespace Google\Service\DatabaseMigrationService;
 
 class MigrationJob extends \Google\Model
 {
+  /**
+   * @var string
+   */
+  public $cmekKeyName;
   protected $conversionWorkspaceType = ConversionWorkspaceInfo::class;
   protected $conversionWorkspaceDataType = '';
-  public $conversionWorkspace;
   /**
    * @var string
    */
@@ -32,18 +35,20 @@ class MigrationJob extends \Google\Model
   public $destination;
   protected $destinationDatabaseType = DatabaseType::class;
   protected $destinationDatabaseDataType = '';
-  public $destinationDatabase;
   /**
    * @var string
    */
   public $displayName;
   protected $dumpFlagsType = DumpFlags::class;
   protected $dumpFlagsDataType = '';
-  public $dumpFlags;
   /**
    * @var string
    */
   public $dumpPath;
+  /**
+   * @var string
+   */
+  public $dumpType;
   /**
    * @var string
    */
@@ -54,7 +59,6 @@ class MigrationJob extends \Google\Model
   public $endTime;
   protected $errorType = Status::class;
   protected $errorDataType = '';
-  public $error;
   /**
    * @var string
    */
@@ -67,27 +71,40 @@ class MigrationJob extends \Google\Model
    * @var string
    */
   public $name;
+  protected $objectsConfigType = MigrationJobObjectsConfig::class;
+  protected $objectsConfigDataType = '';
+  protected $oracleToPostgresConfigType = OracleToPostgresConfig::class;
+  protected $oracleToPostgresConfigDataType = '';
+  protected $performanceConfigType = PerformanceConfig::class;
+  protected $performanceConfigDataType = '';
   /**
    * @var string
    */
   public $phase;
   protected $reverseSshConnectivityType = ReverseSshConnectivity::class;
   protected $reverseSshConnectivityDataType = '';
-  public $reverseSshConnectivity;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   /**
    * @var string
    */
   public $source;
   protected $sourceDatabaseType = DatabaseType::class;
   protected $sourceDatabaseDataType = '';
-  public $sourceDatabase;
+  protected $sqlserverHomogeneousMigrationJobConfigType = SqlServerHomogeneousMigrationJobConfig::class;
+  protected $sqlserverHomogeneousMigrationJobConfigDataType = '';
   /**
    * @var string
    */
   public $state;
   protected $staticIpConnectivityType = StaticIpConnectivity::class;
   protected $staticIpConnectivityDataType = '';
-  public $staticIpConnectivity;
   /**
    * @var string
    */
@@ -98,8 +115,21 @@ class MigrationJob extends \Google\Model
   public $updateTime;
   protected $vpcPeeringConnectivityType = VpcPeeringConnectivity::class;
   protected $vpcPeeringConnectivityDataType = '';
-  public $vpcPeeringConnectivity;
 
+  /**
+   * @param string
+   */
+  public function setCmekKeyName($cmekKeyName)
+  {
+    $this->cmekKeyName = $cmekKeyName;
+  }
+  /**
+   * @return string
+   */
+  public function getCmekKeyName()
+  {
+    return $this->cmekKeyName;
+  }
   /**
    * @param ConversionWorkspaceInfo
    */
@@ -201,6 +231,20 @@ class MigrationJob extends \Google\Model
   /**
    * @param string
    */
+  public function setDumpType($dumpType)
+  {
+    $this->dumpType = $dumpType;
+  }
+  /**
+   * @return string
+   */
+  public function getDumpType()
+  {
+    return $this->dumpType;
+  }
+  /**
+   * @param string
+   */
   public function setDuration($duration)
   {
     $this->duration = $duration;
@@ -283,6 +327,48 @@ class MigrationJob extends \Google\Model
     return $this->name;
   }
   /**
+   * @param MigrationJobObjectsConfig
+   */
+  public function setObjectsConfig(MigrationJobObjectsConfig $objectsConfig)
+  {
+    $this->objectsConfig = $objectsConfig;
+  }
+  /**
+   * @return MigrationJobObjectsConfig
+   */
+  public function getObjectsConfig()
+  {
+    return $this->objectsConfig;
+  }
+  /**
+   * @param OracleToPostgresConfig
+   */
+  public function setOracleToPostgresConfig(OracleToPostgresConfig $oracleToPostgresConfig)
+  {
+    $this->oracleToPostgresConfig = $oracleToPostgresConfig;
+  }
+  /**
+   * @return OracleToPostgresConfig
+   */
+  public function getOracleToPostgresConfig()
+  {
+    return $this->oracleToPostgresConfig;
+  }
+  /**
+   * @param PerformanceConfig
+   */
+  public function setPerformanceConfig(PerformanceConfig $performanceConfig)
+  {
+    $this->performanceConfig = $performanceConfig;
+  }
+  /**
+   * @return PerformanceConfig
+   */
+  public function getPerformanceConfig()
+  {
+    return $this->performanceConfig;
+  }
+  /**
    * @param string
    */
   public function setPhase($phase)
@@ -311,6 +397,34 @@ class MigrationJob extends \Google\Model
     return $this->reverseSshConnectivity;
   }
   /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
+  }
+  /**
    * @param string
    */
   public function setSource($source)
@@ -337,6 +451,20 @@ class MigrationJob extends \Google\Model
   public function getSourceDatabase()
   {
     return $this->sourceDatabase;
+  }
+  /**
+   * @param SqlServerHomogeneousMigrationJobConfig
+   */
+  public function setSqlserverHomogeneousMigrationJobConfig(SqlServerHomogeneousMigrationJobConfig $sqlserverHomogeneousMigrationJobConfig)
+  {
+    $this->sqlserverHomogeneousMigrationJobConfig = $sqlserverHomogeneousMigrationJobConfig;
+  }
+  /**
+   * @return SqlServerHomogeneousMigrationJobConfig
+   */
+  public function getSqlserverHomogeneousMigrationJobConfig()
+  {
+    return $this->sqlserverHomogeneousMigrationJobConfig;
   }
   /**
    * @param string

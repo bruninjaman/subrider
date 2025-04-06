@@ -4,17 +4,7 @@
  * Contém funções e configurações para proteção da aplicação
  */
 
-// Configurações de Sessão
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_secure', 1);
-session_set_cookie_params([
-    'lifetime' => 3600,
-    'path' => '/',
-    'secure' => true,
-    'httponly' => true,
-    'samesite' => 'Strict'
-]);
+require_once __DIR__ . '/system/session_manager.php';
 
 // Headers de Segurança
 header("X-XSS-Protection: 1; mode=block");
@@ -32,6 +22,9 @@ function sanitize_input($data) {
 }
 
 function generate_csrf_token() {
+    $sessionManager = SessionManager::getInstance();
+    $sessionManager->startSession();
+    
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
@@ -39,6 +32,9 @@ function generate_csrf_token() {
 }
 
 function verify_csrf_token($token) {
+    $sessionManager = SessionManager::getInstance();
+    $sessionManager->startSession();
+    
     if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
         die('Erro de validação CSRF');
     }
@@ -46,8 +42,16 @@ function verify_csrf_token($token) {
 }
 
 function check_auth() {
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: /login.php');
+    $sessionManager = SessionManager::getInstance();
+    $sessionManager->startSession();
+    
+    if (!$sessionManager->isAuthenticated()) {
+        header('Location: /subrider/login.php');
+        exit();
+    }
+    
+    if (!$sessionManager->checkSessionTimeout()) {
+        header('Location: /subrider/login.php?error=timeout');
         exit();
     }
 }

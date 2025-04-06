@@ -22,22 +22,20 @@ class GoogleCloudContactcenterinsightsV1AnalysisResultCallAnalysisMetadata exten
   protected $collection_key = 'sentiments';
   protected $annotationsType = GoogleCloudContactcenterinsightsV1CallAnnotation::class;
   protected $annotationsDataType = 'array';
-  public $annotations;
   protected $entitiesType = GoogleCloudContactcenterinsightsV1Entity::class;
   protected $entitiesDataType = 'map';
-  public $entities;
   protected $intentsType = GoogleCloudContactcenterinsightsV1Intent::class;
   protected $intentsDataType = 'map';
-  public $intents;
   protected $issueModelResultType = GoogleCloudContactcenterinsightsV1IssueModelResult::class;
   protected $issueModelResultDataType = '';
-  public $issueModelResult;
   protected $phraseMatchersType = GoogleCloudContactcenterinsightsV1PhraseMatchData::class;
   protected $phraseMatchersDataType = 'map';
-  public $phraseMatchers;
+  protected $qaScorecardResultsType = GoogleCloudContactcenterinsightsV1QaScorecardResult::class;
+  protected $qaScorecardResultsDataType = 'array';
   protected $sentimentsType = GoogleCloudContactcenterinsightsV1ConversationLevelSentiment::class;
   protected $sentimentsDataType = 'array';
-  public $sentiments;
+  protected $silenceType = GoogleCloudContactcenterinsightsV1ConversationLevelSilence::class;
+  protected $silenceDataType = '';
 
   /**
    * @param GoogleCloudContactcenterinsightsV1CallAnnotation[]
@@ -110,6 +108,20 @@ class GoogleCloudContactcenterinsightsV1AnalysisResultCallAnalysisMetadata exten
     return $this->phraseMatchers;
   }
   /**
+   * @param GoogleCloudContactcenterinsightsV1QaScorecardResult[]
+   */
+  public function setQaScorecardResults($qaScorecardResults)
+  {
+    $this->qaScorecardResults = $qaScorecardResults;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1QaScorecardResult[]
+   */
+  public function getQaScorecardResults()
+  {
+    return $this->qaScorecardResults;
+  }
+  /**
    * @param GoogleCloudContactcenterinsightsV1ConversationLevelSentiment[]
    */
   public function setSentiments($sentiments)
@@ -122,6 +134,20 @@ class GoogleCloudContactcenterinsightsV1AnalysisResultCallAnalysisMetadata exten
   public function getSentiments()
   {
     return $this->sentiments;
+  }
+  /**
+   * @param GoogleCloudContactcenterinsightsV1ConversationLevelSilence
+   */
+  public function setSilence(GoogleCloudContactcenterinsightsV1ConversationLevelSilence $silence)
+  {
+    $this->silence = $silence;
+  }
+  /**
+   * @return GoogleCloudContactcenterinsightsV1ConversationLevelSilence
+   */
+  public function getSilence()
+  {
+    return $this->silence;
   }
 }
 

@@ -33,6 +33,10 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep extends \Google\Colle
    */
   public $args;
   /**
+   * @var bool
+   */
+  public $automapSubstitutions;
+  /**
    * @var string
    */
   public $dir;
@@ -58,7 +62,6 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep extends \Google\Colle
   public $name;
   protected $pullTimingType = ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::class;
   protected $pullTimingDataType = '';
-  public $pullTiming;
   /**
    * @var string
    */
@@ -77,10 +80,8 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep extends \Google\Colle
   public $timeout;
   protected $timingType = ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::class;
   protected $timingDataType = '';
-  public $timing;
   protected $volumesType = ContaineranalysisGoogleDevtoolsCloudbuildV1Volume::class;
   protected $volumesDataType = 'array';
-  public $volumes;
   /**
    * @var string[]
    */
@@ -127,6 +128,20 @@ class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep extends \Google\Colle
   public function getArgs()
   {
     return $this->args;
+  }
+  /**
+   * @param bool
+   */
+  public function setAutomapSubstitutions($automapSubstitutions)
+  {
+    $this->automapSubstitutions = $automapSubstitutions;
+  }
+  /**
+   * @return bool
+   */
+  public function getAutomapSubstitutions()
+  {
+    return $this->automapSubstitutions;
   }
   /**
    * @param string

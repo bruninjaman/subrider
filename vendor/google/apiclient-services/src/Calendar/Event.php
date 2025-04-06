@@ -26,35 +26,32 @@ class Event extends \Google\Collection
   public $anyoneCanAddSelf;
   protected $attachmentsType = EventAttachment::class;
   protected $attachmentsDataType = 'array';
-  public $attachments;
   protected $attendeesType = EventAttendee::class;
   protected $attendeesDataType = 'array';
-  public $attendees;
   /**
    * @var bool
    */
   public $attendeesOmitted;
+  protected $birthdayPropertiesType = EventBirthdayProperties::class;
+  protected $birthdayPropertiesDataType = '';
   /**
    * @var string
    */
   public $colorId;
   protected $conferenceDataType = ConferenceData::class;
   protected $conferenceDataDataType = '';
-  public $conferenceData;
   /**
    * @var string
    */
   public $created;
   protected $creatorType = EventCreator::class;
   protected $creatorDataType = '';
-  public $creator;
   /**
    * @var string
    */
   public $description;
   protected $endType = EventDateTime::class;
   protected $endDataType = '';
-  public $end;
   /**
    * @var bool
    */
@@ -69,10 +66,10 @@ class Event extends \Google\Collection
   public $eventType;
   protected $extendedPropertiesType = EventExtendedProperties::class;
   protected $extendedPropertiesDataType = '';
-  public $extendedProperties;
+  protected $focusTimePropertiesType = EventFocusTimeProperties::class;
+  protected $focusTimePropertiesDataType = '';
   protected $gadgetType = EventGadget::class;
   protected $gadgetDataType = '';
-  public $gadget;
   /**
    * @var bool
    */
@@ -115,10 +112,10 @@ class Event extends \Google\Collection
   public $locked;
   protected $organizerType = EventOrganizer::class;
   protected $organizerDataType = '';
-  public $organizer;
   protected $originalStartTimeType = EventDateTime::class;
   protected $originalStartTimeDataType = '';
-  public $originalStartTime;
+  protected $outOfOfficePropertiesType = EventOutOfOfficeProperties::class;
+  protected $outOfOfficePropertiesDataType = '';
   /**
    * @var bool
    */
@@ -133,17 +130,14 @@ class Event extends \Google\Collection
   public $recurringEventId;
   protected $remindersType = EventReminders::class;
   protected $remindersDataType = '';
-  public $reminders;
   /**
    * @var int
    */
   public $sequence;
   protected $sourceType = EventSource::class;
   protected $sourceDataType = '';
-  public $source;
   protected $startType = EventDateTime::class;
   protected $startDataType = '';
-  public $start;
   /**
    * @var string
    */
@@ -164,6 +158,8 @@ class Event extends \Google\Collection
    * @var string
    */
   public $visibility;
+  protected $workingLocationPropertiesType = EventWorkingLocationProperties::class;
+  protected $workingLocationPropertiesDataType = '';
 
   /**
    * @param bool
@@ -220,6 +216,20 @@ class Event extends \Google\Collection
   public function getAttendeesOmitted()
   {
     return $this->attendeesOmitted;
+  }
+  /**
+   * @param EventBirthdayProperties
+   */
+  public function setBirthdayProperties(EventBirthdayProperties $birthdayProperties)
+  {
+    $this->birthdayProperties = $birthdayProperties;
+  }
+  /**
+   * @return EventBirthdayProperties
+   */
+  public function getBirthdayProperties()
+  {
+    return $this->birthdayProperties;
   }
   /**
    * @param string
@@ -360,6 +370,20 @@ class Event extends \Google\Collection
   public function getExtendedProperties()
   {
     return $this->extendedProperties;
+  }
+  /**
+   * @param EventFocusTimeProperties
+   */
+  public function setFocusTimeProperties(EventFocusTimeProperties $focusTimeProperties)
+  {
+    $this->focusTimeProperties = $focusTimeProperties;
+  }
+  /**
+   * @return EventFocusTimeProperties
+   */
+  public function getFocusTimeProperties()
+  {
+    return $this->focusTimeProperties;
   }
   /**
    * @param EventGadget
@@ -544,6 +568,20 @@ class Event extends \Google\Collection
     return $this->originalStartTime;
   }
   /**
+   * @param EventOutOfOfficeProperties
+   */
+  public function setOutOfOfficeProperties(EventOutOfOfficeProperties $outOfOfficeProperties)
+  {
+    $this->outOfOfficeProperties = $outOfOfficeProperties;
+  }
+  /**
+   * @return EventOutOfOfficeProperties
+   */
+  public function getOutOfOfficeProperties()
+  {
+    return $this->outOfOfficeProperties;
+  }
+  /**
    * @param bool
    */
   public function setPrivateCopy($privateCopy)
@@ -710,6 +748,20 @@ class Event extends \Google\Collection
   public function getVisibility()
   {
     return $this->visibility;
+  }
+  /**
+   * @param EventWorkingLocationProperties
+   */
+  public function setWorkingLocationProperties(EventWorkingLocationProperties $workingLocationProperties)
+  {
+    $this->workingLocationProperties = $workingLocationProperties;
+  }
+  /**
+   * @return EventWorkingLocationProperties
+   */
+  public function getWorkingLocationProperties()
+  {
+    return $this->workingLocationProperties;
   }
 }
 

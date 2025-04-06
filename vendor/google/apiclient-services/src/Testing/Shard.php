@@ -20,6 +20,10 @@ namespace Google\Service\Testing;
 class Shard extends \Google\Model
 {
   /**
+   * @var string
+   */
+  public $estimatedShardDuration;
+  /**
    * @var int
    */
   public $numShards;
@@ -29,8 +33,21 @@ class Shard extends \Google\Model
   public $shardIndex;
   protected $testTargetsForShardType = TestTargetsForShard::class;
   protected $testTargetsForShardDataType = '';
-  public $testTargetsForShard;
 
+  /**
+   * @param string
+   */
+  public function setEstimatedShardDuration($estimatedShardDuration)
+  {
+    $this->estimatedShardDuration = $estimatedShardDuration;
+  }
+  /**
+   * @return string
+   */
+  public function getEstimatedShardDuration()
+  {
+    return $this->estimatedShardDuration;
+  }
   /**
    * @param int
    */

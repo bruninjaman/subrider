@@ -30,7 +30,10 @@ class Matter extends \Google\Collection
   public $matterId;
   protected $matterPermissionsType = MatterPermission::class;
   protected $matterPermissionsDataType = 'array';
-  public $matterPermissions;
+  /**
+   * @var string
+   */
+  public $matterRegion;
   /**
    * @var string
    */
@@ -81,6 +84,20 @@ class Matter extends \Google\Collection
   public function getMatterPermissions()
   {
     return $this->matterPermissions;
+  }
+  /**
+   * @param string
+   */
+  public function setMatterRegion($matterRegion)
+  {
+    $this->matterRegion = $matterRegion;
+  }
+  /**
+   * @return string
+   */
+  public function getMatterRegion()
+  {
+    return $this->matterRegion;
   }
   /**
    * @param string

@@ -19,14 +19,29 @@ namespace Google\Service\Gmail;
 
 class CsePrivateKeyMetadata extends \Google\Model
 {
+  protected $hardwareKeyMetadataType = HardwareKeyMetadata::class;
+  protected $hardwareKeyMetadataDataType = '';
   protected $kaclsKeyMetadataType = KaclsKeyMetadata::class;
   protected $kaclsKeyMetadataDataType = '';
-  public $kaclsKeyMetadata;
   /**
    * @var string
    */
   public $privateKeyMetadataId;
 
+  /**
+   * @param HardwareKeyMetadata
+   */
+  public function setHardwareKeyMetadata(HardwareKeyMetadata $hardwareKeyMetadata)
+  {
+    $this->hardwareKeyMetadata = $hardwareKeyMetadata;
+  }
+  /**
+   * @return HardwareKeyMetadata
+   */
+  public function getHardwareKeyMetadata()
+  {
+    return $this->hardwareKeyMetadata;
+  }
   /**
    * @param KaclsKeyMetadata
    */

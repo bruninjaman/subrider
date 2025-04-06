@@ -35,6 +35,8 @@ class GoogleCloudKmsV1CryptoKey extends \Google\Model
    * @var bool
    */
   public $importOnly;
+  protected $keyAccessJustificationsPolicyType = GoogleCloudKmsV1KeyAccessJustificationsPolicy::class;
+  protected $keyAccessJustificationsPolicyDataType = '';
   /**
    * @var string[]
    */
@@ -49,7 +51,6 @@ class GoogleCloudKmsV1CryptoKey extends \Google\Model
   public $nextRotationTime;
   protected $primaryType = GoogleCloudKmsV1CryptoKeyVersion::class;
   protected $primaryDataType = '';
-  public $primary;
   /**
    * @var string
    */
@@ -60,7 +61,6 @@ class GoogleCloudKmsV1CryptoKey extends \Google\Model
   public $rotationPeriod;
   protected $versionTemplateType = GoogleCloudKmsV1CryptoKeyVersionTemplate::class;
   protected $versionTemplateDataType = '';
-  public $versionTemplate;
 
   /**
    * @param string
@@ -117,6 +117,20 @@ class GoogleCloudKmsV1CryptoKey extends \Google\Model
   public function getImportOnly()
   {
     return $this->importOnly;
+  }
+  /**
+   * @param GoogleCloudKmsV1KeyAccessJustificationsPolicy
+   */
+  public function setKeyAccessJustificationsPolicy(GoogleCloudKmsV1KeyAccessJustificationsPolicy $keyAccessJustificationsPolicy)
+  {
+    $this->keyAccessJustificationsPolicy = $keyAccessJustificationsPolicy;
+  }
+  /**
+   * @return GoogleCloudKmsV1KeyAccessJustificationsPolicy
+   */
+  public function getKeyAccessJustificationsPolicy()
+  {
+    return $this->keyAccessJustificationsPolicy;
   }
   /**
    * @param string[]

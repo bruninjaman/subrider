@@ -32,12 +32,17 @@ use Google\Service\CloudIdentity\Operation;
 class InboundSamlSsoProfiles extends \Google\Service\Resource
 {
   /**
-   * Creates an InboundSamlSsoProfile for a customer.
+   * Creates an InboundSamlSsoProfile for a customer. When the target customer has
+   * enabled [Multi-party approval for sensitive
+   * actions](https://support.google.com/a/answer/13790448), the `Operation` in
+   * the response will have `"done": false`, it will not have a response, and the
+   * metadata will have `"state": "awaiting-multi-party-approval"`.
    * (inboundSamlSsoProfiles.create)
    *
    * @param InboundSamlSsoProfile $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function create(InboundSamlSsoProfile $postBody, $optParams = [])
   {
@@ -54,6 +59,7 @@ class InboundSamlSsoProfiles extends \Google\Service\Resource
    * `inboundSamlSsoProfiles/{sso_profile_id}`
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function delete($name, $optParams = [])
   {
@@ -70,6 +76,7 @@ class InboundSamlSsoProfiles extends \Google\Service\Resource
    * `inboundSamlSsoProfiles/{sso_profile_id}`
    * @param array $optParams Optional parameters.
    * @return InboundSamlSsoProfile
+   * @throws \Google\Service\Exception
    */
   public function get($name, $optParams = [])
   {
@@ -85,10 +92,10 @@ class InboundSamlSsoProfiles extends \Google\Service\Resource
    *
    * @opt_param string filter A [Common Expression
    * Language](https://github.com/google/cel-spec) expression to filter the
-   * results. The only currently-supported filter is filtering by customer. For
-   * example: `customer=="customers/C0123abc"`. Omitting the filter or specifying
-   * a filter of `customer=="customers/my_customer"` will return the profiles for
-   * the customer that the caller (authenticated user) belongs to.
+   * results. The only supported filter is filtering by customer. For example:
+   * `customer=="customers/C0123abc"`. Omitting the filter or specifying a filter
+   * of `customer=="customers/my_customer"` will return the profiles for the
+   * customer that the caller (authenticated user) belongs to.
    * @opt_param int pageSize The maximum number of InboundSamlSsoProfiles to
    * return. The service may return fewer than this value. If omitted (or
    * defaulted to zero) the server will use a sensible default. This default may
@@ -100,6 +107,7 @@ class InboundSamlSsoProfiles extends \Google\Service\Resource
    * `ListInboundSamlSsoProfiles` must match the call that provided the page
    * token.
    * @return ListInboundSamlSsoProfilesResponse
+   * @throws \Google\Service\Exception
    */
   public function listInboundSamlSsoProfiles($optParams = [])
   {
@@ -108,7 +116,12 @@ class InboundSamlSsoProfiles extends \Google\Service\Resource
     return $this->call('list', [$params], ListInboundSamlSsoProfilesResponse::class);
   }
   /**
-   * Updates an InboundSamlSsoProfile. (inboundSamlSsoProfiles.patch)
+   * Updates an InboundSamlSsoProfile. When the target customer has enabled
+   * [Multi-party approval for sensitive
+   * actions](https://support.google.com/a/answer/13790448), the `Operation` in
+   * the response will have `"done": false`, it will not have a response, and the
+   * metadata will have `"state": "awaiting-multi-party-approval"`.
+   * (inboundSamlSsoProfiles.patch)
    *
    * @param string $name Output only. [Resource
    * name](https://cloud.google.com/apis/design/resource_names) of the SAML SSO
@@ -118,6 +131,7 @@ class InboundSamlSsoProfiles extends \Google\Service\Resource
    *
    * @opt_param string updateMask Required. The list of fields to be updated.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function patch($name, InboundSamlSsoProfile $postBody, $optParams = [])
   {

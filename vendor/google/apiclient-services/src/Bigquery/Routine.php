@@ -22,11 +22,14 @@ class Routine extends \Google\Collection
   protected $collection_key = 'importedLibraries';
   protected $argumentsType = Argument::class;
   protected $argumentsDataType = 'array';
-  public $arguments;
   /**
    * @var string
    */
   public $creationTime;
+  /**
+   * @var string
+   */
+  public $dataGovernanceType;
   /**
    * @var string
    */
@@ -57,23 +60,22 @@ class Routine extends \Google\Collection
   public $lastModifiedTime;
   protected $remoteFunctionOptionsType = RemoteFunctionOptions::class;
   protected $remoteFunctionOptionsDataType = '';
-  public $remoteFunctionOptions;
   protected $returnTableTypeType = StandardSqlTableType::class;
   protected $returnTableTypeDataType = '';
-  public $returnTableType;
   protected $returnTypeType = StandardSqlDataType::class;
   protected $returnTypeDataType = '';
-  public $returnType;
   protected $routineReferenceType = RoutineReference::class;
   protected $routineReferenceDataType = '';
-  public $routineReference;
   /**
    * @var string
    */
   public $routineType;
+  /**
+   * @var string
+   */
+  public $securityMode;
   protected $sparkOptionsType = SparkOptions::class;
   protected $sparkOptionsDataType = '';
-  public $sparkOptions;
   /**
    * @var bool
    */
@@ -106,6 +108,20 @@ class Routine extends \Google\Collection
   public function getCreationTime()
   {
     return $this->creationTime;
+  }
+  /**
+   * @param string
+   */
+  public function setDataGovernanceType($dataGovernanceType)
+  {
+    $this->dataGovernanceType = $dataGovernanceType;
+  }
+  /**
+   * @return string
+   */
+  public function getDataGovernanceType()
+  {
+    return $this->dataGovernanceType;
   }
   /**
    * @param string
@@ -274,6 +290,20 @@ class Routine extends \Google\Collection
   public function getRoutineType()
   {
     return $this->routineType;
+  }
+  /**
+   * @param string
+   */
+  public function setSecurityMode($securityMode)
+  {
+    $this->securityMode = $securityMode;
+  }
+  /**
+   * @return string
+   */
+  public function getSecurityMode()
+  {
+    return $this->securityMode;
   }
   /**
    * @param SparkOptions

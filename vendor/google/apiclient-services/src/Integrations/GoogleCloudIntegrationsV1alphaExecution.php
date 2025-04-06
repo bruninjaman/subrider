@@ -20,19 +20,18 @@ namespace Google\Service\Integrations;
 class GoogleCloudIntegrationsV1alphaExecution extends \Google\Collection
 {
   protected $collection_key = 'responseParams';
+  protected $cloudLoggingDetailsType = GoogleCloudIntegrationsV1alphaCloudLoggingDetails::class;
+  protected $cloudLoggingDetailsDataType = '';
   /**
    * @var string
    */
   public $createTime;
   protected $directSubExecutionsType = GoogleCloudIntegrationsV1alphaExecution::class;
   protected $directSubExecutionsDataType = 'array';
-  public $directSubExecutions;
   protected $eventExecutionDetailsType = EnterpriseCrmEventbusProtoEventExecutionDetails::class;
   protected $eventExecutionDetailsDataType = '';
-  public $eventExecutionDetails;
   protected $executionDetailsType = GoogleCloudIntegrationsV1alphaExecutionDetails::class;
   protected $executionDetailsDataType = '';
-  public $executionDetails;
   /**
    * @var string
    */
@@ -40,19 +39,25 @@ class GoogleCloudIntegrationsV1alphaExecution extends \Google\Collection
   /**
    * @var string
    */
+  public $integrationVersionState;
+  /**
+   * @var string
+   */
   public $name;
+  protected $replayInfoType = GoogleCloudIntegrationsV1alphaExecutionReplayInfo::class;
+  protected $replayInfoDataType = '';
   protected $requestParametersType = GoogleCloudIntegrationsV1alphaValueType::class;
   protected $requestParametersDataType = 'map';
-  public $requestParameters;
   protected $requestParamsType = EnterpriseCrmFrontendsEventbusProtoParameterEntry::class;
   protected $requestParamsDataType = 'array';
-  public $requestParams;
   protected $responseParametersType = GoogleCloudIntegrationsV1alphaValueType::class;
   protected $responseParametersDataType = 'map';
-  public $responseParameters;
   protected $responseParamsType = EnterpriseCrmFrontendsEventbusProtoParameterEntry::class;
   protected $responseParamsDataType = 'array';
-  public $responseParams;
+  /**
+   * @var string
+   */
+  public $snapshotNumber;
   /**
    * @var string
    */
@@ -62,6 +67,20 @@ class GoogleCloudIntegrationsV1alphaExecution extends \Google\Collection
    */
   public $updateTime;
 
+  /**
+   * @param GoogleCloudIntegrationsV1alphaCloudLoggingDetails
+   */
+  public function setCloudLoggingDetails(GoogleCloudIntegrationsV1alphaCloudLoggingDetails $cloudLoggingDetails)
+  {
+    $this->cloudLoggingDetails = $cloudLoggingDetails;
+  }
+  /**
+   * @return GoogleCloudIntegrationsV1alphaCloudLoggingDetails
+   */
+  public function getCloudLoggingDetails()
+  {
+    return $this->cloudLoggingDetails;
+  }
   /**
    * @param string
    */
@@ -135,6 +154,20 @@ class GoogleCloudIntegrationsV1alphaExecution extends \Google\Collection
   /**
    * @param string
    */
+  public function setIntegrationVersionState($integrationVersionState)
+  {
+    $this->integrationVersionState = $integrationVersionState;
+  }
+  /**
+   * @return string
+   */
+  public function getIntegrationVersionState()
+  {
+    return $this->integrationVersionState;
+  }
+  /**
+   * @param string
+   */
   public function setName($name)
   {
     $this->name = $name;
@@ -145,6 +178,20 @@ class GoogleCloudIntegrationsV1alphaExecution extends \Google\Collection
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param GoogleCloudIntegrationsV1alphaExecutionReplayInfo
+   */
+  public function setReplayInfo(GoogleCloudIntegrationsV1alphaExecutionReplayInfo $replayInfo)
+  {
+    $this->replayInfo = $replayInfo;
+  }
+  /**
+   * @return GoogleCloudIntegrationsV1alphaExecutionReplayInfo
+   */
+  public function getReplayInfo()
+  {
+    return $this->replayInfo;
   }
   /**
    * @param GoogleCloudIntegrationsV1alphaValueType[]
@@ -201,6 +248,20 @@ class GoogleCloudIntegrationsV1alphaExecution extends \Google\Collection
   public function getResponseParams()
   {
     return $this->responseParams;
+  }
+  /**
+   * @param string
+   */
+  public function setSnapshotNumber($snapshotNumber)
+  {
+    $this->snapshotNumber = $snapshotNumber;
+  }
+  /**
+   * @return string
+   */
+  public function getSnapshotNumber()
+  {
+    return $this->snapshotNumber;
   }
   /**
    * @param string

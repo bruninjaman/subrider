@@ -22,7 +22,6 @@ class JobStatistics2 extends \Google\Collection
   protected $collection_key = 'undeclaredQueryParameters';
   protected $biEngineStatisticsType = BiEngineStatistics::class;
   protected $biEngineStatisticsDataType = '';
-  public $biEngineStatistics;
   /**
    * @var int
    */
@@ -31,42 +30,50 @@ class JobStatistics2 extends \Google\Collection
    * @var bool
    */
   public $cacheHit;
+  protected $dclTargetDatasetType = DatasetReference::class;
+  protected $dclTargetDatasetDataType = '';
+  protected $dclTargetTableType = TableReference::class;
+  protected $dclTargetTableDataType = '';
+  protected $dclTargetViewType = TableReference::class;
+  protected $dclTargetViewDataType = '';
   /**
    * @var string
    */
   public $ddlAffectedRowAccessPolicyCount;
   protected $ddlDestinationTableType = TableReference::class;
   protected $ddlDestinationTableDataType = '';
-  public $ddlDestinationTable;
   /**
    * @var string
    */
   public $ddlOperationPerformed;
   protected $ddlTargetDatasetType = DatasetReference::class;
   protected $ddlTargetDatasetDataType = '';
-  public $ddlTargetDataset;
   protected $ddlTargetRoutineType = RoutineReference::class;
   protected $ddlTargetRoutineDataType = '';
-  public $ddlTargetRoutine;
   protected $ddlTargetRowAccessPolicyType = RowAccessPolicyReference::class;
   protected $ddlTargetRowAccessPolicyDataType = '';
-  public $ddlTargetRowAccessPolicy;
   protected $ddlTargetTableType = TableReference::class;
   protected $ddlTargetTableDataType = '';
-  public $ddlTargetTable;
   protected $dmlStatsType = DmlStatistics::class;
   protected $dmlStatsDataType = '';
-  public $dmlStats;
   /**
    * @var string
    */
   public $estimatedBytesProcessed;
+  protected $exportDataStatisticsType = ExportDataStatistics::class;
+  protected $exportDataStatisticsDataType = '';
+  protected $externalServiceCostsType = ExternalServiceCost::class;
+  protected $externalServiceCostsDataType = 'array';
+  protected $loadQueryStatisticsType = LoadQueryStatistics::class;
+  protected $loadQueryStatisticsDataType = '';
+  protected $materializedViewStatisticsType = MaterializedViewStatistics::class;
+  protected $materializedViewStatisticsDataType = '';
+  protected $metadataCacheStatisticsType = MetadataCacheStatistics::class;
+  protected $metadataCacheStatisticsDataType = '';
   protected $mlStatisticsType = MlStatistics::class;
   protected $mlStatisticsDataType = '';
-  public $mlStatistics;
   protected $modelTrainingType = BigQueryModelTraining::class;
   protected $modelTrainingDataType = '';
-  public $modelTraining;
   /**
    * @var int
    */
@@ -79,34 +86,30 @@ class JobStatistics2 extends \Google\Collection
    * @var string
    */
   public $numDmlAffectedRows;
+  protected $performanceInsightsType = PerformanceInsights::class;
+  protected $performanceInsightsDataType = '';
+  protected $queryInfoType = QueryInfo::class;
+  protected $queryInfoDataType = '';
   protected $queryPlanType = ExplainQueryStage::class;
   protected $queryPlanDataType = 'array';
-  public $queryPlan;
   protected $referencedRoutinesType = RoutineReference::class;
   protected $referencedRoutinesDataType = 'array';
-  public $referencedRoutines;
   protected $referencedTablesType = TableReference::class;
   protected $referencedTablesDataType = 'array';
-  public $referencedTables;
   protected $reservationUsageType = JobStatistics2ReservationUsage::class;
   protected $reservationUsageDataType = 'array';
-  public $reservationUsage;
   protected $schemaType = TableSchema::class;
   protected $schemaDataType = '';
-  public $schema;
   protected $searchStatisticsType = SearchStatistics::class;
   protected $searchStatisticsDataType = '';
-  public $searchStatistics;
   protected $sparkStatisticsType = SparkStatistics::class;
   protected $sparkStatisticsDataType = '';
-  public $sparkStatistics;
   /**
    * @var string
    */
   public $statementType;
   protected $timelineType = QueryTimelineSample::class;
   protected $timelineDataType = 'array';
-  public $timeline;
   /**
    * @var string
    */
@@ -133,7 +136,8 @@ class JobStatistics2 extends \Google\Collection
   public $transferredBytes;
   protected $undeclaredQueryParametersType = QueryParameter::class;
   protected $undeclaredQueryParametersDataType = 'array';
-  public $undeclaredQueryParameters;
+  protected $vectorSearchStatisticsType = VectorSearchStatistics::class;
+  protected $vectorSearchStatisticsDataType = '';
 
   /**
    * @param BiEngineStatistics
@@ -176,6 +180,48 @@ class JobStatistics2 extends \Google\Collection
   public function getCacheHit()
   {
     return $this->cacheHit;
+  }
+  /**
+   * @param DatasetReference
+   */
+  public function setDclTargetDataset(DatasetReference $dclTargetDataset)
+  {
+    $this->dclTargetDataset = $dclTargetDataset;
+  }
+  /**
+   * @return DatasetReference
+   */
+  public function getDclTargetDataset()
+  {
+    return $this->dclTargetDataset;
+  }
+  /**
+   * @param TableReference
+   */
+  public function setDclTargetTable(TableReference $dclTargetTable)
+  {
+    $this->dclTargetTable = $dclTargetTable;
+  }
+  /**
+   * @return TableReference
+   */
+  public function getDclTargetTable()
+  {
+    return $this->dclTargetTable;
+  }
+  /**
+   * @param TableReference
+   */
+  public function setDclTargetView(TableReference $dclTargetView)
+  {
+    $this->dclTargetView = $dclTargetView;
+  }
+  /**
+   * @return TableReference
+   */
+  public function getDclTargetView()
+  {
+    return $this->dclTargetView;
   }
   /**
    * @param string
@@ -304,6 +350,76 @@ class JobStatistics2 extends \Google\Collection
     return $this->estimatedBytesProcessed;
   }
   /**
+   * @param ExportDataStatistics
+   */
+  public function setExportDataStatistics(ExportDataStatistics $exportDataStatistics)
+  {
+    $this->exportDataStatistics = $exportDataStatistics;
+  }
+  /**
+   * @return ExportDataStatistics
+   */
+  public function getExportDataStatistics()
+  {
+    return $this->exportDataStatistics;
+  }
+  /**
+   * @param ExternalServiceCost[]
+   */
+  public function setExternalServiceCosts($externalServiceCosts)
+  {
+    $this->externalServiceCosts = $externalServiceCosts;
+  }
+  /**
+   * @return ExternalServiceCost[]
+   */
+  public function getExternalServiceCosts()
+  {
+    return $this->externalServiceCosts;
+  }
+  /**
+   * @param LoadQueryStatistics
+   */
+  public function setLoadQueryStatistics(LoadQueryStatistics $loadQueryStatistics)
+  {
+    $this->loadQueryStatistics = $loadQueryStatistics;
+  }
+  /**
+   * @return LoadQueryStatistics
+   */
+  public function getLoadQueryStatistics()
+  {
+    return $this->loadQueryStatistics;
+  }
+  /**
+   * @param MaterializedViewStatistics
+   */
+  public function setMaterializedViewStatistics(MaterializedViewStatistics $materializedViewStatistics)
+  {
+    $this->materializedViewStatistics = $materializedViewStatistics;
+  }
+  /**
+   * @return MaterializedViewStatistics
+   */
+  public function getMaterializedViewStatistics()
+  {
+    return $this->materializedViewStatistics;
+  }
+  /**
+   * @param MetadataCacheStatistics
+   */
+  public function setMetadataCacheStatistics(MetadataCacheStatistics $metadataCacheStatistics)
+  {
+    $this->metadataCacheStatistics = $metadataCacheStatistics;
+  }
+  /**
+   * @return MetadataCacheStatistics
+   */
+  public function getMetadataCacheStatistics()
+  {
+    return $this->metadataCacheStatistics;
+  }
+  /**
    * @param MlStatistics
    */
   public function setMlStatistics(MlStatistics $mlStatistics)
@@ -372,6 +488,34 @@ class JobStatistics2 extends \Google\Collection
   public function getNumDmlAffectedRows()
   {
     return $this->numDmlAffectedRows;
+  }
+  /**
+   * @param PerformanceInsights
+   */
+  public function setPerformanceInsights(PerformanceInsights $performanceInsights)
+  {
+    $this->performanceInsights = $performanceInsights;
+  }
+  /**
+   * @return PerformanceInsights
+   */
+  public function getPerformanceInsights()
+  {
+    return $this->performanceInsights;
+  }
+  /**
+   * @param QueryInfo
+   */
+  public function setQueryInfo(QueryInfo $queryInfo)
+  {
+    $this->queryInfo = $queryInfo;
+  }
+  /**
+   * @return QueryInfo
+   */
+  public function getQueryInfo()
+  {
+    return $this->queryInfo;
   }
   /**
    * @param ExplainQueryStage[]
@@ -596,6 +740,20 @@ class JobStatistics2 extends \Google\Collection
   public function getUndeclaredQueryParameters()
   {
     return $this->undeclaredQueryParameters;
+  }
+  /**
+   * @param VectorSearchStatistics
+   */
+  public function setVectorSearchStatistics(VectorSearchStatistics $vectorSearchStatistics)
+  {
+    $this->vectorSearchStatistics = $vectorSearchStatistics;
+  }
+  /**
+   * @return VectorSearchStatistics
+   */
+  public function getVectorSearchStatistics()
+  {
+    return $this->vectorSearchStatistics;
   }
 }
 

@@ -42,17 +42,14 @@ class Job extends \Google\Collection
   public $currentStateTime;
   protected $environmentType = Environment::class;
   protected $environmentDataType = '';
-  public $environment;
   protected $executionInfoType = JobExecutionInfo::class;
   protected $executionInfoDataType = '';
-  public $executionInfo;
   /**
    * @var string
    */
   public $id;
   protected $jobMetadataType = JobMetadata::class;
   protected $jobMetadataDataType = '';
-  public $jobMetadata;
   /**
    * @var string[]
    */
@@ -67,7 +64,6 @@ class Job extends \Google\Collection
   public $name;
   protected $pipelineDescriptionType = PipelineDescription::class;
   protected $pipelineDescriptionDataType = '';
-  public $pipelineDescription;
   /**
    * @var string
    */
@@ -84,20 +80,26 @@ class Job extends \Google\Collection
    * @var string
    */
   public $requestedState;
+  protected $runtimeUpdatableParamsType = RuntimeUpdatableParams::class;
+  protected $runtimeUpdatableParamsDataType = '';
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
   /**
    * @var bool
    */
   public $satisfiesPzs;
+  protected $serviceResourcesType = ServiceResources::class;
+  protected $serviceResourcesDataType = '';
   protected $stageStatesType = ExecutionStageState::class;
   protected $stageStatesDataType = 'array';
-  public $stageStates;
   /**
    * @var string
    */
   public $startTime;
   protected $stepsType = Step::class;
   protected $stepsDataType = 'array';
-  public $steps;
   /**
    * @var string
    */
@@ -354,6 +356,34 @@ class Job extends \Google\Collection
     return $this->requestedState;
   }
   /**
+   * @param RuntimeUpdatableParams
+   */
+  public function setRuntimeUpdatableParams(RuntimeUpdatableParams $runtimeUpdatableParams)
+  {
+    $this->runtimeUpdatableParams = $runtimeUpdatableParams;
+  }
+  /**
+   * @return RuntimeUpdatableParams
+   */
+  public function getRuntimeUpdatableParams()
+  {
+    return $this->runtimeUpdatableParams;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
    * @param bool
    */
   public function setSatisfiesPzs($satisfiesPzs)
@@ -366,6 +396,20 @@ class Job extends \Google\Collection
   public function getSatisfiesPzs()
   {
     return $this->satisfiesPzs;
+  }
+  /**
+   * @param ServiceResources
+   */
+  public function setServiceResources(ServiceResources $serviceResources)
+  {
+    $this->serviceResources = $serviceResources;
+  }
+  /**
+   * @return ServiceResources
+   */
+  public function getServiceResources()
+  {
+    return $this->serviceResources;
   }
   /**
    * @param ExecutionStageState[]

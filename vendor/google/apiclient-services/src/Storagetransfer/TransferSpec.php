@@ -21,34 +21,26 @@ class TransferSpec extends \Google\Model
 {
   protected $awsS3CompatibleDataSourceType = AwsS3CompatibleData::class;
   protected $awsS3CompatibleDataSourceDataType = '';
-  public $awsS3CompatibleDataSource;
   protected $awsS3DataSourceType = AwsS3Data::class;
   protected $awsS3DataSourceDataType = '';
-  public $awsS3DataSource;
   protected $azureBlobStorageDataSourceType = AzureBlobStorageData::class;
   protected $azureBlobStorageDataSourceDataType = '';
-  public $azureBlobStorageDataSource;
   protected $gcsDataSinkType = GcsData::class;
   protected $gcsDataSinkDataType = '';
-  public $gcsDataSink;
   protected $gcsDataSourceType = GcsData::class;
   protected $gcsDataSourceDataType = '';
-  public $gcsDataSource;
   protected $gcsIntermediateDataLocationType = GcsData::class;
   protected $gcsIntermediateDataLocationDataType = '';
-  public $gcsIntermediateDataLocation;
+  protected $hdfsDataSourceType = HdfsData::class;
+  protected $hdfsDataSourceDataType = '';
   protected $httpDataSourceType = HttpData::class;
   protected $httpDataSourceDataType = '';
-  public $httpDataSource;
   protected $objectConditionsType = ObjectConditions::class;
   protected $objectConditionsDataType = '';
-  public $objectConditions;
   protected $posixDataSinkType = PosixFilesystem::class;
   protected $posixDataSinkDataType = '';
-  public $posixDataSink;
   protected $posixDataSourceType = PosixFilesystem::class;
   protected $posixDataSourceDataType = '';
-  public $posixDataSource;
   /**
    * @var string
    */
@@ -59,10 +51,8 @@ class TransferSpec extends \Google\Model
   public $sourceAgentPoolName;
   protected $transferManifestType = TransferManifest::class;
   protected $transferManifestDataType = '';
-  public $transferManifest;
   protected $transferOptionsType = TransferOptions::class;
   protected $transferOptionsDataType = '';
-  public $transferOptions;
 
   /**
    * @param AwsS3CompatibleData
@@ -147,6 +137,20 @@ class TransferSpec extends \Google\Model
   public function getGcsIntermediateDataLocation()
   {
     return $this->gcsIntermediateDataLocation;
+  }
+  /**
+   * @param HdfsData
+   */
+  public function setHdfsDataSource(HdfsData $hdfsDataSource)
+  {
+    $this->hdfsDataSource = $hdfsDataSource;
+  }
+  /**
+   * @return HdfsData
+   */
+  public function getHdfsDataSource()
+  {
+    return $this->hdfsDataSource;
   }
   /**
    * @param HttpData

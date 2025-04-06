@@ -25,7 +25,10 @@ class Argument extends \Google\Model
   public $argumentKind;
   protected $dataTypeType = StandardSqlDataType::class;
   protected $dataTypeDataType = '';
-  public $dataType;
+  /**
+   * @var bool
+   */
+  public $isAggregate;
   /**
    * @var string
    */
@@ -62,6 +65,20 @@ class Argument extends \Google\Model
   public function getDataType()
   {
     return $this->dataType;
+  }
+  /**
+   * @param bool
+   */
+  public function setIsAggregate($isAggregate)
+  {
+    $this->isAggregate = $isAggregate;
+  }
+  /**
+   * @return bool
+   */
+  public function getIsAggregate()
+  {
+    return $this->isAggregate;
   }
   /**
    * @param string

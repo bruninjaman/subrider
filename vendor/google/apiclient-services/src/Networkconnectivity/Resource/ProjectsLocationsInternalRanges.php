@@ -48,13 +48,14 @@ class ProjectsLocationsInternalRanges extends \Google\Service\Resource
    * the server will know to ignore the request if it has already been completed.
    * The server will guarantee that for at least 60 minutes since the first
    * request. For example, consider a situation where you make an initial request
-   * and t he request times out. If you make the request again with the same
+   * and the request times out. If you make the request again with the same
    * request ID, the server can check if original operation with the same request
    * ID was received, and if so, will ignore the second request. This prevents
    * clients from accidentally creating duplicate commitments. The request ID must
    * be a valid UUID with the exception that zero UUID is not supported
    * (00000000-0000-0000-0000-000000000000).
    * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
    */
   public function create($parent, InternalRange $postBody, $optParams = [])
   {
@@ -73,13 +74,14 @@ class ProjectsLocationsInternalRanges extends \Google\Service\Resource
    * the server will know to ignore the request if it has already been completed.
    * The server will guarantee that for at least 60 minutes after the first
    * request. For example, consider a situation where you make an initial request
-   * and t he request times out. If you make the request again with the same
+   * and the request times out. If you make the request again with the same
    * request ID, the server can check if original operation with the same request
    * ID was received, and if so, will ignore the second request. This prevents
    * clients from accidentally creating duplicate commitments. The request ID must
    * be a valid UUID with the exception that zero UUID is not supported
    * (00000000-0000-0000-0000-000000000000).
    * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
    */
   public function delete($name, $optParams = [])
   {
@@ -93,6 +95,7 @@ class ProjectsLocationsInternalRanges extends \Google\Service\Resource
    * @param string $name Required. Name of the InternalRange to get.
    * @param array $optParams Optional parameters.
    * @return InternalRange
+   * @throws \Google\Service\Exception
    */
   public function get($name, $optParams = [])
   {
@@ -114,6 +117,7 @@ class ProjectsLocationsInternalRanges extends \Google\Service\Resource
    * returned.
    * @opt_param string pageToken The page token.
    * @return ListInternalRangesResponse
+   * @throws \Google\Service\Exception
    */
   public function listProjectsLocationsInternalRanges($parent, $optParams = [])
   {
@@ -135,7 +139,7 @@ class ProjectsLocationsInternalRanges extends \Google\Service\Resource
    * the server will know to ignore the request if it has already been completed.
    * The server will guarantee that for at least 60 minutes since the first
    * request. For example, consider a situation where you make an initial request
-   * and t he request times out. If you make the request again with the same
+   * and the request times out. If you make the request again with the same
    * request ID, the server can check if original operation with the same request
    * ID was received, and if so, will ignore the second request. This prevents
    * clients from accidentally creating duplicate commitments. The request ID must
@@ -147,6 +151,7 @@ class ProjectsLocationsInternalRanges extends \Google\Service\Resource
    * full request. A field will be overwritten if it is in the mask. If the user
    * does not provide a mask then all fields will be overwritten.
    * @return GoogleLongrunningOperation
+   * @throws \Google\Service\Exception
    */
   public function patch($name, InternalRange $postBody, $optParams = [])
   {

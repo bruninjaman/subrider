@@ -21,7 +21,6 @@ class GoogleCloudRecaptchaenterpriseV1Key extends \Google\Model
 {
   protected $androidSettingsType = GoogleCloudRecaptchaenterpriseV1AndroidKeySettings::class;
   protected $androidSettingsDataType = '';
-  public $androidSettings;
   /**
    * @var string
    */
@@ -30,9 +29,10 @@ class GoogleCloudRecaptchaenterpriseV1Key extends \Google\Model
    * @var string
    */
   public $displayName;
+  protected $expressSettingsType = GoogleCloudRecaptchaenterpriseV1ExpressKeySettings::class;
+  protected $expressSettingsDataType = '';
   protected $iosSettingsType = GoogleCloudRecaptchaenterpriseV1IOSKeySettings::class;
   protected $iosSettingsDataType = '';
-  public $iosSettings;
   /**
    * @var string[]
    */
@@ -43,13 +43,10 @@ class GoogleCloudRecaptchaenterpriseV1Key extends \Google\Model
   public $name;
   protected $testingOptionsType = GoogleCloudRecaptchaenterpriseV1TestingOptions::class;
   protected $testingOptionsDataType = '';
-  public $testingOptions;
   protected $wafSettingsType = GoogleCloudRecaptchaenterpriseV1WafSettings::class;
   protected $wafSettingsDataType = '';
-  public $wafSettings;
   protected $webSettingsType = GoogleCloudRecaptchaenterpriseV1WebKeySettings::class;
   protected $webSettingsDataType = '';
-  public $webSettings;
 
   /**
    * @param GoogleCloudRecaptchaenterpriseV1AndroidKeySettings
@@ -92,6 +89,20 @@ class GoogleCloudRecaptchaenterpriseV1Key extends \Google\Model
   public function getDisplayName()
   {
     return $this->displayName;
+  }
+  /**
+   * @param GoogleCloudRecaptchaenterpriseV1ExpressKeySettings
+   */
+  public function setExpressSettings(GoogleCloudRecaptchaenterpriseV1ExpressKeySettings $expressSettings)
+  {
+    $this->expressSettings = $expressSettings;
+  }
+  /**
+   * @return GoogleCloudRecaptchaenterpriseV1ExpressKeySettings
+   */
+  public function getExpressSettings()
+  {
+    return $this->expressSettings;
   }
   /**
    * @param GoogleCloudRecaptchaenterpriseV1IOSKeySettings
