@@ -1,7 +1,7 @@
 <?php
 // Configurações básicas
 error_reporting(E_ALL);
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/logs/error.log');
 
@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Verificar autenticação (exceto para páginas públicas)
-$public_pages = ['login.php', 'index.php'];
+$public_pages = ['login.php', 'index.php','log-in.php'];
 $current_page = basename($_SERVER['PHP_SELF']);
 
 if (!in_array($current_page, $public_pages)) {

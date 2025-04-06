@@ -1,5 +1,5 @@
 <?php
-require_once('./config.php');
+require_once(__DIR__ . '/../../config.php');
 ?>
 
 <style>
@@ -40,7 +40,7 @@ require_once('./config.php');
 </style>
 <section id="two" class="spotlight style2 right">
   <span class="image fit main">
-    <img src="./assets/css/images/race-moto.gif" alt="" />
+    <img src="/subrider/assets/css/images/race-moto.gif" alt="" />
   </span>
   <div class="content">
     <header>
@@ -69,16 +69,16 @@ require_once('./config.php');
     <header>
       <h2>Entre na sua conta</h2>
     </header>
-    <form id="loginform" name="loginform" method="POST" action="scripts/log-in.php">
+    <form id="loginform" name="loginform" method="POST" action="/subrider/scripts/log-in.php">
       <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
       <div class="col-4 col-12-medium">
         <label for="fname">Login:</label>
-        <input type="text" id="user" name="user" maxlength="25" required><br>
+        <input type="text" id="username" name="username" maxlength="25" required><br>
         <label for="lname">Senha:</label>
-        <input type="password" id="pass" name="pass" maxlength="25" required><br>
+        <input type="password" id="password" name="password" maxlength="25" required><br>
       </div>
       <div class="col-4 col-12-medium">
-        <a class="button primary" href='javascript:loginform.submit()'>Entrar</a>
+        <button type="submit" class="button primary">Entrar</button>
       </div>
     </form>
   </div>

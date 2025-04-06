@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/../../classes/CalculadoraOrdem.php");
 
 if (isset($_POST['tipo_item'])) {
     switch($_POST['tipo_item']) {

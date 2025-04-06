@@ -1,14 +1,18 @@
 <?php
+require_once(__DIR__ . "/../../classes/CalculadoraOrdem.php");
+
 echo "<style>";
 echo file_get_contents($baseAddress . '/pages/ordemservico/modal/modal.css');
 echo "</style>";
-?>
 
-<?php
 $get_ordemservicos = "SELECT * FROM ordem_servicos ";
 $get_ordemservicos .= "WHERE ordem_servicos.Codigo = '" . $_GET['ordem'] . "' ";
 $ordem_servicos = mysqli_query($conn, $get_ordemservicos);
 $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
+
+// Inicializa a calculadora
+$calculadora = new CalculadoraOrdem($conn, $_GET['ordem']);
+$totais = $calculadora->getTotais();
 ?>
 <section id="banner">
     <div class="content">
@@ -87,15 +91,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                     </thead>
                     <tbody>
                         <?php
-                        $total = 0;
-                        $adiantamento = 0;
                         while ($item = mysqli_fetch_assoc($result)) {
-                            if ($item["Categoria"] != '3') {
-                                $total = $total + $item['Valor'] * $item['Quantidade'];
-                            } else {
-                                $adiantamento = $adiantamento  + $item['Valor'] * $item['Quantidade'];
-                            }
-
                             if ($item['Categoria'] == '3')
                                 continue;
                         ?>
@@ -122,12 +118,11 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                             </tr>
                         <?php
                         }
-                        $subtotal = $total - $adiantamento;
                         ?>
                         <tr class="total">
                             <td colspan="4"></td>
                             <td>Total:</td>
-                            <td><?php echo realFormat($total) ?></td>
+                            <td><?php echo realFormat($totais['total']) ?></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -158,7 +153,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                         ?>
                         <tr>
                             <td class="totalbold">Saldo:</td>
-                            <td class="totalbold" colspan="2"><?php echo realFormat($subtotal) ?></td>
+                            <td class="totalbold" colspan="2"><?php echo realFormat($totais['saldo']) ?></td>
                         </tr>
                     </tbody>
                 </table>

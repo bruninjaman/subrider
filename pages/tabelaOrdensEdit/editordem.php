@@ -59,6 +59,24 @@
                     <input type="text" name="proprietario_ordem" value="<?php echo $result2['proprietario_ordem'] ?>" required>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-8">
+                    <label>Status: </label>
+                    <select name="status" id="status" required>
+                        <?php
+                        $status_list = ['Em Andamento', 'Concluída', 'Cancelada', 'Aguardando Peças', 'Aguardando Aprovação'];
+                        foreach ($status_list as $status) {
+                            $selected = ($status == $result2['status']) ? 'selected' : '';
+                            echo "<option value=\"$status\" $selected>$status</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label>Observação sobre mudança de status:</label>
+                    <textarea name="observacao_status" rows="3"></textarea>
+                </div>
+            </div>
             <br>
             <input class="button primary" type="submit" value="Salvar Ordem de Serviço" style="width: 100%;">
         </form>

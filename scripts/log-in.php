@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $blockStatus = $loginAttempts->isUserBlocked($username);
     if ($blockStatus['blocked']) {
         $minutes = ceil($blockStatus['timeRemaining'] / 60);
-        header("Location: /subrider/login.php?error=blocked&time=$minutes");
+        header("Location: /subrider/pages/login/login.php?error=blocked&time=$minutes");
         exit();
     }
     
@@ -78,16 +78,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Login falhou
         $loginAttempts->recordAttempt($username, false);
-        header("Location: /subrider/login.php?error=1");
+        header("Location: /subrider/pages/login/login.php?error=1");
         exit();
         
     } catch (Exception $e) {
         error_log("Erro no login: " . $e->getMessage());
-        header("Location: /subrider/login.php?error=system");
+        header("Location: /subrider/pages/login/login.php?error=system");
         exit();
     }
 } else {
-    header("Location: /subrider/login.php");
+    header("Location: /subrider/pages/login/login.php");
     exit();
 }
 ?>

@@ -66,7 +66,11 @@ require_once('./config.php');
     <!-- Define baseAddress for JavaScript -->
     <script>
         const baseAddress = '<?php echo $baseAddress; ?>';
+        const ordemId = '<?php echo $_GET["ordem"]; ?>';
     </script>
+    
+    <!-- Calculadora -->
+    <script src="<?php echo $baseAddress; ?>/assets/js/calculadora_ordem.js"></script>
 
     <!-- Delete button -->
     <script src=".\pages\ordemservico\delete_confirm.js"></script>
