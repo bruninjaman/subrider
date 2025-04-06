@@ -14,12 +14,42 @@
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
+    <style>
+        .error-message {
+            color: #ff3333;
+            background-color: rgba(255, 51, 51, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body class="is-preload landing">
     <div id="page-wrapper">
         <?php
+        // Tratamento de erros de login
+        $error_message = '';
+        if (isset($_GET['error'])) {
+            switch ($_GET['error']) {
+                case '1':
+                    $error_message = 'Usuário ou senha incorretos.';
+                    break;
+                case 'blocked':
+                    $minutes = isset($_GET['time']) ? (int)$_GET['time'] : 30;
+                    $error_message = "Conta temporariamente bloqueada. Tente novamente em {$minutes} minutos.";
+                    break;
+                case 'system':
+                    $error_message = 'Erro no sistema. Por favor, tente novamente mais tarde.';
+                    break;
+            }
+        }
+        
         require("./pages/login/header.php");
+        if ($error_message) {
+            echo "<div class='error-message'>$error_message</div>";
+        }
         require("./pages/login/login.php");
         require("./pages/login/footer.php");
         ?>
