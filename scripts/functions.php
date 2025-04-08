@@ -148,6 +148,6 @@ function realFormat($valor)
 }
 function KMFormat($valor)
 { //Formato Real
-    return number_format($valor, 0, ',', '.') . "km";
+    return number_format($valor, 0, ',', '.');
 }
 ?>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         colors="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>tests/Integration</directory>
+        </testsuite>
+        <testsuite name="UI">
+            <directory>tests/UI</directory>
+        </testsuite>
+    </testsuites>
+    
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">classes</directory>
+            <directory suffix=".php">includes</directory>
+            <directory suffix=".php">scripts/system</directory>
+        </include>
+        <exclude>
+            <directory>vendor</directory>
+            <directory>tests</directory>
+        </exclude>
+    </coverage>
+    
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="DB_DATABASE" value="subrider_test"/>
+        <ini name="display_errors" value="On"/>
+        <ini name="error_reporting" value="-1"/>
+    </php>
+    
+    <listeners>
+        <listener class="Tests\TestListener" file="tests/TestListener.php"/>
+    </listeners>
+</phpunit> 

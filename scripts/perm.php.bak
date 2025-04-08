@@ -1,0 +1,90 @@
+<?php
+/**
+ * Sistema de verificação de permissões
+ */
+
+// Carrega o gerenciador de permissões
+require_once dirname(__DIR__) . '/src/Permissions/PermissionManager.php';
+
+use Subrider\Permissions\PermissionManager;
+
+/**
+ * Função para logging de debug
+ * 
+ * @param string $message Mensagem de debug
+ * @param array $context Contexto adicional opcional
+ * @return void
+ */
+function logDebug($message, $context = []) {
+    // Diretório para armazenar logs
+    $logDir = __DIR__ . '/../logs';
+    
+    // Criar diretório de logs se não existir
+    if (!file_exists($logDir)) {
+        mkdir($logDir, 0777, true);
+    }
+    
+    // Nome do arquivo de log com data
+    $logFile = $logDir . '/debug_' . date('Y-m-d') . '.log';
+    
+    // Formatar a mensagem de log
+    $timestamp = date('Y-m-d H:i:s');
+    $contextStr = !empty($context) ? ' ' . json_encode($context, JSON_UNESCAPED_UNICODE) : '';
+    $logMessage = "[$timestamp] $message$contextStr\n";
+    
+    // Escrever no arquivo de log
+    error_log($logMessage, 3, $logFile);
+}
+
+// Verifica as permissões
+PermissionManager::checkPermissions();
+
+// Não verifica permissões durante o processo de login
+if (defined('IS_LOGIN_PROCESS') && IS_LOGIN_PROCESS === true) {
+    return;
+}
+
+// Lista de páginas públicas que não requerem autenticação
+$public_pages = [
+    'login.php',
+    'register.php',
+    'forgot-password.php',
+    'reset-password.php',
+    'tabelaMotos.php',
+    'index.php'
+];
+
+$current_page = basename($_SERVER['PHP_SELF']);
+
+// Log para debugging
+logDebug('Verificando permissões', [
+    'page' => $current_page,
+    'session' => isset($_SESSION) ? array_keys($_SESSION) : [],
+    'is_public' => in_array($current_page, $public_pages),
+    'user_type' => $_SESSION["type"] ?? 'não logado'
+]);
+
+if (!in_array($current_page, $public_pages)) {
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION["user"]) || !isset($_SESSION["type"])) {
+        logDebug('Usuário não logado, redirecionando para login');
+        header("Location: /subrider/login.php");
+        exit();
+    }
+    
+    // Verifica se o usuário tem permissão adequada
+    if ($_SESSION["type"] < PERMISSION_USER) {
+        logDebug('Usuário sem permissão adequada', ['type' => $_SESSION["type"]]);
+        // Destruir a sessão se o usuário não tem permissão adequada
+        session_destroy();
+        header("Location: /subrider/login.php?error=permission");
+        exit();
+    }
+
+    // Log de acesso bem-sucedido
+    logDebug('Acesso permitido', [
+        'user' => $_SESSION["user"],
+        'type' => $_SESSION["type"],
+        'page' => $current_page
+    ]);
+}

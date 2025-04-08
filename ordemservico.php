@@ -1,7 +1,11 @@
+<?php
+require_once __DIR__ . '/config/init.php';
+require_once __DIR__ . '/scripts/perm.php';
+?>
 <!DOCTYPE HTML>
 
-<?php
-session_start();
+
+
 
 require_once './vendor/autoload.php';
 
@@ -83,6 +87,6 @@ require_once('./config.php');
 </body>
 </html>
 
-<?php
+
 mysqli_close($conn);
 ?>

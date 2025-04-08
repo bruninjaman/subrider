@@ -1,10 +1,30 @@
 <?php
-require_once __DIR__ . '/../scripts/security.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/session_manager.php';
+require_once __DIR__ . '/../classes/Security/PermissionManager.php';
 require_once __DIR__ . '/../repositories/MotocicletaRepository.php';
 require_once __DIR__ . '/../repositories/ProprietarioRepository.php';
 
-// Verifica autenticação
-check_auth();
+$sessionManager = new SessionManager();
+$permManager = \Security\PermissionManager::getInstance();
+
+// Verifica se o usuário está logado
+if (!$sessionManager->isLoggedIn()) {
+    header('Location: login.php');
+    exit;
+}
+
+// Verifica permissão
+$permManager->loadUserPermissions($_SESSION['user_id']);
+if (!$permManager->hasPermission('historico.proprietarios.view')) {
+    header('Location: access-denied.php');
+    exit;
+}
+
+// Headers de segurança
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
 
 // Inicializa repositórios
 $motoRepo = new MotocicletaRepository();

@@ -1,0 +1,128 @@
+[2025-04-07 21:12:27] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:12:27] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:14:52] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:14:52] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:14:52] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:14:52] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:14:54] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:14:54] Usuário não logado, redirecionando para login
+[2025-04-07 21:14:54] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:14:54] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:15:08] Verificando permissões {"page":"index.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:15:08] Acesso permitido {"user":"xandov","type":1,"page":"index.php"}
+[2025-04-07 21:15:08] Verificando permissões {"page":"index.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:15:08] Acesso permitido {"user":"xandov","type":1,"page":"index.php"}
+[2025-04-07 21:15:11] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:15:11] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:15:11] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:15:11] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:48:36] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:48:36] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:48:36] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:48:36] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:48:41] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:48:41] Usuário não logado, redirecionando para login
+[2025-04-07 21:48:41] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:48:41] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:51:12] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:51:12] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:51:12] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:51:12] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:51:16] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:51:16] Usuário não logado, redirecionando para login
+[2025-04-07 21:51:16] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:51:16] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:52:21] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:52:21] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:52:21] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:52:21] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:52:24] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:52:24] Usuário não logado, redirecionando para login
+[2025-04-07 21:52:24] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:52:24] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:52:38] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:52:38] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:52:38] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:52:38] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:55:23] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:55:23] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:55:23] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 21:55:25] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:55:25] Usuário não logado, redirecionando para login
+[2025-04-07 21:55:25] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:55:25] Verificando permissões {"page":"login.php","session":[],"is_public":true,"user_type":"não logado"}
+[2025-04-07 21:55:27] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:55:27] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:55:27] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 21:55:29] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:55:29] Usuário não logado, redirecionando para login
+[2025-04-07 21:55:29] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:55:29] Verificando permissões {"page":"login.php","session":[],"is_public":true,"user_type":"não logado"}
+[2025-04-07 21:55:30] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:55:30] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:55:30] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 21:55:33] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:55:33] Usuário não logado, redirecionando para login
+[2025-04-07 21:55:33] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:55:33] Verificando permissões {"page":"login.php","session":[],"is_public":true,"user_type":"não logado"}
+[2025-04-07 21:55:43] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:55:43] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:55:43] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 21:55:45] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:55:45] Usuário não logado, redirecionando para login
+[2025-04-07 21:55:45] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:55:45] Verificando permissões {"page":"login.php","session":[],"is_public":true,"user_type":"não logado"}
+[2025-04-07 21:56:00] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:56:00] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:56:00] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 21:57:28] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:57:28] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:57:28] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 21:57:31] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 21:57:31] Usuário não logado, redirecionando para login
+[2025-04-07 21:57:31] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 21:57:31] Verificando permissões {"page":"login.php","session":[],"is_public":true,"user_type":"não logado"}
+[2025-04-07 21:57:33] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:57:33] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:57:33] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 21:58:37] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:58:37] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:58:37] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 21:58:40] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 21:58:40] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 21:58:40] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:00:31] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:00:31] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 22:00:31] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:00:54] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:00:54] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 22:00:54] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:01:34] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:01:34] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 22:01:34] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:01:36] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:01:36] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 22:01:36] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:01:38] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 22:01:38] Usuário não logado, redirecionando para login
+[2025-04-07 22:01:38] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 22:01:38] Verificando permissões {"page":"login.php","session":[],"is_public":true,"user_type":"não logado"}
+[2025-04-07 22:02:28] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:02:28] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 22:02:28] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:04:18] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:04:18] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 22:04:18] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:04:32] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:04:32] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 22:04:32] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:06:05] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:06:05] Acesso permitido {"user":"xandov","type":1,"page":"tabelaMotos.php"}
+[2025-04-07 22:06:05] Verificando permissões {"page":"tabelaMotos.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}
+[2025-04-07 22:06:12] Verificando permissões {"page":"carregarMotos.php","session":[],"is_public":false}
+[2025-04-07 22:06:12] Usuário não logado, redirecionando para login
+[2025-04-07 22:06:12] Verificando permissões {"page":"login.php","session":[],"is_public":true}
+[2025-04-07 22:06:12] Verificando permissões {"page":"login.php","session":[],"is_public":true,"user_type":"não logado"}
+[2025-04-07 22:06:14] Verificando permissões {"page":"index.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":false}
+[2025-04-07 22:06:14] Acesso permitido {"user":"xandov","type":1,"page":"index.php"}
+[2025-04-07 22:06:14] Verificando permissões {"page":"index.php","session":["last_regeneration","csrf_token","user_id","last_activity","user","type"],"is_public":true,"user_type":1}

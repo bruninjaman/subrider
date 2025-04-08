@@ -1,4 +1,6 @@
 <?php
+namespace Subrider;
+
 /**
  * Gerenciador de Notificações
  * 

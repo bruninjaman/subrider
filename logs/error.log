@@ -1,49 +1,80 @@
-[06-Apr-2025 12:50:41 America/Sao_Paulo] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in C:\xampp\htdocs\subrider\scripts\log-in.php on line 55
-[06-Apr-2025 12:50:55 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\security.php on line 8
-[06-Apr-2025 12:50:55 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\security.php on line 9
-[06-Apr-2025 12:50:55 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\security.php on line 10
-[06-Apr-2025 12:50:55 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\security.php on line 11
-[06-Apr-2025 13:58:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[06-Apr-2025 13:58:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[06-Apr-2025 13:58:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[06-Apr-2025 13:58:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[06-Apr-2025 13:58:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[06-Apr-2025 13:58:44 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[06-Apr-2025 13:59:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[06-Apr-2025 13:59:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[06-Apr-2025 13:59:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[06-Apr-2025 13:59:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[06-Apr-2025 13:59:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[06-Apr-2025 13:59:01 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[06-Apr-2025 13:59:12 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[06-Apr-2025 13:59:12 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[06-Apr-2025 13:59:12 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[06-Apr-2025 13:59:12 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[06-Apr-2025 13:59:12 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[06-Apr-2025 13:59:12 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[06-Apr-2025 13:59:12 America/Sao_Paulo] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\subrider\scripts\log-in.php on line 58
-[06-Apr-2025 13:59:20 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[06-Apr-2025 13:59:20 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[06-Apr-2025 13:59:20 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[06-Apr-2025 13:59:20 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[06-Apr-2025 13:59:20 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[06-Apr-2025 13:59:20 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[06-Apr-2025 17:35:55 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[06-Apr-2025 17:35:55 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[06-Apr-2025 17:35:55 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[06-Apr-2025 17:35:55 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[06-Apr-2025 17:35:55 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[06-Apr-2025 17:35:55 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[06-Apr-2025 17:36:07 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[06-Apr-2025 17:36:07 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[06-Apr-2025 17:36:07 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[06-Apr-2025 17:36:07 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[06-Apr-2025 17:36:07 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[06-Apr-2025 17:36:07 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[06-Apr-2025 17:36:07 America/Sao_Paulo] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\subrider\scripts\log-in.php on line 58
-[06-Apr-2025 17:36:13 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[06-Apr-2025 17:36:13 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[06-Apr-2025 17:36:13 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[06-Apr-2025 17:36:13 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[06-Apr-2025 17:36:13 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[06-Apr-2025 17:36:13 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
+[07-Apr-2025 22:04:32 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:284
+Stack trace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(284): mysqli->close()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(312): Database->close()
+#2 [internal function]: Database->__destruct()
+#3 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 284
+[07-Apr-2025 22:06:05 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:283
+Stack trace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(283): mysqli->close()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#2 [internal function]: Database->__destruct()
+#3 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 283
+[08-Apr-2025 09:09:12 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider/scripts/perm.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\config.php on line 27
+[08-Apr-2025 09:09:12 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider/scripts/perm.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\config.php:27
+Stack trace:
+#0 C:\xampp\htdocs\subrider\pages\login\login.php(2): require_once()
+#1 C:\xampp\htdocs\subrider\login.php(53): require('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\subrider\config.php on line 27
+[08-Apr-2025 09:34:58 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider/scripts/perm.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\config.php on line 27
+[08-Apr-2025 09:34:58 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider/scripts/perm.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\config.php:27
+Stack trace:
+#0 C:\xampp\htdocs\subrider\pages\login\login.php(2): require_once()
+#1 C:\xampp\htdocs\subrider\login.php(53): require('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\subrider\config.php on line 27
+[08-Apr-2025 09:35:11 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider/scripts/perm.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\index.php on line 3
+[08-Apr-2025 09:35:11 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider/scripts/perm.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\index.php:3
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\subrider\index.php on line 3
+[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
+[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
+[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
+[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
+[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
+[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
+[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\subrider\scripts\log-in.php on line 58
+[08-Apr-2025 10:34:11 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:283
+Stack trace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(283): mysqli->close()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#2 [internal function]: Database->__destruct()
+#3 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 283
+[08-Apr-2025 10:34:30 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:283
+Stack trace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(283): mysqli->close()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#2 [internal function]: Database->__destruct()
+#3 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 283
+[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
+[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
+[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
+[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
+[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
+[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
+[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
+[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
+[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
+[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
+[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
+[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
+[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\subrider\scripts\log-in.php on line 58
+[08-Apr-2025 10:34:58 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:283
+Stack trace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(283): mysqli->close()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#2 [internal function]: Database->__destruct()
+#3 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 283
+[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
+[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
+[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
+[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
+[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
+[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48

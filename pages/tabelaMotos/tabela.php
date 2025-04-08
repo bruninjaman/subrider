@@ -95,10 +95,12 @@
 // Função global para carregar os dados via AJAX
 window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '', orderby = '') {
     var xhr = new XMLHttpRequest();
+    var csrf_token = '<?php echo $_SESSION['csrf_token']; ?>';
     xhr.open('GET', './ajax/carregarMotos.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
                    '&selectPesquisa=' + encodeURIComponent(selectPesquisa) + 
-                   '&orderby=' + encodeURIComponent(orderby), true);
+                   '&orderby=' + encodeURIComponent(orderby) + 
+                   '&csrf_token=' + encodeURIComponent(csrf_token), true);
     
     xhr.onload = function() {
         if (this.status == 200) {
@@ -106,6 +108,9 @@ window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '',
             
             // Reaplica os eventos após o carregamento
             aplicarEventos();
+        } else if (this.status == 403) {
+            // Redirecionar para a página de login se a sessão expirou
+            window.location.href = '/subrider/login.php';
         }
     };
     

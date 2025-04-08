@@ -1,9 +1,11 @@
 <?php
+require_once __DIR__ . '/config/init.php';
+require_once __DIR__ . '/scripts/perm.php';
+?>
 require_once 'config.php';
 require_once 'scripts/system/audit.php';
 require_once 'scripts/system/password_policy.php';
 
-session_start();
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user'])) {

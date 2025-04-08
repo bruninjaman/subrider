@@ -1,0 +1,114 @@
+<?php
+/**
+ * Arquivo de inicialização do sistema
+ * 
+ * Este arquivo é responsável por:
+ * - Carregar configurações básicas
+ * - Inicializar a sessão
+ * - Configurar o ambiente
+ * - Carregar dependências globais
+ */
+
+// Variável global para ambiente
+$isLocalhost = in_array($_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1']);
+
+// Configurações de erro
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/../logs/error.log');
+
+// Configurações de sessão
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+// Cookie seguro apenas em produção
+if (!$isLocalhost) {
+    ini_set('session.cookie_secure', 1);
+}
+ini_set('session.cookie_samesite', 'Strict');
+ini_set('session.gc_maxlifetime', 3600); // 1 hora
+session_set_cookie_params([
+    'lifetime' => 3600,
+    'path' => '/',
+    'domain' => '',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'Strict'
+]);
+
+// Iniciar ou recuperar sessão
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Gerar token CSRF se não existir
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Verificar timeout da sessão
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 3600)) {
+    session_unset();
+    session_destroy();
+    header('Location: /subrider/login.php');
+    exit();
+}
+$_SESSION['last_activity'] = time();
+
+// Carregar arquivos de configuração
+require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/../scripts/security.php';  // Carrega security.php primeiro
+require_once __DIR__ . '/../scripts/functions.php';
+
+// Configurar timezone
+date_default_timezone_set('America/Sao_Paulo');
+
+// Configurar locale
+setlocale(LC_ALL, 'pt_BR.utf-8', 'pt_BR', 'Portuguese_Brazil');
+
+// Carregar classes e funções globais
+require_once __DIR__ . '/../src/Utils/Logger.php';
+require_once __DIR__ . '/../src/Database/Database.php';
+require_once __DIR__ . '/../src/Security/Security.php';
+
+// Inicializar namespace do Logger
+use Subrider\Utils\Logger;
+
+// Log de inicialização
+Logger::info('Sistema inicializado', [
+    'session_id' => session_id(),
+    'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown'
+]);
+
+// Define o diretório raiz do projeto
+define('ROOT_DIR', dirname(__DIR__));
+
+// Carrega as funções de logging
+require_once ROOT_DIR . '/src/Utils/Logger.php';
+
+// Define as constantes de permissão
+if (!defined('PERMISSION_GUEST')) define('PERMISSION_GUEST', 0);
+if (!defined('PERMISSION_USER')) define('PERMISSION_USER', 1);
+if (!defined('PERMISSION_ADMIN')) define('PERMISSION_ADMIN', 2);
+if (!defined('PERMISSION_SUPER_ADMIN')) define('PERMISSION_SUPER_ADMIN', 3);
+
+// Configurações básicas
+if (!defined('BASE_PATH')) define('BASE_PATH', dirname(__DIR__));
+if (!defined('CONFIG_PATH')) define('CONFIG_PATH', __DIR__);
+if (!defined('LOG_PATH')) define('LOG_PATH', BASE_PATH . '/logs');
+
+// Headers de segurança
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+    header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        http_response_code(403);
+        die('Acesso negado: Token CSRF inválido');
+    }
+} 

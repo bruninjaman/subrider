@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 
 <?php
-session_start();
+// Carrega as configurações iniciais
+require_once("./config/init.php");
 
 //PERM
 require_once("./scripts/perm.php");

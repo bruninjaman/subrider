@@ -1,7 +1,11 @@
+<?php
+require_once __DIR__ . '/config/init.php';
+require_once __DIR__ . '/scripts/perm.php';
+?>
 <!DOCTYPE HTML>
 
-<?php
-session_start();
+
+
 ?>
 <!--
 	Landed by HTML5 UP

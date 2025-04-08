@@ -95,7 +95,7 @@ class SessionManager {
     }
     
     public function checkSessionTimeout() {
-        $timeout = 30 * 60; // 30 minutos
+        $timeout = 3600; // 1 hora (consistente com init.php)
         if (isset($_SESSION['last_activity']) && 
             (time() - $_SESSION['last_activity'] > $timeout)) {
             $this->log("Sessão expirada por timeout - Último acesso: " . date('Y-m-d H:i:s', $_SESSION['last_activity']));

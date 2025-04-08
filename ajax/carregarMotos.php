@@ -3,9 +3,15 @@
 require_once("../config.php");
 
 // Verificar CSRF token
-if (!isset($_GET['csrf_token']) || !verify_csrf_token($_GET['csrf_token'])) {
-    security_log("Tentativa de acesso AJAX sem CSRF token válido", "WARNING");
-    die('Erro de validação');
+if (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== $_SESSION['csrf_token']) {
+    http_response_code(403);
+    die('Acesso negado: Token CSRF inválido');
+}
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['user']) || !isset($_SESSION['type'])) {
+    http_response_code(403);
+    die('Acesso negado: Usuário não autenticado');
 }
 
 // Recuperar e sanitizar parâmetros da requisição
@@ -19,7 +25,6 @@ $orderby = isset($_GET['orderby']) ? sanitize_input($_GET['orderby']) : '';
 // Validar campos de ordenação permitidos
 $allowed_order_fields = ['endereco', 'ano', 'modelo', 'marca', 'placa', 'km', 'proprietario', 'motoId'];
 if (!empty($orderby) && !in_array($orderby, $allowed_order_fields)) {
-    security_log("Tentativa de ordenação com campo inválido: " . $orderby, "WARNING");
     $orderby = 'motoId'; // Campo padrão seguro
 }
 

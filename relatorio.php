@@ -1,7 +1,11 @@
+<?php
+require_once __DIR__ . '/config/init.php';
+require_once __DIR__ . '/scripts/perm.php';
+?>
 <!DOCTYPE HTML>
 
-<?php
-session_start();
+
+
 
 //PERM
 // require_once("./scripts/perm.php");
@@ -54,6 +58,6 @@ require_once('./config.php');
 
 </html>
 
-<?php
+
     mysqli_close($conn);
 ?>

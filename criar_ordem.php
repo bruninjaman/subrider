@@ -1,5 +1,7 @@
 <?php
-session_start();
+require_once __DIR__ . '/config/init.php';
+require_once __DIR__ . '/scripts/perm.php';
+?>
 require_once './vendor/autoload.php';
 
 // Load environment variables from .env file
@@ -154,6 +156,6 @@ $result_motos = $conn->query($sql_motos);
 
 </body>
 </html>
-<?php
+
 mysqli_close($conn);
 ?>

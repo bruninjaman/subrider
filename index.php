@@ -1,7 +1,7 @@
 <?php
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require_once __DIR__ . '/config/init.php';
+require_once __DIR__ . '/scripts/perm.php';
+?>
 ?>
 <!--
 	Landed by HTML5 UP

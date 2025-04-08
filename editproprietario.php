@@ -1,5 +1,7 @@
 <?php
-session_start();
+require_once __DIR__ . '/config/init.php';
+require_once __DIR__ . '/scripts/perm.php';
+?>
 require_once __DIR__ . '/repositories/ProprietarioRepository.php';
 
 $proprietarioRepo = new ProprietarioRepository();

@@ -1,5 +1,29 @@
 <?php
-require_once(__DIR__ . "/../scripts/config.php");
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/session_manager.php';
+require_once __DIR__ . '/../classes/Security/PermissionManager.php';
+
+$sessionManager = new SessionManager();
+$permManager = \Security\PermissionManager::getInstance();
+
+// Verifica se o usuário está logado
+if (!$sessionManager->isLoggedIn()) {
+    header('Location: login.php');
+    exit;
+}
+
+// Verifica permissão
+$permManager->loadUserPermissions($_SESSION['user_id']);
+if (!$permManager->hasPermission('historico.status.view')) {
+    header('Location: access-denied.php');
+    exit;
+}
+
+// Headers de segurança
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
+
 require_once(__DIR__ . "/../classes/StatusOrdem.php");
 
 if (isset($_GET['ordem'])) {

@@ -1,7 +1,40 @@
 {
+    "name": "subrider/subrider",
+    "description": "Sistema de gerenciamento de oficina mecânica",
+    "type": "project",
     "require": {
+        "php": "^7.4|^8.0",
+        "ext-pdo": "*",
+        "ext-json": "*",
         "google/apiclient": "^2.0",
         "vlucas/phpdotenv": "^5.6",
         "tecnickcom/tcpdf": "^6.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Subrider\\": ["classes/", "includes/", "scripts/system/"]
+        },
+        "files": [
+            "config.php",
+            "includes/database.php",
+            "includes/notification_manager.php",
+            "includes/session_manager.php",
+            "scripts/system/password_policy.php",
+            "scripts/system/login_attempts.php",
+            "classes/AvaliacaoManager.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage"
     }
 }
