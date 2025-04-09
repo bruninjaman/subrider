@@ -105,12 +105,8 @@ window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '',
     xhr.onload = function() {
         if (this.status == 200) {
             document.getElementById('resultados-tabela').innerHTML = this.responseText;
-            
             // Reaplica os eventos após o carregamento
             aplicarEventos();
-        } else if (this.status == 403) {
-            // Redirecionar para a página de login se a sessão expirou
-            window.location.href = '/subrider/login.php';
         }
     };
     

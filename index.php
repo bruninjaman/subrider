@@ -1,7 +1,36 @@
 <?php
 require_once __DIR__ . '/config/init.php';
-require_once __DIR__ . '/scripts/perm.php';
-?>
+require_once __DIR__ . '/src/Security/SessionManager.php';
+require_once __DIR__ . '/src/Security/PermissionManager.php';
+
+use Subrider\Security\SessionManager;
+use Subrider\Security\PermissionManager;
+
+$sessionManager = new SessionManager();
+$permManager = PermissionManager::getInstance();
+
+// Verifica se o usuário está logado
+if (!$sessionManager->isLoggedIn()) {
+    header('Location: pages/login/login.php');
+    exit;
+}
+
+// Verifica permissão
+$permManager->loadUserPermissions($_SESSION['user_id']);
+if (!$permManager->hasPermission('site.access')) {
+    header('Location: pages/access-denied.php');
+    exit;
+}
+
+// Verifica se o acesso é direto ou através do site principal
+$referer = $_SERVER['HTTP_REFERER'] ?? '';
+$host = $_SERVER['HTTP_HOST'] ?? '';
+$isDirectAccess = empty($referer) || (!strpos($referer, $host) && !strpos($referer, 'localhost'));
+
+if ($isDirectAccess) {
+    header('Location: pages/access-denied.php');
+    exit;
+}
 ?>
 <!--
 	Landed by HTML5 UP

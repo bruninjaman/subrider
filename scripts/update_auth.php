@@ -12,9 +12,14 @@ $files_to_update = [
     'editproprietario.php',
     'addproprietario.php',
     'change_password.php',
-    'addmotos.php',
-    'editmotos.php',
-    'medicoes.php',
+    'ADMINISTRADOR' => [
+        'dashboard.php',
+        'pages/dashboard/',
+        'pages/addmotos/',
+        'pages/editmotos/',
+        'editmotos.php',
+        'pages/medicoes/',
+    ],
     'relatorio.php',
     'proprietario.php'
 ];

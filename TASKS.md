@@ -1,88 +1,47 @@
-# Tarefas do Projeto SubRider
+# Tarefas do Projeto SubRider - Atualizado em 2024-07-26
 
-### Modernização do Sistema de Segurança
-- [x] Remover código legado de autenticação:
-  - [x] Remover includes e requires do perm.php em todos os arquivos
-  - [x] Remover variáveis globais relacionadas a permissões antigas
-  - [x] Remover funções de verificação de permissão obsoletas
-  - [x] Limpar sessões que usam variáveis de permissão antigas
-
-- [x] Atualizar API de Notificações:
-  - [x] /api/notificacoes/excluir.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'notifications.delete'
-    - [x] Implementar validação CSRF
-    - [x] Adicionar headers de segurança
-  - [x] /api/notificacoes/marcar_todas_lidas.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'notifications.update'
-    - [x] Implementar validação CSRF
-    - [x] Adicionar headers de segurança
-  - [x] /api/notificacoes/marcar_lida.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'notifications.update'
-    - [x] Implementar validação CSRF
-    - [x] Adicionar headers de segurança
-
-- [x] Atualizar Páginas:
-  - [x] /pages/avaliacoes.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'avaliacoes.view'
-  - [x] /pages/avaliar.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'avaliacoes.create'
-  - [x] /pages/notificacoes.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'notifications.view'
-  - [x] /pages/dashboard.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'dashboard.view'
-  - [x] /pages/historico_proprietarios.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'historico.proprietarios.view'
-  - [x] /pages/historico_status.php:
-    - [x] Remover include do perm.php
-    - [x] Implementar novo PermissionManager
-    - [x] Adicionar verificação de permissão 'historico.status.view'
-
-- [x] Documentação:
-  - [x] Criar arquivo permissions.md documentando todas as permissões do sistema
-  - [x] Atualizar README.md com as novas mudanças no sistema de segurança
-  - [x] Documentar processo de migração para novos desenvolvedores
-
-- [x] Testes:
-  - [x] Criar testes unitários para o novo sistema de permissões
-  - [x] Testar cada endpoint da API com diferentes níveis de permissão
-  - [x] Validar headers de segurança em todas as respostas
-  - [x] Testar proteção CSRF em todas as rotas POST/PUT/DELETE
-
-- [x] Monitoramento:
-  - [x] Implementar logging de tentativas de acesso não autorizado
-  - [x] Configurar alertas para múltiplas falhas de autenticação
-  - [x] Implementar auditoria de ações sensíveis
-
-## Tarefas Concluídas
-- [x] Remoção do arquivo perm.php do diretório /scripts
-  - Data: 08/04/2024
-- [x] Atualização da API de Notificações com novo sistema de permissões
-  - Data: 08/04/2024
-- [x] Atualização das páginas com novo sistema de permissões
-  - Data: 08/04/2024
-- [x] Documentação do novo sistema de permissões
-  - Data: 08/04/2024
-- [x] Implementação dos testes unitários
-  - Data: 08/04/2024
-- [x] Implementação do sistema de monitoramento
-  - Data: 08/04/2024
-- [x] Remoção do código legado de autenticação
-  - Data: 08/04/2024
----
-*Última atualização: 08/04/2024*
+## 🧹 Limpeza e Refatoração Inicial
+- [X] Analisar arquivos do `projeto.md` (Concluído em 2024-07-26)
+- [X] **Excluir arquivos marcados como 'Não Utilizado - Remover' ou 'Legado - Remover' (sem dependências óbvias):** (Concluído em 2024-07-26)
+    - `config.php` (Legado - Substituído por `config/init.php` e `.env`)
+    - `classes/Security/` (Legado/Não Utilizado)
+    - `includes/BackupManager.php` (Não utilizado)
+    - `includes/database.php` (Legado/Redundante - Usar `src/Database/Database.php` ou unificar)
+    - `connection/connection.php` (Legado - Substituído por `connection/Database.php` ou `src/Database/Database.php`)
+    - `check_table.php` (Não utilizado - Remover/Mover)
+    - `defaultpages.php` (Não utilizado - Remover)
+    - `instagram_feed_data.txt` (Não utilizado - Remover)
+    - `scripts/functions.php` (Legado/Redundante)
+    - `scripts/log-out.php` (Legado/Redundante - Usar `logout.php`)
+    - `scripts/perm.php` (Legado - Substituído por `src/Permissions/PermissionManager.php`)
+    - `scripts/security.php` (Legado/Redundante)
+    - `scripts/backup_auto.php` (Não utilizado)
+    - `scripts/perm.php.bak` (Não utilizado)
+    - `relatorios/` (Diretório vazio)
+    - `temp_setup.php` (Não utilizado)
+    - `css/style.css` (Legado? Verificar uso e remover se `assets/css` e `assets/sass` forem suficientes)
+- [ ] **Revisar e Remover Wrappers Legados na Raiz (após garantir que rotas/links apontam para `pages/` ou `scripts/`):**
+    - [X] `tabelaMotos.php` -> `pages/tabelaMotos/` (Concluído em 2024-07-26)
+    - [X] `addmotos.php` -> `pages/addmotos/` (Concluído em 2024-07-26)
+    - [X] `editmotos.php` -> `pages/editmotos/` (Concluído em 2024-07-26)
+    - [X] `medicoes.php` -> `pages/medicoes/` (Concluído em 2024-07-26)
+    - [X] `ordem_add_item.php` -> `pages/ordem_add_item/` (Concluído em 2024-07-26)
+    - [X] `ordem_edit_item.php` -> `pages/ordem_edit_item/` (Concluído em 2024-07-26)
+    - [X] `ordemservico.php` -> `pages/ordemservico/` (Concluído em 2024-07-26)
+    - [X] `proprietario.php` -> `pages/proprietario/` (Concluído em 2024-07-26)
+    - [X] `relatorio.php` -> `pages/relatorio/` (Concluído em 2024-07-26)
+    - [X] `tabelaOrdens.php` -> `pages/tabelaOrdens/tabela.php` (Concluído em 2024-07-26)
+    - [X] `tabelaOrdensAdd.php` -> `pages/tabelaOrdensAdd/tabela.php` (Concluído em 2024-07-26)
+    - [X] `tabelaOrdensEdit.php` -> `pages/tabelaOrdensEdit/tabela.php` (Concluído em 2024-07-26)
+    - [X] `tabelaPecas.php` -> `pages/tabelaPecas/tabela.php` (Concluído em 2024-07-26)
+    - [X] `tabelaPecasAdd.php` -> `pages/tabelaPecasAdd/tabela.php` (Concluído em 2024-07-26)
+    - [X] `tabelaPecasEdit.php` -> `pages/tabelaPecasEdit/tabela.php` (Concluído em 2024-07-26)
+    - [X] `tabelaServicos.php` -> `pages/tabelaServicos/tabela.php` (Concluído em 2024-07-26)
+    - [X] `tabelaServicosAdd.php` -> `pages/tabelaServicosAdd/addservicos.php` (Concluído em 2024-07-26)
+    - [X] `tabelaServicosEdit.php` -> `pages/tabelaServicosEdit/editservicos.php` (Concluído em 2024-07-26)
+    - [X] `tabela_ordemservicos.php` -> `pages/tabela_ordemservicos/ordens.php` (Concluído em 2024-07-26)
+- [ ] **Refatorar Arquivos Funcionais Mistos (Backend/Frontend) na Raiz:**
+    - [X] `addproprietario.php` -> `pages/proprietario/add.php` (Concluído em 2024-07-26)
+    - [X] `change_password.php` -> `pages/user/change_password.php` (Concluído em 2024-07-26)
+    - `criar_ordem.php`
+    - `editproprietario.php`

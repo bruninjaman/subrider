@@ -1,288 +1,948 @@
-[2025-04-07 22:02:28] Destrutor chamado - fechando conexão
+[2025-04-08 10:55:15] Destrutor chamado. (Status: Ativa, isClosed: false, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(329): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(309): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->logDebug()
 
-[2025-04-07 22:04:18] Destrutor chamado - fechando conexão
+[2025-04-08 10:55:15] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(312): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(339): Database->close()
 
-[2025-04-07 22:04:32] Destrutor chamado - fechando conexão
+[2025-04-08 10:59:56] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(312): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(340): Database->close()
 
-[2025-04-07 22:06:05] Destrutor chamado - fechando conexão
+[2025-04-08 10:59:58] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(297): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(340): Database->close()
 
-[2025-04-07 22:06:12] Destrutor chamado - fechando conexão
+[2025-04-08 10:59:58] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(312): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(340): Database->close()
 
-[2025-04-07 22:06:12] Conexão fechada com sucesso
+[2025-04-08 11:00:08] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(312): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(340): Database->close()
 
-[2025-04-08 09:36:04] Destrutor chamado - fechando conexão
+[2025-04-08 11:00:10] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(297): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(340): Database->close()
 
-[2025-04-08 09:36:04] Conexão fechada com sucesso
+[2025-04-08 11:00:10] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(312): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(340): Database->close()
 
-[2025-04-08 09:36:08] Destrutor chamado - fechando conexão
+[2025-04-08 11:01:07] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(286): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 09:36:08] Conexão fechada com sucesso
+[2025-04-08 11:01:07] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 09:36:10] Destrutor chamado - fechando conexão
+[2025-04-08 11:01:09] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(286): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 09:36:10] Conexão fechada com sucesso
+[2025-04-08 11:01:09] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 09:36:12] Destrutor chamado - fechando conexão
+[2025-04-08 11:01:09] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 09:36:12] Conexão fechada com sucesso
+[2025-04-08 11:01:21] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(286): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 10:33:48] Destrutor chamado - fechando conexão
+[2025-04-08 11:01:21] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 10:33:48] Conexão fechada com sucesso
+[2025-04-08 11:01:23] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(286): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 10:33:51] Destrutor chamado - fechando conexão
+[2025-04-08 11:01:23] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 10:33:51] Conexão fechada com sucesso
+[2025-04-08 11:01:23] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(351): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(334): Database->close()
 
-[2025-04-08 10:33:55] Destrutor chamado - fechando conexão
+[2025-04-08 11:02:46] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 10:33:55] Conexão fechada com sucesso
+[2025-04-08 11:02:46] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(307): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 10:34:01] Destrutor chamado - fechando conexão
+[2025-04-08 11:02:48] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 10:34:01] Conexão fechada com sucesso
+[2025-04-08 11:02:48] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(293): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 10:34:11] Destrutor chamado - fechando conexão
+[2025-04-08 11:02:48] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(307): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 10:34:14] Destrutor chamado - fechando conexão
+[2025-04-08 11:02:59] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 10:34:14] Conexão fechada com sucesso
+[2025-04-08 11:02:59] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(307): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 10:34:30] Destrutor chamado - fechando conexão
+[2025-04-08 11:03:01] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:32] Destrutor chamado - fechando conexão
+[2025-04-08 11:03:01] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(293): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:32] Conexão fechada com sucesso
+[2025-04-08 11:03:01] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(307): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:33] Destrutor chamado - fechando conexão
+[2025-04-08 11:03:55] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:33] Conexão fechada com sucesso
+[2025-04-08 11:03:55] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(307): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:34] Destrutor chamado - fechando conexão
+[2025-04-08 11:03:57] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:34] Conexão fechada com sucesso
+[2025-04-08 11:03:57] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(293): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:34] Destrutor chamado - fechando conexão
+[2025-04-08 11:03:57] Bloco finally do close() executado. isClosed=true. (Status: N/A, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(307): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:34] Conexão fechada com sucesso
+[2025-04-08 11:06:17] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:36] Destrutor chamado - fechando conexão
+[2025-04-08 11:06:17] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(307): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:36] Conexão fechada com sucesso
+[2025-04-08 11:06:19] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:37] Destrutor chamado - fechando conexão
+[2025-04-08 11:06:19] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(293): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:37] Conexão fechada com sucesso
+[2025-04-08 11:06:19] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(357): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(307): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(336): Database->close()
 
-[2025-04-08 15:34:37] Destrutor chamado - fechando conexão
+[2025-04-08 11:07:53] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 15:34:37] Conexão fechada com sucesso
+[2025-04-08 11:07:53] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 15:34:38] Destrutor chamado - fechando conexão
+[2025-04-08 11:07:56] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 15:34:38] Conexão fechada com sucesso
+[2025-04-08 11:07:56] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:34:44] Destrutor chamado - fechando conexão
+[2025-04-08 11:07:56] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:34:44] Conexão fechada com sucesso
+[2025-04-08 11:07:57] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:34:44] Destrutor chamado - fechando conexão
+[2025-04-08 11:07:57] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:34:44] Conexão fechada com sucesso
+[2025-04-08 11:10:17] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:34:54] Destrutor chamado - fechando conexão
+[2025-04-08 11:10:17] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:34:54] Conexão fechada com sucesso
+[2025-04-08 16:10:20] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:34:58] Destrutor chamado - fechando conexão
+[2025-04-08 16:10:20] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:35:04] Destrutor chamado - fechando conexão
+[2025-04-08 16:10:20] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:35:04] Conexão fechada com sucesso
+[2025-04-08 16:10:21] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:35:04] Destrutor chamado - fechando conexão
+[2025-04-08 16:10:21] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(310): Database->logDebug()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
 
-[2025-04-08 10:35:04] Conexão fechada com sucesso
+[2025-04-08 16:10:21] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
 Backtrace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(333): Database->getDebugBacktrace()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(284): Database->logDebug()
-#2 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:23] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:23] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:31] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:31] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:35] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:35] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:38] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:38] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:38] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:38] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:38] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:38] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:41] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 11:10:41] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:24] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:24] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:24] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:41] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:41] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:41] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:53] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:53] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:32:53] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:33:01] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:33:01] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:33:03] Iniciando processo de fechamento da conexão. (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(287): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:33:03] Conexão fechada com sucesso via close(). (Status: Em processo de fechamento, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(292): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:33:03] Bloco finally do close() executado. isClosed=true. (Status: Fechada, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(356): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(306): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(335): Database->close()
+
+[2025-04-08 13:40:49] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:40:49] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:40:49] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:41:10] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:41:10] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:41:10] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:41:38] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:41:38] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:41:38] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:47:49] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:47:49] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:47:49] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:47:54] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:47:54] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:47:54] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:51:05] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:51:05] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:51:05] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:51:10] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:51:10] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:51:10] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:54:05] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:54:05] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:54:05] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:56:48] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:56:48] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:56:48] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:56:48] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:56:48] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:56:48] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:16] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:57:16] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:16] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:16] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:57:16] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:16] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:22] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:57:22] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:22] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:31] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:57:31] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:31] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:31] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:57:31] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:57:31] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:59:28] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:59:28] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:59:28] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:59:28] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 13:59:28] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 13:59:28] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:00:36] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 14:00:36] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:00:36] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:00:37] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 14:00:37] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:00:37] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:01:22] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 14:01:22] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:01:22] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:01:22] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 14:01:22] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:01:22] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:01:43] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 14:01:43] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:01:43] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:01:43] Destrutor iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(256): Database->logDebug()
+
+[2025-04-08 14:01:43] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:01:43] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(271): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(257): Database->close()
+
+[2025-04-08 14:04:30] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:30] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:30] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:30] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:34] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:34] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:34] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:34] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:46] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:46] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:46] Iniciando fechamento da conexão. (Status: Ativa, isClosed: false, isClosing: true)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(220): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
+
+[2025-04-08 14:04:46] Conexão marcada como fechada no finally. (Status: Nula, isClosed: true, isClosing: false)
+Backtrace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(262): Database->getDebugBacktrace()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(237): Database->logDebug()
+#2 C:\xampp\htdocs\subrider\connection\connection.php(17): Database->close()
 

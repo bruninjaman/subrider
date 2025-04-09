@@ -7,7 +7,7 @@ ini_set('session.gc_maxlifetime', 30 * 24 * 60 * 60); // 30 dias em segundos
 ini_set('session.cookie_lifetime', 30 * 24 * 60 * 60); // 30 dias em segundos
 session_set_cookie_params(30 * 24 * 60 * 60); // 30 dias em segundos
 
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../config/init.php';
 require_once __DIR__ . '/system/audit.php';
 require_once __DIR__ . '/system/login_attempts.php';
 require_once __DIR__ . '/system/password_policy.php';

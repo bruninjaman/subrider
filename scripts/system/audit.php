@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../config/config.php';
 /**
  * Sistema de auditoria para registrar ações no sistema
  */

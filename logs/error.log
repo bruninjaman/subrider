@@ -1,80 +1,130 @@
-[07-Apr-2025 22:04:32 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:284
+[08-Apr-2025 14:11:57 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
 Stack trace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(284): mysqli->close()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(312): Database->close()
-#2 [internal function]: Database->__destruct()
-#3 {main}
-  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 284
-[07-Apr-2025 22:06:05 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:283
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[08-Apr-2025 14:11:59 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
+[08-Apr-2025 14:11:59 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
+[08-Apr-2025 14:11:59 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 47
+[08-Apr-2025 14:11:59 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 50
+[08-Apr-2025 14:11:59 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 51
+[08-Apr-2025 14:11:59 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 53
+[08-Apr-2025 14:11:59 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
 Stack trace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(283): mysqli->close()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
-#2 [internal function]: Database->__destruct()
-#3 {main}
-  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 283
-[08-Apr-2025 09:09:12 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider/scripts/perm.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\config.php on line 27
-[08-Apr-2025 09:09:12 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider/scripts/perm.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\config.php:27
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[08-Apr-2025 14:11:59 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
 Stack trace:
-#0 C:\xampp\htdocs\subrider\pages\login\login.php(2): require_once()
-#1 C:\xampp\htdocs\subrider\login.php(53): require('C:\\xampp\\htdocs...')
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[08-Apr-2025 14:15:37 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
+Stack trace:
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[08-Apr-2025 14:15:39 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
+[08-Apr-2025 14:15:39 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
+[08-Apr-2025 14:15:39 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 47
+[08-Apr-2025 14:15:39 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 50
+[08-Apr-2025 14:15:39 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 51
+[08-Apr-2025 14:15:39 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 53
+[08-Apr-2025 14:15:39 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
+Stack trace:
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[08-Apr-2025 14:15:39 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
+Stack trace:
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[08-Apr-2025 14:15:49 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
+Stack trace:
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[09-Apr-2025 04:47:09 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\subrider\config/../scripts/security.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\config\init.php on line 53
+[09-Apr-2025 04:47:09 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\config/../scripts/security.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\config\init.php:53
+Stack trace:
+#0 C:\xampp\htdocs\subrider\includes\template_base.php(5): require_once()
+#1 C:\xampp\htdocs\subrider\tabelaMotos.php(3): require_once('C:\\xampp\\htdocs...')
 #2 {main}
-  thrown in C:\xampp\htdocs\subrider\config.php on line 27
-[08-Apr-2025 09:34:58 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider/scripts/perm.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\config.php on line 27
-[08-Apr-2025 09:34:58 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider/scripts/perm.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\config.php:27
+  thrown in C:\xampp\htdocs\subrider\config\init.php on line 53
+[09-Apr-2025 04:47:12 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\subrider\config/../scripts/security.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\config\init.php on line 53
+[09-Apr-2025 04:47:12 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\config/../scripts/security.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\config\init.php:53
 Stack trace:
-#0 C:\xampp\htdocs\subrider\pages\login\login.php(2): require_once()
-#1 C:\xampp\htdocs\subrider\login.php(53): require('C:\\xampp\\htdocs...')
-#2 {main}
-  thrown in C:\xampp\htdocs\subrider\config.php on line 27
-[08-Apr-2025 09:35:11 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider/scripts/perm.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\index.php on line 3
-[08-Apr-2025 09:35:11 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider/scripts/perm.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\index.php:3
+#0 C:\xampp\htdocs\subrider\index.php(2): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\config\init.php on line 53
+[09-Apr-2025 04:47:15 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\subrider\config/../scripts/security.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\config\init.php on line 53
+[09-Apr-2025 04:47:15 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\config/../scripts/security.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\config\init.php:53
 Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\subrider\index.php on line 3
-[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[08-Apr-2025 10:34:01 America/Sao_Paulo] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\subrider\scripts\log-in.php on line 58
-[08-Apr-2025 10:34:11 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:283
+#0 C:\xampp\htdocs\subrider\index.php(2): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\config\init.php on line 53
+[09-Apr-2025 05:04:12 Europe/Berlin] PHP Warning:  Constant SECURITY_INCLUDED already defined in C:\xampp\htdocs\subrider\scripts\security.php on line 55
+[09-Apr-2025 05:04:12 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\subrider\config/../scripts/functions.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\config\init.php on line 63
+[09-Apr-2025 05:04:12 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\config/../scripts/functions.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\config\init.php:63
 Stack trace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(283): mysqli->close()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
-#2 [internal function]: Database->__destruct()
-#3 {main}
-  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 283
-[08-Apr-2025 10:34:30 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:283
+#0 C:\xampp\htdocs\subrider\index.php(2): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\config\init.php on line 63
+[09-Apr-2025 08:26:25 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system/../../config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:26:25 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system/../../config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
 Stack trace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(283): mysqli->close()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
-#2 [internal function]: Database->__destruct()
-#3 {main}
-  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 283
-[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[08-Apr-2025 10:34:44 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
-[08-Apr-2025 10:34:54 America/Sao_Paulo] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\subrider\scripts\log-in.php on line 58
-[08-Apr-2025 10:34:58 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:283
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:26:30 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system/../../config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:26:30 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system/../../config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
 Stack trace:
-#0 C:\xampp\htdocs\subrider\connection\Database.php(283): mysqli->close()
-#1 C:\xampp\htdocs\subrider\connection\Database.php(311): Database->close()
-#2 [internal function]: Database->__destruct()
-#3 {main}
-  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 283
-[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 40
-[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 41
-[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 42
-[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 45
-[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 46
-[08-Apr-2025 10:35:04 America/Sao_Paulo] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in C:\xampp\htdocs\subrider\scripts\system\session_manager.php on line 48
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:27:01 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system/../../config/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:27:01 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system/../../config/config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:27:47 America/Sao_Paulo] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 141
+[09-Apr-2025 08:27:47 America/Sao_Paulo] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\subrider\scripts\system\audit.php:27
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\system\audit.php(27): mysqli_query(NULL, 'CREATE TABLE IF...')
+#1 C:\xampp\htdocs\subrider\scripts\system\audit.php(10): AuditSystem->initializeTable()
+#2 C:\xampp\htdocs\subrider\scripts\system\audit.php(141): AuditSystem->__construct(NULL)
+#3 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 27
+[09-Apr-2025 08:27:54 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system/../../config/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:27:54 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system/../../config/config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:28:41 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system/../../../config/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:28:41 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system/../../../config/config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:29:38 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system./config/config.php): Failed to open stream: Permission denied in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:29:38 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system./config/config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:32:03 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system./config/config.php): Failed to open stream: Permission denied in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:32:03 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system./config/config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:34:48 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system/../../config/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 08:34:48 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system/../../config/config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2

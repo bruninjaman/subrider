@@ -2,9 +2,9 @@
 require_once __DIR__ . '/config/init.php';
 require_once __DIR__ . '/scripts/perm.php';
 ?>
-require_once 'config.php';
-require_once 'scripts/system/audit.php';
-require_once 'scripts/system/password_policy.php';
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/scripts/system/audit.php';
+require_once __DIR__ . '/scripts/system/password_policy.php';
 
 
 // Verifica se o usuário está logado

@@ -1,7 +1,15 @@
 <?php
+// Define que é uma requisição AJAX
+define('IS_AJAX_REQUEST', true);
+
 // Incluir configurações de conexão e funções necessárias
-include_once("../../connection/connection.php");
-include_once("../../scripts/functions.php");
+require_once("../../../connection/connection.php");
+require_once("../../../scripts/functions.php");
+
+// Garantir que a conexão não seja fechada durante a execução
+if (isset($db) && method_exists($db, 'keepAlive')) {
+    $db->keepAlive();
+}
 
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

@@ -108,7 +108,7 @@ try {
 
     // Sucesso
     setMessage("Moto cadastrada com sucesso!", "success");
-    header('Location: ../../tabelaMotos.php');
+    header('Location: ../../pages/addmotos/');
     exit;
 
 } catch (Exception $e) {

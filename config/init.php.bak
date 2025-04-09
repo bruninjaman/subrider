@@ -10,15 +10,9 @@
  */
 
 // Verificar acesso direto
-if (basename($_SERVER['SCRIPT_FILENAME']) === 'index.php' && 
-    !isset($_SERVER['HTTP_REFERER']) && 
-    !in_array($_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1'])) {
-    // Log da tentativa de acesso direto
-    error_log("Tentativa de acesso direto detectada: " . $_SERVER['REQUEST_URI']);
-    
-    // Redirecionar para a página de acesso negado
-    header('Location: /pages/access-denied.php');
-    exit;
+if (basename($_SERVER['SCRIPT_FILENAME']) === 'index.php' && !isset($_SERVER['HTTP_REFERER'])) {
+    header('HTTP/1.0 403 Forbidden');
+    die('Acesso direto não permitido. Por favor, acesse através do site principal.');
 }
 
 // Variável global para ambiente
@@ -63,7 +57,7 @@ $_SESSION['last_activity'] = time();
 // Carregar arquivos de configuração
 require_once __DIR__ . '/constants.php';
 require_once __DIR__ . '/../scripts/security.php';  // Carrega security.php primeiro
-// require_once __DIR__ . '/../scripts/functions.php';  // Arquivo não existe, comentado temporariamente
+require_once __DIR__ . '/../scripts/functions.php';
 
 // Configurar timezone
 date_default_timezone_set('America/Sao_Paulo');

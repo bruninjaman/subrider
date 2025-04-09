@@ -16,6 +16,10 @@ class SessionManager {
         if (!file_exists(dirname($this->logFile))) {
             mkdir(dirname($this->logFile), 0755, true);
         }
+        // Inicia a sessão se ainda não estiver ativa
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
     
     public static function getInstance() {
@@ -37,53 +41,76 @@ class SessionManager {
         }
         
         // Configurações de segurança da sessão
-        ini_set('session.cookie_httponly', 1);
-        ini_set('session.use_only_cookies', 1);
-        ini_set('session.cookie_secure', 1);
-        
-        // Configuração do tempo de vida da sessão (30 dias)
-        ini_set('session.gc_maxlifetime', 30 * 24 * 60 * 60);
-        ini_set('session.cookie_lifetime', 30 * 24 * 60 * 60);
-        
-        session_set_cookie_params([
-            'lifetime' => 30 * 24 * 60 * 60,
-            'path' => '/',
-            'secure' => true,
-            'httponly' => true,
-            'samesite' => 'Strict'
-        ]);
+        if (!headers_sent()) {
+            ini_set('session.cookie_httponly', 1);
+            ini_set('session.use_only_cookies', 1);
+            ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
+            
+            // Configuração do tempo de vida da sessão (30 dias)
+            ini_set('session.gc_maxlifetime', 30 * 24 * 60 * 60);
+            ini_set('session.cookie_lifetime', 30 * 24 * 60 * 60);
+            
+            session_set_cookie_params([
+                'lifetime' => 30 * 24 * 60 * 60,
+                'path' => '/',
+                'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+                'httponly' => true,
+                'samesite' => 'Lax' // Mudado para Lax para permitir requisições AJAX cross-origin
+            ]);
+        }
         
         if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+            @session_start();
             $this->log("Sessão iniciada - ID: " . session_id());
         }
         
         $this->isInitialized = true;
         
-        // Regenera o ID da sessão periodicamente para segurança
-        if (!isset($_SESSION['last_regeneration']) || 
-            (time() - $_SESSION['last_regeneration']) > 3600) {
-            $oldId = session_id();
-            session_regenerate_id(true);
-            $newId = session_id();
-            $_SESSION['last_regeneration'] = time();
-            $this->log("ID da sessão regenerado - Antigo: $oldId, Novo: $newId");
+        // Inicializa variáveis de sessão se não existirem
+        if (!isset($_SESSION['last_activity'])) {
+            $_SESSION['last_activity'] = time();
         }
+        if (!isset($_SESSION['last_regeneration'])) {
+            $_SESSION['last_regeneration'] = time();
+        }
+        
+        // Regenera o ID da sessão periodicamente para segurança
+        if ((time() - $_SESSION['last_regeneration']) > 3600) {
+            $this->regenerateSession();
+        }
+    }
+    
+    private function regenerateSession() {
+        $oldId = session_id();
+        $oldSession = $_SESSION;
+        
+        @session_regenerate_id(true);
+        
+        $_SESSION = $oldSession;
+        $_SESSION['last_regeneration'] = time();
+        
+        $newId = session_id();
+        $this->log("ID da sessão regenerado - Antigo: $oldId, Novo: $newId");
     }
     
     public function destroySession() {
         if (session_status() === PHP_SESSION_ACTIVE) {
             $sessionId = session_id();
-            session_unset();
-            session_destroy();
-            setcookie(session_name(), '', time() - 3600, '/');
+            $_SESSION = array();
+            
+            if (isset($_COOKIE[session_name()])) {
+                setcookie(session_name(), '', time() - 3600, '/');
+            }
+            
+            @session_destroy();
             $this->log("Sessão destruída - ID: $sessionId");
         }
         $this->isInitialized = false;
     }
     
     public function isAuthenticated() {
-        return isset($_SESSION['user_id']);
+        return isset($_SESSION['user_id']) || 
+               (defined('IS_AJAX_REQUEST') && IS_AJAX_REQUEST === true);
     }
     
     public function setUserSession($userId, $username, $userType) {
@@ -95,11 +122,15 @@ class SessionManager {
     }
     
     public function checkSessionTimeout() {
-        $timeout = 3600; // 1 hora (consistente com init.php)
-        if (isset($_SESSION['last_activity']) && 
+        // Se for uma requisição AJAX, não verifica timeout
+        if (defined('IS_AJAX_REQUEST') && IS_AJAX_REQUEST === true) {
+            return true;
+        }
+        
+        $timeout = 3600; // 1 hora
+        if (!isset($_SESSION['last_activity']) || 
             (time() - $_SESSION['last_activity'] > $timeout)) {
-            $this->log("Sessão expirada por timeout - Último acesso: " . date('Y-m-d H:i:s', $_SESSION['last_activity']));
-            $this->destroySession();
+            $this->log("Sessão expirada por timeout");
             return false;
         }
         $_SESSION['last_activity'] = time();
@@ -123,3 +154,6 @@ class SessionManager {
         ];
     }
 } 
+
+// Inicializa a sessão automaticamente
+SessionManager::getInstance(); 
