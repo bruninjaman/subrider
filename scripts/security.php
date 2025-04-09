@@ -60,7 +60,8 @@ function is_direct_access() {
     $script_name = basename($_SERVER['SCRIPT_FILENAME']);
     $is_index = $script_name === 'index.php';
     $no_referer = !isset($_SERVER['HTTP_REFERER']);
-    $not_localhost = !in_array($_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1']);
+    $serverName = $_SERVER['SERVER_NAME'] ?? ''; // Usa ?? para evitar warning
+    $not_localhost = !in_array($serverName, ['localhost', '127.0.0.1']);
     
     return $is_index && $no_referer && $not_localhost;
 }

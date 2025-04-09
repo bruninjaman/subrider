@@ -9,27 +9,24 @@ use Subrider\Security\PermissionManager;
 $sessionManager = new SessionManager();
 $permManager = PermissionManager::getInstance();
 
-// Verifica se o usuário está logado
-if (!$sessionManager->isLoggedIn()) {
-    header('Location: pages/login/login.php');
-    exit;
-}
+// Verificar permissão e acesso direto APENAS se o usuário estiver logado
+if (isset($_SESSION['user_id'])) {
+    // Verifica permissão
+    $permManager->loadUserPermissions($_SESSION['user_id']); // Agora é seguro chamar, pois user_id existe
+    if (!$permManager->hasPermission('site.access')) {
+        header('Location: pages/access-denied.php');
+        exit;
+    }
 
-// Verifica permissão
-$permManager->loadUserPermissions($_SESSION['user_id']);
-if (!$permManager->hasPermission('site.access')) {
-    header('Location: pages/access-denied.php');
-    exit;
-}
+    // Verifica se o acesso é direto ou através do site principal
+    $referer = $_SERVER['HTTP_REFERER'] ?? '';
+    $host = $_SERVER['HTTP_HOST'] ?? '';
+    $isDirectAccess = empty($referer) || (!strpos($referer, $host) && !strpos($referer, 'localhost'));
 
-// Verifica se o acesso é direto ou através do site principal
-$referer = $_SERVER['HTTP_REFERER'] ?? '';
-$host = $_SERVER['HTTP_HOST'] ?? '';
-$isDirectAccess = empty($referer) || (!strpos($referer, $host) && !strpos($referer, 'localhost'));
-
-if ($isDirectAccess) {
-    header('Location: pages/access-denied.php');
-    exit;
+    if ($isDirectAccess) {
+        header('Location: pages/access-denied.php');
+        exit;
+    }
 }
 ?>
 <!--

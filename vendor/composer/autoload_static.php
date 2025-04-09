@@ -20,9 +20,6 @@ class ComposerStaticInitd82279326cd1cc044d78be4cd5b31f9a
         'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
-        '2992d700ba8d015bdd8efc348186785a' => __DIR__ . '/../..' . '/includes/database.php',
-        '44d84d62ad9e4a0c937f379e06579d15' => __DIR__ . '/../..' . '/includes/notification_manager.php',
-        'fc38ce1de2057220d95a3352ad73afff' => __DIR__ . '/../..' . '/classes/AvaliacaoManager.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -103,6 +100,8 @@ class ComposerStaticInitd82279326cd1cc044d78be4cd5b31f9a
         array (
             0 => __DIR__ . '/../..' . '/classes',
             1 => __DIR__ . '/../..' . '/includes',
+            2 => __DIR__ . '/../..' . '/scripts/system',
+            3 => __DIR__ . '/../..' . '/connection',
         ),
         'Psr\\Log\\' => 
         array (

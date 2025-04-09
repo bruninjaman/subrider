@@ -16,7 +16,8 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
 }
 
 // Carrega configurações do sistema
-require_once __DIR__ . '/../config.php';
+// require_once __DIR__ . '/../config.php'; // Comentado ou removido - não existe mais
+require_once __DIR__ . '/../config/init.php'; // Carrega o novo arquivo de inicialização
 
 // Carrega autoloader personalizado
 require_once __DIR__ . '/autoload.php';

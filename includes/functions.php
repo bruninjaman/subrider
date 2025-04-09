@@ -16,9 +16,7 @@ function verificaLogin() {
  * @param string $data Data no formato Y-m-d
  * @return string Data no formato d/m/Y
  */
-function formataData($data) {
-    return date('d/m/Y', strtotime($data));
-}
+// REMOVED formataData function
 
 /**
  * Formata um valor monetário
@@ -26,9 +24,7 @@ function formataData($data) {
  * @param float $valor Valor a ser formatado
  * @return string Valor formatado com R$
  */
-function formataValor($valor) {
-    return 'R$ ' . number_format($valor, 2, ',', '.');
-}
+// REMOVED formataValor function
 
 /**
  * Limpa uma string para uso em SQL
@@ -153,10 +149,7 @@ function validaCNPJ($cnpj) {
  * @param string $cpf CPF a ser formatado
  * @return string CPF formatado
  */
-function formataCPF($cpf) {
-    $cpf = preg_replace('/[^0-9]/', '', $cpf);
-    return substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2);
-}
+// REMOVED formataCPF function
 
 /**
  * Formata um CNPJ
@@ -164,10 +157,7 @@ function formataCPF($cpf) {
  * @param string $cnpj CNPJ a ser formatado
  * @return string CNPJ formatado
  */
-function formataCNPJ($cnpj) {
-    $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
-    return substr($cnpj, 0, 2) . '.' . substr($cnpj, 2, 3) . '.' . substr($cnpj, 5, 3) . '/' . substr($cnpj, 8, 4) . '-' . substr($cnpj, 12, 2);
-}
+// REMOVED formataCNPJ function
 
 /**
  * Formata um telefone
@@ -175,18 +165,7 @@ function formataCNPJ($cnpj) {
  * @param string $telefone Telefone a ser formatado
  * @return string Telefone formatado
  */
-function formataTelefone($telefone) {
-    $telefone = preg_replace('/[^0-9]/', '', $telefone);
-    $len = strlen($telefone);
-    
-    if ($len == 11) {
-        return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 5) . '-' . substr($telefone, 7);
-    } else if ($len == 10) {
-        return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 4) . '-' . substr($telefone, 6);
-    }
-    
-    return $telefone;
-}
+// REMOVED formataTelefone function
 
 /**
  * Formata um CEP
@@ -194,10 +173,7 @@ function formataTelefone($telefone) {
  * @param string $cep CEP a ser formatado
  * @return string CEP formatado
  */
-function formataCEP($cep) {
-    $cep = preg_replace('/[^0-9]/', '', $cep);
-    return substr($cep, 0, 5) . '-' . substr($cep, 5, 3);
-}
+// REMOVED formataCEP function
 
 /**
  * Gera um token aleatório

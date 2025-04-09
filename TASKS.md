@@ -1,47 +1,15 @@
-# Tarefas do Projeto SubRider - Atualizado em 2024-07-26
+## Tarefas - 2024-07-26
 
-## 🧹 Limpeza e Refatoração Inicial
-- [X] Analisar arquivos do `projeto.md` (Concluído em 2024-07-26)
-- [X] **Excluir arquivos marcados como 'Não Utilizado - Remover' ou 'Legado - Remover' (sem dependências óbvias):** (Concluído em 2024-07-26)
-    - `config.php` (Legado - Substituído por `config/init.php` e `.env`)
-    - `classes/Security/` (Legado/Não Utilizado)
-    - `includes/BackupManager.php` (Não utilizado)
-    - `includes/database.php` (Legado/Redundante - Usar `src/Database/Database.php` ou unificar)
-    - `connection/connection.php` (Legado - Substituído por `connection/Database.php` ou `src/Database/Database.php`)
-    - `check_table.php` (Não utilizado - Remover/Mover)
-    - `defaultpages.php` (Não utilizado - Remover)
-    - `instagram_feed_data.txt` (Não utilizado - Remover)
-    - `scripts/functions.php` (Legado/Redundante)
-    - `scripts/log-out.php` (Legado/Redundante - Usar `logout.php`)
-    - `scripts/perm.php` (Legado - Substituído por `src/Permissions/PermissionManager.php`)
-    - `scripts/security.php` (Legado/Redundante)
-    - `scripts/backup_auto.php` (Não utilizado)
-    - `scripts/perm.php.bak` (Não utilizado)
-    - `relatorios/` (Diretório vazio)
-    - `temp_setup.php` (Não utilizado)
-    - `css/style.css` (Legado? Verificar uso e remover se `assets/css` e `assets/sass` forem suficientes)
-- [ ] **Revisar e Remover Wrappers Legados na Raiz (após garantir que rotas/links apontam para `pages/` ou `scripts/`):**
-    - [X] `tabelaMotos.php` -> `pages/tabelaMotos/` (Concluído em 2024-07-26)
-    - [X] `addmotos.php` -> `pages/addmotos/` (Concluído em 2024-07-26)
-    - [X] `editmotos.php` -> `pages/editmotos/` (Concluído em 2024-07-26)
-    - [X] `medicoes.php` -> `pages/medicoes/` (Concluído em 2024-07-26)
-    - [X] `ordem_add_item.php` -> `pages/ordem_add_item/` (Concluído em 2024-07-26)
-    - [X] `ordem_edit_item.php` -> `pages/ordem_edit_item/` (Concluído em 2024-07-26)
-    - [X] `ordemservico.php` -> `pages/ordemservico/` (Concluído em 2024-07-26)
-    - [X] `proprietario.php` -> `pages/proprietario/` (Concluído em 2024-07-26)
-    - [X] `relatorio.php` -> `pages/relatorio/` (Concluído em 2024-07-26)
-    - [X] `tabelaOrdens.php` -> `pages/tabelaOrdens/tabela.php` (Concluído em 2024-07-26)
-    - [X] `tabelaOrdensAdd.php` -> `pages/tabelaOrdensAdd/tabela.php` (Concluído em 2024-07-26)
-    - [X] `tabelaOrdensEdit.php` -> `pages/tabelaOrdensEdit/tabela.php` (Concluído em 2024-07-26)
-    - [X] `tabelaPecas.php` -> `pages/tabelaPecas/tabela.php` (Concluído em 2024-07-26)
-    - [X] `tabelaPecasAdd.php` -> `pages/tabelaPecasAdd/tabela.php` (Concluído em 2024-07-26)
-    - [X] `tabelaPecasEdit.php` -> `pages/tabelaPecasEdit/tabela.php` (Concluído em 2024-07-26)
-    - [X] `tabelaServicos.php` -> `pages/tabelaServicos/tabela.php` (Concluído em 2024-07-26)
-    - [X] `tabelaServicosAdd.php` -> `pages/tabelaServicosAdd/addservicos.php` (Concluído em 2024-07-26)
-    - [X] `tabelaServicosEdit.php` -> `pages/tabelaServicosEdit/editservicos.php` (Concluído em 2024-07-26)
-    - [X] `tabela_ordemservicos.php` -> `pages/tabela_ordemservicos/ordens.php` (Concluído em 2024-07-26)
-- [ ] **Refatorar Arquivos Funcionais Mistos (Backend/Frontend) na Raiz:**
-    - [X] `addproprietario.php` -> `pages/proprietario/add.php` (Concluído em 2024-07-26)
-    - [X] `change_password.php` -> `pages/user/change_password.php` (Concluído em 2024-07-26)
-    - `criar_ordem.php`
-    - `editproprietario.php`
+### Funcionalidade e Testes
+- [ ] **Testar todas as páginas/funcionalidades:** Garantir que todas as rotas e interações da UI funcionem como esperado.
+- [ ] **Implementar funcionalidade completa:** Finalizar a lógica para todas as páginas e recursos que estão incompletos.
+- [ ] **Escrever testes unitários:** Criar testes unitários (Pytest) para todas as funções, classes e rotas críticas. Cobrir casos de uso esperados, casos de borda e falhas.
+
+### Refatoração e Limpeza
+- [ ] **Corrigir código quebrado:** Identificar e corrigir bugs ou lógica incorreta em todo o codebase. (Parcialmente bloqueado: Erros de inicialização corrigidos, mas não foi possível mover/criar `tests/Unit/AvaliacaoManagerTest.php` para executar os testes devido a erro de permissão da ferramenta de escrita de arquivo - 2024-07-26) (Progresso: Erro fatal de `mysqli`/PDO em `log-in.php` e classes relacionadas corrigido - 2024-07-26)
+- [ ] **Remover código não utilizado:** Analisar o projeto e remover funções, variáveis, imports e arquivos que não estão sendo usados.
+- [ ] **Revisar e refatorar:** Melhorar a clareza, eficiência e manutenibilidade do código existente, seguindo as convenções definidas em `PLANNING.md`.
+
+### Descobertas Durante o Trabalho
+*(Adicione aqui novas subtarefas ou TODOs encontrados)*
+- Investigar erro "Access denied" da ferramenta `mcp_filesystem_write_file` ao tentar criar arquivos em subdiretórios de `tests/`.

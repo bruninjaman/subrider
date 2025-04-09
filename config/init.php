@@ -22,7 +22,8 @@ if (basename($_SERVER['SCRIPT_FILENAME']) === 'index.php' &&
 }
 
 // Variável global para ambiente
-$isLocalhost = in_array($_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1']);
+$serverName = $_SERVER['SERVER_NAME'] ?? ''; // Usa ?? para evitar warning no CLI
+$isLocalhost = in_array($serverName, ['localhost', '127.0.0.1']);
 
 // Configurações de erro
 error_reporting(E_ALL);
@@ -111,7 +112,8 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET'; // Usa ?? para evitar warning, assume GET
+if ($requestMethod === 'POST') {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         http_response_code(403);
         die('Acesso negado: Token CSRF inválido');

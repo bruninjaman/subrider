@@ -128,3 +128,122 @@ Stack trace:
 #0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
 #1 {main}
   thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\subrider\config\init.php on line 36
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\subrider\config\init.php on line 37
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\subrider\config\init.php on line 39
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\subrider\config\init.php on line 41
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\subrider\config\init.php on line 42
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\subrider\config\init.php on line 43
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed after headers have already been sent in C:\xampp\htdocs\subrider\config\init.php on line 44
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\subrider\config\init.php on line 53
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  Undefined array key "HTTP_HOST" in C:\xampp\htdocs\subrider\config\constants.php on line 32
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\scripts\security.php on line 17
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\scripts\security.php on line 18
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\scripts\security.php on line 19
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\scripts\security.php on line 20
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\scripts\security.php on line 21
+[09-Apr-2025 16:35:51 Europe/Berlin] PHP Warning:  Undefined array key "SERVER_NAME" in C:\xampp\htdocs\subrider\scripts\security.php on line 63
+[09-Apr-2025 11:35:51 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\config\init.php on line 106
+[09-Apr-2025 11:35:51 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\config\init.php on line 107
+[09-Apr-2025 11:35:51 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\config\init.php on line 108
+[09-Apr-2025 11:35:51 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\init.php:25) in C:\xampp\htdocs\subrider\config\init.php on line 109
+[09-Apr-2025 11:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\subrider\config\init.php on line 114
+[09-Apr-2025 11:35:51 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
+Stack trace:
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[09-Apr-2025 16:36:16 Europe/Berlin] PHP Warning:  Undefined array key "HTTP_HOST" in C:\xampp\htdocs\subrider\config\constants.php on line 32
+[09-Apr-2025 16:36:16 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\scripts\security.php on line 17
+[09-Apr-2025 16:36:16 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\scripts\security.php on line 18
+[09-Apr-2025 16:36:16 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\scripts\security.php on line 19
+[09-Apr-2025 16:36:16 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\scripts\security.php on line 20
+[09-Apr-2025 16:36:16 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\scripts\security.php on line 21
+[09-Apr-2025 16:36:16 Europe/Berlin] PHP Warning:  Undefined array key "SERVER_NAME" in C:\xampp\htdocs\subrider\scripts\security.php on line 63
+[09-Apr-2025 11:36:16 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\config\init.php on line 107
+[09-Apr-2025 11:36:16 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\config\init.php on line 108
+[09-Apr-2025 11:36:16 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\config\init.php on line 109
+[09-Apr-2025 11:36:16 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\subrider\config\constants.php:32) in C:\xampp\htdocs\subrider\config\init.php on line 110
+[09-Apr-2025 11:36:16 America/Sao_Paulo] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\subrider\config\init.php on line 115
+[09-Apr-2025 11:36:16 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Cannot access private property Database::$isClosed in C:\xampp\htdocs\subrider\connection\Database.php:346
+Stack trace:
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 346
+[09-Apr-2025 11:37:24 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\subrider\connection\Database.php:332
+Stack trace:
+#0 C:\xampp\htdocs\subrider\connection\Database.php(332): mysqli->ping()
+#1 C:\xampp\htdocs\subrider\connection\Database.php(282): Subrider\Database->isConnected()
+#2 C:\xampp\htdocs\subrider\connection\Database.php(243): Subrider\Database->logDebug('Conex\xC3\xA3o fechad...')
+#3 C:\xampp\htdocs\subrider\connection\Database.php(357): Subrider\Database->close()
+#4 [internal function]: Subrider\{closure}()
+#5 {main}
+  thrown in C:\xampp\htdocs\subrider\connection\Database.php on line 332
+[09-Apr-2025 11:49:34 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system/../../config/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 11:49:34 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system/../../config/config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\audit.php:2
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 2
+[09-Apr-2025 11:51:06 America/Sao_Paulo] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 142
+[09-Apr-2025 11:51:06 America/Sao_Paulo] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\subrider\scripts\system\audit.php:28
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\system\audit.php(28): mysqli_query(NULL, 'CREATE TABLE IF...')
+#1 C:\xampp\htdocs\subrider\scripts\system\audit.php(11): AuditSystem->initializeTable()
+#2 C:\xampp\htdocs\subrider\scripts\system\audit.php(142): AuditSystem->__construct(NULL)
+#3 C:\xampp\htdocs\subrider\scripts\log-in.php(11): require_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 28
+[09-Apr-2025 11:54:48 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 4
+[09-Apr-2025 11:54:48 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 5
+[09-Apr-2025 11:54:48 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 4
+[09-Apr-2025 11:54:48 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 5
+[09-Apr-2025 11:54:48 America/Sao_Paulo] PHP Warning:  require_once(C:\xampp\htdocs\subrider\scripts\system/../../config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 2
+[09-Apr-2025 11:54:48 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\subrider\scripts\system/../../config.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\scripts\system\password_policy.php:2
+Stack trace:
+#0 C:\xampp\htdocs\subrider\scripts\log-in.php(14): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 2
+[09-Apr-2025 11:55:03 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 4
+[09-Apr-2025 11:55:03 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 5
+[09-Apr-2025 11:55:03 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 4
+[09-Apr-2025 11:55:03 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 5
+[09-Apr-2025 11:55:03 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 4
+[09-Apr-2025 11:55:03 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 5
+[09-Apr-2025 11:55:03 America/Sao_Paulo] Erro de conexão com o banco de dados: SQLSTATE[HY000] [1049] Unknown database 'subrider'
+[09-Apr-2025 11:55:03 America/Sao_Paulo] Erro crítico de conexão com o banco de dados no login: SQLSTATE[HY000] [1049] Unknown database 'subrider'
+[09-Apr-2025 11:55:10 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 4
+[09-Apr-2025 11:55:10 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 5
+[09-Apr-2025 11:55:10 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 4
+[09-Apr-2025 11:55:10 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 5
+[09-Apr-2025 11:55:10 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 4
+[09-Apr-2025 11:55:10 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 5
+[09-Apr-2025 11:55:10 America/Sao_Paulo] Erro de conexão com o banco de dados: SQLSTATE[HY000] [1049] Unknown database 'subrider'
+[09-Apr-2025 11:55:10 America/Sao_Paulo] Erro crítico de conexão com o banco de dados no login: SQLSTATE[HY000] [1049] Unknown database 'subrider'
+[09-Apr-2025 11:56:06 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 4
+[09-Apr-2025 11:56:06 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 5
+[09-Apr-2025 11:56:06 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 4
+[09-Apr-2025 11:56:06 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 5
+[09-Apr-2025 11:56:06 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 4
+[09-Apr-2025 11:56:06 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 5
+[09-Apr-2025 11:56:06 America/Sao_Paulo] Erro de conexão com o banco de dados: SQLSTATE[HY000] [1049] Unknown database 'subrider'
+[09-Apr-2025 11:56:06 America/Sao_Paulo] Erro crítico de conexão com o banco de dados no login: SQLSTATE[HY000] [1049] Unknown database 'subrider'
+[09-Apr-2025 11:56:45 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 4
+[09-Apr-2025 11:56:45 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\audit.php on line 5
+[09-Apr-2025 11:56:45 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 4
+[09-Apr-2025 11:56:45 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\login_attempts.php on line 5
+[09-Apr-2025 11:56:45 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDO' has no effect in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 4
+[09-Apr-2025 11:56:45 America/Sao_Paulo] PHP Warning:  The use statement with non-compound name 'PDOException' has no effect in C:\xampp\htdocs\subrider\scripts\system\password_policy.php on line 5
+[09-Apr-2025 11:56:45 America/Sao_Paulo] Erro de conexão com o banco de dados: SQLSTATE[HY000] [1049] Unknown database 'subrider'
+[09-Apr-2025 11:56:45 America/Sao_Paulo] Erro crítico de conexão com o banco de dados no login: SQLSTATE[HY000] [1049] Unknown database 'subrider'
+[09-Apr-2025 12:00:42 America/Sao_Paulo] PHP Fatal error:  Uncaught TypeError: Subrider\Security\PermissionManager::loadUserPermissions(): Argument #1 ($userId) must be of type int, null given, called in C:\xampp\htdocs\subrider\index.php on line 13 and defined in C:\xampp\htdocs\subrider\src\Security\PermissionManager.php:17
+Stack trace:
+#0 C:\xampp\htdocs\subrider\index.php(13): Subrider\Security\PermissionManager->loadUserPermissions(NULL)
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\src\Security\PermissionManager.php on line 17
+[09-Apr-2025 12:01:33 America/Sao_Paulo] PHP Warning:  require_once(./scripts/perm.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\subrider\includes\template_base.php on line 8
+[09-Apr-2025 12:01:33 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Failed opening required './scripts/perm.php' (include_path='\xampp\php\PEAR') in C:\xampp\htdocs\subrider\includes\template_base.php:8
+Stack trace:
+#0 C:\xampp\htdocs\subrider\tabelaMotos.php(3): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subrider\includes\template_base.php on line 8

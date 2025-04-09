@@ -16,17 +16,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Subrider\\": ["classes/", "includes/", "scripts/system/"]
-        },
-        "files": [
-            "config.php",
-            "includes/database.php",
-            "includes/notification_manager.php",
-            "includes/session_manager.php",
-            "scripts/system/password_policy.php",
-            "scripts/system/login_attempts.php",
-            "classes/AvaliacaoManager.php"
-        ]
+            "Subrider\\": ["classes/", "includes/", "scripts/system/", "connection/"]
+        }
     },
     "autoload-dev": {
         "psr-4": {

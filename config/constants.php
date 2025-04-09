@@ -28,7 +28,14 @@ define('PASSWORD_MIN_LENGTH', 8);
 define('MAX_LOGIN_ATTEMPTS', 5);
 define('LOGIN_TIMEOUT', 300); // 5 minutos
 
+// Diretórios
+define('DIR_UPLOADS', BASE_PATH . '/upload/');
+
+// URL Base - CUIDADO ao usar em CLI
+$httpHost = $_SERVER['HTTP_HOST'] ?? 'localhost'; // Usa ?? para evitar warning
+$scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+define('BASE_URL', $scheme . '://' . $httpHost);
+
 // URLs e endpoints
-define('BASE_URL', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST']);
 define('API_VERSION', 'v1');
 define('API_BASE_URL', BASE_URL . '/api/' . API_VERSION); 

@@ -19,7 +19,4 @@ return array(
     'c72349b1fe8d0deeedd3a52e8aa814d8' => $vendorDir . '/mockery/mockery/library/helpers.php',
     'ce9671a430e4846b44e1c68c7611f9f5' => $vendorDir . '/mockery/mockery/library/Mockery.php',
     'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
-    '2992d700ba8d015bdd8efc348186785a' => $baseDir . '/includes/database.php',
-    '44d84d62ad9e4a0c937f379e06579d15' => $baseDir . '/includes/notification_manager.php',
-    'fc38ce1de2057220d95a3352ad73afff' => $baseDir . '/classes/AvaliacaoManager.php',
 );
