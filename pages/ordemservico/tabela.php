@@ -100,7 +100,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 continue;
                         ?>
                             <tr>
-                                <td colspan=3>
+                                <td colspan=3 data-cell="Descrição">
                                     <?php echo $item['Tipo'] != '0' ? "" . $item['Tipo'] . " - " : ""; ?>
                                     <?php echo $item['Grupo'] != '0' ? "" . $item['Grupo'] . " - " : ""; ?>
                                     <?php echo $item['Item'] != '0' ? "" . $item['Item'] . "" : ""; ?>
@@ -115,7 +115,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 <td data-cell="Quantidade"><?php echo $item['Quantidade']; ?></td>
                                 <td data-cell="Valor Unitário"><?php echo ($item['Valor'] <= 0) ? 'N/D' : realFormat($item['Valor']); ?></td>
                                 <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
-                                <td>
+                                <td data-cell="Ações">
                                     <button style="background: none; border: none;" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'"><img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" style="height: 30px; width: 30px;"> </button>
                                     <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                                 </td>
@@ -125,10 +125,10 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                         $subtotal = $total - $adiantamento;
                         ?>
                         <tr class="total">
-                            <td colspan="4"></td>
-                            <td>Total:</td>
-                            <td><?php echo realFormat($total) ?></td>
-                            <td></td>
+                            <td colspan="4" data-cell=""></td>
+                            <td data-cell="Subtotal">Total:</td>
+                            <td data-cell="Valor"><?php echo realFormat($total) ?></td>
+                            <td data-cell=""></td>
                         </tr>
                     </tbody>
                 </table>
@@ -143,13 +143,13 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 continue;
                         ?>
                             <tr>
-                                <td>
+                                <td data-cell="Descrição">
                                     <?php echo $item['Descricao'] ?>
                                 </td>
-                                <td>
+                                <td data-cell="Valor">
                                     <?php echo realFormat($item['Valor'] * $item['Quantidade']) ?>
                                 </td>
-                                <td>
+                                <td data-cell="Ações">
                                     <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                                 </td>
                             </tr>
@@ -157,8 +157,8 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                         }
                         ?>
                         <tr>
-                            <td class="totalbold">Saldo:</td>
-                            <td class="totalbold" colspan="2"><?php echo realFormat($subtotal) ?></td>
+                            <td class="totalbold" data-cell="Saldo">Saldo:</td>
+                            <td class="totalbold" colspan="2" data-cell="Valor"><?php echo realFormat($subtotal) ?></td>
                         </tr>
                     </tbody>
                 </table>

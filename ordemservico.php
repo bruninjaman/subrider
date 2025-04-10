@@ -31,10 +31,25 @@ require_once(__DIR__ . "/scripts/functions.php");
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="<?php echo $baseAddress; ?>/pages/ordemservico/ordemservico.css" />
+    <link rel="stylesheet" href="<?php echo $baseAddress; ?>/pages/ordemservico/ordemservico_mobile.css" />
     <link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/main.css" />
     <noscript>
         <link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/noscript.css" />
     </noscript>
+    
+    <!-- Script para aplicar tema escuro imediatamente em dispositivos mobile -->
+    <script>
+        (function() {
+            if(window.innerWidth <= 768) {
+                document.documentElement.classList.add('dark-theme');
+                document.body.classList.add('is-mobile');
+                document.body.classList.add('dark-theme');
+                if(window.innerWidth <= 320) {
+                    document.body.classList.add('is-very-small');
+                }
+            }
+        })();
+    </script>
 
 </head>
 
@@ -73,6 +88,8 @@ require_once(__DIR__ . "/scripts/functions.php");
     <!-- Delete button -->
     <script src=".\pages\ordemservico\editable_data.js"></script>
     <script src=".\pages\ordemservico\editable_proprietario.js"></script>
+    <!-- Mobile Responsive Script -->
+    <script src=".\pages\ordemservico\mobile_responsive.js"></script>
 
 </body>
 </html>
