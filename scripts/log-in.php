@@ -13,8 +13,14 @@ session_set_cookie_params(30 * 24 * 60 * 60); // 30 dias em segundos
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate that required fields exist
     if (isset($_POST["user"]) && isset($_POST["pass"]) && !empty($_POST["user"]) && !empty($_POST["pass"])) {
-        // Use prepared statements in your login function
-        login(htmlspecialchars($_POST["user"]), $_POST["pass"], $conn);
+        // Sanitizar entradas para evitar XSS
+        $username = htmlspecialchars($_POST["user"]);
+        $password = $_POST["pass"]; // A senha será verificada na função login
+        
+        // Chamar a função login com prepared statements
+        login($username, $password, $conn);
+        
+        // Fechar conexão
         mysqli_close($conn);
     } else {
         // Invalid input

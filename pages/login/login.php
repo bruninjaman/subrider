@@ -33,6 +33,21 @@
       height: 2em;
     }
   }
+  
+  .login-error {
+    color: #ff3333;
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid #ff3333;
+    font-weight: bold;
+  }
+  
+  .login-counter {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
 </style>
 <section id="two" class="spotlight style2 right">
   <span class="image fit main">
@@ -65,7 +80,48 @@
     <header>
       <h2>Entre na sua conta</h2>
     </header>
-    <form id="loginform" name="loginform" method="POST" action="scripts/log-in.php">
+    
+    <?php if(isset($_GET['error'])) { ?>
+      <div class="login-error">
+        <?php 
+          switch($_GET['error']) {
+            case 'blocked':
+              $time = isset($_GET['time']) ? intval($_GET['time']) : 15;
+              echo "Sua conta está temporariamente bloqueada por excesso de tentativas incorretas.<br>";
+              echo "<span class='login-counter'>Tente novamente em $time minutos.</span>";
+              // Desabilitar o formulário
+              echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  setTimeout(function() {
+                    window.location.href = 'login.php';
+                  }, " . ($time * 60 * 1000) . ");
+                });
+              </script>";
+              break;
+            case 'wrong':
+              if (isset($_GET['attempts'])) {
+                $attempts = intval($_GET['attempts']);
+                echo "Senha incorreta.<br>";
+                echo "<span class='login-counter'>Tentativas restantes: $attempts</span>";
+              } else {
+                echo "Senha incorreta. Por favor, tente novamente.";
+              }
+              break;
+            case 'nouser':
+              echo "Usuário não encontrado.";
+              break;
+            case 'invalid_input':
+              echo "Dados de login inválidos.";
+              break;
+            default:
+              echo "Erro ao fazer login. Tente novamente.";
+          }
+        ?>
+      </div>
+    <?php } ?>
+    
+    <form id="loginform" name="loginform" method="POST" action="scripts/log-in.php" 
+      <?php if(isset($_GET['error']) && $_GET['error'] === 'blocked') echo 'style="pointer-events: none; opacity: 0.6;"'; ?>>
       <div class="col-4 col-12-medium">
         <label for="fname">Login:</label>
         <input type="text" id="user" name="user" maxlength="25" required><br>

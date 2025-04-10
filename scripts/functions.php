@@ -73,20 +73,119 @@ function pagination($conn, $sql_query, $results_per_page = 5)
 
 function login($user, $password, $conn)
 {
-    //check if password and name exist on db
-    $mysqli_query = "SELECT * FROM login WHERE username = '{$user}' AND password = '{$password}'";
-    $result = mysqli_query($conn, $mysqli_query);
-    session_start();
-    $rows = mysqli_num_rows($result);
-    $result = mysqli_fetch_assoc($result);
-    if ($rows > 0) {
-        //set sesions
-        $_SESSION["user"] = $result["username"];
-        $_SESSION["type"] = $result["userType"];
-        header("location: ../index.php");
+    // Verificar se as colunas necessárias existem e criá-las se não existirem
+    $check_columns_query = "SHOW COLUMNS FROM login LIKE 'login_attempts'";
+    $check_columns_result = mysqli_query($conn, $check_columns_query);
+    
+    if (mysqli_num_rows($check_columns_result) == 0) {
+        // As colunas não existem, vamos criá-las
+        $alter_table_queries = [
+            "ALTER TABLE login ADD COLUMN login_attempts INT DEFAULT 0",
+            "ALTER TABLE login ADD COLUMN last_attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+            "ALTER TABLE login ADD COLUMN blocked_until TIMESTAMP NULL DEFAULT NULL"
+        ];
+        
+        foreach ($alter_table_queries as $query) {
+            if (!mysqli_query($conn, $query)) {
+                // Se houver erro ao criar as colunas, continue com o login normal
+                error_log("Erro ao adicionar coluna: " . mysqli_error($conn));
+            }
+        }
+    }
+    
+    // Verificar se o usuário existe
+    $check_user_query = "SELECT * FROM login WHERE username = ?";
+    $stmt = mysqli_prepare($conn, $check_user_query);
+    mysqli_stmt_bind_param($stmt, "s", $user);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    
+    // Se o usuário existe
+    if (mysqli_num_rows($result) > 0) {
+        $user_data = mysqli_fetch_assoc($result);
+        
+        // Verificar se as colunas existem no resultado
+        $has_block_column = isset($user_data['blocked_until']);
+        $has_attempts_column = isset($user_data['login_attempts']);
+        
+        // Verificar se o usuário está bloqueado (apenas se a coluna existir)
+        if ($has_block_column && $user_data['blocked_until'] !== NULL) {
+            $current_time = time();
+            $blocked_until = strtotime($user_data['blocked_until']);
+            
+            if ($current_time < $blocked_until) {
+                // Calcular tempo restante em minutos
+                $remaining_time = ceil(($blocked_until - $current_time) / 60);
+                header("location: ../login.php?error=blocked&time=" . $remaining_time);
+                exit();
+            } else {
+                // Se o bloqueio expirou, resetar as tentativas
+                if ($has_attempts_column) {
+                    $reset_query = "UPDATE login SET login_attempts = 0, blocked_until = NULL WHERE username = ?";
+                    $reset_stmt = mysqli_prepare($conn, $reset_query);
+                    mysqli_stmt_bind_param($reset_stmt, "s", $user);
+                    mysqli_stmt_execute($reset_stmt);
+                    mysqli_stmt_close($reset_stmt);
+                }
+            }
+        }
+        
+        // Verificar senha
+        if ($user_data['password'] === $password) {
+            // Login bem-sucedido, resetar tentativas
+            if ($has_attempts_column) {
+                $reset_query = "UPDATE login SET login_attempts = 0, last_attempt_time = CURRENT_TIMESTAMP WHERE username = ?";
+                $reset_stmt = mysqli_prepare($conn, $reset_query);
+                mysqli_stmt_bind_param($reset_stmt, "s", $user);
+                mysqli_stmt_execute($reset_stmt);
+                mysqli_stmt_close($reset_stmt);
+            }
+            
+            // Iniciar sessão
+            session_start();
+            $_SESSION["user"] = $user_data["username"];
+            $_SESSION["type"] = $user_data["userType"];
+            header("location: ../index.php");
+            exit();
+        } else {
+            // Senha incorreta
+            if ($has_attempts_column) {
+                // Incrementar tentativas
+                $attempts = $user_data['login_attempts'] + 1;
+                
+                // Se atingiu 5 tentativas, bloquear por 15 minutos
+                if ($attempts >= 5) {
+                    $block_time = date('Y-m-d H:i:s', strtotime('+15 minutes'));
+                    $update_query = "UPDATE login SET login_attempts = ?, last_attempt_time = CURRENT_TIMESTAMP, blocked_until = ? WHERE username = ?";
+                    $update_stmt = mysqli_prepare($conn, $update_query);
+                    mysqli_stmt_bind_param($update_stmt, "iss", $attempts, $block_time, $user);
+                    mysqli_stmt_execute($update_stmt);
+                    mysqli_stmt_close($update_stmt);
+                    
+                    header("location: ../login.php?error=blocked&time=15");
+                    exit();
+                } else {
+                    // Atualizar número de tentativas
+                    $update_query = "UPDATE login SET login_attempts = ?, last_attempt_time = CURRENT_TIMESTAMP WHERE username = ?";
+                    $update_stmt = mysqli_prepare($conn, $update_query);
+                    mysqli_stmt_bind_param($update_stmt, "is", $attempts, $user);
+                    mysqli_stmt_execute($update_stmt);
+                    mysqli_stmt_close($update_stmt);
+                    
+                    $remaining_attempts = 5 - $attempts;
+                    header("location: ../login.php?error=wrong&attempts=" . $remaining_attempts);
+                    exit();
+                }
+            } else {
+                // Se não temos as colunas, apenas redirecionar com erro simples
+                header("location: ../login.php?error=wrong");
+                exit();
+            }
+        }
     } else {
-        // NO LOGIN
-        header("location: ../login.php");
+        // Usuário não existe
+        header("location: ../login.php?error=nouser");
+        exit();
     }
 }
 
