@@ -17,6 +17,8 @@ session_start();
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+    <!-- jQuery importado no head para estar disponível para todos os scripts -->
+    <script src="assets/js/global/jquery.min.js"></script>
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
@@ -39,7 +41,7 @@ session_start();
     </div>
 
     <!-- Scripts -->
-    <script src="assets/js/global/jquery.min.js"></script>
+    <!-- jQuery já foi importado no head -->
     <script src="assets/js/index/owl.carousel.min.js"></script>
     <script src="assets/js/global/jquery.scrolly.min.js"></script>
     <script src="assets/js/global/jquery.dropotron.min.js"></script>
