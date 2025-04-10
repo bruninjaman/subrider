@@ -30,7 +30,6 @@ require_once(__DIR__ . "/scripts/functions.php");
     <title>Subrider</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="<?php echo $baseAddress; ?>/pages/ordemservico/ordemservico.css" />
     <link rel="stylesheet" href="<?php echo $baseAddress; ?>/pages/ordemservico/ordemservico_mobile.css" />
     <link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/main.css" />
     <noscript>
