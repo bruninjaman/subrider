@@ -37,7 +37,7 @@ require_once('./config.php');
         <!-- content -->
         <?php 
         require("./pages/tabelaPecasEdit/header.php");
-        require("./pages/tabelaPecasEdit/editmotos.php");
+        require("./pages/tabelaPecasEdit/edit_pecas.php");
         require("./pages/tabelaPecasEdit/footer.php");
         ?>
     </div>

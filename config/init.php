@@ -9,6 +9,20 @@
  * - Carregar dependências globais
  */
 
+// Carregar autoloader do Composer para usar dependências como phpdotenv
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+// Carregar variáveis de ambiente do .env
+try {
+    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+    $dotenv->load();
+} catch (\Dotenv\Exception\InvalidPathException $e) {
+    // Log ou tratamento de erro se o .env não for encontrado (opcional, pode ser crítico)
+    error_log("Erro ao carregar .env: " . $e->getMessage());
+    // Dependendo da criticidade, você pode querer parar a execução aqui
+    // die("Erro crítico: Não foi possível carregar as configurações do ambiente.");
+}
+
 // Verificar acesso direto
 if (basename($_SERVER['SCRIPT_FILENAME']) === 'index.php' && 
     !isset($_SERVER['HTTP_REFERER']) && 

@@ -1,8 +1,7 @@
 <?php
-require_once __DIR__ . '/../../config/init.php';
+namespace Subrider\Security;
 
-use PDO;
-use PDOException;
+require_once __DIR__ . '/../../config/init.php';
 
 /**
  * Classe para gerenciar política de senhas
@@ -17,13 +16,13 @@ class PasswordPolicy {
     const MAX_AGE_DAYS = 90;
     const HISTORY_SIZE = 5;
     
-    /** @var PDO */
+    /** @var \PDO */
     private $conn;
     
     /**
-     * @param PDO $conn A conexão PDO com o banco de dados.
+     * @param \PDO $conn A conexão PDO com o banco de dados.
      */
-    public function __construct(PDO $conn) {
+    public function __construct(\PDO $conn) {
         $this->conn = $conn;
         $this->initializeTables();
     }
@@ -54,7 +53,7 @@ class PasswordPolicy {
                 AND TABLE_NAME = 'login'
                 AND COLUMN_NAME = 'password_changed_at'
             ");
-            $stmtCheckColumn->bindParam(':dbName', $dbName, PDO::PARAM_STR);
+            $stmtCheckColumn->bindParam(':dbName', $dbName, \PDO::PARAM_STR);
             $stmtCheckColumn->execute();
             $columnExists = $stmtCheckColumn->fetchColumn();
 
@@ -67,7 +66,7 @@ class PasswordPolicy {
                 $this->conn->exec($sqlAlter);
                 error_log("Coluna 'password_changed_at' adicionada à tabela 'login'.");
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             error_log("Erro ao inicializar tabelas de política de senha (PDO): " . $e->getMessage());
             // Considerar lançar a exceção
         }
@@ -122,9 +121,9 @@ class PasswordPolicy {
             // Ajuste :user_id_column se for diferente (ex: id)
             $sql = "SELECT password_changed_at FROM login WHERE username = :user_id"; 
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':user_id', $userId, PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $userId, \PDO::PARAM_STR);
             $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if ($result && isset($result['password_changed_at'])) {
                 $changedAt = strtotime($result['password_changed_at']);
@@ -135,7 +134,7 @@ class PasswordPolicy {
             
             // Se não encontrar o usuário ou a data, considera que não precisa (ou logar erro)
             return false; 
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             error_log("Erro ao verificar expiração de senha (PDO) para usuário '$userId': " . $e->getMessage());
             return false; // Evita forçar troca em caso de erro
         }
@@ -160,10 +159,10 @@ class PasswordPolicy {
                     ORDER BY created_at DESC
                     LIMIT :limit";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':user_id', $userId, PDO::PARAM_STR);
-            $stmt->bindValue(':limit', self::HISTORY_SIZE, PDO::PARAM_INT);
+            $stmt->bindParam(':user_id', $userId, \PDO::PARAM_STR);
+            $stmt->bindValue(':limit', self::HISTORY_SIZE, \PDO::PARAM_INT);
             $stmt->execute();
-            $history = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $history = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
             foreach ($history as $row) {
                 if (password_verify($newPassword, $row['password_hash'])) {
@@ -172,7 +171,7 @@ class PasswordPolicy {
             }
 
             return false; // Senha não encontrada no histórico
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             error_log("Erro ao verificar reutilização de senha (PDO) para usuário '$userId': " . $e->getMessage());
             return false; // Evita bloquear em caso de erro
         }
@@ -196,21 +195,21 @@ class PasswordPolicy {
             //    A coluna password_changed_at será atualizada automaticamente pelo ON UPDATE CURRENT_TIMESTAMP
             $sql_update_login = "UPDATE login SET password = :password WHERE username = :user_id"; // Ajuste WHERE se usar ID
             $stmt_update = $this->conn->prepare($sql_update_login);
-            $stmt_update->bindParam(':password', $newPasswordHash, PDO::PARAM_STR);
-            $stmt_update->bindParam(':user_id', $userId, PDO::PARAM_STR);
+            $stmt_update->bindParam(':password', $newPasswordHash, \PDO::PARAM_STR);
+            $stmt_update->bindParam(':user_id', $userId, \PDO::PARAM_STR);
             $stmt_update->execute();
 
             // Verifica se alguma linha foi afetada (usuário existe?)
             if ($stmt_update->rowCount() === 0) {
-                throw new Exception("Usuário '$userId' não encontrado para atualização de senha.");
+                throw new \Exception("Usuário '$userId' não encontrado para atualização de senha.");
             }
 
             // 2. Insere a nova senha no histórico
             if (self::HISTORY_SIZE > 0) {
                 $sql_insert_history = "INSERT INTO password_history (user_id, password_hash) VALUES (:user_id, :password_hash)";
                 $stmt_history = $this->conn->prepare($sql_insert_history);
-                $stmt_history->bindParam(':user_id', $userId, PDO::PARAM_STR);
-                $stmt_history->bindParam(':password_hash', $newPasswordHash, PDO::PARAM_STR);
+                $stmt_history->bindParam(':user_id', $userId, \PDO::PARAM_STR);
+                $stmt_history->bindParam(':password_hash', $newPasswordHash, \PDO::PARAM_STR);
                 $stmt_history->execute();
     
                 // 3. Remove histórico antigo (mantém apenas os HISTORY_SIZE mais recentes)
@@ -226,9 +225,9 @@ class PasswordPolicy {
                                    ) keep ON ph.id = keep.id
                                    WHERE ph.user_id = :user_id AND keep.id IS NULL";
                 $stmt_delete = $this->conn->prepare($sql_delete_old);
-                $stmt_delete->bindParam(':user_id_sub', $userId, PDO::PARAM_STR);
-                $stmt_delete->bindValue(':limit', self::HISTORY_SIZE, PDO::PARAM_INT);
-                $stmt_delete->bindParam(':user_id', $userId, PDO::PARAM_STR);
+                $stmt_delete->bindParam(':user_id_sub', $userId, \PDO::PARAM_STR);
+                $stmt_delete->bindValue(':limit', self::HISTORY_SIZE, \PDO::PARAM_INT);
+                $stmt_delete->bindParam(':user_id', $userId, \PDO::PARAM_STR);
                 $stmt_delete->execute();
             }
             
@@ -240,11 +239,11 @@ class PasswordPolicy {
             
             return true;
 
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->conn->rollBack(); // Desfaz a transação em caso de erro PDO
             error_log("Erro PDO ao atualizar senha para '$userId': " . $e->getMessage());
             return false;
-        } catch (Exception $e) { // Captura outras exceções (ex: usuário não encontrado)
+        } catch (\Exception $e) { // Captura outras exceções (ex: usuário não encontrado)
             $this->conn->rollBack(); // Desfaz a transação
             error_log("Erro ao atualizar senha para '$userId': " . $e->getMessage());
             return false;
@@ -264,4 +263,22 @@ class PasswordPolicy {
         // Mantenha comentado ou remova se não for mais necessário.
     }
     */
+
+    /**
+     * Obtém a política de senha como um array associativo.
+     *
+     * @return array
+     */
+    public function getPolicyAsArray(): array
+    {
+        return [
+            'minLength' => self::MIN_LENGTH,
+            'requireUppercase' => self::REQUIRE_UPPERCASE,
+            'requireLowercase' => self::REQUIRE_LOWERCASE,
+            'requireNumbers' => self::REQUIRE_NUMBERS,
+            'requireSpecial' => self::REQUIRE_SPECIAL,
+            'maxAgeDays' => self::MAX_AGE_DAYS,
+            'historySize' => self::HISTORY_SIZE,
+        ];
+    }
 } 

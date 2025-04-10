@@ -1,126 +1,240 @@
 <?php
-session_start();
-require_once(__DIR__ . "/../../config.php");
+// Incluir inicialização segura (sessão, config, db, security, permissions)
+require_once __DIR__ . '/../../config/init.php';
+require_once __DIR__ . '/../../src/Database/Database.php';
+require_once __DIR__ . '/../../src/Security/Security.php';
+require_once __DIR__ . '/../../src/Permissions/PermissionManager.php';
 
-function setMessage($message, $type = 'danger') {
-    $_SESSION['msg'] = $message;
-    $_SESSION['msg_type'] = $type;
+use Subrider\Database\Database;
+use Subrider\Security\Security;
+use Subrider\Permissions\PermissionManager;
+
+// Definição de $baseUrl (idealmente vindo de init.php)
+$baseUrl = defined('BASE_URL') ? BASE_URL : '/subrider';
+
+// --- Verificações Iniciais ---
+
+// 1. Verificar Permissão (Ex: ADMIN ou outra permissão específica)
+// TODO: Definir a permissão correta para adicionar motos
+if (!PermissionManager::hasPermission(PERMISSION_ADMIN)) { // Usando ADMIN como placeholder
+    $_SESSION['form_errors'] = ['Permissão negada para adicionar motocicletas.'];
+    header("Location: {$baseUrl}/addmotos.php?error=permission");
+    exit;
 }
 
-try {
-    // Validar se é um POST
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception('Método inválido');
-    }
+// 2. Verificar método POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['form_errors'] = ['Método de requisição inválido.'];
+    header("Location: {$baseUrl}/addmotos.php?error=invalid_method");
+    exit;
+}
 
-    // Validar campos obrigatórios
-    $required_fields = ['endereco', 'ano', 'modelo', 'marca', 'placa', 'KM', 'proprietario'];
-    foreach ($required_fields as $field) {
-        if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
-            throw new Exception("O campo {$field} é obrigatório");
-        }
-    }
+// 3. Verificar Token CSRF (Assumindo que init.php configura e formulário envia)
+/*
+if (!isset($_POST['csrf_token']) || !Security::verifyCsrfToken($_POST['csrf_token'])) {
+    $_SESSION['form_errors'] = ['Token de segurança inválido ou ausente.'];
+    header("Location: {$baseUrl}/addmotos.php?error=csrf");
+    exit;
+}
+*/
 
-    // Validar e processar a foto
-    $foto = null;
-    if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
-        $allowed = ["jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png"];
-        $filename = $_FILES["foto"]["name"];
-        $filetype = $_FILES["foto"]["type"];
-        $filesize = $_FILES["foto"]["size"];
+// --- Processamento do Formulário ---
 
-        // Verify file extension
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if (!array_key_exists($ext, $allowed)) {
-            throw new Exception("Formato de arquivo inválido. Por favor, envie uma imagem nos formatos: " . implode(", ", array_keys($allowed)));
-        }
+// 1. Obter e Validar Dados do Formulário
+$endereco = trim($_POST['endereco'] ?? '');
+$ano = trim($_POST['ano'] ?? '');
+$modelo = trim($_POST['modelo'] ?? '');
+$marca = trim($_POST['marca'] ?? '');
+$placa = strtoupper(trim($_POST['placa'] ?? ''));
+$km = trim(str_replace(['.', ','], '', $_POST['km'] ?? '0')); // Corrigido para 'km' minúsculo e remove formatação
+$proprietarioNome = trim($_POST['proprietario'] ?? ''); // Nome do proprietário vindo do autocomplete
+$fotoFile = $_FILES['foto'] ?? null;
 
-        // Verify file size - 5MB maximum
-        $maxsize = 5 * 1024 * 1024;
-        if ($filesize > $maxsize) {
-            throw new Exception("Tamanho do arquivo excede o limite de 5MB");
-        }
+$errors = [];
 
-        // Verify MYME type of the file
-        if (!in_array($filetype, $allowed)) {
-            throw new Exception("Tipo de arquivo inválido. Por favor, envie uma imagem válida.");
-        }
+// Validações básicas
+if (empty($endereco)) $errors[] = "O campo 'Endereço' é obrigatório.";
+if (empty($ano)) $errors[] = "O campo 'Ano' é obrigatório.";
+if (empty($modelo)) $errors[] = "O campo 'Modelo' é obrigatório.";
+if (empty($marca)) $errors[] = "O campo 'Marca' é obrigatório.";
+if (empty($placa)) $errors[] = "O campo 'Placa' é obrigatório.";
+if (empty($proprietarioNome)) $errors[] = "O campo 'Proprietário' é obrigatório.";
+// km pode ser 0, então verificamos se é numérico
+if (!is_numeric($km)) $errors[] = "O campo 'KM' deve ser um número.";
 
-        // Generate unique filename
-        $new_filename = uniqid() . '.' . $ext;
-        $upload_path = __DIR__ . "/../../upload/moto/";
-        
-        // Create directory if it doesn't exist
-        if (!file_exists($upload_path)) {
-            mkdir($upload_path, 0777, true);
-        }
+// Validação de formato/intervalo
+if (!empty($ano) && (!ctype_digit($ano) || $ano < 1900 || $ano > (date('Y') + 1))) {
+    $errors[] = "Ano inválido (deve ser entre 1900 e " . (date('Y') + 1) . ").";
+}
+if (!empty($placa) && !preg_match('/^[A-Z]{3}-?[0-9][A-Z0-9][0-9]{2}$/', $placa)) {
+     // Permite formato antigo (ABC-1234) ou Mercosul (ABC1D23) - Ajustar regex se necessário
+    $errors[] = "Formato de placa inválido.";
+}
+if ($km < 0) {
+     $errors[] = "KM não pode ser negativo.";
+}
 
-        if (move_uploaded_file($_FILES["foto"]["tmp_name"], $upload_path . $new_filename)) {
-            $foto = "upload/moto/" . $new_filename;
+// Validação do upload da foto (se um arquivo foi enviado)
+$fotoPathInDb = null;
+$uploadedFilePath = null;
+if ($fotoFile && $fotoFile['error'] !== UPLOAD_ERR_NO_FILE) {
+    if ($fotoFile['error'] !== UPLOAD_ERR_OK) {
+        $uploadErrors = [
+             UPLOAD_ERR_INI_SIZE => "O arquivo excede o limite de tamanho do servidor (upload_max_filesize).",
+             UPLOAD_ERR_FORM_SIZE => "O arquivo excede o limite de tamanho especificado no formulário HTML.",
+             UPLOAD_ERR_PARTIAL => "O upload do arquivo foi feito parcialmente.",
+             UPLOAD_ERR_NO_TMP_DIR => "Diretório temporário não encontrado.",
+             UPLOAD_ERR_CANT_WRITE => "Falha ao escrever o arquivo no disco.",
+             UPLOAD_ERR_EXTENSION => "Uma extensão PHP interrompeu o upload do arquivo."
+         ];
+        $errors[] = "Erro no upload da foto: " . ($uploadErrors[$fotoFile['error']] ?? "Erro desconhecido.");
+    } else {
+        $maxFileSize = 5 * 1024 * 1024; // 5MB
+        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $uploadDir = ROOT_DIR . '/upload/moto/'; // Padronizar diretório?
+
+        if ($fotoFile['size'] > $maxFileSize) {
+            $errors[] = "A foto excede o tamanho máximo permitido de 5MB.";
         } else {
-            throw new Exception("Erro ao fazer upload da imagem");
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $fotoFile['tmp_name']);
+            finfo_close($finfo);
+            if (!in_array($mimeType, $allowedMimeTypes)) {
+                $errors[] = "Tipo de arquivo inválido. Apenas JPG, PNG e GIF são permitidos.";
+            } else {
+                 // Gerar nome único e seguro
+                $originalName = pathinfo($fotoFile['name'], PATHINFO_FILENAME);
+                $extension = pathinfo($fotoFile['name'], PATHINFO_EXTENSION);
+                $safeOriginalName = preg_replace("/[^a-zA-Z0-9_\-]/", "_", $originalName);
+                $uniqueFilename = uniqid('moto_') . '_' . $safeOriginalName . '.' . strtolower($extension);
+                $targetPath = $uploadDir . $uniqueFilename;
+
+                if (!is_dir($uploadDir)) {
+                    if (!mkdir($uploadDir, 0755, true)) {
+                        $errors[] = "Falha ao criar o diretório de upload.";
+                        error_log("Falha ao criar diretório: {$uploadDir}");
+                    }
+                }
+                // Move apenas se o diretório existe e não houve erros anteriores
+                if (is_dir($uploadDir) && empty($errors)) {
+                    if (move_uploaded_file($fotoFile['tmp_name'], $targetPath)) {
+                        $fotoPathInDb = 'upload/moto/' . $uniqueFilename;
+                        $uploadedFilePath = $targetPath;
+                    } else {
+                        $errors[] = "Erro ao mover o arquivo enviado.";
+                        error_log("Falha em move_uploaded_file para: {$targetPath}");
+                    }
+                }
+            }
         }
     }
+} // Fim validação foto
 
-    // Sanitizar e validar inputs
-    $endereco = filter_var($_POST['endereco'], FILTER_SANITIZE_STRING);
-    $ano = filter_var($_POST['ano'], FILTER_SANITIZE_NUMBER_INT);
-    $modelo = filter_var($_POST['modelo'], FILTER_SANITIZE_STRING);
-    $marca = filter_var($_POST['marca'], FILTER_SANITIZE_STRING);
-    $placa = strtoupper(filter_var($_POST['placa'], FILTER_SANITIZE_STRING));
-    $km = filter_var(str_replace(['.', ','], '', $_POST['KM']), FILTER_SANITIZE_NUMBER_INT);
-    $proprietario = filter_var($_POST['proprietario'], FILTER_SANITIZE_STRING);
-
-    // Validações adicionais
-    if ($ano < 1900 || $ano > (date('Y') + 1)) {
-        throw new Exception("Ano inválido");
+// Se houver erros até aqui (antes do DB), redirecionar
+if (!empty($errors)) {
+    // Se um arquivo foi carregado mas houve erro de validação depois, remove o arquivo
+    if ($uploadedFilePath && file_exists($uploadedFilePath)) {
+        unlink($uploadedFilePath);
     }
-
-    if (!preg_match('/^[A-Z]{3}-[0-9][A-Z0-9][0-9]{2}$/', $placa)) {
-        throw new Exception("Formato de placa inválido");
-    }
-
-    // Verificar se a placa já existe
-    $stmt = mysqli_prepare($conn, "SELECT id FROM motocicletas WHERE placa = ? AND id != ?");
-    mysqli_stmt_bind_param($stmt, "si", $placa, $id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_store_result($stmt);
-    if (mysqli_stmt_num_rows($stmt) > 0) {
-        throw new Exception("Esta placa já está cadastrada");
-    }
-    mysqli_stmt_close($stmt);
-
-    // Preparar a query
-    $query = "INSERT INTO motocicletas (foto, endereco, ano, modelo, marca, placa, KM, proprietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $query);
-
-    if (!$stmt) {
-        throw new Exception("Erro ao preparar a query: " . mysqli_error($conn));
-    }
-
-    // Bind parameters
-    mysqli_stmt_bind_param($stmt, "ssssssss", $foto, $endereco, $ano, $modelo, $marca, $placa, $km, $proprietario);
-
-    // Executar a query
-    if (!mysqli_stmt_execute($stmt)) {
-        throw new Exception("Erro ao salvar os dados: " . mysqli_stmt_error($stmt));
-    }
-
-    // Sucesso
-    setMessage("Moto cadastrada com sucesso!", "success");
-    header('Location: ../../pages/addmotos/');
+    $_SESSION['form_errors'] = $errors;
+    // TODO: Passar os valores antigos de volta para repopular o formulário
+    header("Location: {$baseUrl}/addmotos.php?error=validation");
     exit;
-
-} catch (Exception $e) {
-    setMessage($e->getMessage());
-    header('Location: ../../addmotos.php');
-    exit;
-} finally {
-    if (isset($stmt)) {
-        mysqli_stmt_close($stmt);
-    }
-    if (isset($conn)) {
-        mysqli_close($conn);
-    }
 }
+
+// 2. Sanitizar Dados (usando classe Security)
+$enderecoSanitized = Security::sanitizeString($endereco);
+$anoSanitized = intval($ano); // Já validado como digit e range
+$modeloSanitized = Security::sanitizeString($modelo);
+$marcaSanitized = Security::sanitizeString($marca);
+$placaSanitized = Security::sanitizeString($placa); // Formato já validado
+$kmSanitized = intval($km); // Já validado como numeric e >= 0
+$proprietarioNomeSanitized = Security::sanitizeString($proprietarioNome);
+
+// --- Operações com Banco de Dados ---
+try {
+    $db = Database::getInstance();
+    $conn = $db->getConnection();
+
+    // 3. Validar Placa e Proprietário no DB
+    // Verificar se a placa já existe
+    $stmtCheckPlaca = $conn->prepare("SELECT motoId FROM motocicletas WHERE placa = :placa");
+    $stmtCheckPlaca->bindParam(':placa', $placaSanitized, PDO::PARAM_STR);
+    $stmtCheckPlaca->execute();
+    if ($stmtCheckPlaca->fetch()) {
+        $errors[] = "Esta placa já está cadastrada.";
+    }
+
+    // Verificar se o proprietário existe (assumindo uma tabela 'proprietarios' com coluna 'nome')
+    // TODO: Confirmar nome da tabela e coluna de proprietários
+    $stmtCheckProp = $conn->prepare("SELECT proprietarioId FROM proprietarios WHERE nome = :nome");
+    $stmtCheckProp->bindParam(':nome', $proprietarioNomeSanitized, PDO::PARAM_STR);
+    $stmtCheckProp->execute();
+    $proprietarioResult = $stmtCheckProp->fetch(PDO::FETCH_ASSOC);
+    if (!$proprietarioResult) {
+        $errors[] = "Proprietário '" . htmlspecialchars($proprietarioNomeSanitized) . "' não encontrado. Verifique o nome ou cadastre-o primeiro.";
+    } else {
+        // Guardar o ID do proprietário para usar na inserção (se a tabela motocicletas usa ID)
+        // TODO: Verificar se a tabela 'motocicletas' usa 'proprietarioId' ou 'proprietario' (nome)
+        $proprietarioIdParaInserir = $proprietarioResult['proprietarioId'];
+        // Se a tabela usa o nome, $proprietarioNomeSanitized já está correto.
+    }
+
+    // Se houve erros de DB (placa/proprietário), redirecionar
+    if (!empty($errors)) {
+        // Se um arquivo foi carregado mas houve erro de validação de DB, remove o arquivo
+        if ($uploadedFilePath && file_exists($uploadedFilePath)) {
+            unlink($uploadedFilePath);
+        }
+        $_SESSION['form_errors'] = $errors;
+        header("Location: {$baseUrl}/addmotos.php?error=db_validation");
+        exit;
+    }
+
+    // 4. Inserir no Banco de Dados (PDO)
+    // TODO: Confirmar se a coluna é 'proprietario' (nome) ou 'proprietarioId'
+    $sql = "INSERT INTO motocicletas (foto, endereco, ano, modelo, marca, placa, km, proprietario) VALUES (:foto, :endereco, :ano, :modelo, :marca, :placa, :km, :proprietario)";
+    // Se usar ID: $sql = "INSERT INTO motocicletas (foto, endereco, ano, modelo, marca, placa, km, proprietarioId) VALUES (:foto, :endereco, :ano, :modelo, :marca, :placa, :km, :proprietarioId)";
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindParam(':foto', $fotoPathInDb, PDO::PARAM_STR);
+    $stmt->bindParam(':endereco', $enderecoSanitized, PDO::PARAM_STR);
+    $stmt->bindParam(':ano', $anoSanitized, PDO::PARAM_INT);
+    $stmt->bindParam(':modelo', $modeloSanitized, PDO::PARAM_STR);
+    $stmt->bindParam(':marca', $marcaSanitized, PDO::PARAM_STR);
+    $stmt->bindParam(':placa', $placaSanitized, PDO::PARAM_STR);
+    $stmt->bindParam(':km', $kmSanitized, PDO::PARAM_INT);
+    $stmt->bindParam(':proprietario', $proprietarioNomeSanitized, PDO::PARAM_STR); // Ou :proprietarioId com $proprietarioIdParaInserir
+
+    if ($stmt->execute()) {
+        $_SESSION['success_message'] = "Motocicleta adicionada com sucesso!";
+        header("Location: {$baseUrl}/tabelaMotos.php?status=success");
+        exit;
+    } else {
+        $errors[] = "Erro ao salvar a motocicleta no banco de dados.";
+        error_log("Erro PDO em add-moto.php: " . implode('; ', $stmt->errorInfo()));
+    }
+
+} catch (PDOException $e) {
+    $errors[] = "Erro de conexão ou SQL: " . $e->getMessage();
+    error_log("Exceção PDO em add-moto.php: " . $e->getMessage());
+}
+
+// 5. Lidar com Erros Finais (Se chegou aqui, houve erro no DB ou Exception)
+if (!empty($errors)) {
+    // Se um arquivo foi carregado com sucesso mas a inserção no DB falhou, remove o arquivo
+    if ($uploadedFilePath && file_exists($uploadedFilePath)) {
+        unlink($uploadedFilePath);
+        error_log("Arquivo órfão removido devido à falha no DB: {$uploadedFilePath}");
+    }
+    $_SESSION['form_errors'] = $errors;
+    // TODO: Passar os valores antigos de volta para repopular o formulário
+    header("Location: {$baseUrl}/addmotos.php?error=final");
+    exit;
+}
+
+// Fallback
+echo "Ocorreu um erro inesperado.";
+exit;
+
 ?>

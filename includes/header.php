@@ -24,9 +24,9 @@ $usuario_nome = $_SESSION['usuario_nome'] ?? 'Usuário';
         <nav>
             <ul>
                 <li><a href="/index.php">Início</a></li>
-                <li><a href="/pages/motos/motos.php">Motos</a></li>
-                <li><a href="/pages/proprietarios/proprietarios.php">Proprietários</a></li>
-                <li><a href="/pages/os/os.php">Ordens de Serviço</a></li>
+                <li><a href="/tabelaMotos.php">Motos</a></li>
+                <li><a href="/pages/proprietario/proprietarios.php">Proprietários</a></li>
+                <li><a href="/ordemservico.php">Ordens de Serviço</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Relatórios</a>
                     <div class="dropdown-content">
@@ -38,8 +38,7 @@ $usuario_nome = $_SESSION['usuario_nome'] ?? 'Usuário';
                 <li class="dropdown">
                     <a href="#" class="dropbtn"><?php echo htmlspecialchars($usuario_nome); ?></a>
                     <div class="dropdown-content">
-                        <a href="/pages/usuarios/perfil.php">Meu Perfil</a>
-                        <a href="/logout.php">Sair</a>
+                        <a href="/scripts/logout.php">Sair</a>
                     </div>
                 </li>
             </ul>

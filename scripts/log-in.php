@@ -11,11 +11,15 @@ define('IS_LOGIN_PROCESS', true);
 require_once __DIR__ . '/../config/init.php';
 require_once __DIR__ . '/system/audit.php';
 require_once __DIR__ . '/system/login_attempts.php';
-require_once __DIR__ . '/system/password_policy.php';
+// require_once __DIR__ . '/system/password_policy.php'; // Comentado - Autoloader deve cuidar disso
 require_once __DIR__ . '/system/session_manager.php';
+require_once __DIR__ . '/../src/Utils/Logger.php';
 
-// Usar a classe Database (PDO) definida em init.php
-use App\Database\Database;
+use Subrider\Security\LoginAttemptManager;
+use Subrider\Security\PasswordPolicy;
+use Subrider\Database\Database;
+use Subrider\Utils\Logger;
+use Subrider\Repositories\UserRepository;
 
 // Obter a conexão PDO
 try {
@@ -104,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //     $updateStmt->execute();
             //     $auditSystem->logAction('password_hashed', "Senha antiga do usuário '$username' atualizada para hash.");
 
-            //     header("Location: /subrider/index.php");
+            //     header("Location: /index.php");
             //     exit();
             // }
         }

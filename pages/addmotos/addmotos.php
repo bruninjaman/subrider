@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-2">
                     <label>KM:</label>
-                    <input type="text" name="KM" id="KM" required>
+                    <input type="text" name="km" id="km" required>
                     <small class="form-text text-muted">Ex: 1.234</small>
                 </div>
             </div>
@@ -111,7 +111,7 @@ $(document).ready(function() {
     $('#ano').mask('0000');
 
     // Máscara para quilometragem
-    $('#KM').mask('000.000', {reverse: true});
+    $('#km').mask('000.000', {reverse: true});
 
     // Autocomplete para proprietários
     $('#proprietario').autocomplete({
@@ -148,7 +148,7 @@ $(document).ready(function() {
                 required: true,
                 minlength: 7
             },
-            KM: {
+            km: {
                 required: true,
                 min: 0
             }
@@ -180,7 +180,7 @@ $(document).ready(function() {
                 required: "Por favor, informe a placa",
                 minlength: "A placa deve ter 7 caracteres"
             },
-            KM: {
+            km: {
                 required: "Por favor, informe a quilometragem",
                 min: "A quilometragem deve ser maior que 0"
             }

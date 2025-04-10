@@ -4,14 +4,19 @@
         <div class="col-3">
             <select name="selectPesquisa" id="selectPesquisa">
                 <?php
-                //this while is getting all columns from our table
-                while ($categorias = mysqli_fetch_assoc($resultCategorias)) {
-                    if ($categorias['Field'] == "km" ||$categorias['Field'] == "Id" || $categorias['Field'] == "foto" || $categorias['Field'] == "motoId" || $categorias['Field'] == "ordem" || $categorias['Field'] == "valor" || $categorias['Field'] == "servID" || $categorias['Field'] == "Aberto" || $categorias['Field'] == "pecaId" || $categorias['Field'] == "motoID" || $categorias['Field'] == "quantidade" || $categorias['Field'] == "servicoId") {
-                        continue;
+                // Itera sobre o array $colunasPesquisa passado pelo include
+                // A filtragem de colunas indesejadas já foi feita antes
+                if (isset($colunasPesquisa) && is_array($colunasPesquisa)) {
+                    foreach ($colunasPesquisa as $coluna) {
+                        // Não precisa mais da verificação aqui
+                        // A coluna já vem sanitizada de tabela.php
+                        ?>
+                        <option value="<?php echo $coluna; ?>"><?php echo ucfirst($coluna); ?></option>
+                        <?php
                     }
-                ?>
-                    <option value="<?php echo $categorias['Field'] ?>"><?php echo ucfirst($categorias['Field']) ?></option>
-                <?php
+                } else {
+                    // Fallback caso $colunasPesquisa não esteja definido ou não seja um array
+                    echo '<option value="">Erro ao carregar colunas</option>';
                 }
                 ?>
             </select>
@@ -23,25 +28,3 @@
     </div>
 </form>
 <!-- fim da barra de pesquisa -->
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Evento para o botão de pesquisa
-    document.getElementById('btn-pesquisar').addEventListener('click', function() {
-        var pesquisa = document.getElementById('input-pesquisa').value;
-        var selectPesquisa = document.getElementById('selectPesquisa').value;
-        var orderby = document.querySelector('.sort.active') ? 
-                     document.querySelector('.sort.active').getAttribute('data-orderby') : '';
-        
-        window.carregarTabela(1, pesquisa, selectPesquisa, orderby);
-    });
-
-    // Evento para pressionar Enter no campo de pesquisa
-    document.getElementById('input-pesquisa').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            document.getElementById('btn-pesquisar').click();
-        }
-    });
-});
-</script>

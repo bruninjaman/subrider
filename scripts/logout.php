@@ -5,6 +5,6 @@ $sessionManager = SessionManager::getInstance();
 $sessionManager->destroySession();
 
 // Redireciona para a página de login
-header("Location: /subrider/login.php");
+header("Location: /login.php");
 exit();
 ?> 

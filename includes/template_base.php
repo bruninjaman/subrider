@@ -3,13 +3,6 @@
 <?php
 // Carrega as configurações iniciais
 require_once("./config/init.php");
-
-//PERM
-require_once("./scripts/perm.php");
-//CONNECTION
-require_once("./connection/connection.php");
-//FUNCTIONS
-require_once("./scripts/functions.php");
 ?>
 <!--
 	Landed by HTML5 UP
@@ -56,5 +49,4 @@ require_once("./scripts/functions.php");
 </html>
 
 <?php
-    mysqli_close($conn);
 ?> 

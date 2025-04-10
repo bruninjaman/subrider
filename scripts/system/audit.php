@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/init.php';
 
-use PDO;
-use PDOException;
-
 /**
  * Sistema de auditoria para registrar ações no sistema
  */

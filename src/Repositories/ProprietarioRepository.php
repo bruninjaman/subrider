@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace Subrider\Repositories;
 
-use App\Database\Database;
+use Subrider\Database\Database;
+use PDO;
 
 class ProprietarioRepository {
     private $db;

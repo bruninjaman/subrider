@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Security;
+namespace Subrider\Security;
 
-use App\Database\Database;
+use Subrider\Database\Database;
+use PDO;
 
 class PasswordPolicy {
     const MIN_LENGTH = 8;

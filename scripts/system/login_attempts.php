@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/init.php'; // Assumindo que init.php carrega o necessário
 
-use PDO;
-use PDOException;
-
 /**
  * Classe para gerenciar tentativas de login
  */

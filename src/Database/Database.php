@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database;
+namespace Subrider\Database;
 
 use PDO;
 use PDOException;
