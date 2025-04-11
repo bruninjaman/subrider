@@ -166,6 +166,20 @@
     .motoinfo li {
       padding: 3px 0 !important;
     }
+    
+    /* Ajuste do botão para telas muito pequenas */
+    .mobile-button {
+      padding: 0.8em 1em !important;
+      font-size: 1.1em !important;
+      width: 120px !important;
+      height: auto !important;
+      display: block !important;
+      margin: 8px auto !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      box-sizing: border-box !important;
+    }
   }
 }
 
@@ -175,6 +189,24 @@
 .dark-theme {
     background-color: #121212 !important;
     color: #e0e0e0 !important;
+}
+
+/* Efeitos touch para o botão mobile */
+.mobile-button:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.1s !important;
+    background-color: #4d5890 !important;
+}
+
+/* Melhoria do contraste visual para maior acessibilidade */
+.button.primary.mobile-button {
+    background-color: #3d4880 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+    border: 2px solid #5d68a0 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+    letter-spacing: 0.5px !important;
 }
 
 /* Media query para dispositivos mobile */
@@ -188,11 +220,20 @@
     
     /* Cabeçalho */
     #header {
-        padding: 0.4em 0.8em;
+        padding: 0.6em 0.8em;
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #181921 !important;
+        min-height: 60px !important;
+        width: 100% !important;
+    }
+    
+    #nav.mobile-nav {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: auto !important;
     }
     
     .mobile-logo {
@@ -220,8 +261,23 @@
     }
     
     .mobile-button {
-        padding: 0.4em 0.8em !important;
-        font-size: 0.8em !important;
+        padding: 0.7em 1.2em !important;
+        font-size: 1em !important;
+        min-width: 100px !important;
+        text-align: center !important;
+        margin: 5px !important;
+        border-radius: 4px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.2 !important;
+        box-sizing: border-box !important;
+        vertical-align: middle !important;
+        height: auto !important;
     }
     
     /* Banner e conteúdo principal */
@@ -448,8 +504,15 @@
         }
         
         .mobile-button {
-            font-size: 0.7em !important;
-            padding: 0.3em 0.6em !important;
+            font-size: 0.9em !important;
+            padding: 0.5em 1em !important;
+            width: 90px !important;
+            height: auto !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            line-height: 1.2 !important;
+            box-sizing: border-box !important;
         }
         
         .table-wrapper {
