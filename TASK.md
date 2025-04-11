@@ -3,4 +3,4 @@
   - Adição de colunas na tabela login para rastreamento de tentativas
   - Implementação de timer de bloqueio de 15 minutos
   - Exibição de mensagens informativas para o usuário
-  - Melhorias de segurança com prepared statements 
+  - Melhorias de segurança com prepared statements
