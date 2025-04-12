@@ -2,10 +2,7 @@
     <div class="content">
         <!-- search bar -->
         <?php
-        //Categorias de pesquisa
-        $categoriasPesquisa = "SHOW COLUMNS FROM servicos";
-        $resultCategorias = mysqli_query($conn, $categoriasPesquisa);
-        include_once("./includes/searchbar.php");
+        include_once("./includes/searchbar_unified.php");
         ?>
         <div id="resultados-tabela">
             <?php
@@ -19,11 +16,10 @@
 <!-- Script para carregar a tabela sem recarregar a página -->
 <script>
 // Função global para carregar os dados via AJAX
-window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '', orderby = '') {
+window.carregarTabela = function(pagina = 1, pesquisa = '', orderby = '') {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/subrider/pages/tabelaServicos/ajax/carregarServicos.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
-                   '&selectPesquisa=' + encodeURIComponent(selectPesquisa) + 
                    '&orderby=' + encodeURIComponent(orderby), true);
     
     xhr.onload = function() {
@@ -46,10 +42,8 @@ function aplicarEventos() {
             var orderby = this.getAttribute('data-orderby');
             var pesquisa = document.getElementById('input-pesquisa') ? 
                           document.getElementById('input-pesquisa').value : '';
-            var selectPesquisa = document.getElementById('selectPesquisa') ? 
-                                document.getElementById('selectPesquisa').value : '';
             
-            window.carregarTabela(1, pesquisa, selectPesquisa, orderby);
+            window.carregarTabela(1, pesquisa, orderby);
         });
     });
     
@@ -61,12 +55,10 @@ function aplicarEventos() {
             var pagina = this.getAttribute('data-page');
             var pesquisa = document.getElementById('input-pesquisa') ? 
                           document.getElementById('input-pesquisa').value : '';
-            var selectPesquisa = document.getElementById('selectPesquisa') ? 
-                                document.getElementById('selectPesquisa').value : '';
             var orderby = document.querySelector('.sort.active') ? 
                          document.querySelector('.sort.active').getAttribute('data-orderby') : '';
             
-            window.carregarTabela(pagina, pesquisa, selectPesquisa, orderby);
+            window.carregarTabela(pagina, pesquisa, orderby);
         });
     });
 }

@@ -6,15 +6,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/subrider/scripts/functions.php");
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $pesquisa = isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '';
-$selectPesquisa = isset($_GET['selectPesquisa']) ? $_GET['selectPesquisa'] : '';
 $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
 
 // Construir consulta SQL
 $sql_query = "SELECT * FROM pecas ";
 
-// Aplicar filtro de pesquisa
-if (!empty($pesquisa) && !empty($selectPesquisa)) {
-    $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+// Aplicar filtro de pesquisa em todas as colunas relevantes
+if (!empty($pesquisa)) {
+    $sql_query .= " WHERE (
+        grupo LIKE '%" . $pesquisa . "%' OR 
+        item LIKE '%" . $pesquisa . "%' OR 
+        parte LIKE '%" . $pesquisa . "%'
+    )";
 }
 
 // Ordenação
@@ -40,7 +43,7 @@ $result = mysqli_query($conn, $sql_query);
 
 // Se não houver resultados
 if (!$result || mysqli_num_rows($result) === 0) {
-    echo '<tr><td colspan="7" class="text-center">Nenhum resultado encontrado.</td></tr>';
+    echo '<tr><td colspan="5" class="text-center">Nenhum resultado encontrado.</td></tr>';
     exit;
 }
 
@@ -52,33 +55,33 @@ if (!$result || mysqli_num_rows($result) === 0) {
             <thead>
                 <tr>
                     <th>Foto</th>
-                    <th><button class="sort <?php echo ($orderby == 'Grupo') ? 'active' : ''; ?>" type="button" data-orderby="Grupo">Grupo <i class="fa-solid fa-sort"></i></button> </th>
-                    <th><button class="sort <?php echo ($orderby == 'Item') ? 'active' : ''; ?>" type="button" data-orderby="Item">Item <i class="fa-solid fa-sort"></i></button></th>
-                    <th><button class="sort <?php echo ($orderby == 'Parte') ? 'active' : ''; ?>" type="button" data-orderby="Parte">Parte <i class="fa-solid fa-sort"></i></button></th>
-                    <th>Ações</th>
+                    <th><button class="sort <?php echo ($orderby == 'grupo') ? 'active' : ''; ?>" type="button" data-orderby="grupo">Grupo <i class="fa-solid fa-sort"></i></button></th>
+                    <th><button class="sort <?php echo ($orderby == 'item') ? 'active' : ''; ?>" type="button" data-orderby="item">Item <i class="fa-solid fa-sort"></i></button></th>
+                    <th><button class="sort <?php echo ($orderby == 'parte') ? 'active' : ''; ?>" type="button" data-orderby="parte">Parte <i class="fa-solid fa-sort"></i></button></th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="tabela-pecas">
                 <?php
-                if (!$result) {
-                    echo "<tr><td colspan='5'>Nenhum resultado encontrado.</td></tr>";
-                } elseif (mysqli_num_rows($result) === 0) {
-                    echo "<tr><td colspan='5'>Nenhum resultado encontrado.</td></tr>";
-                } else {
-                    while ($peca = mysqli_fetch_assoc($result)) {
+                while ($peca = mysqli_fetch_assoc($result)) {
                 ?>
-                        <tr>
-                            <td class="img-table"><img src='<?php echo str_replace("../", "", $peca['foto']); ?>'></td>
-                            <td data-cell="Grupo"><?php echo $peca['grupo']; ?></td>
-                            <td data-cell="Item"><?php echo $peca['item']; ?></td>
-                            <td data-cell="Parte"><?php echo $peca['parte']; ?></td>
-                            <td>
-                                <button style="background: none; border: none;" onclick="location.href='../tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId'] ?>'"><img src="/subrider/assets/css/images/edit-peca.png" style="height: 30px; width: 30px;"></button>
-                                <button style="background: none; border: none;" onclick="return deletePeca('<?php echo $peca['pecaId']; ?>')"><img src="/subrider/assets/css/images/x-button-peca.png" style="height: 30px; width: 30px;"></button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td class="img-table">
+                            <?php if (!empty($peca['foto'])) : ?>
+                                <img src='<?php echo str_replace("../", "", $peca['foto']); ?>'>
+                            <?php else : ?>
+                                <img src="/subrider/assets/css/images/no-image.jpg">
+                            <?php endif; ?>
+                        </td>
+                        <td data-cell="Grupo"><?php echo $peca['grupo']; ?></td>
+                        <td data-cell="Item"><?php echo $peca['item']; ?></td>
+                        <td data-cell="Parte"><?php echo $peca['parte']; ?></td>
+                        <td>
+                            <button style="background: none; border: none;" onclick="location.href='/subrider/tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId'] ?>'"><img src="/subrider/assets/css/images/edit-peca.png" style="height: 30px; width: 30px;"></button>
+                            <button style="background: none; border: none;" onclick="return deletePeca('<?php echo $peca['pecaId']; ?>')"><img src="/subrider/assets/css/images/x-button-peca.png" style="height: 30px; width: 30px;"></button>
+                        </td>
+                    </tr>
                 <?php
-                    }
                 }
                 ?>
             </tbody>
@@ -103,7 +106,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Adicionar o script para a função deletePeca
 function deletePeca(pecaID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = 'scripts/tabelaPecasDelete/delete-peca.php?pecaID=' + pecaID;
+        location.href = '/subrider/scripts/tabelaPecas/delete-peca.php?pecaID=' + pecaID;
         return true;
     }
     return false;

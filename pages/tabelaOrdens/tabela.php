@@ -2,7 +2,7 @@
     <div class="content">
         <!-- search bar -->
         <?php
-        include_once("./includes/searchbar_ordemservicos.php");
+        include_once("./includes/searchbar_unified.php");
         ?>
         <div id="resultados-tabela">
             <div class="table-wrapper">

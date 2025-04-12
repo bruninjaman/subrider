@@ -6,16 +6,22 @@ include_once("../scripts/functions.php");
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $pesquisa = isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '';
-$selectPesquisa = isset($_GET['selectPesquisa']) ? $_GET['selectPesquisa'] : '';
 $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
 
 // Construir consulta SQL
 $sql_query = " SELECT * FROM ordem_servicos ";
 $sql_query .= " LEFT JOIN motocicletas ON motocicletas.motoId = ordem_servicos.motoID ";
 
-// Aplicar filtro de pesquisa
-if (!empty($pesquisa) && !empty($selectPesquisa)) {
-    $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+// Aplicar filtro de pesquisa em todas as colunas relevantes
+if (!empty($pesquisa)) {
+    $sql_query .= " WHERE (
+        ordem_servicos.Codigo LIKE '%" . $pesquisa . "%' OR 
+        motocicletas.modelo LIKE '%" . $pesquisa . "%' OR 
+        motocicletas.marca LIKE '%" . $pesquisa . "%' OR 
+        motocicletas.placa LIKE '%" . $pesquisa . "%' OR 
+        motocicletas.proprietario LIKE '%" . $pesquisa . "%' OR 
+        motocicletas.ano LIKE '%" . $pesquisa . "%'
+    )";
 }
 
 // Ordenação

@@ -6,15 +6,17 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/subrider/scripts/functions.php");
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $pesquisa = isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '';
-$selectPesquisa = isset($_GET['selectPesquisa']) ? $_GET['selectPesquisa'] : '';
 $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
 
 // Construir consulta SQL
 $sql_query = "SELECT * FROM servicos ";
 
-// Aplicar filtro de pesquisa
-if (!empty($pesquisa) && !empty($selectPesquisa)) {
-    $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+// Aplicar filtro de pesquisa em todas as colunas relevantes
+if (!empty($pesquisa)) {
+    $sql_query .= " WHERE (
+        item LIKE '%" . $pesquisa . "%' OR 
+        tipo LIKE '%" . $pesquisa . "%'
+    )";
 }
 
 // Ordenação
