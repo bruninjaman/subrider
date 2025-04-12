@@ -14,20 +14,20 @@ $sql_query = "SELECT * FROM motocicletas ";
 // Aplicar filtro de pesquisa em todas as colunas relevantes
 if (!empty($pesquisa)) {
     $sql_query .= " WHERE (
-        modelo LIKE '%" . $pesquisa . "%' OR 
-        marca LIKE '%" . $pesquisa . "%' OR 
-        placa LIKE '%" . $pesquisa . "%' OR 
-        proprietario LIKE '%" . $pesquisa . "%' OR 
-        ano LIKE '%" . $pesquisa . "%' OR 
-        endereco LIKE '%" . $pesquisa . "%'
+        modelo LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%' OR 
+        marca LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%' OR 
+        placa LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%' OR 
+        proprietario LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%' OR 
+        ano LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%' OR 
+        endereco LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%'
     )";
 }
 
 // Ordenação
 if (!empty($orderby)) {
-    $sql_query .= " ORDER BY " . $orderby . " ";
+    $sql_query .= " ORDER BY " . mysqli_real_escape_string($conn, $orderby);
 } else {
-    $sql_query .= " ORDER BY motocicletas.motoId DESC "; // Default ordering by latest added
+    $sql_query .= " ORDER BY motocicletas.motoId DESC"; // Default ordering by latest added
 }
 
 // Armazenar consulta sem limite para paginação
@@ -35,11 +35,7 @@ $sql_query_without_limit = $sql_query;
 
 // Adicionar limitação para a página atual
 $offset = ($page - 1) * 5;
-if ($offset < 0) {
-    $offset = 0;
-    $page = 1;
-}
-$sql_query .= " LIMIT " . $offset . ", 5";
+$sql_query .= " LIMIT $offset, 5";
 
 // Executar consulta
 $result = mysqli_query($conn, $sql_query);
