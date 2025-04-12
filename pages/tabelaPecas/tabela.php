@@ -55,10 +55,20 @@ function aplicarEventos() {
         });
     });
 
-    // Adicionar eventos para os links de paginação
-    document.querySelectorAll('.pagination a').forEach(function(link) {
-        link.addEventListener('click', function(e) {
+    // Adicionar eventos para os botões de paginação
+    document.querySelectorAll('.paginacao-btn').forEach(function(button) {
+        button.addEventListener('click', function(e) {
             e.preventDefault();
+            
+            // Remove a classe ativa de todos os botões
+            document.querySelectorAll('.paginacao-btn').forEach(function(btn) {
+                btn.classList.remove('paginacao-ativa');
+                btn.style.fontWeight = 'normal';
+            });
+            
+            // Adiciona a classe ativa ao botão clicado
+            this.classList.add('paginacao-ativa');
+            this.style.fontWeight = 'bold';
             
             var pagina = this.getAttribute('data-page');
             var pesquisa = document.getElementById('input-pesquisa') ? 
@@ -72,7 +82,9 @@ function aplicarEventos() {
 }
 
 // Aplicar eventos inicialmente
-aplicarEventos();
+document.addEventListener('DOMContentLoaded', function() {
+    aplicarEventos();
+});
 </script>
 <script src="delete_confirm.js"></script>
 <script src="js/deletePeca.js"></script>

@@ -14,17 +14,17 @@ $sql_query = "SELECT * FROM pecas ";
 // Aplicar filtro de pesquisa em todas as colunas relevantes
 if (!empty($pesquisa)) {
     $sql_query .= " WHERE (
-        grupo LIKE '%" . $pesquisa . "%' OR 
-        item LIKE '%" . $pesquisa . "%' OR 
-        parte LIKE '%" . $pesquisa . "%'
+        grupo LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%' OR 
+        item LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%' OR 
+        parte LIKE '%" . mysqli_real_escape_string($conn, $pesquisa) . "%'
     )";
 }
 
 // Ordenação
 if (!empty($orderby)) {
-    $sql_query .= " ORDER BY " . $orderby . " ";
+    $sql_query .= " ORDER BY " . mysqli_real_escape_string($conn, $orderby);
 } else {
-    $sql_query .= " ORDER BY pecas.pecaId DESC "; // Default ordering by latest added
+    $sql_query .= " ORDER BY pecas.pecaId DESC"; // Default ordering by latest added
 }
 
 // Armazenar consulta sem limite para paginação
@@ -32,11 +32,7 @@ $sql_query_without_limit = $sql_query;
 
 // Adicionar limitação para a página atual
 $offset = ($page - 1) * 5;
-if ($offset < 0) {
-    $offset = 0;
-    $page = 1;
-}
-$sql_query .= " LIMIT " . $offset . ", 5";
+$sql_query .= " LIMIT $offset, 5";
 
 // Executar consulta
 $result = mysqli_query($conn, $sql_query);

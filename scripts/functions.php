@@ -26,23 +26,13 @@ function pagination($conn, $sql_query, $results_per_page = 5)
         if ($current_page < 1) $current_page = 1;
         if ($current_page > $num_pages) $current_page = $num_pages;
 
-        // Limit results based on current page
-        $offset = ($current_page - 1) * $results_per_page;
-        $limited_sql_query = $sql_query . " LIMIT $offset, $results_per_page";
-        $limited_result = mysqli_query($conn, $limited_sql_query);
-
-        // Check for errors in database query (for limited results)
-        if (!$limited_result) {
-            throw new Exception("Error executing limited database query: " . mysqli_error($conn));
-        }
-
         // Generate pagination interface
         ?>
         <div class="pagination-style">
             <?php if ($current_page > 1) : ?>
                 <!-- Move to the first page -->
-                <button type="button" class="paginacao-btn" data-page="1">« First</button>
-                <button type="button" class="paginacao-btn" data-page="<?php echo $current_page - 1; ?>">‹ Prev</button>
+                <button type="button" class="paginacao-btn" data-page="1">« Primeira</button>
+                <button type="button" class="paginacao-btn" data-page="<?php echo $current_page - 1; ?>">‹ Anterior</button>
             <?php endif; ?>
 
             <!-- Show page numbers -->
@@ -56,8 +46,8 @@ function pagination($conn, $sql_query, $results_per_page = 5)
 
             <?php if ($current_page < $num_pages) : ?>
                 <!-- Move to the last page -->
-                <button type="button" class="paginacao-btn" data-page="<?php echo $current_page + 1; ?>">Next ›</button>
-                <button type="button" class="paginacao-btn" data-page="<?php echo $num_pages; ?>">Last »</button>
+                <button type="button" class="paginacao-btn" data-page="<?php echo $current_page + 1; ?>">Próxima ›</button>
+                <button type="button" class="paginacao-btn" data-page="<?php echo $num_pages; ?>">Última »</button>
             <?php endif; ?>
         </div>
         <?php
