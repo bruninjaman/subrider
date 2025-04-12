@@ -11,79 +11,89 @@ require_once("../../scripts/functions.php");
 if (isset($_POST['tipo_item'])) {
     switch($_POST['tipo_item']) {
         case 'pecas':
+            if (!isset($_POST['pecaid']) || !is_numeric($_POST['pecaid'])) {
+                die("ID da peça inválido");
+            }
+            
             $categoria = 2;
             //SELECT PECA
-            $sql_query = "SELECT * FROM pecas ";
-            $sql_query .= "WHERE pecas.pecaId = ". $_POST['pecaid'];
-            $result = mysqli_query($conn, $sql_query);
+            $sql_query = "SELECT * FROM pecas WHERE pecas.pecaId = ?";
+            $stmt = mysqli_prepare($conn, $sql_query);
+            mysqli_stmt_bind_param($stmt, "i", $_POST['pecaid']);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
 
-            //GIVE RESULTS
-            while ($peca = mysqli_fetch_assoc($result)) {
+            if ($peca = mysqli_fetch_assoc($result)) {
                 $foto = $peca['foto'];
                 $grupo = $peca['grupo'];
                 $tipo = 0;
                 $item = $peca['item'];
                 $parte = $peca['parte'];
-                $quantidade = $_POST['pquantidade'];
-                $valor = $_POST['pvalor'];
+                $quantidade = isset($_POST['pquantidade']) ? $_POST['pquantidade'] : 0;
+                $valor = isset($_POST['pvalor']) ? $_POST['pvalor'] : 0;
                 $descricao = 0;
-                $ordem = $_GET["ordem"];            
-                //Código
-                $scode = $_POST['scode'];
+                $ordem = isset($_GET["ordem"]) ? $_GET["ordem"] : 0;            
+                $scode = isset($_POST['scode']) ? $_POST['scode'] : '';
+                
+                $insert_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria,Codigo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                $stmt = mysqli_prepare($conn, $insert_query);
+                mysqli_stmt_bind_param($stmt, "ssissddisis", $foto, $grupo, $tipo, $item, $parte, $quantidade, $valor, $descricao, $ordem, $categoria, $scode);
+                mysqli_stmt_execute($stmt);
+            }
+            break;
+            
+        case 'service':
+            if (!isset($_POST['servicoid']) || !is_numeric($_POST['servicoid'])) {
+                die("ID do serviço inválido");
             }
             
-            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria,Codigo) ";
-            $mysqli_query .= " VALUES ";
-            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}','{$scode}')";
-            break;
-        case 'service':
             $categoria = 1;
-            //SELECT Serviço
-            $sql_query = "SELECT * FROM servicos ";
-            $sql_query .= "WHERE servicos.servicoId = ". $_POST['servicoid'];
-            
-            $result = mysqli_query($conn, $sql_query);
+            $sql_query = "SELECT * FROM servicos WHERE servicos.servicoId = ?";
+            $stmt = mysqli_prepare($conn, $sql_query);
+            mysqli_stmt_bind_param($stmt, "i", $_POST['servicoid']);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
 
-            //GIVE RESULTS
-            while ($servico = mysqli_fetch_assoc($result)) {
+            if ($servico = mysqli_fetch_assoc($result)) {
                 $foto = 0;
                 $grupo = 0;
                 $tipo = $servico['tipo'];
                 $item = $servico['item'];
                 $parte = 0;
-                $quantidade = $_POST['squantidade'];
-                $valor = $_POST['svalor'];
+                $quantidade = isset($_POST['squantidade']) ? $_POST['squantidade'] : 0;
+                $valor = isset($_POST['svalor']) ? $_POST['svalor'] : 0;
                 $descricao = 0;
-                $ordem = $_GET["ordem"];
+                $ordem = isset($_GET["ordem"]) ? $_GET["ordem"] : 0;
+                
+                $insert_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                $stmt = mysqli_prepare($conn, $insert_query);
+                mysqli_stmt_bind_param($stmt, "ssissddisi", $foto, $grupo, $tipo, $item, $parte, $quantidade, $valor, $descricao, $ordem, $categoria);
+                mysqli_stmt_execute($stmt);
             }
-            
-            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) ";
-            $mysqli_query .= " VALUES ";
-            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}')";
             break;
+            
         case 'adiantamento':
             $categoria = 3;
-            //GIVE RESULTS
             $foto = 0;
             $grupo = 0;
             $tipo = 0;
             $item = 0;
             $parte = 0;
             $quantidade = 1;
-            $valor = $_POST['avalor'];
-            $descricao = $_POST['aitem'];;
-            $ordem = $_GET["ordem"];
+            $valor = isset($_POST['avalor']) ? $_POST['avalor'] : 0;
+            $descricao = isset($_POST['aitem']) ? $_POST['aitem'] : '';
+            $ordem = isset($_GET["ordem"]) ? $_GET["ordem"] : 0;
             
-            $mysqli_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) ";
-            $mysqli_query .= " VALUES ";
-            $mysqli_query .= " ('{$foto}','{$grupo}','{$tipo}','{$item}','{$parte}','{$quantidade}','{$valor}','{$descricao}','{$ordem}','{$categoria}')";
+            $insert_query = "INSERT INTO item_ordem (Foto,Grupo,Tipo,Item,Parte,Quantidade,Valor,Descricao,Ordem,Categoria) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $stmt = mysqli_prepare($conn, $insert_query);
+            mysqli_stmt_bind_param($stmt, "ssissddisi", $foto, $grupo, $tipo, $item, $parte, $quantidade, $valor, $descricao, $ordem, $categoria);
+            mysqli_stmt_execute($stmt);
             break;
     }
 
-    var_dump($mysqli_query);
-    mysqli_query($conn, $mysqli_query);
     mysqli_close($conn);
     header('Location: ../../ordemservico.php?ordem='. $_GET['ordem']);
+    exit();
 }
 ?>
 
