@@ -32,14 +32,14 @@
                                 $sql_query .= " ORDER BY ordem_servicos.servID DESC "; // Default ordering by latest added
                             }
                             $sql_query_without_limit = $sql_query;
-                            $sql_query .= " LIMIT " . ((isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5) . ", 5";
+                            $offset = (isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5;
+                            if ($offset < 0) {
+                                $offset = 0;
+                            }
+                            $sql_query .= " LIMIT " . $offset . ", 5";
                             $result = mysqli_query($conn, $sql_query);
-                            if (!$result) {
-                                // Exibe uma mensagem genérica ao usuário
-                                echo "<tr><td colspan='7'>Nenhum resultado encontrado.</td></tr>";
-                            } elseif (mysqli_num_rows($result) === 0) {
-                                // Se não houver resultados
-                                echo "<tr><td colspan='7'>Nenhum resultado encontrado.</td></tr>";
+                            if (!$result || mysqli_num_rows($result) === 0) {
+                                echo "<tr><td colspan='7' class='text-center'>Nenhum resultado encontrado.</td></tr>";
                             } else {
                                 while ($moto = mysqli_fetch_assoc($result)) {
                             ?>

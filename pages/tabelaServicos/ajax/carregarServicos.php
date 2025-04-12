@@ -29,10 +29,20 @@ $sql_query_without_limit = $sql_query;
 
 // Adicionar limitação para a página atual
 $offset = ($page - 1) * 5;
+if ($offset < 0) {
+    $offset = 0;
+    $page = 1;
+}
 $sql_query .= " LIMIT " . $offset . ", 5";
 
 // Executar consulta
 $result = mysqli_query($conn, $sql_query);
+
+// Se não houver resultados
+if (!$result || mysqli_num_rows($result) === 0) {
+    echo '<tr><td colspan="7" class="text-center">Nenhum resultado encontrado.</td></tr>';
+    exit;
+}
 
 // HTML da tabela
 ?>
