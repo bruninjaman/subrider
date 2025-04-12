@@ -61,7 +61,7 @@
                                             <button class="ordembutton" style="color:white;" onclick="location.href='ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'"><?php echo $moto['Codigo']; ?></button>
                                             <div style="display: flex; gap: 10px; align-items: center;">
                                                 <button class="ordemedit" style="background: none; border: none;" onclick="location.href='tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="./assets\css\images\edit-ordem.png" style="height: 2em; width: 2em;"> </button>
-                                                <button style="background: none; border: none;" onclick="return deleteServico(<?php echo $moto['motoId'] ?>,'<?php echo $moto['Codigo'] ?>')"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
+                                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $moto['motoId'] ?>','<?php echo $moto['Codigo'] ?>')"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
                                             </div>
                                         </td>
                                     </tr>
