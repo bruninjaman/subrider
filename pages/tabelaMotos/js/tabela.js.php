@@ -1,48 +1,10 @@
 <?php
-// Se não estiver sendo incluído como script
-if (!isset($isScript)) {
+header('Content-Type: application/javascript');
+require_once(__DIR__ . "/../../../connection/connection.php");
 ?>
-<section id="banner">
-    <div class="content">
-        <!-- Script para carregar a tabela sem recarregar a página -->
-        <script src="<?php echo $baseAddress; ?>/pages/tabelaMotos/js/tabela.js.php"></script>
-        
-        <!-- search bar -->
-        <?php
-        include_once("./includes/searchbar_unified.php");
-        ?>
-        <div id="resultados-tabela">
-            <?php
-            // Carregar a tabela inicialmente
-            include_once(__DIR__ . "/ajax/carregarMotos.php");
-            ?>
-        </div>
-    </div>
-</section>
-<?php
-} else {
-?>
+
 // Recebe o baseAddress do PHP
 const baseAddress = '<?php echo $baseAddress; ?>';
-
-// Função global para carregar os dados via AJAX
-window.carregarTabela = function(pagina = 1, pesquisa = '', orderby = '') {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', baseAddress + '/pages/tabelaMotos/ajax/carregarMotos.php?page=' + pagina + 
-                   '&pesquisa=' + encodeURIComponent(pesquisa) + 
-                   '&orderby=' + encodeURIComponent(orderby), true);
-    
-    xhr.onload = function() {
-        if (this.status == 200) {
-            document.getElementById('resultados-tabela').innerHTML = this.responseText;
-            
-            // Reaplica os eventos após o carregamento
-            aplicarEventos();
-        }
-    };
-    
-    xhr.send();
-};
 
 // Função para aplicar eventos aos elementos carregados
 function aplicarEventos() {
@@ -91,10 +53,30 @@ function aplicarEventos() {
     });
 }
 
-// Aplicar eventos inicialmente
-document.addEventListener('DOMContentLoaded', function() {
+// Função global para carregar os dados via AJAX
+window.carregarTabela = function(pagina = 1, pesquisa = '', orderby = '') {
+    console.log('carregarTabela chamada:', {pagina, pesquisa, orderby}); // Debug
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', baseAddress + '/pages/tabelaMotos/ajax/carregarMotos.php?page=' + pagina + 
+                   '&pesquisa=' + encodeURIComponent(pesquisa) + 
+                   '&orderby=' + encodeURIComponent(orderby), true);
+    
+    xhr.onload = function() {
+        if (this.status == 200) {
+            document.getElementById('resultados-tabela').innerHTML = this.responseText;
+            
+            // Reaplica os eventos após o carregamento
+            aplicarEventos();
+        }
+    };
+    
+    xhr.send();
+};
+
+// Aplicar eventos quando o DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', aplicarEventos);
+} else {
     aplicarEventos();
-});
-<?php
-}
-?>
+} 

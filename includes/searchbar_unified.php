@@ -11,21 +11,40 @@
 <!-- fim da barra de pesquisa -->
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Adicionar event listener para o formulário de pesquisa
+// Função para verificar se carregarTabela está disponível
+function checkCarregarTabela(callback, maxAttempts = 20, interval = 100) {
+    console.log('Verificando carregarTabela...'); // Debug
+    
+    if (typeof window.carregarTabela === 'function') {
+        console.log('carregarTabela encontrada!'); // Debug
+        callback();
+    } else if (maxAttempts > 0) {
+        console.log('carregarTabela não encontrada, tentando novamente...'); // Debug
+        setTimeout(() => checkCarregarTabela(callback, maxAttempts - 1, interval), interval);
+    } else {
+        console.error('Função carregarTabela não encontrada após várias tentativas.');
+    }
+}
+
+// Função para inicializar a pesquisa
+function initializePesquisa() {
     var formPesquisa = document.getElementById('form-pesquisa');
     if (formPesquisa) {
         formPesquisa.addEventListener('submit', function(event) {
             event.preventDefault();
             var pesquisa = document.getElementById('input-pesquisa').value;
             
-            // Verifica se existe a função carregarTabela (definida em tabela.php)
-            if (typeof window.carregarTabela === 'function') {
+            checkCarregarTabela(() => {
                 window.carregarTabela(1, pesquisa);
-            } else {
-                console.error('Função carregarTabela não encontrada. Verifique se o script em tabela.php foi carregado corretamente.');
-            }
+            });
         });
     }
-});
+}
+
+// Inicializar quando o DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePesquisa);
+} else {
+    initializePesquisa();
+}
 </script> 
