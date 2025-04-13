@@ -15,10 +15,13 @@
 
 <!-- Script para carregar a tabela sem recarregar a página -->
 <script>
+// Recebe o baseAddress do PHP
+const baseAddress = '<?php echo $baseAddress; ?>';
+
 // Função global para carregar os dados via AJAX
 window.carregarTabela = function(pagina = 1, pesquisa = '', orderby = '') {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/subrider/pages/tabelaMotos/ajax/carregarMotos.php?page=' + pagina + 
+    xhr.open('GET', baseAddress + '/pages/tabelaMotos/ajax/carregarMotos.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
                    '&orderby=' + encodeURIComponent(orderby), true);
     

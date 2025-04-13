@@ -90,10 +90,13 @@
 
 <!-- Script para carregar a tabela sem recarregar a página -->
 <script>
+// Recebe o baseAddress do PHP
+const baseAddress = '<?php echo $baseAddress; ?>';
+
 // Função para carregar os dados via AJAX
 window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '', orderby = '') {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', './ajax/carregarOrdens.php?page=' + pagina + 
+    xhr.open('GET', baseAddress + '/ajax/carregarOrdens.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
                    '&selectPesquisa=' + encodeURIComponent(selectPesquisa) + 
                    '&orderby=' + encodeURIComponent(orderby), true);

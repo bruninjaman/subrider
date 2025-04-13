@@ -78,8 +78,12 @@ if (!$result || mysqli_num_rows($result) === 0) {
                         <td data-cell="Km"><?php echo KMFormat($moto['km']); ?></td>
                         <td data-cell="Proprietario"><?php echo $moto['proprietario']; ?></td>
                         <td>
-                            <button style="background: none; border: none;" onclick="location.href='/subrider/editmotos.php?motoID=<?php echo $moto['motoId'] ?>'"><img src="/subrider/assets/css/images/edit-new.png" style="height: 28px; width: 38px;"></button>
-                            <button style="background: none; border: none;" onclick="return deleteMoto('<?php echo $moto['motoId']; ?>')"><img src="/subrider/assets/css/images/x-button-new.png" style="height: 28px; width: 38px;"></button>
+                            <button style="background: none; border: none;" onclick="location.href='<?php echo $baseAddress; ?>/editmotos.php?motoID=<?php echo $moto['motoId'] ?>'">
+                                <img src="<?php echo $baseAddress; ?>/assets/css/images/edit-new.png" style="height: 28px; width: 38px;">
+                            </button>
+                            <button style="background: none; border: none;" onclick="return deleteMoto('<?php echo $moto['motoId']; ?>')">
+                                <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button-new.png" style="height: 28px; width: 38px;">
+                            </button>
                         </td>
                     </tr>
                 <?php
@@ -89,9 +93,9 @@ if (!$result || mysqli_num_rows($result) === 0) {
         </table>
         <div class="row">
             <div class="col-3">
-                <a class="button primary" href='/subrider/addmotos.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
-                    <img src="/subrider/assets/css/images/addmoto.png" style="margin-right: 12px;">
-                    Adicionar Motocicleta
+                <a class="button primary" href='<?php echo $baseAddress; ?>/addmotos.php' style="display: flex; align-items: center; justify-content: center;">
+                    <img src="<?php echo $baseAddress; ?>/assets/css/images/addmoto.png" style="margin-right: 12px;">
+                    Adicionar Moto
                 </a>
             </div>
             <div class="col-9" id="paginacao-container">
@@ -107,7 +111,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Função para deletar moto
 function deleteMoto(motoID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = '/subrider/scripts/tabelaMotos/delete-moto.php?motoID=' + motoID;
+        location.href = '<?php echo $baseAddress; ?>/scripts/tabelaMotos/delete-moto.php?motoID=' + motoID;
         return true;
     }
     return false;

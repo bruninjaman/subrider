@@ -63,18 +63,22 @@ if (!$result || mysqli_num_rows($result) === 0) {
                 ?>
                     <tr>
                         <td class="img-table">
-                            <?php if (!empty($peca['foto'])) : ?>
-                                <img src='<?php echo str_replace("../", "", $peca['foto']); ?>'>
-                            <?php else : ?>
-                                <img src="/subrider/assets/css/images/no-image.jpg">
-                            <?php endif; ?>
+                            <?php if (empty($peca['foto'])) { ?>
+                                <img src="<?php echo $baseAddress; ?>/assets/css/images/no-image.jpg">
+                            <?php } else { ?>
+                                <img src="<?php echo $peca['foto']; ?>">
+                            <?php } ?>
                         </td>
                         <td data-cell="Grupo"><?php echo $peca['grupo']; ?></td>
                         <td data-cell="Item"><?php echo $peca['item']; ?></td>
                         <td data-cell="Parte"><?php echo $peca['parte']; ?></td>
                         <td>
-                            <button style="background: none; border: none;" onclick="location.href='/subrider/tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId'] ?>'"><img src="/subrider/assets/css/images/edit-peca.png" style="height: 30px; width: 30px;"></button>
-                            <button style="background: none; border: none;" onclick="return deletePeca('<?php echo $peca['pecaId']; ?>')"><img src="/subrider/assets/css/images/x-button-peca.png" style="height: 30px; width: 30px;"></button>
+                            <button style="background: none; border: none;" onclick="location.href='<?php echo $baseAddress; ?>/tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId'] ?>'">
+                                <img src="<?php echo $baseAddress; ?>/assets/css/images/edit-peca.png" style="height: 30px; width: 30px;">
+                            </button>
+                            <button style="background: none; border: none;" onclick="return deletePeca('<?php echo $peca['pecaId']; ?>')">
+                                <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button-peca.png" style="height: 30px; width: 30px;">
+                            </button>
                         </td>
                     </tr>
                 <?php
@@ -84,9 +88,9 @@ if (!$result || mysqli_num_rows($result) === 0) {
         </table>
         <div class="row">
             <div class="col-3">
-                <a class="button primary" href='../tabelaPecasAdd.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
-                    <img src="/subrider/assets/css/images/addpeca.png" style="margin-right: 12px; width: 40px; height: 40px;">
-                    Adicionar Item
+                <a class="button primary" href='<?php echo $baseAddress; ?>/tabelaPecasAdd.php' style="display: flex; align-items: center; justify-content: center;">
+                    <img src="<?php echo $baseAddress; ?>/assets/css/images/addpeca.png" style="margin-right: 12px; width: 40px; height: 40px;">
+                    Adicionar Peça
                 </a>
             </div>
             <div class="col-9" id="paginacao-container">
@@ -102,7 +106,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Adicionar o script para a função deletePeca
 function deletePeca(pecaID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = '/subrider/scripts/tabelaPecas/delete-peca.php?pecaID=' + pecaID;
+        location.href = '<?php echo $baseAddress; ?>/scripts/tabelaPecas/delete-peca.php?pecaID=' + pecaID;
         return true;
     }
     return false;
