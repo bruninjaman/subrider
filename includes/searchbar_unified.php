@@ -11,6 +11,19 @@
 <!-- fim da barra de pesquisa -->
 
 <script>
+// Define caminhos de forma compatível com servidor hospedado
+<?php
+if (!isset($baseAddress)) {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $domainName = $_SERVER['HTTP_HOST'];
+    $scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+    $basePathParts = explode('/includes', $scriptPath);
+    $baseAddress = $protocol . $domainName . $basePathParts[0];
+}
+?>
+// Variável global
+var searchBarBaseAddress = '<?php echo $baseAddress; ?>';
+
 // Função para verificar se carregarTabela está disponível
 function checkCarregarTabela(callback, maxAttempts = 20, interval = 100) {
     console.log('Verificando carregarTabela...'); // Debug

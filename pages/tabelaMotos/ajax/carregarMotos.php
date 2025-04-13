@@ -11,19 +11,31 @@ function writeLog($message) {
 }
 
 try {
-    // Usar caminho relativo para includes
-    $rootPath = dirname(__FILE__) . '/../../../';
+    // Usar caminho absoluto para includes - melhor compatibilidade entre servidores
+    $rootPath = realpath(dirname(__FILE__) . '/../../../');
     
     // Log dos caminhos para debug
     writeLog("Root Path: " . $rootPath);
     
     // Incluir configurações de conexão e funções necessárias
-    require_once($rootPath . "connection/connection.php");
-    require_once($rootPath . "scripts/functions.php");
+    require_once($rootPath . "/connection/connection.php");
+    require_once($rootPath . "/scripts/functions.php");
 
     // Verificar conexão
     if (!$conn) {
         throw new Exception("Erro na conexão com o banco de dados: " . mysqli_connect_error());
+    }
+    
+    // Se $baseAddress não estiver definido, defina-o
+    if (!isset($baseAddress)) {
+        // Detecta automaticamente o caminho base da aplicação
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $domainName = $_SERVER['HTTP_HOST'];
+        $scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+        $basePathParts = explode('/pages', $scriptPath);
+        $baseAddress = $protocol . $domainName . $basePathParts[0];
+        
+        writeLog("Base Address auto-detectado: " . $baseAddress);
     }
 
     // Recuperar parâmetros da requisição

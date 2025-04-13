@@ -1,6 +1,14 @@
 <?php
 // Se não estiver sendo incluído como script
 if (!isset($isScript)) {
+    // Define o caminho base caso não exista
+    if (!isset($baseAddress)) {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $domainName = $_SERVER['HTTP_HOST'];
+        $scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+        $basePathParts = explode('/pages', $scriptPath);
+        $baseAddress = $protocol . $domainName . $basePathParts[0];
+    }
 ?>
 <section id="banner">
     <div class="content">
@@ -9,12 +17,12 @@ if (!isset($isScript)) {
         
         <!-- search bar -->
         <?php
-        include_once("./includes/searchbar_unified.php");
+        include_once($baseAddress ? realpath($_SERVER['DOCUMENT_ROOT'] . parse_url($baseAddress, PHP_URL_PATH)) . "/includes/searchbar_unified.php" : "./includes/searchbar_unified.php");
         ?>
         <div id="resultados-tabela">
             <?php
             // Carregar a tabela inicialmente
-            include_once(__DIR__ . "/ajax/carregarMotos.php");
+            include_once(realpath(__DIR__ . "/ajax/carregarMotos.php"));
             ?>
         </div>
     </div>

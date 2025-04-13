@@ -1,6 +1,15 @@
 <?php
 header('Content-Type: application/javascript');
-require_once(__DIR__ . "/../../../connection/connection.php");
+require_once(realpath(__DIR__ . "/../../../connection/connection.php"));
+
+// Se $baseAddress não estiver definido, defina-o
+if (!isset($baseAddress)) {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $domainName = $_SERVER['HTTP_HOST'];
+    $scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+    $basePathParts = explode('/pages', $scriptPath);
+    $baseAddress = $protocol . $domainName . $basePathParts[0];
+}
 ?>
 
 // Recebe o baseAddress do PHP
