@@ -24,7 +24,7 @@ A função `login()` verifica se as colunas existem e as cria caso não existam.
 1. **Execute o script PHP específico**:
    Acesse `scripts/add_login_columns.php` no navegador para adicionar as colunas ao banco de dados.
    
-   Exemplo: `http://localhost/subrider/scripts/add_login_columns.php`
+   Exemplo: `http://localhost/scripts/add_login_columns.php`
 
    Este script irá:
    - Verificar se as colunas já existem

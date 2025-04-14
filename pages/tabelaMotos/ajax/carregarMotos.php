@@ -1,7 +1,7 @@
 <?php
 // Incluir configurações de conexão e funções necessárias
-include_once($_SERVER['DOCUMENT_ROOT'] . "/subrider/connection/connection.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/subrider/scripts/functions.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/connection/connection.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/scripts/functions.php");
 
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -82,8 +82,8 @@ if (!$result || mysqli_num_rows($result) === 0) {
                         <td data-cell="Km"><?php echo KMFormat($moto['km']); ?></td>
                         <td data-cell="Proprietario"><?php echo $moto['proprietario']; ?></td>
                         <td>
-                            <button style="background: none; border: none;" onclick="location.href='/subrider/editmotos.php?motoID=<?php echo $moto['motoId'] ?>'"><img src="/subrider/assets/css/images/edit-new.png" style="height: 28px; width: 38px;"></button>
-                            <button style="background: none; border: none;" onclick="return deleteMoto('<?php echo $moto['motoId']; ?>')"><img src="/subrider/assets/css/images/x-button-new.png" style="height: 28px; width: 38px;"></button>
+                            <button style="background: none; border: none;" onclick="location.href='editmotos.php?motoID=<?php echo $moto['motoId'] ?>'"><img src="assets/css/images/edit-new.png" style="height: 28px; width: 38px;"></button>
+                            <button style="background: none; border: none;" onclick="return deleteMoto('<?php echo $moto['motoId']; ?>')"><img src="assets/css/images/x-button-new.png" style="height: 28px; width: 38px;"></button>
                         </td>
                     </tr>
                 <?php
@@ -93,8 +93,8 @@ if (!$result || mysqli_num_rows($result) === 0) {
         </table>
         <div class="row">
             <div class="col-3">
-                <a class="button primary" href='/subrider/addmotos.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
-                    <img src="/subrider/assets/css/images/addmoto.png" style="margin-right: 12px;">
+                <a class="button primary" href='addmotos.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
+                    <img src="assets/css/images/addmoto.png" style="margin-right: 12px;">
                     Adicionar Motocicleta
                 </a>
             </div>
@@ -111,7 +111,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Função para deletar moto
 function deleteMoto(motoID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = '/subrider/scripts/tabelaMotos/delete-moto.php?motoID=' + motoID;
+        location.href = 'scripts/tabelaMotos/delete-moto.php?motoID=' + motoID;
         return true;
     }
     return false;
