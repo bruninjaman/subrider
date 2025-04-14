@@ -1,7 +1,7 @@
 <?php
 // Incluir configurações de conexão e funções necessárias
-include_once($_SERVER['DOCUMENT_ROOT'] . "/subrider/connection/connection.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/subrider/scripts/functions.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "connection/connection.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "scripts/functions.php");
 
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -71,8 +71,8 @@ if (!$result || mysqli_num_rows($result) === 0) {
                             <td data-cell="Item"><?php echo $servico['item']; ?></td>
                             <td data-cell="Tipo"><?php echo $servico['tipo']; ?></td>
                             <td>
-                                <button style="background: none; border: none;" onclick="location.href='/subrider/tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="/subrider/assets/css/images/edit.png" style="height: 30px; width: 30px;"></button>
-                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $servico['servicoId']; ?>')"><img src="/subrider/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
+                                <button style="background: none; border: none;" onclick="location.href='/tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="/assets/css/images/edit.png" style="height: 30px; width: 30px;"></button>
+                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $servico['servicoId']; ?>')"><img src="/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                             </td>
                         </tr>
                 <?php
@@ -98,7 +98,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Adicionar o script para a função deleteServico
 function deleteServico(servicoID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = '/subrider/scripts/tabelaServicos/delete-serv.php?servID=' + servicoID;
+        location.href = '/scripts/tabelaServicos/delete-serv.php?servID=' + servicoID;
         return true;
     }
     return false;

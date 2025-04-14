@@ -18,7 +18,7 @@
 // Função global para carregar os dados via AJAX
 window.carregarTabela = function(pagina = 1, pesquisa = '', orderby = '') {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/subrider/pages/tabelaMotos/ajax/carregarMotos.php?page=' + pagina + 
+    xhr.open('GET', 'pages/tabelaMotos/ajax/carregarMotos.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
                    '&orderby=' + encodeURIComponent(orderby), true);
     
