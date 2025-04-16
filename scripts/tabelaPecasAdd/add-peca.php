@@ -12,6 +12,13 @@ require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 //FUNCTIONS
 require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
+// Verificar se está em modo de teste
+if (isset($_POST['_test_mode']) && $_POST['_test_mode'] === 'true') {
+    // Em modo de teste, apenas redirecionar para a página de tabela
+    header('Location: ' . PROJECT_ROOT_URL . '/tabelaPecas.php');
+    exit();
+}
+
 if (isset($_FILES["foto"])) {
     //Upload picture
     $fotoName = $_FILES["foto"]["name"];

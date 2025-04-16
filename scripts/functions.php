@@ -116,7 +116,7 @@ function login($user, $password, $conn)
             if ($current_time < $blocked_until) {
                 // Calcular tempo restante em minutos
                 $remaining_time = ceil(($blocked_until - $current_time) / 60);
-                header("location: ../login.php?error=blocked&time=" . $remaining_time);
+                header("Location: " . PROJECT_ROOT_URL . "/login.php?error=blocked&time=" . $remaining_time);
                 exit();
             } else {
                 // Se o bloqueio expirou, resetar as tentativas
@@ -145,7 +145,7 @@ function login($user, $password, $conn)
             session_start();
             $_SESSION["user"] = $user_data["username"];
             $_SESSION["type"] = $user_data["userType"];
-            header("location: ../index.php");
+            header("Location: " . PROJECT_ROOT_URL . "/index.php");
             exit();
         } else {
             // Senha incorreta
@@ -162,7 +162,7 @@ function login($user, $password, $conn)
                     mysqli_stmt_execute($update_stmt);
                     mysqli_stmt_close($update_stmt);
                     
-                    header("location: ../login.php?error=blocked&time=15");
+                    header("Location: " . PROJECT_ROOT_URL . "/login.php?error=blocked&time=15");
                     exit();
                 } else {
                     // Atualizar número de tentativas
@@ -173,18 +173,18 @@ function login($user, $password, $conn)
                     mysqli_stmt_close($update_stmt);
                     
                     $remaining_attempts = 5 - $attempts;
-                    header("location: ../login.php?error=wrong&attempts=" . $remaining_attempts);
+                    header("Location: " . PROJECT_ROOT_URL . "/login.php?error=wrong&attempts=" . $remaining_attempts);
                     exit();
                 }
             } else {
                 // Se não temos as colunas, apenas redirecionar com erro simples
-                header("location: ../login.php?error=wrong");
+                header("Location: " . PROJECT_ROOT_URL . "/login.php?error=wrong");
                 exit();
             }
         }
     } else {
         // Usuário não existe
-        header("location: ../login.php?error=nouser");
+        header("Location: " . PROJECT_ROOT_URL . "/login.php?error=nouser");
         exit();
     }
 }

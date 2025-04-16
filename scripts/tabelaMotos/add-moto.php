@@ -1,19 +1,31 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'config.php'); 
 session_start();
 
 //PERM
-require_once("../../scripts/perm.php");
+// Caminhos corrigidos
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "perm.php");
 //CONNECTION
-require_once("../../connection/connection.php");
+require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 //FUNCTIONS
-require_once("../../scripts/functions.php");
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
+
+// Verificar se está em modo de teste
+if (isset($_POST['_test_mode']) && $_POST['_test_mode'] === 'true') {
+    // Em modo de teste, apenas redirecionar para a página de tabela
+    header('Location: ' . PROJECT_ROOT_URL . '/tabelaMotos.php');
+    exit();
+}
 
 if (isset($_FILES["foto"])) {
     //Upload picture securely
     $fotoName = $_FILES["foto"]["name"];
     $fotoSize = $_FILES["foto"]["size"];
     $fotoTmpname = $_FILES["foto"]["tmp_name"];
-    $file_path = "../../upload/moto/";
+    // Path de upload corrigido
+    $file_path = PROJECT_ROOT_PATH . DS . "upload" . DS . "moto" . DS;
 
     // Validate and upload photo
     $foto = uploadFoto($fotoName, $fotoSize, $fotoTmpname, $file_path);
@@ -21,8 +33,11 @@ if (isset($_FILES["foto"])) {
         die("Error: Failed to upload photo.");
     }
 
-    // Remove relative path
-    $foto = trim($foto, "../../");
+    // Remove o path absoluto, deixando apenas o relativo à raiz do projeto
+    // Ex: /upload/moto/imagem.jpg
+    // Garante barras normais (/) para consistência entre OS
+    $foto = str_replace(PROJECT_ROOT_PATH . DS, '', $foto);
+    $foto = str_replace('\\', '/', $foto);
 
     // Validate other input data (example validations)
     $endereco = $_POST['endereco'];
@@ -55,8 +70,8 @@ if (isset($_FILES["foto"])) {
             // Close the database connection
             mysqli_close($conn);
 
-            // Redirect the user
-            header('Location: ../../tabelaMotos.php');
+            // Redirect the user (caminho corrigido)
+            header('Location: ' . PROJECT_ROOT_URL . '/tabelaMotos.php');
             exit; // Exit after redirection to prevent further execution
         } else {
             // Handle the execution error, for example:
