@@ -1,12 +1,16 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'config.php'); 
 session_start();
 
 //PERM
-require_once("../perm.php");
+// Caminhos corrigidos
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "perm.php");
 //CONNECTION
-require_once("../../connection/connection.php");
+require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 //FUNCTIONS
-require_once("../functions.php");
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 if (isset($_POST['item'])) {
     // Sanitize and validate input
@@ -29,8 +33,8 @@ if (isset($_POST['item'])) {
     // Close the connection
     mysqli_close($conn);
 
-    // Redirect the user
-    header('Location: ../../tabelaServicos.php');
+    // Redirect the user (caminho corrigido)
+    header('Location: ' . PROJECT_ROOT_URL . '/tabelaServicos.php');
     exit(); // Stop further execution
 }
 ?>

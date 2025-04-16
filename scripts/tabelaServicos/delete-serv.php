@@ -1,12 +1,16 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'config.php'); 
 session_start();
 
 //PERM
-require_once("../../scripts/perm.php");
+// Caminhos corrigidos
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "perm.php");
 //CONNECTION
-require_once("../../connection/connection.php");
+require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 //FUNCTIONS
-require_once("../../scripts/functions.php");
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 // Check if servID is set and is a valid integer
 if (isset($_GET['servID']) && is_numeric($_GET['servID'])) {
@@ -26,10 +30,12 @@ if (isset($_GET['servID']) && is_numeric($_GET['servID'])) {
     // Close the connection
     mysqli_close($conn);
     
-    header('Location: ../../tabelaServicos.php');
+    // Redirecionamento corrigido
+    header('Location: ' . PROJECT_ROOT_URL . '/tabelaServicos.php');
 } else {
     // Redirect to an error page or handle the error in some other way
-    header('Location: ../../error.php');
+    // Redirecionamento corrigido (assumindo error.php na raiz)
+    header('Location: ' . PROJECT_ROOT_URL . '/error.php');
     exit(); // Stop further execution
 }
 ?>

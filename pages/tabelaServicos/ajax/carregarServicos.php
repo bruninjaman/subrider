@@ -1,7 +1,14 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'config.php'); 
+
 // Incluir configurações de conexão e funções necessárias
-include_once($_SERVER['DOCUMENT_ROOT'] . "connection/connection.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "scripts/functions.php");
+// Caminhos corrigidos usando PROJECT_ROOT_PATH
+// include_once($_SERVER['DOCUMENT_ROOT'] . "connection/connection.php"); // Linha original comentada
+include_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
+// include_once($_SERVER['DOCUMENT_ROOT'] . "scripts/functions.php"); // Linha original comentada
+include_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -71,8 +78,10 @@ if (!$result || mysqli_num_rows($result) === 0) {
                             <td data-cell="Item"><?php echo $servico['item']; ?></td>
                             <td data-cell="Tipo"><?php echo $servico['tipo']; ?></td>
                             <td>
-                                <button style="background: none; border: none;" onclick="location.href='/tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="/assets/css/images/edit.png" style="height: 30px; width: 30px;"></button>
-                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $servico['servicoId']; ?>')"><img src="/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
+                                <!-- Link e imagem corrigidos -->
+                                <button style="background: none; border: none;" onclick="location.href='<?php echo PROJECT_ROOT_URL; ?>/tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/edit.png" style="height: 30px; width: 30px;"></button>
+                                <!-- Imagem corrigida -->
+                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $servico['servicoId']; ?>')"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                             </td>
                         </tr>
                 <?php
@@ -83,7 +92,8 @@ if (!$result || mysqli_num_rows($result) === 0) {
         </table>
         <div class="row">
             <div class="col-3">
-                <a class="button primary" href='../tabelaServicosAdd.php'>Adicionar Serviço</a>
+                <!-- Link corrigido -->
+                <a class="button primary" href='<?php echo PROJECT_ROOT_URL; ?>/tabelaServicosAdd.php'>Adicionar Serviço</a>
             </div>
             <div class="col-9" id="paginacao-container">
                 <?php
@@ -98,7 +108,8 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Adicionar o script para a função deleteServico
 function deleteServico(servicoID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = '/scripts/tabelaServicos/delete-serv.php?servID=' + servicoID;
+        // URL corrigida
+        location.href = '<?php echo PROJECT_ROOT_URL; ?>/scripts/tabelaServicos/delete-serv.php?servID=' + servicoID;
         return true;
     }
     return false;

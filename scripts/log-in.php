@@ -1,8 +1,14 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config.php'); 
+
 //CONNECTION
-require_once("../connection/connection.php");
+// Caminho corrigido
+require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 //FUNCTIONS
-require_once("functions.php");
+// Caminho corrigido
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 // Configuração da sessão para 30 dias
 ini_set('session.gc_maxlifetime', 30 * 24 * 60 * 60); // 30 dias em segundos
@@ -25,13 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Invalid input
         mysqli_close($conn);
-        header("Location: ../login.php?error=invalid_input");
+        // Redirecionamento corrigido
+        header("Location: " . PROJECT_ROOT_URL . "/login.php?error=invalid_input");
         exit();
     }
 } else {
     // Not a POST request
     mysqli_close($conn);
-    header("Location: ../login.php");
+    // Redirecionamento corrigido
+    header("Location: " . PROJECT_ROOT_URL . "/login.php");
     exit();
 }
 ?>

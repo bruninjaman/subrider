@@ -1,23 +1,36 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'config.php'); 
 session_start();
 
 //PERM
-require_once("../../scripts/perm.php");
+// Caminhos corrigidos
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "perm.php");
 //CONNECTION
-require_once("../../connection/connection.php");
+require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 //FUNCTIONS
-require_once("../../scripts/functions.php");
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 if (isset($_FILES["foto"])) {
     //Upload picture
     $fotoName = $_FILES["foto"]["name"];
     $fotoSize = $_FILES["foto"]["size"];
     $fotoTmpname = $_FILES["foto"]["tmp_name"];
-    $file_path = "../../upload/peca/";
+    // Path de upload corrigido
+    $file_path = PROJECT_ROOT_PATH . DS . "upload" . DS . "peca" . DS;
     //upload
     $foto = uploadFoto($fotoName,$fotoSize,$fotoTmpname,$file_path);
-    //remove relative path
-    $foto = trim($foto,"../../");
+    
+    // Remove o path absoluto, deixando apenas o relativo à raiz do projeto
+    // Ex: /upload/peca/imagem.jpg
+    // Garante barras normais (/) para consistência entre OS
+    if ($foto) { // Verifica se o upload foi bem-sucedido antes de processar
+        $foto = str_replace(PROJECT_ROOT_PATH . DS, '', $foto);
+        $foto = str_replace('\\', '/', $foto);
+    } else {
+        $foto = null; // Define como null se o upload falhar
+    }
     
     $grupo = $_POST['grupo'];
     $item = $_POST['item'];
@@ -34,6 +47,7 @@ if (isset($_FILES["foto"])) {
     $stmt->close();
     // Close the connection
     mysqli_close($conn);
-    header('Location: ../../tabelaPecas.php');
+    // Redirecionamento corrigido
+    header('Location: ' . PROJECT_ROOT_URL . '/tabelaPecas.php');
 }
 ?>

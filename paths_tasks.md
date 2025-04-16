@@ -3,97 +3,58 @@
 ## Arquivos Include/Require_once a serem revisados
 
 ### Includes/Template
-- [ ] `includes/template_base.php` - Substituir `"./scripts/perm.php"`, `"./connection/connection.php"`, `"./scripts/functions.php"` por caminhos absolutos com PROJECT_ROOT
+- [x] `includes/template_base.php` - Substituir `"./scripts/perm.php"`, `"./connection/connection.php"`, `"./scripts/functions.php"` por caminhos absolutos com PROJECT_ROOT (Feito em 2024-07-26)
 
 ### Páginas de Tabela
-- [ ] `pages/tabelaOrdens/tabela.php` - Substituir `"./includes/searchbar_unified.php"` por caminho absoluto
-- [ ] `pages/tabelaMotos/tabela.php` - Verificar includes e substituir caminhos relativos
-- [ ] `pages/tabelaPecas/tabela.php` - Verificar includes e substituir caminhos relativos 
-- [ ] `pages/tabelaServicos/tabela.php` - Substituir `"./includes/searchbar_unified.php"` por caminho absoluto
+- [x] `pages/tabelaOrdens/tabela.php` - Substituir `"./includes/searchbar_unified.php"` por caminho absoluto (Feito em 2024-07-26)
+- [x] `pages/tabelaMotos/tabela.php` - Verificar includes e substituir caminhos relativos (Feito em 2024-07-26)
+- [x] `pages/tabelaPecas/tabela.php` - Verificar includes e substituir caminhos relativos (Feito em 2024-07-26)
+- [x] `pages/tabelaServicos/tabela.php` - Substituir `"./includes/searchbar_unified.php"` por caminho absoluto (Feito em 2024-07-26)
 
 ### Scripts AJAX
-- [ ] `ajax/carregarOrdens.php` - Substituir `"../connection/connection.php"`, `"../scripts/functions.php"` por caminhos absolutos
-- [ ] `ajax/carregarMotos.php` - Substituir `"../connection/connection.php"`, `"../scripts/functions.php"` por caminhos absolutos
-- [ ] `ajax/update_date.php` - Substituir `"./../connection/connection.php"` por caminho absoluto
-- [ ] `ajax/update_proprietario.php` - Substituir `"./../connection/connection.php"` por caminho absoluto
+- [x] `ajax/carregarOrdens.php` - Substituir `"../connection/connection.php"`, `"../scripts/functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `ajax/carregarMotos.php` - Substituir `"../connection/connection.php"`, `"../scripts/functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `ajax/update_date.php` - Substituir `"./../connection/connection.php"` por caminho absoluto (Feito em 2024-07-26)
+- [x] `ajax/update_proprietario.php` - Substituir `"./../connection/connection.php"` por caminho absoluto (Feito em 2024-07-26)
 
 ### AJAX em subdiretórios
-- [ ] `pages/tabelaServicos/ajax/carregarServicos.php` - Corrigir `$_SERVER['DOCUMENT_ROOT'] . "connection/connection.php"` (falta barra)
-- [ ] `pages/tabelaServicos/ajax/carregarServicos.php` - Corrigir `$_SERVER['DOCUMENT_ROOT'] . "scripts/functions.php"` (falta barra)
+- [x] `pages/tabelaServicos/ajax/carregarServicos.php` - Corrigir `$_SERVER['DOCUMENT_ROOT'] . "connection/connection.php"` (falta barra) (Feito em 2024-07-26)
+- [x] `pages/tabelaServicos/ajax/carregarServicos.php` - Corrigir `$_SERVER['DOCUMENT_ROOT'] . "scripts/functions.php"` (falta barra) (Feito em 2024-07-26)
 
 ### Scripts de processamento
-- [ ] `scripts/tabelaServicosEdit/edit-servico.php` - Substituir `"../perm.php"`, `"../../connection/connection.php"`, `"../functions.php"` por caminhos absolutos
-- [ ] `scripts/tabelaServicosAdd/add-servico.php` - Substituir `"../../scripts/perm.php"`, `"../../connection/connection.php"`, `"../../scripts/functions.php"` por caminhos absolutos
-- [ ] `scripts/tabelaServicos/delete-serv.php` - Substituir `"../../scripts/perm.php"`, `"../../connection/connection.php"`, `"../../scripts/functions.php"` por caminhos absolutos
-- [ ] `scripts/tabelaPecasEdit/edit-peca.php` - Substituir `"../perm.php"`, `"../../connection/connection.php"`, `"../functions.php"` por caminhos absolutos
-- [ ] `scripts/tabelaPecasDelete/delete-peca.php` - Substituir `"../../scripts/perm.php"`, `"../../connection/connection.php"`, `"../../scripts/functions.php"` por caminhos absolutos
-- [ ] `scripts/tabelaPecasAdd/add-peca.php` - Substituir `"../../scripts/perm.php"`, `"../../connection/connection.php"`, `"../../scripts/functions.php"` por caminhos absolutos
-- [ ] `scripts/tabelaOrdensEdit/edit-ordem.php` - Substituir `"../perm.php"`, `"../../connection/connection.php"`, `"../functions.php"` por caminhos absolutos
-- [ ] `scripts/tabelaOrdensDelete/delete-service.php` - Verificar e corrigir caminhos para includes
-- [ ] `scripts/tabelaOrdensAdd/add-ordem.php` - Verificar e corrigir caminhos para includes
-- [ ] `scripts/log-in.php` - Substituir `"../connection/connection.php"`, `"functions.php"` por caminhos absolutos
-- [ ] `scripts/add_login_columns.php` - Substituir `"../connection/connection.php"` por caminho absoluto
+- [x] `scripts/tabelaServicosEdit/edit-servico.php` - Substituir `"../perm.php"`, `"../../connection/connection.php"`, `"../functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `scripts/tabelaServicosAdd/add-servico.php` - Substituir `"../../scripts/perm.php"`, `"../../connection/connection.php"`, `"../../scripts/functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `scripts/tabelaServicos/delete-serv.php` - Substituir `"../../scripts/perm.php"`, `"../../connection/connection.php"`, `"../../scripts/functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `scripts/tabelaPecasEdit/edit-peca.php` - Substituir `"../perm.php"`, `"../../connection/connection.php"`, `"../functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `scripts/tabelaPecasDelete/delete-peca.php` - Substituir `"../../scripts/perm.php"`, `"../../connection/connection.php"`, `"../../scripts/functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `scripts/tabelaPecasAdd/add-peca.php` - Substituir `"../../scripts/perm.php"`, `"../../connection/connection.php"`, `"../../scripts/functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `scripts/tabelaOrdensEdit/edit-ordem.php` - Substituir `"../perm.php"`, `"../../connection/connection.php"`, `"../functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `scripts/tabelaOrdensDelete/delete-service.php` - Verificar e corrigir caminhos para includes (Feito em 2024-07-26)
+- [x] `scripts/tabelaOrdensAdd/create-service.php` - Verificar e corrigir caminhos para includes (Nome do arquivo corrigido de add-ordem.php) (Feito em 2024-07-26)
+- [x] `scripts/log-in.php` - Substituir `"../connection/connection.php"`, `"functions.php"` por caminhos absolutos (Feito em 2024-07-26)
+- [x] `scripts/add_login_columns.php` - Substituir `"../connection/connection.php"` por caminho absoluto (Feito em 2024-07-26)
+
+## Revisão dos Includes do `config.php` (Usando `dirname(__DIR__)`)
+
+- [x] Revisar e corrigir todos os `require_once` para `config.php` usando `dirname(__DIR__)` para garantir caminhos absolutos. (Feito em 2024-07-26)
 
 ## Caminhos de recursos em HTML/JS
 
 ### Referências de imagens
-- [ ] `pages/tabelaOrdens/tabela.php` - Substituir `"./assets\css\images\edit-ordem.png"`, `"./assets\css\images\x-button.png"` por caminhos absolutos usando PROJECT_ROOT
-- [ ] `ajax/carregarOrdens.php` - Substituir `"assets/css/images/edit-ordem.png"`, `"assets/css/images/x-button.png"` por caminhos absolutos
+- [x] `pages/tabelaOrdens/tabela.php` - Substituir `"./assets\css\images\edit-ordem.png"`, `"./assets\css\images\x-button.png"` por caminhos absolutos usando PROJECT_ROOT (Feito em 2024-07-26)
+- [x] `ajax/carregarOrdens.php` - Substituir `"assets/css/images/edit-ordem.png"`, `"assets/css/images/x-button.png"` por caminhos absolutos (Feito em 2024-07-26)
 
 ### Links de navegação e redirecionamento
-- [ ] `pages/tabelaOrdens/tabela.php` - Corrigir links `'tabelaOrdensAdd.php'`, `'ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'` para usar PROJECT_ROOT
-- [ ] `ajax/carregarOrdens.php` - Corrigir links `'ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'`, `'tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'`, `'tabelaOrdensAdd.php'` para usar PROJECT_ROOT
-- [ ] `ajax/carregarOrdens.php` - Corrigir caminho no JavaScript `'scripts/tabelaOrdensDelete/delete-service.php?ordemID='` para usar PROJECT_ROOT
+- [x] `pages/tabelaOrdens/tabela.php` - Corrigir links `'tabelaOrdensAdd.php'`, `'ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'` para usar PROJECT_ROOT (Feito em 2024-07-26)
+- [x] `ajax/carregarOrdens.php` - Corrigir links `'ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'`, `'tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'`, `'tabelaOrdensAdd.php'` para usar PROJECT_ROOT (Feito em 2024-07-26)
+- [x] `ajax/carregarOrdens.php` - Corrigir caminho no JavaScript `'scripts/tabelaOrdensDelete/delete-service.php?ordemID='` para usar PROJECT_ROOT (Feito em 2024-07-26)
 
 ### Ajax URLs em JavaScript
-- [ ] `pages/tabelaOrdens/tabela.php` - Corrigir URL do ajax `'./ajax/carregarOrdens.php?page='` para usar PROJECT_ROOT
+- [x] `pages/tabelaOrdens/tabela.php` - Corrigir URL do ajax `'./ajax/carregarOrdens.php?page='` para usar PROJECT_ROOT (Feito em 2024-07-26)
 
 ## Arquivos a incluir o config.php e definir PROJECT_ROOT
-- [ ] `pages/tabelaOrdens/tabela.php` - Adicionar `require_once("../../config.php")` no início
-- [ ] `pages/tabelaMotos/tabela.php` - Adicionar `require_once("../../config.php")` no início
-- [ ] `pages/tabelaPecas/tabela.php` - Adicionar `require_once("../../config.php")` no início
-- [ ] `pages/tabelaServicos/tabela.php` - Adicionar `require_once("../../config.php")` no início
-- [ ] `ajax/carregarOrdens.php` - Adicionar `require_once("../config.php")` no início
-- [ ] `ajax/carregarMotos.php` - Adicionar `require_once("../config.php")` no início
-- [ ] `ajax/update_date.php` - Adicionar `require_once("../config.php")` no início
-- [ ] `ajax/update_proprietario.php` - Adicionar `require_once("../config.php")` no início
-
-## Padrão de substituição
-
-Para cada arquivo, seguir o seguinte padrão:
-
-1. Substituir includes/requires relativos como:
-   ```php
-   require_once("../connection/connection.php");
-   ```
-   Por:
-   ```php
-   require_once(PROJECT_ROOT . "/connection/connection.php");
-   ```
-
-2. Substituir caminhos de imagens:
-   ```html
-   <img src="./assets/css/images/edit-ordem.png">
-   ```
-   Por:
-   ```html
-   <img src="<?php echo PROJECT_ROOT; ?>/assets/css/images/edit-ordem.png">
-   ```
-
-3. Substituir URLs em JavaScript:
-   ```javascript
-   xhr.open('GET', './ajax/carregarOrdens.php?page=');
-   ```
-   Por:
-   ```javascript
-   xhr.open('GET', PROJECT_ROOT + '/ajax/carregarOrdens.php?page=');
-   ```
-
-4. Substituir redirecionamentos:
-   ```php
-   location.href='tabelaOrdensAdd.php'
-   ```
-   Por:
-   ```php
-   location.href=PROJECT_ROOT + '/tabelaOrdensAdd.php'
-   ``` 
+- [x] `pages/tabelaOrdens/tabela.php` - Adicionar `require_once("../../config.php")` no início (Feito em 2024-07-26)
+- [x] `pages/tabelaMotos/tabela.php` - Adicionar `require_once("../../config.php")` no início (Feito em 2024-07-26)
+- [x] `pages/tabelaPecas/tabela.php` - Adicionar `require_once("../../config.php")` no início (Feito em 2024-07-26)
+- [x] `pages/tabelaServicos/tabela.php` - Adicionar `require_once("../../config.php")` no início (Feito em 2024-07-26)
+- [x] `

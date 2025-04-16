@@ -1,6 +1,11 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config.php'); 
+
 // Conexão com o banco de dados
-require_once("../connection/connection.php");
+// Caminho corrigido
+require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 
 // Verificar se as colunas já existem
 $check_columns_query = "SHOW COLUMNS FROM login LIKE 'login_attempts'";
@@ -42,5 +47,6 @@ if (mysqli_num_rows($check_columns_result) == 0) {
 // Fechar conexão
 mysqli_close($conn);
 
-echo "<p><a href='../login.php'>Voltar para a página de login</a></p>";
+// Link corrigido
+echo "<p><a href='" . PROJECT_ROOT_URL . "/login.php'>Voltar para a página de login</a></p>";
 ?> 

@@ -1,12 +1,17 @@
+<?php
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'config.php'); // Adiciona config
+?>
 <section id="banner">
     <div class="content">
         <!-- search bar -->
         <?php
-        include_once("./includes/searchbar_unified.php");
+        // Caminho corrigido para include
+        include_once(PROJECT_ROOT_PATH . DS . "includes" . DS . "searchbar_unified.php");
         ?>
         <div id="resultados-tabela">
             <?php
-            // Carregar a tabela inicialmente
+            // Carregar a tabela inicialmente (Mantido __DIR__ por simplicidade neste caso)
             include_once(__DIR__ . "/ajax/carregarPecas.php");
             ?>
         </div>
@@ -18,7 +23,8 @@
 // Função global para carregar os dados via AJAX
 window.carregarTabela = function(pagina = 1, pesquisa = '', orderby = '') {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'pages/tabelaPecas/ajax/carregarPecas.php?page=' + pagina + 
+    // URL AJAX corrigida
+    xhr.open('GET', '<?php echo PROJECT_ROOT_URL; ?>/pages/tabelaPecas/ajax/carregarPecas.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
                    '&orderby=' + encodeURIComponent(orderby), true);
     
@@ -74,6 +80,7 @@ function aplicarEventos() {
 // Aplicar eventos inicialmente
 aplicarEventos();
 </script>
-<script src="delete_confirm.js"></script>
-<script src="js/deletePeca.js"></script>
+<!-- Scripts com caminhos corrigidos -->
+<script src="<?php echo PROJECT_ROOT_URL; ?>/assets/js/delete_confirm.js"></script>
+<script src="<?php echo PROJECT_ROOT_URL; ?>/pages/tabelaPecas/js/deletePeca.js"></script>
 </section>

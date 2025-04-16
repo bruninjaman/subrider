@@ -1,12 +1,16 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'config.php'); 
 session_start();
 
 //PERM
-require_once("../perm.php");
+// Caminhos corrigidos
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "perm.php");
 //CONNECTION
-require_once("../../connection/connection.php");
+require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 //FUNCTIONS
-require_once("../functions.php");
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 //CREATE NEW CODE
 $mysqli_query = "SELECT Codigo FROM ordem_servicos";
@@ -57,4 +61,5 @@ $mysqli_query .= "VALUES ('" . $novo_codigo . "', '" . $_POST["motoid"] . "', '"
 
 mysqli_query($conn, $mysqli_query);
 mysqli_close($conn);
-header('location: ../../tabelaOrdens.php?ordem=' . $novo_codigo);
+// Redirecionamento corrigido
+header('Location: ' . PROJECT_ROOT_URL . '/tabelaOrdens.php?ordem=' . $novo_codigo);

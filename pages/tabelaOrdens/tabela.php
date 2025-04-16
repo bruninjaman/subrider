@@ -1,8 +1,13 @@
+<?php
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'config.php'); // Adiciona config
+?>
 <section id="banner">
     <div class="content">
         <!-- search bar -->
         <?php
-        include_once("./includes/searchbar_unified.php");
+        // Caminho corrigido para include
+        include_once(PROJECT_ROOT_PATH . DS . "includes" . DS . "searchbar_unified.php"); 
         ?>
         <div id="resultados-tabela">
             <div class="table-wrapper">
@@ -58,10 +63,10 @@
                                                     border: none;
                                                 }
                                             </style>
-                                            <button class="ordembutton" style="color:white;" onclick="location.href='ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'"><?php echo $moto['Codigo']; ?></button>
+                                            <button class="ordembutton" style="color:white;" onclick="location.href='<?php echo PROJECT_ROOT_URL; ?>/ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'"><?php echo $moto['Codigo']; ?></button>
                                             <div style="display: flex; gap: 10px; align-items: center;">
-                                                <button class="ordemedit" style="background: none; border: none;" onclick="location.href='tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="./assets\css\images\edit-ordem.png" style="height: 2em; width: 2em;"> </button>
-                                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $moto['motoId'] ?>','<?php echo $moto['Codigo'] ?>')"><img src="./assets\css\images\x-button.png" style="height: 30px; width: 30px;"></button>
+                                                <button class="ordemedit" style="background: none; border: none;" onclick="location.href='<?php echo PROJECT_ROOT_URL; ?>/tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/edit-ordem.png" style="height: 2em; width: 2em;"> </button>
+                                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $moto['motoId'] ?>','<?php echo $moto['Codigo'] ?>')"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -73,7 +78,7 @@
                     </table>
                     <div class="row">
                         <div class="col-3">
-                            <a class="button primary" href='tabelaOrdensAdd.php'>Gerar Ordem de Serviço</a>
+                            <a class="button primary" href='<?php echo PROJECT_ROOT_URL; ?>/tabelaOrdensAdd.php'>Gerar Ordem de Serviço</a>
                         </div>
                         <div class="col-9" id="paginacao-container">
                             <?php
@@ -93,7 +98,8 @@
 // Função para carregar os dados via AJAX
 window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '', orderby = '') {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', './ajax/carregarOrdens.php?page=' + pagina + 
+    // URL AJAX corrigida
+    xhr.open('GET', '<?php echo PROJECT_ROOT_URL; ?>/ajax/carregarOrdens.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
                    '&selectPesquisa=' + encodeURIComponent(selectPesquisa) + 
                    '&orderby=' + encodeURIComponent(orderby), true);

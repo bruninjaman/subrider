@@ -1,7 +1,12 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config.php'); 
+
 // Incluir configurações de conexão e funções necessárias
-include_once("../connection/connection.php");
-include_once("../scripts/functions.php");
+// Caminhos corrigidos
+include_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
+include_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -79,7 +84,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
                     while ($moto = mysqli_fetch_assoc($result)) {
                 ?>
                         <tr>
-                            <td class="img-table"><img src='<?php echo str_replace("../", "", $moto['foto']); ?>'></td>
+                            <td class="img-table"><img src='<?php echo PROJECT_ROOT_URL . "/" . str_replace(["../", "..\\"], "", $moto['foto']); ?>'></td>
                             <td data-cell="Ordem"><?php echo $moto['Codigo']; ?></td>
                             <td data-cell="Ano"><?php echo $moto['ano']; ?></td>
                             <td data-cell="Modelo"><?php echo $moto['modelo']; ?></td>
@@ -93,9 +98,9 @@ if (!$result || mysqli_num_rows($result) === 0) {
                                         border: none;
                                     }
                                 </style>
-                                <button class="ordembutton" style="color:white;" onclick="location.href='ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'"><?php echo $moto['Codigo']; ?></button>
-                                <button class="ordemedit" style="background: none; border: none;" onclick="location.href='tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="assets/css/images/edit-ordem.png" style="height: 2em; width: 2em;"> </button>
-                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $moto['servID']; ?>','<?php echo $moto['Codigo']; ?>')"><img src="assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
+                                <button class="ordembutton" style="color:white;" onclick="location.href='<?php echo PROJECT_ROOT_URL; ?>/ordemservico.php?ordem=<?php echo $moto['Codigo'] ?>'"><?php echo $moto['Codigo']; ?></button>
+                                <button class="ordemedit" style="background: none; border: none;" onclick="location.href='<?php echo PROJECT_ROOT_URL; ?>/tabelaOrdensEdit.php?ordem=<?php echo $moto['Codigo'] ?>'"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/edit-ordem.png" style="height: 2em; width: 2em;"> </button>
+                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $moto['servID']; ?>','<?php echo $moto['Codigo']; ?>')"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                             </td>
                         </tr>
                 <?php
@@ -106,7 +111,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
         </table>
         <div class="row">
             <div class="col-3">
-                <a class="button primary" href='tabelaOrdensAdd.php'>Gerar Ordem de Serviço</a>
+                <a class="button primary" href='<?php echo PROJECT_ROOT_URL; ?>/tabelaOrdensAdd.php'>Gerar Ordem de Serviço</a>
             </div>
             <div class="col-9" id="paginacao-container">
                 <?php
@@ -121,7 +126,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Adicionar o script para a função delete_confirm
 function deleteServico(ordemID, Ordem) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = 'scripts/tabelaOrdensDelete/delete-service.php?ordemID=' + ordemID + '&Ordem=' + Ordem;
+        location.href = '<?php echo PROJECT_ROOT_URL; ?>/scripts/tabelaOrdensDelete/delete-service.php?ordemID=' + ordemID + '&Ordem=' + Ordem;
         return true;
     }
     return false;

@@ -1,15 +1,22 @@
 <?php
+// Adiciona config
+// Caminho absoluto para config.php
+require_once(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'config.php'); 
 session_start();
 
 //PERM
-require_once("../../scripts/perm.php");
+// Caminhos corrigidos
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "perm.php");
 //CONNECTION
-require_once("../../connection/connection.php");
+require_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
 //FUNCTIONS
-require_once("../../scripts/functions.php");
+require_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 $id = $_GET["ordemID"];
 $codigo = $_GET["Ordem"]; // Assume que o 'codigo' seja passado pela URL também
+
+// !!! ALERTA DE SEGURANÇA: Este código é vulnerável a SQL Injection !!!
+// !!! Recomenda-se usar prepared statements em vez de concatenação direta !!!
 
 // Begin Transaction
 mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);
@@ -34,6 +41,7 @@ try {
 
 // Close connection
 mysqli_close($conn);
-header('Location: ../../tabelaOrdens.php');
+// Redirecionamento corrigido
+header('Location: ' . PROJECT_ROOT_URL . '/tabelaOrdens.php');
 
 ?>

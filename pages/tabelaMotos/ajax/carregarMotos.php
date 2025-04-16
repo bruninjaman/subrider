@@ -1,7 +1,13 @@
 <?php
+// Adiciona config
+require_once(dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'config.php'); 
+
 // Incluir configurações de conexão e funções necessárias
-include_once($_SERVER['DOCUMENT_ROOT'] . "/connection/connection.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/scripts/functions.php");
+// Caminhos corrigidos usando PROJECT_ROOT_PATH
+// include_once($_SERVER['DOCUMENT_ROOT'] . "/connection/connection.php"); // Linha original comentada
+include_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
+// include_once($_SERVER['DOCUMENT_ROOT'] . "/scripts/functions.php"); // Linha original comentada
+include_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -73,7 +79,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
                 while ($moto = mysqli_fetch_assoc($result)) {
                 ?>
                     <tr>
-                        <td class="img-table"><img src='<?php echo $moto['foto']; ?>'></td>
+                        <td class="img-table"><img src='<?php echo PROJECT_ROOT_URL . "/" . str_replace(["../", "..\\"], "", $moto['foto']); ?>'></td>
                         <td data-cell="Endereço"><?php echo $moto['endereco']; ?></td>
                         <td data-cell="Ano"><?php echo $moto['ano']; ?></td>
                         <td data-cell="Modelo"><?php echo $moto['modelo']; ?></td>
@@ -82,8 +88,8 @@ if (!$result || mysqli_num_rows($result) === 0) {
                         <td data-cell="Km"><?php echo KMFormat($moto['km']); ?></td>
                         <td data-cell="Proprietario"><?php echo $moto['proprietario']; ?></td>
                         <td>
-                            <button style="background: none; border: none;" onclick="location.href='editmotos.php?motoID=<?php echo $moto['motoId'] ?>'"><img src="assets/css/images/edit-new.png" style="height: 28px; width: 38px;"></button>
-                            <button style="background: none; border: none;" onclick="return deleteMoto('<?php echo $moto['motoId']; ?>')"><img src="assets/css/images/x-button-new.png" style="height: 28px; width: 38px;"></button>
+                            <button style="background: none; border: none;" onclick="location.href='<?php echo PROJECT_ROOT_URL; ?>/editmotos.php?motoID=<?php echo $moto['motoId'] ?>'"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/edit-new.png" style="height: 28px; width: 38px;"></button>
+                            <button style="background: none; border: none;" onclick="return deleteMoto('<?php echo $moto['motoId']; ?>')"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/x-button-new.png" style="height: 28px; width: 38px;"></button>
                         </td>
                     </tr>
                 <?php
@@ -93,8 +99,8 @@ if (!$result || mysqli_num_rows($result) === 0) {
         </table>
         <div class="row">
             <div class="col-3">
-                <a class="button primary" href='addmotos.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
-                    <img src="assets/css/images/addmoto.png" style="margin-right: 12px;">
+                <a class="button primary" href='<?php echo PROJECT_ROOT_URL; ?>/addmotos.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
+                    <img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/addmoto.png" style="margin-right: 12px;">
                     Adicionar Motocicleta
                 </a>
             </div>
@@ -111,7 +117,7 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Função para deletar moto
 function deleteMoto(motoID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = 'scripts/tabelaMotos/delete-moto.php?motoID=' + motoID;
+        location.href = '<?php echo PROJECT_ROOT_URL; ?>/scripts/tabelaMotos/delete-moto.php?motoID=' + motoID;
         return true;
     }
     return false;

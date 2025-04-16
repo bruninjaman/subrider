@@ -1,7 +1,13 @@
 <?php
+// Adiciona config
+require_once(dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'config.php'); 
+
 // Incluir configurações de conexão e funções necessárias
-include_once($_SERVER['DOCUMENT_ROOT'] . "/connection/connection.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/scripts/functions.php");
+// Caminhos corrigidos usando PROJECT_ROOT_PATH
+// include_once($_SERVER['DOCUMENT_ROOT'] . "/connection/connection.php"); // Linha original comentada
+include_once(PROJECT_ROOT_PATH . DS . "connection" . DS . "connection.php");
+// include_once($_SERVER['DOCUMENT_ROOT'] . "/scripts/functions.php"); // Linha original comentada
+include_once(PROJECT_ROOT_PATH . DS . "scripts" . DS . "functions.php");
 
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -68,17 +74,20 @@ if (!$result || mysqli_num_rows($result) === 0) {
                     <tr>
                         <td class="img-table">
                             <?php if (!empty($peca['foto'])) : ?>
-                                <img src='<?php echo str_replace("../", "", $peca['foto']); ?>'>
+                                <!-- Caminho da imagem corrigido -->
+                                <img src='<?php echo PROJECT_ROOT_URL . "/" . str_replace(["../", "..\\"], "", $peca['foto']); ?>'>
                             <?php else : ?>
-                                <img src="/assets/css/images/no-image.jpg">
+                                <!-- Caminho da imagem corrigido -->
+                                <img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/no-image.jpg">
                             <?php endif; ?>
                         </td>
                         <td data-cell="Grupo"><?php echo $peca['grupo']; ?></td>
                         <td data-cell="Item"><?php echo $peca['item']; ?></td>
                         <td data-cell="Parte"><?php echo $peca['parte']; ?></td>
                         <td>
-                            <button style="background: none; border: none;" onclick="location.href='/tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId'] ?>'"><img src="/assets/css/images/edit-peca.png" style="height: 30px; width: 30px;"></button>
-                            <button style="background: none; border: none;" onclick="return deletePeca('<?php echo $peca['pecaId']; ?>')"><img src="/assets/css/images/x-button-peca.png" style="height: 30px; width: 30px;"></button>
+                            <!-- Link e imagens corrigidos -->
+                            <button style="background: none; border: none;" onclick="location.href='<?php echo PROJECT_ROOT_URL; ?>/tabelaPecasEdit.php?pecaID=<?php echo $peca['pecaId'] ?>'"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/edit-peca.png" style="height: 30px; width: 30px;"></button>
+                            <button style="background: none; border: none;" onclick="return deletePeca('<?php echo $peca['pecaId']; ?>')"><img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/x-button-peca.png" style="height: 30px; width: 30px;"></button>
                         </td>
                     </tr>
                 <?php
@@ -88,8 +97,9 @@ if (!$result || mysqli_num_rows($result) === 0) {
         </table>
         <div class="row">
             <div class="col-3">
-                <a class="button primary" href='../tabelaPecasAdd.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
-                    <img src="/assets/css/images/addpeca.png" style="margin-right: 12px; width: 40px; height: 40px;">
+                <!-- Link e imagem corrigidos -->
+                <a class="button primary" href='<?php echo PROJECT_ROOT_URL; ?>/tabelaPecasAdd.php' style="display: flex; align-items: center; justify-content: center; white-space: nowrap; width: fit-content; min-width: 100%;">
+                    <img src="<?php echo PROJECT_ROOT_URL; ?>/assets/css/images/addpeca.png" style="margin-right: 12px; width: 40px; height: 40px;">
                     Adicionar Item
                 </a>
             </div>
@@ -106,7 +116,8 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Adicionar o script para a função deletePeca
 function deletePeca(pecaID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = '/scripts/tabelaPecas/delete-peca.php?pecaID=' + pecaID;
+        // URL corrigida (aponta para a pasta correta: scripts/tabelaPecasDelete/)
+        location.href = '<?php echo PROJECT_ROOT_URL; ?>/scripts/tabelaPecasDelete/delete-peca.php?pecaID=' + pecaID;
         return true;
     }
     return false;
