@@ -62,8 +62,8 @@ function aplicarEventos() {
     });
 
     // Adicionar eventos para os links de paginação
-    document.querySelectorAll('.pagination a').forEach(function(link) {
-        link.addEventListener('click', function(e) {
+    document.querySelectorAll('.paginacao-btn').forEach(function(botao) { 
+        botao.addEventListener('click', function(e) {
             e.preventDefault();
             
             var pagina = this.getAttribute('data-page');
