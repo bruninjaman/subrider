@@ -111,6 +111,32 @@ class PathChecker {
                     background-color: #f8f9fa;
                     border-radius: 4px;
                 }
+                .filters {
+                    background: #f8f9fa;
+                    padding: 15px;
+                    border-radius: 4px;
+                    margin-bottom: 20px;
+                }
+                .filter-group {
+                    margin-bottom: 10px;
+                }
+                .filter-group label {
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    display: block;
+                }
+                .filter-group .checkbox-group {
+                    display: flex;
+                    gap: 15px;
+                }
+                .checkbox-label {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+                .hidden {
+                    display: none !important;
+                }
             </style>
         </head>
         <body>
@@ -121,6 +147,33 @@ class PathChecker {
                     <?php echo htmlspecialchars($_GET['message']); ?>
                 </div>
             <?php endif; ?>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Filtrar por Tipo:</label>
+                    <div class="checkbox-group">
+                        <?php foreach ($this->patterns as $type => $pattern): ?>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="type-filter" value="<?php echo $type; ?>" checked>
+                                <?php echo ucfirst($type); ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Filtrar por Status:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="status-filter" value="valid" checked>
+                            Válidos
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="status-filter" value="invalid" checked>
+                            Inválidos
+                        </label>
+                    </div>
+                </div>
+            </div>
 
             <div class="summary">
                 <h3>Resumo</h3>
@@ -135,8 +188,11 @@ class PathChecker {
                 </p>
             </div>
 
+            <div id="results-container">
             <?php foreach ($this->results as $index => $result): ?>
-                <div class="path-item <?php echo $result['exists'] ? 'valid' : 'invalid'; ?>">
+                <div class="path-item <?php echo $result['exists'] ? 'valid' : 'invalid'; ?>" 
+                     data-type="<?php echo htmlspecialchars($result['type']); ?>"
+                     data-status="<?php echo $result['exists'] ? 'valid' : 'invalid'; ?>">
                     <span class="type-badge"><?php echo htmlspecialchars($result['type']); ?></span>
                     <strong>Path:</strong> <?php echo htmlspecialchars($result['path']); ?><br>
                     <strong>Source:</strong> <?php echo htmlspecialchars($result['source_file']); ?><br>
@@ -152,6 +208,7 @@ class PathChecker {
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
+            </div>
 
             <script>
             // Remove a mensagem após 5 segundos
@@ -161,6 +218,30 @@ class PathChecker {
                     message.style.display = 'none';
                 }
             }, 5000);
+
+            // Função para atualizar a visibilidade dos items
+            function updateVisibility() {
+                const selectedTypes = Array.from(document.querySelectorAll('.type-filter:checked')).map(cb => cb.value);
+                const selectedStatuses = Array.from(document.querySelectorAll('.status-filter:checked')).map(cb => cb.value);
+                
+                document.querySelectorAll('.path-item').forEach(item => {
+                    const type = item.dataset.type;
+                    const status = item.dataset.status;
+                    
+                    const typeMatch = selectedTypes.includes(type);
+                    const statusMatch = selectedStatuses.includes(status);
+                    
+                    item.classList.toggle('hidden', !typeMatch || !statusMatch);
+                });
+            }
+
+            // Adiciona listeners para todos os checkboxes
+            document.querySelectorAll('.type-filter, .status-filter').forEach(checkbox => {
+                checkbox.addEventListener('change', updateVisibility);
+            });
+
+            // Inicializa a visibilidade
+            updateVisibility();
             </script>
         </body>
         </html>
