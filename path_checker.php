@@ -80,6 +80,7 @@ class PathChecker {
                 .path-item { margin: 10px 0; padding: 10px; border: 1px solid #ddd; }
                 .valid { background-color: #dff0d8; border-color: #d6e9c6; }
                 .invalid { background-color: #f2dede; border-color: #ebccd1; }
+                .updated { background-color: #fcf8e3; border-color: #faebcc; }
                 .edit-form { margin-top: 10px; }
                 .type-badge {
                     display: inline-block;
@@ -198,14 +199,12 @@ class PathChecker {
                     <strong>Source:</strong> <?php echo htmlspecialchars($result['source_file']); ?><br>
                     <strong>Status:</strong> <?php echo $result['exists'] ? '✅ Valid' : '❌ Invalid'; ?>
                     
-                    <?php if (!$result['exists']): ?>
                     <form class="edit-form" method="post" action="path_editor.php">
                         <input type="hidden" name="source_file" value="<?php echo htmlspecialchars($result['source_file']); ?>">
                         <input type="hidden" name="old_path" value="<?php echo htmlspecialchars($result['path']); ?>">
                         <input type="text" name="new_path" value="<?php echo htmlspecialchars($result['path']); ?>" style="width: 300px;">
                         <input type="submit" value="Update Path" style="margin-left: 10px;">
                     </form>
-                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
             </div>
@@ -218,6 +217,71 @@ class PathChecker {
                     message.style.display = 'none';
                 }
             }, 5000);
+
+            // Função para mostrar mensagem temporária
+            function showMessage(message, status) {
+                const container = document.createElement('div');
+                container.className = `message ${status}`;
+                container.textContent = message;
+                
+                document.querySelector('h1').insertAdjacentElement('afterend', container);
+                
+                setTimeout(() => container.remove(), 5000);
+            }
+
+            // Adiciona o estado "atualizado" quando o campo é modificado
+            document.querySelectorAll('.edit-form input[name="new_path"]').forEach(input => {
+                input.addEventListener('input', function() {
+                    const form = this.closest('.path-item');
+                    if (this.value !== this.form.querySelector('input[name="old_path"]').value) {
+                        form.classList.add('updated');
+                        form.classList.remove('valid', 'invalid');
+                    } else {
+                        form.classList.remove('updated');
+                        form.classList.add(form.dataset.status === 'valid' ? 'valid' : 'invalid');
+                    }
+                });
+            });
+
+            // Intercepta o envio do formulário para usar AJAX
+            document.querySelectorAll('.edit-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const pathItem = this.closest('.path-item');
+                    
+                    fetch('path_editor.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Atualiza o status do item
+                            pathItem.classList.remove('updated', 'valid', 'invalid');
+                            pathItem.classList.add(data.exists ? 'valid' : 'invalid');
+                            pathItem.dataset.status = data.exists ? 'valid' : 'invalid';
+                            
+                            // Atualiza o texto de status
+                            const statusText = pathItem.querySelector('strong:last-of-type');
+                            statusText.nextSibling.textContent = data.exists ? '✅ Valid' : '❌ Invalid';
+                            
+                            // Atualiza o valor do old_path
+                            this.querySelector('input[name="old_path"]').value = 
+                                this.querySelector('input[name="new_path"]').value;
+                            
+                            showMessage(data.message, 'success');
+                        } else {
+                            showMessage(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showMessage('Erro ao processar a requisição', 'error');
+                        console.error('Error:', error);
+                    });
+                });
+            });
 
             // Função para atualizar a visibilidade dos items
             function updateVisibility() {

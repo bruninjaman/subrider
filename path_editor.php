@@ -1,18 +1,30 @@
 <?php
+header('Content-Type: application/json');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sourceFile = $_POST['source_file'];
     $oldPath = $_POST['old_path'];
     $newPath = $_POST['new_path'];
 
+    $response = [
+        'success' => false,
+        'message' => '',
+        'exists' => false
+    ];
+
     // Validação básica
     if (empty($sourceFile) || empty($oldPath) || empty($newPath)) {
-        die('Parâmetros inválidos');
+        $response['message'] = 'Parâmetros inválidos';
+        echo json_encode($response);
+        exit;
     }
 
     // Lê o conteúdo do arquivo
     $content = file_get_contents($sourceFile);
     if ($content === false) {
-        die('Não foi possível ler o arquivo fonte');
+        $response['message'] = 'Não foi possível ler o arquivo fonte';
+        echo json_encode($response);
+        exit;
     }
 
     // Escapa caracteres especiais para uso em regex
@@ -25,19 +37,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Salva o arquivo
     if (file_put_contents($sourceFile, $newContent) !== false) {
-        $message = "Path atualizado com sucesso!";
-        $status = "success";
+        $response['success'] = true;
+        $response['message'] = "Path atualizado com sucesso!";
+        
+        // Verifica se o novo path existe
+        if (strpos($newPath, 'http') === 0 || strpos($newPath, '//') === 0) {
+            $response['exists'] = true;
+        } else {
+            $absolutePath = strpos($newPath, '/') === 0 
+                ? dirname(__DIR__) . $newPath 
+                : dirname($sourceFile) . '/' . $newPath;
+            $response['exists'] = file_exists($absolutePath);
+        }
     } else {
-        $message = "Erro ao atualizar o arquivo";
-        $status = "error";
+        $response['message'] = "Erro ao atualizar o arquivo";
     }
 
-    // Redireciona de volta para o path_checker.php com mensagem
-    header("Location: path_checker.php?message=" . urlencode($message) . "&status=" . $status);
+    echo json_encode($response);
     exit;
 }
 
-// Se não for POST, redireciona para o path_checker
-header("Location: path_checker.php");
+// Se não for POST, retorna erro
+$response = [
+    'success' => false,
+    'message' => 'Método não permitido'
+];
+echo json_encode($response);
 exit;
 ?> 
