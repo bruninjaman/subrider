@@ -138,6 +138,22 @@ class PathChecker {
                 .hidden {
                     display: none !important;
                 }
+                .fix-all-btn {
+                    background-color: #28a745;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                }
+                .fix-all-btn:hover {
+                    background-color: #218838;
+                }
+                .processing {
+                    opacity: 0.7;
+                    cursor: not-allowed;
+                }
             </style>
         </head>
         <body>
@@ -187,6 +203,9 @@ class PathChecker {
                     Paths válidos: <?php echo $validPaths; ?><br>
                     Paths inválidos: <?php echo $invalidPaths; ?>
                 </p>
+                <?php if ($invalidPaths > 0): ?>
+                    <button id="fixAllPaths" class="fix-all-btn">Corrigir Todos os Paths Inválidos</button>
+                <?php endif; ?>
             </div>
 
             <div id="results-container">
@@ -306,6 +325,159 @@ class PathChecker {
 
             // Inicializa a visibilidade
             updateVisibility();
+
+            // Função para converter path absoluto para relativo
+            function getRelativePath(from, to) {
+                console.log('Convertendo path:', { from, to });
+
+                // Se o path contém variáveis PHP, preserva-as
+                if (to.includes('<?php') || to.includes('${')) {
+                    console.log('Path contém variáveis PHP, mantendo como está:', to);
+                    return to;
+                }
+
+                // Normaliza os paths para usar forward slashes
+                from = from.replace(/\\/g, '/');
+                to = to.replace(/\\/g, '/');
+
+                // Se o path de destino já é uma URL ou path relativo, retorna como está
+                if (to.startsWith('http') || to.startsWith('//') || to.startsWith('./') || to.startsWith('../')) {
+                    console.log('Path já é URL ou relativo:', to);
+                    return to;
+                }
+
+                // Remove o nome do arquivo do path de origem
+                const fromDir = from.substring(0, from.lastIndexOf('/'));
+                
+                // Se o path de destino é absoluto (começa com /), mantém como está
+                if (to.startsWith('/')) {
+                    console.log('Path é absoluto, mantendo:', to);
+                    return to;
+                }
+
+                // Divide os paths em partes
+                const fromParts = fromDir.split('/').filter(Boolean);
+                const toParts = to.split('/').filter(Boolean);
+
+                console.log('Parts:', { fromParts, toParts });
+
+                // Encontra os diretórios comuns
+                let commonLength = 0;
+                const minLength = Math.min(fromParts.length, toParts.length);
+                
+                while (commonLength < minLength && fromParts[commonLength] === toParts[commonLength]) {
+                    commonLength++;
+                }
+
+                // Constrói o path relativo
+                const upCount = fromParts.length - commonLength;
+                const relativeParts = [];
+
+                // Adiciona '../' para cada nível que precisa subir
+                for (let i = 0; i < upCount; i++) {
+                    relativeParts.push('..');
+                }
+
+                // Adiciona o restante do path
+                relativeParts.push(...toParts.slice(commonLength));
+
+                const relativePath = relativeParts.join('/');
+                console.log('Path relativo gerado:', relativePath);
+
+                return relativePath;
+            }
+
+            // Função para corrigir todos os paths inválidos
+            async function fixAllInvalidPaths() {
+                const button = document.getElementById('fixAllPaths');
+                button.classList.add('processing');
+                button.textContent = 'Processando...';
+                button.disabled = true;
+
+                const invalidItems = document.querySelectorAll('.path-item.invalid');
+                let fixed = 0;
+                let errors = 0;
+                let errorDetails = [];
+
+                for (const item of invalidItems) {
+                    const form = item.querySelector('.edit-form');
+                    const sourceFile = form.querySelector('input[name="source_file"]').value;
+                    const oldPath = form.querySelector('input[name="old_path"]').value;
+                    
+                    try {
+                        console.log('Processando item:', { sourceFile, oldPath });
+                        
+                        // Se o path contém variáveis PHP, mantém como está
+                        const newPath = oldPath.includes('<?php') || oldPath.includes('${') 
+                            ? oldPath 
+                            : getRelativePath(sourceFile, oldPath);
+
+                        console.log('Novo path gerado:', newPath);
+                        
+                        const formData = new FormData();
+                        formData.append('source_file', sourceFile);
+                        formData.append('old_path', oldPath);
+                        formData.append('new_path', newPath);
+                        formData.append('has_php_vars', oldPath.includes('<?php') || oldPath.includes('${'));
+                        
+                        const response = await fetch('path_editor.php', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            fixed++;
+                            item.classList.remove('invalid');
+                            item.classList.add('valid');
+                            item.dataset.status = 'valid';
+                            
+                            const statusText = item.querySelector('strong:last-of-type');
+                            statusText.nextSibling.textContent = '✅ Valid';
+                            
+                            form.querySelector('input[name="new_path"]').value = newPath;
+                            form.querySelector('input[name="old_path"]').value = newPath;
+                        } else {
+                            errors++;
+                            errorDetails.push(`Erro em ${sourceFile}: ${data.message}`);
+                            console.error('Erro ao processar:', { sourceFile, oldPath, newPath, error: data.message });
+                        }
+                    } catch (error) {
+                        console.error('Erro:', error);
+                        errors++;
+                        errorDetails.push(`Erro em ${sourceFile}: ${error.message}`);
+                    }
+                }
+
+                button.classList.remove('processing');
+                button.disabled = false;
+                button.textContent = 'Corrigir Todos os Paths Inválidos';
+
+                // Mostra mensagem com detalhes dos erros
+                const message = `Correção automática concluída: ${fixed} paths corrigidos, ${errors} erros\n` +
+                              (errorDetails.length > 0 ? '\nDetalhes dos erros:\n' + errorDetails.join('\n') : '');
+                
+                showMessage(message, errors === 0 ? 'success' : 'error');
+                
+                // Atualiza o resumo
+                const summary = document.querySelector('.summary p');
+                const total = document.querySelectorAll('.path-item').length;
+                const valid = document.querySelectorAll('.path-item.valid').length;
+                const invalid = total - valid;
+                
+                summary.innerHTML = `
+                    Total de paths encontrados: ${total}<br>
+                    Paths válidos: ${valid}<br>
+                    Paths inválidos: ${invalid}
+                `;
+                
+                if (invalid === 0) {
+                    button.style.display = 'none';
+                }
+            }
+
+            // Adiciona o evento de clique ao botão de correção
+            document.getElementById('fixAllPaths')?.addEventListener('click', fixAllInvalidPaths);
             </script>
         </body>
         </html>
