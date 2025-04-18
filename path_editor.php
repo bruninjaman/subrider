@@ -5,11 +5,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sourceFile = $_POST['source_file'];
     $oldPath = $_POST['old_path'];
     $newPath = $_POST['new_path'];
+    $returnUrl = isset($_POST['return_url']) ? $_POST['return_url'] : '';
 
     $response = [
         'success' => false,
         'message' => '',
-        'exists' => false
+        'exists' => false,
+        'return_url' => $returnUrl
     ];
 
     // Validação básica

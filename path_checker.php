@@ -10,8 +10,85 @@ class PathChecker {
         'php' => '/include[_once]*\([\'"]([^\'"]+\.php)[\'"]\)/',
     ];
 
-    private $results = [];
+    public $results = [];
     private $scannedFiles = [];
+    public $totalFiles = 0;
+    public $processedFiles = 0;
+
+    public function getDirectoryStructure($dir = PROJECT_ROOT, $relativePath = '') {
+        $structure = [];
+        $items = glob($dir . '/*');
+        
+        foreach ($items as $item) {
+            $name = basename($item);
+            $relPath = $relativePath ? "$relativePath/$name" : $name;
+            
+            if (is_dir($item)) {
+                $structure[] = [
+                    'type' => 'directory',
+                    'name' => $name,
+                    'path' => $relPath,
+                    'children' => $this->getDirectoryStructure($item, $relPath)
+                ];
+            } else if (preg_match('/\.(php|html|js|css)$/', $name)) {
+                $structure[] = [
+                    'type' => 'file',
+                    'name' => $name,
+                    'path' => $relPath
+                ];
+            }
+        }
+        
+        return $structure;
+    }
+
+    public function countScanFiles($paths) {
+        $this->totalFiles = 0;
+        
+        foreach ($paths as $path) {
+            $fullPath = PROJECT_ROOT . '/' . $path;
+            
+            if (is_dir($fullPath)) {
+                $this->countFilesInDirectory($fullPath);
+            } else if (preg_match('/\.(php|html|js)$/', $fullPath)) {
+                $this->totalFiles++;
+            }
+        }
+        
+        return $this->totalFiles;
+    }
+    
+    private function countFilesInDirectory($dir) {
+        $files = glob($dir . '/*.{php,html,js}', GLOB_BRACE);
+        $this->totalFiles += count($files);
+        
+        $subdirs = glob($dir . '/*', GLOB_ONLYDIR);
+        foreach ($subdirs as $subdir) {
+            $this->countFilesInDirectory($subdir);
+        }
+    }
+
+    public function scanSelectedPaths($paths) {
+        $this->results = [];
+        $this->scannedFiles = [];
+        $this->processedFiles = 0;
+        
+        foreach ($paths as $path) {
+            $fullPath = PROJECT_ROOT . '/' . $path;
+            
+            if (is_dir($fullPath)) {
+                $this->scanDirectory($fullPath);
+            } else if (preg_match('/\.(php|html|js)$/', $fullPath)) {
+                if (!in_array($fullPath, $this->scannedFiles)) {
+                    $this->scannedFiles[] = $fullPath;
+                    $this->scanFile($fullPath);
+                    $this->processedFiles++;
+                }
+            }
+        }
+        
+        return $this->results;
+    }
 
     public function scanDirectory($dir) {
         $files = glob($dir . '/*.{php,html,js}', GLOB_BRACE);
@@ -19,6 +96,7 @@ class PathChecker {
             if (!in_array($file, $this->scannedFiles)) {
                 $this->scannedFiles[] = $file;
                 $this->scanFile($file);
+                $this->processedFiles++;
             }
         }
 
@@ -67,6 +145,263 @@ class PathChecker {
             'type' => $type,
             'exists' => $exists
         ];
+    }
+    
+    public function getProgress() {
+        return $this->totalFiles > 0 ? ($this->processedFiles / $this->totalFiles) * 100 : 0;
+    }
+
+    public function displaySelector() {
+        $structure = $this->getDirectoryStructure();
+        ?>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Path Checker - Seletor de Arquivos</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                .directory-tree {
+                    margin: 20px 0;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    padding: 20px;
+                    max-height: 500px;
+                    overflow-y: auto;
+                }
+                .tree-item {
+                    margin: 5px 0;
+                }
+                .tree-dir {
+                    margin-bottom: 10px;
+                }
+                .tree-dir > .tree-label {
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+                .tree-children {
+                    margin-left: 20px;
+                    display: none;
+                }
+                .tree-expanded > .tree-children {
+                    display: block;
+                }
+                .progress-container {
+                    width: 100%;
+                    background-color: #f3f3f3;
+                    border-radius: 4px;
+                    margin: 20px 0;
+                    height: 25px;
+                }
+                .progress-bar {
+                    height: 100%;
+                    border-radius: 4px;
+                    background-color: #4CAF50;
+                    width: 0%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: bold;
+                    transition: width 0.3s;
+                }
+                .action-buttons {
+                    margin: 20px 0;
+                }
+                button {
+                    padding: 10px 15px;
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-right: 10px;
+                }
+                button:hover {
+                    background-color: #0056b3;
+                }
+                .select-controls {
+                    margin-bottom: 15px;
+                }
+                .hidden {
+                    display: none;
+                }
+                #scanning-status {
+                    margin-bottom: 15px;
+                    font-weight: bold;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Path Checker - Seletor de Diretórios e Arquivos</h1>
+            
+            <div class="select-controls">
+                <button id="select-all">Selecionar Todos</button>
+                <button id="unselect-all">Desmarcar Todos</button>
+                <button id="expand-all">Expandir Todos</button>
+                <button id="collapse-all">Colapsar Todos</button>
+            </div>
+            
+            <div class="directory-tree" id="directory-tree">
+                <?php $this->renderDirectoryTree($structure); ?>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="start-scan">Iniciar Verificação</button>
+            </div>
+            
+            <div id="scanning-container" class="hidden">
+                <div id="scanning-status">Preparando verificação...</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar">0%</div>
+                </div>
+            </div>
+            
+            <div id="results-container" class="hidden"></div>
+            
+            <script>
+                // Função para alternar a expansão de diretórios
+                document.querySelectorAll('.tree-label').forEach(label => {
+                    if (label.parentElement.classList.contains('tree-dir')) {
+                        label.addEventListener('click', () => {
+                            label.parentElement.classList.toggle('tree-expanded');
+                        });
+                    }
+                });
+                
+                // Função para selecionar todos os itens
+                document.getElementById('select-all').addEventListener('click', () => {
+                    document.querySelectorAll('.tree-item input[type="checkbox"]').forEach(checkbox => {
+                        checkbox.checked = true;
+                    });
+                });
+                
+                // Função para desmarcar todos os itens
+                document.getElementById('unselect-all').addEventListener('click', () => {
+                    document.querySelectorAll('.tree-item input[type="checkbox"]').forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                });
+                
+                // Função para expandir todos os diretórios
+                document.getElementById('expand-all').addEventListener('click', () => {
+                    document.querySelectorAll('.tree-dir').forEach(dir => {
+                        dir.classList.add('tree-expanded');
+                    });
+                });
+                
+                // Função para colapsar todos os diretórios
+                document.getElementById('collapse-all').addEventListener('click', () => {
+                    document.querySelectorAll('.tree-dir').forEach(dir => {
+                        dir.classList.remove('tree-expanded');
+                    });
+                });
+                
+                // Função para iniciar a verificação
+                document.getElementById('start-scan').addEventListener('click', () => {
+                    const selectedItems = [];
+                    document.querySelectorAll('.tree-item input[type="checkbox"]:checked').forEach(checkbox => {
+                        selectedItems.push(checkbox.value);
+                    });
+                    
+                    if (selectedItems.length === 0) {
+                        alert('Por favor, selecione pelo menos um diretório ou arquivo para verificar.');
+                        return;
+                    }
+                    
+                    // Mostrar container de progresso
+                    document.getElementById('scanning-container').classList.remove('hidden');
+                    document.getElementById('results-container').classList.add('hidden');
+                    
+                    // Contar arquivos para definir o progresso
+                    fetch('path_checker.php?action=count_files', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({paths: selectedItems})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('scanning-status').textContent = 
+                            `Iniciando verificação de ${data.total_files} arquivos...`;
+                        
+                        // Iniciar o scan
+                        startScan(selectedItems);
+                    });
+                });
+                
+                function startScan(selectedItems) {
+                    // Iniciar verificação
+                    fetch('path_checker.php?action=scan', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({paths: selectedItems})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.href = 'path_checker.php?show_results=1';
+                    });
+                    
+                    // Atualizar barra de progresso
+                    const progressInterval = setInterval(() => {
+                        fetch('path_checker.php?action=progress')
+                        .then(response => response.json())
+                        .then(data => {
+                            const progressBar = document.getElementById('progress-bar');
+                            const progress = Math.round(data.progress);
+                            progressBar.style.width = progress + '%';
+                            progressBar.textContent = progress + '%';
+                            
+                            document.getElementById('scanning-status').textContent = 
+                                `Verificando: ${data.processed_files} de ${data.total_files} arquivos...`;
+                            
+                            if (progress >= 100) {
+                                clearInterval(progressInterval);
+                                document.getElementById('scanning-status').textContent = 'Verificação concluída!';
+                            }
+                        });
+                    }, 500);
+                }
+            </script>
+        </body>
+        </html>
+        <?php
+    }
+    
+    private function renderDirectoryTree($items, $level = 0) {
+        foreach ($items as $item) {
+            if ($item['type'] === 'directory') {
+                ?>
+                <div class="tree-item tree-dir">
+                    <label class="tree-label">
+                        <input type="checkbox" value="<?php echo htmlspecialchars($item['path']); ?>">
+                        📁 <?php echo htmlspecialchars($item['name']); ?>
+                    </label>
+                    <div class="tree-children">
+                        <?php $this->renderDirectoryTree($item['children'], $level + 1); ?>
+                    </div>
+                </div>
+                <?php
+            } else {
+                ?>
+                <div class="tree-item">
+                    <label>
+                        <input type="checkbox" value="<?php echo htmlspecialchars($item['path']); ?>">
+                        <?php 
+                        $icon = '📄';
+                        if (preg_match('/\.php$/', $item['name'])) $icon = '🐘';
+                        elseif (preg_match('/\.js$/', $item['name'])) $icon = '📜';
+                        elseif (preg_match('/\.css$/', $item['name'])) $icon = '🎨';
+                        elseif (preg_match('/\.html$/', $item['name'])) $icon = '🌐';
+                        echo $icon . ' ' . htmlspecialchars($item['name']); 
+                        ?>
+                    </label>
+                </div>
+                <?php
+            }
+        }
     }
 
     public function displayResults() {
@@ -138,10 +473,26 @@ class PathChecker {
                 .hidden {
                     display: none !important;
                 }
+                .back-button {
+                    padding: 10px 15px;
+                    background-color: #6c757d;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin: 20px 0;
+                    text-decoration: none;
+                    display: inline-block;
+                }
+                .back-button:hover {
+                    background-color: #5a6268;
+                }
             </style>
         </head>
         <body>
             <h1>Path Checker Results</h1>
+            
+            <a href="path_checker.php" class="back-button">Voltar ao Seletor</a>
             
             <?php if (isset($_GET['message'])): ?>
                 <div class="message <?php echo $_GET['status']; ?>">
@@ -202,6 +553,7 @@ class PathChecker {
                     <form class="edit-form" method="post" action="path_editor.php">
                         <input type="hidden" name="source_file" value="<?php echo htmlspecialchars($result['source_file']); ?>">
                         <input type="hidden" name="old_path" value="<?php echo htmlspecialchars($result['path']); ?>">
+                        <input type="hidden" name="return_url" value="path_checker.php?show_results=1">
                         <input type="text" name="new_path" value="<?php echo htmlspecialchars($result['path']); ?>" style="width: 300px;">
                         <input type="submit" value="Update Path" style="margin-left: 10px;">
                     </form>
@@ -272,6 +624,13 @@ class PathChecker {
                                 this.querySelector('input[name="new_path"]').value;
                             
                             showMessage(data.message, 'success');
+                            
+                            // Se houver uma URL de retorno, redirecionar após 1.5 segundos
+                            if (data.return_url && formData.get('return_url')) {
+                                setTimeout(() => {
+                                    window.location.href = data.return_url;
+                                }, 1500);
+                            }
                         } else {
                             showMessage(data.message, 'error');
                         }
@@ -313,10 +672,47 @@ class PathChecker {
     }
 }
 
+// Processamento das requisições AJAX
+if (isset($_GET['action'])) {
+    header('Content-Type: application/json');
+    $checker = new PathChecker();
+    
+    switch ($_GET['action']) {
+        case 'count_files':
+            $data = json_decode(file_get_contents('php://input'), true);
+            $total = $checker->countScanFiles($data['paths']);
+            echo json_encode(['total_files' => $total]);
+            exit;
+            
+        case 'scan':
+            $data = json_decode(file_get_contents('php://input'), true);
+            $results = $checker->scanSelectedPaths($data['paths']);
+            // Salvar resultados na sessão
+            session_start();
+            $_SESSION['path_checker_results'] = $results;
+            echo json_encode(['success' => true]);
+            exit;
+            
+        case 'progress':
+            echo json_encode([
+                'progress' => $checker->getProgress(),
+                'total_files' => $checker->totalFiles,
+                'processed_files' => $checker->processedFiles
+            ]);
+            exit;
+    }
+}
+
 // Uso da ferramenta
 if (php_sapi_name() !== 'cli') {
+    session_start();
     $checker = new PathChecker();
-    $checker->scanDirectory(PROJECT_ROOT);
-    $checker->displayResults();
+    
+    if (isset($_GET['show_results']) && isset($_SESSION['path_checker_results'])) {
+        $checker->results = $_SESSION['path_checker_results'];
+        $checker->displayResults();
+    } else {
+        $checker->displaySelector();
+    }
 }
 ?> 
