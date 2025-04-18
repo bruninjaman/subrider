@@ -262,10 +262,66 @@ class PathChecker {
                 // Função para alternar a expansão de diretórios
                 document.querySelectorAll('.tree-label').forEach(label => {
                     if (label.parentElement.classList.contains('tree-dir')) {
-                        label.addEventListener('click', () => {
-                            label.parentElement.classList.toggle('tree-expanded');
+                        label.addEventListener('click', (e) => {
+                            // Previne que o clique no checkbox cause o evento de toggle
+                            if (e.target.type !== 'checkbox') {
+                                label.parentElement.classList.toggle('tree-expanded');
+                            }
                         });
                     }
+                });
+                
+                // Função para selecionar/desmarcar todos os arquivos de um diretório quando ele é marcado/desmarcado
+                document.querySelectorAll('.dir-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const dirItem = this.closest('.tree-dir');
+                        const childCheckboxes = dirItem.querySelectorAll('.tree-children input[type="checkbox"]');
+                        
+                        // Define o estado de todos os checkboxes dentro do diretório
+                        childCheckboxes.forEach(childBox => {
+                            childBox.checked = this.checked;
+                        });
+                        
+                        // Se marcar um diretório, expandir para mostrar os filhos
+                        if (this.checked) {
+                            dirItem.classList.add('tree-expanded');
+                        }
+                        
+                        // Verifica se precisa atualizar os diretórios pais
+                        updateParentDirectories(dirItem.parentElement);
+                    });
+                });
+                
+                // Função para atualizar o estado dos diretórios pais com base nos filhos
+                function updateParentDirectories(element) {
+                    if (!element) return;
+                    
+                    const parentDir = element.closest('.tree-dir');
+                    if (!parentDir) return;
+                    
+                    const parentCheckbox = parentDir.querySelector('input[type="checkbox"]');
+                    const siblingCheckboxes = element.querySelectorAll('input[type="checkbox"]');
+                    
+                    // Verifica se todos os checkboxes irmãos estão marcados
+                    const allChecked = Array.from(siblingCheckboxes).every(cb => cb.checked);
+                    // Verifica se pelo menos um checkbox irmão está marcado
+                    const someChecked = Array.from(siblingCheckboxes).some(cb => cb.checked);
+                    
+                    // Atualiza o estado do checkbox do diretório pai
+                    parentCheckbox.checked = allChecked || someChecked;
+                    
+                    // Continua recursivamente para os diretórios pais
+                    updateParentDirectories(parentDir.parentElement);
+                }
+                
+                // Atualiza os diretórios pais quando qualquer arquivo é marcado/desmarcado
+                document.querySelectorAll('.file-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const parentDir = this.closest('.tree-children');
+                        if (parentDir) {
+                            updateParentDirectories(parentDir);
+                        }
+                    });
                 });
                 
                 // Função para selecionar todos os itens
@@ -376,7 +432,7 @@ class PathChecker {
                 ?>
                 <div class="tree-item tree-dir">
                     <label class="tree-label">
-                        <input type="checkbox" value="<?php echo htmlspecialchars($item['path']); ?>">
+                        <input type="checkbox" class="dir-checkbox" value="<?php echo htmlspecialchars($item['path']); ?>">
                         📁 <?php echo htmlspecialchars($item['name']); ?>
                     </label>
                     <div class="tree-children">
@@ -388,7 +444,7 @@ class PathChecker {
                 ?>
                 <div class="tree-item">
                     <label>
-                        <input type="checkbox" value="<?php echo htmlspecialchars($item['path']); ?>">
+                        <input type="checkbox" class="file-checkbox" value="<?php echo htmlspecialchars($item['path']); ?>">
                         <?php 
                         $icon = '📄';
                         if (preg_match('/\.php$/', $item['name'])) $icon = '🐘';
