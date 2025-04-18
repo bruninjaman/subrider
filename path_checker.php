@@ -22,7 +22,6 @@ class PathChecker {
             }
         }
 
-        // Scan subdirectories
         $subdirs = glob($dir . '/*', GLOB_ONLYDIR);
         foreach ($subdirs as $subdir) {
             $this->scanDirectory($subdir);
@@ -44,18 +43,17 @@ class PathChecker {
     private function checkPath($path, $sourceFile, $type) {
         $originalPath = $path;
         
-        // Convert relative paths to absolute
         if (strpos($path, 'http') !== 0 && strpos($path, '//') !== 0) {
             if (strpos($path, '/') === 0) {
                 $path = PROJECT_ROOT . $path;
             } else {
                 $path = dirname($sourceFile) . '/' . $path;
             }
+            $path = realpath($path) ?: $path;
         }
 
         $exists = false;
-        if (strpos($path, 'http') === 0 || strpos($path, '//') === 0) {
-            // Para URLs externas, consideramos como válido por padrão
+        if (strpos($path, 'http') === 0 || strpos($path, '//') !== 0) {
             $exists = true;
         } else {
             $exists = file_exists($path);
@@ -138,6 +136,18 @@ class PathChecker {
                 .hidden {
                     display: none !important;
                 }
+                .fix-all-btn {
+                    margin-bottom: 20px;
+                    padding: 10px 20px;
+                    background-color: #28a745;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                .fix-all-btn:hover {
+                    background-color: #218838;
+                }
             </style>
         </head>
         <body>
@@ -148,6 +158,8 @@ class PathChecker {
                     <?php echo htmlspecialchars($_GET['message']); ?>
                 </div>
             <?php endif; ?>
+
+            <button class="fix-all-btn" onclick="fixAllInvalidPaths()">Fix All Invalid Paths</button>
 
             <div class="filters">
                 <div class="filter-group">
@@ -195,9 +207,9 @@ class PathChecker {
                      data-type="<?php echo htmlspecialchars($result['type']); ?>"
                      data-status="<?php echo $result['exists'] ? 'valid' : 'invalid'; ?>">
                     <span class="type-badge"><?php echo htmlspecialchars($result['type']); ?></span>
-                    <strong>Path:</strong> <?php echo htmlspecialchars($result['path']); ?><br>
+                    <strong>Path:</strong> <span class="path-text"><?php echo htmlspecialchars($result['path']); ?></span><br>
                     <strong>Source:</strong> <?php echo htmlspecialchars($result['source_file']); ?><br>
-                    <strong>Status:</strong> <?php echo $result['exists'] ? '✅ Valid' : '❌ Invalid'; ?>
+                    <strong>Status:</strong> <span class="status-text"><?php echo $result['exists'] ? '✅ Valid' : '❌ Invalid'; ?></span>
                     
                     <form class="edit-form" method="post" action="path_editor.php">
                         <input type="hidden" name="source_file" value="<?php echo htmlspecialchars($result['source_file']); ?>">
@@ -210,7 +222,7 @@ class PathChecker {
             </div>
 
             <script>
-            // Remove a mensagem após 5 segundos
+            // Remove message after 5 seconds
             setTimeout(function() {
                 var message = document.querySelector('.message');
                 if (message) {
@@ -218,72 +230,192 @@ class PathChecker {
                 }
             }, 5000);
 
-            // Função para mostrar mensagem temporária
+            // Function to show temporary message
             function showMessage(message, status) {
                 const container = document.createElement('div');
                 container.className = `message ${status}`;
                 container.textContent = message;
-                
                 document.querySelector('h1').insertAdjacentElement('afterend', container);
-                
                 setTimeout(() => container.remove(), 5000);
             }
 
-            // Adiciona o estado "atualizado" quando o campo é modificado
+            // Function to calculate relative path
+            function getRelativePath(fromPath, toPath) {
+                const root = '<?php echo addslashes(PROJECT_ROOT); ?>'.replace(/\\\\/g, '/');
+                fromPath = fromPath.replace(root, '').replace(/^\/+/, '');
+                toPath = toPath.replace(root, '').replace(/^\/+/, '');
+                
+                const fromParts = fromPath.split('/').filter(p => p);
+                const toParts = toPath.split('/').filter(p => p);
+                fromParts.pop(); // Remove filename from source path
+                
+                let commonLength = 0;
+                while (commonLength < fromParts.length && 
+                       commonLength < toParts.length && 
+                       fromParts[commonLength] === toParts[commonLength]) {
+                    commonLength++;
+                }
+                
+                const upLevels = fromParts.length - commonLength;
+                const upPath = upLevels > 0 ? Array(upLevels).fill('..').join('/') : '.';
+                const remainingPath = toParts.slice(commonLength).join('/');
+                
+                return upPath + (remainingPath ? '/' + remainingPath : '');
+            }
+
+            // Function to fix all invalid paths
+            async function fixAllInvalidPaths() {
+                if (!confirm('Are you sure you want to fix all invalid paths?')) {
+                    return;
+                }
+
+                const invalidItems = document.querySelectorAll('.path-item.invalid');
+                const updates = [];
+
+                for (const item of invalidItems) {
+                    const sourceFile = item.querySelector('input[name="source_file"]').value;
+                    const oldPath = item.querySelector('input[name="old_path"]').value;
+                    const type = item.dataset.type;
+                    const filename = oldPath.split('/').pop();
+
+                    try {
+                        const response = await fetch(`find_file.php?filename=${encodeURIComponent(filename)}&type=${encodeURIComponent(type)}`, {
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        const text = await response.text(); // Get raw response for debugging
+                        let data;
+                        try {
+                            data = JSON.parse(text);
+                        } catch (e) {
+                            console.error('Invalid JSON from find_file.php:', text);
+                            throw new Error(`Invalid JSON response from find_file.php: ${text.slice(0, 100)}`);
+                        }
+
+                        if (data.found && data.path) {
+                            const relativePath = getRelativePath(sourceFile, data.path);
+                            updates.push({
+                                source_file: sourceFile,
+                                old_path: oldPath,
+                                new_path: relativePath
+                            });
+                        } else {
+                            console.warn(`File not found for ${filename} (type: ${type})`);
+                        }
+                    } catch (error) {
+                        console.error(`Error finding file ${filename}:`, error);
+                        showMessage(`Failed to process ${filename}: ${error.message}`, 'error');
+                    }
+                }
+
+                if (updates.length === 0) {
+                    showMessage('No invalid paths to fix or no matching files found.', 'success');
+                    return;
+                }
+
+                // Send updates to path_editor.php
+                try {
+                    const response = await fetch('path_editor.php', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ updates })
+                    });
+                    const text = await response.text(); // Get raw response for debugging
+                    let data;
+                    try {
+                        data = JSON.parse(text);
+                    } catch (e) {
+                        console.error('Invalid JSON from path_editor.php:', text);
+                        throw new Error(`Invalid JSON response from path_editor.php: ${text.slice(0, 100)}`);
+                    }
+
+                    if (data.success) {
+                        updates.forEach(update => {
+                            const item = Array.from(document.querySelectorAll('.path-item')).find(i => 
+                                i.querySelector('input[name="source_file"]').value === update.source_file &&
+                                i.querySelector('input[name="old_path"]').value === update.old_path
+                            );
+                            if (item && data.results[update.source_file + '|' + update.old_path]) {
+                                item.classList.remove('invalid', 'valid', 'updated');
+                                item.classList.add(data.results[update.source_file + '|' + update.old_path].exists ? 'valid' : 'invalid');
+                                item.dataset.status = data.results[update.source_file + '|' + update.old_path].exists ? 'valid' : 'invalid';
+                                item.querySelector('.status-text').textContent = 
+                                    data.results[update.source_file + '|' + update.old_path].exists ? '✅ Valid' : '❌ Invalid';
+                                item.querySelector('input[name="old_path"]').value = update.new_path;
+                                item.querySelector('input[name="new_path"]').value = update.new_path;
+                                item.querySelector('.path-text').textContent = update.new_path;
+                            }
+                        });
+                        showMessage(data.message, 'success');
+                        updateVisibility();
+                    } else {
+                        showMessage(data.message || 'Failed to update paths', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error updating paths:', error);
+                    showMessage(`Error processing request: ${error.message}`, 'error');
+                }
+            }
+
+            // Mark item as updated when path is edited
             document.querySelectorAll('.edit-form input[name="new_path"]').forEach(input => {
                 input.addEventListener('input', function() {
                     const form = this.closest('.path-item');
                     if (this.value !== this.form.querySelector('input[name="old_path"]').value) {
                         form.classList.add('updated');
                         form.classList.remove('valid', 'invalid');
-                    } else {
+                    } single {
                         form.classList.remove('updated');
-                        form.classList.add(form.dataset.status === 'valid' ? 'valid' : 'invalid');
+                        form.classList.add(form.dataset.status);
                     }
                 });
             });
 
-            // Intercepta o envio do formulário para usar AJAX
+            // Handle single form submission via AJAX
             document.querySelectorAll('.edit-form').forEach(form => {
-                form.addEventListener('submit', function(e) {
+                form.addEventListener('submit', async function(e) {
                     e.preventDefault();
-                    
                     const formData = new FormData(this);
                     const pathItem = this.closest('.path-item');
                     
-                    fetch('path_editor.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
+                    try {
+                        const response = await fetch('path_editor.php', {
+                            method: 'POST',
+                            body: formData,
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        const text = await response.text(); // Get raw response for debugging
+                        let data;
+                        try {
+                            data = JSON.parse(text);
+                        } catch (e) {
+                            console.error('Invalid JSON from path_editor.php:', text);
+                            throw new Error(`Invalid JSON response from path_editor.php: ${text.slice(0, 100)}`);
+                        }
+
                         if (data.success) {
-                            // Atualiza o status do item
                             pathItem.classList.remove('updated', 'valid', 'invalid');
                             pathItem.classList.add(data.exists ? 'valid' : 'invalid');
                             pathItem.dataset.status = data.exists ? 'valid' : 'invalid';
-                            
-                            // Atualiza o texto de status
-                            const statusText = pathItem.querySelector('strong:last-of-type');
-                            statusText.nextSibling.textContent = data.exists ? '✅ Valid' : '❌ Invalid';
-                            
-                            // Atualiza o valor do old_path
-                            this.querySelector('input[name="old_path"]').value = 
-                                this.querySelector('input[name="new_path"]').value;
-                            
+                            pathItem.querySelector('.status-text').textContent = data.exists ? '✅ Valid' : '❌ Invalid';
+                            pathItem.querySelector('input[name="old_path"]').value = 
+                                pathItem.querySelector('input[name="new_path"]').value;
+                            pathItem.querySelector('.path-text').textContent = 
+                                pathItem.querySelector('input[name="new_path"]').value;
                             showMessage(data.message, 'success');
                         } else {
-                            showMessage(data.message, 'error');
+                            showMessage(data.message || 'Failed to update path', 'error');
                         }
-                    })
-                    .catch(error => {
-                        showMessage('Erro ao processar a requisição', 'error');
-                        console.error('Error:', error);
-                    });
+                    } catch (error) {
+                        console.error('Error updating path:', error);
+                        showMessage(`Error processing request: ${error.message}`, 'error');
+                    }
                 });
             });
 
-            // Função para atualizar a visibilidade dos items
+            // Update visibility based on filters
             function updateVisibility() {
                 const selectedTypes = Array.from(document.querySelectorAll('.type-filter:checked')).map(cb => cb.value);
                 const selectedStatuses = Array.from(document.querySelectorAll('.status-filter:checked')).map(cb => cb.value);
@@ -291,20 +423,16 @@ class PathChecker {
                 document.querySelectorAll('.path-item').forEach(item => {
                     const type = item.dataset.type;
                     const status = item.dataset.status;
-                    
-                    const typeMatch = selectedTypes.includes(type);
-                    const statusMatch = selectedStatuses.includes(status);
-                    
-                    item.classList.toggle('hidden', !typeMatch || !statusMatch);
+                    item.classList.toggle('hidden', !selectedTypes.includes(type) || !selectedStatuses.includes(status));
                 });
             }
 
-            // Adiciona listeners para todos os checkboxes
+            // Add filter event listeners
             document.querySelectorAll('.type-filter, .status-filter').forEach(checkbox => {
                 checkbox.addEventListener('change', updateVisibility);
             });
 
-            // Inicializa a visibilidade
+            // Initialize visibility
             updateVisibility();
             </script>
         </body>
@@ -313,10 +441,9 @@ class PathChecker {
     }
 }
 
-// Uso da ferramenta
 if (php_sapi_name() !== 'cli') {
     $checker = new PathChecker();
     $checker->scanDirectory(PROJECT_ROOT);
     $checker->displayResults();
 }
-?> 
+?>
