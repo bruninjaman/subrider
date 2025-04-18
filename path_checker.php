@@ -605,6 +605,57 @@ class PathChecker {
                     margin-bottom: 20px;
                     color: #004085;
                 }
+                .action-button {
+                    padding: 10px 15px;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    text-decoration: none;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+                .autofix-button {
+                    background-color: #28a745;
+                }
+                .autofix-button:hover {
+                    background-color: #218838;
+                }
+                .btn-container {
+                    display: flex;
+                    gap: 10px;
+                    margin-bottom: 20px;
+                }
+                .checkbox-select-all {
+                    margin-bottom: 10px;
+                }
+                .path-item-checkbox {
+                    float: right;
+                }
+                .loading-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                }
+                .loading-spinner {
+                    width: 50px;
+                    height: 50px;
+                    border: 5px solid #f3f3f3;
+                    border-top: 5px solid #3498db;
+                    border-radius: 50%;
+                    animation: spin 2s linear infinite;
+                }
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
             </style>
         </head>
         <body>
@@ -642,6 +693,13 @@ class PathChecker {
                     <?php endif; ?>
                 </ul>
                 <?php endif; ?>
+            </div>
+
+            <div class="btn-container">
+                <button id="autofix-button" class="action-button autofix-button">AutoFix Paths Selecionados</button>
+                <label class="checkbox-select-all">
+                    <input type="checkbox" id="select-all-items"> Selecionar Todos Inválidos
+                </label>
             </div>
 
             <div class="filters">
@@ -688,7 +746,12 @@ class PathChecker {
             <?php foreach ($this->results as $index => $result): ?>
                 <div class="path-item <?php echo $result['exists'] ? 'valid' : 'invalid'; ?>" 
                      data-type="<?php echo htmlspecialchars($result['type']); ?>"
-                     data-status="<?php echo $result['exists'] ? 'valid' : 'invalid'; ?>">
+                     data-status="<?php echo $result['exists'] ? 'valid' : 'invalid'; ?>"
+                     data-id="<?php echo $index; ?>">
+                    <?php if (!$result['exists']): ?>
+                    <input type="checkbox" class="path-item-checkbox" data-path="<?php echo htmlspecialchars($result['path']); ?>" 
+                           data-source="<?php echo htmlspecialchars($result['source_file']); ?>">
+                    <?php endif; ?>
                     <span class="type-badge"><?php echo htmlspecialchars($result['type']); ?></span>
                     <strong>Path:</strong> <?php echo htmlspecialchars($result['path']); ?><br>
                     <strong>Source:</strong> <?php echo htmlspecialchars($result['source_file']); ?><br>
@@ -703,6 +766,10 @@ class PathChecker {
                     </form>
                 </div>
             <?php endforeach; ?>
+            </div>
+
+            <div id="loading-overlay" class="loading-overlay hidden">
+                <div class="loading-spinner"></div>
             </div>
 
             <script>
@@ -751,7 +818,19 @@ class PathChecker {
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro de rede: ' + response.status);
+                        }
+                        return response.text().then(text => {
+                            try {
+                                return JSON.parse(text);
+                            } catch (e) {
+                                console.error('Erro ao processar resposta do servidor:', text);
+                                throw new Error('Resposta inválida do servidor: ' + e.message);
+                            }
+                        });
+                    })
                     .then(data => {
                         if (data.success) {
                             // Atualiza o status do item
@@ -776,11 +855,13 @@ class PathChecker {
                                 }, 1500);
                             }
                         } else {
-                            showMessage(data.message, 'error');
+                            const errorMessage = data.message || 'Erro desconhecido';
+                            showMessage(errorMessage, 'error');
+                            console.error('Erro retornado pelo servidor:', data);
                         }
                     })
                     .catch(error => {
-                        showMessage('Erro ao processar a requisição', 'error');
+                        showMessage('Erro ao processar a requisição: ' + error.message, 'error');
                         console.error('Error:', error);
                     });
                 });
@@ -809,6 +890,123 @@ class PathChecker {
 
             // Inicializa a visibilidade
             updateVisibility();
+
+            // Selecionar/desmarcar todos os itens inválidos
+            document.getElementById('select-all-items').addEventListener('change', function() {
+                document.querySelectorAll('.path-item[data-status="invalid"] .path-item-checkbox').forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
+
+            // Função para mostrar/esconder o indicador de carregamento
+            function toggleLoading(show) {
+                document.getElementById('loading-overlay').classList.toggle('hidden', !show);
+            }
+
+            // Botão de AutoFix
+            document.getElementById('autofix-button').addEventListener('click', function() {
+                // Coletar os itens selecionados
+                const selectedItems = [];
+                document.querySelectorAll('.path-item-checkbox:checked').forEach(checkbox => {
+                    selectedItems.push({
+                        path: checkbox.dataset.path,
+                        source_file: checkbox.dataset.source
+                    });
+                });
+                
+                if (selectedItems.length === 0) {
+                    showMessage('Selecione pelo menos um caminho inválido para corrigir.', 'error');
+                    return;
+                }
+                
+                // Confirmação do usuário
+                if (!confirm(`Deseja tentar corrigir automaticamente ${selectedItems.length} caminhos?`)) {
+                    return;
+                }
+                
+                // Mostrar indicador de carregamento
+                toggleLoading(true);
+                
+                // Enviar solicitação de autofix
+                const formData = new FormData();
+                formData.append('autofix', 'true');
+                formData.append('items', JSON.stringify(selectedItems));
+                formData.append('return_url', 'path_checker.php?show_results=1');
+                
+                fetch('path_editor.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro de rede: ' + response.status);
+                    }
+                    return response.text().then(text => {
+                        try {
+                            return JSON.parse(text);
+                        } catch (e) {
+                            console.error('Erro ao processar resposta do servidor:', text);
+                            throw new Error('Resposta inválida do servidor: ' + e.message);
+                        }
+                    });
+                })
+                .then(data => {
+                    toggleLoading(false);
+                    
+                    if (data.success) {
+                        showMessage(data.message, 'success');
+                        
+                        // Atualizar UI com os resultados
+                        data.results.forEach(result => {
+                            if (result.success) {
+                                document.querySelectorAll('.path-item-checkbox').forEach(checkbox => {
+                                    if (checkbox.dataset.path === result.old_path && 
+                                        checkbox.dataset.source === result.source_file) {
+                                        
+                                        const pathItem = checkbox.closest('.path-item');
+                                        
+                                        // Atualizar status e classe
+                                        pathItem.classList.remove('invalid');
+                                        pathItem.classList.add('valid');
+                                        pathItem.dataset.status = 'valid';
+                                        
+                                        // Atualizar texto de status
+                                        const statusText = pathItem.querySelector('strong:last-of-type');
+                                        statusText.nextSibling.textContent = '✅ Valid';
+                                        
+                                        // Atualizar campo de input
+                                        const input = pathItem.querySelector('input[name="new_path"]');
+                                        input.value = result.new_path;
+                                        
+                                        // Atualizar campo hidden
+                                        const oldPathInput = pathItem.querySelector('input[name="old_path"]');
+                                        oldPathInput.value = result.new_path;
+                                        
+                                        // Remover o checkbox
+                                        checkbox.remove();
+                                    }
+                                });
+                            }
+                        });
+                        
+                        // Redirecionar se necessário após um atraso
+                        if (data.return_url) {
+                            setTimeout(() => {
+                                window.location.href = data.return_url;
+                            }, 2000);
+                        }
+                    } else {
+                        const errorMessage = data.message || 'Erro desconhecido';
+                        showMessage(errorMessage, 'error');
+                        console.error('Erro retornado pelo servidor:', data);
+                    }
+                })
+                .catch(error => {
+                    toggleLoading(false);
+                    showMessage('Erro ao processar a requisição: ' + error.message, 'error');
+                    console.error('Error:', error);
+                });
+            });
             </script>
         </body>
         </html>
