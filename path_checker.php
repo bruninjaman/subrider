@@ -12,6 +12,7 @@ class PathChecker {
 
     public $results = [];
     private $scannedFiles = [];
+    public $selectedPaths = [];
     public $totalFiles = 0;
     public $processedFiles = 0;
 
@@ -71,6 +72,7 @@ class PathChecker {
     public function scanSelectedPaths($paths) {
         $this->results = [];
         $this->scannedFiles = [];
+        $this->selectedPaths = $paths;
         $this->processedFiles = 0;
         
         foreach ($paths as $path) {
@@ -131,6 +133,9 @@ class PathChecker {
             }
         }
 
+        // Verifica se o caminho está entre os selecionados
+        $isSelected = $this->isPathSelected($path);
+
         $exists = false;
         if (strpos($path, 'http') === 0 || strpos($path, '//') === 0) {
             // Para URLs externas, consideramos como válido por padrão
@@ -139,12 +144,61 @@ class PathChecker {
             $exists = file_exists($path);
         }
 
-        $this->results[] = [
-            'path' => $originalPath,
-            'source_file' => $sourceFile,
-            'type' => $type,
-            'exists' => $exists
-        ];
+        // Adiciona o resultado apenas se o caminho estiver selecionado
+        if ($isSelected) {
+            $this->results[] = [
+                'path' => $originalPath,
+                'source_file' => $sourceFile,
+                'type' => $type,
+                'exists' => $exists
+            ];
+        }
+    }
+    
+    private function isPathSelected($absolutePath) {
+        // Para URLs externas, sempre incluir nos resultados
+        if (strpos($absolutePath, 'http') === 0 || strpos($absolutePath, '//') === 0) {
+            return true;
+        }
+        
+        // Normaliza o caminho
+        $absolutePath = str_replace('\\', '/', $absolutePath);
+        $projectRootPath = str_replace('\\', '/', PROJECT_ROOT);
+        
+        // Se o caminho está fora da raiz do projeto, não pode estar selecionado
+        if (strpos($absolutePath, $projectRootPath) !== 0) {
+            return false;
+        }
+        
+        // Converte o caminho absoluto para relativo a PROJECT_ROOT
+        $relativePath = substr($absolutePath, strlen($projectRootPath) + 1);
+        
+        // Verifica se o caminho ou qualquer diretório pai está na lista de selecionados
+        foreach ($this->selectedPaths as $selectedPath) {
+            // Normaliza o caminho selecionado
+            $selectedPath = str_replace('\\', '/', $selectedPath);
+            
+            // Se o caminho selecionado é um diretório pai do caminho verificado
+            if (strpos($relativePath, $selectedPath . '/') === 0) {
+                return true;
+            }
+            
+            // Se é o próprio caminho
+            if ($relativePath === $selectedPath) {
+                return true;
+            }
+            
+            // Se o caminho verificado é um arquivo e o caminho selecionado é seu diretório pai
+            $pathDir = dirname($relativePath);
+            if ($pathDir === '.' && $selectedPath === '.') {
+                return true;
+            }
+            if ($pathDir !== '.' && $selectedPath !== '.' && $pathDir === $selectedPath) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     public function getProgress() {
@@ -543,6 +597,14 @@ class PathChecker {
                 .back-button:hover {
                     background-color: #5a6268;
                 }
+                .selection-info {
+                    background-color: #e2f0fd;
+                    border: 1px solid #b8daff;
+                    border-radius: 4px;
+                    padding: 10px;
+                    margin-bottom: 20px;
+                    color: #004085;
+                }
             </style>
         </head>
         <body>
@@ -555,6 +617,32 @@ class PathChecker {
                     <?php echo htmlspecialchars($_GET['message']); ?>
                 </div>
             <?php endif; ?>
+
+            <div class="selection-info">
+                <p><strong>Nota:</strong> Apenas os caminhos encontrados dentro dos diretórios e arquivos selecionados foram verificados.</p>
+                
+                <?php if (!empty($this->selectedPaths)): ?>
+                <p><strong>Seleção de verificação:</strong></p>
+                <ul>
+                    <?php 
+                    $maxDisplay = 10;
+                    $count = 0;
+                    foreach ($this->selectedPaths as $path): 
+                        if ($count < $maxDisplay):
+                    ?>
+                        <li><?php echo htmlspecialchars($path); ?></li>
+                    <?php 
+                        $count++;
+                        endif;
+                    endforeach; 
+                    
+                    if (count($this->selectedPaths) > $maxDisplay):
+                    ?>
+                        <li>...e mais <?php echo count($this->selectedPaths) - $maxDisplay; ?> itens</li>
+                    <?php endif; ?>
+                </ul>
+                <?php endif; ?>
+            </div>
 
             <div class="filters">
                 <div class="filter-group">
@@ -743,9 +831,10 @@ if (isset($_GET['action'])) {
         case 'scan':
             $data = json_decode(file_get_contents('php://input'), true);
             $results = $checker->scanSelectedPaths($data['paths']);
-            // Salvar resultados na sessão
+            // Salvar resultados e caminhos selecionados na sessão
             session_start();
             $_SESSION['path_checker_results'] = $results;
+            $_SESSION['path_checker_selected_paths'] = $data['paths'];
             echo json_encode(['success' => true]);
             exit;
             
@@ -766,6 +855,12 @@ if (php_sapi_name() !== 'cli') {
     
     if (isset($_GET['show_results']) && isset($_SESSION['path_checker_results'])) {
         $checker->results = $_SESSION['path_checker_results'];
+        
+        // Se temos os caminhos selecionados na sessão, vamos passá-los para o checker
+        if (isset($_SESSION['path_checker_selected_paths'])) {
+            $checker->selectedPaths = $_SESSION['path_checker_selected_paths'];
+        }
+        
         $checker->displayResults();
     } else {
         $checker->displaySelector();

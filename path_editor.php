@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -50,6 +51,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ? dirname(__DIR__) . $newPath 
                 : dirname($sourceFile) . '/' . $newPath;
             $response['exists'] = file_exists($absolutePath);
+        }
+        
+        // Se houver resultados na sessão, vamos atualizar também
+        if (isset($_SESSION['path_checker_results'])) {
+            $results = $_SESSION['path_checker_results'];
+            foreach ($results as $key => $result) {
+                if ($result['source_file'] === $sourceFile && $result['path'] === $_POST['old_path']) {
+                    $results[$key]['path'] = $newPath;
+                    $results[$key]['exists'] = $response['exists'];
+                }
+            }
+            $_SESSION['path_checker_results'] = $results;
         }
     } else {
         $response['message'] = "Erro ao atualizar o arquivo";
