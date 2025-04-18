@@ -73,7 +73,7 @@ if (isset($_GET['ordem'])) {
 echo '<a class="button primary" id="closeModal3">Sair</a>';
 ?>
 
-<link rel="stylesheet" href="pages/ordemservico/modal/dados/dados.css">
+<link rel="stylesheet" href="../../../../../../../../pages/ordemservico/modal/dados/dados.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <?php
@@ -94,7 +94,7 @@ $cabecote_ref = mysqli_fetch_assoc($result);
 <input type="hidden" id="val_esc_limite_max" value="<?php echo $cabecote_ref['val_esc_limite_max']; ?>">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="pages\ordemservico\modal\calcularPastilha.js"></script>
+<script src="../../../../../../../../pages/ordemservico/modal/calcularPastilha.js"></script>
 
 
 <script>
