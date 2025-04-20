@@ -15,6 +15,7 @@ class PathChecker {
     public $selectedPaths = [];
     public $totalFiles = 0;
     public $processedFiles = 0;
+    private $debugLog = [];
 
     public function getDirectoryStructure($dir = PROJECT_ROOT, $relativePath = '') {
         $structure = [];
@@ -49,24 +50,23 @@ class PathChecker {
         foreach ($paths as $path) {
             $fullPath = PROJECT_ROOT . '/' . $path;
             
-            if (is_dir($fullPath)) {
-                $this->countFilesInDirectory($fullPath);
-            } else if (preg_match('/\.(php|html|js)$/', $fullPath)) {
+            if (is_file($fullPath) && preg_match('/\.(php|html|js)$/', $fullPath)) {
                 $this->totalFiles++;
+            } else if (is_dir($fullPath)) {
+                // Em vez de contar todos os arquivos no diretório,
+                // contamos apenas os arquivos explicitamente selecionados dentro dele
+                foreach ($paths as $potentialFile) {
+                    if (strpos($potentialFile, $path . '/') === 0) {
+                        $fullFilePath = PROJECT_ROOT . '/' . $potentialFile;
+                        if (is_file($fullFilePath) && preg_match('/\.(php|html|js)$/', $fullFilePath)) {
+                            $this->totalFiles++;
+                        }
+                    }
+                }
             }
         }
         
         return $this->totalFiles;
-    }
-    
-    private function countFilesInDirectory($dir) {
-        $files = glob($dir . '/*.{php,html,js}', GLOB_BRACE);
-        $this->totalFiles += count($files);
-        
-        $subdirs = glob($dir . '/*', GLOB_ONLYDIR);
-        foreach ($subdirs as $subdir) {
-            $this->countFilesInDirectory($subdir);
-        }
     }
 
     public function scanSelectedPaths($paths) {
@@ -74,42 +74,54 @@ class PathChecker {
         $this->scannedFiles = [];
         $this->selectedPaths = $paths;
         $this->processedFiles = 0;
+        $this->debugLog = []; // Reset do log de depuração
         
+        $this->logDebug("Iniciando verificação com " . count($paths) . " caminhos selecionados: " . implode(', ', $paths));
+        
+        // Lista de arquivos explicitamente selecionados
+        $explicitlySelectedFiles = [];
+        
+        // Primeiro, separamos apenas os arquivos selecionados explicitamente
         foreach ($paths as $path) {
             $fullPath = PROJECT_ROOT . '/' . $path;
+            $this->logDebug("Verificando caminho selecionado: $path (Caminho completo: $fullPath)");
             
-            if (is_dir($fullPath)) {
-                $this->scanDirectory($fullPath);
-            } else if (preg_match('/\.(php|html|js)$/', $fullPath)) {
-                if (!in_array($fullPath, $this->scannedFiles)) {
-                    $this->scannedFiles[] = $fullPath;
-                    $this->scanFile($fullPath);
-                    $this->processedFiles++;
+            if (is_file($fullPath) && preg_match('/\.(php|html|js)$/', $fullPath)) {
+                $explicitlySelectedFiles[] = $fullPath;
+                $this->logDebug("Arquivo explicitamente selecionado: $fullPath");
+            } elseif (is_dir($fullPath)) {
+                $this->logDebug("Diretório selecionado: $fullPath - Procurando apenas por arquivos explicitamente selecionados dentro dele");
+                
+                // Se for um diretório, apenas procuramos se algum arquivo dentro dele foi selecionado explicitamente
+                foreach ($paths as $potentialFile) {
+                    if (strpos($potentialFile, $path . '/') === 0) {
+                        $fullFilePath = PROJECT_ROOT . '/' . $potentialFile;
+                        if (is_file($fullFilePath) && preg_match('/\.(php|html|js)$/', $fullFilePath)) {
+                            $explicitlySelectedFiles[] = $fullFilePath;
+                            $this->logDebug("Arquivo explicitamente selecionado (dentro do diretório): $fullFilePath");
+                        }
+                    }
                 }
             }
         }
         
-        return $this->results;
-    }
-
-    public function scanDirectory($dir) {
-        $files = glob($dir . '/*.{php,html,js}', GLOB_BRACE);
-        foreach ($files as $file) {
+        $this->logDebug("Total de " . count($explicitlySelectedFiles) . " arquivos explicitamente selecionados para escaneamento");
+        
+        // Agora, escaneamos apenas os arquivos explicitamente selecionados
+        foreach ($explicitlySelectedFiles as $file) {
             if (!in_array($file, $this->scannedFiles)) {
                 $this->scannedFiles[] = $file;
                 $this->scanFile($file);
                 $this->processedFiles++;
+                $this->logDebug("Arquivo escaneado: $file");
             }
         }
-
-        // Scan subdirectories
-        $subdirs = glob($dir . '/*', GLOB_ONLYDIR);
-        foreach ($subdirs as $subdir) {
-            $this->scanDirectory($subdir);
-        }
+        
+        $this->logDebug("Verificação concluída. Total de " . count($this->results) . " caminhos encontrados.");
+        return $this->results;
     }
 
-    private function scanFile($file) {
+    public function scanFile($file) {
         $content = file_get_contents($file);
         foreach ($this->patterns as $type => $pattern) {
             preg_match_all($pattern, $content, $matches);
@@ -124,7 +136,10 @@ class PathChecker {
     private function checkPath($path, $sourceFile, $type) {
         $originalPath = $path;
         
-        // Convert relative paths to absolute
+        // Não precisamos verificar se o arquivo fonte está selecionado,
+        // porque agora só escaneamos arquivos explicitamente selecionados
+        
+        // Convertemos o caminho para absoluto
         if (strpos($path, 'http') !== 0 && strpos($path, '//') !== 0) {
             if (strpos($path, '/') === 0) {
                 $path = PROJECT_ROOT . $path;
@@ -132,9 +147,6 @@ class PathChecker {
                 $path = dirname($sourceFile) . '/' . $path;
             }
         }
-
-        // Verifica se o caminho está entre os selecionados
-        $isSelected = $this->isPathSelected($path);
 
         $exists = false;
         if (strpos($path, 'http') === 0 || strpos($path, '//') === 0) {
@@ -144,21 +156,22 @@ class PathChecker {
             $exists = file_exists($path);
         }
 
-        // Adiciona o resultado apenas se o caminho estiver selecionado
-        if ($isSelected) {
-            $this->results[] = [
-                'path' => $originalPath,
-                'source_file' => $sourceFile,
-                'type' => $type,
-                'exists' => $exists
-            ];
-        }
+        // Adicionamos o resultado para o caminho encontrado
+        $this->results[] = [
+            'path' => $originalPath,
+            'source_file' => $sourceFile,
+            'type' => $type,
+            'exists' => $exists
+        ];
+        
+        $this->logDebug("Caminho encontrado: $originalPath (Existe: " . ($exists ? "Sim" : "Não") . ")");
     }
     
     private function isPathSelected($absolutePath) {
-        // Para URLs externas, sempre incluir nos resultados
+        // Para URLs externas, não incluímos por padrão nos resultados
         if (strpos($absolutePath, 'http') === 0 || strpos($absolutePath, '//') === 0) {
-            return true;
+            $this->logDebug("URL externa: $absolutePath - Não é considerada no verificador de seleção");
+            return false;
         }
         
         // Normaliza o caminho
@@ -167,42 +180,62 @@ class PathChecker {
         
         // Se o caminho está fora da raiz do projeto, não pode estar selecionado
         if (strpos($absolutePath, $projectRootPath) !== 0) {
+            $this->logDebug("Caminho fora da raiz do projeto rejeitado: $absolutePath");
             return false;
         }
         
         // Converte o caminho absoluto para relativo a PROJECT_ROOT
         $relativePath = substr($absolutePath, strlen($projectRootPath) + 1);
         
-        // Verifica se o caminho ou qualquer diretório pai está na lista de selecionados
-        foreach ($this->selectedPaths as $selectedPath) {
-            // Normaliza o caminho selecionado
-            $selectedPath = str_replace('\\', '/', $selectedPath);
-            
-            // Se o caminho selecionado é um diretório pai do caminho verificado
-            if (strpos($relativePath, $selectedPath . '/') === 0) {
-                return true;
-            }
-            
-            // Se é o próprio caminho
-            if ($relativePath === $selectedPath) {
-                return true;
-            }
-            
-            // Se o caminho verificado é um arquivo e o caminho selecionado é seu diretório pai
-            $pathDir = dirname($relativePath);
-            if ($pathDir === '.' && $selectedPath === '.') {
-                return true;
-            }
-            if ($pathDir !== '.' && $selectedPath !== '.' && $pathDir === $selectedPath) {
-                return true;
-            }
-        }
-        
-        return false;
+        // Delega para a função isInSelectedPaths
+        return $this->isInSelectedPaths($relativePath);
     }
     
     public function getProgress() {
         return $this->totalFiles > 0 ? ($this->processedFiles / $this->totalFiles) * 100 : 0;
+    }
+
+    // Função auxiliar para verificar se um caminho está contido em outro
+    private function isPathInside($childPath, $parentPath) {
+        // Normaliza os caminhos
+        $childPath = rtrim(str_replace('\\', '/', $childPath), '/');
+        $parentPath = rtrim(str_replace('\\', '/', $parentPath), '/');
+        
+        // Adiciona barras para garantir comparação exata de prefixo
+        // Ex: "pages/login" não deve dar match em "pages/loginadmin" 
+        return $childPath === $parentPath || 
+               strpos($childPath . '/', $parentPath . '/') === 0;
+    }
+    
+    // Função para verificar se um arquivo ou diretório está nas seleções do usuário
+    private function isInSelectedPaths($relativePath) {
+        // Verifica se está exatamente na lista
+        if (in_array($relativePath, $this->selectedPaths)) {
+            $this->logDebug("Caminho exato na seleção: $relativePath");
+            return true;
+        }
+        
+        // Verifica se é um subdiretório/arquivo de algum caminho selecionado
+        foreach ($this->selectedPaths as $selectedPath) {
+            // Se o caminho atual está contido no caminho selecionado (ex: /pages/login está em /pages)
+            if ($this->isPathInside($relativePath, $selectedPath)) {
+                $this->logDebug("Caminho dentro de seleção: $relativePath está em $selectedPath");
+                return true;
+            }
+            
+            // Caso especial: se o caminho é um diretório, e há caminhos selecionados dentro dele
+            // Por exemplo, se relativePath = "pages" e selectedPath = "pages/login"
+            // Precisamos verificar isso para permitir que o diretório pages seja escaneado
+            if (is_dir(PROJECT_ROOT . '/' . $relativePath)) {
+                if ($this->isPathInside($selectedPath, $relativePath)) {
+                    $this->logDebug("Diretório que contém um caminho selecionado: $selectedPath está em $relativePath");
+                    return true;
+                }
+            }
+        }
+        
+        $this->logDebug("Caminho fora da seleção: $relativePath");
+        return false;
     }
 
     public function displaySelector() {
@@ -656,6 +689,32 @@ class PathChecker {
                     0% { transform: rotate(0deg); }
                     100% { transform: rotate(360deg); }
                 }
+                .debug-log {
+                    background-color: #f8f9fa;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    padding: 15px;
+                    margin-top: 30px;
+                    font-family: monospace;
+                    max-height: 300px;
+                    overflow-y: auto;
+                }
+                .debug-log h3 {
+                    margin-top: 0;
+                    border-bottom: 1px solid #ddd;
+                    padding-bottom: 10px;
+                }
+                .debug-log-entry {
+                    margin-bottom: 5px;
+                    border-bottom: 1px dotted #eee;
+                    padding-bottom: 5px;
+                }
+                .debug-button {
+                    background-color: #17a2b8;
+                }
+                .debug-button:hover {
+                    background-color: #138496;
+                }
             </style>
         </head>
         <body>
@@ -670,26 +729,32 @@ class PathChecker {
             <?php endif; ?>
 
             <div class="selection-info">
-                <p><strong>Nota:</strong> Apenas os caminhos encontrados dentro dos diretórios e arquivos selecionados foram verificados.</p>
+                <p><strong>Nota:</strong> Apenas os caminhos encontrados dentro dos arquivos explicitamente selecionados foram verificados.</p>
                 
                 <?php if (!empty($this->selectedPaths)): ?>
-                <p><strong>Seleção de verificação:</strong></p>
+                <p><strong>Arquivos verificados:</strong></p>
                 <ul>
                     <?php 
                     $maxDisplay = 10;
                     $count = 0;
+                    $fileCount = 0;
+                    
                     foreach ($this->selectedPaths as $path): 
-                        if ($count < $maxDisplay):
+                        $fullPath = PROJECT_ROOT . '/' . $path;
+                        if (is_file($fullPath) && preg_match('/\.(php|html|js)$/', $fullPath)):
+                            $fileCount++;
+                            if ($count < $maxDisplay):
                     ?>
                         <li><?php echo htmlspecialchars($path); ?></li>
                     <?php 
-                        $count++;
+                            $count++;
+                            endif;
                         endif;
                     endforeach; 
                     
-                    if (count($this->selectedPaths) > $maxDisplay):
+                    if ($fileCount > $maxDisplay):
                     ?>
-                        <li>...e mais <?php echo count($this->selectedPaths) - $maxDisplay; ?> itens</li>
+                        <li>...e mais <?php echo $fileCount - $maxDisplay; ?> arquivos</li>
                     <?php endif; ?>
                 </ul>
                 <?php endif; ?>
@@ -700,6 +765,7 @@ class PathChecker {
                 <label class="checkbox-select-all">
                     <input type="checkbox" id="select-all-items"> Selecionar Todos Inválidos
                 </label>
+                <button id="toggle-debug" class="action-button debug-button">Mostrar Log de Depuração</button>
             </div>
 
             <div class="filters">
@@ -768,6 +834,13 @@ class PathChecker {
             <?php endforeach; ?>
             </div>
 
+            <div id="debug-log" class="debug-log hidden">
+                <h3>Log de Depuração</h3>
+                <?php foreach ($this->debugLog as $index => $log): ?>
+                    <div class="debug-log-entry"><?php echo htmlspecialchars($log); ?></div>
+                <?php endforeach; ?>
+            </div>
+
             <div id="loading-overlay" class="loading-overlay hidden">
                 <div class="loading-spinner"></div>
             </div>
@@ -780,6 +853,14 @@ class PathChecker {
                     message.style.display = 'none';
                 }
             }, 5000);
+
+            // Toggle para exibir/ocultar o log de depuração
+            document.getElementById('toggle-debug').addEventListener('click', function() {
+                const debugLog = document.getElementById('debug-log');
+                debugLog.classList.toggle('hidden');
+                this.textContent = debugLog.classList.contains('hidden') ? 
+                    'Mostrar Log de Depuração' : 'Ocultar Log de Depuração';
+            });
 
             // Função para mostrar mensagem temporária
             function showMessage(message, status) {
@@ -1011,6 +1092,18 @@ class PathChecker {
         </body>
         </html>
         <?php
+    }
+
+    // Função para adicionar uma entrada ao log de depuração
+    private function logDebug($message) {
+        $this->debugLog[] = $message;
+        // Opcionalmente, você pode salvar o log em um arquivo real
+        // file_put_contents(PROJECT_ROOT . '/path_checker_debug.log', $message . PHP_EOL, FILE_APPEND);
+    }
+
+    // Função para obter o log de depuração
+    public function getDebugLog() {
+        return $this->debugLog;
     }
 }
 
