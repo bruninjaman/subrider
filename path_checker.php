@@ -715,6 +715,33 @@ class PathChecker {
                 .debug-button:hover {
                     background-color: #138496;
                 }
+                .test-button {
+                    background-color: #ffc107;
+                    color: #000;
+                    border: none;
+                    border-radius: 4px;
+                    padding: 3px 8px;
+                    margin-left: 10px;
+                    cursor: pointer;
+                    font-size: 12px;
+                }
+                .test-button:hover {
+                    background-color: #e0a800;
+                }
+                .test-result {
+                    margin-top: 10px;
+                    padding: 8px;
+                    border-radius: 4px;
+                    background-color: #f8f9fa;
+                    border: 1px solid #ddd;
+                    font-size: 12px;
+                }
+                .test-result pre {
+                    margin: 5px 0;
+                    overflow-x: auto;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
             </style>
         </head>
         <body>
@@ -822,6 +849,13 @@ class PathChecker {
                     <strong>Path:</strong> <?php echo htmlspecialchars($result['path']); ?><br>
                     <strong>Source:</strong> <?php echo htmlspecialchars($result['source_file']); ?><br>
                     <strong>Status:</strong> <?php echo $result['exists'] ? '✅ Valid' : '❌ Invalid'; ?>
+                    
+                    <?php if (!$result['exists']): ?>
+                    <button class="test-button" data-path="<?php echo htmlspecialchars($result['path']); ?>" 
+                            data-source="<?php echo htmlspecialchars($result['source_file']); ?>">
+                        Test AutoFix
+                    </button>
+                    <?php endif; ?>
                     
                     <form class="edit-form" method="post" action="path_editor.php">
                         <input type="hidden" name="source_file" value="<?php echo htmlspecialchars($result['source_file']); ?>">
@@ -1086,6 +1120,105 @@ class PathChecker {
                     toggleLoading(false);
                     showMessage('Erro ao processar a requisição: ' + error.message, 'error');
                     console.error('Error:', error);
+                });
+            });
+
+            // Handler para botões de teste de AutoFix
+            document.querySelectorAll('.test-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const path = this.dataset.path;
+                    const source = this.dataset.source;
+                    const pathItem = this.closest('.path-item');
+                    
+                    // Remover resultado anterior se existir
+                    const oldResult = pathItem.querySelector('.test-result');
+                    if (oldResult) oldResult.remove();
+                    
+                    // Mostrar indicador de carregamento
+                    toggleLoading(true);
+                    
+                    // Enviar solicitação para testar a correção automática
+                    const formData = new FormData();
+                    formData.append('test_autofix', 'true');
+                    formData.append('path', path);
+                    formData.append('source_file', source);
+                    
+                    fetch('path_editor.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro de rede: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        toggleLoading(false);
+                        
+                        // Criar contêiner para o resultado do teste
+                        const resultDiv = document.createElement('div');
+                        resultDiv.className = 'test-result';
+                        
+                        // Adicionar título
+                        const resultTitle = document.createElement('h4');
+                        resultTitle.textContent = 'Resultado do Teste';
+                        resultDiv.appendChild(resultTitle);
+                        
+                        // Adicionar informações do resultado
+                        if (data.success) {
+                            resultDiv.innerHTML += `
+                                <p><strong>Status:</strong> <span style="color:green">Sucesso</span></p>
+                                <p><strong>Caminho encontrado:</strong> ${data.new_path || 'N/A'}</p>
+                                <p><strong>Caminho existe:</strong> ${data.exists ? 'Sim' : 'Não'}</p>
+                                <p><strong>Substituições:</strong> ${data.replacements || 0}</p>
+                            `;
+                            
+                            // Botão para aplicar a correção
+                            if (data.new_path) {
+                                const applyButton = document.createElement('button');
+                                applyButton.textContent = 'Aplicar Correção';
+                                applyButton.style.backgroundColor = '#28a745';
+                                applyButton.style.color = 'white';
+                                applyButton.style.border = 'none';
+                                applyButton.style.padding = '5px 10px';
+                                applyButton.style.borderRadius = '4px';
+                                applyButton.style.cursor = 'pointer';
+                                applyButton.style.marginTop = '5px';
+                                
+                                applyButton.addEventListener('click', () => {
+                                    // Preencher o formulário de edição
+                                    const form = pathItem.querySelector('.edit-form');
+                                    form.querySelector('input[name="new_path"]').value = data.new_path;
+                                    
+                                    // Enviar o formulário
+                                    form.dispatchEvent(new Event('submit'));
+                                });
+                                
+                                resultDiv.appendChild(applyButton);
+                            }
+                        } else {
+                            resultDiv.innerHTML += `
+                                <p><strong>Status:</strong> <span style="color:red">Falha</span></p>
+                                <p><strong>Mensagem:</strong> ${data.message || 'Erro desconhecido'}</p>
+                            `;
+                        }
+                        
+                        // Adicionar detalhes técnicos se disponíveis
+                        if (data.debug_info) {
+                            const debugPre = document.createElement('pre');
+                            debugPre.textContent = JSON.stringify(data.debug_info, null, 2);
+                            resultDiv.appendChild(debugPre);
+                        }
+                        
+                        // Adicionar ao item
+                        pathItem.appendChild(resultDiv);
+                    })
+                    .catch(error => {
+                        toggleLoading(false);
+                        showMessage('Erro ao processar o teste: ' + error.message, 'error');
+                        console.error('Error:', error);
+                    });
                 });
             });
             </script>
