@@ -42,6 +42,75 @@ function check_file_exists($path, $sourceFile) {
         $sourceDir = dirname($sourceFile);
     }
     
+    // Verificar se o arquivo fonte está sendo incluído por outro script
+    // Analisar o conteúdo do arquivo para verificar se ele é incluído
+    $isIncluded = false;
+    $includingScripts = find_including_scripts($sourceFile);
+    
+    if (!empty($includingScripts)) {
+        error_log("O arquivo $sourceFile é incluído por outros scripts: " . implode(", ", $includingScripts));
+        $isIncluded = true;
+        
+        // Tentar resolver caminhos em relação ao script que faz a inclusão
+        foreach ($includingScripts as $index => $includingScript) {
+            $includingDir = dirname(realpath($includingScript));
+            
+            // Tentar com caminho relativo do inclusor
+            if (strpos($path, '../') === 0) {
+                $adjustedBase = adjust_base_for_relative_path($includingDir, $path);
+                $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $path);
+                $possiblePath = $adjustedBase . '/' . $pathWithoutDots;
+                $exists = file_exists($possiblePath);
+                
+                if ($exists) {
+                    $relativePath = path_make_relative($sourceDir, $possiblePath);
+                    $alternativePaths["inclusor_adjusted_$index"] = [
+                        'path' => $relativePath,
+                        'exists' => true,
+                        'method' => "Caminho ajustado do inclusor: " . basename($includingScript)
+                    ];
+                }
+            }
+            
+            // Tentar com caminho direto do inclusor
+            $directPath = $includingDir . '/' . $path;
+            $exists = file_exists($directPath);
+            
+            if ($exists) {
+                $relativePath = path_make_relative($sourceDir, $directPath);
+                $alternativePaths["inclusor_direct_$index"] = [
+                    'path' => $relativePath,
+                    'exists' => true,
+                    'method' => "Direto do inclusor: " . basename($includingScript)
+                ];
+            }
+            
+            // Tentar padrões comuns de inclusão
+            $filenameToTest = basename($path);
+            $commonIncludePaths = [
+                './assets/' . $filenameToTest,
+                '../assets/' . $filenameToTest,
+                './css/' . $filenameToTest,
+                '../css/' . $filenameToTest,
+                './js/' . $filenameToTest,
+                '../js/' . $filenameToTest
+            ];
+            
+            foreach ($commonIncludePaths as $idx => $includePath) {
+                $fullPath = $includingDir . '/' . ltrim($includePath, './');
+                $exists = file_exists($fullPath);
+                
+                if ($exists) {
+                    $alternativePaths["inclusor_common_$index_$idx"] = [
+                        'path' => $includePath,
+                        'exists' => true,
+                        'method' => "Padrão de inclusão: $includePath"
+                    ];
+                }
+            }
+        }
+    }
+    
     // 1. Verificar o caminho exatamente como está (preservar estrutura)
     $absolutePath = $sourceDir . '/' . $path;
     error_log("Tentativa 1 - Direto: $absolutePath");
@@ -114,8 +183,142 @@ function check_file_exists($path, $sourceFile) {
         }
     }
     
+    // 5. Se o arquivo é incluído, tentar buscar na raiz do projeto
+    if ($isIncluded) {
+        $projectRoot = realpath(dirname(__DIR__));
+        $rootPaths = [
+            $projectRoot . '/' . $path,
+            $projectRoot . '/assets/' . $filename,
+            $projectRoot . '/css/' . $filename,
+            $projectRoot . '/js/' . $filename,
+            $projectRoot . '/includes/' . $filename,
+        ];
+        
+        foreach ($rootPaths as $rootPath) {
+            error_log("Tentativa 5 - Raiz do projeto: $rootPath");
+            if (file_exists($rootPath)) {
+                error_log("Arquivo encontrado na raiz do projeto: $rootPath");
+                return true;
+            }
+        }
+    }
+    
     error_log("Arquivo não encontrado em nenhuma tentativa");
     return false;
+}
+
+// Função para encontrar scripts que incluem o arquivo fonte
+function find_including_scripts($sourceFile) {
+    $result = [];
+    $projectRoot = realpath(dirname(__DIR__));
+    
+    // Encontrar todos os arquivos PHP no projeto
+    $phpFiles = [];
+    find_php_files($projectRoot, $phpFiles);
+    
+    $sourceBasename = basename($sourceFile);
+    $includePatterns = [
+        '/include\s*\(\s*[\'"]([^\'"]*' . preg_quote($sourceBasename, '/') . ')[\'"]/',
+        '/include_once\s*\(\s*[\'"]([^\'"]*' . preg_quote($sourceBasename, '/') . ')[\'"]/',
+        '/require\s*\(\s*[\'"]([^\'"]*' . preg_quote($sourceBasename, '/') . ')[\'"]/',
+        '/require_once\s*\(\s*[\'"]([^\'"]*' . preg_quote($sourceBasename, '/') . ')[\'"]/'
+    ];
+    
+    foreach ($phpFiles as $phpFile) {
+        if ($phpFile === $sourceFile) continue;
+        
+        $content = file_get_contents($phpFile);
+        if ($content === false) continue;
+        
+        foreach ($includePatterns as $pattern) {
+            if (preg_match($pattern, $content)) {
+                $result[] = $phpFile;
+                break;
+            }
+        }
+    }
+    
+    return $result;
+}
+
+// Função auxiliar para encontrar todos os arquivos PHP em um diretório
+function find_php_files($dir, &$result) {
+    // Ignorar diretórios específicos
+    $ignoreDirs = ['vendor', 'node_modules', '.git', 'bower_components', 'cache', 'dist'];
+    $baseName = basename($dir);
+    
+    if (in_array($baseName, $ignoreDirs)) {
+        return;
+    }
+    
+    // Encontrar arquivos PHP
+    $phpFilesInDir = glob($dir . '/*.php');
+    foreach ($phpFilesInDir as $file) {
+        $result[] = $file;
+    }
+    
+    // Buscar em subdiretórios
+    $subdirs = glob($dir . '/*', GLOB_ONLYDIR);
+    foreach ($subdirs as $subdir) {
+        find_php_files($subdir, $result);
+    }
+}
+
+// Função para resolver um caminho relativo a partir de uma base
+function resolve_path_from_base($base, $relativePath) {
+    // Normalizar caminhos
+    $base = rtrim(str_replace('\\', '/', $base), '/');
+    $relativePath = str_replace('\\', '/', $relativePath);
+    
+    // Se o caminho não é relativo, retornar direto
+    if (strpos($relativePath, './') !== 0 && strpos($relativePath, '../') !== 0) {
+        return $base . '/' . $relativePath;
+    }
+    
+    // Dividir o caminho relativo
+    $parts = explode('/', $relativePath);
+    $baseParts = explode('/', $base);
+    
+    $resultParts = $baseParts;
+    
+    foreach ($parts as $part) {
+        if ($part === '.') {
+            continue; // Ficar no mesmo diretório
+        } elseif ($part === '..') {
+            array_pop($resultParts); // Subir um nível
+        } else {
+            $resultParts[] = $part; // Adicionar ao caminho
+        }
+    }
+    
+    return implode('/', $resultParts);
+}
+
+// Função para ajustar a base com base no número de ../ no caminho
+function adjust_base_for_relative_path($base, $path) {
+    if (strpos($path, '../') !== 0) {
+        return $base;
+    }
+    
+    // Contar quantos níveis subir
+    $upLevels = 0;
+    $pathParts = explode('/', $path);
+    
+    foreach ($pathParts as $part) {
+        if ($part === '..') {
+            $upLevels++;
+        } else {
+            break;
+        }
+    }
+    
+    // Subir os níveis necessários
+    $baseParts = explode('/', $base);
+    for ($i = 0; $i < $upLevels; $i++) {
+        array_pop($baseParts);
+    }
+    
+    return implode('/', $baseParts);
 }
 
 // Função recursiva para procurar o arquivo
@@ -163,6 +366,70 @@ function find_alternative_path($oldPath, $sourceFile) {
     
     // Raiz do projeto
     $projectRoot = realpath(dirname(__DIR__));
+    
+    // Verificar se o arquivo fonte está sendo incluído por outro script
+    $isIncluded = false;
+    $includingScripts = find_including_scripts($sourceFile);
+    
+    if (!empty($includingScripts)) {
+        error_log("O arquivo $sourceFile é incluído por outros scripts: " . implode(", ", $includingScripts));
+        $isIncluded = true;
+        
+        // ABORDAGEM 0: Primeiro tentar resolver em relação ao script inclusor
+        foreach ($includingScripts as $includingScript) {
+            $includingDir = dirname(realpath($includingScript));
+            error_log("Verificando a partir do script inclusor: $includingScript");
+            
+            // Se o caminho começa com ../ remove os níveis necessários
+            if (strpos($oldPath, '../') === 0) {
+                $adjustedBase = adjust_base_for_relative_path($includingDir, $oldPath);
+                $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $oldPath);
+                $possiblePath = $adjustedBase . '/' . $pathWithoutDots;
+                error_log("Tentando caminho ajustado do inclusor: $possiblePath");
+                
+                if (file_exists($possiblePath)) {
+                    // Construir o caminho relativo adequado para o inclusor
+                    $relativePath = path_make_relative($sourceDir, $possiblePath);
+                    error_log("SUCESSO! Caminho encontrado a partir do script inclusor (ajustado): $relativePath");
+                    return $relativePath;
+                }
+            }
+            
+            // Tentar direto relativo ao inclusor
+            $directPath = $includingDir . '/' . $oldPath;
+            error_log("Tentando direto do inclusor: $directPath");
+            
+            if (file_exists($directPath)) {
+                $relativePath = path_make_relative($sourceDir, $directPath);
+                error_log("SUCESSO! Caminho encontrado a partir do script inclusor: $relativePath");
+                return $relativePath;
+            }
+            
+            // Tentar com ./
+            $dotPath = $includingDir . '/' . ltrim($oldPath, './');
+            if ($dotPath !== $directPath) {
+                error_log("Tentando com ./ removido: $dotPath");
+                if (file_exists($dotPath)) {
+                    $relativePath = path_make_relative($sourceDir, $dotPath);
+                    error_log("SUCESSO! Caminho encontrado com ./ removido: $relativePath");
+                    return $relativePath;
+                }
+            }
+            
+            // Tentar com ./assets no inclusor
+            $commonDirs = ['', 'assets', 'css', 'js', 'img', 'images'];
+            foreach ($commonDirs as $dir) {
+                $includingCommonPath = $includingDir . '/' . ($dir ? "$dir/" : '') . $filename;
+                error_log("Tentando com diretório comum a partir do inclusor: $includingCommonPath");
+                
+                if (file_exists($includingCommonPath)) {
+                    $relativePath = path_make_relative($sourceDir, $includingCommonPath);
+                    error_log("SUCESSO! Caminho encontrado em diretório comum do inclusor: $relativePath");
+                    return $relativePath;
+                }
+            }
+        }
+    }
     
     // ABORDAGEM 1: Verificar se o caminho existe com a estrutura atual
     // Tenta primeiro corrigir erros simples de capitalização ou pequenas diferenças
@@ -250,7 +517,33 @@ function find_alternative_path($oldPath, $sourceFile) {
         return $relativePath;
     }
     
-    // ABORDAGEM 4: Último recurso - manter apenas o nome do arquivo
+    // ABORDAGEM 4: Se for um arquivo incluído, tentar caminhos específicos para inclusões
+    if ($isIncluded) {
+        // Estas são suposições comuns para arquivos incluídos
+        $commonIncludePaths = [
+            './assets/' . $filename,
+            '../assets/' . $filename,
+            './css/' . $filename,
+            '../css/' . $filename,
+            './js/' . $filename,
+            '../js/' . $filename,
+            './includes/' . $filename,
+            '../includes/' . $filename,
+        ];
+        
+        foreach ($commonIncludePaths as $includePath) {
+            error_log("Tentando caminho comum para arquivos incluídos: $includePath");
+            
+            // Verificar se existe a partir do diretório fonte
+            $fullPath = $sourceDir . '/' . $includePath;
+            if (file_exists($fullPath)) {
+                error_log("SUCESSO! Caminho de inclusão encontrado: $includePath");
+                return $includePath;
+            }
+        }
+    }
+    
+    // ABORDAGEM 5: Último recurso - manter apenas o nome do arquivo
     error_log("Último recurso: apenas o nome do arquivo: $filename");
     return $filename;
 }
@@ -391,6 +684,76 @@ try {
             
             // Testar todos os algoritmos de busca
             $alternativePaths = [];
+            
+            // Verificar se o arquivo fonte está sendo incluído por outro script
+            $isIncluded = false;
+            $includingScripts = find_including_scripts($sourceFile);
+            
+            if (!empty($includingScripts)) {
+                error_log("TESTE: O arquivo $sourceFile é incluído por outros scripts: " . implode(", ", $includingScripts));
+                $isIncluded = true;
+                
+                // Tentar resolver caminhos em relação ao script que faz a inclusão
+                foreach ($includingScripts as $index => $includingScript) {
+                    $includingDir = dirname(realpath($includingScript));
+                    
+                    // Tentar com caminho relativo do inclusor
+                    if (strpos($path, '../') === 0) {
+                        $adjustedBase = adjust_base_for_relative_path($includingDir, $path);
+                        $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $path);
+                        $possiblePath = $adjustedBase . '/' . $pathWithoutDots;
+                        $exists = file_exists($possiblePath);
+                        
+                        if ($exists) {
+                            $relativePath = path_make_relative($sourceDir, $possiblePath);
+                            $alternativePaths["inclusor_adjusted_$index"] = [
+                                'path' => $relativePath,
+                                'exists' => true,
+                                'method' => "Caminho ajustado do inclusor: " . basename($includingScript)
+                            ];
+                        }
+                    }
+                    
+                    // Tentar com caminho direto do inclusor
+                    $directPath = $includingDir . '/' . $path;
+                    $exists = file_exists($directPath);
+                    
+                    if ($exists) {
+                        $relativePath = path_make_relative($sourceDir, $directPath);
+                        $alternativePaths["inclusor_direct_$index"] = [
+                            'path' => $relativePath,
+                            'exists' => true,
+                            'method' => "Direto do inclusor: " . basename($includingScript)
+                        ];
+                    }
+                    
+                    // Obter o nome do arquivo do caminho
+                    $filenameToTest = basename($path);
+                    
+                    // Tentar padrões comuns de inclusão
+                    $commonIncludePaths = [
+                        './assets/' . $filenameToTest,
+                        '../assets/' . $filenameToTest,
+                        './css/' . $filenameToTest,
+                        '../css/' . $filenameToTest,
+                        './js/' . $filenameToTest,
+                        '../js/' . $filenameToTest
+                    ];
+                    
+                    foreach ($commonIncludePaths as $idx => $includePath) {
+                        $fullPath = $includingDir . '/' . ltrim($includePath, './');
+                        $exists = file_exists($fullPath);
+                        
+                        if ($exists) {
+                            $alternativePaths["inclusor_common_{$index}_{$idx}"] = [
+                                'path' => $includePath,
+                                'exists' => true,
+                                'method' => "Padrão de inclusão: $includePath"
+                            ];
+                        }
+                    }
+                }
+            }
             
             // 1. Busca principal usando find_alternative_path
             $mainAlternative = find_alternative_path($path, $sourceFile);
@@ -589,6 +952,74 @@ try {
                 
                 // Armazenar todas as alternativas encontradas
                 $alternativePaths = [];
+                
+                // Verificar se o arquivo fonte está sendo incluído por outro script
+                $isIncluded = false;
+                $includingScripts = find_including_scripts($sourceFile);
+                
+                if (!empty($includingScripts)) {
+                    error_log("TESTE: O arquivo $sourceFile é incluído por outros scripts: " . implode(", ", $includingScripts));
+                    $isIncluded = true;
+                    
+                    // Tentar resolver caminhos em relação ao script que faz a inclusão
+                    foreach ($includingScripts as $index => $includingScript) {
+                        $includingDir = dirname(realpath($includingScript));
+                        
+                        // Tentar com caminho relativo do inclusor
+                        if (strpos($oldPath, '../') === 0) {
+                            $adjustedBase = adjust_base_for_relative_path($includingDir, $oldPath);
+                            $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $oldPath);
+                            $possiblePath = $adjustedBase . '/' . $pathWithoutDots;
+                            $exists = file_exists($possiblePath);
+                            
+                            if ($exists) {
+                                $relativePath = path_make_relative($sourceDir, $possiblePath);
+                                $alternativePaths["inclusor_adjusted_$index"] = [
+                                    'path' => $relativePath,
+                                    'exists' => true,
+                                    'method' => "Caminho ajustado do inclusor: " . basename($includingScript)
+                                ];
+                            }
+                        }
+                        
+                        // Tentar com caminho direto do inclusor
+                        $directPath = $includingDir . '/' . $oldPath;
+                        $exists = file_exists($directPath);
+                        
+                        if ($exists) {
+                            $relativePath = path_make_relative($sourceDir, $directPath);
+                            $alternativePaths["inclusor_direct_$index"] = [
+                                'path' => $relativePath,
+                                'exists' => true,
+                                'method' => "Direto do inclusor: " . basename($includingScript)
+                            ];
+                        }
+                        
+                        // Tentar padrões comuns de inclusão
+                        $filenameToTest = basename($oldPath);
+                        $commonIncludePaths = [
+                            './assets/' . $filenameToTest,
+                            '../assets/' . $filenameToTest,
+                            './css/' . $filenameToTest,
+                            '../css/' . $filenameToTest,
+                            './js/' . $filenameToTest,
+                            '../js/' . $filenameToTest
+                        ];
+                        
+                        foreach ($commonIncludePaths as $idx => $includePath) {
+                            $fullPath = $includingDir . '/' . ltrim($includePath, './');
+                            $exists = file_exists($fullPath);
+                            
+                            if ($exists) {
+                                $alternativePaths["inclusor_common_{$index}_{$idx}"] = [
+                                    'path' => $includePath,
+                                    'exists' => true,
+                                    'method' => "Padrão de inclusão: $includePath"
+                                ];
+                            }
+                        }
+                    }
+                }
                 
                 // 1. Busca principal usando find_alternative_path
                 $mainAlternative = find_alternative_path($oldPath, $sourceFile);
