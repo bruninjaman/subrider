@@ -36,6 +36,29 @@ function check_file_exists($path, $sourceFile) {
         return false;
     }
     
+    // Verifica se o caminho contém código PHP
+    if (strpos($path, '<?php') !== false || strpos($path, '<?=') !== false) {
+        error_log("Caminho contém código PHP, extraindo parte estática");
+        
+        // Extrair parte estática do caminho (após o código PHP)
+        preg_match('/(?:\?>|;)(.+)$/', $path, $matches);
+        if (!empty($matches[1])) {
+            $staticPart = trim($matches[1]);
+            error_log("Parte estática extraída: $staticPart");
+            $path = $staticPart;
+        } else {
+            // Tenta extrair a parte depois de uma variável PHP
+            preg_match('/.*?(?:;|\?>)\s*\/(.+)$/', $path, $matches);
+            if (!empty($matches[1])) {
+                error_log("Parte após variável PHP: $matches[1]");
+                $path = $matches[1];
+            } else {
+                error_log("Não foi possível extrair parte estática do caminho PHP");
+                return false;
+            }
+        }
+    }
+    
     // Obter caminho absoluto do arquivo fonte
     $sourceDir = dirname(realpath($sourceFile));
     if (!$sourceDir) {
@@ -46,6 +69,7 @@ function check_file_exists($path, $sourceFile) {
     // Analisar o conteúdo do arquivo para verificar se ele é incluído
     $isIncluded = false;
     $includingScripts = find_including_scripts($sourceFile);
+    $alternativePaths = [];
     
     if (!empty($includingScripts)) {
         error_log("O arquivo $sourceFile é incluído por outros scripts: " . implode(", ", $includingScripts));
@@ -101,7 +125,7 @@ function check_file_exists($path, $sourceFile) {
                 $exists = file_exists($fullPath);
                 
                 if ($exists) {
-                    $alternativePaths["inclusor_common_$index_$idx"] = [
+                    $alternativePaths["inclusor_common_{$index}_{$idx}"] = [
                         'path' => $includePath,
                         'exists' => true,
                         'method' => "Padrão de inclusão: $includePath"
@@ -357,11 +381,32 @@ function find_alternative_path($oldPath, $sourceFile) {
     error_log("Caminho original: $oldPath");
     error_log("Arquivo fonte: $sourceFile");
     
+    // Verifica se o caminho contém código PHP
+    $hasPhpCode = false;
+    $staticPath = $oldPath;
+    
+    if (strpos($oldPath, '<?php') !== false || strpos($oldPath, '<?=') !== false) {
+        $hasPhpCode = true;
+        error_log("Caminho contém código PHP, extraindo parte estática");
+        
+        // Extrair parte estática do caminho (após o código PHP)
+        preg_match('/(?:\?>|;)\s*\/(.+)$/', $oldPath, $matches);
+        if (!empty($matches[1])) {
+            $staticPath = $matches[1];
+            error_log("Parte estática extraída: $staticPath");
+        } else {
+            // Tenta extrair o último segmento do caminho (após a última /)
+            $parts = explode('/', $oldPath);
+            $staticPath = end($parts);
+            error_log("Último segmento do caminho: $staticPath");
+        }
+    }
+    
     // Obter diretório absoluto do arquivo fonte
     $sourceDir = dirname(realpath($sourceFile));
     
     // Extrair o nome do arquivo do caminho antigo
-    $filename = basename($oldPath);
+    $filename = basename($staticPath);
     error_log("Nome do arquivo a procurar: $filename");
     
     // Raiz do projeto
@@ -381,9 +426,9 @@ function find_alternative_path($oldPath, $sourceFile) {
             error_log("Verificando a partir do script inclusor: $includingScript");
             
             // Se o caminho começa com ../ remove os níveis necessários
-            if (strpos($oldPath, '../') === 0) {
-                $adjustedBase = adjust_base_for_relative_path($includingDir, $oldPath);
-                $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $oldPath);
+            if (strpos($staticPath, '../') === 0) {
+                $adjustedBase = adjust_base_for_relative_path($includingDir, $staticPath);
+                $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $staticPath);
                 $possiblePath = $adjustedBase . '/' . $pathWithoutDots;
                 error_log("Tentando caminho ajustado do inclusor: $possiblePath");
                 
@@ -396,7 +441,7 @@ function find_alternative_path($oldPath, $sourceFile) {
             }
             
             // Tentar direto relativo ao inclusor
-            $directPath = $includingDir . '/' . $oldPath;
+            $directPath = $includingDir . '/' . $staticPath;
             error_log("Tentando direto do inclusor: $directPath");
             
             if (file_exists($directPath)) {
@@ -406,7 +451,7 @@ function find_alternative_path($oldPath, $sourceFile) {
             }
             
             // Tentar com ./
-            $dotPath = $includingDir . '/' . ltrim($oldPath, './');
+            $dotPath = $includingDir . '/' . ltrim($staticPath, './');
             if ($dotPath !== $directPath) {
                 error_log("Tentando com ./ removido: $dotPath");
                 if (file_exists($dotPath)) {
@@ -433,11 +478,11 @@ function find_alternative_path($oldPath, $sourceFile) {
     
     // ABORDAGEM 1: Verificar se o caminho existe com a estrutura atual
     // Tenta primeiro corrigir erros simples de capitalização ou pequenas diferenças
-    $oldDirPath = dirname($oldPath);
+    $oldDirPath = dirname($staticPath);
     $oldDirParts = explode('/', $oldDirPath);
     
     // Tentar manter a estrutura original intacta
-    $possiblePath = $oldPath;
+    $possiblePath = $staticPath;
     $absolutePath = $sourceDir . '/' . $possiblePath;
     error_log("Tentando caminho direto: $absolutePath");
     
@@ -446,7 +491,50 @@ function find_alternative_path($oldPath, $sourceFile) {
         return $possiblePath;
     }
     
-    // ABORDAGEM 2: Tentar encontrar o arquivo na mesma estrutura de diretórios
+    // ABORDAGEM 2: Se tiver partes PHP e um diretório, tratar com especial cuidado
+    if ($hasPhpCode && $oldDirPath !== '.' && $oldDirPath !== '/') {
+        // Pega todos os componentes do caminho
+        $allDirParts = explode('/', $oldPath);
+        
+        // Identifica a última parte (que deve ser o arquivo)
+        $filenamePart = array_pop($allDirParts);
+        
+        // Verifica se o penúltimo componente contém código PHP
+        $lastDirPart = array_pop($allDirParts);
+        
+        // Se o penúltimo componente não contém PHP, recoloca
+        if (strpos($lastDirPart, '<?php') === false && strpos($lastDirPart, '<?=') === false) {
+            array_push($allDirParts, $lastDirPart);
+        }
+        
+        // Procura por diretórios que correspondem à última parte do caminho
+        $parts = explode('/', $staticPath);
+        if (count($parts) > 1) {
+            $lastDir = $parts[count($parts) - 2]; // Penúltimo elemento é o diretório
+            
+            // Tentar com estrutura completa de diretório
+            if (!empty($lastDir)) {
+                $searchPaths = [
+                    "$lastDir/$filename",
+                    "assets/$lastDir/$filename",
+                    "css/$lastDir/$filename",
+                    "js/$lastDir/$filename"
+                ];
+                
+                foreach ($searchPaths as $testPath) {
+                    error_log("Tentando com estrutura de diretório preservada: $testPath");
+                    $fullPath = $sourceDir . '/' . $testPath;
+                    
+                    if (file_exists($fullPath)) {
+                        error_log("SUCESSO! Caminho encontrado com estrutura preservada: $testPath");
+                        return $testPath;
+                    }
+                }
+            }
+        }
+    }
+    
+    // ABORDAGEM 3: Tentar encontrar o arquivo na mesma estrutura de diretórios
     // mas corrigindo possíveis erros de capitalização/naming
     $dirsToSearch = [$sourceDir]; // Iniciar com o diretório do arquivo fonte
     
@@ -494,7 +582,7 @@ function find_alternative_path($oldPath, $sourceFile) {
         }
     }
     
-    // ABORDAGEM 3: Busca recursiva mais ampla para achar o arquivo em qualquer lugar
+    // ABORDAGEM 4: Busca recursiva mais ampla para achar o arquivo em qualquer lugar
     error_log("Iniciando busca recursiva pelo arquivo: $filename");
     
     // Armazenar todos os caminhos encontrados
@@ -504,20 +592,87 @@ function find_alternative_path($oldPath, $sourceFile) {
     if (!empty($foundFiles)) {
         error_log("Encontrado(s) " . count($foundFiles) . " arquivo(s) com o nome");
         
+        // Se temos múltiplos arquivos encontrados, damos preferência aos que mantêm a estrutura original
+        if (count($foundFiles) > 1 && !empty($oldDirParts) && count($oldDirParts) > 0) {
+            $bestMatches = [];
+            
+            // Se temos um caminho com PHP, tentar identificar componentes da estrutura de diretórios
+            if ($hasPhpCode) {
+                // Extrair quaisquer partes de diretório do caminho estático
+                preg_match('/([^\/]+\/)+/', $staticPath, $dirMatches);
+                $structureParts = [];
+                
+                if (!empty($dirMatches[0])) {
+                    $structureParts = explode('/', rtrim($dirMatches[0], '/'));
+                }
+                
+                // Dar peso alto para arquivos que mantêm estrutura similar
+                foreach ($foundFiles as $foundFile) {
+                    $foundParts = explode('/', $foundFile);
+                    $matchCount = 0;
+                    
+                    foreach ($structureParts as $part) {
+                        if (in_array($part, $foundParts)) {
+                            $matchCount++;
+                        }
+                    }
+                    
+                    if ($matchCount > 0) {
+                        $bestMatches[$foundFile] = $matchCount;
+                    }
+                }
+                
+                // Ordenar por número de correspondências
+                if (!empty($bestMatches)) {
+                    arsort($bestMatches);
+                    $bestFile = array_key_first($bestMatches);
+                    $relativePath = path_make_relative($sourceDir, $bestFile);
+                    error_log("Melhor correspondência estrutural: $relativePath");
+                    return $relativePath;
+                }
+            }
+            
+            // Verificar por correspondências de estrutura de diretórios
+            $lastDir = end($oldDirParts);
+            foreach ($foundFiles as $foundFile) {
+                $foundDirname = dirname($foundFile);
+                $foundDirParts = explode('/', $foundDirname);
+                
+                // Verificar se o último diretório do caminho original está presente
+                if (in_array($lastDir, $foundDirParts)) {
+                    $relativePath = path_make_relative($sourceDir, $foundFile);
+                    error_log("Correspondência de estrutura encontrada: $relativePath");
+                    return $relativePath;
+                }
+            }
+        }
+        
         // Ordenar por comprimento, preferindo caminhos mais curtos
         usort($foundFiles, function($a, $b) {
             return strlen($a) - strlen($b);
         });
         
-        // Obter o melhor caminho encontrado
-        $bestMatch = $foundFiles[0];
+        // Verificar se algum dos caminhos tem 'assets' ou 'css' como componente do caminho
+        $assetsMatches = array_filter($foundFiles, function($file) {
+            return strpos($file, '/assets/') !== false || 
+                   strpos($file, '/css/') !== false;
+        });
+        
+        // Se encontramos caminhos com 'assets' ou 'css', usar o primeiro deles
+        if (!empty($assetsMatches)) {
+            $bestMatch = reset($assetsMatches);
+        } else {
+            // Caso contrário, usar o mais curto
+            $bestMatch = $foundFiles[0];
+        }
+        
         $relativePath = path_make_relative($sourceDir, $bestMatch);
         
         error_log("Melhor correspondência: $relativePath");
         return $relativePath;
     }
     
-    // ABORDAGEM 4: Se for um arquivo incluído, tentar caminhos específicos para inclusões
+    // ABORDAGEM 5: Se for um arquivo incluído, tentar caminhos específicos para inclusões
     if ($isIncluded) {
         // Estas são suposições comuns para arquivos incluídos
         $commonIncludePaths = [
@@ -543,7 +698,124 @@ function find_alternative_path($oldPath, $sourceFile) {
         }
     }
     
-    // ABORDAGEM 5: Último recurso - manter apenas o nome do arquivo
+    // ABORDAGEM 6: Se estamos lidando com CSS, tente procurar em diretórios de assets específicos
+    if (strpos($filename, '.css') !== false) {
+        $cssSpecificPaths = [
+            'assets/css/' . $filename,
+            'css/' . $filename,
+            'styles/' . $filename,
+            'assets/styles/' . $filename
+        ];
+        
+        foreach ($cssSpecificPaths as $cssPath) {
+            $fullPath = $sourceDir . '/' . $cssPath;
+            error_log("Tentando caminho específico para CSS: $fullPath");
+            
+            if (file_exists($fullPath)) {
+                error_log("SUCESSO! Caminho CSS encontrado: $cssPath");
+                return $cssPath;
+            }
+            
+            // Verificar na raiz do projeto também
+            $rootPath = $projectRoot . '/' . $cssPath;
+            if (file_exists($rootPath)) {
+                $relativePath = path_make_relative($sourceDir, $rootPath);
+                error_log("SUCESSO! Caminho CSS encontrado na raiz: $relativePath");
+                return $relativePath;
+            }
+        }
+    }
+    
+    // ABORDAGEM 7: Semelhante para JS
+    if (strpos($filename, '.js') !== false) {
+        $jsSpecificPaths = [
+            'assets/js/' . $filename,
+            'js/' . $filename,
+            'scripts/' . $filename,
+            'assets/scripts/' . $filename
+        ];
+        
+        foreach ($jsSpecificPaths as $jsPath) {
+            $fullPath = $sourceDir . '/' . $jsPath;
+            error_log("Tentando caminho específico para JS: $fullPath");
+            
+            if (file_exists($fullPath)) {
+                error_log("SUCESSO! Caminho JS encontrado: $jsPath");
+                return $jsPath;
+            }
+            
+            // Verificar na raiz do projeto também
+            $rootPath = $projectRoot . '/' . $jsPath;
+            if (file_exists($rootPath)) {
+                $relativePath = path_make_relative($sourceDir, $rootPath);
+                error_log("SUCESSO! Caminho JS encontrado na raiz: $relativePath");
+                return $relativePath;
+            }
+        }
+    }
+    
+    // ABORDAGEM 8: Se o caminho original tem uma parte estática após PHP com uma estrutura de diretório
+    if ($hasPhpCode && strpos($staticPath, '/') !== false) {
+        $staticParts = explode('/', $staticPath);
+        
+        // Se temos mais de um segmento (diretório/arquivo)
+        if (count($staticParts) > 1) {
+            $lastDir = $staticParts[count($staticParts) - 2]; // Penúltima parte deve ser o diretório
+            $partialPath = $lastDir . '/' . $filename;
+            
+            // Verificar em vários locais comuns
+            $commonParentDirs = ['', 'assets', 'css', 'js', 'images', 'includes'];
+            foreach ($commonParentDirs as $parentDir) {
+                $testPath = ($parentDir ? "$parentDir/" : '') . $partialPath;
+                $fullPath = $sourceDir . '/' . $testPath;
+                
+                error_log("Tentando com estrutura parcial da variável PHP: $fullPath");
+                if (file_exists($fullPath)) {
+                    error_log("SUCESSO! Estrutura parcial encontrada: $testPath");
+                    return $testPath;
+                }
+                
+                // Verificar na raiz do projeto também
+                $rootPath = $projectRoot . '/' . $testPath;
+                if (file_exists($rootPath)) {
+                    $relativePath = path_make_relative($sourceDir, $rootPath);
+                    error_log("SUCESSO! Estrutura parcial encontrada na raiz: $relativePath");
+                    return $relativePath;
+                }
+            }
+        }
+    }
+    
+    // ABORDAGEM 9: Para arquivos CSS/JS em particular, verificar em locais padrão comuns
+    if (strpos($filename, '.css') !== false || strpos($filename, '.js') !== false) {
+        $fileExt = substr($filename, strrpos($filename, '.') + 1);
+        $assetDirs = [
+            "assets/$fileExt",
+            $fileExt,
+            "assets"
+        ];
+        
+        foreach ($assetDirs as $dir) {
+            $assetPath = "$dir/$filename";
+            $fullPath = $sourceDir . '/' . $assetPath;
+            
+            error_log("Tentando em diretório padrão para $fileExt: $fullPath");
+            if (file_exists($fullPath)) {
+                error_log("SUCESSO! Encontrado em diretório padrão: $assetPath");
+                return $assetPath;
+            }
+            
+            // Verificar na raiz do projeto
+            $rootPath = $projectRoot . '/' . $assetPath;
+            if (file_exists($rootPath)) {
+                $relativePath = path_make_relative($sourceDir, $rootPath);
+                error_log("SUCESSO! Encontrado em diretório padrão na raiz: $relativePath");
+                return $relativePath;
+            }
+        }
+    }
+    
+    // ABORDAGEM 10: Último recurso - manter apenas o nome do arquivo
     error_log("Último recurso: apenas o nome do arquivo: $filename");
     return $filename;
 }
@@ -682,8 +954,30 @@ try {
                 exit;
             }
             
+            // Verificar se o caminho contém código PHP e extrair a parte estática
+            $hasPhpCode = false;
+            $staticPath = $path;
+            
+            if (strpos($path, '<?php') !== false || strpos($path, '<?=') !== false) {
+                $hasPhpCode = true;
+                error_log("Caminho contém código PHP, extraindo parte estática");
+                
+                // Extrair parte estática do caminho (após o código PHP)
+                preg_match('/(?:\?>|;)\s*\/(.+)$/', $path, $matches);
+                if (!empty($matches[1])) {
+                    $staticPath = $matches[1];
+                    error_log("Parte estática extraída: $staticPath");
+                } else {
+                    // Tenta extrair o último segmento do caminho (após a última /)
+                    $parts = explode('/', $path);
+                    $staticPath = end($parts);
+                    error_log("Último segmento do caminho: $staticPath");
+                }
+            }
+            
             // Testar todos os algoritmos de busca
             $alternativePaths = [];
+            $sourceDir = dirname(realpath($sourceFile));
             
             // Verificar se o arquivo fonte está sendo incluído por outro script
             $isIncluded = false;
@@ -698,9 +992,9 @@ try {
                     $includingDir = dirname(realpath($includingScript));
                     
                     // Tentar com caminho relativo do inclusor
-                    if (strpos($path, '../') === 0) {
-                        $adjustedBase = adjust_base_for_relative_path($includingDir, $path);
-                        $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $path);
+                    if (strpos($staticPath, '../') === 0) {
+                        $adjustedBase = adjust_base_for_relative_path($includingDir, $staticPath);
+                        $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $staticPath);
                         $possiblePath = $adjustedBase . '/' . $pathWithoutDots;
                         $exists = file_exists($possiblePath);
                         
@@ -715,7 +1009,7 @@ try {
                     }
                     
                     // Tentar com caminho direto do inclusor
-                    $directPath = $includingDir . '/' . $path;
+                    $directPath = $includingDir . '/' . $staticPath;
                     $exists = file_exists($directPath);
                     
                     if ($exists) {
@@ -728,7 +1022,7 @@ try {
                     }
                     
                     // Obter o nome do arquivo do caminho
-                    $filenameToTest = basename($path);
+                    $filenameToTest = basename($staticPath);
                     
                     // Tentar padrões comuns de inclusão
                     $commonIncludePaths = [
@@ -765,9 +1059,53 @@ try {
                 ];
             }
             
-            // 2. Testar apenas com o nome do arquivo em vários diretórios comuns
-            $filename = basename($path);
-            $commonDirs = ['', 'images/', 'img/', 'css/', 'js/', 'scripts/', 'assets/'];
+            // 2. Se estamos lidando com código PHP, tentar extrair a estrutura de diretório
+            if ($hasPhpCode && strpos($staticPath, '/') !== false) {
+                $parts = explode('/', $staticPath);
+                if (count($parts) > 1) {
+                    $lastDir = $parts[count($parts) - 2]; // Penúltimo elemento é o diretório
+                    
+                    // Definir o nome do arquivo para uso neste bloco
+                    $filenameToTest = basename($staticPath);
+                    
+                    if (!empty($lastDir)) {
+                        $phpSpecificPaths = [
+                            "$lastDir/$filenameToTest",
+                            "assets/$lastDir/$filenameToTest",
+                            "css/$lastDir/$filenameToTest",
+                            "js/$lastDir/$filenameToTest"
+                        ];
+                        
+                        foreach ($phpSpecificPaths as $idx => $phpPath) {
+                            $fullPath = $sourceDir . '/' . $phpPath;
+                            $exists = file_exists($fullPath);
+                            
+                            if ($exists) {
+                                $alternativePaths["php_struct_$idx"] = [
+                                    'path' => $phpPath,
+                                    'exists' => true,
+                                    'method' => "Estrutura preservada do PHP: $phpPath"
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // 3. Testar apenas com o nome do arquivo em vários diretórios comuns
+            $filename = basename($staticPath);
+            $commonDirs = [
+                '', 
+                'images/', 
+                'img/', 
+                'css/', 
+                'js/', 
+                'scripts/', 
+                'assets/',
+                'assets/css/',
+                'assets/js/',
+                'assets/images/'
+            ];
             
             foreach ($commonDirs as $index => $dir) {
                 $testPath = $dir . $filename;
@@ -782,21 +1120,32 @@ try {
                 }
             }
             
-            // 3. Testar mantendo a estrutura parcial
-            $dirPath = dirname($path);
+            // 4. Testar mantendo a estrutura parcial
+            $dirPath = dirname($staticPath);
             if ($dirPath !== '.' && $dirPath !== '/') {
                 $dirParts = explode('/', $dirPath);
                 $lastDir = end($dirParts);
                 
-                $testPath = $lastDir . '/' . $filename;
-                $exists = check_file_exists($testPath, $sourceFile);
-                
-                if ($exists) {
-                    $alternativePaths['structure'] = [
-                        'path' => $testPath,
-                        'exists' => true,
-                        'method' => "Preservando última pasta: '$lastDir'"
+                if (!empty($lastDir)) {
+                    $structurePaths = [
+                        "$lastDir/$filename",
+                        "assets/$lastDir/$filename",
+                        "css/$lastDir/$filename",
+                        "js/$lastDir/$filename"
                     ];
+                    
+                    foreach ($structurePaths as $idx => $structPath) {
+                        $fullPath = $sourceDir . '/' . $structPath;
+                        $exists = file_exists($fullPath);
+                        
+                        if ($exists) {
+                            $alternativePaths["structure_$idx"] = [
+                                'path' => $structPath,
+                                'exists' => true,
+                                'method' => "Preservando estrutura: $structPath"
+                            ];
+                        }
+                    }
                 }
             }
             
@@ -804,11 +1153,42 @@ try {
             $bestPath = null;
             $bestMethod = null;
             
-            foreach ($alternativePaths as $key => $info) {
-                if ($info['exists']) {
-                    if ($bestPath === null || strlen($info['path']) < strlen($bestPath)) {
+            // Primeiro, tentar priorizar caminhos que contêm 'assets/css' para arquivos CSS
+            if (strpos($filename, '.css') !== false) {
+                foreach ($alternativePaths as $key => $info) {
+                    if ($info['exists'] && (
+                        strpos($info['path'], 'assets/css/') !== false || 
+                        strpos($info['path'], 'css/') !== false
+                    )) {
                         $bestPath = $info['path'];
                         $bestMethod = $info['method'];
+                        break;
+                    }
+                }
+            }
+            
+            // Priorização similar para JS
+            if (empty($bestPath) && strpos($filename, '.js') !== false) {
+                foreach ($alternativePaths as $key => $info) {
+                    if ($info['exists'] && (
+                        strpos($info['path'], 'assets/js/') !== false || 
+                        strpos($info['path'], 'js/') !== false
+                    )) {
+                        $bestPath = $info['path'];
+                        $bestMethod = $info['method'];
+                        break;
+                    }
+                }
+            }
+            
+            // Se não encontramos um caminho especializado, escolher o melhor entre todos
+            if (empty($bestPath)) {
+                foreach ($alternativePaths as $key => $info) {
+                    if ($info['exists']) {
+                        if ($bestPath === null || strlen($info['path']) < strlen($bestPath)) {
+                            $bestPath = $info['path'];
+                            $bestMethod = $info['method'];
+                        }
                     }
                 }
             }
@@ -905,6 +1285,8 @@ try {
                     'patterns_found' => $debugPatterns,
                     'source_file' => $sourceFile,
                     'old_path' => $path,
+                    'static_path' => $staticPath,
+                    'has_php_code' => $hasPhpCode,
                     'dirname_source' => dirname($sourceFile),
                     'basename_source' => basename($sourceFile),
                     'filename_only' => $filename
@@ -948,7 +1330,29 @@ try {
                 // Registrar no log
                 error_log("Tentando corrigir: $oldPath no arquivo $sourceFile");
                 
+                // Verificar se o caminho contém código PHP e extrair a parte estática
+                $hasPhpCode = false;
+                $staticPath = $oldPath;
+                
+                if (strpos($oldPath, '<?php') !== false || strpos($oldPath, '<?=') !== false) {
+                    $hasPhpCode = true;
+                    error_log("Caminho contém código PHP, extraindo parte estática");
+                    
+                    // Extrair parte estática do caminho (após o código PHP)
+                    preg_match('/(?:\?>|;)\s*\/(.+)$/', $oldPath, $matches);
+                    if (!empty($matches[1])) {
+                        $staticPath = $matches[1];
+                        error_log("Parte estática extraída: $staticPath");
+                    } else {
+                        // Tenta extrair o último segmento do caminho (após a última /)
+                        $parts = explode('/', $oldPath);
+                        $staticPath = end($parts);
+                        error_log("Último segmento do caminho: $staticPath");
+                    }
+                }
+                
                 // FASE 1: Encontrar o melhor caminho alternativo
+                $sourceDir = dirname(realpath($sourceFile));
                 
                 // Armazenar todas as alternativas encontradas
                 $alternativePaths = [];
@@ -966,9 +1370,9 @@ try {
                         $includingDir = dirname(realpath($includingScript));
                         
                         // Tentar com caminho relativo do inclusor
-                        if (strpos($oldPath, '../') === 0) {
-                            $adjustedBase = adjust_base_for_relative_path($includingDir, $oldPath);
-                            $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $oldPath);
+                        if (strpos($staticPath, '../') === 0) {
+                            $adjustedBase = adjust_base_for_relative_path($includingDir, $staticPath);
+                            $pathWithoutDots = preg_replace('/^(\.\.\/)+/', '', $staticPath);
                             $possiblePath = $adjustedBase . '/' . $pathWithoutDots;
                             $exists = file_exists($possiblePath);
                             
@@ -983,7 +1387,7 @@ try {
                         }
                         
                         // Tentar com caminho direto do inclusor
-                        $directPath = $includingDir . '/' . $oldPath;
+                        $directPath = $includingDir . '/' . $staticPath;
                         $exists = file_exists($directPath);
                         
                         if ($exists) {
@@ -996,7 +1400,7 @@ try {
                         }
                         
                         // Tentar padrões comuns de inclusão
-                        $filenameToTest = basename($oldPath);
+                        $filenameToTest = basename($staticPath);
                         $commonIncludePaths = [
                             './assets/' . $filenameToTest,
                             '../assets/' . $filenameToTest,
@@ -1031,9 +1435,53 @@ try {
                     ];
                 }
                 
-                // 2. Testar apenas com o nome do arquivo em vários diretórios comuns
-                $filename = basename($oldPath);
-                $commonDirs = ['', 'images/', 'img/', 'css/', 'js/', 'scripts/', 'assets/'];
+                // 2. Se estamos lidando com código PHP, tentar extrair a estrutura de diretório
+                if ($hasPhpCode && strpos($staticPath, '/') !== false) {
+                    $parts = explode('/', $staticPath);
+                    if (count($parts) > 1) {
+                        $lastDir = $parts[count($parts) - 2]; // Penúltimo elemento é o diretório
+                        
+                        // Definir o nome do arquivo para uso neste bloco
+                        $filenameToTest = basename($staticPath);
+                        
+                        if (!empty($lastDir)) {
+                            $phpSpecificPaths = [
+                                "$lastDir/$filenameToTest",
+                                "assets/$lastDir/$filenameToTest",
+                                "css/$lastDir/$filenameToTest",
+                                "js/$lastDir/$filenameToTest"
+                            ];
+                            
+                            foreach ($phpSpecificPaths as $idx => $phpPath) {
+                                $fullPath = $sourceDir . '/' . $phpPath;
+                                $exists = file_exists($fullPath);
+                                
+                                if ($exists) {
+                                    $alternativePaths["php_struct_$idx"] = [
+                                        'path' => $phpPath,
+                                        'exists' => true,
+                                        'method' => "Estrutura preservada do PHP: $phpPath"
+                                    ];
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // 3. Testar apenas com o nome do arquivo em vários diretórios comuns
+                $filename = basename($staticPath);
+                $commonDirs = [
+                    '', 
+                    'images/', 
+                    'img/', 
+                    'css/', 
+                    'js/', 
+                    'scripts/', 
+                    'assets/',
+                    'assets/css/',
+                    'assets/js/',
+                    'assets/images/'
+                ];
                 
                 foreach ($commonDirs as $index => $dir) {
                     $testPath = $dir . $filename;
@@ -1048,21 +1496,32 @@ try {
                     }
                 }
                 
-                // 3. Testar mantendo a estrutura parcial
-                $dirPath = dirname($oldPath);
+                // 4. Testar mantendo a estrutura parcial
+                $dirPath = dirname($staticPath);
                 if ($dirPath !== '.' && $dirPath !== '/') {
                     $dirParts = explode('/', $dirPath);
                     $lastDir = end($dirParts);
                     
-                    $testPath = $lastDir . '/' . $filename;
-                    $exists = check_file_exists($testPath, $sourceFile);
-                    
-                    if ($exists) {
-                        $alternativePaths['structure'] = [
-                            'path' => $testPath,
-                            'exists' => true,
-                            'method' => "Preservando última pasta: '$lastDir'"
+                    if (!empty($lastDir)) {
+                        $structurePaths = [
+                            "$lastDir/$filename",
+                            "assets/$lastDir/$filename",
+                            "css/$lastDir/$filename",
+                            "js/$lastDir/$filename"
                         ];
+                        
+                        foreach ($structurePaths as $idx => $structPath) {
+                            $fullPath = $sourceDir . '/' . $structPath;
+                            $exists = file_exists($fullPath);
+                            
+                            if ($exists) {
+                                $alternativePaths["structure_$idx"] = [
+                                    'path' => $structPath,
+                                    'exists' => true,
+                                    'method' => "Preservando estrutura: $structPath"
+                                ];
+                            }
+                        }
                     }
                 }
                 
@@ -1070,11 +1529,42 @@ try {
                 $newPath = null;
                 $method = null;
                 
-                foreach ($alternativePaths as $key => $info) {
-                    if ($info['exists']) {
-                        if ($newPath === null || strlen($info['path']) < strlen($newPath)) {
+                // Primeiro, tentar priorizar caminhos que contêm 'assets/css' para arquivos CSS
+                if (strpos($filename, '.css') !== false) {
+                    foreach ($alternativePaths as $key => $info) {
+                        if ($info['exists'] && (
+                            strpos($info['path'], 'assets/css/') !== false || 
+                            strpos($info['path'], 'css/') !== false
+                        )) {
                             $newPath = $info['path'];
                             $method = $info['method'];
+                            break;
+                        }
+                    }
+                }
+                
+                // Priorização similar para JS
+                if (empty($newPath) && strpos($filename, '.js') !== false) {
+                    foreach ($alternativePaths as $key => $info) {
+                        if ($info['exists'] && (
+                            strpos($info['path'], 'assets/js/') !== false || 
+                            strpos($info['path'], 'js/') !== false
+                        )) {
+                            $newPath = $info['path'];
+                            $method = $info['method'];
+                            break;
+                        }
+                    }
+                }
+                
+                // Se não encontramos um caminho especializado, escolher o melhor entre todos
+                if (empty($newPath)) {
+                    foreach ($alternativePaths as $key => $info) {
+                        if ($info['exists']) {
+                            if ($newPath === null || strlen($info['path']) < strlen($newPath)) {
+                                $newPath = $info['path'];
+                                $method = $info['method'];
+                            }
                         }
                     }
                 }
