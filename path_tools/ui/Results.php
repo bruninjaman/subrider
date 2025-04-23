@@ -1,553 +1,19 @@
 <?php
-define('PROJECT_ROOT', __DIR__);
+/**
+ * Interface de exibição de resultados da verificação
+ */
 
-class PathChecker {
-    private $patterns = [
-        'css' => '/href=[\'"]([^\'"]+\.css)[\'"]/',
-        'js' => '/src=[\'"]([^\'"]+\.js)[\'"]/',
-        'ajax' => '/url:\s*[\'"]([^\'"]+)[\'"]/',
-        'images' => '/src=[\'"]([^\'"]+\.(jpg|jpeg|png|gif|svg))[\'"]/',
-        'php' => '/include[_once]*\([\'"]([^\'"]+\.php)[\'"]\)/',
-    ];
+namespace PathTools\UI;
 
-    public $results = [];
-    private $scannedFiles = [];
-    public $selectedPaths = [];
-    public $totalFiles = 0;
-    public $processedFiles = 0;
-    private $debugLog = [];
+use PathTools\Lib\PathChecker;
 
-    public function getDirectoryStructure($dir = PROJECT_ROOT, $relativePath = '') {
-        $structure = [];
-        $items = glob($dir . '/*');
-        
-        foreach ($items as $item) {
-            $name = basename($item);
-            $relPath = $relativePath ? "$relativePath/$name" : $name;
-            
-            if (is_dir($item)) {
-                $structure[] = [
-                    'type' => 'directory',
-                    'name' => $name,
-                    'path' => $relPath,
-                    'children' => $this->getDirectoryStructure($item, $relPath)
-                ];
-            } else if (preg_match('/\.(php|html|js|css)$/', $name)) {
-                $structure[] = [
-                    'type' => 'file',
-                    'name' => $name,
-                    'path' => $relPath
-                ];
-            }
-        }
-        
-        return $structure;
-    }
-
-    public function countScanFiles($paths) {
-        $this->totalFiles = 0;
-        
-        foreach ($paths as $path) {
-            $fullPath = PROJECT_ROOT . '/' . $path;
-            
-            if (is_file($fullPath) && preg_match('/\.(php|html|js)$/', $fullPath)) {
-                $this->totalFiles++;
-            } else if (is_dir($fullPath)) {
-                // Em vez de contar todos os arquivos no diretório,
-                // contamos apenas os arquivos explicitamente selecionados dentro dele
-                foreach ($paths as $potentialFile) {
-                    if (strpos($potentialFile, $path . '/') === 0) {
-                        $fullFilePath = PROJECT_ROOT . '/' . $potentialFile;
-                        if (is_file($fullFilePath) && preg_match('/\.(php|html|js)$/', $fullFilePath)) {
-                            $this->totalFiles++;
-                        }
-                    }
-                }
-            }
-        }
-        
-        return $this->totalFiles;
-    }
-
-    public function scanSelectedPaths($paths) {
-        $this->results = [];
-        $this->scannedFiles = [];
-        $this->selectedPaths = $paths;
-        $this->processedFiles = 0;
-        $this->debugLog = []; // Reset do log de depuração
-        
-        $this->logDebug("Iniciando verificação com " . count($paths) . " caminhos selecionados: " . implode(', ', $paths));
-        
-        // Lista de arquivos explicitamente selecionados
-        $explicitlySelectedFiles = [];
-        
-        // Primeiro, separamos apenas os arquivos selecionados explicitamente
-        foreach ($paths as $path) {
-            $fullPath = PROJECT_ROOT . '/' . $path;
-            $this->logDebug("Verificando caminho selecionado: $path (Caminho completo: $fullPath)");
-            
-            if (is_file($fullPath) && preg_match('/\.(php|html|js)$/', $fullPath)) {
-                $explicitlySelectedFiles[] = $fullPath;
-                $this->logDebug("Arquivo explicitamente selecionado: $fullPath");
-            } elseif (is_dir($fullPath)) {
-                $this->logDebug("Diretório selecionado: $fullPath - Procurando apenas por arquivos explicitamente selecionados dentro dele");
-                
-                // Se for um diretório, apenas procuramos se algum arquivo dentro dele foi selecionado explicitamente
-                foreach ($paths as $potentialFile) {
-                    if (strpos($potentialFile, $path . '/') === 0) {
-                        $fullFilePath = PROJECT_ROOT . '/' . $potentialFile;
-                        if (is_file($fullFilePath) && preg_match('/\.(php|html|js)$/', $fullFilePath)) {
-                            $explicitlySelectedFiles[] = $fullFilePath;
-                            $this->logDebug("Arquivo explicitamente selecionado (dentro do diretório): $fullFilePath");
-                        }
-                    }
-                }
-            }
-        }
-        
-        $this->logDebug("Total de " . count($explicitlySelectedFiles) . " arquivos explicitamente selecionados para escaneamento");
-        
-        // Agora, escaneamos apenas os arquivos explicitamente selecionados
-        foreach ($explicitlySelectedFiles as $file) {
-            if (!in_array($file, $this->scannedFiles)) {
-                $this->scannedFiles[] = $file;
-                $this->scanFile($file);
-                $this->processedFiles++;
-                $this->logDebug("Arquivo escaneado: $file");
-            }
-        }
-        
-        $this->logDebug("Verificação concluída. Total de " . count($this->results) . " caminhos encontrados.");
-        return $this->results;
-    }
-
-    public function scanFile($file) {
-        $content = file_get_contents($file);
-        foreach ($this->patterns as $type => $pattern) {
-            preg_match_all($pattern, $content, $matches);
-            if (!empty($matches[1])) {
-                foreach ($matches[1] as $path) {
-                    $this->checkPath($path, $file, $type);
-                }
-            }
-        }
-    }
-
-    private function checkPath($path, $sourceFile, $type) {
-        $originalPath = $path;
-        
-        // Não precisamos verificar se o arquivo fonte está selecionado,
-        // porque agora só escaneamos arquivos explicitamente selecionados
-        
-        // Convertemos o caminho para absoluto
-        if (strpos($path, 'http') !== 0 && strpos($path, '//') !== 0) {
-            if (strpos($path, '/') === 0) {
-                $path = PROJECT_ROOT . $path;
-            } else {
-                $path = dirname($sourceFile) . '/' . $path;
-            }
-        }
-
-        $exists = false;
-        if (strpos($path, 'http') === 0 || strpos($path, '//') === 0) {
-            // Para URLs externas, consideramos como válido por padrão
-            $exists = true;
-        } else {
-            $exists = file_exists($path);
-        }
-
-        // Adicionamos o resultado para o caminho encontrado
-        $this->results[] = [
-            'path' => $originalPath,
-            'source_file' => $sourceFile,
-            'type' => $type,
-            'exists' => $exists
-        ];
-        
-        $this->logDebug("Caminho encontrado: $originalPath (Existe: " . ($exists ? "Sim" : "Não") . ")");
-    }
-    
-    private function isPathSelected($absolutePath) {
-        // Para URLs externas, não incluímos por padrão nos resultados
-        if (strpos($absolutePath, 'http') === 0 || strpos($absolutePath, '//') === 0) {
-            $this->logDebug("URL externa: $absolutePath - Não é considerada no verificador de seleção");
-            return false;
-        }
-        
-        // Normaliza o caminho
-        $absolutePath = str_replace('\\', '/', $absolutePath);
-        $projectRootPath = str_replace('\\', '/', PROJECT_ROOT);
-        
-        // Se o caminho está fora da raiz do projeto, não pode estar selecionado
-        if (strpos($absolutePath, $projectRootPath) !== 0) {
-            $this->logDebug("Caminho fora da raiz do projeto rejeitado: $absolutePath");
-            return false;
-        }
-        
-        // Converte o caminho absoluto para relativo a PROJECT_ROOT
-        $relativePath = substr($absolutePath, strlen($projectRootPath) + 1);
-        
-        // Delega para a função isInSelectedPaths
-        return $this->isInSelectedPaths($relativePath);
-    }
-    
-    public function getProgress() {
-        return $this->totalFiles > 0 ? ($this->processedFiles / $this->totalFiles) * 100 : 0;
-    }
-
-    // Função auxiliar para verificar se um caminho está contido em outro
-    private function isPathInside($childPath, $parentPath) {
-        // Normaliza os caminhos
-        $childPath = rtrim(str_replace('\\', '/', $childPath), '/');
-        $parentPath = rtrim(str_replace('\\', '/', $parentPath), '/');
-        
-        // Adiciona barras para garantir comparação exata de prefixo
-        // Ex: "pages/login" não deve dar match em "pages/loginadmin" 
-        return $childPath === $parentPath || 
-               strpos($childPath . '/', $parentPath . '/') === 0;
-    }
-    
-    // Função para verificar se um arquivo ou diretório está nas seleções do usuário
-    private function isInSelectedPaths($relativePath) {
-        // Verifica se está exatamente na lista
-        if (in_array($relativePath, $this->selectedPaths)) {
-            $this->logDebug("Caminho exato na seleção: $relativePath");
-            return true;
-        }
-        
-        // Verifica se é um subdiretório/arquivo de algum caminho selecionado
-        foreach ($this->selectedPaths as $selectedPath) {
-            // Se o caminho atual está contido no caminho selecionado (ex: /pages/login está em /pages)
-            if ($this->isPathInside($relativePath, $selectedPath)) {
-                $this->logDebug("Caminho dentro de seleção: $relativePath está em $selectedPath");
-                return true;
-            }
-            
-            // Caso especial: se o caminho é um diretório, e há caminhos selecionados dentro dele
-            // Por exemplo, se relativePath = "pages" e selectedPath = "pages/login"
-            // Precisamos verificar isso para permitir que o diretório pages seja escaneado
-            if (is_dir(PROJECT_ROOT . '/' . $relativePath)) {
-                if ($this->isPathInside($selectedPath, $relativePath)) {
-                    $this->logDebug("Diretório que contém um caminho selecionado: $selectedPath está em $relativePath");
-                    return true;
-                }
-            }
-        }
-        
-        $this->logDebug("Caminho fora da seleção: $relativePath");
-        return false;
-    }
-
-    public function displaySelector() {
-        $structure = $this->getDirectoryStructure();
-        ?>
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Path Checker - Seletor de Arquivos</title>
-            <style>
-                body { font-family: Arial, sans-serif; margin: 20px; }
-                .directory-tree {
-                    margin: 20px 0;
-                    border: 1px solid #ddd;
-                    border-radius: 4px;
-                    padding: 20px;
-                    max-height: 500px;
-                    overflow-y: auto;
-                }
-                .tree-item {
-                    margin: 5px 0;
-                }
-                .tree-dir {
-                    margin-bottom: 10px;
-                }
-                .tree-dir > .tree-label {
-                    font-weight: bold;
-                    cursor: pointer;
-                }
-                .tree-children {
-                    margin-left: 20px;
-                    display: none;
-                }
-                .tree-expanded > .tree-children {
-                    display: block;
-                }
-                .progress-container {
-                    width: 100%;
-                    background-color: #f3f3f3;
-                    border-radius: 4px;
-                    margin: 20px 0;
-                    height: 25px;
-                }
-                .progress-bar {
-                    height: 100%;
-                    border-radius: 4px;
-                    background-color: #4CAF50;
-                    width: 0%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
-                    font-weight: bold;
-                    transition: width 0.3s;
-                }
-                .action-buttons {
-                    margin: 20px 0;
-                }
-                button {
-                    padding: 10px 15px;
-                    background-color: #007bff;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    margin-right: 10px;
-                }
-                button:hover {
-                    background-color: #0056b3;
-                }
-                .select-controls {
-                    margin-bottom: 15px;
-                }
-                .hidden {
-                    display: none;
-                }
-                #scanning-status {
-                    margin-bottom: 15px;
-                    font-weight: bold;
-                }
-            </style>
-        </head>
-        <body>
-            <h1>Path Checker - Seletor de Diretórios e Arquivos</h1>
-            
-            <div class="select-controls">
-                <button id="select-all">Selecionar Todos</button>
-                <button id="unselect-all">Desmarcar Todos</button>
-                <button id="expand-all">Expandir Todos</button>
-                <button id="collapse-all">Colapsar Todos</button>
-            </div>
-            
-            <div class="directory-tree" id="directory-tree">
-                <?php $this->renderDirectoryTree($structure); ?>
-            </div>
-            
-            <div class="action-buttons">
-                <button id="start-scan">Iniciar Verificação</button>
-            </div>
-            
-            <div id="scanning-container" class="hidden">
-                <div id="scanning-status">Preparando verificação...</div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="progress-bar">0%</div>
-                </div>
-            </div>
-            
-            <div id="results-container" class="hidden"></div>
-            
-            <script>
-                // Função para alternar a expansão de diretórios
-                document.querySelectorAll('.tree-label').forEach(label => {
-                    if (label.parentElement.classList.contains('tree-dir')) {
-                        label.addEventListener('click', (e) => {
-                            // Previne que o clique no checkbox cause o evento de toggle
-                            if (e.target.type !== 'checkbox') {
-                                label.parentElement.classList.toggle('tree-expanded');
-                            }
-                        });
-                    }
-                });
-                
-                // Função para selecionar/desmarcar todos os arquivos de um diretório quando ele é marcado/desmarcado
-                document.querySelectorAll('.dir-checkbox').forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        const dirItem = this.closest('.tree-dir');
-                        const childCheckboxes = dirItem.querySelectorAll('.tree-children input[type="checkbox"]');
-                        
-                        // Define o estado de todos os checkboxes dentro do diretório
-                        childCheckboxes.forEach(childBox => {
-                            childBox.checked = this.checked;
-                        });
-                        
-                        // Se marcar um diretório, expandir para mostrar os filhos
-                        if (this.checked) {
-                            dirItem.classList.add('tree-expanded');
-                        }
-                        
-                        // Verifica se precisa atualizar os diretórios pais
-                        updateParentDirectories(dirItem.parentElement);
-                    });
-                });
-                
-                // Função para atualizar o estado dos diretórios pais com base nos filhos
-                function updateParentDirectories(element) {
-                    if (!element) return;
-                    
-                    const parentDir = element.closest('.tree-dir');
-                    if (!parentDir) return;
-                    
-                    const parentCheckbox = parentDir.querySelector('input[type="checkbox"]');
-                    const siblingCheckboxes = element.querySelectorAll('input[type="checkbox"]');
-                    
-                    // Verifica se todos os checkboxes irmãos estão marcados
-                    const allChecked = Array.from(siblingCheckboxes).every(cb => cb.checked);
-                    // Verifica se pelo menos um checkbox irmão está marcado
-                    const someChecked = Array.from(siblingCheckboxes).some(cb => cb.checked);
-                    
-                    // Atualiza o estado do checkbox do diretório pai
-                    parentCheckbox.checked = allChecked || someChecked;
-                    
-                    // Continua recursivamente para os diretórios pais
-                    updateParentDirectories(parentDir.parentElement);
-                }
-                
-                // Atualiza os diretórios pais quando qualquer arquivo é marcado/desmarcado
-                document.querySelectorAll('.file-checkbox').forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        const parentDir = this.closest('.tree-children');
-                        if (parentDir) {
-                            updateParentDirectories(parentDir);
-                        }
-                    });
-                });
-                
-                // Função para selecionar todos os itens
-                document.getElementById('select-all').addEventListener('click', () => {
-                    document.querySelectorAll('.tree-item input[type="checkbox"]').forEach(checkbox => {
-                        checkbox.checked = true;
-                    });
-                });
-                
-                // Função para desmarcar todos os itens
-                document.getElementById('unselect-all').addEventListener('click', () => {
-                    document.querySelectorAll('.tree-item input[type="checkbox"]').forEach(checkbox => {
-                        checkbox.checked = false;
-                    });
-                });
-                
-                // Função para expandir todos os diretórios
-                document.getElementById('expand-all').addEventListener('click', () => {
-                    document.querySelectorAll('.tree-dir').forEach(dir => {
-                        dir.classList.add('tree-expanded');
-                    });
-                });
-                
-                // Função para colapsar todos os diretórios
-                document.getElementById('collapse-all').addEventListener('click', () => {
-                    document.querySelectorAll('.tree-dir').forEach(dir => {
-                        dir.classList.remove('tree-expanded');
-                    });
-                });
-                
-                // Função para iniciar a verificação
-                document.getElementById('start-scan').addEventListener('click', () => {
-                    const selectedItems = [];
-                    document.querySelectorAll('.tree-item input[type="checkbox"]:checked').forEach(checkbox => {
-                        selectedItems.push(checkbox.value);
-                    });
-                    
-                    if (selectedItems.length === 0) {
-                        alert('Por favor, selecione pelo menos um diretório ou arquivo para verificar.');
-                        return;
-                    }
-                    
-                    // Mostrar container de progresso
-                    document.getElementById('scanning-container').classList.remove('hidden');
-                    document.getElementById('results-container').classList.add('hidden');
-                    
-                    // Contar arquivos para definir o progresso
-                    fetch('path_checker.php?action=count_files', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({paths: selectedItems})
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('scanning-status').textContent = 
-                            `Iniciando verificação de ${data.total_files} arquivos...`;
-                        
-                        // Iniciar o scan
-                        startScan(selectedItems);
-                    });
-                });
-                
-                function startScan(selectedItems) {
-                    // Iniciar verificação
-                    fetch('path_checker.php?action=scan', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({paths: selectedItems})
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        window.location.href = 'path_checker.php?show_results=1';
-                    });
-                    
-                    // Atualizar barra de progresso
-                    const progressInterval = setInterval(() => {
-                        fetch('path_checker.php?action=progress')
-                        .then(response => response.json())
-                        .then(data => {
-                            const progressBar = document.getElementById('progress-bar');
-                            const progress = Math.round(data.progress);
-                            progressBar.style.width = progress + '%';
-                            progressBar.textContent = progress + '%';
-                            
-                            document.getElementById('scanning-status').textContent = 
-                                `Verificando: ${data.processed_files} de ${data.total_files} arquivos...`;
-                            
-                            if (progress >= 100) {
-                                clearInterval(progressInterval);
-                                document.getElementById('scanning-status').textContent = 'Verificação concluída!';
-                            }
-                        });
-                    }, 500);
-                }
-            </script>
-        </body>
-        </html>
-        <?php
-    }
-    
-    private function renderDirectoryTree($items, $level = 0) {
-        foreach ($items as $item) {
-            if ($item['type'] === 'directory') {
-                ?>
-                <div class="tree-item tree-dir">
-                    <label class="tree-label">
-                        <input type="checkbox" class="dir-checkbox" value="<?php echo htmlspecialchars($item['path']); ?>">
-                        📁 <?php echo htmlspecialchars($item['name']); ?>
-                    </label>
-                    <div class="tree-children">
-                        <?php $this->renderDirectoryTree($item['children'], $level + 1); ?>
-                    </div>
-                </div>
-                <?php
-            } else {
-                ?>
-                <div class="tree-item">
-                    <label>
-                        <input type="checkbox" class="file-checkbox" value="<?php echo htmlspecialchars($item['path']); ?>">
-                        <?php 
-                        $icon = '📄';
-                        if (preg_match('/\.php$/', $item['name'])) $icon = '🐘';
-                        elseif (preg_match('/\.js$/', $item['name'])) $icon = '📜';
-                        elseif (preg_match('/\.css$/', $item['name'])) $icon = '🎨';
-                        elseif (preg_match('/\.html$/', $item['name'])) $icon = '🌐';
-                        echo $icon . ' ' . htmlspecialchars($item['name']); 
-                        ?>
-                    </label>
-                </div>
-                <?php
-            }
-        }
-    }
-
-    public function displayResults() {
+class Results {
+    /**
+     * Renderiza a interface de resultados
+     * 
+     * @param PathChecker $checker Instância do verificador de caminhos
+     */
+    public static function render(PathChecker $checker) {
         ?>
         <!DOCTYPE html>
         <html>
@@ -758,7 +224,7 @@ class PathChecker {
             <div class="selection-info">
                 <p><strong>Nota:</strong> Apenas os caminhos encontrados dentro dos arquivos explicitamente selecionados foram verificados.</p>
                 
-                <?php if (!empty($this->selectedPaths)): ?>
+                <?php if (!empty($checker->selectedPaths)): ?>
                 <p><strong>Arquivos verificados:</strong></p>
                 <ul>
                     <?php 
@@ -766,7 +232,7 @@ class PathChecker {
                     $count = 0;
                     $fileCount = 0;
                     
-                    foreach ($this->selectedPaths as $path): 
+                    foreach ($checker->selectedPaths as $path): 
                         $fullPath = PROJECT_ROOT . '/' . $path;
                         if (is_file($fullPath) && preg_match('/\.(php|html|js)$/', $fullPath)):
                             $fileCount++;
@@ -799,7 +265,7 @@ class PathChecker {
                 <div class="filter-group">
                     <label>Filtrar por Tipo:</label>
                     <div class="checkbox-group">
-                        <?php foreach ($this->patterns as $type => $pattern): ?>
+                        <?php foreach ($checker->patterns as $type => $pattern): ?>
                             <label class="checkbox-label">
                                 <input type="checkbox" class="type-filter" value="<?php echo $type; ?>" checked>
                                 <?php echo ucfirst($type); ?>
@@ -825,18 +291,18 @@ class PathChecker {
             <div class="summary">
                 <h3>Resumo</h3>
                 <?php
-                $validPaths = count(array_filter($this->results, function($r) { return $r['exists']; }));
-                $invalidPaths = count(array_filter($this->results, function($r) { return !$r['exists']; }));
+                $validPaths = count(array_filter($checker->results, function($r) { return $r['exists']; }));
+                $invalidPaths = count(array_filter($checker->results, function($r) { return !$r['exists']; }));
                 ?>
                 <p>
-                    Total de paths encontrados: <?php echo count($this->results); ?><br>
+                    Total de paths encontrados: <?php echo count($checker->results); ?><br>
                     Paths válidos: <?php echo $validPaths; ?><br>
                     Paths inválidos: <?php echo $invalidPaths; ?>
                 </p>
             </div>
 
             <div id="results-container">
-            <?php foreach ($this->results as $index => $result): ?>
+            <?php foreach ($checker->results as $index => $result): ?>
                 <div class="path-item <?php echo $result['exists'] ? 'valid' : 'invalid'; ?>" 
                      data-type="<?php echo htmlspecialchars($result['type']); ?>"
                      data-status="<?php echo $result['exists'] ? 'valid' : 'invalid'; ?>"
@@ -870,7 +336,7 @@ class PathChecker {
 
             <div id="debug-log" class="debug-log hidden">
                 <h3>Log de Depuração</h3>
-                <?php foreach ($this->debugLog as $index => $log): ?>
+                <?php foreach ($checker->getDebugLog() as $index => $log): ?>
                     <div class="debug-log-entry"><?php echo htmlspecialchars($log); ?></div>
                 <?php endforeach; ?>
             </div>
@@ -1226,68 +692,4 @@ class PathChecker {
         </html>
         <?php
     }
-
-    // Função para adicionar uma entrada ao log de depuração
-    private function logDebug($message) {
-        $this->debugLog[] = $message;
-        // Opcionalmente, você pode salvar o log em um arquivo real
-        // file_put_contents(PROJECT_ROOT . '/path_checker_debug.log', $message . PHP_EOL, FILE_APPEND);
-    }
-
-    // Função para obter o log de depuração
-    public function getDebugLog() {
-        return $this->debugLog;
-    }
-}
-
-// Processamento das requisições AJAX
-if (isset($_GET['action'])) {
-    header('Content-Type: application/json');
-    $checker = new PathChecker();
-    
-    switch ($_GET['action']) {
-        case 'count_files':
-            $data = json_decode(file_get_contents('php://input'), true);
-            $total = $checker->countScanFiles($data['paths']);
-            echo json_encode(['total_files' => $total]);
-            exit;
-            
-        case 'scan':
-            $data = json_decode(file_get_contents('php://input'), true);
-            $results = $checker->scanSelectedPaths($data['paths']);
-            // Salvar resultados e caminhos selecionados na sessão
-            session_start();
-            $_SESSION['path_checker_results'] = $results;
-            $_SESSION['path_checker_selected_paths'] = $data['paths'];
-            echo json_encode(['success' => true]);
-            exit;
-            
-        case 'progress':
-            echo json_encode([
-                'progress' => $checker->getProgress(),
-                'total_files' => $checker->totalFiles,
-                'processed_files' => $checker->processedFiles
-            ]);
-            exit;
-    }
-}
-
-// Uso da ferramenta
-if (php_sapi_name() !== 'cli') {
-    session_start();
-    $checker = new PathChecker();
-    
-    if (isset($_GET['show_results']) && isset($_SESSION['path_checker_results'])) {
-        $checker->results = $_SESSION['path_checker_results'];
-        
-        // Se temos os caminhos selecionados na sessão, vamos passá-los para o checker
-        if (isset($_SESSION['path_checker_selected_paths'])) {
-            $checker->selectedPaths = $_SESSION['path_checker_selected_paths'];
-        }
-        
-        $checker->displayResults();
-    } else {
-        $checker->displaySelector();
-    }
-}
-?> 
+} 
