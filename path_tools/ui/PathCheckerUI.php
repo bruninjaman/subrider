@@ -140,20 +140,19 @@ class PathCheckerUI {
         $path = htmlspecialchars($result['path']);
         $type = htmlspecialchars($result['type']);
         
-        $html = "<div class='$itemClass' id='result-$index'>";
+        $html = "<div class='$itemClass' id='result-item-$index'>";
         $html .= "<div class='result-header'>";
         $html .= "<div class='result-type'>$type</div>";
-        $html .= "<div class='$statusClass'>$statusText</div>";
+        $html .= "<div id='result-status-$index' class='$statusClass'>$statusText</div>";
         $html .= "</div>";
         
         $html .= "<div class='result-content'>";
-        $html .= "<div class='result-path'><strong>Caminho:</strong> $path</div>";
+        $html .= "<div id='result-path-$index' class='result-path'><strong>Caminho:</strong> $path</div>";
         $html .= "<div class='result-source'><strong>Arquivo:</strong> $sourceFile</div>";
         
         if (!$result['exists']) {
             $html .= "<div class='result-actions'>";
             $html .= "<button onclick='showEditForm($index)' class='edit-button'>Editar</button>";
-            $html .= "<button onclick='autoFix($index)' class='autofix-button'>AutoFix</button>";
             $html .= "</div>";
             
             $html .= "<div class='edit-form' id='edit-form-$index' style='display:none;'>";

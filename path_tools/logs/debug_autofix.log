@@ -12,3 +12,77 @@
 [2025-04-24 00:51:23] Resultado do processBatch: {"success":true,"message":"Foram consertados 15 de 18 caminhos.","results":[{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"<?php echo PROJECT_ROOT_URL; ?>\/assets\/css\/images\/edit-new.png","new_path":"..\/assets\/css\/images\/edit-new.png","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"<?php echo PROJECT_ROOT_URL; ?>\/assets\/css\/images\/x-button-new.png","new_path":"..\/assets\/css\/images\/x-button-new.png","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"<?php echo PROJECT_ROOT_URL; ?>\/assets\/css\/images\/addmoto.png","new_path":"..\/assets\/css\/images\/addmoto.png","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"<?php echo PROJECT_ROOT_URL; ?>\/assets\/css\/images\/edit-ordem.png","new_path":"..\/assets\/css\/images\/edit-ordem.png","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"<?php echo PROJECT_ROOT_URL; ?>\/assets\/css\/images\/x-button.png","new_path":"..\/assets\/css\/images\/x-button.png","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":".\/pages\/{$pageType}\/header.php","new_path":"..\/pages\/index\/header.php","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":".\/pages\/{$pageType}\/tabela.php","new_path":"..\/pages\/tabelaMotos\/tabela.php","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":".\/pages\/{$pageType}\/footer.php","new_path":"footer.php","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"css\/dados.css","new_path":"dados.css","exists":true},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"modal-menus.css","new_path":"menus.css","exists":false},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"modal-menus.css","new_path":"menus.css","exists":false},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"modal-menus.css","new_path":"menus.css","exists":false},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"modal-menus.css","new_path":"menus.css","exists":false},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"modal-menus.css","new_path":"menus.css","exists":false},{"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","old_path":"modal-menus.css","new_path":"menus.css","exists":false},{"success":false,"message":"Erro: O processamento resultaria em caminhos vazios","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/images\/edit.png","new_path":"..\/..\/assets\/css\/images\/edit.png"},{"success":false,"message":"Erro: O processamento resultaria em caminhos vazios","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/images\/x-button.png","new_path":"..\/..\/assets\/css\/images\/x-button.png"},{"success":false,"message":"Erro: O processamento resultaria em caminhos vazios","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/images\/x-button.png","new_path":"..\/..\/assets\/css\/images\/x-button.png"}],"total_fixed":15}
 [2025-04-24 00:51:23] Output do buffer: 
 [2025-04-24 00:51:23] Enviando resposta JSON final: 
+[2025-04-25 00:20:14] === NOVA REQUISIÇÃO ===
+[2025-04-25 00:20:14] Método: POST
+[2025-04-25 00:20:14] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 00:20:14] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 00:20:14] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"614","sec-ch-ua-platform":"\"Windows\"","X-Requested-With":"XMLHttpRequest","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundaryAZiTidOoXUZ1OnTP","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 00:20:14] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/pages\/addmotos\/addmotos.php","old_path":".\/assets\/css\/images\/logo-branco-crop.png","new_path":".\/assets\/css\/images\/logo-branco-crop.png","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:20:14] É requisição AJAX: Sim
+[2025-04-25 00:20:14] Definindo header Content-Type: application/json
+[2025-04-25 00:20:14] Processando requisição individual
+[2025-04-25 00:20:14] Atualizando caminho ./assets/css/images/logo-branco-crop.png para ./assets/css/images/logo-branco-crop.png
+[2025-04-25 00:20:14] Enviando resultado da atualização: {"success":true,"message":"Path atualizado com sucesso! (2 substitui\u00e7\u00f5es)","replacementCount":2,"exists":false,"return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:20:14] Output do buffer: 
+[2025-04-25 00:20:14] Enviando resposta JSON final: 
+[2025-04-25 00:20:38] === NOVA REQUISIÇÃO ===
+[2025-04-25 00:20:38] Método: POST
+[2025-04-25 00:20:38] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 00:20:38] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 00:20:38] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"618","sec-ch-ua-platform":"\"Windows\"","X-Requested-With":"XMLHttpRequest","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundarydKsOHthiTgS4lgWY","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 00:20:38] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/pages\/addmotos\/addmotos.php","old_path":".\/assets\/css\/images\/logo-branco-crop.png","new_path":"..\/..\/assets\/css\/images\/logo-branco-crop.png","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:20:38] É requisição AJAX: Sim
+[2025-04-25 00:20:38] Definindo header Content-Type: application/json
+[2025-04-25 00:20:38] Processando requisição individual
+[2025-04-25 00:20:38] Atualizando caminho ./assets/css/images/logo-branco-crop.png para ../../assets/css/images/logo-branco-crop.png
+[2025-04-25 00:20:38] Enviando resultado da atualização: {"success":true,"message":"Path atualizado com sucesso! (1 substitui\u00e7\u00f5es)","replacementCount":1,"exists":true,"return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:20:38] Output do buffer: 
+[2025-04-25 00:20:38] Enviando resposta JSON final: 
+[2025-04-25 00:26:35] === NOVA REQUISIÇÃO ===
+[2025-04-25 00:26:35] Método: POST
+[2025-04-25 00:26:35] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 00:26:35] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 00:26:35] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"637","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundarywSB04bZug4WFRnxm","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 00:26:35] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/pages\/ordemservico\/ordemservico_mobile.css","new_path":".\/pages\/ordemservico\/ordemservico_mobile.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:26:35] É requisição AJAX: Não
+[2025-04-25 00:26:35] Definindo header Content-Type: application/json
+[2025-04-25 00:26:35] Processando requisição individual
+[2025-04-25 00:26:35] Resultado da atualização: Sucesso
+[2025-04-25 00:26:35] Output do buffer: 
+[2025-04-25 00:26:35] Enviando resposta JSON final: 
+[2025-04-25 00:26:47] === NOVA REQUISIÇÃO ===
+[2025-04-25 00:26:47] Método: POST
+[2025-04-25 00:26:47] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 00:26:47] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 00:26:47] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"591","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundarybJRg6MVt6IFyNrFn","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 00:26:47] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/main.css","new_path":".\/assets\/css\/main.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:26:47] É requisição AJAX: Não
+[2025-04-25 00:26:47] Definindo header Content-Type: application/json
+[2025-04-25 00:26:47] Processando requisição individual
+[2025-04-25 00:26:47] Resultado da atualização: Sucesso
+[2025-04-25 00:26:47] Output do buffer: 
+[2025-04-25 00:26:47] Enviando resposta JSON final: 
+[2025-04-25 00:26:52] === NOVA REQUISIÇÃO ===
+[2025-04-25 00:26:52] Método: POST
+[2025-04-25 00:26:52] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 00:26:52] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 00:26:52] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"625","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundarytHdS6ACbfS8gSsKi","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 00:26:52] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/noscript.css","new_path":"<?php echo $baseAddress; ?>\/assets\/css\/noscript.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:26:52] É requisição AJAX: Não
+[2025-04-25 00:26:52] Definindo header Content-Type: application/json
+[2025-04-25 00:26:52] Processando requisição individual
+[2025-04-25 00:26:52] Resultado da atualização: Sucesso
+[2025-04-25 00:26:52] Output do buffer: 
+[2025-04-25 00:26:52] Enviando resposta JSON final: 
+[2025-04-25 00:27:03] === NOVA REQUISIÇÃO ===
+[2025-04-25 00:27:03] Método: POST
+[2025-04-25 00:27:03] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 00:27:03] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 00:27:03] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"599","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundarycF3tgjkufZ25d9M2","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 00:27:03] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/noscript.css","new_path":".\/assets\/css\/noscript.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:27:03] É requisição AJAX: Não
+[2025-04-25 00:27:03] Definindo header Content-Type: application/json
+[2025-04-25 00:27:03] Processando requisição individual
+[2025-04-25 00:27:03] Resultado da atualização: Sucesso
+[2025-04-25 00:27:03] Output do buffer: 
+[2025-04-25 00:27:03] Enviando resposta JSON final: 

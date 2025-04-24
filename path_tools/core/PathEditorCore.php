@@ -322,206 +322,209 @@ class PathEditorCore {
     /**
      * Atualiza um caminho em um arquivo
      * 
-     * @param string $sourceFile Arquivo fonte
-     * @param string $oldPath Caminho antigo
-     * @param string $newPath Novo caminho
-     * @return array Resultado da atualização
+     * @param string $sourceFile Arquivo fonte onde o caminho será atualizado
+     * @param string $oldPath Caminho antigo/original
+     * @param string $newPath Caminho novo para substituir
+     * @return bool|array Sucesso da operação ou array com informações de erro
      */
     public function updatePath($sourceFile, $oldPath, $newPath) {
-        $this->logDebug("Atualizando caminho: $oldPath -> $newPath no arquivo $sourceFile");
+        $this->logDebug("\n------ INICIANDO ATUALIZAÇÃO DE CAMINHO ------");
+        $this->logDebug("Arquivo fonte: $sourceFile");
+        $this->logDebug("Caminho antigo: $oldPath");
+        $this->logDebug("Caminho novo: $newPath");
         
-        // Lê o conteúdo do arquivo
+        // Validações básicas
+        if (empty($sourceFile) || empty($oldPath) || empty($newPath)) {
+            $this->logDebug("ERRO: Parâmetros incompletos para atualização");
+            return [
+                'success' => false,
+                'message' => 'Parâmetros incompletos para atualização de caminho'
+            ];
+        }
+        
+        if (!file_exists($sourceFile)) {
+            $this->logDebug("ERRO: Arquivo fonte não encontrado: $sourceFile");
+            return [
+                'success' => false,
+                'message' => 'Arquivo fonte não encontrado: ' . $sourceFile
+            ];
+        }
+        
+        // Ler o conteúdo do arquivo
         $content = file_get_contents($sourceFile);
         if ($content === false) {
+            $this->logDebug("ERRO: Não foi possível ler o arquivo: $sourceFile");
             return [
                 'success' => false,
-                'message' => 'Não foi possível ler o arquivo fonte'
+                'message' => 'Falha ao ler o arquivo fonte'
             ];
         }
-
-        // Escapa caracteres especiais para uso em regex
+        
+        // Escapar o caminho antigo para usar em uma expressão regular
         $escapedOldPath = preg_quote($oldPath, '/');
-
-        // Padrões que podem conter caminhos de arquivos
+        
+        // Criar padrões de substituição para diferentes contextos
         $patterns = [
-            // href em tags (HTML e CSS)
-            '/href=(["\'])' . $escapedOldPath . '(["\'])/i',
-            
-            // src em tags (HTML)
-            '/src=(["\'])' . $escapedOldPath . '(["\'])/i',
-            
-            // url em JavaScript
-            '/url\s*:\s*(["\'])' . $escapedOldPath . '(["\'])/i',
-            
-            // includes e requires em PHP
-            '/include(?:_once)?\s*\(\s*(["\'])' . $escapedOldPath . '(["\'])\s*\)/i',
-            '/require(?:_once)?\s*\(\s*(["\'])' . $escapedOldPath . '(["\'])\s*\)/i',
-            
-            // url() em CSS
-            '/url\(\s*(["\']?)' . $escapedOldPath . '(["\']?)\s*\)/i',
-            
-            // Caminho como string literal
-            '/(["\'])' . $escapedOldPath . '(["\'])/i'
+            // Para atributos src e href em tags HTML
+            "/(['\"])(" . $escapedOldPath . ")(['\"])/",
+            // Para inclusões de arquivos PHP
+            "/(include[_once]*\\s*\\(\\s*['\"])(" . $escapedOldPath . ")(['\"]\\s*\\))/",
+            // Para requires de arquivos PHP
+            "/(require[_once]*\\s*\\(\\s*['\"])(" . $escapedOldPath . ")(['\"]\\s*\\))/",
+            // Para URL de chamadas AJAX
+            "/(url:\\s*['\"])(" . $escapedOldPath . ")(['\"])/",
         ];
-
+        
         $replacements = [
-            'href=$1' . $newPath . '$2',
-            'src=$1' . $newPath . '$2',
-            'url: $1' . $newPath . '$2',
-            'include$1($1' . $newPath . '$2)',
-            'require$1($1' . $newPath . '$2)',
-            'url($1' . $newPath . '$2)',
-            '$1' . $newPath . '$2'
+            "$1" . $newPath . "$3",
+            "$1" . $newPath . "$3",
+            "$1" . $newPath . "$3",
+            "$1" . $newPath . "$3",
         ];
-
-        // Aplicamos as substituições
-        $newContent = $content;
-        $replacementCount = 0;
-
-        foreach ($patterns as $i => $pattern) {
-            $tempContent = preg_replace($pattern, $replacements[$i], $newContent, -1, $count);
-            if ($count > 0) {
-                $newContent = $tempContent;
-                $replacementCount += $count;
-                $this->logDebug("Padrão $i substituiu $count ocorrências");
-            }
-        }
-
-        // PROTEÇÃO: Verificar se não houve substituições que resultaram em caminhos vazios
-        if (strpos($newContent, '=""') !== false || 
-            strpos($newContent, "=''") !== false || 
-            strpos($newContent, 'url()') !== false) {
-            
-            $this->logDebug("ALERTA: Substituições resultaram em caminhos vazios!");
+        
+        // Aplicar substituições
+        $newContent = preg_replace($patterns, $replacements, $content, -1, $count);
+        
+        if ($count === 0) {
+            $this->logDebug("AVISO: Nenhuma correspondência encontrada para substituição");
             return [
                 'success' => false,
-                'message' => "Erro: O processamento resultaria em caminhos vazios"
+                'message' => 'Caminho não encontrado no arquivo fonte'
             ];
         }
-
-        // Se houve substituições, salvamos o arquivo
-        if ($replacementCount > 0) {
-            if (file_put_contents($sourceFile, $newContent) !== false) {
-                return [
-                    'success' => true,
-                    'message' => "Path atualizado com sucesso! ($replacementCount substituições)",
-                    'replacementCount' => $replacementCount,
-                    'exists' => $this->checkFileExists($newPath, $sourceFile)
-                ];
-            } else {
-                return [
-                    'success' => false,
-                    'message' => "Erro ao atualizar o arquivo"
-                ];
-            }
+        
+        $this->logDebug("$count substituições realizadas");
+        
+        // Fazer backup do arquivo original
+        $backupPath = $sourceFile . '.bak';
+        $backupSuccess = copy($sourceFile, $backupPath);
+        
+        if (!$backupSuccess) {
+            $this->logDebug("AVISO: Não foi possível criar backup: $backupPath");
         } else {
-            // Se não encontramos nenhum padrão para substituir, tentamos uma abordagem mais simples
-            $fallbackPattern = '/(["\'])' . $escapedOldPath . '(["\'])/';
-            $fallbackReplacement = '$1' . $newPath . '$2';
-            $newContent = preg_replace($fallbackPattern, $fallbackReplacement, $content, -1, $count);
-            
-            if ($count > 0) {
-                // Verificação de segurança
-                if (strpos($newContent, '=""') === false && 
-                    strpos($newContent, "=''") === false && 
-                    strpos($newContent, 'url()') === false) {
-                    
-                    if (file_put_contents($sourceFile, $newContent) !== false) {
-                        return [
-                            'success' => true,
-                            'message' => "Path atualizado com sucesso (fallback)!",
-                            'replacementCount' => $count,
-                            'exists' => $this->checkFileExists($newPath, $sourceFile)
-                        ];
-                    } else {
-                        return [
-                            'success' => false,
-                            'message' => "Erro ao atualizar o arquivo"
-                        ];
-                    }
-                } else {
-                    return [
-                        'success' => false,
-                        'message' => "Erro: A substituição resultaria em caminhos vazios"
-                    ];
-                }
-            } else {
-                return [
-                    'success' => false,
-                    'message' => "Não foi possível encontrar o padrão para substituir"
-                ];
-            }
+            $this->logDebug("Backup criado: $backupPath");
         }
+        
+        // Salvar o arquivo com o conteúdo atualizado
+        $writeSuccess = file_put_contents($sourceFile, $newContent);
+        
+        if ($writeSuccess === false) {
+            $this->logDebug("ERRO: Não foi possível escrever no arquivo: $sourceFile");
+            return [
+                'success' => false,
+                'message' => 'Falha ao escrever no arquivo fonte'
+            ];
+        }
+        
+        $this->logDebug("Atualização concluída com sucesso");
+        return [
+            'success' => true,
+            'message' => 'Caminho atualizado com sucesso',
+            'old_path' => $oldPath,
+            'new_path' => $newPath,
+            'replacements' => $count,
+            'exists' => $this->checkFileExists($newPath, $sourceFile),
+        ];
     }
-    
+
     /**
-     * Processa um lote de atualizações de caminhos
+     * Processa uma lista de itens para atualização de caminhos
      * 
-     * @param array $items Lista de itens para atualizar
+     * @param array $items Lista de itens para processar
      * @return array Resultados do processamento
      */
     public function processBatch($items) {
-        $results = [];
-        $totalFixed = 0;
+        $this->logDebug("\n------ INICIANDO PROCESSAMENTO EM LOTE ------");
+        $this->logDebug("Itens a processar: " . count($items));
         
-        foreach ($items as $item) {
-            $sourceFile = $item['source_file'];
-            $oldPath = $item['path'];
-            
-            // IMPORTANTE: Evitar processar caminhos vazios
-            if (empty($oldPath)) {
-                $results[] = [
-                    'success' => false,
-                    'message' => "Caminho vazio ignorado",
-                    'old_path' => $oldPath,
-                    'new_path' => null
-                ];
-                continue;
-            }
-            
-            // Encontrar caminho alternativo
-            $newPath = $this->findAlternativePath($oldPath, $sourceFile);
-            
-            if (empty($newPath)) {
-                $results[] = [
-                    'success' => false,
-                    'message' => "Não foi possível encontrar um caminho alternativo para: $oldPath",
-                    'old_path' => $oldPath,
-                    'new_path' => null
-                ];
-                continue;
-            }
-            
-            // Atualizar o caminho
-            $updateResult = $this->updatePath($sourceFile, $oldPath, $newPath);
-            
-            if ($updateResult['success']) {
-                $totalFixed++;
-                $results[] = [
-                    'success' => true,
-                    'message' => $updateResult['message'],
-                    'old_path' => $oldPath,
-                    'new_path' => $newPath,
-                    'exists' => $updateResult['exists']
-                ];
-            } else {
-                $results[] = [
-                    'success' => false,
-                    'message' => $updateResult['message'],
-                    'old_path' => $oldPath,
-                    'new_path' => $newPath
-                ];
-            }
+        $results = [
+            'success' => true,
+            'message' => 'Processamento em lote concluído',
+            'total' => count($items),
+            'processed' => 0,
+            'successful' => 0,
+            'failed' => 0,
+            'items' => []
+        ];
+        
+        if (empty($items)) {
+            $this->logDebug("Lista de itens vazia");
+            $results['message'] = 'Nenhum item para processar';
+            return $results;
         }
         
-        return [
-            'success' => $totalFixed > 0,
-            'message' => $totalFixed > 0 
-                        ? "Foram consertados $totalFixed de " . count($items) . " caminhos." 
-                        : "Não foi possível consertar nenhum caminho.",
-            'results' => $results,
-            'total_fixed' => $totalFixed
-        ];
+        foreach ($items as $index => $item) {
+            $this->logDebug("\nProcessando item $index");
+            
+            // Validar item
+            if (!isset($item['source_file']) || !isset($item['old_path']) || !isset($item['new_path'])) {
+                $this->logDebug("ERRO: Item $index não contém os campos obrigatórios");
+                $results['items'][] = [
+                    'success' => false,
+                    'message' => 'Item inválido: campos obrigatórios ausentes',
+                    'item_index' => $index
+                ];
+                $results['failed']++;
+                continue;
+            }
+            
+            $sourceFile = $item['source_file'];
+            $oldPath = $item['old_path'];
+            $newPath = $item['new_path'];
+            
+            // Verificar campos obrigatórios
+            if (empty($sourceFile) || empty($oldPath) || empty($newPath)) {
+                $this->logDebug("ERRO: Item $index contém campos vazios");
+                $results['items'][] = [
+                    'success' => false,
+                    'message' => 'Campos obrigatórios não podem estar vazios',
+                    'source_file' => $sourceFile,
+                    'old_path' => $oldPath,
+                    'new_path' => $newPath,
+                    'item_index' => $index
+                ];
+                $results['failed']++;
+                continue;
+            }
+            
+            // Tentar atualizar o caminho
+            $updateResult = $this->updatePath($sourceFile, $oldPath, $newPath);
+            $results['processed']++;
+            
+            if ($updateResult['success']) {
+                $results['successful']++;
+                $this->logDebug("Item $index processado com sucesso");
+            } else {
+                $results['failed']++;
+                $this->logDebug("Falha ao processar item $index: " . $updateResult['message']);
+            }
+            
+            // Adicionar resultado ao array de itens
+            $updateResult['item_index'] = $index;
+            $updateResult['source_file'] = $sourceFile;
+            $updateResult['old_path'] = $oldPath;
+            $updateResult['new_path'] = $newPath;
+            $results['items'][] = $updateResult;
+        }
+        
+        $this->logDebug("\nProcessamento em lote concluído");
+        $this->logDebug("Total processado: {$results['processed']}");
+        $this->logDebug("Sucessos: {$results['successful']}");
+        $this->logDebug("Falhas: {$results['failed']}");
+        
+        // Atualizar mensagem final
+        if ($results['failed'] > 0) {
+            if ($results['successful'] > 0) {
+                $results['message'] = "Processamento concluído com {$results['successful']} sucessos e {$results['failed']} falhas";
+            } else {
+                $results['message'] = "Falha no processamento: nenhum item foi atualizado com sucesso";
+                $results['success'] = false;
+            }
+        } else {
+            $results['message'] = "Todos os {$results['successful']} itens foram atualizados com sucesso";
+        }
+        
+        return $results;
     }
     
     /**

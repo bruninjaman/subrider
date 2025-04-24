@@ -169,71 +169,6 @@ register_shutdown_function(function() {
 // Processar requisições
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Para teste de AutoFix
-        if (isset($_POST['test_autofix']) && $_POST['test_autofix'] === 'true') {
-            path_log("Processando requisição de teste autofix");
-            $path = $_POST['path'] ?? $_POST['old_path'];
-            $sourceFile = $_POST['source_file'];
-            
-            if (empty($path) || empty($sourceFile) || !file_exists($sourceFile)) {
-                $errorMessage = empty($path) ? "Caminho vazio" : 
-                              (!file_exists($sourceFile) ? "Arquivo fonte não existe: $sourceFile" : "Erro desconhecido");
-                
-                path_log("Erro em test_autofix: $errorMessage");
-                $ui->sendJsonResponse([
-                    'success' => false,
-                    'message' => $errorMessage,
-                    'debug_info' => [
-                        'path' => $path,
-                        'source_file' => $sourceFile
-                    ]
-                ]);
-            }
-            
-            // Encontrar caminho alternativo
-            $newPath = $pathEditor->findAlternativePath($path, $sourceFile);
-            path_log("Caminho alternativo encontrado: $newPath");
-            
-            $ui->sendJsonResponse([
-                'success' => true,
-                'new_path' => $newPath,
-                'exists' => $pathEditor->checkFileExists($newPath, $sourceFile),
-                'method_used' => 'findAlternativePath()'
-            ]);
-        }
-        
-        // Para processamento em lote
-        if (isset($_POST['autofix']) && $_POST['autofix'] === 'true') {
-            path_log("Processando requisição de autofix em lote");
-            
-            if (!isset($_POST['items'])) {
-                path_log("ERRO: Parâmetro 'items' não encontrado");
-                $ui->sendJsonResponse([
-                    'success' => false,
-                    'message' => 'Parâmetro items não encontrado na requisição'
-                ]);
-            }
-            
-            path_log("JSON items recebido: " . $_POST['items']);
-            $items = json_decode($_POST['items'], true);
-            $returnUrl = isset($_POST['return_url']) ? $_POST['return_url'] : '';
-            
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                path_log("ERRO: Falha ao decodificar JSON: " . json_last_error_msg());
-                $ui->sendJsonResponse([
-                    'success' => false,
-                    'message' => 'Erro ao decodificar JSON: ' . json_last_error_msg()
-                ]);
-            }
-            
-            path_log("Items decodificados: " . json_encode($items));
-            $result = $pathEditor->processBatch($items);
-            path_log("Resultado do processBatch: " . json_encode($result));
-            $result['return_url'] = $returnUrl;
-            
-            $ui->sendJsonResponse($result);
-        }
-        
         // Processamento individual
         if (isset($_POST['source_file']) && isset($_POST['old_path'])) {
             path_log("Processando requisição individual");
@@ -242,61 +177,47 @@ try {
             $newPath = $_POST['new_path'] ?? null;
             $returnUrl = isset($_POST['return_url']) ? $_POST['return_url'] : '';
             
-            // Se o novo caminho não foi fornecido, encontrar automaticamente
+            // Verificar se o novo caminho foi fornecido (obrigatório agora)
             if (empty($newPath)) {
-                path_log("Novo caminho não fornecido, buscando automaticamente");
-                $newPath = $pathEditor->findAlternativePath($oldPath, $sourceFile);
-            }
-            
-            if (empty($newPath)) {
-                path_log("ERRO: Não foi possível determinar novo caminho");
+                path_log("Erro: Novo caminho não fornecido");
                 $ui->sendJsonResponse([
                     'success' => false,
-                    'message' => 'Não foi possível determinar um novo caminho válido',
-                    'return_url' => $returnUrl
+                    'message' => 'O novo caminho deve ser fornecido manualmente'
                 ]);
             }
             
-            path_log("Atualizando caminho $oldPath para $newPath");
+            // Fazer a atualização do caminho
             $result = $pathEditor->updatePath($sourceFile, $oldPath, $newPath);
-            $result['return_url'] = $returnUrl;
+            path_log("Resultado da atualização: " . ($result ? "Sucesso" : "Falha"));
             
-            // Se a atualização foi bem-sucedida e temos resultados na sessão, atualizar também
-            if ($result['success'] && isset($_SESSION['path_checker_results'])) {
-                $results = $_SESSION['path_checker_results'];
-                foreach ($results as $key => $resultItem) {
-                    if ($resultItem['source_file'] === $sourceFile && $resultItem['path'] === $oldPath) {
-                        $results[$key]['path'] = $newPath;
-                        $results[$key]['exists'] = $result['exists'] ?? false;
-                    }
-                }
-                $_SESSION['path_checker_results'] = $results;
-            }
-            
-            path_log("Enviando resultado da atualização: " . json_encode($result));
-            $ui->sendJsonResponse($result);
+            $ui->sendJsonResponse([
+                'success' => $result,
+                'message' => $result ? 'Caminho atualizado com sucesso' : 'Falha ao atualizar caminho',
+                'old_path' => $oldPath,
+                'new_path' => $newPath,
+                'return_url' => $returnUrl
+            ]);
         }
         
-        // Se nenhuma das condições acima for atendida, retornar erro
-        path_log("ERRO: Requisição não reconhecida");
-        $ui->sendJsonResponse([
-            'success' => false,
-            'message' => 'Requisição inválida'
-        ]);
+        // Redirecionar para página principal se nenhuma operação foi reconhecida
+        path_log("Nenhuma operação válida encontrada na requisição POST");
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit();
     } else {
-        // Exibir interface para teste de caminhos
-        path_log("Exibindo interface de teste");
+        // Exibir interface do editor para requisições GET
+        path_log("Exibindo interface do editor");
         $ui->displayTestInterface();
     }
 } catch (Exception $e) {
     // Capturar qualquer exceção
-    path_log("EXCEÇÃO: " . $e->getMessage() . " em " . $e->getFile() . ":" . $e->getLine());
-    $ui->sendJsonResponse([
-        'success' => false,
-        'message' => 'Exceção: ' . $e->getMessage(),
-        'error_details' => [
-            'file' => $e->getFile(),
-            'line' => $e->getLine()
-        ]
-    ]);
+    path_log("ERRO: " . $e->getMessage() . " em " . $e->getFile() . ":" . $e->getLine());
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $ui->sendJsonResponse([
+            'success' => false,
+            'message' => 'Erro: ' . $e->getMessage()
+        ]);
+    } else {
+        $ui->displayError('Erro: ' . $e->getMessage());
+    }
 } 

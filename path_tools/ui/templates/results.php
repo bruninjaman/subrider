@@ -199,7 +199,6 @@
     <?php if ($errorCount > 0): ?>
     <div class="actions-bar">
         <a href="<?php echo htmlspecialchars($returnUrl); ?>" class="back-button">Voltar</a>
-        <button id="autofixAllButton" class="autofix-all-button">AutoFix Todos os Erros</button>
     </div>
     <?php endif; ?>
 
@@ -248,267 +247,57 @@
             // Enviar requisição AJAX
             fetch('<?php echo $pathEditorUrl; ?>', {
                 method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
                 body: formData
             })
-            .then(response => {
-                // Verificar se o status da resposta é OK
-                if (!response.ok) {
-                    throw new Error('Erro de rede: ' + response.status);
-                }
-                
-                // Verificar se o content-type da resposta é application/json
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    return response.text().then(text => {
-                        console.error('Resposta não-JSON recebida:', text.substring(0, 500));
-                        throw new Error('Resposta inválida do servidor (não é JSON)');
-                    });
-                }
-                
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Atualizar o resultado na página
-                    const resultItem = document.getElementById('result-' + index);
-                    resultItem.querySelector('.result-path').innerHTML = '<strong>Caminho:</strong> ' + newPath;
+                    // Atualizar o item na interface
+                    document.getElementById('result-path-' + index).textContent = 'Caminho: ' + newPath;
+                    document.getElementById('result-status-' + index).textContent = 'Válido';
+                    document.getElementById('result-status-' + index).className = 'status-valid';
+                    document.getElementById('result-item-' + index).className = 'result-item valid';
+                    document.getElementById('edit-form-' + index).style.display = 'none';
                     
-                    // Atualizar status
-                    if (data.exists) {
-                        resultItem.classList.remove('invalid');
-                        resultItem.classList.add('valid');
-                        resultItem.querySelector('.status-invalid').textContent = 'Válido';
-                        resultItem.querySelector('.status-invalid').classList.remove('status-invalid');
-                        resultItem.querySelector('.status-valid').classList.add('status-valid');
-                        
-                        // Remover botões de ação
-                        const actionsDiv = resultItem.querySelector('.result-actions');
-                        if (actionsDiv) actionsDiv.remove();
-                        
-                        // Remover formulário
-                        const formDiv = resultItem.querySelector('.edit-form');
-                        if (formDiv) formDiv.remove();
-                    }
-                    
-                    // Exibir mensagem de sucesso
-                    alert(data.message);
-                } else {
-                    // Exibir mensagem de erro
-                    alert('Erro: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Ocorreu um erro ao processar a solicitação.');
-            });
-        }
-        
-        // Função para execução automática de correção
-        function autoFix(index) {
-            const resultItem = document.getElementById('result-' + index);
-            const sourceFile = resultItem.querySelector('input[name="source_file"]').value;
-            const oldPath = resultItem.querySelector('input[name="old_path"]').value;
-            
-            // Preparar dados
-            const formData = new FormData();
-            formData.append('source_file', sourceFile);
-            formData.append('old_path', oldPath);
-            formData.append('test_autofix', 'true');
-            
-            // Enviar requisição AJAX
-            fetch('<?php echo $pathEditorUrl; ?>', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: formData
-            })
-            .then(response => {
-                // Verificar se o status da resposta é OK
-                if (!response.ok) {
-                    throw new Error('Erro de rede: ' + response.status);
-                }
-                
-                // Verificar se o content-type da resposta é application/json
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    return response.text().then(text => {
-                        console.error('Resposta não-JSON recebida:', text.substring(0, 500));
-                        throw new Error('Resposta inválida do servidor (não é JSON)');
-                    });
-                }
-                
-                return response.json();
-            })
-            .then(data => {
-                if (data.success && data.new_path) {
-                    // Perguntar ao usuário se deseja aplicar a correção
-                    if (confirm('Foi encontrado um caminho alternativo: ' + data.new_path + '\nDeseja aplicá-lo?')) {
-                        // Aplicar correção
-                        const updateFormData = new FormData();
-                        updateFormData.append('source_file', sourceFile);
-                        updateFormData.append('old_path', oldPath);
-                        updateFormData.append('new_path', data.new_path);
-                        updateFormData.append('return_url', window.location.href);
-                        
-                        fetch('<?php echo $pathEditorUrl; ?>', {
-                            method: 'POST',
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            },
-                            body: updateFormData
-                        })
-                        .then(response => {
-                            // Verificar se o status da resposta é OK
-                            if (!response.ok) {
-                                throw new Error('Erro de rede: ' + response.status);
-                            }
-                            
-                            // Verificar se o content-type da resposta é application/json
-                            const contentType = response.headers.get('content-type');
-                            if (!contentType || !contentType.includes('application/json')) {
-                                return response.text().then(text => {
-                                    console.error('Resposta não-JSON recebida:', text.substring(0, 500));
-                                    throw new Error('Resposta inválida do servidor (não é JSON)');
-                                });
-                            }
-                            
-                            return response.json();
-                        })
-                        .then(updateData => {
-                            if (updateData.success) {
-                                // Atualizar o resultado na página
-                                resultItem.querySelector('.result-path').innerHTML = '<strong>Caminho:</strong> ' + data.new_path;
-                                
-                                // Atualizar status
-                                if (updateData.exists) {
-                                    resultItem.classList.remove('invalid');
-                                    resultItem.classList.add('valid');
-                                    resultItem.querySelector('.status-invalid').textContent = 'Válido';
-                                    resultItem.querySelector('.status-invalid').classList.remove('status-invalid');
-                                    resultItem.querySelector('.status-valid').classList.add('status-valid');
-                                    
-                                    // Remover botões de ação
-                                    const actionsDiv = resultItem.querySelector('.result-actions');
-                                    if (actionsDiv) actionsDiv.remove();
-                                    
-                                    // Remover formulário
-                                    const formDiv = resultItem.querySelector('.edit-form');
-                                    if (formDiv) formDiv.remove();
-                                }
-                                
-                                // Exibir mensagem de sucesso
-                                alert(updateData.message);
-                            } else {
-                                // Exibir mensagem de erro
-                                alert('Erro: ' + updateData.message);
-                            }
-                        });
-                    }
-                } else {
-                    alert('Não foi possível encontrar um caminho alternativo.');
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Ocorreu um erro ao processar a solicitação.');
-            });
-        }
-        
-        // Função para consertar todos os caminhos
-        document.getElementById('autofixAllButton').addEventListener('click', function() {
-            if (!confirm('Isso irá tentar corrigir automaticamente todos os caminhos inválidos. Continuar?')) {
-                return;
-            }
-            
-            // Coletar todos os itens inválidos
-            const invalidItems = document.querySelectorAll('.result-item.invalid');
-            const items = [];
-            
-            invalidItems.forEach(item => {
-                const sourceFile = item.querySelector('input[name="source_file"]').value;
-                const oldPath = item.querySelector('input[name="old_path"]').value;
-                
-                items.push({
-                    source_file: sourceFile,
-                    path: oldPath
-                });
-            });
-            
-            if (items.length === 0) {
-                alert('Não há caminhos inválidos para corrigir.');
-                return;
-            }
-            
-            // Preparar dados
-            const formData = new FormData();
-            formData.append('items', JSON.stringify(items));
-            formData.append('autofix', 'true');
-            formData.append('return_url', window.location.href);
-            
-            // Enviar requisição AJAX
-            fetch('<?php echo $pathEditorUrl; ?>', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: formData
-            })
-            .then(response => {
-                // Verificar se o status da resposta é OK
-                if (!response.ok) {
-                    throw new Error('Erro de rede: ' + response.status);
-                }
-                
-                // Verificar se o content-type da resposta é application/json
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    return response.text().then(text => {
-                        console.error('Resposta não-JSON recebida:', text.substring(0, 500));
-                        throw new Error('Resposta inválida do servidor (não é JSON)');
-                    });
-                }
-                
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    // Recarregar a página para mostrar os resultados atualizados
-                    window.location.reload();
+                    // Mostrar feedback
+                    alert('Caminho atualizado com sucesso!');
                 } else {
                     alert('Erro: ' + data.message);
                 }
             })
             .catch(error => {
                 console.error('Erro:', error);
-                alert('Ocorreu um erro ao processar a solicitação.');
+                alert('Erro ao processar a solicitação: ' + error);
             });
-        });
+        }
         
-        // Função para filtrar resultados
+        // Inicializar comportamento dos filtros
         document.querySelectorAll('.filter-button').forEach(button => {
             button.addEventListener('click', function() {
-                // Atualizar botões ativos
+                const filter = this.getAttribute('data-filter');
+                
+                // Atualizar botões de filtro
                 document.querySelectorAll('.filter-button').forEach(btn => {
                     btn.classList.remove('active');
                 });
                 this.classList.add('active');
                 
-                // Aplicar filtro
-                const filter = this.getAttribute('data-filter');
-                const resultItems = document.querySelectorAll('.result-item');
-                
-                resultItems.forEach(item => {
+                // Filtrar resultados
+                document.querySelectorAll('.result-item').forEach(item => {
                     if (filter === 'all') {
                         item.classList.remove('hidden');
                     } else if (filter === 'invalid') {
-                        item.classList.toggle('hidden', !item.classList.contains('invalid'));
+                        if (item.classList.contains('invalid')) {
+                            item.classList.remove('hidden');
+                        } else {
+                            item.classList.add('hidden');
+                        }
                     } else if (filter === 'valid') {
-                        item.classList.toggle('hidden', !item.classList.contains('valid'));
+                        if (item.classList.contains('valid')) {
+                            item.classList.remove('hidden');
+                        } else {
+                            item.classList.add('hidden');
+                        }
                     }
                 });
             });
