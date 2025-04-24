@@ -3,9 +3,6 @@
 <?php
 session_start();
 
-// Incluir arquivo de configuração global
-require_once __DIR__ . '/config.php';
-
 require_once './vendor/autoload.php';
 
 // Load environment variables from .env file
@@ -56,8 +53,8 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
     <title>Subrider</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="<?php echo $baseAddress; ?>/pages/ordemservico/ordemservico_mobile.css" />
-    <link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/main.css" />
+    <link rel="stylesheet" href="./pages/ordemservico/ordemservico_mobile.css" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
     <noscript>
         <link rel="stylesheet" href="<?php echo $baseAddress; ?>/assets/css/noscript.css" />
     </noscript>
