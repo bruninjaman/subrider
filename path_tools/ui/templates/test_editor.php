@@ -90,6 +90,8 @@
         #result-container {
             display: none;
         }
+        
+        <?php echo $extraCSS ?? ''; ?>
     </style>
 </head>
 <body>
@@ -138,6 +140,8 @@
             <h3>Resultado:</h3>
             <div id="result-content"></div>
         </div>
+        
+        <?php echo $extraHTML ?? ''; ?>
     </div>
 
     <script>
@@ -147,6 +151,9 @@
             document.getElementById('old_path').value = '';
             document.getElementById('new_path').value = '';
             document.getElementById('result-container').style.display = 'none';
+            if (document.getElementById('included-paths-container')) {
+                document.getElementById('included-paths-container').style.display = 'none';
+            }
         }
         
         // Processar formulário de atualização
@@ -158,8 +165,20 @@
             const newPath = document.getElementById('new_path').value;
             
             if (!sourceFile || !oldPath || !newPath) {
-                alert('Por favor, preencha todos os campos');
-                return;
+                // Preencher campos vazios com valores padrão
+                if (!sourceFile) {
+                    document.getElementById('source_file').value = 'index.php'; // Valor padrão
+                    sourceFile = 'index.php';
+                }
+                if (!oldPath) {
+                    document.getElementById('old_path').value = 'path/not/specified';
+                    oldPath = 'path/not/specified';
+                }
+                if (!newPath) {
+                    // Se não tiver novo caminho, usa o antigo
+                    document.getElementById('new_path').value = oldPath;
+                    newPath = oldPath;
+                }
             }
             
             // Mostrar container de resultado
@@ -202,6 +221,8 @@
                 `;
             });
         });
+        
+        <?php echo $extraJS ?? ''; ?>
     </script>
 </body>
 </html> 

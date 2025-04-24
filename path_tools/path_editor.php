@@ -169,34 +169,103 @@ register_shutdown_function(function() {
 // Processar requisições
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Nova funcionalidade: Encontrar arquivos incluídos
+        if (isset($_POST['action']) && $_POST['action'] === 'find_included_files' && isset($_POST['source_file'])) {
+            path_log("Processando requisição para encontrar arquivos incluídos");
+            $sourceFile = $_POST['source_file'];
+            
+            // Verificar se o arquivo fonte existe
+            if (!file_exists($sourceFile)) {
+                path_log("Erro: Arquivo fonte não existe: $sourceFile");
+                $ui->sendJsonResponse([
+                    'success' => false,
+                    'message' => 'Arquivo fonte não encontrado'
+                ]);
+            }
+            
+            // Encontrar arquivos incluídos
+            $includedFiles = $pathEditor->findIncludedFiles($sourceFile);
+            path_log("Encontrados " . count($includedFiles) . " arquivos incluídos");
+            
+            // Analisar caminhos dentro de cada arquivo incluído
+            $result = [];
+            
+            foreach ($includedFiles as $includedFile) {
+                path_log("Analisando caminhos no arquivo incluído: " . $includedFile['absolute_path']);
+                
+                // Ler o conteúdo do arquivo incluído
+                $fileContent = file_get_contents($includedFile['absolute_path']);
+                if ($fileContent === false) {
+                    path_log("Erro ao ler o arquivo incluído: " . $includedFile['absolute_path']);
+                    continue;
+                }
+                
+                // Padrões para encontrar caminhos no conteúdo
+                $patterns = [
+                    'css' => '/href=[\'"]([^\'"]+\.css)[\'"]/',
+                    'js' => '/src=[\'"]([^\'"]+\.js)[\'"]/',
+                    'images' => '/src=[\'"]([^\'"]+\.(jpg|jpeg|png|gif|svg))[\'"]/',
+                    'php' => '/include[_once]*\([\'"]([^\'"]+)[\'"]/',
+                    'require' => '/require[_once]*\([\'"]([^\'"]+)[\'"]/',
+                    'url' => '/url\s*:\s*[\'"]([^\'"]+)[\'"]/',
+                ];
+                
+                $filePaths = [];
+                
+                // Encontrar todos os caminhos no arquivo
+                foreach ($patterns as $type => $pattern) {
+                    preg_match_all($pattern, $fileContent, $matches);
+                    
+                    if (!empty($matches[1])) {
+                        foreach ($matches[1] as $path) {
+                            // Verificar se o caminho existe
+                            $exists = $pathEditor->checkFileExists($path, $includedFile['absolute_path']);
+                            
+                            $filePaths[] = [
+                                'path' => $path,
+                                'type' => $type,
+                                'exists' => $exists
+                            ];
+                        }
+                    }
+                }
+                
+                // Adicionar ao resultado
+                $result[] = [
+                    'file' => $includedFile['absolute_path'],
+                    'include_path' => $includedFile['path'],
+                    'paths' => $filePaths
+                ];
+            }
+            
+            // Enviar resposta
+            $ui->sendJsonResponse([
+                'success' => true,
+                'included_files' => $result
+            ]);
+        }
+        
         // Processamento individual
-        if (isset($_POST['source_file']) && isset($_POST['old_path'])) {
+        else if (isset($_POST['source_file']) && isset($_POST['old_path'])) {
             path_log("Processando requisição individual");
             $sourceFile = $_POST['source_file'];
             $oldPath = $_POST['old_path'];
             $newPath = $_POST['new_path'] ?? null;
             $returnUrl = isset($_POST['return_url']) ? $_POST['return_url'] : '';
             
-            // Verificar se o novo caminho foi fornecido (obrigatório agora)
+            // Remover a verificação que exigia um novo caminho manualmente fornecido
+            // Agora vamos processar diretamente se não houver newPath
             if (empty($newPath)) {
-                path_log("Erro: Novo caminho não fornecido");
-                $ui->sendJsonResponse([
-                    'success' => false,
-                    'message' => 'O novo caminho deve ser fornecido manualmente'
-                ]);
+                // Encontrar caminho alternativo automaticamente
+                $newPath = $pathEditor->findAlternativePath($oldPath, $sourceFile);
+                path_log("Novo caminho gerado automaticamente: $newPath");
             }
             
             // Fazer a atualização do caminho
             $result = $pathEditor->updatePath($sourceFile, $oldPath, $newPath);
-            path_log("Resultado da atualização: " . ($result ? "Sucesso" : "Falha"));
+            path_log("Resultado da atualização: " . ($result['success'] ? "Sucesso" : "Falha"));
             
-            $ui->sendJsonResponse([
-                'success' => $result,
-                'message' => $result ? 'Caminho atualizado com sucesso' : 'Falha ao atualizar caminho',
-                'old_path' => $oldPath,
-                'new_path' => $newPath,
-                'return_url' => $returnUrl
-            ]);
+            $ui->sendJsonResponse($result);
         }
         
         // Redirecionar para página principal se nenhuma operação foi reconhecida

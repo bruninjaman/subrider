@@ -24,6 +24,183 @@ class PathEditorUI {
      * Exibe interface para teste de caminho alternativo
      */
     public function displayTestInterface() {
+        $jsCode = <<<JS
+        // Função para carregar os caminhos de arquivos incluídos
+        function loadIncludedFilesPaths(sourceFile) {
+            if (!sourceFile) return;
+            
+            // Mostrar loader
+            document.getElementById('included-paths-container').style.display = 'block';
+            document.getElementById('included-paths-content').innerHTML = '<p>Carregando arquivos incluídos...</p>';
+            
+            // Preparar dados para a requisição
+            const formData = new FormData();
+            formData.append('action', 'find_included_files');
+            formData.append('source_file', sourceFile);
+            
+            // Enviar requisição AJAX
+            fetch('path_editor.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.included_files && data.included_files.length > 0) {
+                    // Mostrar caminhos dos arquivos incluídos
+                    let html = '<h3>Caminhos em Arquivos Incluídos:</h3>';
+                    
+                    // Agrupar por arquivo incluído
+                    data.included_files.forEach(function(fileData, index) {
+                        html += '<div class="included-file-section">';
+                        html += '<h4>Arquivo Incluído: ' + fileData.file + '</h4>';
+                        
+                        if (fileData.paths && fileData.paths.length > 0) {
+                            html += '<table class="paths-table">';
+                            html += '<thead><tr><th>Caminho</th><th>Tipo</th><th>Status</th><th>Ações</th></tr></thead>';
+                            html += '<tbody>';
+                            
+                            fileData.paths.forEach(function(path) {
+                                const statusClass = path.exists ? 'path-valid' : 'path-invalid';
+                                const statusText = path.exists ? 'Válido' : 'Inválido';
+                                
+                                html += '<tr class="' + statusClass + '">';
+                                html += '<td>' + path.path + '</td>';
+                                html += '<td>' + path.type + '</td>';
+                                html += '<td class="path-status">' + statusText + '</td>';
+                                html += '<td>';
+                                
+                                if (!path.exists) {
+                                    html += '<button class="fix-path-btn" data-source="' + fileData.file + '" data-path="' + path.path + '">Corrigir</button>';
+                                }
+                                
+                                html += '</td>';
+                                html += '</tr>';
+                            });
+                            
+                            html += '</tbody></table>';
+                        } else {
+                            html += '<p>Nenhum caminho encontrado neste arquivo.</p>';
+                        }
+                        
+                        html += '</div>';
+                    });
+                    
+                    document.getElementById('included-paths-content').innerHTML = html;
+                    
+                    // Adicionar eventos para botões de correção
+                    document.querySelectorAll('.fix-path-btn').forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            const sourceFile = this.getAttribute('data-source');
+                            const oldPath = this.getAttribute('data-path');
+                            
+                            // Preencher o formulário com os dados do caminho
+                            document.getElementById('source_file').value = sourceFile;
+                            document.getElementById('old_path').value = oldPath;
+                            document.getElementById('new_path').value = '';
+                            
+                            // Rolar para o formulário
+                            document.getElementById('update-form').scrollIntoView({behavior: 'smooth'});
+                        });
+                    });
+                    
+                } else {
+                    let message = 'Nenhum arquivo incluído encontrado.';
+                    if (!data.success) {
+                        message = 'Erro: ' + (data.message || 'Erro ao carregar arquivos incluídos.');
+                    }
+                    document.getElementById('included-paths-content').innerHTML = '<p>' + message + '</p>';
+                }
+            })
+            .catch(function(error) {
+                console.error('Erro:', error);
+                document.getElementById('included-paths-content').innerHTML = 
+                    '<div class="status status-error">' +
+                    '<p>Erro ao processar a solicitação: ' + error + '</p>' +
+                    '</div>';
+            });
+        }
+        
+        // Adicionar evento para verificar arquivos incluídos quando o arquivo fonte for preenchido
+        document.addEventListener('DOMContentLoaded', function() {
+            const sourceFileInput = document.getElementById('source_file');
+            
+            // Evento de change para carregar arquivos incluídos
+            sourceFileInput.addEventListener('change', function() {
+                loadIncludedFilesPaths(this.value);
+            });
+            
+            // Verificar se já existe um valor ao carregar a página
+            if (sourceFileInput.value) {
+                loadIncludedFilesPaths(sourceFileInput.value);
+            }
+        });
+        JS;
+        
+        // CSS adicional para os caminhos de arquivos incluídos
+        $cssExtra = <<<CSS
+        .included-paths-container {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .included-file-section {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-left: 4px solid #3498db;
+        }
+        
+        .paths-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .paths-table th, .paths-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+        .paths-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        
+        .path-valid {
+            background-color: #d4edda;
+        }
+        
+        .path-invalid {
+            background-color: #f8d7da;
+        }
+        
+        .fix-path-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        
+        .fix-path-btn:hover {
+            background-color: #45a049;
+        }
+        CSS;
+        
+        // Adicionar HTML para a seção de arquivos incluídos
+        $includedPathsHtml = <<<HTML
+        <div id="included-paths-container" class="included-paths-container">
+            <h2>Caminhos em Arquivos Incluídos</h2>
+            <div id="included-paths-content"></div>
+        </div>
+        HTML;
+        
+        // Guardar os valores para o template
+        $extraJS = $jsCode;
+        $extraCSS = $cssExtra;
+        $extraHTML = $includedPathsHtml;
+        
         include $this->templatesDir . '/test_editor.php';
     }
     

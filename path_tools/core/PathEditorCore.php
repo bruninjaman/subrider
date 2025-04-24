@@ -395,15 +395,7 @@ class PathEditorCore {
         
         $this->logDebug("$count substituições realizadas");
         
-        // Fazer backup do arquivo original
-        $backupPath = $sourceFile . '.bak';
-        $backupSuccess = copy($sourceFile, $backupPath);
-        
-        if (!$backupSuccess) {
-            $this->logDebug("AVISO: Não foi possível criar backup: $backupPath");
-        } else {
-            $this->logDebug("Backup criado: $backupPath");
-        }
+        // Remover a criação de backup - não precisamos mais disso
         
         // Salvar o arquivo com o conteúdo atualizado
         $writeSuccess = file_put_contents($sourceFile, $newContent);
@@ -543,5 +535,75 @@ class PathEditorCore {
      */
     public function getDebugLog() {
         return $this->debugLog;
+    }
+
+    /**
+     * Encontra arquivos que são incluídos dentro de um arquivo fonte
+     * 
+     * @param string $sourceFile Arquivo fonte a ser verificado
+     * @return array Lista de caminhos de arquivos incluídos
+     */
+    public function findIncludedFiles($sourceFile) {
+        $this->logDebug("Procurando arquivos incluídos em: $sourceFile");
+        $result = [];
+        
+        if (!file_exists($sourceFile)) {
+            $this->logDebug("Arquivo fonte não existe: $sourceFile");
+            return $result;
+        }
+        
+        // Ler o conteúdo do arquivo
+        $content = file_get_contents($sourceFile);
+        if ($content === false) {
+            $this->logDebug("Não foi possível ler o arquivo: $sourceFile");
+            return $result;
+        }
+        
+        // Padrões para localizar includes e requires
+        $patterns = [
+            '/include\s*\(\s*[\'"]([^\'"]+)[\'"]\s*\)/',
+            '/include_once\s*\(\s*[\'"]([^\'"]+)[\'"]\s*\)/',
+            '/require\s*\(\s*[\'"]([^\'"]+)[\'"]\s*\)/',
+            '/require_once\s*\(\s*[\'"]([^\'"]+)[\'"]\s*\)/'
+        ];
+        
+        // Diretório do arquivo fonte para resolver caminhos relativos
+        $sourceDir = dirname(realpath($sourceFile));
+        
+        // Encontrar todos os includes e requires
+        foreach ($patterns as $pattern) {
+            preg_match_all($pattern, $content, $matches);
+            
+            if (!empty($matches[1])) {
+                foreach ($matches[1] as $includePath) {
+                    $this->logDebug("Encontrado caminho incluído: $includePath");
+                    
+                    // Resolver caminho para absoluto
+                    $absolutePath = '';
+                    
+                    // Se começa com barra, é relativo à raiz do projeto
+                    if (strpos($includePath, '/') === 0) {
+                        $absolutePath = $this->projectRoot . $includePath;
+                    } else {
+                        // Se é um caminho relativo, resolver em relação ao arquivo fonte
+                        $absolutePath = $sourceDir . '/' . $includePath;
+                    }
+                    
+                    // Verificar se o arquivo existe
+                    if (file_exists($absolutePath)) {
+                        $this->logDebug("Arquivo incluído encontrado: $absolutePath");
+                        $result[] = [
+                            'path' => $includePath,
+                            'absolute_path' => $absolutePath,
+                            'source_file' => $sourceFile
+                        ];
+                    } else {
+                        $this->logDebug("Arquivo incluído não encontrado: $absolutePath");
+                    }
+                }
+            }
+        }
+        
+        return $result;
     }
 } 

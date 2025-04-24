@@ -86,3 +86,87 @@
 [2025-04-25 00:27:03] Resultado da atualização: Sucesso
 [2025-04-25 00:27:03] Output do buffer: 
 [2025-04-25 00:27:03] Enviando resposta JSON final: 
+[2025-04-25 00:59:56] === NOVA REQUISIÇÃO ===
+[2025-04-25 00:59:56] Método: POST
+[2025-04-25 00:59:56] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 00:59:56] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 00:59:56] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"638","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundaryqB0SQVcf2lRN2MbX","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 00:59:56] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/pages\/ordemservico\/ordemservico_mobile.css","new_path":".,\/pages\/ordemservico\/ordemservico_mobile.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 00:59:56] É requisição AJAX: Não
+[2025-04-25 00:59:56] Definindo header Content-Type: application/json
+[2025-04-25 00:59:56] Processando requisição individual
+[2025-04-25 00:59:56] Resultado da atualização: Sucesso
+[2025-04-25 00:59:56] Output do buffer: 
+[2025-04-25 00:59:56] Enviando resposta JSON final: 
+[2025-04-25 01:00:05] === NOVA REQUISIÇÃO ===
+[2025-04-25 01:00:05] Método: POST
+[2025-04-25 01:00:05] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 01:00:05] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 01:00:05] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"637","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundaryZ4jnIi0y5D0TWjhc","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 01:00:05] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/pages\/ordemservico\/ordemservico_mobile.css","new_path":".\/pages\/ordemservico\/ordemservico_mobile.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 01:00:05] É requisição AJAX: Não
+[2025-04-25 01:00:05] Definindo header Content-Type: application/json
+[2025-04-25 01:00:05] Processando requisição individual
+[2025-04-25 01:00:05] Resultado da atualização: Sucesso
+[2025-04-25 01:00:05] Output do buffer: 
+[2025-04-25 01:00:05] Enviando resposta JSON final: 
+[2025-04-25 01:00:15] === NOVA REQUISIÇÃO ===
+[2025-04-25 01:00:15] Método: POST
+[2025-04-25 01:00:15] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 01:00:15] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 01:00:15] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"591","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundarybqdiVkwUEzRff7Cy","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 01:00:15] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/main.css","new_path":".\/assets\/css\/main.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 01:00:15] É requisição AJAX: Não
+[2025-04-25 01:00:15] Definindo header Content-Type: application/json
+[2025-04-25 01:00:15] Processando requisição individual
+[2025-04-25 01:00:15] Resultado da atualização: Sucesso
+[2025-04-25 01:00:15] Output do buffer: 
+[2025-04-25 01:00:15] Enviando resposta JSON final: 
+[2025-04-25 01:00:21] === NOVA REQUISIÇÃO ===
+[2025-04-25 01:00:21] Método: POST
+[2025-04-25 01:00:21] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 01:00:21] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 01:00:21] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"599","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundarybC84hJBRWGqCbKhc","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 01:00:21] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/noscript.css","new_path":".\/assets\/css\/noscript.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 01:00:21] É requisição AJAX: Não
+[2025-04-25 01:00:21] Definindo header Content-Type: application/json
+[2025-04-25 01:00:21] Processando requisição individual
+[2025-04-25 01:00:21] Resultado da atualização: Sucesso
+[2025-04-25 01:00:21] Output do buffer: 
+[2025-04-25 01:00:21] Enviando resposta JSON final: 
+[2025-04-25 01:06:12] === NOVA REQUISIÇÃO ===
+[2025-04-25 01:06:12] Método: POST
+[2025-04-25 01:06:12] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 01:06:12] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 01:06:12] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"637","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundaryGhqEt1sBRMryY9Mx","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 01:06:12] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/pages\/ordemservico\/ordemservico_mobile.css","new_path":".\/pages\/ordemservico\/ordemservico_mobile.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 01:06:12] É requisição AJAX: Não
+[2025-04-25 01:06:12] Definindo header Content-Type: application/json
+[2025-04-25 01:06:12] Processando requisição individual
+[2025-04-25 01:06:12] Resultado da atualização: Sucesso
+[2025-04-25 01:06:12] Output do buffer: 
+[2025-04-25 01:06:12] Enviando resposta JSON final: 
+[2025-04-25 01:06:17] === NOVA REQUISIÇÃO ===
+[2025-04-25 01:06:17] Método: POST
+[2025-04-25 01:06:17] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 01:06:17] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 01:06:17] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"591","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundary91pKBbAOCJurTneW","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 01:06:17] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/main.css","new_path":".\/assets\/css\/main.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 01:06:17] É requisição AJAX: Não
+[2025-04-25 01:06:17] Definindo header Content-Type: application/json
+[2025-04-25 01:06:17] Processando requisição individual
+[2025-04-25 01:06:17] Resultado da atualização: Sucesso
+[2025-04-25 01:06:17] Output do buffer: 
+[2025-04-25 01:06:17] Enviando resposta JSON final: 
+[2025-04-25 01:06:21] === NOVA REQUISIÇÃO ===
+[2025-04-25 01:06:21] Método: POST
+[2025-04-25 01:06:21] URI: /subrider/path_tools/path_editor.php
+[2025-04-25 01:06:21] Script: /subrider/path_tools/path_editor.php
+[2025-04-25 01:06:21] Headers: {"Host":"127.0.0.1","Connection":"keep-alive","Content-Length":"599","sec-ch-ua-platform":"\"Windows\"","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36 Edg\/135.0.0.0","sec-ch-ua":"\"Microsoft Edge\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundaryGBKcNB3cdAnzBJw3","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/127.0.0.1","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en,pt-BR;q=0.9,pt;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=trhv432upoe4c4l1il3259ahrd"}
+[2025-04-25 01:06:21] POST: {"source_file":"C:\\xampp\\htdocs\\subrider\/ordemservico.php","old_path":"<?php echo $baseAddress; ?>\/assets\/css\/noscript.css","new_path":".\/assets\/css\/noscript.css","return_url":"http:\/\/127.0.0.1\/subrider\/path_tools\/path_checker.php"}
+[2025-04-25 01:06:21] É requisição AJAX: Não
+[2025-04-25 01:06:21] Definindo header Content-Type: application/json
+[2025-04-25 01:06:21] Processando requisição individual
+[2025-04-25 01:06:21] Resultado da atualização: Sucesso
+[2025-04-25 01:06:21] Output do buffer: 
+[2025-04-25 01:06:21] Enviando resposta JSON final: 

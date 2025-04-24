@@ -237,8 +237,9 @@
             const newPath = formData.get('new_path');
             
             if (!newPath) {
-                alert('Por favor, insira um novo caminho.');
-                return;
+                // Remover o alerta e continuar com o processamento
+                // Usar um valor padrão ou vazio para o novo caminho
+                formData.set('new_path', oldPath); // Usar o caminho antigo como padrão
             }
             
             // Adicionar URL de retorno
@@ -259,8 +260,7 @@
                     document.getElementById('result-item-' + index).className = 'result-item valid';
                     document.getElementById('edit-form-' + index).style.display = 'none';
                     
-                    // Mostrar feedback
-                    alert('Caminho atualizado com sucesso!');
+                    // Remover o alerta de sucesso
                 } else {
                     alert('Erro: ' + data.message);
                 }
