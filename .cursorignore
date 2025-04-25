@@ -1,0 +1,5 @@
+.env
+/connection
+/vendor
+/upload
+/pdf

@@ -32,7 +32,7 @@ class DeleteConfirmation {
             ordem: ordem,
             id: id
         });
-        return `${this.baseAddress}/scripts/ordem-delete/ordem-delete.php?${params.toString()}`;
+        return `${this.baseAddress}scripts/ordem-delete/ordem-delete.php?${params.toString()}`;
     }
 }
 
