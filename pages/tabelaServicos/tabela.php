@@ -19,7 +19,7 @@
 <!-- Script para carregar a tabela sem recarregar a página -->
 <script>
 // Função global para carregar os dados via AJAX
-window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '', orderby = '') {
+window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = 'all', orderby = '') {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/subrider/pages/tabelaServicos/ajax/carregarServicos.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
@@ -46,10 +46,8 @@ function aplicarEventos() {
             var orderby = this.getAttribute('data-orderby');
             var pesquisa = document.getElementById('input-pesquisa') ? 
                           document.getElementById('input-pesquisa').value : '';
-            var selectPesquisa = document.getElementById('selectPesquisa') ? 
-                                document.getElementById('selectPesquisa').value : '';
             
-            window.carregarTabela(1, pesquisa, selectPesquisa, orderby);
+            window.carregarTabela(1, pesquisa, 'all', orderby);
         });
     });
     
@@ -61,12 +59,10 @@ function aplicarEventos() {
             var pagina = this.getAttribute('data-page');
             var pesquisa = document.getElementById('input-pesquisa') ? 
                           document.getElementById('input-pesquisa').value : '';
-            var selectPesquisa = document.getElementById('selectPesquisa') ? 
-                                document.getElementById('selectPesquisa').value : '';
             var orderby = document.querySelector('.sort.active') ? 
                          document.querySelector('.sort.active').getAttribute('data-orderby') : '';
             
-            window.carregarTabela(pagina, pesquisa, selectPesquisa, orderby);
+            window.carregarTabela(pagina, pesquisa, 'all', orderby);
         });
     });
 }

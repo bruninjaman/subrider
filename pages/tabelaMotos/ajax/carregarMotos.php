@@ -13,8 +13,20 @@ $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
 $sql_query = "SELECT * FROM motocicletas ";
 
 // Aplicar filtro de pesquisa
-if (!empty($pesquisa) && !empty($selectPesquisa)) {
-    $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+if (!empty($pesquisa)) {
+    if ($selectPesquisa == 'all') {
+        // Pesquisar em múltiplos campos
+        $sql_query .= " WHERE (
+            modelo LIKE '%" . $pesquisa . "%' OR 
+            marca LIKE '%" . $pesquisa . "%' OR 
+            proprietario LIKE '%" . $pesquisa . "%' OR 
+            placa LIKE '%" . $pesquisa . "%' OR 
+            ano LIKE '%" . $pesquisa . "%'
+        ) ";
+    } elseif (!empty($selectPesquisa)) {
+        // Pesquisa em campo específico
+        $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+    }
 }
 
 // Ordenação

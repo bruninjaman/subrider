@@ -13,8 +13,18 @@ $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
 $sql_query = "SELECT * FROM pecas ";
 
 // Aplicar filtro de pesquisa
-if (!empty($pesquisa) && !empty($selectPesquisa)) {
-    $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+if (!empty($pesquisa)) {
+    if ($selectPesquisa == 'all') {
+        // Pesquisar em múltiplos campos
+        $sql_query .= " WHERE (
+            item LIKE '%" . $pesquisa . "%' OR 
+            grupo LIKE '%" . $pesquisa . "%' OR 
+            parte LIKE '%" . $pesquisa . "%'
+        ) ";
+    } elseif (!empty($selectPesquisa)) {
+        // Pesquisa em campo específico
+        $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+    }
 }
 
 // Ordenação

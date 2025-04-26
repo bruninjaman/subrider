@@ -2,7 +2,7 @@
     <div class="content">
         <!-- search bar -->
         <?php
-        include_once("./includes/searchbar_ordemservicos.php");
+        include_once("./includes/searchbar.php");
         ?>
         <div id="resultados-tabela">
             <div class="table-wrapper">
@@ -23,14 +23,33 @@
                             <?php
                             $sql_query = " SELECT * FROM ordem_servicos ";
                             $sql_query .= " LEFT JOIN motocicletas ON motocicletas.motoId = ordem_servicos.motoID ";
-                            if (isset($_GET["pesquisa"])) {
-                                $sql_query .= " WHERE " . strtolower($_GET['selectPesquisa']) . " LIKE '%" . $_GET["pesquisa"] . "%' ";
+                            
+                            if (isset($_GET["pesquisa"]) && !empty($_GET["pesquisa"])) {
+                                $pesquisa = $_GET["pesquisa"];
+                                $selectPesquisa = isset($_GET['selectPesquisa']) && !empty($_GET['selectPesquisa']) ? $_GET['selectPesquisa'] : 'all';
+                                
+                                if ($selectPesquisa == 'all') {
+                                    // Pesquisar em múltiplos campos
+                                    $sql_query .= " WHERE (
+                                        modelo LIKE '%" . $pesquisa . "%' OR 
+                                        marca LIKE '%" . $pesquisa . "%' OR 
+                                        proprietario LIKE '%" . $pesquisa . "%' OR 
+                                        proprietario_ordem LIKE '%" . $pesquisa . "%' OR 
+                                        ano LIKE '%" . $pesquisa . "%' OR 
+                                        Codigo LIKE '%" . $pesquisa . "%'
+                                    ) ";
+                                } else {
+                                    // Pesquisa em campo específico
+                                    $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+                                }
                             }
+                            
                             if (isset($_GET["orderby"])) {
                                 $sql_query .= " ORDER BY  " . $_GET["orderby"] . "  ";
                             } else {
                                 $sql_query .= " ORDER BY ordem_servicos.servID DESC "; // Default ordering by latest added
                             }
+                            
                             $sql_query_without_limit = $sql_query;
                             $sql_query .= " LIMIT " . ((isset($_GET['page']) ? $_GET['page'] - 1 : 0) * 5) . ", 5";
                             $result = mysqli_query($conn, $sql_query);
@@ -91,7 +110,7 @@
 <!-- Script para carregar a tabela sem recarregar a página -->
 <script>
 // Função para carregar os dados via AJAX
-window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '', orderby = '') {
+window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = 'all', orderby = '') {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', './ajax/carregarOrdens.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
@@ -116,12 +135,10 @@ function aplicarEventos() {
     document.querySelectorAll('.sort').forEach(function(botao) {
         botao.addEventListener('click', function() {
             var orderby = this.getAttribute('data-orderby');
-            var pesquisa = document.querySelector('input[name="pesquisa"]') ? 
-                          document.querySelector('input[name="pesquisa"]').value : '';
-            var selectPesquisa = document.querySelector('select[name="selectPesquisa"]') ? 
-                                document.querySelector('select[name="selectPesquisa"]').value : '';
+            var pesquisa = document.getElementById('input-pesquisa') ? 
+                          document.getElementById('input-pesquisa').value : '';
             
-            window.carregarTabela(1, pesquisa, selectPesquisa, orderby);
+            window.carregarTabela(1, pesquisa, 'all', orderby);
         });
     });
     
@@ -131,32 +148,14 @@ function aplicarEventos() {
             e.preventDefault();
             
             var pagina = this.getAttribute('data-page');
-            
-            var pesquisa = document.querySelector('input[name="pesquisa"]') ? 
-                          document.querySelector('input[name="pesquisa"]').value : '';
-            var selectPesquisa = document.querySelector('select[name="selectPesquisa"]') ? 
-                                document.querySelector('select[name="selectPesquisa"]').value : '';
+            var pesquisa = document.getElementById('input-pesquisa') ? 
+                          document.getElementById('input-pesquisa').value : '';
             var orderby = document.querySelector('.sort.active') ? 
                          document.querySelector('.sort.active').getAttribute('data-orderby') : '';
             
-            window.carregarTabela(pagina, pesquisa, selectPesquisa, orderby);
+            window.carregarTabela(pagina, pesquisa, 'all', orderby);
         });
     });
-    
-    // Evento para o formulário de pesquisa
-    var formPesquisa = document.getElementById('form-pesquisa');
-    if (formPesquisa) {
-        formPesquisa.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            var pesquisa = document.getElementById('input-pesquisa').value;
-            var selectPesquisa = document.getElementById('selectPesquisa').value;
-            var orderby = document.querySelector('.sort.active') ? 
-                         document.querySelector('.sort.active').getAttribute('data-orderby') : '';
-            
-            window.carregarTabela(1, pesquisa, selectPesquisa, orderby);
-        });
-    }
 }
 
 // Inicializar eventos quando o documento carrega

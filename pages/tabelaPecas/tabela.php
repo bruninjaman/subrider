@@ -24,9 +24,23 @@
                             <?php
                             $sql_query = "SELECT * FROM pecas ";
 
-                            if (isset($_GET["pesquisa"])) {
-                                $sql_query .= " WHERE " . strtolower($_GET['selectPesquisa']) . " LIKE '%" . $_GET["pesquisa"] . "%' ";
+                            if (isset($_GET["pesquisa"]) && !empty($_GET["pesquisa"])) {
+                                $pesquisa = $_GET["pesquisa"];
+                                $selectPesquisa = isset($_GET['selectPesquisa']) && !empty($_GET['selectPesquisa']) ? $_GET['selectPesquisa'] : 'all';
+                                
+                                if ($selectPesquisa == 'all') {
+                                    // Pesquisar em múltiplos campos
+                                    $sql_query .= " WHERE (
+                                        item LIKE '%" . $pesquisa . "%' OR 
+                                        grupo LIKE '%" . $pesquisa . "%' OR 
+                                        parte LIKE '%" . $pesquisa . "%'
+                                    ) ";
+                                } else {
+                                    // Pesquisa em campo específico
+                                    $sql_query .= " WHERE " . strtolower($selectPesquisa) . " LIKE '%" . $pesquisa . "%' ";
+                                }
                             }
+                            
                             if (isset($_GET["orderby"])) {
                                 $sql_query .= " ORDER BY  " . $_GET["orderby"] . "  ";
                             } else {
@@ -85,7 +99,7 @@
 <!-- Script para carregar a tabela sem recarregar a página -->
 <script>
 // Função global para carregar os dados via AJAX
-window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = '', orderby = '') {
+window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = 'all', orderby = '') {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/subrider/pages/tabelaPecas/ajax/carregarPecas.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
@@ -112,10 +126,8 @@ function aplicarEventos() {
             var orderby = this.getAttribute('data-orderby');
             var pesquisa = document.getElementById('input-pesquisa') ? 
                           document.getElementById('input-pesquisa').value : '';
-            var selectPesquisa = document.getElementById('selectPesquisa') ? 
-                                document.getElementById('selectPesquisa').value : '';
             
-            window.carregarTabela(1, pesquisa, selectPesquisa, orderby);
+            window.carregarTabela(1, pesquisa, 'all', orderby);
         });
     });
     
@@ -127,12 +139,10 @@ function aplicarEventos() {
             var pagina = this.getAttribute('data-page');
             var pesquisa = document.getElementById('input-pesquisa') ? 
                           document.getElementById('input-pesquisa').value : '';
-            var selectPesquisa = document.getElementById('selectPesquisa') ? 
-                                document.getElementById('selectPesquisa').value : '';
             var orderby = document.querySelector('.sort.active') ? 
                          document.querySelector('.sort.active').getAttribute('data-orderby') : '';
             
-            window.carregarTabela(pagina, pesquisa, selectPesquisa, orderby);
+            window.carregarTabela(pagina, pesquisa, 'all', orderby);
         });
     });
 }
