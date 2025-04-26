@@ -9,7 +9,11 @@
         ?>
         <div id="resultados-tabela">
             <?php
-            // Carregar a tabela inicialmente
+            // Carregar a tabela inicialmente com parâmetros padrão
+            $page = 1;
+            $pesquisa = '';
+            $selectPesquisa = 'all';
+            $orderby = '';
             include_once(__DIR__ . "/ajax/carregarServicos.php");
             ?>
         </div>
@@ -21,7 +25,7 @@
 // Função global para carregar os dados via AJAX
 window.carregarTabela = function(pagina = 1, pesquisa = '', selectPesquisa = 'all', orderby = '') {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/subrider/pages/tabelaServicos/ajax/carregarServicos.php?page=' + pagina + 
+    xhr.open('GET', '<?php echo $baseAddress; ?>/pages/tabelaServicos/ajax/carregarServicos.php?page=' + pagina + 
                    '&pesquisa=' + encodeURIComponent(pesquisa) + 
                    '&selectPesquisa=' + encodeURIComponent(selectPesquisa) + 
                    '&orderby=' + encodeURIComponent(orderby), true);

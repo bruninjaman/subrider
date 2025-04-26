@@ -1,7 +1,8 @@
 <?php
 // Incluir configurações de conexão e funções necessárias
-include_once($_SERVER['DOCUMENT_ROOT'] . "/subrider/connection/connection.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/subrider/scripts/functions.php");
+include_once(__DIR__ . "/../../../connection/connection.php");
+include_once(__DIR__ . "/../../../scripts/functions.php");
+include_once(__DIR__ . "/../../../config.php");
 
 // Recuperar parâmetros da requisição
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -68,8 +69,8 @@ $result = mysqli_query($conn, $sql_query);
                             <td data-cell="Item"><?php echo $servico['item']; ?></td>
                             <td data-cell="Tipo"><?php echo $servico['tipo']; ?></td>
                             <td>
-                                <button style="background: none; border: none;" onclick="location.href='/subrider/tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="/subrider/assets/css/images/edit.png" style="height: 30px; width: 30px;"></button>
-                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $servico['servicoId']; ?>')"><img src="/subrider/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
+                                <button style="background: none; border: none;" onclick="location.href='<?php echo $baseAddress; ?>/tabelaServicosEdit.php?servicoID=<?php echo $servico['servicoId'] ?>'"><img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" style="height: 30px; width: 30px;"></button>
+                                <button style="background: none; border: none;" onclick="return deleteServico('<?php echo $servico['servicoId']; ?>')"><img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
                             </td>
                         </tr>
                 <?php
@@ -80,7 +81,7 @@ $result = mysqli_query($conn, $sql_query);
         </table>
         <div class="row">
             <div class="col-3">
-                <a class="button primary" href='../tabelaServicosAdd.php'>Adicionar Serviço</a>
+                <a class="button primary" href='<?php echo $baseAddress; ?>/tabelaServicosAdd.php'>Adicionar Serviço</a>
             </div>
             <div class="col-9" id="paginacao-container">
                 <?php
@@ -95,7 +96,7 @@ $result = mysqli_query($conn, $sql_query);
 // Adicionar o script para a função deleteServico
 function deleteServico(servicoID) {
     if (confirm('Deseja realmente excluir este item?')) {
-        location.href = '/subrider/scripts/tabelaServicos/delete-serv.php?servID=' + servicoID;
+        location.href = '<?php echo $baseAddress; ?>/scripts/tabelaServicos/delete-serv.php?servID=' + servicoID;
         return true;
     }
     return false;
