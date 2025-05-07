@@ -163,26 +163,6 @@ if ($ordem && isset($ordem['motoID'])) {
               <input type="date" id="data-conclusao" class="form-control" value="<?php echo date('Y-m-d'); ?>">
             </div>
           </div>
-          
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="observacoes_finais">Observações Finais:</label>
-              <textarea id="observacoes_finais" class="form-control" rows="4" placeholder="Observações finais sobre o serviço realizado"></textarea>
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="assinatura-pad">Assinatura do Técnico:</label>
-              <div id="assinatura-pad"></div>
-              <button id="limpar-assinatura" type="button" class="button small">Limpar Assinatura</button>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="assinatura-cliente-pad">Assinatura do Cliente:</label>
-              <div id="assinatura-cliente-pad"></div>
-              <button id="limpar-assinatura-cliente" type="button" class="button small">Limpar Assinatura</button>
-            </div>
-          </div>
         </div>
         
         <!-- Barra de Ações -->
