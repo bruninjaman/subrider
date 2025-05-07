@@ -111,33 +111,6 @@ if ($ordem && isset($ordem['motoID'])) {
                 <li>Testes de funcionamento</li>
               </ul>
               
-              <h3>Serviços Realizados</h3>
-              <p>Detalhamento dos serviços executados:</p>
-              <ol>
-                <li>Serviço 1</li>
-                <li>Serviço 2</li>
-                <li>Serviço 3</li>
-              </ol>
-              
-              <h3>Materiais Utilizados</h3>
-              <p>Lista de peças e materiais utilizados no serviço:</p>
-              <table style="width:100%; border-collapse: collapse;">
-                <tr>
-                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Item</th>
-                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Quantidade</th>
-                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Observação</th>
-                </tr>
-                <tr>
-                  <td style="border: 1px solid #ddd; padding: 8px;">Item 1</td>
-                  <td style="border: 1px solid #ddd; padding: 8px;">1</td>
-                  <td style="border: 1px solid #ddd; padding: 8px;">-</td>
-                </tr>
-                <tr>
-                  <td style="border: 1px solid #ddd; padding: 8px;">Item 2</td>
-                  <td style="border: 1px solid #ddd; padding: 8px;">1</td>
-                  <td style="border: 1px solid #ddd; padding: 8px;">-</td>
-                </tr>
-              </table>
               
               <h3>Recomendações</h3>
               <p>Recomendações para manutenção futura:</p>
