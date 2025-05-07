@@ -87,9 +87,9 @@ if ($ordem && isset($ordem['motoID'])) {
           
           <?php if (isset($moto['endereco']) && !empty($moto['endereco'])): ?>
           <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group endereco-full-width">
               <label for="endereco_cliente">Endereço:</label>
-              <textarea id="endereco_cliente" class="form-control" readonly rows="3"><?php echo $moto['endereco']; ?></textarea>
+              <textarea id="endereco_cliente" class="form-control" readonly rows="1"><?php echo $moto['endereco']; ?></textarea>
             </div>
           </div>
           <?php endif; ?>

@@ -235,7 +235,7 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
     // Adicionar endereço se existir
     const endereco = document.getElementById('endereco_cliente');
     if (endereco && (endereco.textContent || endereco.value)) {
-        const enderecoTexto = endereco.textContent || endereco.value;
+        const enderecoTexto = (endereco.textContent || endereco.value).replace(/\n/g, ' ').trim();
         info.innerHTML += `<p><strong>Endereço:</strong> ${enderecoTexto}</p>`;
     }
     
