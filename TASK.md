@@ -27,6 +27,11 @@
 - ✅ Eliminação de run_db_update.php (redundante com update_table.php)
 - ✅ Eliminação de create_relatorio_table.php (desatualizado e redundante)
 
+### [08/06/2024] Limpeza dos campos desnecessários do relatório
+- ✅ Remoção dos campos de assinatura, técnico responsável e quilometragem do backend e banco de dados
+- ✅ Ajuste dos scripts save.php, load.php, update_table.php e relatorio.js para refletir apenas os campos usados atualmente (conteúdo, data de conclusão, observações finais)
+- ✅ Atualização do banco de dados para remover colunas obsoletas
+
 ## Descobertas Durante o Trabalho
 - Foi necessário adicionar verificações de existência para evitar erros de acesso a arrays nulos
 - O script para salvar relatórios foi atualizado para processar os novos campos

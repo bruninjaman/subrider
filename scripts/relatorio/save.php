@@ -19,12 +19,8 @@ if (!isset($_POST['conteudo']) || !isset($_GET['ordem'])) {
 
 // Limpa os dados recebidos
 $conteudo = mysqli_real_escape_string($conn, $_POST['conteudo']);
-$ordem_id = mysqli_real_escape_string($conn, $_GET['ordem']); // Alterado para permitir varchar
-$assinatura = isset($_POST['assinatura']) ? mysqli_real_escape_string($conn, $_POST['assinatura']) : '';
-$assinatura_cliente = isset($_POST['assinatura_cliente']) ? mysqli_real_escape_string($conn, $_POST['assinatura_cliente']) : '';
-$quilometragem = isset($_POST['quilometragem']) ? mysqli_real_escape_string($conn, $_POST['quilometragem']) : '';
+$ordem_id = mysqli_real_escape_string($conn, $_GET['ordem']);
 $data_conclusao = isset($_POST['data_conclusao']) ? mysqli_real_escape_string($conn, $_POST['data_conclusao']) : '';
-$tecnico_responsavel = isset($_POST['tecnico_responsavel']) ? mysqli_real_escape_string($conn, $_POST['tecnico_responsavel']) : '';
 $observacoes_finais = isset($_POST['observacoes_finais']) ? mysqli_real_escape_string($conn, $_POST['observacoes_finais']) : '';
 
 // Verifica se a ordem de serviço existe
@@ -38,12 +34,6 @@ if (mysqli_num_rows($verificacao_ordem) == 0) {
 $row_ordem = mysqli_fetch_assoc($verificacao_ordem);
 $serv_id = $row_ordem['servID'];
 
-// Atualiza a quilometragem na tabela de ordem de serviço se foi fornecida
-if (!empty($quilometragem)) {
-    $update_km = "UPDATE ordem_servicos SET KM = '$quilometragem' WHERE servID = $serv_id";
-    mysqli_query($conn, $update_km);
-}
-
 // Verifica se já existe um relatório para esta ordem
 $verificacao = mysqli_query($conn, "SELECT id FROM relatorios WHERE ordem_id = $serv_id");
 
@@ -53,11 +43,7 @@ if (mysqli_num_rows($verificacao) > 0) {
     $relatorio_id = $row['id'];
     $query = "UPDATE relatorios SET 
                 conteudo = '$conteudo', 
-                assinatura_img = '$assinatura',
-                assinatura_cliente_img = '$assinatura_cliente',
-                quilometragem = '$quilometragem',
                 data_conclusao = '$data_conclusao',
-                tecnico_responsavel = '$tecnico_responsavel',
                 observacoes_finais = '$observacoes_finais',
                 data_modificacao = NOW()
               WHERE id = $relatorio_id";
@@ -65,9 +51,9 @@ if (mysqli_num_rows($verificacao) > 0) {
 } else {
     // Insere um novo relatório
     $query = "INSERT INTO relatorios 
-                (ordem_id, conteudo, assinatura_img, assinatura_cliente_img, quilometragem, data_conclusao, tecnico_responsavel, observacoes_finais) 
+                (ordem_id, conteudo, data_conclusao, observacoes_finais) 
               VALUES 
-                ($serv_id, '$conteudo', '$assinatura', '$assinatura_cliente', '$quilometragem', '$data_conclusao', '$tecnico_responsavel', '$observacoes_finais')";
+                ($serv_id, '$conteudo', '$data_conclusao', '$observacoes_finais')";
     $action = "criado";
 }
 

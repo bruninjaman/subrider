@@ -28,5 +28,20 @@ if (!$exists) {
     echo "Coluna observacoes_finais adicionada<br>";
 }
 
+// Remover colunas desnecessárias se existirem
+$colunas_remover = [
+    'assinatura_img',
+    'assinatura_cliente_img',
+    'tecnico_responsavel',
+    'quilometragem'
+];
+foreach ($colunas_remover as $coluna) {
+    $result = mysqli_query($conn, "SHOW COLUMNS FROM relatorios LIKE '$coluna'");
+    if (mysqli_num_rows($result)) {
+        mysqli_query($conn, "ALTER TABLE relatorios DROP COLUMN $coluna");
+        echo "Coluna $coluna removida<br>";
+    }
+}
+
 echo "Atualização concluída!";
 ?>
