@@ -111,7 +111,6 @@ if ($ordem && isset($ordem['motoID'])) {
                 <li>Testes de funcionamento</li>
               </ul>
               
-              
               <h3>Recomendações</h3>
               <p>Recomendações para manutenção futura:</p>
               <ul>
@@ -127,13 +126,17 @@ if ($ordem && isset($ordem['motoID'])) {
         <div class="form-section signature-section">
           <h2>Finalização</h2>
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="tecnico_responsavel">Técnico Responsável:</label>
-              <input type="text" id="tecnico_responsavel" class="form-control" placeholder="Nome do técnico responsável">
-            </div>
+
             <div class="form-group col-md-6">
               <label for="data-conclusao">Data de Conclusão:</label>
               <input type="date" id="data-conclusao" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Observações Finais:</label>
+              <textarea id="observacoes_finais" class="form-control" rows="3" style="width: 40em;" placeholder="Observações finais sobre o serviço realizado..."></textarea>
             </div>
           </div>
         </div>

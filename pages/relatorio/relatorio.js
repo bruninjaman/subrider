@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Ajustar tamanho dos canvas
     function resizeCanvas() {
+        if (!canvasTecnico || !canvasCliente) return;
+        
         // Redimensionar canvas do técnico
         const ratioTecnico = Math.max(window.devicePixelRatio || 1, 1);
         canvasTecnico.width = canvasTecnico.offsetWidth * ratioTecnico;
@@ -89,6 +91,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Função para carregar relatório do banco de dados
 function carregarRelatorio(ordem_id, quill, signaturePadTecnico, signaturePadCliente) {
+    if (!ordem_id) return;
+    
     fetch(`scripts/relatorio/load.php?ordem=${ordem_id}`)
         .then(response => response.json())
         .then(data => {
@@ -97,12 +101,12 @@ function carregarRelatorio(ordem_id, quill, signaturePadTecnico, signaturePadCli
                 quill.root.innerHTML = data.conteudo;
                 
                 // Preencher a assinatura do técnico se existir
-                if (data.assinatura) {
+                if (data.assinatura && signaturePadTecnico) {
                     signaturePadTecnico.fromDataURL(data.assinatura);
                 }
                 
                 // Preencher a assinatura do cliente se existir
-                if (data.assinatura_cliente) {
+                if (data.assinatura_cliente && signaturePadCliente) {
                     signaturePadCliente.fromDataURL(data.assinatura_cliente);
                 }
                 
@@ -137,6 +141,11 @@ function carregarRelatorio(ordem_id, quill, signaturePadTecnico, signaturePadCli
 
 // Função para salvar relatório no banco de dados
 function salvarRelatorio(quill, signaturePadTecnico, signaturePadCliente, ordem_id) {
+    if (!ordem_id) {
+        mostrarStatus('ID da ordem não encontrado', 'error');
+        return;
+    }
+    
     // Mostrar loader
     document.getElementById('aguarde').style.display = 'flex';
     
@@ -144,16 +153,16 @@ function salvarRelatorio(quill, signaturePadTecnico, signaturePadCliente, ordem_
     const conteudo = quill.root.innerHTML;
     
     // Obter assinatura do técnico (se existir)
-    const assinatura = !signaturePadTecnico.isEmpty() ? signaturePadTecnico.toDataURL() : '';
+    const assinatura = signaturePadTecnico && !signaturePadTecnico.isEmpty() ? signaturePadTecnico.toDataURL() : '';
     
     // Obter assinatura do cliente (se existir)
-    const assinaturaCliente = !signaturePadCliente.isEmpty() ? signaturePadCliente.toDataURL() : '';
+    const assinaturaCliente = signaturePadCliente && !signaturePadCliente.isEmpty() ? signaturePadCliente.toDataURL() : '';
     
     // Obter outros campos do formulário
     const quilometragem = document.getElementById('km_ordem').value;
     const dataConclusao = document.getElementById('data-conclusao').value;
     const tecnicoResponsavel = document.getElementById('tecnico_responsavel').value;
-    const observacoesFinais = document.getElementById('observacoes_finais').value;
+    const observacoesFinais = document.getElementById('observacoes_finais') ? document.getElementById('observacoes_finais').value : '';
     
     // Criar FormData para envio
     const formData = new FormData();
@@ -176,7 +185,7 @@ function salvarRelatorio(quill, signaturePadTecnico, signaturePadCliente, ordem_
         document.getElementById('aguarde').style.display = 'none';
         
         // Mostrar modal de confirmação
-        document.getElementById('modal-confirmacao').style.display = 'block';
+        document.getElementById('modal-confirmacao').style.display = 'flex';
         document.querySelector('.modal-message').textContent = data.message;
         
         // Mostrar status
@@ -215,8 +224,8 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
     
     // Obter dados dos elementos, textareas usam textContent
     const numeroOrdem = document.getElementById('numero_ordem').value;
-    const cliente = document.getElementById('cliente_ordem').textContent || document.getElementById('cliente_ordem').value;
-    const moto = document.getElementById('moto_ordem').textContent || document.getElementById('moto_ordem').value;
+    const cliente = document.getElementById('cliente_ordem').value || document.getElementById('cliente_ordem').textContent;
+    const moto = document.getElementById('moto_ordem').value || document.getElementById('moto_ordem').textContent;
     const data = document.getElementById('data_ordem').value;
     const km = document.getElementById('km_ordem').value;
     const dataConclusao = formatarDataBr(document.getElementById('data-conclusao').value);
@@ -234,8 +243,8 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
     
     // Adicionar endereço se existir
     const endereco = document.getElementById('endereco_cliente');
-    if (endereco && (endereco.textContent || endereco.value)) {
-        const enderecoTexto = (endereco.textContent || endereco.value).replace(/\n/g, ' ').trim();
+    if (endereco && (endereco.value || endereco.textContent)) {
+        const enderecoTexto = (endereco.value || endereco.textContent).replace(/\n/g, ' ').trim();
         info.innerHTML += `<p><strong>Endereço:</strong> ${enderecoTexto}</p>`;
     }
     
@@ -248,13 +257,13 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
     elemento.appendChild(conteudo);
     
     // Adicionar observações finais se houver
-    const observacoesFinais = document.getElementById('observacoes_finais').value;
-    if (observacoesFinais) {
+    const observacoesElement = document.getElementById('observacoes_finais');
+    if (observacoesElement && observacoesElement.value) {
         const obsElement = document.createElement('div');
         obsElement.classList.add('relatorio-obs');
         obsElement.innerHTML = `
             <h3>Observações Finais</h3>
-            <p>${observacoesFinais}</p>
+            <p>${observacoesElement.value}</p>
         `;
         elemento.appendChild(obsElement);
     }
@@ -271,7 +280,7 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
     assinaturaTecnico.style.width = '45%';
     assinaturaTecnico.style.textAlign = 'center';
     
-    if (!signaturePadTecnico.isEmpty()) {
+    if (signaturePadTecnico && !signaturePadTecnico.isEmpty()) {
         assinaturaTecnico.innerHTML = `
             <img src="${signaturePadTecnico.toDataURL()}" style="max-width: 100%; height: auto; border-bottom: 1px solid #000;">
             <p>Assinatura do Técnico</p>
@@ -288,7 +297,7 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
     assinaturaCliente.style.width = '45%';
     assinaturaCliente.style.textAlign = 'center';
     
-    if (!signaturePadCliente.isEmpty()) {
+    if (signaturePadCliente && !signaturePadCliente.isEmpty()) {
         assinaturaCliente.innerHTML = `
             <img src="${signaturePadCliente.toDataURL()}" style="max-width: 100%; height: auto; border-bottom: 1px solid #000;">
             <p>Assinatura do Cliente</p>
@@ -307,7 +316,7 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
     // Configuração do html2pdf
     const opt = {
         margin: [15, 15],
-        filename: `relatorio-os-${document.getElementById('numero_ordem').value}.pdf`,
+        filename: `relatorio-os-${numeroOrdem}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -328,6 +337,8 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
 // Função para mostrar mensagens de status
 function mostrarStatus(mensagem, tipo) {
     const statusElement = document.querySelector('.status-message');
+    if (!statusElement) return;
+    
     statusElement.textContent = mensagem;
     statusElement.className = 'status-message';
     statusElement.classList.add(tipo);
@@ -341,6 +352,7 @@ function mostrarStatus(mensagem, tipo) {
 
 // Formatar data para exibição
 function formatarData(dataString) {
+    if (!dataString) return '';
     const data = new Date(dataString);
     return data.toLocaleString('pt-BR');
 }
