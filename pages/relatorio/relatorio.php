@@ -8,12 +8,6 @@
 <!-- Include signature_pad.js for signature -->
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
-<!-- Include TinyMCE -->
-<script src="https://cdn.tiny.cloud/1/vyfv561lwa2j1rohg50gvpg3w6rhao6tbw7ax2hwcljwlzu5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
-<!-- Include CKEditor -->
-<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
-
 <!-- Adicionar uma meta tag para suprimir avisos de depreciação -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -103,8 +97,8 @@ if ($ordem && isset($ordem['motoID'])) {
         <!-- Seção do Editor de Relatório -->
         <div class="form-section editor-section">
           <h2>Detalhes do Serviço</h2>
-          <div id="editor-container" class="form-group">
-            <div id="editor-content">
+          <div class="form-group">
+            <div id="editor-personalizado" class="editor-personalizado" contenteditable="true">
               <h3>Descrição do Serviço</h3>
               <p>Serviço realizado na motocicleta <?php echo (isset($moto['marca']) && isset($moto['modelo'])) ? $moto['marca'] . ' ' . $moto['modelo'] . ' (' . (isset($moto['ano']) ? $moto['ano'] : 'N/A') . ')' : 'N/A'; ?>, placa <?php echo isset($moto['placa']) ? $moto['placa'] : 'N/A'; ?> com <?php echo isset($moto['km']) ? number_format($moto['km'], 0, ',', '.') . ' km' : 'quilometragem não informada'; ?>.</p>
               
@@ -124,6 +118,17 @@ if ($ordem && isset($ordem['motoID'])) {
                 <li>Outras recomendações específicas...</li>
               </ul>
             </div>
+          </div>
+          
+          <!-- Barra de ferramentas personalizada -->
+          <div class="editor-toolbar">
+            <button type="button" data-command="bold" title="Negrito"><strong>N</strong></button>
+            <button type="button" data-command="italic" title="Itálico"><em>I</em></button>
+            <button type="button" data-command="underline" title="Sublinhado"><u>S</u></button>
+            <button type="button" data-command="insertUnorderedList" title="Lista com marcadores"><i>•</i></button>
+            <button type="button" data-command="insertOrderedList" title="Lista numerada"><i>1.</i></button>
+            <button type="button" data-command="h3" title="Subtítulo">H3</button>
+            <button type="button" data-command="removeFormat" title="Remover formatação">Limpar</button>
           </div>
         </div>
         

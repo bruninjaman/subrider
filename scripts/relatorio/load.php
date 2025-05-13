@@ -12,12 +12,6 @@ header('Content-Type: application/json');
 $debug_info = [];
 $debug_info['ordem_original'] = isset($_GET['ordem']) ? $_GET['ordem'] : 'não definido';
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['userID'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Usuário não autenticado', 'debug' => $debug_info]);
-    exit();
-}
-
 // Verifica se o código da ordem foi enviado
 if (!isset($_GET['ordem'])) {
     echo json_encode(['status' => 'error', 'message' => 'Código da ordem não fornecido', 'debug' => $debug_info]);

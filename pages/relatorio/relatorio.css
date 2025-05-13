@@ -110,35 +110,74 @@ body {
     background-color: #444 !important;
   }
 
-  /* Editor container adjustments */
-  .tox-tinymce {
-    border-radius: 8px !important;
+  /* Editor personalizado */
+  .editor-personalizado {
+    min-height: 400px;
+    padding: 20px;
+    background-color: #232530;
+    border: 1px solid #3a3d4a;
+    border-radius: 4px;
+    color: #e0e0e0;
+    overflow-y: auto;
+    line-height: 1.6;
   }
 
-  /* Editor customization */
-  .ck-editor__editable {
-    min-height: 400px !important;
-    color: #e0e0e0 !important;
-    background-color: #2a2c35 !important;
+  .editor-personalizado:focus {
+    outline: none;
+    border-color: #e44c65;
+    box-shadow: 0 0 0 0.2rem rgba(228, 76, 101, 0.25);
   }
 
-  .ck.ck-editor__main>.ck-editor__editable {
-    background: #2a2c35 !important;
-    border: 1px solid #444 !important;
+  .editor-personalizado h3 {
+    color: #e44c65;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
   }
 
-  .ck.ck-toolbar {
-    background: #444 !important;
-    border: 1px solid #555 !important;
+  .editor-personalizado ul, .editor-personalizado ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
   }
 
-  .ck.ck-button {
-    color: #e0e0e0 !important;
+  .editor-personalizado p {
+    margin-bottom: 15px;
+  }
+
+  /* Barra de ferramentas personalizada */
+  .editor-toolbar {
+    display: flex;
+    background-color: #1d1f27;
+    border: 1px solid #3a3d4a;
+    border-radius: 4px;
+    padding: 8px;
+    margin-top: 10px;
+  }
+
+  .editor-toolbar button {
+    background-color: #232530;
+    border: 1px solid #3a3d4a;
+    color: #e0e0e0;
+    margin-right: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
 
-  .ck.ck-button:hover {
-    background: #555 !important;
+  .editor-toolbar button:hover {
+    background-color: #2a2c35;
+    border-color: #e44c65;
+  }
+
+  .editor-toolbar button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(228, 76, 101, 0.4);
+  }
+
+  .editor-toolbar button.active {
+    background-color: #e44c65;
+    color: #fff;
   }
 
   /* Container principal do relatório */

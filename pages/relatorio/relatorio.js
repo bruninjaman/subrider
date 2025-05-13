@@ -19,22 +19,57 @@
 })();
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Inicializar o Editor Quill
-    const quill = new Quill('#editor-content', {
-        modules: {
-            toolbar: [
-                [{ 'header': [1, 2, 3, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'align': [] }],
-                ['clean']
-            ],
-            history: {
-                userOnly: true
+    // Inicializar o Editor Personalizado
+    const editorPersonalizado = document.getElementById('editor-personalizado');
+    const botoesEditor = document.querySelectorAll('.editor-toolbar button');
+    
+    if (editorPersonalizado) {
+        // Adicionar manipuladores de eventos para os botões da barra de ferramentas
+        botoesEditor.forEach(button => {
+            button.addEventListener('click', () => {
+                const command = button.getAttribute('data-command');
+                
+                if (command === 'h3') {
+                    // Tratamento especial para inserir cabeçalho H3
+                    document.execCommand('formatBlock', false, '<h3>');
+                } else {
+                    // Executar comando padrão do documento
+                    document.execCommand(command, false, null);
+                }
+                
+                // Manter o foco no editor
+                editorPersonalizado.focus();
+            });
+        });
+        
+        // Verificar estado atual dos botões ao clicar no editor
+        editorPersonalizado.addEventListener('click', atualizarEstadoBotoes);
+        editorPersonalizado.addEventListener('keyup', atualizarEstadoBotoes);
+    }
+    
+    // Função para atualizar o estado visual dos botões baseado na formatação atual
+    function atualizarEstadoBotoes() {
+        botoesEditor.forEach(button => {
+            const command = button.getAttribute('data-command');
+            
+            if (command === 'h3') {
+                // Verificar se estamos dentro de um h3
+                const parentElement = window.getSelection().anchorNode.parentElement;
+                if (parentElement && parentElement.tagName === 'H3') {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            } else if (['bold', 'italic', 'underline'].includes(command)) {
+                // Verificar estado dos comandos básicos
+                if (document.queryCommandState(command)) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
             }
-        },
-        theme: 'snow'
-    });
+        });
+    }
 
     // Verificar se os elementos de assinatura existem antes de inicializá-los
     const canvasTecnico = document.getElementById('assinatura-pad');
@@ -107,14 +142,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Carregar dados do relatório se existir
     const ordem_id = document.getElementById('ordem_id').value;
-    carregarRelatorio(ordem_id, quill);
+    carregarRelatorio(ordem_id);
 
     // Salvar relatório
     const btnSalvar = document.getElementById('btn-salvar');
     if (btnSalvar) {
         btnSalvar.addEventListener('click', function(e) {
             e.preventDefault();
-            salvarRelatorio(quill, ordem_id);
+            salvarRelatorio(ordem_id);
         });
     }
 
@@ -123,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (btnGerarPDF) {
         btnGerarPDF.addEventListener('click', function(e) {
             e.preventDefault(); // Prevenir envio do formulário
-            gerarPDF(quill, signaturePadTecnico, signaturePadCliente);
+            gerarPDF(signaturePadTecnico, signaturePadCliente);
         });
     }
 
@@ -145,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Função para carregar relatório do banco de dados
-function carregarRelatorio(ordem_id, quill) {
+function carregarRelatorio(ordem_id) {
     if (!ordem_id) return;
     
     // Exibir mensagem de carregamento
@@ -173,7 +208,11 @@ function carregarRelatorio(ordem_id, quill) {
         .then(data => {
             if (data.status === 'success') {
                 // Preencher o editor com o conteúdo salvo
-                quill.root.innerHTML = data.conteudo;
+                const editorPersonalizado = document.getElementById('editor-personalizado');
+                if (editorPersonalizado) {
+                    editorPersonalizado.innerHTML = data.conteudo;
+                }
+                
                 // Preencher a data de conclusão se existir
                 if (data.data_conclusao) {
                     const dataConclusao = document.getElementById('data-conclusao');
@@ -210,23 +249,28 @@ function carregarRelatorio(ordem_id, quill) {
 }
 
 // Função para salvar relatório no banco de dados
-function salvarRelatorio(quill, ordem_id) {
+function salvarRelatorio(ordem_id) {
     if (!ordem_id) {
         mostrarStatus('ID da ordem não encontrado', 'error');
         return;
     }
     // Mostrar loader
     document.getElementById('aguarde').style.display = 'flex';
-    // Obter conteúdo do editor
-    const conteudo = quill.root.innerHTML;
+    
+    // Obter conteúdo do editor personalizado
+    const editorPersonalizado = document.getElementById('editor-personalizado');
+    const conteudo = editorPersonalizado ? editorPersonalizado.innerHTML : '';
+    
     // Obter outros campos do formulário
     const dataConclusao = document.getElementById('data-conclusao').value;
     const observacoesFinais = document.getElementById('observacoes_finais') ? document.getElementById('observacoes_finais').value : '';
+    
     // Criar FormData para envio
     const formData = new FormData();
     formData.append('conteudo', conteudo);
     formData.append('data_conclusao', dataConclusao);
     formData.append('observacoes_finais', observacoesFinais);
+    
     // Enviar dados para o servidor
     fetch(`scripts/relatorio/save.php?ordem=${ordem_id}`, {
         method: 'POST',
@@ -251,7 +295,7 @@ function salvarRelatorio(quill, ordem_id) {
 }
 
 // Função para gerar PDF
-function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
+function gerarPDF(signaturePadTecnico, signaturePadCliente) {
     // Mostrar loader
     document.getElementById('aguarde').style.display = 'flex';
     
@@ -303,7 +347,8 @@ function gerarPDF(quill, signaturePadTecnico, signaturePadCliente) {
     // Adicionar conteúdo do relatório
     const conteudo = document.createElement('div');
     conteudo.classList.add('relatorio-body');
-    conteudo.innerHTML = quill.root.innerHTML;
+    const editorPersonalizado = document.getElementById('editor-personalizado');
+    conteudo.innerHTML = editorPersonalizado ? editorPersonalizado.innerHTML : '';
     elemento.appendChild(conteudo);
     
     // Adicionar observações finais se houver
