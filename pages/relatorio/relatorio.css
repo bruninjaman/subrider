@@ -422,76 +422,111 @@ textarea.form-control {
 
 /* Estilo para PDF */
 .relatorio-pdf {
-  background-color: white !important;
-  color: #333 !important;
-  padding: 40px;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 10pt;
 }
 
 .relatorio-pdf .relatorio-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #5a4a96;
 }
 
-.relatorio-pdf .relatorio-header img {
-  max-width: 200px;
+.relatorio-pdf .logo-principal {
+  height: 50px;
 }
 
-.relatorio-pdf h1, .relatorio-pdf h2, .relatorio-pdf h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
+.relatorio-pdf h1, .relatorio-pdf h2, .relatorio-pdf h3, .relatorio-pdf h4 {
+  color: #5a4a96;
+  font-weight: 600;
+  margin: 10px 0;
 }
 
 .relatorio-pdf h1 {
-  color: #333;
-  font-size: 24px;
+  font-size: 14pt;
 }
 
 .relatorio-pdf h2 {
-  color: var(--accent-color);
-  font-size: 18px;
-  border-bottom: 1px solid var(--accent-color);
+  font-size: 12pt;
+  border-bottom: 1px solid #e0e0e0;
   padding-bottom: 5px;
 }
 
 .relatorio-pdf h3 {
-  color: #333;
-  font-size: 16px;
+  font-size: 11pt;
 }
 
-.relatorio-pdf .relatorio-info {
-  background-color: #f7f7f7;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 25px;
+.relatorio-pdf .info-table {
+  width: 100%;
+  margin-bottom: 15px;
+  border-collapse: collapse;
 }
 
-.relatorio-pdf .relatorio-info p {
-  margin-bottom: 10px;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-wrap: break-word;
+.relatorio-pdf .info-table td {
+  padding: 3px 5px;
+  font-size: 9pt;
 }
 
-/* Quill editor */
-.ql-toolbar.ql-snow {
-  background-color: var(--bg-medium);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  border-bottom: none;
+.relatorio-pdf .info-table .label {
+  font-weight: bold;
+  width: 25%;
+  vertical-align: top;
 }
 
-.ql-container.ql-snow {
-  border: 1px solid var(--border-color);
-  border-top: none;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  background-color: var(--bg-medium);
+.relatorio-pdf .content-section {
+  margin-bottom: 15px;
 }
 
-.ql-editor {
-  min-height: 300px;
-  color: var(--text-color);
+.relatorio-pdf .servico-conteudo {
+  font-size: 9pt;
+  line-height: 1.4;
+}
+
+.relatorio-pdf .servico-conteudo p {
+  margin-bottom: 0.5rem;
+  text-align: justify;
+}
+
+.relatorio-pdf .servico-conteudo ul, 
+.relatorio-pdf .servico-conteudo ol {
+  padding-left: 20px;
+  margin: 5px 0;
+}
+
+.relatorio-pdf .obs-section {
+  margin-top: 10px;
+  border-top: 1px dashed #ccc;
+  padding-top: 10px;
+}
+
+.relatorio-pdf .obs-section h3 {
+  margin-top: 0;
+}
+
+.relatorio-pdf .conclusao {
+  margin-top: 20px;
+  font-size: 9pt;
+}
+
+/* Removendo estilos não utilizados do PDF */
+.relatorio-pdf .logo-container,
+.relatorio-pdf .logo-cnec,
+.relatorio-pdf .logo-75anos,
+.relatorio-pdf .decoration-right,
+.relatorio-pdf .section-title,
+.relatorio-pdf .company-info,
+.relatorio-pdf .mission-vision,
+.relatorio-pdf .values-list,
+.relatorio-pdf .page-number,
+.relatorio-pdf .ql-editor {
+  /* Esses estilos não são mais necessários com a nova estrutura simplificada */
+  display: none;
 }
 
 /* Ajustes responsivos */

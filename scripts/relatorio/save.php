@@ -1,69 +1,131 @@
 <?php
+// Iniciar sessão para verificar autenticação
 session_start();
 
-// Inclui os arquivos necessários
-require_once("../../connection/connection.php");
-require_once("../../scripts/functions.php");
+// Definir cabeçalho para JSON
+header('Content-Type: application/json');
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['userID'])) {
-    header("Location: ../../login.php");
-    exit();
+// Verificar se o usuário está logado
+if (!isset($_SESSION["user"])) {
+    // Retornar erro em formato JSON
+    echo json_encode([
+        "status" => "error",
+        "message" => "Usuário não autenticado"
+    ]);
+    exit;
 }
 
-// Verifica se todos os dados necessários foram enviados
-if (!isset($_POST['conteudo']) || !isset($_GET['ordem'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Dados incompletos']);
-    exit();
+// Verificar se a ordem está especificada
+$ordem_id = isset($_GET['ordem']) ? $_GET['ordem'] : '';
+if (empty($ordem_id)) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "ID da ordem não especificado"
+    ]);
+    exit;
 }
 
-// Limpa os dados recebidos
-$conteudo = mysqli_real_escape_string($conn, $_POST['conteudo']);
-$ordem_id = mysqli_real_escape_string($conn, $_GET['ordem']);
-$data_conclusao = isset($_POST['data_conclusao']) ? mysqli_real_escape_string($conn, $_POST['data_conclusao']) : '';
-$observacoes_finais = isset($_POST['observacoes_finais']) ? mysqli_real_escape_string($conn, $_POST['observacoes_finais']) : '';
+// Obter dados enviados
+$conteudo = isset($_POST['conteudo']) ? $_POST['conteudo'] : '';
+$data_conclusao = isset($_POST['data_conclusao']) ? $_POST['data_conclusao'] : '';
+$observacoes_finais = isset($_POST['observacoes_finais']) ? $_POST['observacoes_finais'] : '';
 
-// Verifica se a ordem de serviço existe
-$verificacao_ordem = mysqli_query($conn, "SELECT servID FROM ordem_servicos WHERE Codigo = '$ordem_id'");
-if (mysqli_num_rows($verificacao_ordem) == 0) {
-    echo json_encode(['status' => 'error', 'message' => 'Ordem de serviço não encontrada']);
-    exit();
+// Conexão com o banco de dados
+require_once '../../connection/connection.php';
+
+// Verificar se a conexão foi bem-sucedida
+if (!$conn) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Erro de conexão com o banco de dados: " . mysqli_connect_error()
+    ]);
+    exit;
 }
 
-// Obtém o servID da ordem para uso nas consultas
-$row_ordem = mysqli_fetch_assoc($verificacao_ordem);
-$serv_id = $row_ordem['servID'];
+try {
+    // Limpar o ID da ordem (pode conter caracteres especiais como /)
+    $ordem_id = mysqli_real_escape_string($conn, $ordem_id);
+    
+    // Primeiro, verificar se a ordem existe
+    $check_ordem = "SELECT Codigo FROM ordem_servicos WHERE Codigo = '$ordem_id'";
+    $result_check = mysqli_query($conn, $check_ordem);
+    
+    if (!$result_check || mysqli_num_rows($result_check) == 0) {
+        echo json_encode([
+            "status" => "error",
+            "message" => "Ordem de serviço não encontrada"
+        ]);
+        exit;
+    }
+    
+    // Verificar se já existe um relatório para esta ordem
+    $query_check = "SELECT * FROM relatorios WHERE ordem_id = '$ordem_id'";
+    $result_check = mysqli_query($conn, $query_check);
+    
+    if (!$result_check) {
+        throw new Exception("Erro ao verificar existência de relatório: " . mysqli_error($conn));
+    }
 
-// Verifica se já existe um relatório para esta ordem
-$verificacao = mysqli_query($conn, "SELECT id FROM relatorios WHERE ordem_id = $serv_id");
-
-if (mysqli_num_rows($verificacao) > 0) {
-    // Atualiza o relatório existente
-    $row = mysqli_fetch_assoc($verificacao);
-    $relatorio_id = $row['id'];
-    $query = "UPDATE relatorios SET 
-                conteudo = '$conteudo', 
-                data_conclusao = '$data_conclusao',
-                observacoes_finais = '$observacoes_finais',
-                data_modificacao = NOW()
-              WHERE id = $relatorio_id";
-    $action = "atualizado";
-} else {
-    // Insere um novo relatório
-    $query = "INSERT INTO relatorios 
-                (ordem_id, conteudo, data_conclusao, observacoes_finais) 
-              VALUES 
-                ($serv_id, '$conteudo', '$data_conclusao', '$observacoes_finais')";
-    $action = "criado";
+    if (mysqli_num_rows($result_check) > 0) {
+        // Atualizar relatório existente
+        $query = "UPDATE relatorios SET 
+                conteudo = ?, 
+                data_conclusao = ?, 
+                observacoes_finais = ?,
+                data_modificacao = NOW() 
+                WHERE ordem_id = ?";
+        
+        $stmt = mysqli_prepare($conn, $query);
+        
+        if (!$stmt) {
+            throw new Exception("Erro na preparação da consulta de atualização: " . mysqli_error($conn));
+        }
+        
+        mysqli_stmt_bind_param($stmt, "ssss", $conteudo, $data_conclusao, $observacoes_finais, $ordem_id);
+        $exec_result = mysqli_stmt_execute($stmt);
+        
+        if (!$exec_result) {
+            throw new Exception("Erro na execução da atualização: " . mysqli_stmt_error($stmt));
+        }
+        
+        echo json_encode([
+            "status" => "success", 
+            "message" => "Relatório atualizado com sucesso!"
+        ]);
+    } else {
+        // Criar novo relatório
+        $query = "INSERT INTO relatorios (ordem_id, conteudo, data_conclusao, observacoes_finais, data_criacao, data_modificacao) 
+                VALUES (?, ?, ?, ?, NOW(), NOW())";
+        
+        $stmt = mysqli_prepare($conn, $query);
+        
+        if (!$stmt) {
+            throw new Exception("Erro na preparação da consulta de inserção: " . mysqli_error($conn));
+        }
+        
+        mysqli_stmt_bind_param($stmt, "ssss", $ordem_id, $conteudo, $data_conclusao, $observacoes_finais);
+        $exec_result = mysqli_stmt_execute($stmt);
+        
+        if (!$exec_result) {
+            throw new Exception("Erro na execução da inserção: " . mysqli_stmt_error($stmt));
+        }
+        
+        echo json_encode([
+            "status" => "success", 
+            "message" => "Relatório salvo com sucesso!"
+        ]);
+    }
+    
+    // Fechar statement
+    mysqli_stmt_close($stmt);
+} 
+catch (Exception $e) {
+    echo json_encode([
+        "status" => "error",
+        "message" => $e->getMessage()
+    ]);
 }
 
-// Executa a query
-if (mysqli_query($conn, $query)) {
-    echo json_encode(['status' => 'success', 'message' => "Relatório $action com sucesso"]);
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Erro ao salvar relatório: ' . mysqli_error($conn)]);
-}
-
-// Fecha a conexão
+// Fechar conexão
 mysqli_close($conn);
 ?> 

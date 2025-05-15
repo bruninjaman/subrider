@@ -2,23 +2,20 @@
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
 
-<!-- Include html2pdf.js for PDF generation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<!-- Incluir bibliotecas para geração de PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <!-- Adicionar uma meta tag para suprimir avisos de depreciação -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 
+<!-- Incluir arquivos JavaScript e CSS -->
+<script src="pages/relatorio/relatorio.js"></script>
+<link rel="stylesheet" href="pages/relatorio/relatorio.css">
+
 <?php
-echo "<script>";
-echo file_get_contents('pages/relatorio/relatorio.js');
-echo "</script>";
-
-echo "<style>";
-echo file_get_contents('pages/relatorio/relatorio.css');
-echo "</style>";
-
 // Obter ID da ordem de serviço
 $ordem_id = isset($_GET['ordem']) ? $_GET['ordem'] : '';
 
@@ -150,7 +147,7 @@ if ($ordem && isset($ordem['motoID'])) {
         <!-- Barra de Ações -->
         <div class="form-actions">
           <button type="button" id="btn-salvar" class="button primary">Salvar Relatório</button>
-          <button type="button" id="btn-gerar-pdf" class="button">Gerar PDF</button>
+          <button type="button" id="btn-gerar-pdf" class="button">Download do PDF</button>
           <div class="status-message"></div>
         </div>
       </form>
