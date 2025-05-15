@@ -6,7 +6,7 @@
     <nav id="nav" class="mobile-nav">
         <ul class="mobile-menu">
             <li class="mobile-menu-item">
-                <a class="button primary mobile-button" href="<?php echo $baseAddress; ?>/tabelaOrdens.php">Voltar</a>
+                <a class="button primary" href="<?php echo $baseAddress; ?>/tabelaOrdens.php">Voltar</a>
             </li>
         </ul>
     </nav>
