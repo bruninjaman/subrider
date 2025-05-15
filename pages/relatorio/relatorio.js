@@ -71,75 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Verificar se os elementos de assinatura existem antes de inicializá-los
-    const canvasTecnico = document.getElementById('assinatura-pad');
-    let signaturePadTecnico = null;
-    
-    if (canvasTecnico) {
-        signaturePadTecnico = new SignaturePad(canvasTecnico, {
-            backgroundColor: 'rgb(35, 37, 48)',
-            penColor: 'rgb(255, 255, 255)'
-        });
-    }
-
-    // Inicializar o pad de assinatura do cliente apenas se existir
-    const canvasCliente = document.getElementById('assinatura-cliente-pad');
-    let signaturePadCliente = null;
-    
-    if (canvasCliente) {
-        signaturePadCliente = new SignaturePad(canvasCliente, {
-            backgroundColor: 'rgb(35, 37, 48)',
-            penColor: 'rgb(255, 255, 255)'
-        });
-    }
-
-    // Ajustar tamanho dos canvas apenas se eles existirem
-    function resizeCanvas() {
-        if (canvasTecnico && signaturePadTecnico) {
-            // Redimensionar canvas do técnico
-            const ratioTecnico = Math.max(window.devicePixelRatio || 1, 1);
-            canvasTecnico.width = canvasTecnico.offsetWidth * ratioTecnico;
-            canvasTecnico.height = canvasTecnico.offsetHeight * ratioTecnico;
-            canvasTecnico.getContext("2d").scale(ratioTecnico, ratioTecnico);
-            signaturePadTecnico.clear();
-        }
-        
-        if (canvasCliente && signaturePadCliente) {
-            // Redimensionar canvas do cliente
-            const ratioCliente = Math.max(window.devicePixelRatio || 1, 1);
-            canvasCliente.width = canvasCliente.offsetWidth * ratioCliente;
-            canvasCliente.height = canvasCliente.offsetHeight * ratioCliente;
-            canvasCliente.getContext("2d").scale(ratioCliente, ratioCliente);
-            signaturePadCliente.clear();
-        }
-    }
-
-    // Chamar resizeCanvas() quando a janela for redimensionada
-    window.addEventListener("resize", resizeCanvas);
-    
-    // Chamar resizeCanvas apenas se houver canvas de assinatura
-    if (canvasTecnico || canvasCliente) {
-        resizeCanvas();
-    }
-
-    // Botão para limpar assinatura do técnico, verificar se existe antes
-    const btnLimparAssinatura = document.getElementById('limpar-assinatura');
-    if (btnLimparAssinatura && signaturePadTecnico) {
-        btnLimparAssinatura.addEventListener('click', function(e) {
-            e.preventDefault(); // Prevenir envio do formulário
-            signaturePadTecnico.clear();
-        });
-    }
-    
-    // Botão para limpar assinatura do cliente, verificar se existe antes
-    const btnLimparAssinaturaCliente = document.getElementById('limpar-assinatura-cliente');
-    if (btnLimparAssinaturaCliente && signaturePadCliente) {
-        btnLimparAssinaturaCliente.addEventListener('click', function(e) {
-            e.preventDefault(); // Prevenir envio do formulário
-            signaturePadCliente.clear();
-        });
-    }
-
     // Carregar dados do relatório se existir
     const ordem_id = document.getElementById('ordem_id').value;
     carregarRelatorio(ordem_id);
@@ -158,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (btnGerarPDF) {
         btnGerarPDF.addEventListener('click', function(e) {
             e.preventDefault(); // Prevenir envio do formulário
-            gerarPDF(signaturePadTecnico, signaturePadCliente);
+            gerarPDF();
         });
     }
 
@@ -295,7 +226,7 @@ function salvarRelatorio(ordem_id) {
 }
 
 // Função para gerar PDF
-function gerarPDF(signaturePadTecnico, signaturePadCliente) {
+function gerarPDF() {
     // Mostrar loader
     document.getElementById('aguarde').style.display = 'flex';
     
@@ -323,7 +254,6 @@ function gerarPDF(signaturePadTecnico, signaturePadCliente) {
     const data = document.getElementById('data_ordem').value;
     const km = document.getElementById('km_ordem').value;
     const dataConclusao = formatarDataBr(document.getElementById('data-conclusao').value);
-    const tecnico = document.getElementById('tecnico_responsavel').value || 'Não informado';
     
     info.innerHTML = `
         <p><strong>Ordem de Serviço Nº:</strong> ${numeroOrdem}</p>
@@ -332,7 +262,6 @@ function gerarPDF(signaturePadTecnico, signaturePadCliente) {
         <p><strong>Data:</strong> ${data}</p>
         <p><strong>Quilometragem:</strong> ${km}</p>
         <p><strong>Data de Conclusão:</strong> ${dataConclusao}</p>
-        <p><strong>Técnico Responsável:</strong> ${tecnico}</p>
     `;
     
     // Adicionar endereço se existir
@@ -362,51 +291,6 @@ function gerarPDF(signaturePadTecnico, signaturePadCliente) {
         `;
         elemento.appendChild(obsElement);
     }
-    
-    // Adicionar assinaturas
-    const assinaturas = document.createElement('div');
-    assinaturas.classList.add('relatorio-assinaturas');
-    assinaturas.style.display = 'flex';
-    assinaturas.style.justifyContent = 'space-between';
-    assinaturas.style.marginTop = '30px';
-    
-    // Assinatura do técnico
-    const assinaturaTecnico = document.createElement('div');
-    assinaturaTecnico.style.width = '45%';
-    assinaturaTecnico.style.textAlign = 'center';
-    
-    if (signaturePadTecnico && !signaturePadTecnico.isEmpty()) {
-        assinaturaTecnico.innerHTML = `
-            <img src="${signaturePadTecnico.toDataURL()}" style="max-width: 100%; height: auto; border-bottom: 1px solid #000;">
-            <p>Assinatura do Técnico</p>
-        `;
-    } else {
-        assinaturaTecnico.innerHTML = `
-            <div style="height: 70px; border-bottom: 1px solid #000;"></div>
-            <p>Assinatura do Técnico</p>
-        `;
-    }
-    
-    // Assinatura do cliente
-    const assinaturaCliente = document.createElement('div');
-    assinaturaCliente.style.width = '45%';
-    assinaturaCliente.style.textAlign = 'center';
-    
-    if (signaturePadCliente && !signaturePadCliente.isEmpty()) {
-        assinaturaCliente.innerHTML = `
-            <img src="${signaturePadCliente.toDataURL()}" style="max-width: 100%; height: auto; border-bottom: 1px solid #000;">
-            <p>Assinatura do Cliente</p>
-        `;
-    } else {
-        assinaturaCliente.innerHTML = `
-            <div style="height: 70px; border-bottom: 1px solid #000;"></div>
-            <p>Assinatura do Cliente</p>
-        `;
-    }
-    
-    assinaturas.appendChild(assinaturaTecnico);
-    assinaturas.appendChild(assinaturaCliente);
-    elemento.appendChild(assinaturas);
     
     // Configuração do html2pdf
     const opt = {

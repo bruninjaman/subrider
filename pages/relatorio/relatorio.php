@@ -5,9 +5,6 @@
 <!-- Include html2pdf.js for PDF generation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<!-- Include signature_pad.js for signature -->
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-
 <!-- Adicionar uma meta tag para suprimir avisos de depreciação -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -132,14 +129,10 @@ if ($ordem && isset($ordem['motoID'])) {
           </div>
         </div>
         
-        <!-- Seção de Assinatura -->
+        <!-- Seção de Finalização -->
         <div class="form-section signature-section">
           <h2>Finalização</h2>
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="tecnico_responsavel">Técnico Responsável:</label>
-              <input type="text" id="tecnico_responsavel" class="form-control" placeholder="Nome do técnico responsável">
-            </div>
             <div class="form-group col-md-6">
               <label for="data-conclusao">Data de Conclusão:</label>
               <input type="date" id="data-conclusao" class="form-control" value="<?php echo date('Y-m-d'); ?>">
