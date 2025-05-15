@@ -59,11 +59,11 @@ if ($ordem && isset($ordem['motoID'])) {
             </div>
             <div class="form-group col-md-4">
               <label for="data_ordem">Data:</label>
-              <input type="text" id="data_ordem" class="form-control" value="<?php echo isset($ordem['Data']) ? date('d/m/Y', strtotime($ordem['Data'])) : date('d/m/Y'); ?>" readonly>
+              <input type="text" id="data_ordem" class="form-control" value="<?php echo isset($ordem['Data']) ? date('d/m/Y', strtotime($ordem['Data'])) : 'N/A'; ?>" readonly>
             </div>
             <div class="form-group col-md-4">
               <label for="km_ordem">Quilometragem:</label>
-              <input type="text" id="km_ordem" class="form-control" value="<?php echo isset($moto['km']) ? $moto['km'] : (isset($ordem['KM']) ? $ordem['KM'] : 'N/A'); ?>" readonly>
+              <input type="text" id="km_ordem" class="form-control" value="<?php echo isset($ordem['KM']) ? $ordem['KM'] : 'N/A'; ?>" readonly>
             </div>
           </div>
           
@@ -94,7 +94,7 @@ if ($ordem && isset($ordem['motoID'])) {
           <div class="form-group">
             <div id="editor-personalizado" class="editor-personalizado" contenteditable="true">
               <h3>Descrição do Serviço</h3>
-              <p>Serviço realizado na motocicleta <?php echo (isset($moto['marca']) && isset($moto['modelo'])) ? $moto['marca'] . ' ' . $moto['modelo'] . ' (' . (isset($moto['ano']) ? $moto['ano'] : 'N/A') . ')' : 'N/A'; ?>, placa <?php echo isset($moto['placa']) ? $moto['placa'] : 'N/A'; ?> com <?php echo isset($moto['km']) ? number_format($moto['km'], 0, ',', '.') . ' km' : 'quilometragem não informada'; ?>.</p>
+              <p>Serviço realizado na motocicleta <?php echo (isset($moto['marca']) && isset($moto['modelo'])) ? $moto['marca'] . ' ' . $moto['modelo'] . ' (' . (isset($moto['ano']) ? $moto['ano'] : 'N/A') . ')' : 'N/A'; ?>, placa <?php echo isset($moto['placa']) ? $moto['placa'] : 'N/A'; ?> com <?php echo isset($ordem['KM']) ? number_format($ordem['KM'], 0, ',', '.') . ' km' : 'quilometragem não informada'; ?>.</p>
               
               <p>Diagnóstico inicial e procedimentos realizados na motocicleta:</p>
               <ul>
@@ -105,7 +105,7 @@ if ($ordem && isset($ordem['motoID'])) {
               
               <p>Recomendações para manutenção futura:</p>
               <ul>
-                <li>Próxima revisão em: <?php echo isset($moto['km']) ? number_format($moto['km'] + 5000, 0, ',', '.') . ' km' : 'quilometragem não informada'; ?></li>
+                <li>Próxima revisão em: <?php echo isset($ordem['KM']) ? number_format($ordem['KM'] + 5000, 0, ',', '.') . ' km' : 'quilometragem não informada'; ?></li>
                 <li>Verificar níveis de óleo a cada 1.000 km</li>
                 <li>Outras recomendações específicas...</li>
               </ul>
