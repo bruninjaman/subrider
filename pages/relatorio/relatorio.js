@@ -35,6 +35,24 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // Adicionar botão para visualizar prévia do PDF no formulário
+    const formActions = document.querySelector('.form-actions');
+    const previewBtn = document.createElement('button');
+    previewBtn.type = 'button';
+    previewBtn.id = 'btn-preview-pdf';
+    previewBtn.className = 'button';
+    previewBtn.innerHTML = 'Alternar Prévia do PDF';
+    
+    if (formActions) {
+        formActions.insertBefore(previewBtn, btnGerarPDF);
+        
+        // Configurar evento para alternar visualização de prévia
+        previewBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            alternarPreviewPDF();
+        });
+    }
+
     // Configurar evento de fechar modal
     const btnFecharModal = document.getElementById('modal-fechar');
     if (btnFecharModal) {
@@ -51,3 +69,33 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+/**
+ * Alterna entre visualização normal e prévia do PDF
+ */
+function alternarPreviewPDF() {
+    const container = document.querySelector('.relatorio-container');
+    const editor = document.getElementById('editor-personalizado');
+    const previewBtn = document.getElementById('btn-preview-pdf');
+    
+    if (container.classList.contains('pdf-preview-mode')) {
+        // Voltar ao modo normal
+        container.classList.remove('pdf-preview-mode');
+        previewBtn.textContent = 'Alternar Prévia do PDF';
+        mostrarStatus('Modo de edição normal ativado', 'info');
+    } else {
+        // Ativar modo prévia de PDF
+        container.classList.add('pdf-preview-mode');
+        previewBtn.textContent = 'Voltar ao Modo Normal';
+        mostrarStatus('Prévia do PDF ativada. Esta visualização é similar ao resultado final do PDF.', 'info');
+        
+        // Otimizar o conteúdo do editor para melhor visualização
+        const titulos = editor.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        const paragrafos = editor.querySelectorAll('p');
+        const listas = editor.querySelectorAll('ul, ol');
+        const itens = editor.querySelectorAll('li');
+        
+        // Não precisamos adicionar estilos inline aqui pois estamos usando 
+        // classes CSS para controlar a aparência no modo de prévia
+    }
+}

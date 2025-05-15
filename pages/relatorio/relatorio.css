@@ -228,13 +228,13 @@ textarea.form-control {
 /* Editor personalizado */
 .editor-personalizado {
   min-height: 400px;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-lg);
   background-color: var(--bg-medium);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   color: var(--text-color);
   overflow-y: auto;
-  line-height: 1.6;
+  line-height: 1.4;
   text-align: left;
 }
 
@@ -246,19 +246,20 @@ textarea.form-control {
 
 .editor-personalizado h3 {
   color: var(--accent-color);
-  margin-top: var(--spacing-xl);
-  margin-bottom: var(--spacing-md);
-  font-size: 1.2rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
 }
 
 .editor-personalizado ul, 
 .editor-personalizado ol {
-  margin-left: var(--spacing-xl);
-  margin-bottom: var(--spacing-md);
+  margin: 0.5rem 0 0.8rem 1.5rem;
+  padding-left: 0.5rem;
 }
 
 .editor-personalizado p {
-  margin-bottom: var(--spacing-md);
+  margin: 0.5rem 0;
+  line-height: 1.4;
 }
 
 /* Barra de ferramentas do editor */
@@ -423,111 +424,97 @@ textarea.form-control {
 
 /* Estilo para PDF */
 .relatorio-pdf {
-  font-family: 'Arial', sans-serif;
-  color: #333;
+  font-family: Arial, sans-serif;
+  color: #000;
   background-color: #fff;
-  max-width: 800px;
+  padding: 15px;
+  font-size: 11pt;
+  line-height: 1.3;
+  max-width: 210mm; /* Largura A4 */
   margin: 0 auto;
-  padding: 20px;
-  font-size: 10pt;
 }
 
 .relatorio-pdf .relatorio-header {
   text-align: center;
   margin-bottom: 15px;
-  padding-bottom: 10px;
   border-bottom: 2px solid #5a4a96;
+  padding-bottom: 8px;
 }
 
 .relatorio-pdf .logo-principal {
-  height: 50px;
+  max-width: 150px;
+  margin-bottom: 8px;
 }
 
 .relatorio-pdf h1, .relatorio-pdf h2, .relatorio-pdf h3, .relatorio-pdf h4 {
   color: #5a4a96;
-  font-weight: 600;
-  margin: 10px 0;
+  margin: 8px 0 5px 0;
 }
 
 .relatorio-pdf h1 {
-  font-size: 14pt;
+  font-size: 16pt;
 }
 
 .relatorio-pdf h2 {
-  font-size: 12pt;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 5px;
+  font-size: 14pt;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 3px;
 }
 
 .relatorio-pdf h3 {
-  font-size: 11pt;
+  font-size: 12pt;
 }
 
 .relatorio-pdf .info-table {
   width: 100%;
-  margin-bottom: 15px;
   border-collapse: collapse;
+  margin: 10px 0;
 }
 
 .relatorio-pdf .info-table td {
-  padding: 3px 5px;
-  font-size: 9pt;
+  padding: 3px;
+  border-bottom: 1px solid #eee;
+  font-size: 10pt;
 }
 
 .relatorio-pdf .info-table .label {
   font-weight: bold;
-  width: 25%;
-  vertical-align: top;
+  width: 30%;
 }
 
 .relatorio-pdf .content-section {
-  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .relatorio-pdf .servico-conteudo {
-  font-size: 9pt;
-  line-height: 1.4;
+  font-size: 10pt;
+  line-height: 1.3;
 }
 
 .relatorio-pdf .servico-conteudo p {
-  margin-bottom: 0.5rem;
-  text-align: justify;
+  margin: 3px 0;
 }
 
 .relatorio-pdf .servico-conteudo ul, 
 .relatorio-pdf .servico-conteudo ol {
-  padding-left: 20px;
-  margin: 5px 0;
+  margin: 3px 0 3px 15px;
+  padding-left: 10px;
 }
 
 .relatorio-pdf .obs-section {
-  margin-top: 10px;
+  margin-top: 15px;
   border-top: 1px dashed #ccc;
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .relatorio-pdf .obs-section h3 {
-  margin-top: 0;
+  margin: 0 0 5px 0;
 }
 
 .relatorio-pdf .conclusao {
-  margin-top: 20px;
-  font-size: 9pt;
-}
-
-/* Removendo estilos não utilizados do PDF */
-.relatorio-pdf .logo-container,
-.relatorio-pdf .logo-cnec,
-.relatorio-pdf .logo-75anos,
-.relatorio-pdf .decoration-right,
-.relatorio-pdf .section-title,
-.relatorio-pdf .company-info,
-.relatorio-pdf .mission-vision,
-.relatorio-pdf .values-list,
-.relatorio-pdf .page-number,
-.relatorio-pdf .ql-editor {
-  /* Esses estilos não são mais necessários com a nova estrutura simplificada */
-  display: none;
+  margin-top: 15px;
+  text-align: right;
+  font-size: 10pt;
 }
 
 /* Ajustes responsivos */
@@ -563,5 +550,37 @@ textarea.form-control {
     margin: 0 var(--spacing-md);
     width: auto;
   }
+}
+
+/* Ajustes para PDF (ajuda a visualizar como o conteúdo vai aparecer) */
+.pdf-preview-mode .editor-personalizado {
+  background-color: white;
+  color: black;
+  border: 1px solid #ddd;
+  padding: 1.2rem;
+  font-family: Arial, sans-serif;
+}
+
+.pdf-preview-mode .editor-personalizado h3 {
+  color: #5a4a96;
+  font-size: 1rem;
+  margin: 0.8rem 0 0.4rem 0;
+}
+
+.pdf-preview-mode .editor-personalizado p {
+  margin: 0.3rem 0;
+  line-height: 1.3;
+  font-size: 0.9rem;
+}
+
+.pdf-preview-mode .editor-personalizado ul,
+.pdf-preview-mode .editor-personalizado ol {
+  margin: 0.3rem 0 0.3rem 1.2rem;
+  padding: 0 0 0 0.8rem;
+}
+
+.pdf-preview-mode .editor-personalizado li {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
 }
   
