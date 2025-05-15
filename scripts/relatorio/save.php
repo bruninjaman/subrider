@@ -29,6 +29,7 @@ if (empty($ordem_id)) {
 $conteudo = isset($_POST['conteudo']) ? $_POST['conteudo'] : '';
 $data_conclusao = isset($_POST['data_conclusao']) ? $_POST['data_conclusao'] : '';
 $observacoes_finais = isset($_POST['observacoes_finais']) ? $_POST['observacoes_finais'] : '';
+$quilometragem = isset($_POST['quilometragem']) ? $_POST['quilometragem'] : '';
 
 // Conexão com o banco de dados
 require_once '../../connection/connection.php';
@@ -72,6 +73,7 @@ try {
                 conteudo = ?, 
                 data_conclusao = ?, 
                 observacoes_finais = ?,
+                quilometragem = ?,
                 data_modificacao = NOW() 
                 WHERE ordem_id = ?";
         
@@ -81,7 +83,7 @@ try {
             throw new Exception("Erro na preparação da consulta de atualização: " . mysqli_error($conn));
         }
         
-        mysqli_stmt_bind_param($stmt, "ssss", $conteudo, $data_conclusao, $observacoes_finais, $ordem_id);
+        mysqli_stmt_bind_param($stmt, "sssss", $conteudo, $data_conclusao, $observacoes_finais, $quilometragem, $ordem_id);
         $exec_result = mysqli_stmt_execute($stmt);
         
         if (!$exec_result) {
@@ -94,8 +96,8 @@ try {
         ]);
     } else {
         // Criar novo relatório
-        $query = "INSERT INTO relatorios (ordem_id, conteudo, data_conclusao, observacoes_finais, data_criacao, data_modificacao) 
-                VALUES (?, ?, ?, ?, NOW(), NOW())";
+        $query = "INSERT INTO relatorios (ordem_id, conteudo, data_conclusao, observacoes_finais, quilometragem, data_criacao, data_modificacao) 
+                VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
         
         $stmt = mysqli_prepare($conn, $query);
         
@@ -103,7 +105,7 @@ try {
             throw new Exception("Erro na preparação da consulta de inserção: " . mysqli_error($conn));
         }
         
-        mysqli_stmt_bind_param($stmt, "ssss", $ordem_id, $conteudo, $data_conclusao, $observacoes_finais);
+        mysqli_stmt_bind_param($stmt, "sssss", $ordem_id, $conteudo, $data_conclusao, $observacoes_finais, $quilometragem);
         $exec_result = mysqli_stmt_execute($stmt);
         
         if (!$exec_result) {

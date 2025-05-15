@@ -104,12 +104,15 @@ async function salvarRelatorio(ordem_id) {
         const dataConclusao = document.getElementById('data-conclusao').value;
         const observacoesFinais = document.getElementById('observacoes_finais') ? 
             document.getElementById('observacoes_finais').value : '';
+        const quilometragem = document.getElementById('km_ordem') ? 
+            document.getElementById('km_ordem').value : '';
         
         // Criar FormData para envio
         const formData = new FormData();
         formData.append('conteudo', conteudo);
         formData.append('data_conclusao', dataConclusao);
         formData.append('observacoes_finais', observacoesFinais);
+        formData.append('quilometragem', quilometragem);
         
         // Enviar dados para o servidor
         const response = await fetch(`scripts/relatorio/save.php?ordem=${ordem_id}`, {

@@ -82,6 +82,7 @@ try {
             "conteudo" => $relatorio['conteudo'],
             "data_conclusao" => $relatorio['data_conclusao'],
             "observacoes_finais" => $relatorio['observacoes_finais'],
+            "quilometragem" => $relatorio['quilometragem'],
             "data_criacao" => $relatorio['data_criacao'],
             "data_modificacao" => $relatorio['data_modificacao']
         ]);
