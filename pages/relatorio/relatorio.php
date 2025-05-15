@@ -12,7 +12,7 @@
 <meta http-equiv="Expires" content="0">
 
 <!-- Incluir arquivos JavaScript e CSS -->
-<script src="pages/relatorio/relatorio.js"></script>
+<script src="pages/relatorio/relatorio.js" type="module"></script>
 <link rel="stylesheet" href="pages/relatorio/relatorio.css">
 
 <?php
