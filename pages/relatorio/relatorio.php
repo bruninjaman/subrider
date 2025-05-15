@@ -96,7 +96,6 @@ if ($ordem && isset($ordem['motoID'])) {
               <h3>Descrição do Serviço</h3>
               <p>Serviço realizado na motocicleta <?php echo (isset($moto['marca']) && isset($moto['modelo'])) ? $moto['marca'] . ' ' . $moto['modelo'] . ' (' . (isset($moto['ano']) ? $moto['ano'] : 'N/A') . ')' : 'N/A'; ?>, placa <?php echo isset($moto['placa']) ? $moto['placa'] : 'N/A'; ?> com <?php echo isset($moto['km']) ? number_format($moto['km'], 0, ',', '.') . ' km' : 'quilometragem não informada'; ?>.</p>
               
-              <h3>Diagnóstico</h3>
               <p>Diagnóstico inicial e procedimentos realizados na motocicleta:</p>
               <ul>
                 <li>Verificação geral do estado da motocicleta</li>
@@ -104,7 +103,6 @@ if ($ordem && isset($ordem['motoID'])) {
                 <li>Testes de funcionamento</li>
               </ul>
               
-              <h3>Recomendações</h3>
               <p>Recomendações para manutenção futura:</p>
               <ul>
                 <li>Próxima revisão em: <?php echo isset($moto['km']) ? number_format($moto['km'] + 5000, 0, ',', '.') . ' km' : 'quilometragem não informada'; ?></li>
@@ -117,12 +115,9 @@ if ($ordem && isset($ordem['motoID'])) {
           <!-- Barra de ferramentas personalizada -->
           <div class="editor-toolbar">
             <button type="button" data-command="bold" title="Negrito"><strong>N</strong></button>
-            <button type="button" data-command="italic" title="Itálico"><em>I</em></button>
             <button type="button" data-command="underline" title="Sublinhado"><u>S</u></button>
             <button type="button" data-command="insertUnorderedList" title="Lista com marcadores"><i>•</i></button>
             <button type="button" data-command="insertOrderedList" title="Lista numerada"><i>1.</i></button>
-            <button type="button" data-command="h3" title="Subtítulo">H3</button>
-            <button type="button" data-command="removeFormat" title="Remover formatação">Limpar</button>
           </div>
         </div>
         

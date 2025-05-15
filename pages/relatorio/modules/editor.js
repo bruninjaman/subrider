@@ -34,13 +34,8 @@ function inicializarEditor() {
         button.addEventListener('click', () => {
             const command = button.getAttribute('data-command');
             
-            if (command === 'h3') {
-                // Tratamento especial para inserir cabeçalho H3
-                document.execCommand('formatBlock', false, '<h3>');
-            } else {
-                // Executar comando padrão do documento
-                document.execCommand(command, false, null);
-            }
+            // Executar comando padrão do documento
+            document.execCommand(command, false, null);
             
             // Manter o foco no editor
             editorPersonalizado.focus();
@@ -60,15 +55,7 @@ function atualizarEstadoBotoes(botoesEditor) {
     botoesEditor.forEach(button => {
         const command = button.getAttribute('data-command');
         
-        if (command === 'h3') {
-            // Verificar se estamos dentro de um h3
-            const parentElement = window.getSelection().anchorNode.parentElement;
-            if (parentElement && parentElement.tagName === 'H3') {
-                button.classList.add('active');
-            } else {
-                button.classList.remove('active');
-            }
-        } else if (['bold', 'italic', 'underline'].includes(command)) {
+        if (['bold', 'underline'].includes(command)) {
             // Verificar estado dos comandos básicos
             if (document.queryCommandState(command)) {
                 button.classList.add('active');

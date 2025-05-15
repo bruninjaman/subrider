@@ -235,6 +235,7 @@ textarea.form-control {
   color: var(--text-color);
   overflow-y: auto;
   line-height: 1.6;
+  text-align: left;
 }
 
 .editor-personalizado:focus {
