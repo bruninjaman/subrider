@@ -166,7 +166,7 @@ $motoid = mysqli_fetch_assoc($motoid);
                         <div class="row">
                             <div class="col-10">
                                 <label>Descrição</label>
-                                <input type="text" name="aitem">
+                                <input type="text" value="Pagamento <?php echo date('d/m/Y'); ?>" name="aitem">
                             </div>
                             <div class="col-2">
                                 <label>Valor</label>
