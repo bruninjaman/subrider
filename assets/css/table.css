@@ -4,6 +4,25 @@
     object-fit: cover;
     border-radius: 5px;
 }
+
+/* Padronização para imagens em tabelas de ordens de serviço */
+.item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.item-description {
+    display: flex;
+    align-items: center;
+}
+
+.item-details {
+    text-align: left;
+}
+
 /* Center all text in table headers and cells */
 table th, table td {
     text-align: center; /* Horizontal alignment */

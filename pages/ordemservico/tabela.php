@@ -26,11 +26,12 @@ echo "</style>";
     }
     
     .item-image {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         object-fit: cover;
         border-radius: 5px;
         margin-right: 10px;
+        flex-shrink: 0; /* Impede que a imagem encolha */
     }
     
     .item-description {
@@ -40,6 +41,7 @@ echo "</style>";
     
     .item-details {
         flex: 1;
+        text-align: left;
     }
     
     .table-section {
@@ -84,6 +86,24 @@ echo "</style>";
         padding: 8px 10px;
         text-align: left;
         vertical-align: middle;
+        box-sizing: border-box;
+    }
+    
+    /* Regras para padronizar as larguras das colunas da tabela */
+    .table th:nth-child(1), .table td:nth-child(1) {
+        width: 40%;
+    }
+    
+    .table th:nth-child(2), .table td:nth-child(2),
+    .table th:nth-child(3), .table td:nth-child(3),
+    .table th:nth-child(4), .table td:nth-child(4) {
+        width: 15%;
+        text-align: center;
+    }
+    
+    .table th:nth-child(5), .table td:nth-child(5) {
+        width: 15%;
+        text-align: center;
     }
     
     .total td {
@@ -94,6 +114,22 @@ echo "</style>";
     .totalbold {
         font-size: 1.1em;
         color: #e44c65;
+    }
+    
+    /* Célula de ações na tabela de resumo */
+    .actions-cell {
+        width: 50px !important;
+        max-width: 50px;
+        padding: 0 5px !important;
+        text-align: center;
+    }
+    
+    /* Garantindo que os botões fiquem dentro de suas células */
+    .action-buttons {
+        white-space: nowrap;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
     }
     
     /* Responsividade para dispositivos móveis */
@@ -112,6 +148,19 @@ echo "</style>";
             width: 40px;
             height: 40px;
         }
+    }
+    
+    /* Garantindo que a tabela mantenha sua estrutura */
+    .table {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    /* Evitar quebra de layout nas células */
+    .table td {
+        overflow: hidden;
+        word-wrap: break-word;
     }
 </style>
 
@@ -250,13 +299,15 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 <td data-cell="Quantidade"><?php echo $item['Quantidade']; ?></td>
                                 <td data-cell="Valor Unitário"><?php echo ($item['Valor'] <= 0) ? 'N/D' : realFormat($item['Valor']); ?></td>
                                 <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
-                                <td data-cell="Ações" class="action-buttons">
-                                    <button class="action-button edit-button" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'">
-                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" title="Editar">
-                                    </button>
-                                    <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
-                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir">
-                                    </button>
+                                <td data-cell="Ações">
+                                    <div class="action-buttons">
+                                        <button class="action-button edit-button" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'">
+                                            <img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" title="Editar">
+                                        </button>
+                                        <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
+                                            <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir">
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         <?php
@@ -335,13 +386,15 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 <td data-cell="Quantidade"><?php echo $item['Quantidade']; ?></td>
                                 <td data-cell="Valor Unitário"><?php echo ($item['Valor'] <= 0) ? 'N/D' : realFormat($item['Valor']); ?></td>
                                 <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
-                                <td data-cell="Ações" class="action-buttons">
-                                    <button class="action-button edit-button" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'">
-                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" title="Editar">
-                                    </button>
-                                    <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
-                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir">
-                                    </button>
+                                <td data-cell="Ações">
+                                    <div class="action-buttons">
+                                        <button class="action-button edit-button" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'">
+                                            <img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" title="Editar">
+                                        </button>
+                                        <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
+                                            <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir">
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         <?php
@@ -387,24 +440,30 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                         </tr>
                         <?php foreach ($adiantamentos as $item): ?>
                         <tr>
-                            <td><?php echo $item['Descricao'] ?></td>
+                            <td><strong><?php echo $item['Descricao'] ?></strong></td>
                             <td><?php echo realFormat($item['Valor'] * $item['Quantidade']) ?></td>
-                            <td width="50">
-                                <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este adiantamento?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
-                                    <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir" style="height: 20px; width: 20px;">
-                                </button>
+                            <td class="actions-cell">
+                                <div class="action-buttons">
+                                    <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este adiantamento?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
+                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir" style="height: 20px; width: 20px;">
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         <?php endforeach; ?>
                         <tr>
                             <td><strong>Total de Adiantamentos:</strong></td>
                             <td><?php echo realFormat($total_adiantamentos) ?></td>
+                            <td class="actions-cell"></td>
                         </tr>
                         <?php endif; ?>
                         
                         <tr class="total">
                             <td class="totalbold" data-cell="Saldo"><strong>Saldo a Pagar:</strong></td>
                             <td class="totalbold" data-cell="Valor"><?php echo realFormat($saldo) ?></td>
+                            <?php if (count($adiantamentos) > 0): ?>
+                            <td class="actions-cell"></td>
+                            <?php endif; ?>
                         </tr>
                     </tbody>
                 </table>
