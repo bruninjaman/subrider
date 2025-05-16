@@ -366,7 +366,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
             <!-- Resumo de Valores -->
             <div class="table-section">
                 <div class="table-section-title">Resumo</div>
-                <table class="table">
+                <table class="table alt">
                     <tbody>
                         <tr>
                             <td><strong>Total de Serviços:</strong></td>
