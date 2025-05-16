@@ -55,8 +55,63 @@ echo "</style>";
         color: #e44c65;
     }
     
-    .action-buttons button {
-        margin: 2px;
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    .action-button {
+        background: none;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        border-radius: 4px;
+    }
+    
+    .action-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: scale(1.1);
+    }
+    
+    .action-button img {
+        height: 24px;
+        width: 24px;
+    }
+    
+    .table td, .table th {
+        padding: 8px 10px;
+        text-align: left;
+        vertical-align: middle;
+    }
+    
+    .total td {
+        font-weight: bold;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .totalbold {
+        font-size: 1.1em;
+        color: #e44c65;
+    }
+    
+    /* Responsividade para dispositivos móveis */
+    @media screen and (max-width: 768px) {
+        .table th, .table td {
+            padding: 6px 4px;
+            font-size: 0.9em;
+        }
+        
+        .action-button img {
+            height: 20px;
+            width: 20px;
+        }
+        
+        .item-image {
+            width: 40px;
+            height: 40px;
+        }
     }
 </style>
 
@@ -168,7 +223,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                 <table class="table alt">
                     <thead>
                         <tr>
-                            <th colspan=3>Descrição</th>
+                            <th>Descrição</th>
                             <th>Quantidade</th>
                             <th>Valor unitário</th>
                             <th>Valor Total</th>
@@ -181,7 +236,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                             foreach ($servicos as $item) {
                         ?>
                             <tr>
-                                <td colspan=3 data-cell="Descrição">
+                                <td data-cell="Descrição">
                                     <div class="item-description">
                                         <div class="item-details">
                                             <?php echo $item['Tipo'] != '0' ? "" . $item['Tipo'] . " - " : ""; ?>
@@ -196,8 +251,12 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 <td data-cell="Valor Unitário"><?php echo ($item['Valor'] <= 0) ? 'N/D' : realFormat($item['Valor']); ?></td>
                                 <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
                                 <td data-cell="Ações" class="action-buttons">
-                                    <button style="background: none; border: none;" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'"><img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" style="height: 30px; width: 30px;"> </button>
-                                    <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
+                                    <button class="action-button edit-button" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'">
+                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" title="Editar">
+                                    </button>
+                                    <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
+                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir">
+                                    </button>
                                 </td>
                             </tr>
                         <?php
@@ -205,16 +264,15 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                         } else {
                         ?>
                             <tr>
-                                <td colspan="7" style="text-align:center;">Nenhum serviço adicionado</td>
+                                <td colspan="5" style="text-align:center;">Nenhum serviço adicionado</td>
                             </tr>
                         <?php
                         }
                         ?>
                         <tr class="total">
-                            <td colspan="4" data-cell=""></td>
+                            <td colspan="3" data-cell=""></td>
                             <td data-cell="Subtotal">Total Serviços:</td>
                             <td data-cell="Valor"><?php echo realFormat($total_servicos) ?></td>
-                            <td data-cell=""></td>
                         </tr>
                     </tbody>
                 </table>
@@ -226,7 +284,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                 <table class="table alt">
                     <thead>
                         <tr>
-                            <th colspan=3>Descrição</th>
+                            <th>Descrição</th>
                             <th>Quantidade</th>
                             <th>Valor unitário</th>
                             <th>Valor Total</th>
@@ -261,7 +319,7 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 }
                         ?>
                             <tr>
-                                <td colspan=3 data-cell="Descrição">
+                                <td data-cell="Descrição">
                                     <div class="item-description">
                                         <img src="<?php echo $imagem_peca; ?>" alt="Imagem da Peça" class="item-image">
                                         <div class="item-details">
@@ -278,8 +336,12 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                                 <td data-cell="Valor Unitário"><?php echo ($item['Valor'] <= 0) ? 'N/D' : realFormat($item['Valor']); ?></td>
                                 <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
                                 <td data-cell="Ações" class="action-buttons">
-                                    <button style="background: none; border: none;" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'"><img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" style="height: 30px; width: 30px;"> </button>
-                                    <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')"><img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" style="height: 30px; width: 30px;"></button>
+                                    <button class="action-button edit-button" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'">
+                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" title="Editar">
+                                    </button>
+                                    <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este item?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
+                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir">
+                                    </button>
                                 </td>
                             </tr>
                         <?php
@@ -287,16 +349,15 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                         } else {
                         ?>
                             <tr>
-                                <td colspan="7" style="text-align:center;">Nenhuma peça adicionada</td>
+                                <td colspan="5" style="text-align:center;">Nenhuma peça adicionada</td>
                             </tr>
                         <?php
                         }
                         ?>
                         <tr class="total">
-                            <td colspan="4" data-cell=""></td>
+                            <td colspan="3" data-cell=""></td>
                             <td data-cell="Subtotal">Total Peças:</td>
                             <td data-cell="Valor"><?php echo realFormat($total_pecas) ?></td>
-                            <td data-cell=""></td>
                         </tr>
                     </tbody>
                 </table>
@@ -329,8 +390,8 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                             <td><?php echo $item['Descricao'] ?></td>
                             <td><?php echo realFormat($item['Valor'] * $item['Quantidade']) ?></td>
                             <td width="50">
-                                <button style="background: none; border: none;" onclick="return delete_confirm('Deseja realmente excluir este adiantamento?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
-                                    <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" style="height: 20px; width: 20px;">
+                                <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este adiantamento?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
+                                    <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir" style="height: 20px; width: 20px;">
                                 </button>
                             </td>
                         </tr>

@@ -12,31 +12,42 @@ $result = mysqli_query($conn, $motocicletas_query);
     }
 
     .motoinfo li {
-        padding: 9px;
-        margin-bottom: 6px;
+        padding: 12px;
+        margin-bottom: 8px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 1em;
+        transition: background-color 0.2s ease;
+    }
+    
+    .motoinfo li:hover {
+        background-color: rgba(255, 255, 255, 0.03);
     }
 
     .motoinfobox {
-        border-radius: 5px;
-        padding: 18px;
+        border-radius: 8px;
+        padding: 20px;
         background-color: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
-        max-width: 80%;
+        max-width: 85%;
         margin-left: auto;
         margin-right: auto;
+        transition: transform 0.3s ease;
+    }
+    
+    .motoinfobox:hover {
+        transform: translateY(-3px);
     }
 
     .moto-title {
         color: #e44c65;
-        font-size: 1.4em;
-        margin-bottom: 14px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding-bottom: 9px;
+        font-size: 1.5em;
+        margin-bottom: 16px;
+        border-bottom: 2px solid rgba(228, 76, 101, 0.3);
+        padding-bottom: 10px;
         text-align: center;
     }
 
@@ -47,31 +58,40 @@ $result = mysqli_query($conn, $motocicletas_query);
     .imagemoto img {
         border-radius: 10px;
         width: 85%;
-        max-width: 300px;
+        max-width: 320px;
         height: auto;
         object-fit: cover;
         margin-bottom: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .imagemoto img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
 
     .info-label {
         font-weight: bold;
+        color: #cccccc;
     }
 
     .info-value {
         color: #e0e0e0;
+        font-weight: 300;
     }
 
     .moto-info-row {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        gap: 20px;
     }
 
     .moto-image-col {
         flex: 0 0 35%;
         min-width: 250px;
-        padding-right: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -90,16 +110,20 @@ $result = mysqli_query($conn, $motocicletas_query);
         .moto-image-col, 
         .moto-data-col {
             width: 100%;
-            padding-right: 0;
         }
         
         .motoinfobox {
-            padding: 14px;
+            max-width: 95%;
+            padding: 15px;
         }
         
         .imagemoto img {
-            margin-right: 0;
-            width: 75%;
+            width: 80%;
+        }
+        
+        .motoinfo li {
+            padding: 10px;
+            margin-bottom: 6px;
         }
     }
 </style>
