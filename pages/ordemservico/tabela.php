@@ -416,6 +416,65 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                 </table>
             </div>
             
+            <!-- Tabela de Adiantamentos -->
+            <div class="table-section">
+                <div class="table-section-title">Adiantamentos (Pagamentos Recebidos)</div>
+                <table class="table alt">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Valor unitário</th>
+                            <th>Valor Total</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (count($adiantamentos) > 0) {
+                            foreach ($adiantamentos as $item) {
+                        ?>
+                            <tr>
+                                <td data-cell="Descrição">
+                                    <div class="item-description">
+                                        <div class="item-details">
+                                            <?php echo $item['Descricao'] != '0' ? "" . $item['Descricao'] : "Pagamento"; ?>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-cell="Quantidade"><?php echo $item['Quantidade']; ?></td>
+                                <td data-cell="Valor Unitário"><?php echo ($item['Valor'] <= 0) ? 'N/D' : realFormat($item['Valor']); ?></td>
+                                <td data-cell="Valor Total"><?php echo realFormat($item['Valor'] * $item['Quantidade']); ?></td>
+                                <td data-cell="Ações">
+                                    <div class="action-buttons">
+                                        <button class="action-button edit-button" onclick="location.href='<?php echo $baseAddress; ?>/ordem_edit_item.php?item_ordemID=<?php echo $item['item_ordemID'] ?>&ordem=<?php echo $_GET['ordem'] ?>'">
+                                            <img src="<?php echo $baseAddress; ?>/assets/css/images/edit.png" title="Editar">
+                                        </button>
+                                        <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este adiantamento?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
+                                            <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir">
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php
+                            }
+                        } else {
+                        ?>
+                            <tr>
+                                <td colspan="5" style="text-align:center;">Nenhum adiantamento registrado</td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                        <tr class="total">
+                            <td colspan="3" data-cell=""></td>
+                            <td data-cell="Subtotal">Total Adiantamentos:</td>
+                            <td data-cell="Valor"><?php echo realFormat($total_adiantamentos) ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
             <!-- Resumo de Valores -->
             <div class="table-section">
                 <div class="table-section-title">Resumo</div>
@@ -433,37 +492,13 @@ $ordem_servicos = mysqli_fetch_assoc($ordem_servicos);
                             <td><strong>Valor Total:</strong></td>
                             <td><?php echo realFormat($total_geral) ?></td>
                         </tr>
-                        
-                        <?php if (count($adiantamentos) > 0): ?>
-                        <tr>
-                            <td colspan="2" class="category-header">Adiantamentos</td>
-                        </tr>
-                        <?php foreach ($adiantamentos as $item): ?>
-                        <tr>
-                            <td><strong><?php echo $item['Descricao'] ?></strong></td>
-                            <td><?php echo realFormat($item['Valor'] * $item['Quantidade']) ?></td>
-                            <td class="actions-cell">
-                                <div class="action-buttons">
-                                    <button class="action-button delete-button" onclick="return delete_confirm('Deseja realmente excluir este adiantamento?',<?php echo $item['item_ordemID'] ?>,'<?php echo $_GET['ordem'] ?>')">
-                                        <img src="<?php echo $baseAddress; ?>/assets/css/images/x-button.png" title="Excluir" style="height: 20px; width: 20px;">
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
                         <tr>
                             <td><strong>Total de Adiantamentos:</strong></td>
                             <td><?php echo realFormat($total_adiantamentos) ?></td>
-                            <td class="actions-cell"></td>
                         </tr>
-                        <?php endif; ?>
-                        
                         <tr class="total">
-                            <td class="totalbold" data-cell="Saldo"><strong>Saldo a Pagar:</strong></td>
+                            <td class="totalbold" data-cell="Saldo"><strong>Total a Pagar:</strong></td>
                             <td class="totalbold" data-cell="Valor"><?php echo realFormat($saldo) ?></td>
-                            <?php if (count($adiantamentos) > 0): ?>
-                            <td class="actions-cell"></td>
-                            <?php endif; ?>
                         </tr>
                     </tbody>
                 </table>
