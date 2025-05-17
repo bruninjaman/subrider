@@ -124,5 +124,68 @@
     </div>
 
     <a class='button secondary' href="relatorio.php?ordem=<?php echo $_GET['ordem'] ?>">Relatorio</a>
-    <a class='button primary' href="pdf/download.php?ordem=<?php echo $_GET['ordem'] ?>">Baixar como PDF</a>
+    <a class='button primary' href="#" onclick="gerarPDF(event)">Baixar como PDF</a>
 </div>
+
+<!-- Modal de aviso Gerando PDF -->
+<div id="pdfLoadingModal" class="modal" style="display:none; background: rgba(0,0,0,0.7);">
+    <div class="modal-content" style="text-align:center; padding: 40px; font-size: 1.5em; display: flex; flex-direction: column; align-items: center;">
+        <div class="spinner" style="margin-bottom: 20px;"></div>
+        <span>Gerando PDF<span class="dot-animate"></span></span>
+    </div>
+</div>
+<style>
+.spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #00c063;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.dot-animate {
+    display: inline-block;
+    width: 1.5em;
+    text-align: left;
+}
+.dot-animate::after {
+    content: '';
+    animation: dots 1.2s steps(3, end) infinite;
+}
+@keyframes dots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+}
+</style>
+<script>
+function gerarPDF(event) {
+    event.preventDefault();
+    var modal = document.getElementById('pdfLoadingModal');
+    modal.style.display = 'block';
+    var ordem = new URLSearchParams(window.location.search).get('ordem');
+    var url = 'pdf/download.php?ordem=' + ordem;
+    fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'ordem_' + ordem + '.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(function() {
+                modal.style.display = 'none';
+            }, 1000); // Esconde o modal logo após iniciar o download
+        })
+        .catch(() => {
+            modal.style.display = 'none';
+            alert('Erro ao gerar o PDF.');
+        });
+}
+</script>
