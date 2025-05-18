@@ -39,33 +39,50 @@ $componentes = [
 
 // Criar os dropdowns para cada componente
 if (isset($_GET['ordem'])) {
-    echo '<div class="componentes-container">';
+    $ordem = $_GET['ordem'];
+    $componentesComReferencia = [];
     foreach ($componentes as $componente => $titulo) {
-        echo '<div class="componente-dropdown">';
-        echo '<button type="button" class="dropdown-btn">' . $titulo . ' <i class="fas fa-chevron-down"></i></button>';
-        echo '<div class="dropdown-content">';
-        displayTableData($conn, $componente, $titulo);
-        switch ($componente) {
-            case 'embreagem':
-                displayEmbreagemMedicoes($conn, $_GET['ordem']);
-                break;
-            case 'bomba':
-                displayBombaMedicoes($conn, $_GET['ordem']);
-                break;
-            case 'motor':
-                displayMotorMedicoes($conn, $_GET['ordem']);
-                break;
-            case 'virabrequim':
-                displayVirabrequimMedicoes($conn, $_GET['ordem']);
-                break;
-            case 'cabecote':
-                displayCabecoteMedicoes($conn, $_GET['ordem']);
-                break;
+        $query = "SELECT COUNT(*) as count FROM $componente WHERE is_reference = 1 AND ordem = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "s", $ordem);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        if ($row['count'] > 0) {
+            $componentesComReferencia[$componente] = $titulo;
+        }
+    }
+    if (count($componentesComReferencia) > 0) {
+        echo '<div class="componentes-container">';
+        foreach ($componentesComReferencia as $componente => $titulo) {
+            echo '<div class="componente-dropdown">';
+            echo '<button type="button" class="dropdown-btn">' . $titulo . ' <i class="fas fa-chevron-down"></i></button>';
+            echo '<div class="dropdown-content">';
+            displayTableData($conn, $componente, $titulo);
+            switch ($componente) {
+                case 'embreagem':
+                    displayEmbreagemMedicoes($conn, $_GET['ordem']);
+                    break;
+                case 'bomba':
+                    displayBombaMedicoes($conn, $_GET['ordem']);
+                    break;
+                case 'motor':
+                    displayMotorMedicoes($conn, $_GET['ordem']);
+                    break;
+                case 'virabrequim':
+                    displayVirabrequimMedicoes($conn, $_GET['ordem']);
+                    break;
+                case 'cabecote':
+                    displayCabecoteMedicoes($conn, $_GET['ordem']);
+                    break;
+            }
+            echo '</div>';
+            echo '</div>';
         }
         echo '</div>';
-        echo '</div>';
+    } else {
+        echo "<div class='error-msg'>Nenhum dado de referência encontrado para esta ordem de serviço. O menu não será exibido.</div>";
     }
-    echo '</div>';
 } else {
     echo "<div class='error-msg'>Erro: Parâmetro 'ordem' não foi especificado.</div>";
 }
