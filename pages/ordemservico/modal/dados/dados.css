@@ -1,46 +1,53 @@
 .componentes-container {
-    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    margin: 32px 0 24px 0;
 }
 
 .componente-dropdown {
-    margin-bottom: 10px;
+    background: #181a20;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.28);
+    min-width: 320px;
+    max-width: 100%;
+    margin-bottom: 16px;
+    transition: box-shadow 0.2s, background 0.2s;
+    border: 1px solid #23242b;
+}
+
+.componente-dropdown:hover {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.38);
+    background: #20222a;
 }
 
 .dropdown-btn {
-    background-color: #2a2c35;
-    color: #e5e5e5;
-    padding: 12px 20px;
     width: 100%;
+    background: #232b3e;
+    color: #e5e5e5;
     border: none;
-    text-align: left;
+    outline: none;
+    padding: 18px 24px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    border-radius: 12px 12px 0 0;
     cursor: pointer;
-    font-size: 1.1em;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background-color 0.3s;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s, color 0.2s;
+    letter-spacing: 0.04em;
 }
 
-.dropdown-btn:hover {
-    background-color: #3a3c45;
-}
-
-.dropdown-content {
-    display: none;
-    background-color: #1e2029;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 5px;
-    border: 1px solid #333;
-}
-
-.dropdown-content.active {
-    display: block;
+.dropdown-btn.active, .dropdown-btn:hover {
+    background: #1a2233;
+    color: #fff;
 }
 
 .dropdown-btn i {
+    margin-left: 12px;
+    font-size: 1.1em;
     transition: transform 0.3s;
 }
 
@@ -48,8 +55,27 @@
     transform: rotate(180deg);
 }
 
+.dropdown-content {
+    display: none;
+    padding: 24px 20px 20px 20px;
+    background: #181a20;
+    border-radius: 0 0 12px 12px;
+    border-top: 1px solid #23242b;
+    animation: fadeIn 0.3s;
+    color: #e5e5e5;
+}
+
+.dropdown-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .card {
-    background: #1e2029;
+    background: #23242b;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     margin: 15px 0;
@@ -57,12 +83,12 @@
     width: 100%;
     max-width: 100%;
     color: #e5e5e5;
-    border: 1px solid #333;
+    border: 1px solid #23242b;
 }
 
 .card-title {
     color: #fff;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #232b3e;
     padding-bottom: 10px;
     margin-bottom: 15px;
     font-size: 1.2em;
@@ -79,22 +105,30 @@
 table {
     width: 100%;
     border-collapse: collapse;
+    background: #181a20;
+    color: #e5e5e5;
 }
 
 th, td {
     padding: 8px;
     text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid #23242b;
 }
 
 th {
-    background: #2a2c35;
+    background: #232b3e;
     color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+td {
+    background: #181a20;
 }
 
 .data-label {
     font-weight: bold;
-    color: #aaa;
+    color: #b0b0b0;
 }
 
 .ref-value {
@@ -107,15 +141,44 @@ th {
     text-align: right;
 }
 
-.meas-input {
-    background: #2a2c35;
-    border: 1px solid #4CAF50;
-    border-radius: 4px;
-    padding: 5px;
-    color: #fff;
-    text-align: right;
-    width: 100%;
-    margin: 2px 0;
+.meas-input, .folga-input {
+    background: #23242b;
+    border: 1px solid #353743;
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 1rem;
+    margin: 4px 0;
+    color: #e5e5e5;
+    transition: border 0.2s, background 0.2s;
+}
+
+.meas-input:focus, .folga-input:focus {
+    border: 1.5px solid #1976d2;
+    outline: none;
+    background: #232b3e;
+}
+
+.meas-input[readonly] {
+    background-color: #181a20;
+    border-color: #23242b;
+    color: #666;
+    cursor: not-allowed;
+}
+
+select.meas-input {
+    background: #23242b;
+    border: 1px solid #353743;
+    color: #e5e5e5;
+}
+
+select.meas-input:focus {
+    outline: none;
+    border-color: #1976d2;
+}
+
+select.meas-input option {
+    background: #23242b;
+    color: #e5e5e5;
 }
 
 .meas-input.first {
@@ -172,9 +235,27 @@ th {
 }
 
 .error-msg {
-    color: #ed4933;
-    margin: 10px 0;
-    font-weight: bold;
+    background: #2a1818;
+    color: #ff6b6b;
+    border: 1px solid #3a2323;
+    border-radius: 8px;
+    padding: 18px 24px;
+    margin: 32px auto 24px auto;
+    font-size: 1.08rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 480px;
+    box-shadow: 0 2px 8px rgba(198,40,40,0.10);
+}
+
+.error-msg--center {
+    justify-content: center;
+    text-align: center;
+}
+
+.error-msg i {
+    font-size: 1.3em;
 }
 
 .info-msg {
@@ -259,22 +340,7 @@ th {
 .virabrequim-medicoes .folga-bronzina { background-color: rgba(233, 30, 99, 0.1); }
 .virabrequim-medicoes .folga-lateral-biela { background-color: rgba(76, 175, 80, 0.1); }
 
-/* Estilos para inputs e campos */
-.meas-input[readonly] {
-    background-color: #1a1b23;
-    border-color: #333;
-    color: #666;
-    cursor: not-allowed;
-}
-
 .pastilha-input {
-    background-color: #2a2c35;
-    border-color: #4CAF50;
-    color: #fff;
-    cursor: text;
-}
-
-.folga-input {
     background-color: #2a2c35;
     border-color: #4CAF50;
     color: #fff;
@@ -313,35 +379,52 @@ th {
     font-size: 0.9em;
 }
 
-select.meas-input {
-    background: #2a2c35;
-    border: 1px solid #4CAF50;
-    border-radius: 4px;
-    padding: 5px;
-    color: #fff;
-    text-align: right;
-    width: 100%;
-    margin: 2px 0;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8.825L1.175 4 2.238 2.938 6 6.7l3.763-3.763L10.825 4z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    padding-right: 30px;
-}
-
-select.meas-input:focus {
-    outline: none;
-    border-color: #45a049;
-}
-
-select.meas-input option {
-    background: #2a2c35;
-    color: #fff;
-}
-
 .virabrequim-field.hidden {
     display: none;
+}
+
+/* Botão de sair */
+.footer-modal {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+    margin-bottom: 8px;
+}
+
+.button--sair {
+    background: #c62828;
+    color: #fff;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 1.08rem;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 2px 8px rgba(198,40,40,0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+}
+
+.button--sair:hover {
+    background: #a31b1b;
+    box-shadow: 0 4px 16px rgba(198,40,40,0.18);
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .componentes-container {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .componente-dropdown {
+        min-width: 0;
+        width: 100%;
+    }
+    .footer-modal {
+        justify-content: center;
+    }
 } 

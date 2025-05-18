@@ -1,18 +1,17 @@
 <?php
 // Verificação inicial do parâmetro ordem
 if (!isset($_GET['ordem'])) {
-    die("<div class='error-msg'>Erro: Parâmetro 'ordem' não foi especificado na URL.</div>");
+    echo "<div class='error-msg error-msg--center'> <i class='fas fa-exclamation-triangle'></i> Erro: Parâmetro 'ordem' não foi especificado na URL.</div>";
+    exit;
 }
 
-// Usar a ordem como string
 $ordem = $_GET['ordem'];
 
-// Verificação da conexão com o banco de dados
 if (!isset($conn) || !$conn) {
-    die("<div class='error-msg'>Erro: Conexão com o banco de dados não estabelecida.</div>");
+    echo "<div class='error-msg error-msg--center'> <i class='fas fa-exclamation-triangle'></i> Erro: Conexão com o banco de dados não estabelecida.</div>";
+    exit;
 }
 
-// Verificar se existem dados de referência para a ordem especificada
 $checkQuery = "SELECT COUNT(*) as count FROM cabecote WHERE is_reference = 1 AND ordem = ?";
 $checkStmt = mysqli_prepare($conn, $checkQuery);
 mysqli_stmt_bind_param($checkStmt, "s", $ordem);
@@ -20,7 +19,6 @@ mysqli_stmt_execute($checkStmt);
 $checkResult = mysqli_stmt_get_result($checkStmt);
 $checkRow = mysqli_fetch_assoc($checkResult);
 
-// Incluir os arquivos de funções
 require_once 'dados_util.php';
 require_once 'dados_cabecote.php';
 require_once 'dados_embreagem.php';
@@ -28,7 +26,6 @@ require_once 'dados_bomba.php';
 require_once 'dados_motor.php';
 require_once 'dados_virabrequim.php';
 
-// Array com os componentes e seus títulos
 $componentes = [
     'embreagem' => 'Embreagem',
     'bomba' => 'Bomba',
@@ -37,7 +34,6 @@ $componentes = [
     'cabecote' => 'Cabeçote'
 ];
 
-// Criar os dropdowns para cada componente
 if (isset($_GET['ordem'])) {
     $ordem = $_GET['ordem'];
     $componentesComReferencia = [];
@@ -56,7 +52,7 @@ if (isset($_GET['ordem'])) {
         echo '<div class="componentes-container">';
         foreach ($componentesComReferencia as $componente => $titulo) {
             echo '<div class="componente-dropdown">';
-            echo '<button type="button" class="dropdown-btn">' . $titulo . ' <i class="fas fa-chevron-down"></i></button>';
+            echo '<button type="button" class="dropdown-btn"><span>' . $titulo . '</span> <i class="fas fa-chevron-down"></i></button>';
             echo '<div class="dropdown-content">';
             displayTableData($conn, $componente, $titulo);
             switch ($componente) {
@@ -81,20 +77,22 @@ if (isset($_GET['ordem'])) {
         }
         echo '</div>';
     } else {
-        echo "<div class='error-msg'>Nenhum dado de referência encontrado para esta ordem de serviço. O menu não será exibido.</div>";
+        echo "<div class='error-msg error-msg--center'> <i class='fas fa-info-circle'></i> Nenhum dado de referência encontrado para esta ordem de serviço. O menu não será exibido.</div>";
     }
 } else {
-    echo "<div class='error-msg'>Erro: Parâmetro 'ordem' não foi especificado.</div>";
+    echo "<div class='error-msg error-msg--center'> <i class='fas fa-exclamation-triangle'></i> Erro: Parâmetro 'ordem' não foi especificado.</div>";
 }
 
-echo '<a class="button primary" id="closeModal3">Sair</a>';
+// Botão de sair destacado
 ?>
+<div class="footer-modal">
+    <a class="button primary button--sair" id="closeModal3"><i class="fas fa-sign-out-alt"></i> Sair</a>
+</div>
 
 <link rel="stylesheet" href="pages/ordemservico/modal/dados/dados.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <?php
-// Buscar dados de referência do cabeçote para os valores de limite
 $query = "SELECT val_adm_limite_min, val_adm_limite_max, val_esc_limite_min, val_esc_limite_max 
           FROM cabecote 
           WHERE is_reference = 1 AND ordem = ?";
@@ -111,8 +109,7 @@ $cabecote_ref = mysqli_fetch_assoc($result);
 <input type="hidden" id="val_esc_limite_max" value="<?php echo $cabecote_ref['val_esc_limite_max']; ?>">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="pages\ordemservico\modal\calcularPastilha.js"></script>
-
+<script src="pages/ordemservico/modal/calcularPastilha.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -126,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dropdownBtns = document.querySelectorAll('.dropdown-btn');
     dropdownBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault(); // Prevenir o comportamento padrão do botão
+            e.preventDefault();
             this.classList.toggle('active');
             const content = this.nextElementSibling;
             content.classList.toggle('active');
