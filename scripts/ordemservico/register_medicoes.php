@@ -51,7 +51,9 @@ function checkRecordExists($table, $where, $params, $types) {
         return null;
     }
     
-    mysqli_stmt_bind_param($stmt, $types, ...$params);
+    if (!empty($params) && !empty($types)) {
+        mysqli_stmt_bind_param($stmt, $types, ...$params);
+    }
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
     
