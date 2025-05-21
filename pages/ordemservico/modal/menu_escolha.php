@@ -15,4 +15,5 @@
 <a class="button secondary" id="btnVirabrequim" onclick="setFormSection('virabrequim')">Virabrequim</a>
 <a class="button secondary" id="btnEmbreagem" onclick="setFormSection('embreagem')">Embreagem</a>
 <a class="button secondary" id="btnBombas" onclick="setFormSection('bomba')">Bombas</a>
-<a class="button primary" id="closeModal3">Sair</a>
+<a class="button primary button--sair" id="closeModal3"><i class="fas fa-sign-out-alt"></i> Sair</a>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
