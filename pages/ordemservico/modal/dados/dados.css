@@ -427,4 +427,67 @@ select.meas-input option {
     .footer-modal {
         justify-content: center;
     }
-} 
+}
+
+/* --- Estilos para o menu de abas --- */
+.componentes-tabs-container {
+    margin-bottom: 24px;
+    background: #181a20;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding-top: 8px;
+}
+.componentes-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid #232b3e;
+    padding: 0 16px 0 16px;
+}
+.tab-btn {
+    background: none;
+    border: none;
+    color: #b0b0b0;
+    font-size: 1.1em;
+    padding: 12px 24px 10px 24px;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    transition: background 0.2s, color 0.2s;
+    outline: none;
+    font-weight: 500;
+    position: relative;
+}
+.tab-btn.active {
+    background: #232b3e;
+    color: #fff;
+    border-bottom: 2px solid #4CAF50;
+    z-index: 2;
+}
+.tab-btn:not(.active):hover {
+    background: #232b3e;
+    color: #e5e5e5;
+}
+.tab-content {
+    display: none;
+    padding: 24px 16px 0 16px;
+    background: #181a20;
+    border-radius: 0 0 8px 8px;
+    min-height: 120px;
+}
+.tab-content.active {
+    display: block;
+}
+@media (max-width: 600px) {
+    .componentes-tabs {
+        flex-direction: column;
+        gap: 0;
+    }
+    .tab-btn {
+        width: 100%;
+        border-radius: 8px 8px 0 0;
+        margin-bottom: 2px;
+    }
+    .tab-content {
+        padding: 12px 4px 0 4px;
+    }
+}
+/* --- Fim estilos menu de abas --- */ 

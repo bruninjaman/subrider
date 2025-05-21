@@ -49,11 +49,18 @@ if (isset($_GET['ordem'])) {
         }
     }
     if (count($componentesComReferencia) > 0) {
-        echo '<div class="componentes-container">';
+        // MENU DE ABAS FIXO NO TOPO
+        echo '<div class="componentes-tabs-container">';
+        echo '<div class="componentes-tabs">';
+        $first = true;
         foreach ($componentesComReferencia as $componente => $titulo) {
-            echo '<div class="componente-dropdown">';
-            echo '<button type="button" class="dropdown-btn"><span>' . $titulo . '</span> <i class="fas fa-chevron-down"></i></button>';
-            echo '<div class="dropdown-content">';
+            echo '<button type="button" class="tab-btn' . ($first ? ' active' : '') . '" data-tab="tab-' . $componente . '">' . $titulo . '</button>';
+            $first = false;
+        }
+        echo '</div>';
+        // Conteúdo das abas
+        foreach ($componentesComReferencia as $componente => $titulo) {
+            echo '<div class="tab-content' . ($componente === array_key_first($componentesComReferencia) ? ' active' : '') . '" id="tab-' . $componente . '">';
             displayTableData($conn, $componente, $titulo);
             switch ($componente) {
                 case 'embreagem':
@@ -72,7 +79,6 @@ if (isset($_GET['ordem'])) {
                     displayCabecoteMedicoes($conn, $_GET['ordem']);
                     break;
             }
-            echo '</div>';
             echo '</div>';
         }
         echo '</div>';
@@ -113,6 +119,19 @@ $cabecote_ref = mysqli_fetch_assoc($result);
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Tabs
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+            this.classList.add('active');
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
     // Verificar se os valores de referência estão presentes
     const valAdmMin = document.getElementById('val_adm_limite_min').value;
     const valAdmMax = document.getElementById('val_adm_limite_max').value;
