@@ -82,7 +82,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
     $measResult = mysqli_stmt_get_result($measStmt);
 
     echo "<div class='card'>";
-    echo "<h2 class='card-title'>" . htmlspecialchars($tableTitle) . "</h2>";
+    echo "<h2 class='card-title'>Referências do " . htmlspecialchars($tableTitle) . "</h2>";
     echo "<div class='card-content'>";
 
     if (mysqli_num_rows($refResult) > 0) {
