@@ -155,4 +155,145 @@
 
 #closeModal3:hover {
     background-color: #ef5e4a;
+}
+
+/* ===== AJUSTES DE LAYOUT PARA O MENU CABEÇOTE ===== */
+
+/* Container do formulário mais compacto e centralizado */
+.form-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #23232b;
+    border-radius: 16px;
+    padding: 32px 16px 24px 16px;
+    box-shadow: 0 0 24px #0008;
+}
+
+/* Títulos menores e centralizados */
+.title-cabecote {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+.title-underline {
+    width: 180px;
+    height: 8px;
+    background: #ed4960;
+    border-radius: 8px;
+    margin: 0.5rem auto 0 auto;
+}
+
+/* Espaçamento entre grupos de campos */
+.section-group,
+.measurements-section,
+.compression-section {
+    margin-bottom: 2rem;
+}
+
+/* Inputs menores e mais compactos */
+.floating-input input,
+.floating-input label {
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    height: 2.2rem;
+}
+.floating-input {
+    margin-bottom: 1.2rem;
+}
+
+/* Agrupamento de radios centralizado */
+.custom-radio-group {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+.custom-radio-group label {
+    margin-bottom: 0;
+    color: #e5e5e5;
+    font-weight: 400;
+}
+
+/* Switch do tucho centralizado */
+.tucho-switch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tucho-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 80px;
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+    color: #e5e5e5;
+}
+
+/* Medidas agrupadas lado a lado em telas grandes, empilhadas em telas pequenas */
+.measure-group {
+    margin-bottom: 1.2rem;
+}
+.measure-label {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+.measure-inputs {
+    display: flex;
+    gap: 1rem;
+}
+@media (max-width: 768px) {
+    .measure-inputs {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .form-container {
+        padding: 12px 2px 12px 2px;
+    }
+    .title-cabecote {
+        font-size: 1.3rem;
+    }
+}
+
+/* Botões centralizados e com espaçamento */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.action-buttons .btn,
+.action-buttons .button {
+    min-width: 120px;
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+}
+
+/* Ajuste para campos condicionais ficarem mais integrados */
+.animated-section {
+    margin-bottom: 1.2rem;
+}
+
+/* Ajuste para inputs de número ficarem menores */
+input[type="text"][data-type="decimal"] {
+    max-width: 120px;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Ajuste para labels de inputs flutuantes */
+.floating-input label {
+    left: 0.75rem;
+    color: #aaa;
+}
+
+/* Ajuste para responsividade dos grupos */
+@media (max-width: 576px) {
+    .row.g-4 > [class^="col-"] {
+        margin-bottom: 1rem;
+    }
 } 
