@@ -49,7 +49,6 @@ if (isset($_GET['ordem'])) {
         }
     }
     if (count($componentesComReferencia) > 0) {
-        // MENU DE ABAS FIXO NO TOPO
         echo '<div class="componentes-tabs-container">';
         echo '<div class="componentes-tabs">';
         $first = true;
@@ -60,8 +59,19 @@ if (isset($_GET['ordem'])) {
         echo '</div>';
         // Conteúdo das abas
         foreach ($componentesComReferencia as $componente => $titulo) {
-            echo '<div class="tab-content' . ($componente === array_key_first($componentesComReferencia) ? ' active' : '') . '" id="tab-' . $componente . '">';
+            $isActive = $componente === array_key_first($componentesComReferencia);
+            echo '<div class="tab-content' . ($isActive ? ' active' : '') . '" id="tab-' . $componente . '">';
+            // --- Botões Referência/Medições ---
+            echo '<div style="margin-bottom: 16px; display: flex; gap: 8px;">';
+            echo '<button type="button" class="toggle-btn ref-btn active" data-target="ref-' . $componente . '">Referências</button>';
+            echo '<button type="button" class="toggle-btn med-btn" data-target="med-' . $componente . '">Medições</button>';
+            echo '</div>';
+            // --- Conteúdo Referência ---
+            echo '<div class="toggle-content ref-content" id="ref-' . $componente . '" style="display:block;">';
             displayTableData($conn, $componente, $titulo);
+            echo '</div>';
+            // --- Conteúdo Medições ---
+            echo '<div class="toggle-content med-content" id="med-' . $componente . '" style="display:none;">';
             switch ($componente) {
                 case 'embreagem':
                     displayEmbreagemMedicoes($conn, $_GET['ordem']);
@@ -80,6 +90,7 @@ if (isset($_GET['ordem'])) {
                     break;
             }
             echo '</div>';
+            echo '</div>'; // tab-content
         }
         echo '</div>';
     } else {
@@ -131,25 +142,18 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById(tabId).classList.add('active');
         });
     });
-
-    // Verificar se os valores de referência estão presentes
-    const valAdmMin = document.getElementById('val_adm_limite_min').value;
-    const valAdmMax = document.getElementById('val_adm_limite_max').value;
-    const valEscMin = document.getElementById('val_esc_limite_min').value;
-    const valEscMax = document.getElementById('val_esc_limite_max').value;
-
-    // Adicionar funcionalidade aos dropdowns
-    const dropdownBtns = document.querySelectorAll('.dropdown-btn');
-    dropdownBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            this.classList.toggle('active');
-            const content = this.nextElementSibling;
-            content.classList.toggle('active');
+    // Toggle Referência/Medições
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const parent = this.closest('.tab-content');
+            parent.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            parent.querySelectorAll('.toggle-content').forEach(tc => tc.style.display = 'none');
+            const target = parent.querySelector('#' + this.getAttribute('data-target'));
+            if (target) target.style.display = 'block';
         });
     });
-
-    // Vincular o evento de cálculo a todos os inputs de folga
+    // Pastilha cálculo (mantém)
     const folgaInputs = document.querySelectorAll('.folga-input');
     folgaInputs.forEach(input => {
         input.addEventListener('change', function() {
@@ -159,8 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
             calcularPastilha(this);
         });
     });
-
-    // Inicializar cálculos para inputs que já têm valores
     folgaInputs.forEach(input => {
         if (input.value) {
             calcularPastilha(input);
