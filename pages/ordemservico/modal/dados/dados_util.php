@@ -109,16 +109,19 @@ function displayTableData($conn, $tableName, $tableTitle) {
                         break;
                     }
                 }
-                
-                // Se for rolamento e for um dos campos específicos, pular
-                if ($tipoAtual === 'Rolamento' && 
-                    in_array($keyLower, [
-                        'folga_lateral_biela',
-                        'folga_lateral_eixo_min',
-                        'folga_lateral_eixo_max',
-                        'empenamento'
-                    ])) {
-                    continue;
+                // Adicionar classes CSS para controle dinâmico
+                $virabrequimClass = '';
+                if (in_array($keyLower, [
+                    'folga_bronzina',
+                ])) {
+                    $virabrequimClass = 'virabrequim-bronzina-field';
+                } else if (in_array($keyLower, [
+                    'folga_lateral_biela',
+                    'folga_lateral_eixo_min',
+                    'folga_lateral_eixo_max',
+                    'empenamento'
+                ])) {
+                    $virabrequimClass = 'virabrequim-rolamento-field';
                 }
             }
             
@@ -129,7 +132,8 @@ function displayTableData($conn, $tableName, $tableTitle) {
                 !($tableName === 'cabecote' && ($keyLower === 'motor_tipo' || $keyLower === 'tipo_val')) &&
                 !($tableName === 'motor' && ($keyLower === 'created_at' || $keyLower === 'updated_at'))) {
                 
-                echo "<tr>";
+                echo "<tr" . (isset(
+                    $virabrequimClass) && $virabrequimClass ? " class='$virabrequimClass'" : "") . ">";
                 echo "<td class='data-label'>" . 
                      htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
                      "</td>";
@@ -186,6 +190,33 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
         echo "<button type='submit' class='save-btn'>Salvar Alterações</button>";
         echo "</form>";
+        // Adicionar script para alternar campos dinamicamente
+        if ($tableName === 'virabrequim') {
+            echo "<script>
+            function toggleVirabrequimFields(tipo) {
+                var bronzinaFields = document.querySelectorAll('.virabrequim-bronzina-field');
+                var rolamentoFields = document.querySelectorAll('.virabrequim-rolamento-field');
+                if (tipo === 'Bronzina') {
+                    bronzinaFields.forEach(function(el) { el.style.display = ''; });
+                    rolamentoFields.forEach(function(el) { el.style.display = 'none'; });
+                } else if (tipo === 'Rolamento') {
+                    bronzinaFields.forEach(function(el) { el.style.display = 'none'; });
+                    rolamentoFields.forEach(function(el) { el.style.display = ''; });
+                } else {
+                    bronzinaFields.forEach(function(el) { el.style.display = 'none'; });
+                    rolamentoFields.forEach(function(el) { el.style.display = 'none'; });
+                }
+            }
+            // Inicializar ao carregar
+            document.addEventListener('DOMContentLoaded', function() {
+                var select = document.querySelector('select[name^=\'measured\'][name$=\"[tipo]\"]');
+                if (select) toggleVirabrequimFields(select.value);
+                if (select) select.addEventListener('change', function() {
+                    toggleVirabrequimFields(this.value);
+                });
+            });
+            </script>";
+        }
     } else {
         echo "<div class='info-msg'>Nenhum dado de referência encontrado para esta ordem de serviço.</div>";
         echo "<div class='info-msg'>Por favor, adicione os dados de referência primeiro.</div>";
