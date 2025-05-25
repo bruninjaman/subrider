@@ -18,10 +18,8 @@ function displayVirabrequimMedicoes($conn, $ordem) {
             
             // Verificar se 'medida' existe e mesclar com valores existentes
             if (isset($_POST['medida'])) {
-                foreach ($_POST['medida'] as $param => $cilindros) {
-                    foreach ($cilindros as $cilindro => $valor) {
-                        $medicoes[$param][$cilindro] = $valor !== '' ? floatval(str_replace(',', '.', $valor)) : null;
-                    }
+                foreach ($_POST['medida'] as $param => $valor) {
+                    $medicoes[$param] = $valor !== '' ? floatval(str_replace(',', '.', $valor)) : null;
                 }
             }
             
@@ -79,15 +77,6 @@ function displayVirabrequimMedicoes($conn, $ordem) {
             ];
         }
 
-        // Buscar número de cilindros do cabeçote
-        $queryCilindros = "SELECT cilindros FROM cabecote WHERE is_reference = 1 AND ordem = ?";
-        $stmtCilindros = mysqli_prepare($conn, $queryCilindros);
-        mysqli_stmt_bind_param($stmtCilindros, "s", $ordem);
-        mysqli_stmt_execute($stmtCilindros);
-        $resultCilindros = mysqli_stmt_get_result($stmtCilindros);
-        $cabecote = mysqli_fetch_assoc($resultCilindros);
-        $nr_cilindros = $cabecote ? $cabecote['cilindros'] : 0;
-
         // Buscar medições existentes
         $queryMed = "SELECT medicoes FROM virabrequim WHERE is_reference = 0 AND ordem = ?";
         $stmtMed = mysqli_prepare($conn, $queryMed);
@@ -101,7 +90,7 @@ function displayVirabrequimMedicoes($conn, $ordem) {
         // Exibir interface
         echo "<div class='card virabrequim-medicoes'>";
         echo "<h2 class='card-title'>MENU MEDIÇÕES VIRABREQUIM</h2>";
-        echo "<div class='legenda'>Medição de parâmetros do virabrequim para cada cilindro</div>";
+        echo "<div class='legenda'>Medição dos parâmetros do virabrequim conforme referência</div>";
         echo "<div> Tipo: <div class='subtitulo'> " . htmlspecialchars($virabrequimRef['tipo']) . "</div></div>";
         
         echo "<div class='table-container'>";
@@ -111,71 +100,25 @@ function displayVirabrequimMedicoes($conn, $ordem) {
         echo "<table>";
         
         // Cabeçalho da tabela
-        echo "<thead><tr><th>ITEM</th><th>REFERÊNCIA</th>";
-        for ($i = 1; $i <= $nr_cilindros; $i++) {
-            echo "<th>CILINDRO " . $i . "</th>";
-        }
-        echo "</tr></thead>";
+        echo "<thead><tr><th>PARÂMETRO</th><th>REFERÊNCIA</th><th>MEDIDA</th></tr></thead>";
         echo "<tbody>";
 
-        // Campos comuns para ambos os tipos
-        echo "<tr class='folga-mancal'>";
-        echo "<td>Folga mancal</td>";
-        echo "<td>" . number_format($virabrequimRef['folga_mancal'], 2, ',', '.') . "</td>";
-        for ($i = 1; $i <= $nr_cilindros; $i++) {
-            $valor = isset($medicoes['folga_mancal'][$i]) && $medicoes['folga_mancal'][$i] !== null ? number_format($medicoes['folga_mancal'][$i], 2, ',', '.') : '';
-            echo "<td><input type='text' name='medida[folga_mancal][" . $i . "]' class='meas-input' value='$valor'></td>";
-        }
-        echo "</tr>";
-
-        // Campos específicos para Bronzina
-        if ($virabrequimRef['tipo'] === 'Bronzina') {
-            echo "<tr class='folga-bronzina'>";
-            echo "<td>Folga bronzina</td>";
-            echo "<td>" . number_format($virabrequimRef['folga_bronzina'], 2, ',', '.') . "</td>";
-            for ($i = 1; $i <= $nr_cilindros; $i++) {
-                $valor = isset($medicoes['folga_bronzina'][$i]) && $medicoes['folga_bronzina'][$i] !== null ? number_format($medicoes['folga_bronzina'][$i], 2, ',', '.') : '';
-                echo "<td><input type='text' name='medida[folga_bronzina][" . $i . "]' class='meas-input' value='$valor'></td>";
+        // Exibir todos os campos de referência, exceto id, ordem, is_reference e tipo, com classes conforme o tipo
+        $tipoAtual = isset($virabrequimRef['tipo']) ? $virabrequimRef['tipo'] : '';
+        foreach ($virabrequimRef as $campo => $referencia) {
+            if (in_array($campo, ['id', 'ordem', 'is_reference', 'tipo', 'medicoes'])) continue;
+            $campoLower = strtolower($campo);
+            $virabrequimClass = '';
+            if (in_array($campoLower, ['folga_bronzina'])) {
+                $virabrequimClass = 'virabrequim-bronzina-field';
+            } else if (in_array($campoLower, ['folga_lateral_biela', 'folga_lateral_eixo_min', 'folga_lateral_eixo_max', 'empenamento'])) {
+                $virabrequimClass = 'virabrequim-rolamento-field';
             }
-            echo "</tr>";
-        }
-
-        // Campos específicos para Rolamento
-        if ($virabrequimRef['tipo'] === 'Rolamento') {
-            echo "<tr class='folga-lateral-biela'>";
-            echo "<td>Folga lateral biela</td>";
-            echo "<td>" . number_format($virabrequimRef['folga_lateral_biela'], 2, ',', '.') . "</td>";
-            for ($i = 1; $i <= $nr_cilindros; $i++) {
-                $valor = isset($medicoes['folga_lateral_biela'][$i]) && $medicoes['folga_lateral_biela'][$i] !== null ? number_format($medicoes['folga_lateral_biela'][$i], 2, ',', '.') : '';
-                echo "<td><input type='text' name='medida[folga_lateral_biela][" . $i . "]' class='meas-input' value='$valor'></td>";
-            }
-            echo "</tr>";
-
-            echo "<tr class='folga-lateral-eixo-min'>";
-            echo "<td>Folga lateral eixo mínima</td>";
-            echo "<td>" . number_format($virabrequimRef['folga_lateral_eixo_min'], 2, ',', '.') . "</td>";
-            for ($i = 1; $i <= $nr_cilindros; $i++) {
-                $valor = isset($medicoes['folga_lateral_eixo_min'][$i]) && $medicoes['folga_lateral_eixo_min'][$i] !== null ? number_format($medicoes['folga_lateral_eixo_min'][$i], 2, ',', '.') : '';
-                echo "<td><input type='text' name='medida[folga_lateral_eixo_min][" . $i . "]' class='meas-input' value='$valor'></td>";
-            }
-            echo "</tr>";
-
-            echo "<tr class='folga-lateral-eixo-max'>";
-            echo "<td>Folga lateral eixo máxima</td>";
-            echo "<td>" . number_format($virabrequimRef['folga_lateral_eixo_max'], 2, ',', '.') . "</td>";
-            for ($i = 1; $i <= $nr_cilindros; $i++) {
-                $valor = isset($medicoes['folga_lateral_eixo_max'][$i]) && $medicoes['folga_lateral_eixo_max'][$i] !== null ? number_format($medicoes['folga_lateral_eixo_max'][$i], 2, ',', '.') : '';
-                echo "<td><input type='text' name='medida[folga_lateral_eixo_max][" . $i . "]' class='meas-input' value='$valor'></td>";
-            }
-            echo "</tr>";
-
-            echo "<tr class='empenamento'>";
-            echo "<td>Empenamento</td>";
-            echo "<td>" . number_format($virabrequimRef['empenamento'], 2, ',', '.') . "</td>";
-            for ($i = 1; $i <= $nr_cilindros; $i++) {
-                $valor = isset($medicoes['empenamento'][$i]) && $medicoes['empenamento'][$i] !== null ? number_format($medicoes['empenamento'][$i], 2, ',', '.') : '';
-                echo "<td><input type='text' name='medida[empenamento][" . $i . "]' class='meas-input' value='$valor'></td>";
-            }
+            echo "<tr" . ($virabrequimClass ? " class='$virabrequimClass'" : '') . ">";
+            echo "<td>" . htmlspecialchars(ucfirst(str_replace('_', ' ', $campo))) . "</td>";
+            echo "<td>" . (is_numeric($referencia) ? number_format($referencia, 2, ',', '.') : htmlspecialchars($referencia)) . "</td>";
+            $valor = isset($medicoes[$campo]) && $medicoes[$campo] !== null ? (is_numeric($medicoes[$campo]) ? number_format($medicoes[$campo], 2, ',', '.') : htmlspecialchars($medicoes[$campo])) : '';
+            echo "<td><input type='text' name='medida[" . htmlspecialchars($campo) . "]' class='meas-input' value='$valor'></td>";
             echo "</tr>";
         }
 
@@ -184,6 +127,26 @@ function displayVirabrequimMedicoes($conn, $ordem) {
         echo "</form>";
         echo "</div>";
         echo "</div>";
+        // Script para alternar campos conforme o tipo
+        echo "<script>
+        function toggleVirabrequimFields(tipo) {
+            var bronzinaFields = document.querySelectorAll('.virabrequim-bronzina-field');
+            var rolamentoFields = document.querySelectorAll('.virabrequim-rolamento-field');
+            if (tipo === 'Bronzina') {
+                bronzinaFields.forEach(function(el) { el.style.display = ''; });
+                rolamentoFields.forEach(function(el) { el.style.display = 'none'; });
+            } else if (tipo === 'Rolamento') {
+                bronzinaFields.forEach(function(el) { el.style.display = 'none'; });
+                rolamentoFields.forEach(function(el) { el.style.display = ''; });
+            } else {
+                bronzinaFields.forEach(function(el) { el.style.display = 'none'; });
+                rolamentoFields.forEach(function(el) { el.style.display = 'none'; });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleVirabrequimFields('" . addslashes($tipoAtual) . "');
+        });
+        </script>";
         
     } catch (Exception $e) {
         echo "<div class='error-msg'>Erro ao exibir medições do virabrequim: " . htmlspecialchars($e->getMessage()) . "</div>";
