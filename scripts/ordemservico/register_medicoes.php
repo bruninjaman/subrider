@@ -185,14 +185,13 @@ function processBomba($post, $ordem) {
         $vazao_combustao_min, $vazao_combustao_max, $ordem
     ];
     
-    // Se for um insert, adiciona is_reference
     if ($recordId === null) {
         $fields[] = 'is_reference';
         $values[] = $is_reference;
         return processRecord('bomba', $fields, $values, 'dddddsi');
     } else {
-        // Se for um update, usa o ID para a cláusula WHERE
-        return processRecord('bomba', $fields, $values, 'dddddsi', 'id = ?', $recordId);
+        // No update, NÃO incluir is_reference nos campos/valores/tipos
+        return processRecord('bomba', $fields, $values, 'ddddds', 'id = ?', $recordId);
     }
 }
 
