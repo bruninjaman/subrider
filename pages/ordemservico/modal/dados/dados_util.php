@@ -155,6 +155,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
                 } 
                 // Tratamento especial para o campo tipo do virabrequim
                 else if ($tableName === 'virabrequim' && $keyLower === 'tipo') {
+                    $tipoBanco = trim(strtolower($value));
                     echo "<td class='ref-value'>" . 
                          htmlspecialchars($value) . 
                          "</td>";
@@ -163,8 +164,8 @@ function displayTableData($conn, $tableName, $tableTitle) {
                     echo "<select name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
                          "class='meas-input first' " .
                          "onchange='toggleVirabrequimFields(this.value)'>";
-                    echo "<option value='Rolamento' " . ($value == 'Rolamento' ? 'selected' : '') . ">Rolamento</option>";
-                    echo "<option value='Bronzina' " . ($value == 'Bronzina' ? 'selected' : '') . ">Bronzina</option>";
+                    echo "<option value='Rolamento' " . ($tipoBanco == 'rolamento' ? 'selected' : '') . ">Rolamento</option>";
+                    echo "<option value='Bronzina' " . ($tipoBanco == 'bronzina' ? 'selected' : '') . ">Bronzina</option>";
                     echo "</select>";
                     echo "</td>";
                 }
