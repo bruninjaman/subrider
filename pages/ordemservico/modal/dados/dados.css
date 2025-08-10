@@ -490,4 +490,21 @@ select.meas-input option {
         padding: 12px 4px 0 4px;
     }
 }
-/* --- Fim estilos menu de abas --- */ 
+/* --- Fim estilos menu de abas --- */
+
+/* Estilos para campos fora dos parâmetros */
+.out-of-range {
+    color: #ff4444 !important;
+    font-weight: bold;
+}
+
+.out-of-range-input {
+    color: #ff4444 !important;
+    border-color: #ff4444 !important;
+    background-color: rgba(255, 68, 68, 0.1) !important;
+}
+
+/* Animação sutil para destacar mudanças */
+.meas-input {
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}

@@ -168,5 +168,267 @@ document.addEventListener('DOMContentLoaded', function() {
             calcularPastilha(input);
         }
     });
+
+    // Função para validar se um valor está dentro do intervalo
+    function isInRange(value, min, max) {
+        if (value === '' || value === null || value === undefined) return true;
+        const numValue = parseFloat(value.toString().replace(',', '.'));
+        if (isNaN(numValue)) return true;
+        return numValue >= min && numValue <= max;
+    }
+    
+    // Função para validar campos de cabeçote
+    function validateCabecoteFields() {
+        const valAdmMin = parseFloat(document.getElementById('val_adm_limite_min')?.value || 0);
+        const valAdmMax = parseFloat(document.getElementById('val_adm_limite_max')?.value || 0);
+        const valEscMin = parseFloat(document.getElementById('val_esc_limite_min')?.value || 0);
+        const valEscMax = parseFloat(document.getElementById('val_esc_limite_max')?.value || 0);
+        
+        // Validar campos de admissão
+        document.querySelectorAll('input[name*="adm_folga"]').forEach(input => {
+            if (input.value.trim() === '') {
+                input.classList.remove('out-of-range-input');
+                return;
+            }
+            
+            const inputValue = parseFloat(input.value.replace(',', '.'));
+            if (isNaN(inputValue)) {
+                input.classList.remove('out-of-range-input');
+                return;
+            }
+            
+            // Converter o valor inserido de centésimos para milímetros
+            // Se o valor inserido for maior que 1, assumir que está em centésimos
+            const convertedValue = inputValue > 1 ? inputValue / 100 : inputValue;
+            
+            if (convertedValue < valAdmMin || convertedValue > valAdmMax) {
+                input.classList.add('out-of-range-input');
+            } else {
+                input.classList.remove('out-of-range-input');
+            }
+        });
+        
+        // Validar campos de escape
+        document.querySelectorAll('input[name*="esc_folga"]').forEach(input => {
+            if (input.value.trim() === '') {
+                input.classList.remove('out-of-range-input');
+                return;
+            }
+            
+            const inputValue = parseFloat(input.value.replace(',', '.'));
+            if (isNaN(inputValue)) {
+                input.classList.remove('out-of-range-input');
+                return;
+            }
+            
+            // Converter o valor inserido de centésimos para milímetros
+            // Se o valor inserido for maior que 1, assumir que está em centésimos
+            const convertedValue = inputValue > 1 ? inputValue / 100 : inputValue;
+            
+            if (convertedValue < valEscMin || convertedValue > valEscMax) {
+                input.classList.add('out-of-range-input');
+            } else {
+                input.classList.remove('out-of-range-input');
+            }
+        });
+    }
+    
+    // Função para validar campos de embreagem
+    function validateEmbreagemFields() {
+        // Buscar referências da embreagem
+        const refCells = document.querySelectorAll('.embreagem-medicoes .ref-value');
+        let discoFriccaoMin = 0;
+        let discoSeparadorMax = 0;
+        
+        refCells.forEach(cell => {
+            const row = cell.closest('tr');
+            const itemCell = row?.querySelector('td:first-child');
+            if (itemCell) {
+                const text = itemCell.textContent.toLowerCase();
+                if (text.includes('espessura mínima')) {
+                    discoFriccaoMin = parseFloat(cell.textContent.replace(',', '.')) || 0;
+                } else if (text.includes('empenamento máximo')) {
+                    discoSeparadorMax = parseFloat(cell.textContent.replace(',', '.')) || 0;
+                }
+            }
+        });
+        
+        // Validar discos de fricção (valor deve ser >= mínimo)
+        document.querySelectorAll('input[name*="disco_friccao_espes"]').forEach(input => {
+            const value = parseFloat(input.value.replace(',', '.'));
+            if (!isNaN(value) && value < discoFriccaoMin) {
+                input.classList.add('out-of-range-input');
+            } else {
+                input.classList.remove('out-of-range-input');
+            }
+        });
+        
+        // Validar discos separadores (valor deve ser <= máximo)
+        document.querySelectorAll('input[name*="disco_separador_emp"]').forEach(input => {
+            const value = parseFloat(input.value.replace(',', '.'));
+            if (!isNaN(value) && value > discoSeparadorMax) {
+                input.classList.add('out-of-range-input');
+            } else {
+                input.classList.remove('out-of-range-input');
+            }
+        });
+    }
+    
+    // Função para validar campos de motor
+    function validateMotorFields() {
+        // Buscar todas as referências do motor
+        const motorRefs = {};
+        document.querySelectorAll('.motor-medicoes tr').forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 2) {
+                const item = cells[0].textContent.trim();
+                const ref = cells[1].textContent.trim();
+                
+                if (ref.includes(' a ')) {
+                    const [min, max] = ref.split(' a ').map(v => parseFloat(v.replace(',', '.')));
+                    motorRefs[item] = { min, max };
+                } else if (ref.includes('máx')) {
+                    motorRefs[item] = { max: parseFloat(ref.replace(/[^0-9,\.]/g, '').replace(',', '.')) };
+                } else if (ref.includes('mín')) {
+                    motorRefs[item] = { min: parseFloat(ref.replace(/[^0-9,\.]/g, '').replace(',', '.')) };
+                }
+            }
+        });
+        
+        // Validar cada campo de medição
+        document.querySelectorAll('.motor-medicoes input.meas-input').forEach(input => {
+            const row = input.closest('tr');
+            const itemCell = row?.querySelector('td:first-child');
+            if (itemCell) {
+                const item = itemCell.textContent.trim();
+                const ref = motorRefs[item];
+                if (ref) {
+                    const value = parseFloat(input.value.replace(',', '.'));
+                    if (!isNaN(value)) {
+                        let outOfRange = false;
+                        if (ref.min !== undefined && value < ref.min) outOfRange = true;
+                        if (ref.max !== undefined && value > ref.max) outOfRange = true;
+                        
+                        if (outOfRange) {
+                            input.classList.add('out-of-range-input');
+                        } else {
+                            input.classList.remove('out-of-range-input');
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // Função para validar campos de bomba
+    function validateBombaFields() {
+        const bombaRefs = {};
+        document.querySelectorAll('.bomba-medicoes tr').forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 2) {
+                const item = cells[0].textContent.trim();
+                const ref = cells[1].textContent.trim();
+                
+                if (ref.includes(' a ')) {
+                    const [min, max] = ref.split(' a ').map(v => parseFloat(v.replace(',', '.')));
+                    bombaRefs[item] = { min, max };
+                } else if (ref.includes('máx')) {
+                    bombaRefs[item] = { max: parseFloat(ref.replace(/[^0-9,\.]/g, '').replace(',', '.')) };
+                } else if (ref.includes('mín')) {
+                    bombaRefs[item] = { min: parseFloat(ref.replace(/[^0-9,\.]/g, '').replace(',', '.')) };
+                }
+            }
+        });
+        
+        document.querySelectorAll('.bomba-medicoes input.meas-input').forEach(input => {
+            const row = input.closest('tr');
+            const itemCell = row?.querySelector('td:first-child');
+            if (itemCell) {
+                const item = itemCell.textContent.trim();
+                const ref = bombaRefs[item];
+                if (ref) {
+                    const value = parseFloat(input.value.replace(',', '.'));
+                    if (!isNaN(value)) {
+                        let outOfRange = false;
+                        if (ref.min !== undefined && value < ref.min) outOfRange = true;
+                        if (ref.max !== undefined && value > ref.max) outOfRange = true;
+                        
+                        if (outOfRange) {
+                            input.classList.add('out-of-range-input');
+                        } else {
+                            input.classList.remove('out-of-range-input');
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // Função para validar campos de virabrequim
+    function validateVirabrequimFields() {
+        const virabrequimRefs = {};
+        document.querySelectorAll('.virabrequim-medicoes tr').forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length >= 2) {
+                const param = cells[0].textContent.trim();
+                const ref = parseFloat(cells[1].textContent.replace(',', '.'));
+                if (!isNaN(ref)) {
+                    virabrequimRefs[param] = ref;
+                }
+            }
+        });
+        
+        document.querySelectorAll('.virabrequim-medicoes input.meas-input').forEach(input => {
+            const row = input.closest('tr');
+            const paramCell = row?.querySelector('td:first-child');
+            if (paramCell) {
+                const param = paramCell.textContent.trim();
+                const ref = virabrequimRefs[param];
+                if (ref !== undefined) {
+                    const value = parseFloat(input.value.replace(',', '.'));
+                    if (!isNaN(value)) {
+                        // Para virabrequim, geralmente valores devem ser <= referência
+                        if (value > ref) {
+                            input.classList.add('out-of-range-input');
+                        } else {
+                            input.classList.remove('out-of-range-input');
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // Função principal de validação
+    function validateAllFields() {
+        validateCabecoteFields();
+        validateEmbreagemFields();
+        validateMotorFields();
+        validateBombaFields();
+        validateVirabrequimFields();
+    }
+    
+    // Adicionar event listeners para validação em tempo real
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('meas-input')) {
+            setTimeout(validateAllFields, 100); // Pequeno delay para permitir a entrada completa
+        }
+    });
+    
+    document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('meas-input')) {
+            validateAllFields();
+        }
+    });
+    
+    // Validar campos ao trocar de aba
+    document.querySelectorAll('.tab-btn, .toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            setTimeout(validateAllFields, 200); // Delay para permitir que a aba seja carregada
+        });
+    });
+    
+    // Validação inicial
+    setTimeout(validateAllFields, 500);
 });
 </script>
