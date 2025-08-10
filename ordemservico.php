@@ -220,8 +220,10 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
         <?php
         require("./pages/ordemservico/header.php");
         require("./pages/ordemservico/tabela.php");
+        require("./pages/ordemservico/tabela-dados.php");
         require("./pages/ordemservico/info.php");
         require("./pages/ordemservico/footer.php");
+
         ?>
     </div>
     
