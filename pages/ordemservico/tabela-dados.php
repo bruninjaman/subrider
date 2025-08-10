@@ -209,64 +209,71 @@ echo "</div>";
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    background-color: #24262e;
+    color: #e0e0e0;
 }
 
 .component-section {
     margin-bottom: 30px;
-    border: 1px solid #ddd;
+    border: 1px solid #3a3d47;
     border-radius: 8px;
     overflow: hidden;
+    background-color: #181a20;
 }
 
 .component-section h3 {
-    background-color: #f8f9fa;
+    background-color: #e44c5c;
     margin: 0;
     padding: 15px 20px;
-    border-bottom: 1px solid #ddd;
-    color: #333;
+    border-bottom: 1px solid #3a3d47;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .table-container {
     overflow-x: auto;
+    background-color: #181a20;
 }
 
 .measurements-table {
     width: 100%;
     border-collapse: collapse;
     margin: 0;
+    background-color: #181a20;
 }
 
 .measurements-table th,
 .measurements-table td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #3a3d47;
+    color: #e0e0e0;
 }
 
 .measurements-table th {
-    background-color: #f8f9fa;
+    background-color: #2a2d35;
     font-weight: bold;
-    color: #333;
+    color: #ffffff;
 }
 
 .measurements-table tr:hover {
-    background-color: #f5f5f5;
+    background-color: #2a2d35;
 }
 
 .section-header {
-    background-color: #e3f2fd !important;
+    background-color: #e44c5c !important;
     font-weight: bold;
-    color: #1976d2 !important;
+    color: #ffffff !important;
 }
 
 .no-data-msg {
     text-align: center;
     padding: 40px;
-    color: #666;
+    color: #b0b0b0;
     font-style: italic;
-    background-color: #f8f9fa;
+    background-color: #181a20;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #3a3d47;
 }
 
 @media (max-width: 768px) {
