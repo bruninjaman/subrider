@@ -128,7 +128,6 @@ async function salvarRelatorio(ordem_id) {
         if (!response.ok) {
             throw new Error(`Erro HTTP: ${response.status}`);
         }
-        
         // Obter o texto da resposta primeiro
         const text = await response.text();
         

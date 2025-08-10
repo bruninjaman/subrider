@@ -8,9 +8,7 @@
     width: 100%;
     height: 100%;
     overflow: auto; /* Allow scrolling if content exceeds viewport */
-    /* Gradiente de fundo para profundidade */
-    background: linear-gradient(120deg, rgba(24,25,33,0.98) 60%, rgba(45,48,58,0.95) 100%);
-    transition: opacity 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Modal content */
@@ -21,70 +19,11 @@
     border-radius: 25px;
     width: 90%; /* Increased width slightly */
     max-width: 1000px; /* Increased max-width */
-    box-shadow: 0px 8px 32px rgba(0,0,0,0.35), 0 1.5px 0 #ed4933 inset;
-    border: 1.5px solid #23232b;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     position: relative;
     max-height: 90vh; /* Set max height to 90% of viewport height */
     overflow-y: auto; /* Enable vertical scrolling if needed */
     color: #e5e5e5; /* Light text for dark background */
-    transition: box-shadow 0.2s;
-}
-
-/* Título centralizado e destacado */
-.modal-content h2, .modal-content .modal-title {
-    text-align: center;
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #fff;
-    margin-top: 20px;
-    margin-bottom: 32px;
-    letter-spacing: 0.04em;
-    text-shadow: 0 2px 8px #0006;
-}
-
-/* Menu de opções (botões) */
-.menu-options {
-    display: flex;
-    justify-content: center;
-    gap: 1.2rem;
-    margin-bottom: 2.5rem;
-    flex-wrap: wrap;
-}
-.menu-options button, .menu-options .button {
-    background: none;
-    box-shadow: inset 0 0 0 2px #e5e5e5;
-    color: #e5e5e5;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 600;
-    height: 3em;
-    letter-spacing: 0.18em;
-    line-height: 3em;
-    padding: 0 1.5em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    white-space: nowrap;
-    border-radius: 8px;
-    border: none;
-    margin: 0 0.2em;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    outline: none;
-}
-.menu-options button.active, .menu-options .button.active, .menu-options button:focus {
-    background: linear-gradient(90deg, #ffe066 60%, #ed4933 100%);
-    color: #181921 !important;
-    box-shadow: 0 0 0 2px #ffe066;
-}
-.menu-options button:hover, .menu-options .button:hover {
-    background: rgba(229,229,229,0.13);
-    color: #ffe066;
-    box-shadow: 0 0 0 2px #ffe066;
-}
-
-/* Espaçamento entre botões do menu */
-.menu-options > * {
-    margin-bottom: 0.5em;
 }
 
 /* Hide all pages by default */
@@ -96,18 +35,11 @@
     margin: auto;
     overflow-y: auto; /* Enable scrolling within the page */
     max-height: calc(90vh - 60px); /* Account for padding */
-    background: rgba(24,25,33,0.98);
-    box-shadow: 0 2px 12px #0004;
 }
 
 /* Active modal page */
 .modal-page.active {
     display: block;
-    animation: fadeIn 0.4s;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Close button (X) */
@@ -363,35 +295,5 @@ input[type="text"][data-type="decimal"] {
 @media (max-width: 576px) {
     .row.g-4 > [class^="col-"] {
         margin-bottom: 1rem;
-    }
-}
-
-/* Responsividade aprimorada */
-@media (max-width: 900px) {
-    .modal-content {
-        max-width: 98vw;
-        padding: 8px;
-    }
-    .modal-content h2, .modal-content .modal-title {
-        font-size: 1.3rem;
-    }
-    .menu-options {
-        gap: 0.5rem;
-    }
-}
-@media (max-width: 600px) {
-    .modal-content {
-        padding: 2px;
-        border-radius: 10px;
-    }
-    .modal-content h2, .modal-content .modal-title {
-        font-size: 1.1rem;
-        margin-bottom: 18px;
-    }
-    .menu-options button, .menu-options .button {
-        font-size: 0.9em;
-        padding: 0 0.7em;
-        height: 2.2em;
-        line-height: 2.2em;
     }
 } 

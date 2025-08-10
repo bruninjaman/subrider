@@ -1,7 +1,6 @@
 <?php
 // Iniciar sessão para verificar autenticação
 session_start();
-
 // Definir cabeçalho para JSON
 header('Content-Type: application/json');
 

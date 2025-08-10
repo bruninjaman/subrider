@@ -16,6 +16,5 @@ $server_name = $_SERVER['SERVER_NAME'];
 $is_localhost = (strpos($server_name, 'localhost') !== false || $server_name === '127.0.0.1');
 
 $baseAddress = isset($_ENV['BASE_ADDRESS']) ? $_ENV['BASE_ADDRESS'] : '';
-
 // Definir base URL para JavaScript
 $baseURL = $baseAddress; 
