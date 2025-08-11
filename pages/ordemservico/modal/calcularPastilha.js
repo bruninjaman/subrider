@@ -44,7 +44,7 @@ function calcularPastilha(input) {
     const estaDentroReferencia = folgaValue >= referenciaMin && folgaValue <= referenciaMax;
     
     // Calcular pastilha nova usando o valor de referência da folga
-    const pastilhaCorrigida = (folgaValue - referenciaMin) + pastilhaAtual;
+    const pastilhaCorrigida = (folgaValue - ((referenciaMax + referenciaMin ) /2)) + pastilhaAtual;
     
     // Atualizar o resultado
     const elementoResultado = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
