@@ -451,7 +451,7 @@ echo "<h2>Relatório de Medições - OS: $ordem</h2>";
 echo "<div class='controls'>";
 echo "<button onclick='expandAll()' class='btn'>Expandir</button>";
 echo "<button onclick='collapseAll()' class='btn'>Recolher</button>";
-echo "<button onclick='window.print()' class='btn'>Imprimir</button>";
+echo "<button onclick='printTable()' class='btn'>Imprimir</button>";
 echo "</div>";
 echo "</div>";
 
@@ -507,6 +507,140 @@ function collapseAll() {
     document.querySelectorAll('[id^="icon-"]').forEach(icon => {
         icon.textContent = '▶';
     });
+}
+
+function printTable() {
+    // Expandir todas as seções antes de imprimir
+    expandAll();
+    
+    // Criar uma nova janela para impressão
+    var printWindow = window.open('', '_blank');
+    var reportContainer = document.querySelector('.report-container');
+    
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Relatório de Medições - OS: <?php echo $ordem; ?></title>
+            <style>
+                @page {
+                    size: A4 landscape;
+                    margin: 10mm;
+                }
+                body { 
+                    font-family: Arial, sans-serif; 
+                    margin: 0;
+                    padding: 0;
+                    color: #000;
+                    background: #fff;
+                    font-size: 10px;
+                }
+                .report-container {
+                    max-width: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
+                .report-header h2 {
+                    color: #000;
+                    text-align: center;
+                    margin-bottom: 15px;
+                    font-size: 16px;
+                }
+                .controls { display: none; }
+                .component-section {
+                    margin-bottom: 8px;
+                    border: 1px solid #ccc;
+                    page-break-inside: avoid;
+                    break-inside: avoid;
+                }
+                .component-header {
+                    background-color: #f5f5f5;
+                    padding: 5px 8px;
+                    border-bottom: 1px solid #ccc;
+                }
+                .component-header h4 {
+                    margin: 0;
+                    color: #000;
+                    font-size: 12px;
+                }
+                .toggle-icon { display: none; }
+                .measurements-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 9px;
+                    margin: 0;
+                }
+                .measurements-table td {
+                    padding: 2px 4px;
+                    border: 1px solid #ccc;
+                    color: #000;
+                    line-height: 1.2;
+                }
+                .section-header td {
+                    background-color: #e0e0e0 !important;
+                    font-weight: bold;
+                    text-align: center;
+                    font-size: 9px;
+                    padding: 3px 4px;
+                }
+                .cylinder-header td {
+                    background-color: #d0d0d0 !important;
+                    font-weight: bold;
+                    text-align: center;
+                    font-size: 9px;
+                    padding: 3px 4px;
+                }
+                .reference-value {
+                    font-weight: bold;
+                    font-style: italic;
+                }
+                .in-range {
+                    background-color: #e8f5e8 !important;
+                }
+                .out-range {
+                    background-color: #ffe8e8 !important;
+                }
+                .no-data {
+                    text-align: center;
+                    padding: 8px;
+                    font-style: italic;
+                    font-size: 9px;
+                }
+                /* Forçar tudo em uma página */
+                * {
+                    page-break-inside: avoid !important;
+                    break-inside: avoid !important;
+                }
+                .component-section {
+                    page-break-after: avoid !important;
+                    break-after: avoid !important;
+                }
+                @media print {
+                    body { 
+                        margin: 0;
+                        transform: scale(0.8);
+                        transform-origin: top left;
+                    }
+                    .report-container {
+                        transform: scale(0.85);
+                        transform-origin: top left;
+                        width: 117%;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+    `);
+    
+    printWindow.document.write(reportContainer.outerHTML);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    
+    // Aguardar o carregamento e imprimir
+    setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+    }, 500);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
