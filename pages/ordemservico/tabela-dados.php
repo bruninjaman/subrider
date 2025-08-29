@@ -17,6 +17,12 @@ function formatNumber($value) {
     return is_numeric($value) ? number_format($value, 2, ',', '.') : htmlspecialchars($value);
 }
 
+function formatPastilha($value) {
+    if ($value === null || $value === '' || $value == 0) return null;
+    // Para pastilhas, dividir por 100 para converter de centésimos para centímetros
+    return is_numeric($value) ? number_format($value, 0, ',', '.') : htmlspecialchars($value);
+}
+
 function getReferenceData($conn, $ordem, $table) {
     $query = "SELECT * FROM $table WHERE is_reference = 1 AND ordem = ?";
     $stmt = mysqli_prepare($conn, $query);
@@ -400,8 +406,8 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                                         $cylinderContent .= "<tr><td>$measurementName</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$folgaDisplay</td></tr>";
                                         
                                         // Pastilha (sempre sem cor)
-                                        $pastilhaDisplay = formatNumber($pastilhaValue);
-                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' mm' : '-';
+                                        $pastilhaDisplay = formatPastilha($pastilhaValue);
+                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' cm' : '-';
                                         $pastilhaMeasurementName = "Pastilha Válv. " . strtoupper($valvula) . " ($lado)";
                                         $cylinderContent .= "<tr><td>$pastilhaMeasurementName</td><td class='reference-value'>-</td><td>$pastilhaDisplay</td></tr>";
                                     }
