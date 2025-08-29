@@ -401,13 +401,13 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                                             $colorClass = $inRange ? 'in-range' : 'out-range';
                                         }
                                         
-                                        $folgaDisplay = $formattedFolga !== null ? $formattedFolga . ' mm' : '-';
+                                        $folgaDisplay = $formattedFolga !== null ? $formattedFolga . ' cm,' : '-';
                                         $measurementName = "Folga Válv. " . strtoupper($valvula) . " ($lado)";
                                         $cylinderContent .= "<tr><td>$measurementName</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$folgaDisplay</td></tr>";
                                         
                                         // Pastilha (sempre sem cor)
                                         $pastilhaDisplay = formatPastilha($pastilhaValue);
-                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' cm' : '-';
+                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' mm' : '-';
                                         $pastilhaMeasurementName = "Pastilha Válv. " . strtoupper($valvula) . " ($lado)";
                                         $cylinderContent .= "<tr><td>$pastilhaMeasurementName</td><td class='reference-value'>-</td><td>$pastilhaDisplay</td></tr>";
                                     }
