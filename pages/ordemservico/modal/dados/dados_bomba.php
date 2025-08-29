@@ -106,7 +106,7 @@ function displayBombaMedicoes($conn, $ordem) {
         echo "<td>" . number_format($bombaRef['pressao_oleo_min'], 2, ',', '.') . "</td>";
         echo "<td>";
         $valorPressaoOleoMin = isset($medicoes['pressao_oleo_min']) && $medicoes['pressao_oleo_min'] !== null ? number_format($medicoes['pressao_oleo_min'], 2, ',', '.') : '';
-        echo "<input type='text' name='medida[pressao_oleo_min]' class='meas-input' value='$valorPressaoOleoMin'>";
+        echo "<input type='text' name='medida[pressao_oleo_min]' class='meas-input' data-reference='" . $bombaRef['pressao_oleo_min'] . "' data-validation-type='min' value='$valorPressaoOleoMin'>";
         echo "</td>";
         echo "</tr>";
 
@@ -116,7 +116,7 @@ function displayBombaMedicoes($conn, $ordem) {
         echo "<td>" . number_format($bombaRef['pressao_oleo_max'], 2, ',', '.') . "</td>";
         echo "<td>";
         $valorPressaoOleoMax = isset($medicoes['pressao_oleo_max']) && $medicoes['pressao_oleo_max'] !== null ? number_format($medicoes['pressao_oleo_max'], 2, ',', '.') : '';
-        echo "<input type='text' name='medida[pressao_oleo_max]' class='meas-input' value='$valorPressaoOleoMax'>";
+        echo "<input type='text' name='medida[pressao_oleo_max]' class='meas-input' data-reference='" . $bombaRef['pressao_oleo_max'] . "' data-validation-type='max' value='$valorPressaoOleoMax'>";
         echo "</td>";
         echo "</tr>";
 
@@ -126,7 +126,7 @@ function displayBombaMedicoes($conn, $ordem) {
         echo "<td>" . number_format($bombaRef['vazao_min'], 2, ',', '.') . "</td>";
         echo "<td>";
         $valorVazaoMin = isset($medicoes['vazao_min']) && $medicoes['vazao_min'] !== null ? number_format($medicoes['vazao_min'], 2, ',', '.') : '';
-        echo "<input type='text' name='medida[vazao_min]' class='meas-input' value='$valorVazaoMin'>";
+        echo "<input type='text' name='medida[vazao_min]' class='meas-input' data-reference='" . $bombaRef['vazao_min'] . "' data-validation-type='min' value='$valorVazaoMin'>";
         echo "</td>";
         echo "</tr>";
 
@@ -136,7 +136,7 @@ function displayBombaMedicoes($conn, $ordem) {
         echo "<td>" . number_format($bombaRef['vazao_max'], 2, ',', '.') . "</td>";
         echo "<td>";
         $valorVazaoMax = isset($medicoes['vazao_max']) && $medicoes['vazao_max'] !== null ? number_format($medicoes['vazao_max'], 2, ',', '.') : '';
-        echo "<input type='text' name='medida[vazao_max]' class='meas-input' value='$valorVazaoMax'>";
+        echo "<input type='text' name='medida[vazao_max]' class='meas-input' data-reference='" . $bombaRef['vazao_max'] . "' data-validation-type='max' value='$valorVazaoMax'>";
         echo "</td>";
         echo "</tr>";
 
@@ -146,10 +146,9 @@ function displayBombaMedicoes($conn, $ordem) {
         echo "<td>" . number_format($bombaRef['comb_pressao'], 2, ',', '.') . "</td>";
         echo "<td>";
         $valorCombPressao = isset($medicoes['comb_pressao']) && $medicoes['comb_pressao'] !== null ? number_format($medicoes['comb_pressao'], 2, ',', '.') : '';
-        echo "<input type='text' name='medida[comb_pressao]' class='meas-input' value='$valorCombPressao'>";
+        echo "<input type='text' name='medida[comb_pressao]' class='meas-input' data-reference='" . $bombaRef['comb_pressao'] . "' data-validation-type='exact' value='$valorCombPressao'>";
         echo "</td>";
         echo "</tr>";
-
         echo "</tbody></table>";
         echo "<button type='submit' class='save-btn'>Salvar Medições</button>";
         echo "</form>";
@@ -159,4 +158,4 @@ function displayBombaMedicoes($conn, $ordem) {
     } catch (Exception $e) {
         echo "<div class='error-msg'>Erro ao exibir medições da bomba: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
-} 
+}

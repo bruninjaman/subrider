@@ -114,11 +114,20 @@ function displayVirabrequimMedicoes($conn, $ordem) {
             } else if (in_array($campoLower, ['folga_lateral_biela', 'folga_lateral_eixo_min', 'folga_lateral_eixo_max', 'empenamento'])) {
                 $virabrequimClass = 'virabrequim-rolamento-field';
             }
+            
+            // Determinar tipo de validação baseado no nome do campo
+            $validationType = 'exact';
+            if (strpos($campoLower, '_min') !== false) {
+                $validationType = 'min';
+            } elseif (strpos($campoLower, '_max') !== false || strpos($campoLower, 'empenamento') !== false) {
+                $validationType = 'max';
+            }
+            
             echo "<tr" . ($virabrequimClass ? " class='$virabrequimClass'" : '') . ">";
             echo "<td>" . htmlspecialchars(ucfirst(str_replace('_', ' ', $campo))) . "</td>";
             echo "<td>" . (is_numeric($referencia) ? number_format($referencia, 2, ',', '.') : htmlspecialchars($referencia)) . "</td>";
             $valor = isset($medicoes[$campo]) && $medicoes[$campo] !== null ? (is_numeric($medicoes[$campo]) ? number_format($medicoes[$campo], 2, ',', '.') : htmlspecialchars($medicoes[$campo])) : '';
-            echo "<td><input type='text' name='medida[" . htmlspecialchars($campo) . "]' class='meas-input' value='$valor'></td>";
+            echo "<td><input type='text' name='medida[" . htmlspecialchars($campo) . "]' class='meas-input' data-reference='" . $referencia . "' data-validation-type='" . $validationType . "' value='$valor'></td>";
             echo "</tr>";
         }
 
@@ -151,4 +160,4 @@ function displayVirabrequimMedicoes($conn, $ordem) {
     } catch (Exception $e) {
         echo "<div class='error-msg'>Erro ao exibir medições do virabrequim: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
-} 
+}

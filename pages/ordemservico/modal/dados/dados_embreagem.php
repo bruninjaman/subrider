@@ -126,6 +126,8 @@ function displayEmbreagemMedicoes($conn, $ordem) {
             echo "<td><input type='text' 
                 name='medida[disco_friccao_espes][" . $i . "]' 
                 class='meas-input' 
+                data-reference='" . $embreagemRef['disco_friccao_espes_min'] . "' 
+                data-validation-type='min' 
                 value='$valor'></td>";
         }
         echo "</tr>";
@@ -152,6 +154,8 @@ function displayEmbreagemMedicoes($conn, $ordem) {
             echo "<td><input type='text' 
                 name='medida[disco_separador_emp][" . $i . "]' 
                 class='meas-input' 
+                data-reference='" . $embreagemRef['disco_separador_emp_max'] . "' 
+                data-validation-type='max' 
                 value='$valor'></td>";
         }
         echo "</tr>";
@@ -165,4 +169,4 @@ function displayEmbreagemMedicoes($conn, $ordem) {
     } catch (Exception $e) {
         echo "<div class='error-msg'>Erro: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
-} 
+}

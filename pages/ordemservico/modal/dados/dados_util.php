@@ -5,6 +5,123 @@ function formatarIntervalo($min, $max) {
     return number_format(floatval($min), 2, ',', '.') . " a " . number_format(floatval($max), 2, ',', '.');
 }
 
+// Função para detectar se um valor precisa de correção centesimal
+function needsCentesimalCorrection($inputValue, $referenceValue) {
+    // Converter vírgula para ponto
+    $input = floatval(str_replace(',', '.', $inputValue));
+    
+    // Verificar se a referência é um range (formato "min a max")
+    if (strpos($referenceValue, ' a ') !== false) {
+        $parts = explode(' a ', $referenceValue);
+        if (count($parts) == 2) {
+            $min = floatval(str_replace(',', '.', trim($parts[0])));
+            $max = floatval(str_replace(',', '.', trim($parts[1])));
+            
+            // Usar o valor mínimo como referência para detecção
+            $reference = $min;
+            
+            // Se o valor de entrada é >= 10 e a referência é < 1
+            if ($input >= 10 && $reference < 1) {
+                return true;
+            }
+            
+            // Se o valor de entrada é >= 100 vezes maior que a referência
+            if ($reference > 0 && ($input / $reference) >= 100) {
+                return true;
+            }
+            
+            return false;
+        }
+    }
+    
+    // Para valores únicos
+    $reference = floatval(str_replace(',', '.', $referenceValue));
+    
+    // Se o valor de entrada é >= 10 e a referência é < 1
+    if ($input >= 10 && $reference < 1) {
+        return true;
+    }
+    
+    // Se o valor de entrada é >= 100 vezes maior que a referência
+    if ($reference > 0 && ($input / $reference) >= 100) {
+        return true;
+    }
+    
+    return false;
+}
+
+// Função para aplicar correção centesimal baseada na referência
+function applyCentesimalCorrection($inputValue, $referenceValue) {
+    $input = floatval(str_replace(',', '.', $inputValue));
+    
+    // Extrair valor de referência (usar mínimo se for range)
+    $reference = $referenceValue;
+    if (strpos($referenceValue, ' a ') !== false) {
+        $parts = explode(' a ', $referenceValue);
+        if (count($parts) == 2) {
+            $reference = floatval(str_replace(',', '.', trim($parts[0])));
+        }
+    } else {
+        $reference = floatval(str_replace(',', '.', $referenceValue));
+    }
+    
+    // Calcular o fator de correção baseado na referência
+    if ($reference > 0) {
+        // Encontrar a potência de 10 mais próxima da referência
+        $factor = 1;
+        $tempRef = $reference;
+        
+        // Se referência < 1, encontrar quantas casas decimais precisamos
+        while ($tempRef < 1 && $factor < 10000) {
+            $tempRef *= 10;
+            $factor *= 10;
+        }
+        
+        // Aplicar correção se o valor de entrada for muito maior
+        if ($input >= ($reference * $factor)) {
+            return $input / $factor;
+        }
+    }
+    
+    return $input;
+}
+
+// Função para detectar se um valor está fora do range baseado na referência
+function isValueOutOfRange($inputValue, $referenceValue) {
+    // Converter vírgula para ponto
+    $input = floatval(str_replace(',', '.', $inputValue));
+    
+    // Verificar se a referência contém um range (formato "min a max")
+    if (strpos($referenceValue, ' a ') !== false) {
+        $parts = explode(' a ', $referenceValue);
+        if (count($parts) == 2) {
+            $min = floatval(str_replace(',', '.', trim($parts[0])));
+            $max = floatval(str_replace(',', '.', trim($parts[1])));
+            
+            // Verificar se precisa de correção centesimal
+            if (needsCentesimalCorrection($inputValue, $referenceValue)) {
+                $input = applyCentesimalCorrection($inputValue, $referenceValue);
+            }
+            
+            return $input < $min || $input > $max;
+        }
+    }
+    
+    // Para valores únicos, verificar se está muito distante
+    $reference = floatval(str_replace(',', '.', $referenceValue));
+    if (needsCentesimalCorrection($inputValue, $referenceValue)) {
+        $input = applyCentesimalCorrection($inputValue, $referenceValue);
+    }
+    
+    // Considerar fora do range se a diferença for muito grande (mais de 50% da referência)
+    if ($reference > 0) {
+        $tolerance = $reference * 0.5;
+        return abs($input - $reference) > $tolerance;
+    }
+    
+    return false;
+}
+
 function displayTableData($conn, $tableName, $tableTitle) {
     if (!isset($_GET['ordem'])) {
         echo "<p>Parâmetro 'ordem' inválido ou não fornecido.</p>";
@@ -17,7 +134,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === $tableName) {
         if (isset($_POST['update'])) {
             // Buscar o ID do registro de referência
-            $refQuery = "SELECT id FROM $tableName WHERE is_reference = 1 AND ordem = ?";
+            $refQuery = "SELECT * FROM $tableName WHERE is_reference = 1 AND ordem = ?";
             $refStmt = mysqli_prepare($conn, $refQuery);
             mysqli_stmt_bind_param($refStmt, "s", $ordem);
             mysqli_stmt_execute($refStmt);
@@ -33,10 +150,23 @@ function displayTableData($conn, $tableName, $tableTitle) {
                     $params = [];
                     $types = '';
                     
+                    // Atualizar a parte do salvamento para usar a referência correta
                     foreach ($fields as $field => $value) {
                         // Converter vírgula para ponto se for um número
                         if (is_numeric(str_replace(',', '.', $value))) {
                             $value = str_replace(',', '.', $value);
+                            
+                            // Aplicar correção centesimal se necessário
+                            if (isset($refRow[$field])) {
+                                $referenceValue = $refRow[$field];
+                                
+                                // Debug: verificar se a detecção está funcionando
+                                if (needsCentesimalCorrection($value, $referenceValue)) {
+                                    $originalValue = $value;
+                                    $value = applyCentesimalCorrection($value, $referenceValue); // Passar referência também
+                                    error_log("Correção centesimal aplicada: $originalValue -> $value (ref: $referenceValue)");
+                                }
+                            }
                         }
                         
                         $updates[] = "`$field` = ?";
@@ -132,8 +262,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
                 !($tableName === 'cabecote' && ($keyLower === 'motor_tipo' || $keyLower === 'tipo_val')) &&
                 !($tableName === 'motor' && ($keyLower === 'created_at' || $keyLower === 'updated_at'))) {
                 
-                echo "<tr" . (isset(
-                    $virabrequimClass) && $virabrequimClass ? " class='$virabrequimClass'" : "") . ">";
+                echo "<tr" . (isset($virabrequimClass) && $virabrequimClass ? " class='$virabrequimClass'" : "") . ">";
                 echo "<td class='data-label'>" . 
                      htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
                      "</td>";
@@ -175,10 +304,19 @@ function displayTableData($conn, $tableName, $tableTitle) {
                          "</td>";
                     
                     echo "<td class='meas-values'>";
+                    
+                    // Adicionar classe para validação em tempo real
+                    $inputClass = 'meas-input first';
+                    if (isValueOutOfRange($value, $value)) {
+                        $inputClass .= ' out-of-range-input';
+                    }
+                    
                     echo "<input type='text' " .
                          "name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
                          "value='" . htmlspecialchars($value) . "' " .
-                         "class='meas-input first'>";
+                         "class='$inputClass' " .
+                         "data-reference='" . htmlspecialchars($value) . "' " .
+                         "oninput='validateInput(this)'>";
                     echo "</td>";
                 }
                 
@@ -191,6 +329,69 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
         echo "<button type='submit' class='save-btn'>Salvar Alterações</button>";
         echo "</form>";
+        
+        // Adicionar script para validação em tempo real
+        echo "<script>
+        function validateInput(input) {
+            const reference = input.getAttribute('data-reference');
+            const value = input.value;
+            
+            if (value && reference) {
+                // Verificar se está fora do range
+                if (isValueOutOfRangeJS(value, reference)) {
+                    input.classList.add('out-of-range-input');
+                } else {
+                    input.classList.remove('out-of-range-input');
+                }
+            }
+        }
+        
+        function needsCentesimalCorrectionJS(inputValue, referenceValue) {
+            const input = parseFloat(inputValue.replace(',', '.'));
+            const reference = parseFloat(referenceValue.replace(',', '.'));
+            
+            if (input >= 10 && reference < 1) {
+                return true;
+            }
+            
+            if (reference > 0 && (input / reference) >= 100) {
+                return true;
+            }
+            
+            return false;
+        }
+        
+        function isValueOutOfRangeJS(inputValue, referenceValue) {
+            let input = parseFloat(inputValue.replace(',', '.'));
+            
+            if (referenceValue.includes(' a ')) {
+                const parts = referenceValue.split(' a ');
+                if (parts.length === 2) {
+                    const min = parseFloat(parts[0].replace(',', '.'));
+                    const max = parseFloat(parts[1].replace(',', '.'));
+                    
+                    if (needsCentesimalCorrectionJS(inputValue, min.toString())) {
+                        input = input / 100;
+                    }
+                    
+                    return input < min || input > max;
+                }
+            }
+            
+            const reference = parseFloat(referenceValue.replace(',', '.'));
+            if (needsCentesimalCorrectionJS(inputValue, reference.toString())) {
+                input = input / 100;
+            }
+            
+            if (reference > 0) {
+                const tolerance = reference * 0.5;
+                return Math.abs(input - reference) > tolerance;
+            }
+            
+            return false;
+        }
+        </script>";
+        
         // Adicionar script para alternar campos dinamicamente
         if ($tableName === 'virabrequim') {
             echo "<script>
@@ -228,4 +429,4 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
     mysqli_stmt_close($refStmt);
     mysqli_stmt_close($measStmt);
-} 
+}
