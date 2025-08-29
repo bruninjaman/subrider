@@ -119,15 +119,25 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                             'vazao_max' => 'Vazão Máx', 
                             'comb_pressao' => 'Pressão Combustível'
                         ];
+                        
+                        $tableContent .= "<tr class='section-header'><td><strong>Medição</strong></td><td><strong>Referência</strong></td><td><strong>Valor Medido</strong></td></tr>";
+                        
                         foreach($medicoes as $campo => $valor) {
                             $formattedValue = formatNumber($valor);
                             if ($formattedValue !== null) {
                                 $label = isset($campos[$campo]) ? $campos[$campo] : ucfirst(str_replace('_', ' ', $campo));
                                 $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
-                                $validationType = getValidationType($campo, $table);
-                                $inRange = isInRange($valor, $referenceValue, $validationType);
-                                $colorClass = $inRange ? 'in-range' : 'out-range';
-                                $tableContent .= "<tr><td>$label</td><td class='$colorClass'>$formattedValue</td></tr>";
+                                $refFormatted = $referenceValue ? formatNumber($referenceValue) : '-';
+                                
+                                // Só aplicar cor se houver referência válida
+                                $colorClass = '';
+                                if ($referenceValue !== null && $referenceValue != 0) {
+                                    $validationType = getValidationType($campo, $table);
+                                    $inRange = isInRange($valor, $referenceValue, $validationType);
+                                    $colorClass = $inRange ? 'in-range' : 'out-range';
+                                }
+                                
+                                $tableContent .= "<tr><td>$label</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue</td></tr>";
                                 $hasVisibleData = true;
                             }
                         }
@@ -136,16 +146,24 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                 break;
                 
             case 'embreagem':
+                $tableContent .= "<tr class='section-header'><td><strong>Medição</strong></td><td><strong>Referência</strong></td><td><strong>Valor Medido</strong></td></tr>";
+                
                 if (!empty($row['medicoes_friccao'])) {
                     $medicoes_friccao = json_decode($row['medicoes_friccao'], true);
                     if ($medicoes_friccao) {
                         $referenceMin = isset($referenceData['disco_friccao_espes_min']) ? $referenceData['disco_friccao_espes_min'] : null;
+                        $refFormatted = $referenceMin ? formatNumber($referenceMin) . ' mm (mín)' : '-';
+                        
                         foreach($medicoes_friccao as $index => $valor) {
                             $formattedValue = formatNumber($valor);
                             if ($formattedValue !== null) {
-                                $inRange = isInRange($valor, $referenceMin, 'min');
-                                $colorClass = $inRange ? 'in-range' : 'out-range';
-                                $tableContent .= "<tr><td>Disco Fricção " . ($index + 1) . "</td><td class='$colorClass'>$formattedValue mm</td></tr>";
+                                $colorClass = '';
+                                if ($referenceMin !== null && $referenceMin != 0) {
+                                    $inRange = isInRange($valor, $referenceMin, 'min');
+                                    $colorClass = $inRange ? 'in-range' : 'out-range';
+                                }
+                                
+                                $tableContent .= "<tr><td>Disco Fricção " . ($index + 1) . "</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue mm</td></tr>";
                                 $hasVisibleData = true;
                             }
                         }
@@ -156,12 +174,18 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                     $medicoes_separador = json_decode($row['medicoes_separador'], true);
                     if ($medicoes_separador) {
                         $referenceMax = isset($referenceData['disco_separador_emp_max']) ? $referenceData['disco_separador_emp_max'] : null;
+                        $refFormatted = $referenceMax ? formatNumber($referenceMax) . ' mm (máx)' : '-';
+                        
                         foreach($medicoes_separador as $index => $valor) {
                             $formattedValue = formatNumber($valor);
                             if ($formattedValue !== null) {
-                                $inRange = isInRange($valor, $referenceMax, 'max');
-                                $colorClass = $inRange ? 'in-range' : 'out-range';
-                                $tableContent .= "<tr><td>Disco Separador " . ($index + 1) . "</td><td class='$colorClass'>$formattedValue mm</td></tr>";
+                                $colorClass = '';
+                                if ($referenceMax !== null && $referenceMax != 0) {
+                                    $inRange = isInRange($valor, $referenceMax, 'max');
+                                    $colorClass = $inRange ? 'in-range' : 'out-range';
+                                }
+                                
+                                $tableContent .= "<tr><td>Disco Separador " . ($index + 1) . "</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue mm</td></tr>";
                                 $hasVisibleData = true;
                             }
                         }
@@ -191,17 +215,40 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                             'folga_pino_pis_max' => 'Folga Pino/Pis Máx'
                         ];
                         
-                        foreach($medicoes as $cilindro => $dados_cilindro) {
-                            if (is_array($dados_cilindro)) {
-                                foreach($dados_cilindro as $campo => $valor) {
+                        // Organizar por cilindro
+                        $cilindros = array_keys($medicoes);
+                        sort($cilindros);
+                        
+                        foreach($cilindros as $cilindro) {
+                            if (is_array($medicoes[$cilindro])) {
+                                $tableContent .= "<tr class='cylinder-header'><td colspan='3'><strong>CILINDRO $cilindro</strong></td></tr>";
+                                $tableContent .= "<tr class='section-header'><td><strong>Medição</strong></td><td><strong>Referência</strong></td><td><strong>Valor Medido</strong></td></tr>";
+                                
+                                foreach($medicoes[$cilindro] as $campo => $valor) {
                                     $formattedValue = formatNumber($valor);
                                     if ($formattedValue !== null) {
                                         $label = isset($campos_motor[$campo]) ? $campos_motor[$campo] : ucfirst(str_replace('_', ' ', $campo));
                                         $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
-                                        $validationType = getValidationType($campo, $table);
-                                        $inRange = isInRange($valor, $referenceValue, $validationType);
-                                        $colorClass = $inRange ? 'in-range' : 'out-range';
-                                        $tableContent .= "<tr><td>Cil. $cilindro - $label</td><td class='$colorClass'>$formattedValue</td></tr>";
+                                        $refFormatted = $referenceValue ? formatNumber($referenceValue) : '-';
+                                        
+                                        // Adicionar indicador de tipo de validação
+                                        if ($referenceValue) {
+                                            $validationType = getValidationType($campo, $table);
+                                            switch($validationType) {
+                                                case 'min': $refFormatted .= ' (mín)'; break;
+                                                case 'max': $refFormatted .= ' (máx)'; break;
+                                                case 'exact': $refFormatted .= ' (±5%)'; break;
+                                            }
+                                        }
+                                        
+                                        $colorClass = '';
+                                        if ($referenceValue !== null && $referenceValue != 0) {
+                                            $validationType = getValidationType($campo, $table);
+                                            $inRange = isInRange($valor, $referenceValue, $validationType);
+                                            $colorClass = $inRange ? 'in-range' : 'out-range';
+                                        }
+                                        
+                                        $tableContent .= "<tr><td>$label</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue</td></tr>";
                                         $hasVisibleData = true;
                                     }
                                 }
@@ -224,14 +271,32 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                             'empenamento' => 'Empenamento'
                         ];
                         
+                        $tableContent .= "<tr class='section-header'><td><strong>Medição</strong></td><td><strong>Referência</strong></td><td><strong>Valor Medido</strong></td></tr>";
+                        
                         foreach($medicoes as $campo => $valor) {
                             $formattedValue = formatNumber($valor);
                             if ($formattedValue !== null) {
                                 $label = isset($campos_virabrequim[$campo]) ? $campos_virabrequim[$campo] : ucfirst(str_replace('_', ' ', $campo));
                                 $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
-                                $validationType = getValidationType($campo, $table);
-                                $inRange = isInRange($valor, $referenceValue, $validationType);
-                                $colorClass = $inRange ? 'in-range' : 'out-range';
+                                $refFormatted = $referenceValue ? formatNumber($referenceValue) . ' mm' : '-';
+                                
+                                // Adicionar indicador de tipo de validação
+                                if ($referenceValue) {
+                                    $validationType = getValidationType($campo, $table);
+                                    switch($validationType) {
+                                        case 'min': $refFormatted .= ' (mín)'; break;
+                                        case 'max': $refFormatted .= ' (máx)'; break;
+                                        case 'exact': $refFormatted .= ' (±5%)'; break;
+                                    }
+                                }
+                                
+                                $colorClass = '';
+                                if ($referenceValue !== null && $referenceValue != 0) {
+                                    $validationType = getValidationType($campo, $table);
+                                    $inRange = isInRange($valor, $referenceValue, $validationType);
+                                    $colorClass = $inRange ? 'in-range' : 'out-range';
+                                }
+                                
                                 $tableContent .= "<tr><td>$label</td><td class='$colorClass'>$formattedValue mm</td></tr>";
                                 $hasVisibleData = true;
                             }
@@ -251,33 +316,67 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                             'esc_pastilha' => 'Pastilha Válv. Esc'
                         ];
                         
+                        // Organizar por cilindro e tipo
+                        $cilindrosData = [];
+                        
                         foreach($grupos as $prefixo => $titulo_grupo) {
                             foreach($medicoes as $tipo_medicao => $dados) {
                                 if (strpos($tipo_medicao, $prefixo) !== false && is_array($dados)) {
                                     $lado = str_replace($prefixo . '_', '', $tipo_medicao);
                                     foreach($dados as $cilindro => $valor) {
-                                        $formattedValue = formatNumber($valor);
-                                        if ($formattedValue !== null) {
-                                            // Para cabeçote, usar limites específicos baseados no tipo
-                                            $referenceMin = null;
-                                            $referenceMax = null;
-                                            if (strpos($prefixo, 'adm') !== false) {
-                                                $referenceMin = isset($referenceData['val_adm_limite_min']) ? $referenceData['val_adm_limite_min'] : null;
-                                                $referenceMax = isset($referenceData['val_adm_limite_max']) ? $referenceData['val_adm_limite_max'] : null;
-                                            } else {
-                                                $referenceMin = isset($referenceData['val_esc_limite_min']) ? $referenceData['val_esc_limite_min'] : null;
-                                                $referenceMax = isset($referenceData['val_esc_limite_max']) ? $referenceData['val_esc_limite_max'] : null;
-                                            }
-                                            
-                                            $inRange = true;
-                                            if ($referenceMin !== null && $valor < $referenceMin) $inRange = false;
-                                            if ($referenceMax !== null && $valor > $referenceMax) $inRange = false;
-                                            
-                                            $colorClass = $inRange ? 'in-range' : 'out-range';
-                                            $tableContent .= "<tr><td>$titulo_grupo Cil. $cilindro ($lado)</td><td class='$colorClass'>$formattedValue mm</td></tr>";
-                                            $hasVisibleData = true;
+                                        if (!isset($cilindrosData[$cilindro])) {
+                                            $cilindrosData[$cilindro] = [];
                                         }
+                                        $cilindrosData[$cilindro][] = [
+                                            'tipo' => $titulo_grupo,
+                                            'lado' => $lado,
+                                            'valor' => $valor,
+                                            'prefixo' => $prefixo
+                                        ];
                                     }
+                                }
+                            }
+                        }
+                        
+                        // Exibir organizadamente por cilindro
+                        ksort($cilindrosData);
+                        foreach($cilindrosData as $cilindro => $dados) {
+                            $tableContent .= "<tr class='cylinder-header'><td colspan='3'><strong>CILINDRO $cilindro</strong></td></tr>";
+                            $tableContent .= "<tr class='section-header'><td><strong>Medição</strong></td><td><strong>Referência</strong></td><td><strong>Valor Medido</strong></td></tr>";
+                            
+                            foreach($dados as $item) {
+                                $formattedValue = formatNumber($item['valor']);
+                                if ($formattedValue !== null) {
+                                    $referenceMin = null;
+                                    $referenceMax = null;
+                                    if (strpos($item['prefixo'], 'adm') !== false) {
+                                        $referenceMin = isset($referenceData['val_adm_limite_min']) ? $referenceData['val_adm_limite_min'] : null;
+                                        $referenceMax = isset($referenceData['val_adm_limite_max']) ? $referenceData['val_adm_limite_max'] : null;
+                                    } else {
+                                        $referenceMin = isset($referenceData['val_esc_limite_min']) ? $referenceData['val_esc_limite_min'] : null;
+                                        $referenceMax = isset($referenceData['val_esc_limite_max']) ? $referenceData['val_esc_limite_max'] : null;
+                                    }
+                                    
+                                    $refFormatted = '-';
+                                    if ($referenceMin || $referenceMax) {
+                                        $refParts = [];
+                                        if ($referenceMin) $refParts[] = formatNumber($referenceMin);
+                                        if ($referenceMax) $refParts[] = formatNumber($referenceMax);
+                                        $refFormatted = implode('-', $refParts) . ' mm';
+                                    }
+                                    
+                                    $colorClass = '';
+                                    // Só colorir medidas de folga, não pastilha
+                                    if (strpos($item['prefixo'], 'folga') !== false && (($referenceMin !== null && $referenceMin != 0) || ($referenceMax !== null && $referenceMax != 0))) {
+                                        $inRange = true;
+                                        if ($referenceMin !== null && $referenceMin != 0 && $item['valor'] < $referenceMin) $inRange = false;
+                                        if ($referenceMax !== null && $referenceMax != 0 && $item['valor'] > $referenceMax) $inRange = false;
+                                        $colorClass = $inRange ? 'in-range' : 'out-range';
+                                    }
+                                    
+                                    $measurementName = "{$item['tipo']} ({$item['lado']})";
+                                    $tableContent .= "<tr><td>$measurementName</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue mm</td></tr>";
+                                    $hasVisibleData = true;
                                 }
                             }
                         }
@@ -474,14 +573,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .measurements-table td:first-child {
     font-weight: 500;
-    width: 60%;
+    width: 40%;
     color: #f0f0f0;
+}
+
+.measurements-table td:nth-child(2) {
+    width: 30%;
+    text-align: center;
 }
 
 .measurements-table td:last-child {
     text-align: right;
     font-weight: 600;
-    width: 40%;
+    width: 30%;
+}
+
+/* Cabeçalhos de seção */
+.section-header td {
+    background-color: #3a3d47 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px !important;
+}
+
+/* Cabeçalhos de cilindro */
+.cylinder-header td {
+    background-color: #e44c5c !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px !important;
+    font-size: 13px;
+}
+
+/* Valores de referência */
+.reference-value {
+    color: #87CEEB !important;
+    font-weight: bold;
+    font-style: italic;
 }
 
 /* Cores para medições dentro e fora do range */
