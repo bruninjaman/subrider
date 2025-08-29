@@ -13,8 +13,83 @@ if (!$conn) {
 }
 
 function formatNumber($value) {
-    if ($value === null || $value === '') return '-';
+    if ($value === null || $value === '' || $value == 0) return null;
     return is_numeric($value) ? number_format($value, 2, ',', '.') : htmlspecialchars($value);
+}
+
+function getReferenceData($conn, $ordem, $table) {
+    $query = "SELECT * FROM $table WHERE is_reference = 1 AND ordem = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "s", $ordem);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_assoc($result);
+}
+
+function isInRange($value, $reference, $validationType) {
+    if ($value === null || $reference === null || $reference == 0) return true;
+    
+    switch($validationType) {
+        case 'min':
+            return $value >= $reference;
+        case 'max':
+            return $value <= $reference;
+        case 'exact':
+            // Para valores exatos, considera uma tolerância de 5%
+            $tolerance = $reference * 0.05;
+            return abs($value - $reference) <= $tolerance;
+        default:
+            return true;
+    }
+}
+
+function getValidationType($campo, $table) {
+    // Define o tipo de validação baseado no campo e tabela
+    $validationRules = [
+        'bomba' => [
+            'pressao_oleo_min' => 'min',
+            'pressao_oleo_max' => 'max',
+            'vazao_min' => 'min',
+            'vazao_max' => 'max',
+            'comb_pressao' => 'exact'
+        ],
+        'embreagem' => [
+            'disco_friccao_espes' => 'min',
+            'disco_separador_emp' => 'max'
+        ],
+        'motor' => [
+            'diametro_cilindro_max' => 'max',
+            'conicidade_max' => 'max',
+            'ovalizacao_max' => 'max',
+            'diametro_pistao_min' => 'min',
+            'folga_cil_pis_max' => 'max',
+            'aber_anel_1_max' => 'max',
+            'aber_anel_2_max' => 'max',
+            'aber_anel_1_pres_min' => 'min',
+            'aber_anel_2_pres_min' => 'min',
+            'larg_anel_1_min' => 'min',
+            'larg_anel_2_min' => 'min',
+            'dia_furo_pis_min' => 'min',
+            'dia_pino_pis_min' => 'min',
+            'folga_pino_pis_max' => 'max'
+        ],
+        'virabrequim' => [
+            'folga_mancal' => 'exact',
+            'folga_bronzina' => 'exact',
+            'folga_lateral_biela' => 'exact',
+            'folga_lateral_eixo_min' => 'min',
+            'folga_lateral_eixo_max' => 'max',
+            'empenamento' => 'max'
+        ],
+        'cabecote' => [
+            'val_adm_limite_min' => 'min',
+            'val_adm_limite_max' => 'max',
+            'val_esc_limite_min' => 'min',
+            'val_esc_limite_max' => 'max'
+        ]
+    ];
+    
+    return isset($validationRules[$table][$campo]) ? $validationRules[$table][$campo] : 'exact';
 }
 
 function displayComponentMeasurements($conn, $ordem, $table, $title) {
@@ -24,19 +99,14 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     
+    // Buscar dados de referência
+    $referenceData = getReferenceData($conn, $ordem, $table);
+    
     if ($row = mysqli_fetch_assoc($result)) {
         $componentId = strtolower(str_replace(' ', '-', $title));
-        echo "<div class='component-section'>";
-        echo "<div class='component-header' onclick='toggleComponent(\"$componentId\")'>";
-        echo "<h3>$title</h3>";
-        echo "<span class='toggle-icon' id='icon-$componentId'>▼</span>";
-        echo "</div>";
-        echo "<div class='table-container' id='content-$componentId'>";
-        echo "<table class='measurements-table'>";
-        echo "<thead><tr><th>Campo</th><th>Valor</th></tr></thead>";
-        echo "<tbody>";
+        $hasVisibleData = false;
+        $tableContent = "";
         
-        // Campos específicos por componente
         switch($table) {
             case 'bomba':
                 if (!empty($row['medicoes'])) {
@@ -50,8 +120,16 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                             'comb_pressao' => 'Pressão Combustível'
                         ];
                         foreach($medicoes as $campo => $valor) {
-                            $label = isset($campos[$campo]) ? $campos[$campo] : ucfirst(str_replace('_', ' ', $campo));
-                            echo "<tr><td>$label</td><td>" . formatNumber($valor) . "</td></tr>";
+                            $formattedValue = formatNumber($valor);
+                            if ($formattedValue !== null) {
+                                $label = isset($campos[$campo]) ? $campos[$campo] : ucfirst(str_replace('_', ' ', $campo));
+                                $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
+                                $validationType = getValidationType($campo, $table);
+                                $inRange = isInRange($valor, $referenceValue, $validationType);
+                                $colorClass = $inRange ? 'in-range' : 'out-range';
+                                $tableContent .= "<tr><td>$label</td><td class='$colorClass'>$formattedValue</td></tr>";
+                                $hasVisibleData = true;
+                            }
                         }
                     }
                 }
@@ -61,31 +139,32 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                 if (!empty($row['medicoes_friccao'])) {
                     $medicoes_friccao = json_decode($row['medicoes_friccao'], true);
                     if ($medicoes_friccao) {
-                        $subSectionId = $componentId . '-friccao';
-                        echo "<tr><td colspan='2' class='subsection-header' onclick='toggleSubsection(\"$subSectionId\")'>
-                                <span>Disco de Fricção - Espessura</span>
-                                <span class='toggle-icon-small' id='icon-$subSectionId'>▼</span>
-                              </td></tr>";
-                        echo "<tbody id='content-$subSectionId' class='subsection-content'>";
+                        $referenceMin = isset($referenceData['disco_friccao_espes_min']) ? $referenceData['disco_friccao_espes_min'] : null;
                         foreach($medicoes_friccao as $index => $valor) {
-                            echo "<tr><td>Disco " . ($index + 1) . "</td><td>" . formatNumber($valor) . "</td></tr>";
+                            $formattedValue = formatNumber($valor);
+                            if ($formattedValue !== null) {
+                                $inRange = isInRange($valor, $referenceMin, 'min');
+                                $colorClass = $inRange ? 'in-range' : 'out-range';
+                                $tableContent .= "<tr><td>Disco Fricção " . ($index + 1) . "</td><td class='$colorClass'>$formattedValue mm</td></tr>";
+                                $hasVisibleData = true;
+                            }
                         }
-                        echo "</tbody>";
                     }
                 }
+                
                 if (!empty($row['medicoes_separador'])) {
                     $medicoes_separador = json_decode($row['medicoes_separador'], true);
                     if ($medicoes_separador) {
-                        $subSectionId = $componentId . '-separador';
-                        echo "<tr><td colspan='2' class='subsection-header' onclick='toggleSubsection(\"$subSectionId\")'>
-                                <span>Disco Separador - Empenamento</span>
-                                <span class='toggle-icon-small' id='icon-$subSectionId'>▼</span>
-                              </td></tr>";
-                        echo "<tbody id='content-$subSectionId' class='subsection-content'>";
+                        $referenceMax = isset($referenceData['disco_separador_emp_max']) ? $referenceData['disco_separador_emp_max'] : null;
                         foreach($medicoes_separador as $index => $valor) {
-                            echo "<tr><td>Disco " . ($index + 1) . "</td><td>" . formatNumber($valor) . "</td></tr>";
+                            $formattedValue = formatNumber($valor);
+                            if ($formattedValue !== null) {
+                                $inRange = isInRange($valor, $referenceMax, 'max');
+                                $colorClass = $inRange ? 'in-range' : 'out-range';
+                                $tableContent .= "<tr><td>Disco Separador " . ($index + 1) . "</td><td class='$colorClass'>$formattedValue mm</td></tr>";
+                                $hasVisibleData = true;
+                            }
                         }
-                        echo "</tbody>";
                     }
                 }
                 break;
@@ -95,36 +174,37 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                     $medicoes = json_decode($row['medicoes'], true);
                     if ($medicoes) {
                         $campos_motor = [
-                            'curso_pistao' => 'Curso do Pistão',
-                            'diametro_cilindro_max' => 'Diâmetro Cilindro Máx',
+                            'curso_pistao' => 'Curso Pistão',
+                            'diametro_cilindro_max' => 'Diâm. Cilindro Máx',
                             'conicidade_max' => 'Conicidade Máx',
                             'ovalizacao_max' => 'Ovalização Máx',
-                            'diametro_pistao_min' => 'Diâmetro Pistão Mín',
-                            'folga_cil_pis_max' => 'Folga Cilindro/Pistão Máx',
-                            'aber_anel_1_max' => 'Abertura Anel 1 Máx',
-                            'aber_anel_2_max' => 'Abertura Anel 2 Máx',
-                            'aber_anel_1_pres_min' => 'Pressão Anel 1 Mín',
-                            'aber_anel_2_pres_min' => 'Pressão Anel 2 Mín',
-                            'larg_anel_1_min' => 'Largura Anel 1 Mín',
-                            'larg_anel_2_min' => 'Largura Anel 2 Mín',
-                            'dia_furo_pis_min' => 'Diâmetro Furo Pistão Mín',
-                            'dia_pino_pis_min' => 'Diâmetro Pino Pistão Mín',
-                            'folga_pino_pis_max' => 'Folga Pino/Pistão Máx'
+                            'diametro_pistao_min' => 'Diâm. Pistão Mín',
+                            'folga_cil_pis_max' => 'Folga Cil/Pis Máx',
+                            'aber_anel_1_max' => 'Aber. Anel 1 Máx',
+                            'aber_anel_2_max' => 'Aber. Anel 2 Máx',
+                            'aber_anel_1_pres_min' => 'Press. Anel 1 Mín',
+                            'aber_anel_2_pres_min' => 'Press. Anel 2 Mín',
+                            'larg_anel_1_min' => 'Larg. Anel 1 Mín',
+                            'larg_anel_2_min' => 'Larg. Anel 2 Mín',
+                            'dia_furo_pis_min' => 'Diâm. Furo Pis Mín',
+                            'dia_pino_pis_min' => 'Diâm. Pino Pis Mín',
+                            'folga_pino_pis_max' => 'Folga Pino/Pis Máx'
                         ];
                         
                         foreach($medicoes as $cilindro => $dados_cilindro) {
                             if (is_array($dados_cilindro)) {
-                                $subSectionId = $componentId . '-cilindro-' . $cilindro;
-                                echo "<tr><td colspan='2' class='subsection-header' onclick='toggleSubsection(\"$subSectionId\")'>
-                                        <span>Cilindro $cilindro</span>
-                                        <span class='toggle-icon-small' id='icon-$subSectionId'>▼</span>
-                                      </td></tr>";
-                                echo "<tbody id='content-$subSectionId' class='subsection-content'>";
                                 foreach($dados_cilindro as $campo => $valor) {
-                                    $label = isset($campos_motor[$campo]) ? $campos_motor[$campo] : ucfirst(str_replace('_', ' ', $campo));
-                                    echo "<tr><td>$label</td><td>" . formatNumber($valor) . "</td></tr>";
+                                    $formattedValue = formatNumber($valor);
+                                    if ($formattedValue !== null) {
+                                        $label = isset($campos_motor[$campo]) ? $campos_motor[$campo] : ucfirst(str_replace('_', ' ', $campo));
+                                        $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
+                                        $validationType = getValidationType($campo, $table);
+                                        $inRange = isInRange($valor, $referenceValue, $validationType);
+                                        $colorClass = $inRange ? 'in-range' : 'out-range';
+                                        $tableContent .= "<tr><td>Cil. $cilindro - $label</td><td class='$colorClass'>$formattedValue</td></tr>";
+                                        $hasVisibleData = true;
+                                    }
                                 }
-                                echo "</tbody>";
                             }
                         }
                     }
@@ -138,15 +218,23 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                         $campos_virabrequim = [
                             'folga_mancal' => 'Folga Mancal',
                             'folga_bronzina' => 'Folga Bronzina',
-                            'folga_lateral_biela' => 'Folga Lateral Biela',
-                            'folga_lateral_eixo_min' => 'Folga Lateral Eixo Mín',
-                            'folga_lateral_eixo_max' => 'Folga Lateral Eixo Máx',
+                            'folga_lateral_biela' => 'Folga Lat. Biela',
+                            'folga_lateral_eixo_min' => 'Folga Lat. Eixo Mín',
+                            'folga_lateral_eixo_max' => 'Folga Lat. Eixo Máx',
                             'empenamento' => 'Empenamento'
                         ];
                         
                         foreach($medicoes as $campo => $valor) {
-                            $label = isset($campos_virabrequim[$campo]) ? $campos_virabrequim[$campo] : ucfirst(str_replace('_', ' ', $campo));
-                            echo "<tr><td>$label</td><td>" . formatNumber($valor) . "</td></tr>";
+                            $formattedValue = formatNumber($valor);
+                            if ($formattedValue !== null) {
+                                $label = isset($campos_virabrequim[$campo]) ? $campos_virabrequim[$campo] : ucfirst(str_replace('_', ' ', $campo));
+                                $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
+                                $validationType = getValidationType($campo, $table);
+                                $inRange = isInRange($valor, $referenceValue, $validationType);
+                                $colorClass = $inRange ? 'in-range' : 'out-range';
+                                $tableContent .= "<tr><td>$label</td><td class='$colorClass'>$formattedValue mm</td></tr>";
+                                $hasVisibleData = true;
+                            }
                         }
                     }
                 }
@@ -156,35 +244,41 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                 if (!empty($row['medicoes'])) {
                     $medicoes = json_decode($row['medicoes'], true);
                     if ($medicoes) {
-                        foreach($medicoes as $tipo_medicao => $dados) {
-                            if (is_array($dados)) {
-                                $label_tipo = '';
-                                if (strpos($tipo_medicao, 'adm_folga') !== false) {
-                                    $lado = str_replace('adm_folga_', '', $tipo_medicao);
-                                    $label_tipo = "Folga Válvula Admissão " . ucfirst($lado);
-                                } elseif (strpos($tipo_medicao, 'esc_folga') !== false) {
-                                    $lado = str_replace('esc_folga_', '', $tipo_medicao);
-                                    $label_tipo = "Folga Válvula Escape " . ucfirst($lado);
-                                } elseif (strpos($tipo_medicao, 'adm_pastilha') !== false) {
-                                    $lado = str_replace('adm_pastilha_', '', $tipo_medicao);
-                                    $label_tipo = "Pastilha Válvula Admissão " . ucfirst($lado);
-                                } elseif (strpos($tipo_medicao, 'esc_pastilha') !== false) {
-                                    $lado = str_replace('esc_pastilha_', '', $tipo_medicao);
-                                    $label_tipo = "Pastilha Válvula Escape " . ucfirst($lado);
-                                } else {
-                                    $label_tipo = ucfirst(str_replace('_', ' ', $tipo_medicao));
+                        $grupos = [
+                            'adm_folga' => 'Folga Válv. Adm',
+                            'esc_folga' => 'Folga Válv. Esc',
+                            'adm_pastilha' => 'Pastilha Válv. Adm',
+                            'esc_pastilha' => 'Pastilha Válv. Esc'
+                        ];
+                        
+                        foreach($grupos as $prefixo => $titulo_grupo) {
+                            foreach($medicoes as $tipo_medicao => $dados) {
+                                if (strpos($tipo_medicao, $prefixo) !== false && is_array($dados)) {
+                                    $lado = str_replace($prefixo . '_', '', $tipo_medicao);
+                                    foreach($dados as $cilindro => $valor) {
+                                        $formattedValue = formatNumber($valor);
+                                        if ($formattedValue !== null) {
+                                            // Para cabeçote, usar limites específicos baseados no tipo
+                                            $referenceMin = null;
+                                            $referenceMax = null;
+                                            if (strpos($prefixo, 'adm') !== false) {
+                                                $referenceMin = isset($referenceData['val_adm_limite_min']) ? $referenceData['val_adm_limite_min'] : null;
+                                                $referenceMax = isset($referenceData['val_adm_limite_max']) ? $referenceData['val_adm_limite_max'] : null;
+                                            } else {
+                                                $referenceMin = isset($referenceData['val_esc_limite_min']) ? $referenceData['val_esc_limite_min'] : null;
+                                                $referenceMax = isset($referenceData['val_esc_limite_max']) ? $referenceData['val_esc_limite_max'] : null;
+                                            }
+                                            
+                                            $inRange = true;
+                                            if ($referenceMin !== null && $valor < $referenceMin) $inRange = false;
+                                            if ($referenceMax !== null && $valor > $referenceMax) $inRange = false;
+                                            
+                                            $colorClass = $inRange ? 'in-range' : 'out-range';
+                                            $tableContent .= "<tr><td>$titulo_grupo Cil. $cilindro ($lado)</td><td class='$colorClass'>$formattedValue mm</td></tr>";
+                                            $hasVisibleData = true;
+                                        }
+                                    }
                                 }
-                                
-                                $subSectionId = $componentId . '-' . $tipo_medicao;
-                                echo "<tr><td colspan='2' class='subsection-header' onclick='toggleSubsection(\"$subSectionId\")'>
-                                        <span>$label_tipo</span>
-                                        <span class='toggle-icon-small' id='icon-$subSectionId'>▼</span>
-                                      </td></tr>";
-                                echo "<tbody id='content-$subSectionId' class='subsection-content'>";
-                                foreach($dados as $cilindro => $valor) {
-                                    echo "<tr><td>Cilindro $cilindro</td><td>" . formatNumber($valor) . "</td></tr>";
-                                }
-                                echo "</tbody>";
                             }
                         }
                     }
@@ -192,25 +286,35 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                 break;
         }
         
-        echo "</tbody></table>";
-        echo "</div>";
-        echo "</div>";
-        return true;
+        if ($hasVisibleData) {
+            echo "<div class='component-section'>";
+            echo "<div class='component-header' onclick='toggleComponent(\"$componentId\")'>";
+            echo "<h4>$title</h4>";
+            echo "<span class='toggle-icon' id='icon-$componentId'>▼</span>";
+            echo "</div>";
+            echo "<div class='table-container' id='content-$componentId'>";
+            echo "<table class='measurements-table'>";
+            echo $tableContent;
+            echo "</table>";
+            echo "</div>";
+            echo "</div>";
+            return true;
+        }
     }
     return false;
 }
 
-echo "<div class='measurements-container'>";
-echo "<div class='header-controls'>";
-echo "<h1>Medições da Ordem de Serviço: $ordem</h1>";
-echo "<div class='control-buttons'>";
-echo "<button onclick='expandAll()' class='btn-control'>Expandir Tudo</button>";
-echo "<button onclick='collapseAll()' class='btn-control'>Recolher Tudo</button>";
+echo "<div class='report-container'>";
+echo "<div class='report-header'>";
+echo "<h2>Relatório de Medições - OS: $ordem</h2>";
+echo "<div class='controls'>";
+echo "<button onclick='expandAll()' class='btn'>Expandir</button>";
+echo "<button onclick='collapseAll()' class='btn'>Recolher</button>";
+echo "<button onclick='window.print()' class='btn'>Imprimir</button>";
 echo "</div>";
 echo "</div>";
 
 $hasData = false;
-
 $components = [
     'embreagem' => 'Embreagem',
     'bomba' => 'Bomba',
@@ -226,7 +330,7 @@ foreach($components as $table => $title) {
 }
 
 if (!$hasData) {
-    echo "<div class='no-data-msg'>Nenhuma medição encontrada para esta ordem de serviço.</div>";
+    echo "<div class='no-data'>Nenhuma medição encontrada para esta ordem de serviço.</div>";
 }
 
 echo "</div>";
@@ -246,115 +350,91 @@ function toggleComponent(componentId) {
     }
 }
 
-function toggleSubsection(sectionId) {
-    const content = document.getElementById('content-' + sectionId);
-    const icon = document.getElementById('icon-' + sectionId);
-    
-    if (content.style.display === 'none') {
-        content.style.display = 'table-row-group';
-        icon.textContent = '▼';
-    } else {
-        content.style.display = 'none';
-        icon.textContent = '▶';
-    }
-}
-
 function expandAll() {
-    const allContents = document.querySelectorAll('[id^="content-"]');
-    const allIcons = document.querySelectorAll('[id^="icon-"]');
-    
-    allContents.forEach(content => {
-        if (content.classList.contains('subsection-content')) {
-            content.style.display = 'table-row-group';
-        } else {
-            content.style.display = 'block';
-        }
+    document.querySelectorAll('[id^="content-"]').forEach(content => {
+        content.style.display = 'block';
     });
-    
-    allIcons.forEach(icon => {
+    document.querySelectorAll('[id^="icon-"]').forEach(icon => {
         icon.textContent = '▼';
     });
 }
 
 function collapseAll() {
-    const allContents = document.querySelectorAll('[id^="content-"]');
-    const allIcons = document.querySelectorAll('[id^="icon-"]');
-    
-    allContents.forEach(content => {
+    document.querySelectorAll('[id^="content-"]').forEach(content => {
         content.style.display = 'none';
     });
-    
-    allIcons.forEach(icon => {
+    document.querySelectorAll('[id^="icon-"]').forEach(icon => {
         icon.textContent = '▶';
     });
 }
 
-// Inicializar com todas as seções recolhidas
 document.addEventListener('DOMContentLoaded', function() {
     collapseAll();
 });
 </script>
 
 <style>
-.measurements-container {
-    max-width: 1000px;
+.report-container {
+    max-width: 900px;
     margin: 0 auto;
     padding: 15px;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #24262e;
     color: #e0e0e0;
+    font-size: 13px;
+    line-height: 1.3;
 }
 
-.header-controls {
+.report-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
     border-bottom: 2px solid #3a3d47;
 }
 
-.header-controls h1 {
+.report-header h2 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 18px;
+    color: #ffffff;
 }
 
-.control-buttons {
+.controls {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
-.btn-control {
-    padding: 8px 15px;
+.btn {
+    padding: 6px 12px;
     background-color: #e44c5c;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 3px;
     cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.3s;
+    font-size: 11px;
+    transition: background-color 0.2s;
 }
 
-.btn-control:hover {
+.btn:hover {
     background-color: #d63447;
 }
 
 .component-section {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     border: 1px solid #3a3d47;
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
     background-color: #181a20;
 }
 
 .component-header {
     background-color: #e44c5c;
-    padding: 10px 15px;
+    padding: 8px 12px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    user-select: none;
     transition: background-color 0.3s;
 }
 
@@ -362,129 +442,171 @@ document.addEventListener('DOMContentLoaded', function() {
     background-color: #d63447;
 }
 
-.component-header h3 {
+.component-header h4 {
     margin: 0;
+    font-size: 14px;
+    font-weight: 600;
     color: #ffffff;
-    font-weight: bold;
-    font-size: 1.1em;
 }
 
 .toggle-icon {
-    font-size: 1.2em;
+    font-size: 12px;
     color: #ffffff;
-    transition: transform 0.3s;
 }
 
 .table-container {
-    overflow-x: auto;
     background-color: #181a20;
 }
 
 .measurements-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 0;
+    font-size: 12px;
     background-color: #181a20;
-    font-size: 0.9em;
 }
 
-.measurements-table th,
 .measurements-table td {
-    padding: 8px 12px;
-    text-align: left;
+    padding: 4px 8px;
     border-bottom: 1px solid #3a3d47;
+    vertical-align: top;
     color: #e0e0e0;
 }
 
-.measurements-table th {
-    background-color: #2a2d35;
-    font-weight: bold;
-    color: #ffffff;
-    font-size: 0.85em;
+.measurements-table td:first-child {
+    font-weight: 500;
+    width: 60%;
+    color: #f0f0f0;
+}
+
+.measurements-table td:last-child {
+    text-align: right;
+    font-weight: 600;
+    width: 40%;
+}
+
+/* Cores para medições dentro e fora do range */
+.measurements-table td.in-range {
+    color: #4CAF50 !important;
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.measurements-table td.out-range {
+    color: #f44336 !important;
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.measurements-table tr:nth-child(even) {
+    background-color: #1f2129;
 }
 
 .measurements-table tr:hover {
     background-color: #2a2d35;
 }
 
-.subsection-header {
-    background-color: #3a3d47 !important;
-    font-weight: bold;
-    color: #ffffff !important;
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    transition: background-color 0.3s;
-}
-
-.subsection-header:hover {
-    background-color: #4a4d57 !important;
-}
-
-.subsection-header span:first-child {
-    display: inline-block;
-    width: calc(100% - 20px);
-}
-
-.toggle-icon-small {
-    font-size: 0.9em;
-    color: #ffffff;
-    float: right;
-    transition: transform 0.3s;
-}
-
-.subsection-content {
-    display: table-row-group;
-}
-
-.subsection-content tr td:first-child {
-    padding-left: 25px;
-    font-style: italic;
-    color: #c0c0c0;
-}
-
-.no-data-msg {
+.no-data {
     text-align: center;
-    padding: 30px;
+    padding: 20px;
     color: #b0b0b0;
     font-style: italic;
     background-color: #181a20;
-    border-radius: 6px;
     border: 1px solid #3a3d47;
+    border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-    .measurements-container {
-        padding: 10px;
-    }
-    
-    .header-controls {
-        flex-direction: column;
-        gap: 15px;
-        align-items: stretch;
-    }
-    
-    .header-controls h1 {
-        text-align: center;
-        font-size: 1.3em;
-    }
-    
-    .control-buttons {
-        justify-content: center;
-    }
-    
-    .measurements-table th,
-    .measurements-table td {
-        padding: 6px 8px;
-        font-size: 0.8em;
+.error-msg {
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+@media print {
+    .controls {
+        display: none;
     }
     
     .component-header {
-        padding: 8px 12px;
+        cursor: default;
     }
     
-    .component-header h3 {
-        font-size: 1em;
+    .table-container {
+        display: block !important;
+    }
+    
+    .report-container {
+        max-width: none;
+        padding: 0;
+        background: white;
+        color: black;
+    }
+    
+    .component-section {
+        break-inside: avoid;
+        margin-bottom: 8px;
+        background: white;
+        border-color: #ccc;
+    }
+    
+    .component-header {
+        background: #f5f5f5 !important;
+        color: black !important;
+    }
+    
+    .component-header h4 {
+        color: black !important;
+    }
+    
+    .measurements-table {
+        background: white;
+    }
+    
+    .measurements-table td {
+        color: black;
+        border-color: #ccc;
+    }
+    
+    .measurements-table td.in-range {
+        color: #2E7D32 !important;
+        background-color: rgba(76, 175, 80, 0.2);
+    }
+    
+    .measurements-table td.out-range {
+        color: #C62828 !important;
+        background-color: rgba(244, 67, 54, 0.2);
+    }
+    
+    .measurements-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .report-header h2 {
+        color: black;
+    }
+}
+
+@media (max-width: 768px) {
+    .report-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .measurements-table td {
+        padding: 3px 6px;
+        font-size: 11px;
+    }
+    
+    .measurements-table td:first-child {
+        width: 65%;
+    }
+    
+    .measurements-table td:last-child {
+        width: 35%;
+    }
+    
+    .report-container {
+        padding: 10px;
     }
 }
 </style>
