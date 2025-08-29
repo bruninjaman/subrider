@@ -309,15 +309,16 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                 if (!empty($row['medicoes'])) {
                     $medicoes = json_decode($row['medicoes'], true);
                     if ($medicoes) {
+                        // Organizar por cilindro e válvula
+                        $cilindrosData = [];
+                        
+                        // Primeiro, coletar todas as medições organizadas por cilindro e tipo de válvula
                         $grupos = [
                             'adm_folga' => 'Folga Válv. Adm',
                             'esc_folga' => 'Folga Válv. Esc',
                             'adm_pastilha' => 'Pastilha Válv. Adm',
                             'esc_pastilha' => 'Pastilha Válv. Esc'
                         ];
-                        
-                        // Organizar por cilindro e tipo
-                        $cilindrosData = [];
                         
                         foreach($grupos as $prefixo => $titulo_grupo) {
                             foreach($medicoes as $tipo_medicao => $dados) {
@@ -327,12 +328,7 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                                         if (!isset($cilindrosData[$cilindro])) {
                                             $cilindrosData[$cilindro] = [];
                                         }
-                                        $cilindrosData[$cilindro][] = [
-                                            'tipo' => $titulo_grupo,
-                                            'lado' => $lado,
-                                            'valor' => $valor,
-                                            'prefixo' => $prefixo
-                                        ];
+                                        $cilindrosData[$cilindro][$prefixo][$lado] = $valor;
                                     }
                                 }
                             }
@@ -341,43 +337,83 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                         // Exibir organizadamente por cilindro
                         ksort($cilindrosData);
                         foreach($cilindrosData as $cilindro => $dados) {
-                            $tableContent .= "<tr class='cylinder-header'><td colspan='3'><strong>CILINDRO $cilindro</strong></td></tr>";
-                            $tableContent .= "<tr class='section-header'><td><strong>Medição</strong></td><td><strong>Referência</strong></td><td><strong>Valor Medido</strong></td></tr>";
+                            $hasValidData = false;
+                            $cylinderContent = "";
                             
-                            foreach($dados as $item) {
-                                $formattedValue = formatNumber($item['valor']);
-                                if ($formattedValue !== null) {
-                                    $referenceMin = null;
-                                    $referenceMax = null;
-                                    if (strpos($item['prefixo'], 'adm') !== false) {
-                                        $referenceMin = isset($referenceData['val_adm_limite_min']) ? $referenceData['val_adm_limite_min'] : null;
-                                        $referenceMax = isset($referenceData['val_adm_limite_max']) ? $referenceData['val_adm_limite_max'] : null;
-                                    } else {
-                                        $referenceMin = isset($referenceData['val_esc_limite_min']) ? $referenceData['val_esc_limite_min'] : null;
-                                        $referenceMax = isset($referenceData['val_esc_limite_max']) ? $referenceData['val_esc_limite_max'] : null;
+                            // Organizar por tipo de válvula (adm, esc) e depois por lado
+                            $valvulas = ['adm', 'esc'];
+                            $lados = [];
+                            
+                            // Coletar todos os lados disponíveis
+                            foreach($dados as $tipo => $ladosData) {
+                                foreach($ladosData as $lado => $valor) {
+                                    if (!in_array($lado, $lados)) {
+                                        $lados[] = $lado;
                                     }
-                                    
-                                    $refFormatted = '-';
-                                    if ($referenceMin || $referenceMax) {
-                                        $refParts = [];
-                                        if ($referenceMin) $refParts[] = formatNumber($referenceMin);
-                                        if ($referenceMax) $refParts[] = formatNumber($referenceMax);
-                                        $refFormatted = implode('-', $refParts) . ' mm';
-                                    }
-                                    
-                                    $colorClass = '';
-                                    // Só colorir medidas de folga, não pastilha
-                                    if (strpos($item['prefixo'], 'folga') !== false && (($referenceMin !== null && $referenceMin != 0) || ($referenceMax !== null && $referenceMax != 0))) {
-                                        $inRange = true;
-                                        if ($referenceMin !== null && $referenceMin != 0 && $item['valor'] < $referenceMin) $inRange = false;
-                                        if ($referenceMax !== null && $referenceMax != 0 && $item['valor'] > $referenceMax) $inRange = false;
-                                        $colorClass = $inRange ? 'in-range' : 'out-range';
-                                    }
-                                    
-                                    $measurementName = "{$item['tipo']} ({$item['lado']})";
-                                    $tableContent .= "<tr><td>$measurementName</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue mm</td></tr>";
-                                    $hasVisibleData = true;
                                 }
+                            }
+                            sort($lados);
+                            
+                            foreach($valvulas as $valvula) {
+                                foreach($lados as $lado) {
+                                    // Exibir folga primeiro
+                                    $folgaKey = $valvula . '_folga';
+                                    $pastilhaKey = $valvula . '_pastilha';
+                                    
+                                    $folgaValue = isset($dados[$folgaKey][$lado]) ? $dados[$folgaKey][$lado] : null;
+                                    $pastilhaValue = isset($dados[$pastilhaKey][$lado]) ? $dados[$pastilhaKey][$lado] : null;
+                                    
+                                    // Folga
+                                    $formattedFolga = formatNumber($folgaValue);
+                                    if ($formattedFolga !== null || $pastilhaValue !== null) { // Mostrar se tem folga OU pastilha
+                                        $hasValidData = true;
+                                        
+                                        $referenceMin = null;
+                                        $referenceMax = null;
+                                        if ($valvula === 'adm') {
+                                            $referenceMin = isset($referenceData['val_adm_limite_min']) ? $referenceData['val_adm_limite_min'] : null;
+                                            $referenceMax = isset($referenceData['val_adm_limite_max']) ? $referenceData['val_adm_limite_max'] : null;
+                                        } else {
+                                            $referenceMin = isset($referenceData['val_esc_limite_min']) ? $referenceData['val_esc_limite_min'] : null;
+                                            $referenceMax = isset($referenceData['val_esc_limite_max']) ? $referenceData['val_esc_limite_max'] : null;
+                                        }
+                                        
+                                        $refFormatted = '-';
+                                        if ($referenceMin || $referenceMax) {
+                                            $refParts = [];
+                                            if ($referenceMin) $refParts[] = formatNumber($referenceMin);
+                                            if ($referenceMax) $refParts[] = formatNumber($referenceMax);
+                                            $refFormatted = implode('-', $refParts) . ' mm';
+                                        }
+                                        
+                                        // Folga
+                                        $colorClass = '';
+                                        if ($formattedFolga !== null && (($referenceMin !== null && $referenceMin != 0) || ($referenceMax !== null && $referenceMax != 0))) {
+                                            $inRange = true;
+                                            if ($referenceMin !== null && $referenceMin != 0 && $folgaValue < $referenceMin) $inRange = false;
+                                            if ($referenceMax !== null && $referenceMax != 0 && $folgaValue > $referenceMax) $inRange = false;
+                                            $colorClass = $inRange ? 'in-range' : 'out-range';
+                                        }
+                                        
+                                        $folgaDisplay = $formattedFolga !== null ? $formattedFolga . ' mm' : '-';
+                                        $measurementName = "Folga Válv. " . strtoupper($valvula) . " ($lado)";
+                                        $cylinderContent .= "<tr><td>$measurementName</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$folgaDisplay</td></tr>";
+                                        
+                                        // Pastilha (sempre sem cor)
+                                        $pastilhaDisplay = formatNumber($pastilhaValue);
+                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' mm' : '-';
+                                        $pastilhaMeasurementName = "Pastilha Válv. " . strtoupper($valvula) . " ($lado)";
+                                        $cylinderContent .= "<tr><td>$pastilhaMeasurementName</td><td class='reference-value'>-</td><td>$pastilhaDisplay</td></tr>";
+                                    }
+                                }
+                            }
+                            
+                            // Só adicionar o cilindro se houver dados válidos
+                            if ($hasValidData) {
+                                $tableContent .= "<tr class='cylinder-header'><td colspan='3'><strong>CILINDRO $cilindro</strong></td></tr>";
+                                $tableContent .= "<tr class='section-header'><td><strong>Medição</strong></td><td><strong>Referência</strong></td><td><strong>Valor Medido</strong></td></tr>";
+                                $tableContent .= $cylinderContent;
+                                $hasVisibleData = true;
                             }
                         }
                     }
