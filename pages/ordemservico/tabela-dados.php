@@ -407,7 +407,7 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                                         
                                         // Pastilha (sempre sem cor)
                                         $pastilhaDisplay = formatPastilha($pastilhaValue);
-                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' cm' : '-';
+                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' mm' : '-';
                                         $pastilhaMeasurementName = "Pastilha Válv. " . strtoupper($valvula) . " ($lado)";
                                         $cylinderContent .= "<tr><td>$pastilhaMeasurementName</td><td class='reference-value'>-</td><td>$pastilhaDisplay</td></tr>";
                                     }
