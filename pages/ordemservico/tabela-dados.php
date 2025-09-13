@@ -20,7 +20,7 @@ function formatNumber($value) {
 function formatPastilha($value) {
     if ($value === null || $value === '' || $value == 0) return null;
     // Para pastilhas, dividir por 100 para converter de centésimos para centímetros
-    return is_numeric($value) ? number_format($value, 0, ',', '.') : htmlspecialchars($value);
+    return is_numeric($value) ? number_format($value, 2, ',', '.') : htmlspecialchars($value);
 }
 
 function getReferenceData($conn, $ordem, $table) {
@@ -401,13 +401,13 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                                             $colorClass = $inRange ? 'in-range' : 'out-range';
                                         }
                                         
-                                        $folgaDisplay = $formattedFolga !== null ? $formattedFolga . ' cm' : '-';
+                                        $folgaDisplay = $formattedFolga !== null ? $formattedFolga . ' mm' : '-';
                                         $measurementName = "Folga Válv. " . strtoupper($valvula) . " ($lado)";
                                         $cylinderContent .= "<tr><td>$measurementName</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$folgaDisplay</td></tr>";
                                         
                                         // Pastilha (sempre sem cor)
                                         $pastilhaDisplay = formatPastilha($pastilhaValue);
-                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' mm' : '-';
+                                        $pastilhaDisplay = $pastilhaDisplay !== null ? $pastilhaDisplay . ' cm' : '-';
                                         $pastilhaMeasurementName = "Pastilha Válv. " . strtoupper($valvula) . " ($lado)";
                                         $cylinderContent .= "<tr><td>$pastilhaMeasurementName</td><td class='reference-value'>-</td><td>$pastilhaDisplay</td></tr>";
                                     }
