@@ -1,10 +1,10 @@
 /* === CABEÇALHO DA PÁGINA === */
 #dados .dados-header {
-    background: linear-gradient(135deg, #1a2332 0%, #232b3e 100%);
+    background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
     border-radius: 12px;
     margin-bottom: 32px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    border: 1px solid #2a3441;
+    border: 1px solid #4a4a4a;
 }
 
 #dados .dados-header__content {
@@ -25,7 +25,7 @@
 }
 
 #dados .dados-header__title i {
-    color: #4CAF50;
+    color: #e44c5c;
     font-size: 1.8rem;
 }
 
@@ -36,12 +36,12 @@
 }
 
 #dados .ordem-number {
-    color: #4CAF50;
+    color: #e44c5c;
     font-weight: 700;
-    background: rgba(76, 175, 80, 0.1);
+    background: rgba(228, 76, 92, 0.1);
     padding: 4px 12px;
     border-radius: 6px;
-    border: 1px solid rgba(76, 175, 80, 0.2);
+    border: 1px solid rgba(228, 76, 92, 0.2);
 }
 
 /* === LAYOUT PRINCIPAL === */
@@ -53,9 +53,9 @@
 }
 
 #dados .componentes-navigation {
-    background: #181a20;
+    background: #2a2a2a;
     border-radius: 12px;
-    border: 1px solid #23242b;
+    border: 1px solid #4a4a4a;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     height: fit-content;
     position: sticky;
@@ -64,8 +64,8 @@
 
 #dados .nav-header {
     padding: 20px 24px;
-    border-bottom: 1px solid #23242b;
-    background: linear-gradient(135deg, #1e2028 0%, #232530 100%);
+    border-bottom: 1px solid #4a4a4a;
+    background: linear-gradient(135deg, #333333 0%, #3a3a3a 100%);
     border-radius: 12px 12px 0 0;
 }
 
@@ -80,7 +80,7 @@
 }
 
 #dados .nav-title i {
-    color: #4CAF50;
+    color: #e44c5c;
 }
 
 #dados .nav-subtitle {
@@ -90,9 +90,9 @@
 }
 
 #dados .componentes-content {
-    background: #181a20;
+    background: #2a2a2a;
     border-radius: 12px;
-    border: 1px solid #23242b;
+    border: 1px solid #4a4a4a;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     min-height: 400px;
 }
@@ -106,24 +106,24 @@
 }
 
 #dados .componente-dropdown {
-    background: #181a20;
+    background: #2a2a2a;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.28);
     min-width: 320px;
     max-width: 100%;
     margin-bottom: 16px;
     transition: box-shadow 0.2s, background 0.2s;
-    border: 1px solid #23242b;
+    border: 1px solid #4a4a4a;
 }
 
 #dados .componente-dropdown:hover {
     box-shadow: 0 4px 24px rgba(0,0,0,0.38);
-    background: #20222a;
+    background: #333333;
 }
 
 #dados .dropdown-btn {
     width: 100%;
-    background: #232b3e;
+    background: #3a3a3a;
     color: #e5e5e5;
     border: none;
     outline: none;
@@ -140,7 +140,7 @@
 }
 
 #dados .dropdown-btn.active, #dados .dropdown-btn:hover {
-    background: #1a2233;
+    background: #e44c5c;
     color: #fff;
 }
 
@@ -157,9 +157,9 @@
 #dados .dropdown-content {
     display: none;
     padding: 24px 20px 20px 20px;
-    background: #181a20;
+    background: #2a2a2a;
     border-radius: 0 0 12px 12px;
-    border-top: 1px solid #23242b;
+    border-top: 1px solid #4a4a4a;
     animation: fadeIn 0.3s;
     color: #e5e5e5;
 }
@@ -174,7 +174,7 @@
 }
 
 #dados .card {
-    background: #23242b;
+    background: #333333;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     margin: 15px 0;
@@ -182,12 +182,12 @@
     width: 100%;
     max-width: 100%;
     color: #e5e5e5;
-    border: 1px solid #23242b;
+    border: 1px solid #4a4a4a;
 }
 
 #dados .card-title {
     color: #fff;
-    border-bottom: 2px solid #232b3e;
+    border-bottom: 2px solid #e44c5c;
     padding-bottom: 10px;
     margin-bottom: 15px;
     font-size: 1.2em;
@@ -204,25 +204,25 @@
 #dados table {
     width: 100%;
     border-collapse: collapse;
-    background: #181a20;
+    background: #2a2a2a;
     color: #e5e5e5;
 }
 
 #dados th, #dados td {
     padding: 8px;
     text-align: left;
-    border-bottom: 1px solid #23242b;
+    border-bottom: 1px solid #4a4a4a;
 }
 
 #dados th {
-    background: #232b3e;
+    background: #3a3a3a;
     color: #fff;
     font-weight: 600;
     letter-spacing: 0.04em;
 }
 
 #dados td {
-    background: #181a20;
+    background: #2a2a2a;
 }
 
 #dados .data-label {
@@ -236,13 +236,13 @@
 }
 
 #dados .meas-values {
-    color: #4CAF50;
+    color: #e44c5c;
     text-align: right;
 }
 
 #dados .meas-input, #dados .folga-input {
-    background: #23242b;
-    border: 1px solid #353743;
+    background: #333333;
+    border: 1px solid #4a4a4a;
     border-radius: 6px;
     padding: 7px 12px;
     font-size: 1rem;
@@ -252,31 +252,31 @@
 }
 
 #dados .meas-input:focus, #dados .folga-input:focus {
-    border: 1.5px solid #1976d2;
+    border: 1.5px solid #e44c5c;
     outline: none;
-    background: #232b3e;
+    background: #3a3a3a;
 }
 
 #dados .meas-input[readonly] {
-    background-color: #181a20;
-    border-color: #23242b;
+    background-color: #2a2a2a;
+    border-color: #4a4a4a;
     color: #666;
     cursor: not-allowed;
 }
 
 #dados select.meas-input {
-    background: #23242b;
-    border: 1px solid #353743;
+    background: #333333;
+    border: 1px solid #4a4a4a;
     color: #e5e5e5;
 }
 
 #dados select.meas-input:focus {
     outline: none;
-    border-color: #1976d2;
+    border-color: #e44c5c;
 }
 
 #dados select.meas-input option {
-    background: #23242b;
+    background: #333333;
     color: #e5e5e5;
 }
 
@@ -289,7 +289,7 @@
 }
 
 #dados .save-btn {
-    background-color: #4CAF50;
+    background-color: #e44c5c;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -300,7 +300,7 @@
 }
 
 #dados .save-btn:hover {
-    background-color: #45a049;
+    background-color: #d63851;
 }
 
 #dados #closeModal3 {
@@ -328,7 +328,7 @@
 }
 
 #dados .success-msg {
-    color: #4CAF50;
+    color: #e44c5c;
     margin: 10px 0;
     font-weight: bold;
 }
@@ -441,7 +441,7 @@
 
 #dados .pastilha-input {
     background-color: #2a2c35;
-    border-color: #4CAF50;
+    border-color: #e44c5c;
     color: #fff;
     cursor: text;
 }
@@ -575,7 +575,7 @@
 }
 
 #dados .tab-btn.active {
-    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    background: linear-gradient(135deg, #e44c5c 0%, #d63851 100%);
     color: #fff;
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
@@ -681,7 +681,7 @@
 }
 
 #dados .toggle-btn.active {
-    background: #4CAF50;
+    background: #e44c5c;
     color: #fff;
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
@@ -730,7 +730,7 @@
     left: 32px;
     right: 32px;
     height: 2px;
-    background: linear-gradient(90deg, #4CAF50, transparent);
+    background: linear-gradient(90deg, #e44c5c, transparent);
     border-radius: 1px;
 }
 
@@ -749,7 +749,7 @@
     width: 20px;
     height: 20px;
     margin: -10px 0 0 -10px;
-    border: 2px solid #4CAF50;
+    border: 2px solid #e44c5c;
     border-top: 2px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
