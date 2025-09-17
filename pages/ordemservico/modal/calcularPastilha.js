@@ -46,11 +46,25 @@ function calcularPastilha(input) {
     // Calcular pastilha nova usando o valor de referência da folga
     const pastilhaCorrigida = (folgaValue - ((referenciaMax + referenciaMin ) /2)) + pastilhaAtual;
     
+    // Calcular valores mínimo e máximo da pastilha corrigida baseado na faixa de referência
+    // Pastilha mínima: usando referência mínima
+    const pastilhaMin = (folgaValue - referenciaMin) + pastilhaAtual;
+    // Pastilha máxima: usando referência máxima
+    const pastilhaMax = (folgaValue - referenciaMax) + pastilhaAtual;
+    
     // Atualizar o resultado
     const elementoResultado = document.getElementById(`pc_${tipo}_${lado}_${cilindro}`);
     if (elementoResultado) {
-        // Só mostra a PC se o valor estiver fora da referência
-        elementoResultado.textContent = estaDentroReferencia ? '-' : pastilhaCorrigida.toFixed(2).replace('.', ',');
+        if (estaDentroReferencia) {
+            elementoResultado.textContent = '-';
+            elementoResultado.removeAttribute('title');
+        } else {
+            elementoResultado.textContent = pastilhaCorrigida.toFixed(2).replace('.', ',');
+            // Adicionar tooltip com valores mínimo e máximo
+            const tooltipText = `Pastilha ideal: ${pastilhaCorrigida.toFixed(2).replace('.', ',')}\nFaixa aceitável: ${pastilhaMin.toFixed(2).replace('.', ',')} - ${pastilhaMax.toFixed(2).replace('.', ',')}`;
+            elementoResultado.setAttribute('title', tooltipText);
+            elementoResultado.style.cursor = 'help';
+        }
     } else {
         console.error('Elemento de resultado não encontrado:', `pc_${tipo}_${lado}_${cilindro}`);
     }
@@ -81,4 +95,4 @@ document.addEventListener('DOMContentLoaded', function() {
             calcularPastilha(input);
         }
     });
-}); 
+});

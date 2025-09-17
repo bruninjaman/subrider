@@ -107,6 +107,12 @@ function displayCabecoteMedicoes($conn, $ordem) {
         echo "<form method='POST' class='table-form'>";
         echo "<input type='hidden' name='table' value='cabecote'>";
         echo "<input type='hidden' name='ordem' value='" . htmlspecialchars($ordem) . "'>";
+        
+        // Campos ocultos com valores de referência para o JavaScript
+        echo "<input type='hidden' id='val_adm_limite_min' value='" . (isset($cabecoteRef['val_adm_limite_min']) ? $cabecoteRef['val_adm_limite_min'] : 0) . "'>";
+        echo "<input type='hidden' id='val_adm_limite_max' value='" . (isset($cabecoteRef['val_adm_limite_max']) ? $cabecoteRef['val_adm_limite_max'] : 0) . "'>";
+        echo "<input type='hidden' id='val_esc_limite_min' value='" . (isset($cabecoteRef['val_esc_limite_min']) ? $cabecoteRef['val_esc_limite_min'] : 0) . "'>";
+        echo "<input type='hidden' id='val_esc_limite_max' value='" . (isset($cabecoteRef['val_esc_limite_max']) ? $cabecoteRef['val_esc_limite_max'] : 0) . "'>";
         echo "<table>";
         
         if ((isset($cabecoteRef['cilindros']) ? $cabecoteRef['cilindros'] : 0) > 1) {
@@ -302,4 +308,4 @@ function displayCabecoteMedicoes($conn, $ordem) {
     } catch (Exception $e) {
         echo "<div class='error-msg'>Erro ao exibir medições do cabeçote: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
-} 
+}
