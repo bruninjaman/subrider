@@ -12,6 +12,14 @@ if (!isset($conn) || !$conn) {
     exit;
 }
 
+// Cabeçalho da página
+echo '<div class="dados-header">';
+echo '<div class="dados-header__content">';
+echo '<h1 class="dados-header__title"><i class="fas fa-cogs"></i> Dados Técnicos</h1>';
+echo '<div class="dados-header__subtitle">Ordem de Serviço: <span class="ordem-number">' . htmlspecialchars($ordem) . '</span></div>';
+echo '</div>';
+echo '</div>';
+
 $checkQuery = "SELECT COUNT(*) as count FROM cabecote WHERE is_reference = 1 AND ordem = ?";
 $checkStmt = mysqli_prepare($conn, $checkQuery);
 mysqli_stmt_bind_param($checkStmt, "s", $ordem);
@@ -49,29 +57,56 @@ if (isset($_GET['ordem'])) {
         }
     }
     if (count($componentesComReferencia) > 0) {
-        echo '<div class="componentes-tabs-container">';
+        echo '<div class="dados-main-container">';
+        echo '<div class="componentes-navigation">';
+        echo '<div class="nav-header">';
+        echo '<h2 class="nav-title"><i class="fas fa-list"></i> Componentes Disponíveis</h2>';
+        echo '<div class="nav-subtitle">Selecione um componente para visualizar os dados</div>';
+        echo '</div>';
         echo '<div class="componentes-tabs">';
         $first = true;
         foreach ($componentesComReferencia as $componente => $titulo) {
-            echo '<button type="button" class="tab-btn' . ($first ? ' active' : '') . '" data-tab="tab-' . $componente . '">' . $titulo . '</button>';
+            $icon = getComponentIcon($componente);
+            echo '<button type="button" class="tab-btn' . ($first ? ' active' : '') . '" data-tab="tab-' . $componente . '">';
+            echo '<i class="' . $icon . '"></i>';
+            echo '<span>' . $titulo . '</span>';
+            echo '</button>';
             $first = false;
         }
         echo '</div>';
+        echo '</div>';
+        echo '<div class="componentes-content">';
         // Conteúdo das abas
         foreach ($componentesComReferencia as $componente => $titulo) {
             $isActive = $componente === array_key_first($componentesComReferencia);
             echo '<div class="tab-content' . ($isActive ? ' active' : '') . '" id="tab-' . $componente . '">';
+            
+            // Cabeçalho do componente
+            echo '<div class="component-header">';
+            echo '<h3 class="component-title">';
+            echo '<i class="' . getComponentIcon($componente) . '"></i>';
+            echo $titulo;
+            echo '</h3>';
+            echo '<div class="component-description">' . getComponentDescription($componente) . '</div>';
+            echo '</div>';
+            
             // --- Botões Referência/Medições ---
-            echo '<div style="margin-bottom: 16px; display: flex; gap: 8px;">';
-            echo '<button type="button" class="toggle-btn ref-btn active" data-target="ref-' . $componente . '">Referências</button>';
-            echo '<button type="button" class="toggle-btn med-btn" data-target="med-' . $componente . '">Medições</button>';
+            echo '<div class="data-type-selector">';
+            echo '<div class="selector-buttons">';
+            echo '<button type="button" class="toggle-btn ref-btn" data-target="ref-' . $componente . '">';
+            echo '<i class="fas fa-book"></i><span>Referências</span>';
+            echo '</button>';
+            echo '<button type="button" class="toggle-btn med-btn active" data-target="med-' . $componente . '">';
+            echo '<i class="fas fa-ruler"></i><span>Medições</span>';
+            echo '</button>';
+            echo '</div>';
             echo '</div>';
             // --- Conteúdo Referência ---
-            echo '<div class="toggle-content ref-content" id="ref-' . $componente . '" style="display:block;">';
+            echo '<div class="toggle-content ref-content" id="ref-' . $componente . '" style="display:none;">';
             displayTableData($conn, $componente, $titulo);
             echo '</div>';
             // --- Conteúdo Medições ---
-            echo '<div class="toggle-content med-content" id="med-' . $componente . '" style="display:none;">';
+            echo '<div class="toggle-content med-content" id="med-' . $componente . '" style="display:block;">';
             switch ($componente) {
                 case 'embreagem':
                     displayEmbreagemMedicoes($conn, $_GET['ordem']);
@@ -92,12 +127,36 @@ if (isset($_GET['ordem'])) {
             echo '</div>';
             echo '</div>'; // tab-content
         }
-        echo '</div>';
+        echo '</div>'; // componentes-content
+        echo '</div>'; // dados-main-container
     } else {
         echo "<div class='error-msg error-msg--center'> <i class='fas fa-info-circle'></i> Nenhum dado de referência encontrado para esta ordem de serviço. O menu não será exibido.</div>";
     }
 } else {
     echo "<div class='error-msg error-msg--center'> <i class='fas fa-exclamation-triangle'></i> Erro: Parâmetro 'ordem' não foi especificado.</div>";
+}
+
+// Funções auxiliares para ícones e descrições
+function getComponentIcon($componente) {
+    $icons = [
+        'embreagem' => 'fas fa-circle-notch',
+        'bomba' => 'fas fa-tint',
+        'motor' => 'fas fa-cog',
+        'virabrequim' => 'fas fa-sync-alt',
+        'cabecote' => 'fas fa-cube'
+    ];
+    return isset($icons[$componente]) ? $icons[$componente] : 'fas fa-wrench';
+}
+
+function getComponentDescription($componente) {
+    $descriptions = [
+        'embreagem' => 'Sistema de transmissão de potência do motor',
+        'bomba' => 'Sistema de circulação de fluidos',
+        'motor' => 'Unidade principal de combustão',
+        'virabrequim' => 'Eixo de conversão do movimento',
+        'cabecote' => 'Cabeça do motor com válvulas'
+    ];
+    return isset($descriptions[$componente]) ? $descriptions[$componente] : 'Componente do sistema';
 }
 
 // Botão de sair destacado
@@ -130,29 +189,87 @@ $cabecote_ref = mysqli_fetch_assoc($result);
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Tabs
+    // Melhorar navegação das abas com animações
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
+    
     tabBtns.forEach(btn => {
         btn.addEventListener('click', function() {
+            // Remover classes ativas
             tabBtns.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(tc => tc.classList.remove('active'));
+            tabContents.forEach(tc => {
+                tc.classList.remove('active');
+                tc.style.opacity = '0';
+            });
+            
+            // Adicionar classe ativa ao botão clicado
             this.classList.add('active');
+            
+            // Mostrar conteúdo com animação
             const tabId = this.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
+            const targetContent = document.getElementById(tabId);
+            
+            setTimeout(() => {
+                targetContent.classList.add('active');
+                targetContent.style.opacity = '1';
+            }, 150);
+            
+            // Scroll suave para o topo do conteúdo em dispositivos móveis
+            if (window.innerWidth <= 768) {
+                targetContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         });
     });
     
-    // Toggle Referência/Medições
+    // Inicializar opacidade dos conteúdos
+    tabContents.forEach(tc => {
+        if (tc.classList.contains('active')) {
+            tc.style.opacity = '1';
+        } else {
+            tc.style.opacity = '0';
+        }
+    });
+    
+    // Toggle Referência/Medições com animações melhoradas
     document.querySelectorAll('.toggle-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const parent = this.closest('.tab-content');
+            const targetId = this.getAttribute('data-target');
+            const target = parent.querySelector('#' + targetId);
+            
+            // Se já está ativo, não fazer nada
+            if (this.classList.contains('active')) return;
+            
+            // Remover classes ativas dos botões
             parent.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            parent.querySelectorAll('.toggle-content').forEach(tc => tc.style.display = 'none');
-            const target = parent.querySelector('#' + this.getAttribute('data-target'));
-            if (target) target.style.display = 'block';
+            
+            // Animar transição do conteúdo
+            parent.querySelectorAll('.toggle-content').forEach(tc => {
+                tc.style.opacity = '0';
+                setTimeout(() => {
+                    tc.style.display = 'none';
+                }, 200);
+            });
+            
+            // Mostrar novo conteúdo com animação
+            setTimeout(() => {
+                if (target) {
+                    target.style.display = 'block';
+                    target.style.opacity = '0';
+                    setTimeout(() => {
+                        target.style.opacity = '1';
+                    }, 50);
+                }
+            }, 200);
         });
+    });
+    
+    // Inicializar opacidade dos conteúdos toggle
+    document.querySelectorAll('.toggle-content').forEach(tc => {
+        if (tc.style.display !== 'none') {
+            tc.style.opacity = '1';
+        }
     });
     
     // Pastilha cálculo (mantém)

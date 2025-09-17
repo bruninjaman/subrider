@@ -1,4 +1,103 @@
-.componentes-container {
+/* === CABEÇALHO DA PÁGINA === */
+#dados .dados-header {
+    background: linear-gradient(135deg, #1a2332 0%, #232b3e 100%);
+    border-radius: 12px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border: 1px solid #2a3441;
+}
+
+#dados .dados-header__content {
+    padding: 24px 32px;
+    text-align: center;
+}
+
+#dados .dados-header__title {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    letter-spacing: 0.02em;
+}
+
+#dados .dados-header__title i {
+    color: #4CAF50;
+    font-size: 1.8rem;
+}
+
+#dados .dados-header__subtitle {
+    color: #b0b8c4;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+#dados .ordem-number {
+    color: #4CAF50;
+    font-weight: 700;
+    background: rgba(76, 175, 80, 0.1);
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+/* === LAYOUT PRINCIPAL === */
+#dados .dados-main-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    min-height: 500px;
+}
+
+#dados .componentes-navigation {
+    background: #181a20;
+    border-radius: 12px;
+    border: 1px solid #23242b;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+#dados .nav-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #23242b;
+    background: linear-gradient(135deg, #1e2028 0%, #232530 100%);
+    border-radius: 12px 12px 0 0;
+}
+
+#dados .nav-title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#dados .nav-title i {
+    color: #4CAF50;
+}
+
+#dados .nav-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+#dados .componentes-content {
+    background: #181a20;
+    border-radius: 12px;
+    border: 1px solid #23242b;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    min-height: 400px;
+}
+
+#dados .componentes-container {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
@@ -6,7 +105,7 @@
     margin: 32px 0 24px 0;
 }
 
-.componente-dropdown {
+#dados .componente-dropdown {
     background: #181a20;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.28);
@@ -17,12 +116,12 @@
     border: 1px solid #23242b;
 }
 
-.componente-dropdown:hover {
+#dados .componente-dropdown:hover {
     box-shadow: 0 4px 24px rgba(0,0,0,0.38);
     background: #20222a;
 }
 
-.dropdown-btn {
+#dados .dropdown-btn {
     width: 100%;
     background: #232b3e;
     color: #e5e5e5;
@@ -40,22 +139,22 @@
     letter-spacing: 0.04em;
 }
 
-.dropdown-btn.active, .dropdown-btn:hover {
+#dados .dropdown-btn.active, #dados .dropdown-btn:hover {
     background: #1a2233;
     color: #fff;
 }
 
-.dropdown-btn i {
+#dados .dropdown-btn i {
     margin-left: 12px;
     font-size: 1.1em;
     transition: transform 0.3s;
 }
 
-.dropdown-btn.active i {
+#dados .dropdown-btn.active i {
     transform: rotate(180deg);
 }
 
-.dropdown-content {
+#dados .dropdown-content {
     display: none;
     padding: 24px 20px 20px 20px;
     background: #181a20;
@@ -65,7 +164,7 @@
     color: #e5e5e5;
 }
 
-.dropdown-content.active {
+#dados .dropdown-content.active {
     display: block;
 }
 
@@ -74,7 +173,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-.card {
+#dados .card {
     background: #23242b;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
@@ -86,7 +185,7 @@
     border: 1px solid #23242b;
 }
 
-.card-title {
+#dados .card-title {
     color: #fff;
     border-bottom: 2px solid #232b3e;
     padding-bottom: 10px;
@@ -94,54 +193,54 @@
     font-size: 1.2em;
 }
 
-.card-content {
+#dados .card-content {
     padding: 10px;
 }
 
-.table-container {
+#dados .table-container {
     margin-bottom: 20px;
 }
 
-table {
+#dados table {
     width: 100%;
     border-collapse: collapse;
     background: #181a20;
     color: #e5e5e5;
 }
 
-th, td {
+#dados th, #dados td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #23242b;
 }
 
-th {
+#dados th {
     background: #232b3e;
     color: #fff;
     font-weight: 600;
     letter-spacing: 0.04em;
 }
 
-td {
+#dados td {
     background: #181a20;
 }
 
-.data-label {
+#dados .data-label {
     font-weight: bold;
     color: #b0b0b0;
 }
 
-.ref-value {
+#dados .ref-value {
     color: #e5e5e5;
     text-align: right;
 }
 
-.meas-values {
+#dados .meas-values {
     color: #4CAF50;
     text-align: right;
 }
 
-.meas-input, .folga-input {
+#dados .meas-input, #dados .folga-input {
     background: #23242b;
     border: 1px solid #353743;
     border-radius: 6px;
@@ -152,44 +251,44 @@ td {
     transition: border 0.2s, background 0.2s;
 }
 
-.meas-input:focus, .folga-input:focus {
+#dados .meas-input:focus, #dados .folga-input:focus {
     border: 1.5px solid #1976d2;
     outline: none;
     background: #232b3e;
 }
 
-.meas-input[readonly] {
+#dados .meas-input[readonly] {
     background-color: #181a20;
     border-color: #23242b;
     color: #666;
     cursor: not-allowed;
 }
 
-select.meas-input {
+#dados select.meas-input {
     background: #23242b;
     border: 1px solid #353743;
     color: #e5e5e5;
 }
 
-select.meas-input:focus {
+#dados select.meas-input:focus {
     outline: none;
     border-color: #1976d2;
 }
 
-select.meas-input option {
+#dados select.meas-input option {
     background: #23242b;
     color: #e5e5e5;
 }
 
-.meas-input.first {
+#dados .meas-input.first {
     margin-top: 0;
 }
 
-.table-form {
+#dados .table-form {
     margin-top: 15px;
 }
 
-.save-btn {
+#dados .save-btn {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -200,11 +299,11 @@ select.meas-input option {
     transition: background-color 0.2s ease-in-out;
 }
 
-.save-btn:hover {
+#dados .save-btn:hover {
     background-color: #45a049;
 }
 
-#closeModal3 {
+#dados #closeModal3 {
     display: block;
     margin: 20px auto;
     padding: 0 1.75em;
@@ -224,17 +323,17 @@ select.meas-input option {
     box-shadow: none;
 }
 
-#closeModal3:hover {
+#dados #closeModal3:hover {
     background-color: #ef5e4a;
 }
 
-.success-msg {
+#dados .success-msg {
     color: #4CAF50;
     margin: 10px 0;
     font-weight: bold;
 }
 
-.error-msg {
+#dados .error-msg {
     background: #2a1818;
     color: #ff6b6b;
     border: 1px solid #3a2323;
@@ -249,16 +348,16 @@ select.meas-input option {
     box-shadow: 0 2px 8px rgba(198,40,40,0.10);
 }
 
-.error-msg--center {
+#dados .error-msg--center {
     justify-content: center;
     text-align: center;
 }
 
-.error-msg i {
+#dados .error-msg i {
     font-size: 1.3em;
 }
 
-.info-msg {
+#dados .info-msg {
     color: #2196F3;
     margin: 10px 0;
     font-weight: bold;
@@ -269,48 +368,48 @@ select.meas-input option {
 }
 
 /* Estilos para medições específicas */
-.cabecote-medicoes,
-.embreagem-medicoes,
-.bomba-medicoes,
-.motor-medicoes,
-.virabrequim-medicoes {
+#dados .cabecote-medicoes,
+#dados .embreagem-medicoes,
+#dados .bomba-medicoes,
+#dados .motor-medicoes,
+#dados .virabrequim-medicoes {
     margin-top: 20px;
 }
 
-.cabecote-medicoes .legenda,
-.embreagem-medicoes .legenda,
-.bomba-medicoes .legenda,
-.motor-medicoes .legenda,
-.virabrequim-medicoes .legenda {
+#dados .cabecote-medicoes .legenda,
+#dados .embreagem-medicoes .legenda,
+#dados .bomba-medicoes .legenda,
+#dados .motor-medicoes .legenda,
+#dados .virabrequim-medicoes .legenda {
     color: #888;
     font-size: 0.9em;
     margin-bottom: 10px;
 }
 
-.cabecote-medicoes .subtitulo,
-.embreagem-medicoes .subtitulo,
-.bomba-medicoes .subtitulo,
-.motor-medicoes .subtitulo,
-.virabrequim-medicoes .subtitulo {
+#dados .cabecote-medicoes .subtitulo,
+#dados .embreagem-medicoes .subtitulo,
+#dados .bomba-medicoes .subtitulo,
+#dados .motor-medicoes .subtitulo,
+#dados .virabrequim-medicoes .subtitulo {
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 15px;
     color: #4CAF50;
 }
 
-.cabecote-medicoes .secao,
-.embreagem-medicoes .secao,
-.bomba-medicoes .secao,
-.motor-medicoes .secao,
-.virabrequim-medicoes .secao {
+#dados .cabecote-medicoes .secao,
+#dados .embreagem-medicoes .secao,
+#dados .bomba-medicoes .secao,
+#dados .motor-medicoes .secao,
+#dados .virabrequim-medicoes .secao {
     margin-bottom: 30px;
 }
 
-.cabecote-medicoes .secao h3,
-.embreagem-medicoes .secao h3,
-.bomba-medicoes .secao h3,
-.motor-medicoes .secao h3,
-.virabrequim-medicoes .secao h3 {
+#dados .cabecote-medicoes .secao h3,
+#dados .embreagem-medicoes .secao h3,
+#dados .bomba-medicoes .secao h3,
+#dados .motor-medicoes .secao h3,
+#dados .virabrequim-medicoes .secao h3 {
     color: #fff;
     margin-bottom: 15px;
     padding-bottom: 5px;
@@ -318,53 +417,53 @@ select.meas-input option {
 }
 
 /* Estilos específicos para cada tipo de medição */
-.cabecote-medicoes .valvula-admissao { background-color: rgba(33, 150, 243, 0.1); }
-.cabecote-medicoes .valvula-escape { background-color: rgba(233, 30, 99, 0.1); }
-.cabecote-medicoes .item-fixo { background-color: rgba(255, 255, 255, 0.05); }
+#dados .cabecote-medicoes .valvula-admissao { background-color: rgba(33, 150, 243, 0.1); }
+#dados .cabecote-medicoes .valvula-escape { background-color: rgba(233, 30, 99, 0.1); }
+#dados .cabecote-medicoes .item-fixo { background-color: rgba(255, 255, 255, 0.05); }
 
-.embreagem-medicoes .disco-friccao { background-color: rgba(33, 150, 243, 0.1); }
-.embreagem-medicoes .disco-separador { background-color: rgba(233, 30, 99, 0.1); }
+#dados .embreagem-medicoes .disco-friccao { background-color: rgba(33, 150, 243, 0.1); }
+#dados .embreagem-medicoes .disco-separador { background-color: rgba(233, 30, 99, 0.1); }
 
-.bomba-medicoes .pressao-oleo { background-color: rgba(33, 150, 243, 0.1); }
-.bomba-medicoes .vazao { background-color: rgba(233, 30, 99, 0.1); }
-.bomba-medicoes .combustivel { background-color: rgba(76, 175, 80, 0.1); }
+#dados .bomba-medicoes .pressao-oleo { background-color: rgba(33, 150, 243, 0.1); }
+#dados .bomba-medicoes .vazao { background-color: rgba(233, 30, 99, 0.1); }
+#dados .bomba-medicoes .combustivel { background-color: rgba(76, 175, 80, 0.1); }
 
-.motor-medicoes .curso-pistao { background-color: rgba(33, 150, 243, 0.1); }
-.motor-medicoes .diametro-cilindro { background-color: rgba(233, 30, 99, 0.1); }
-.motor-medicoes .conicidade { background-color: rgba(76, 175, 80, 0.1); }
-.motor-medicoes .ovalizacao { background-color: rgba(255, 152, 0, 0.1); }
-.motor-medicoes .diametro-pistao { background-color: rgba(156, 39, 176, 0.1); }
-.motor-medicoes .folga-cil-pis { background-color: rgba(244, 67, 54, 0.1); }
+#dados .motor-medicoes .curso-pistao { background-color: rgba(33, 150, 243, 0.1); }
+#dados .motor-medicoes .diametro-cilindro { background-color: rgba(233, 30, 99, 0.1); }
+#dados .motor-medicoes .conicidade { background-color: rgba(76, 175, 80, 0.1); }
+#dados .motor-medicoes .ovalizacao { background-color: rgba(255, 152, 0, 0.1); }
+#dados .motor-medicoes .diametro-pistao { background-color: rgba(156, 39, 176, 0.1); }
+#dados .motor-medicoes .folga-cil-pis { background-color: rgba(244, 67, 54, 0.1); }
 
-.virabrequim-medicoes .folga-mancal { background-color: rgba(33, 150, 243, 0.1); }
-.virabrequim-medicoes .folga-bronzina { background-color: rgba(233, 30, 99, 0.1); }
-.virabrequim-medicoes .folga-lateral-biela { background-color: rgba(76, 175, 80, 0.1); }
+#dados .virabrequim-medicoes .folga-mancal { background-color: rgba(33, 150, 243, 0.1); }
+#dados .virabrequim-medicoes .folga-bronzina { background-color: rgba(233, 30, 99, 0.1); }
+#dados .virabrequim-medicoes .folga-lateral-biela { background-color: rgba(76, 175, 80, 0.1); }
 
-.pastilha-input {
+#dados .pastilha-input {
     background-color: #2a2c35;
     border-color: #4CAF50;
     color: #fff;
     cursor: text;
 }
 
-.pastilha-valor {
+#dados .pastilha-valor {
     color: #4CAF50;
     font-weight: bold;
     min-height: 1em;
 }
 
-.valor-calculado {
+#dados .valor-calculado {
     text-align: right;
     padding: 8px;
 }
 
-.pastilha-container {
+#dados .pastilha-container {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.pastilha-corrigida {
+#dados .pastilha-corrigida {
     font-size: 0.9em;
     color: #4CAF50;
     text-align: right;
@@ -373,25 +472,25 @@ select.meas-input option {
     border-radius: 3px;
 }
 
-.pastilha-corrigida::before {
+#dados .pastilha-corrigida::before {
     content: 'PC: ';
     color: #888;
     font-size: 0.9em;
 }
 
-.virabrequim-field.hidden {
+#dados .virabrequim-field.hidden {
     display: none;
 }
 
 /* Botão de sair */
-.footer-modal {
+#dados .footer-modal {
     display: flex;
     justify-content: flex-end;
     margin-top: 32px;
     margin-bottom: 8px;
 }
 
-.button--sair {
+#dados .button--sair {
     background: #c62828;
     color: #fff;
     padding: 12px 32px;
@@ -409,102 +508,421 @@ select.meas-input option {
     letter-spacing: 0.04em;
 }
 
-.button--sair:hover {
+#dados .button--sair:hover {
     background: #a31b1b;
     box-shadow: 0 4px 16px rgba(198,40,40,0.18);
 }
 
 /* Responsividade */
 @media (max-width: 600px) {
-    .componentes-container {
+    #dados .componentes-container {
         flex-direction: column;
         gap: 16px;
     }
-    .componente-dropdown {
+    #dados .componente-dropdown {
         min-width: 0;
         width: 100%;
     }
-    .footer-modal {
+    #dados .footer-modal {
         justify-content: center;
     }
 }
 
-/* --- Estilos para o menu de abas --- */
-.componentes-tabs-container {
-    margin-bottom: 24px;
-    background: #181a20;
-    border-radius: 8px 8px 0 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    padding-top: 8px;
+/* === NAVEGAÇÃO DE COMPONENTES === */
+#dados .componentes-tabs {
+    padding: 0;
 }
-.componentes-tabs {
-    display: flex;
-    gap: 8px;
-    border-bottom: 2px solid #232b3e;
-    padding: 0 16px 0 16px;
-}
-.tab-btn {
+
+#dados .tab-btn {
+    width: 100%;
     background: none;
     border: none;
     color: #b0b0b0;
-    font-size: 1.1em;
-    padding: 12px 24px 10px 24px;
+    font-size: 1rem;
+    padding: 16px 20px;
     cursor: pointer;
-    border-radius: 8px 8px 0 0;
-    transition: background 0.2s, color 0.2s;
+    transition: all 0.3s ease;
     outline: none;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    border-bottom: 1px solid #23242b;
     position: relative;
 }
-.tab-btn.active {
-    background: #232b3e;
-    color: #fff;
-    border-bottom: 2px solid #4CAF50;
-    z-index: 2;
+
+#dados .tab-btn:last-child {
+    border-bottom: none;
+    border-radius: 0 0 12px 12px;
 }
-.tab-btn:not(.active):hover {
-    background: #232b3e;
+
+#dados .tab-btn i {
+    font-size: 1.1em;
+    width: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+#dados .tab-btn span {
+    flex: 1;
+}
+
+#dados .tab-btn:hover {
+    background: #232530;
     color: #e5e5e5;
+    transform: translateX(4px);
 }
-.tab-content {
+
+#dados .tab-btn.active {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+#dados .tab-btn.active i {
+    transform: scale(1.1);
+}
+
+#dados .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: #fff;
+    border-radius: 2px 0 0 2px;
+}
+
+/* === CONTEÚDO DOS COMPONENTES === */
+#dados .tab-content {
     display: none;
-    padding: 24px 16px 0 16px;
-    background: #181a20;
-    border-radius: 0 0 8px 8px;
-    min-height: 120px;
+    padding: 0;
+    background: transparent;
+    min-height: 400px;
 }
-.tab-content.active {
+
+#dados .tab-content.active {
     display: block;
 }
-@media (max-width: 600px) {
-    .componentes-tabs {
-        flex-direction: column;
-        gap: 0;
+
+#dados .component-header {
+    background: linear-gradient(135deg, #1e2028 0%, #232530 100%);
+    padding: 24px 32px;
+    border-radius: 12px 12px 0 0;
+    border-bottom: 1px solid #23242b;
+}
+
+#dados .component-title {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#dados .component-title i {
+    color: #4CAF50;
+    font-size: 1.3rem;
+}
+
+#dados .component-description {
+    color: #888;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* === SELETOR DE TIPO DE DADOS === */
+#dados .data-type-selector {
+    padding: 20px 32px;
+    background: #1a1c22;
+    border-bottom: 1px solid #23242b;
+}
+
+#dados .selector-buttons {
+    display: flex;
+    gap: 12px;
+    background: #23242b;
+    padding: 4px;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+#dados .toggle-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 0.95rem;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    outline: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 120px;
+    justify-content: center;
+}
+
+#dados .toggle-btn i {
+    font-size: 0.9em;
+}
+
+#dados .toggle-btn:hover {
+    background: #2a2c35;
+    color: #e5e5e5;
+}
+
+#dados .toggle-btn.active {
+    background: #4CAF50;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+/* === CONTEÚDO DOS DADOS === */
+#dados .toggle-content {
+    padding: 24px 32px;
+    transition: opacity 0.3s ease;
+}
+
+/* === ANIMAÇÕES E TRANSIÇÕES === */
+#dados .tab-content {
+    transition: opacity 0.3s ease;
+}
+
+#dados .tab-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+#dados .tab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+#dados .tab-btn:hover::before {
+    left: 100%;
+}
+
+/* === MELHORIAS DE UX === */
+#dados .component-header {
+    position: relative;
+}
+
+#dados .component-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 32px;
+    right: 32px;
+    height: 2px;
+    background: linear-gradient(90deg, #4CAF50, transparent);
+    border-radius: 1px;
+}
+
+/* Loading states */
+#dados .loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+#dados .loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #4CAF50;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hover effects melhorados */
+#dados .meas-input:focus,
+#dados .folga-input:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+}
+
+#dados .save-btn {
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+#dados .save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+}
+
+#dados .save-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+#dados .save-btn:hover::before {
+    left: 100%;
+}
+/* === RESPONSIVIDADE === */
+@media (max-width: 1024px) {
+    #dados .dados-main-container {
+        grid-template-columns: 250px 1fr;
+        gap: 16px;
     }
-    .tab-btn {
-        width: 100%;
-        border-radius: 8px 8px 0 0;
-        margin-bottom: 2px;
+    
+    #dados .dados-header__content {
+        padding: 20px 24px;
     }
-    .tab-content {
-        padding: 12px 4px 0 4px;
+    
+    #dados .dados-header__title {
+        font-size: 1.7rem;
     }
 }
-/* --- Fim estilos menu de abas --- */
+
+@media (max-width: 768px) {
+    #dados .dados-main-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    #dados .componentes-navigation {
+        position: static;
+        order: 2;
+    }
+    
+    #dados .componentes-content {
+        order: 1;
+    }
+    
+    #dados .componentes-tabs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 8px;
+        padding: 16px;
+    }
+    
+    #dados .tab-btn {
+        border-radius: 8px;
+        border-bottom: none;
+        text-align: center;
+        justify-content: center;
+        padding: 12px 8px;
+        font-size: 0.9rem;
+    }
+    
+    #dados .tab-btn:last-child {
+        border-radius: 8px;
+    }
+    
+    #dados .tab-btn.active::after {
+        display: none;
+    }
+    
+    #dados .component-header,
+    #dados .data-type-selector,
+    #dados .toggle-content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    #dados .dados-header__content {
+        padding: 16px 20px;
+    }
+    
+    #dados .dados-header__title {
+        font-size: 1.5rem;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #dados .dados-header__content {
+        padding: 12px 16px;
+    }
+    
+    #dados .dados-header__title {
+        font-size: 1.3rem;
+    }
+    
+    #dados .dados-header__subtitle {
+        font-size: 1rem;
+    }
+    
+    #dados .componentes-tabs {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+    
+    #dados .component-header,
+    #dados .data-type-selector,
+    #dados .toggle-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    #dados .component-title {
+        font-size: 1.3rem;
+    }
+    
+    #dados .selector-buttons {
+        width: 100%;
+    }
+    
+    #dados .toggle-btn {
+        flex: 1;
+        min-width: auto;
+    }
+    
+    .footer-modal {
+        justify-content: center;
+        padding: 0 16px;
+    }
+}
 
 /* Estilos para campos fora dos parâmetros */
-.out-of-range {
+#dados .out-of-range {
     color: #ff4444 !important;
     font-weight: bold;
 }
 
-.out-of-range-input {
+#dados .out-of-range-input {
     color: #ff4444 !important;
     border-color: #ff4444 !important;
     background-color: rgba(255, 68, 68, 0.1) !important;
 }
 
 /* Animação sutil para destacar mudanças */
-.meas-input {
+#dados .meas-input {
     transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 }
