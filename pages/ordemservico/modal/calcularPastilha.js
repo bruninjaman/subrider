@@ -61,7 +61,7 @@ function calcularPastilha(input) {
         } else {
             elementoResultado.textContent = pastilhaCorrigida.toFixed(2).replace('.', ',');
             // Adicionar tooltip com valores mínimo e máximo
-            const tooltipText = `Pastilha ideal: ${pastilhaCorrigida.toFixed(2).replace('.', ',')}\nFaixa aceitável: ${pastilhaMin.toFixed(2).replace('.', ',')} - ${pastilhaMax.toFixed(2).replace('.', ',')}`;
+            const tooltipText = `Pastilha ideal: ${pastilhaCorrigida.toFixed(2).replace('.', ',')}\nFaixa aceitável: ${pastilhaMax.toFixed(2).replace('.', ',')} - ${pastilhaMin.toFixed(2).replace('.', ',')}`;
             elementoResultado.setAttribute('title', tooltipText);
             elementoResultado.style.cursor = 'help';
         }
