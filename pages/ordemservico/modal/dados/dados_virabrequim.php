@@ -3,55 +3,6 @@ require_once 'dados_util.php';
 
 function displayVirabrequimMedicoes($conn, $ordem) {
     try {
-        // Processar salvamento se for POST
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'virabrequim') {
-            // Buscar medições existentes antes de processar o POST
-            $queryMed = "SELECT medicoes FROM virabrequim WHERE is_reference = 0 AND ordem = ?";
-            $stmtMed = mysqli_prepare($conn, $queryMed);
-            mysqli_stmt_bind_param($stmtMed, "s", $ordem);
-            mysqli_stmt_execute($stmtMed);
-            $resultMed = mysqli_stmt_get_result($stmtMed);
-            $virabrequimMed = mysqli_fetch_assoc($resultMed);
-            
-            $medicoesExistentes = $virabrequimMed && $virabrequimMed['medicoes'] ? json_decode($virabrequimMed['medicoes'], true) : [];
-            $medicoes = $medicoesExistentes;
-            
-            // Verificar se 'medida' existe e mesclar com valores existentes
-            if (isset($_POST['medida'])) {
-                foreach ($_POST['medida'] as $param => $valor) {
-                    $medicoes[$param] = $valor !== '' ? floatval(str_replace(',', '.', $valor)) : null;
-                }
-            }
-            
-            // Verificar se já existe registro de medições
-            $checkQuery = "SELECT id FROM virabrequim WHERE is_reference = 0 AND ordem = ?";
-            $stmtCheck = mysqli_prepare($conn, $checkQuery);
-            mysqli_stmt_bind_param($stmtCheck, "s", $ordem);
-            mysqli_stmt_execute($stmtCheck);
-            $resultCheck = mysqli_stmt_get_result($stmtCheck);
-            
-            if (mysqli_num_rows($resultCheck) > 0) {
-                // Atualizar registro existente
-                $updateQuery = "UPDATE virabrequim SET medicoes = ? WHERE is_reference = 0 AND ordem = ?";
-                $stmtUpdate = mysqli_prepare($conn, $updateQuery);
-                $jsonMedicoes = json_encode($medicoes);
-                mysqli_stmt_bind_param($stmtUpdate, "ss", $jsonMedicoes, $ordem);
-                if (!mysqli_stmt_execute($stmtUpdate)) {
-                    throw new Exception("Erro ao atualizar medições: " . mysqli_stmt_error($stmtUpdate));
-                }
-            } else {
-                // Inserir novo registro
-                $insertQuery = "INSERT INTO virabrequim (ordem, is_reference, medicoes) VALUES (?, 0, ?)";
-                $stmtInsert = mysqli_prepare($conn, $insertQuery);
-                $jsonMedicoes = json_encode($medicoes);
-                mysqli_stmt_bind_param($stmtInsert, "ss", $ordem, $jsonMedicoes);
-                if (!mysqli_stmt_execute($stmtInsert)) {
-                    throw new Exception("Erro ao inserir medições: " . mysqli_stmt_error($stmtInsert));
-                }
-            }
-            echo "<div class='success-msg'>Medições salvas com sucesso!</div>";
-        }
-
         // Buscar dados de referência do virabrequim
         $queryRef = "SELECT * FROM virabrequim WHERE is_reference = 1 AND ordem = ?";
         $stmtRef = mysqli_prepare($conn, $queryRef);
@@ -94,7 +45,7 @@ function displayVirabrequimMedicoes($conn, $ordem) {
         echo "<div> Tipo: <div class='subtitulo'> " . htmlspecialchars($virabrequimRef['tipo']) . "</div></div>";
         
         echo "<div class='table-container'>";
-        echo "<form method='POST' class='table-form'>";
+        echo "<div class='table-form' data-table='virabrequim'>";
         echo "<input type='hidden' name='table' value='virabrequim'>";
         echo "<input type='hidden' name='ordem' value='" . htmlspecialchars($ordem) . "'>";
         echo "<table>";
@@ -132,8 +83,8 @@ function displayVirabrequimMedicoes($conn, $ordem) {
         }
 
         echo "</tbody></table>";
-        echo "<button type='submit' class='save-btn'>Salvar Medições</button>";
-        echo "</form>";
+        echo "<button type='button' class='save-btn' onclick='dadosAjaxManager.forceSave()'>Salvar Medições</button>";
+        echo "</div>";
         echo "</div>";
         echo "</div>";
         // Script para alternar campos conforme o tipo

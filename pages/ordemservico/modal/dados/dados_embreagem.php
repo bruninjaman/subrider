@@ -3,68 +3,7 @@ require_once 'dados_util.php';
 
 function displayEmbreagemMedicoes($conn, $ordem) {
     try {
-        // Processar salvamento se for POST
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table']) && $_POST['table'] === 'embreagem') {
-            // Buscar medições existentes antes de processar o POST
-            $queryMed = "SELECT medicoes_friccao, medicoes_separador FROM embreagem WHERE is_reference = 0 AND ordem = ?";
-            $stmtMed = mysqli_prepare($conn, $queryMed);
-            mysqli_stmt_bind_param($stmtMed, "s", $ordem);
-            mysqli_stmt_execute($stmtMed);
-            $resultMed = mysqli_stmt_get_result($stmtMed);
-            $embreagemMed = mysqli_fetch_assoc($resultMed);
-            
-            $medicoesFriccaoExistentes = $embreagemMed && $embreagemMed['medicoes_friccao'] ? json_decode($embreagemMed['medicoes_friccao'], true) : [];
-            $medicoesSeparadorExistentes = $embreagemMed && $embreagemMed['medicoes_separador'] ? json_decode($embreagemMed['medicoes_separador'], true) : [];
-            
-            $medicoesFriccao = $medicoesFriccaoExistentes;
-            $medicoesSeparador = $medicoesSeparadorExistentes;
-            
-            // Verificar se 'medida' existe e mesclar com valores existentes
-            if (isset($_POST['medida'])) {
-                if (isset($_POST['medida']['disco_friccao_espes'])) {
-                    foreach ($_POST['medida']['disco_friccao_espes'] as $i => $valor) {
-                        $medicoesFriccao[$i] = $valor !== '' ? floatval(str_replace(',', '.', $valor)) : null;
-                    }
-                }
-                if (isset($_POST['medida']['disco_separador_emp'])) {
-                    foreach ($_POST['medida']['disco_separador_emp'] as $i => $valor) {
-                        $medicoesSeparador[$i] = $valor !== '' ? floatval(str_replace(',', '.', $valor)) : null;
-                    }
-                }
-            }
-            
-            // Verificar se já existe registro de medições
-            $checkQuery = "SELECT id FROM embreagem WHERE is_reference = 0 AND ordem = ?";
-            $stmtCheck = mysqli_prepare($conn, $checkQuery);
-            mysqli_stmt_bind_param($stmtCheck, "s", $ordem);
-            mysqli_stmt_execute($stmtCheck);
-            $resultCheck = mysqli_stmt_get_result($stmtCheck);
-            
-            if (mysqli_num_rows($resultCheck) > 0) {
-                // Atualizar registro existente
-                $updateQuery = "UPDATE embreagem SET medicoes_friccao = ?, medicoes_separador = ? WHERE is_reference = 0 AND ordem = ?";
-                $stmtUpdate = mysqli_prepare($conn, $updateQuery);
-                $jsonFriccao = json_encode($medicoesFriccao);
-                $jsonSeparador = json_encode($medicoesSeparador);
-                mysqli_stmt_bind_param($stmtUpdate, "sss", $jsonFriccao, $jsonSeparador, $ordem);
-                if (!mysqli_stmt_execute($stmtUpdate)) {
-                    throw new Exception("Erro ao atualizar medições: " . mysqli_stmt_error($stmtUpdate));
-                }
-            } else {
-                // Inserir novo registro
-                $insertQuery = "INSERT INTO embreagem (ordem, is_reference, medicoes_friccao, medicoes_separador) VALUES (?, 0, ?, ?)";
-                $stmtInsert = mysqli_prepare($conn, $insertQuery);
-                $jsonFriccao = json_encode($medicoesFriccao);
-                $jsonSeparador = json_encode($medicoesSeparador);
-                mysqli_stmt_bind_param($stmtInsert, "sss", $ordem, $jsonFriccao, $jsonSeparador);
-                if (!mysqli_stmt_execute($stmtInsert)) {
-                    throw new Exception("Erro ao inserir medições: " . mysqli_stmt_error($stmtInsert));
-                }
-            }
-            echo "<div class='success-msg'>Medições salvas com sucesso!</div>";
-        }
-
-        // Buscar dados de referência
+        // Buscar dados de referência da embreagem
         $queryRef = "SELECT * FROM embreagem WHERE is_reference = 1 AND ordem = ?";
         $stmtRef = mysqli_prepare($conn, $queryRef);
         if (!$stmtRef) {
@@ -103,7 +42,7 @@ function displayEmbreagemMedicoes($conn, $ordem) {
         echo "<div class='legenda'>Medição de discos de fricção e separadores</div>";
         
         echo "<div class='table-container'>";
-        echo "<form method='POST' class='table-form'>";
+        echo "<div class='table-form' data-table='embreagem'>";
         echo "<input type='hidden' name='table' value='embreagem'>";
         echo "<input type='hidden' name='ordem' value='" . htmlspecialchars($ordem) . "'>";
         echo "<table>";
@@ -161,8 +100,8 @@ function displayEmbreagemMedicoes($conn, $ordem) {
         echo "</tr>";
 
         echo "</tbody></table>";
-        echo "<button type='submit' class='save-btn'>Salvar Medições</button>";
-        echo "</form>";
+        echo "<button type='button' class='save-btn' onclick='dadosAjaxManager.forceSave()'>Salvar Medições</button>";
+        echo "</div>";
         echo "</div>";
         echo "</div>";
         

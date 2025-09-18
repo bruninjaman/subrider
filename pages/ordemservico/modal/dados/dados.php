@@ -653,3 +653,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
 });
 </script>
+
+<!-- AJAX e Sistema de Histórico de Campos -->
+<script src="dados_ajax.js"></script>
