@@ -1,543 +1,553 @@
-/* Estilos Mobile para Ordem de Serviço */
+/* Estilos Mobile Modernos para Ordem de Serviço */
 
-/* Estilos gerais para mobile */
+/* Reset e configurações base para mobile */
 @media screen and (max-width: 768px) {
-  /* Ajustes gerais - Tema Escuro */
+  /* Configurações gerais - Tema Escuro Moderno */
   body.is-peload.landing {
-    overflow-x: hidden;
-    background-color: #121212 !important;
-    color: #e0e0e0 !important;
-  }
-  
-  /* Ajuste de cabeçalhos */
-  .headers-tabela {
-    font-size: 1.1em !important;
-    padding: 5px !important;
-    text-align: center !important;
-    background-color: #181921 !important;
-    color: #ffffff !important;
-    margin: 0.3em 0 !important;
-  }
-  
-  #editableproprietario {
-    font-size: 1em !important;
-  }
-  
-  /* Ajustes da tabela */
-  .table-wrapper {
-    overflow-x: auto;
-    width: 100%;
+    overflow-x: hidden !important;
+    background: linear-gradient(135deg, #1c1d26 0%, #272833 50%, #1c1d26 100%) !important;
+    color: #e8eaed !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
     margin: 0 !important;
-    padding: 5px !important;
+    padding: 0 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   }
   
-  /* Informações da moto */
-  .motoinfobox {
+  /* Cabeçalho com design glassmorphism */
+  #header {
     padding: 1em !important;
-    margin: 5px 0 !important;
-    background-color: #1e1e1e !important;
-    border: 1px solid #333 !important;
-    border-radius: 5px;
-  }
-  
-  #motoinfo {
-    display: block !important;
-    margin: 5px 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background: rgba(28, 29, 38, 0.85) !important;
+    backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    min-height: 70px !important;
     width: 100% !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
   }
   
-  .imagemoto img {
-    width: 100% !important;
-    height: auto !important;
-    margin-right: 0 !important;
-    margin-bottom: 10px !important;
-    border-radius: 5px;
+  #header #logo img {
+    height: 40px !important;
+    width: 120px !important;
+    margin: 0 !important;
+    filter: brightness(1.1) !important;
   }
   
-  /* Ajuste de layout para colunas */
-  .row .col-6 {
-    width: 100% !important;
-    margin-left: 0 !important;
-    margin-bottom: 10px !important;
+  #nav.mobile-nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    width: auto !important;
+    margin: 0 !important;
   }
   
-  /* Ajuste das tabelas */
-  table.alt {
-    font-size: 0.8em;
+  .mobile-menu {
+    display: flex !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
-  /* Estilo para tabelas responsivas - Tema Escuro */
-  table, thead, tbody, th, td, tr {
-    display: block;
+  .mobile-menu-item {
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
-  table thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
+  /* Botões modernos com gradiente */
+  .mobile-button, .button.primary {
+    padding: 0.8em 1.5em !important;
+    font-size: 0.95em !important;
+    font-weight: 600 !important;
+    min-width: 110px !important;
+    text-align: center !important;
+    margin: 5px !important;
+    border-radius: 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: linear-gradient(135deg, #c73650 0%, #b8455a 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 15px rgba(199, 54, 80, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
   }
   
-  table tr {
-    border: 1px solid #333;
-    margin-bottom: 10px;
-    background-color: #1e1e1e !important;
+  .mobile-button:hover, .button.primary:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 8px 25px rgba(184, 69, 90, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(135deg, #b8455a 0%, #a52a3a 100%) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
   }
   
-  table td {
-    border: none;
-    border-bottom: 1px solid #333;
-    position: relative;
-    padding-left: 50% !important;
-    text-align: left !important;
-    color: #e0e0e0 !important;
+  .mobile-button:active, .button.primary:active {
+    transform: translateY(0) scale(0.98) !important;
+    background: linear-gradient(135deg, #a52a3a 0%, #8f1f2f 100%) !important;
+    box-shadow: 0 2px 8px rgba(143, 31, 47, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
   }
   
-  table td:before {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    content: attr(data-cell);
-    font-weight: bold;
-    color: #aaa !important;
-  }
-  
-  /* Botões e ações */
-  ul.actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Ocultando colunas desnecessárias em mobile */
-  .hide-mobile {
-    display: none !important;
-  }
-  
-  /* Ajustes para linhas de totais */
-  tr.total {
-    margin-top: 10px;
-    font-weight: bold;
-    background-color: #252525 !important;
-  }
-  
-  /* Melhoria para visualização de buttons */
-  button {
-    padding: 5px !important;
-    margin: 3px !important;
-  }
-  
-  /* Ajuste para o banner */
+  /* Banner com design moderno */
   #banner {
-    padding: 5px !important;
-    background-color: #121212 !important;
+    padding: 1.5em !important;
+    background: transparent !important;
+    margin-bottom: 1em !important;
   }
   
   #banner .content {
-    padding: 5px !important;
-    background-color: #121212 !important;
+    padding: 0 !important;
+    background: transparent !important;
   }
   
-  /* Ajustes para telas muito pequenas */
-  @media screen and (max-width: 480px) {
-    body {
-      font-size: 12px !important;
+  /* Cards modernos para seções */
+  .section-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    margin: 1em 0.5em !important;
+    padding: 1.5em !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    animation: slideInUp 0.6s ease-out !important;
+  }
+  
+  .section-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, #c73650, #b8455a, #a52a3a) !important;
+  }
+  
+  .section-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+  
+  /* Animações de entrada */
+  @keyframes slideInUp {
+    from {
+      opacity: 0 !important;
+      transform: translateY(30px) !important;
     }
-    
-    .headers-tabela {
-      font-size: 1em !important;
+    to {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
     }
-    
-    table {
-      min-width: 300px !important;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0 !important;
     }
-    
-    table td {
-      padding-left: 45% !important;
-      padding: 3px 3px 3px 45% !important;
+    to {
+      opacity: 1 !important;
     }
-    
-    .motoinfobox {
-      padding: 0.5em !important;
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0 !important;
+      transform: translateX(-30px) !important;
     }
-    
-    .motoinfo li {
-      padding: 3px 0 !important;
+    to {
+      opacity: 1 !important;
+      transform: translateX(0) !important;
     }
-    
-    /* Ajuste do botão para telas muito pequenas */
-    .mobile-button {
-      padding: 0.8em 1em !important;
-      font-size: 1.1em !important;
-      width: 120px !important;
-      height: auto !important;
-      display: block !important;
-      margin: 8px auto !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: nowrap !important;
-      box-sizing: border-box !important;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0 !important;
+      transform: translateX(30px) !important;
     }
+    to {
+      opacity: 1 !important;
+      transform: translateX(0) !important;
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1) !important;
+    }
+    50% {
+      transform: scale(1.05) !important;
+    }
+    100% {
+      transform: scale(1) !important;
+    }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      left: -100% !important;
+    }
+    100% {
+      left: 100% !important;
+    }
+  }
+  
+  /* Cabeçalhos de seção modernos */
+  .headers-tabela {
+    font-size: 1.2em !important;
+    font-weight: 700 !important;
+    padding: 1em !important;
+    text-align: center !important;
+    background: linear-gradient(135deg, #c73650 0%, #b8455a 100%) !important;
+    color: #ffffff !important;
+    margin: 0 0 1em 0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(199, 54, 80, 0.3) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  
+  .headers-tabela::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+    transition: left 0.5s !important;
+  }
+  
+  .headers-tabela:hover::after {
+    left: 100% !important;
+  }
+  
+  /* Tabelas como cards modernos */
+  .table-wrapper {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 16px !important;
+    padding: 1em !important;
+    margin: 1em 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  table {
+    display: block !important;
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+  
+  table thead {
+    display: none !important;
+  }
+  
+  table tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  table tr {
+    display: block !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    margin: 0.8em 0 !important;
+    padding: 1.2em !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  
+  table tr::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 4px !important;
+    height: 100% !important;
+    background: linear-gradient(180deg, #c73650, #b8455a) !important;
+  }
+  
+  table tr:hover {
+    transform: translateX(4px) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  table td {
+    display: block !important;
+    width: 100% !important;
+    padding: 0.5em 0 !important;
+    border: none !important;
+    text-align: left !important;
+    position: relative !important;
+    padding-left: 40% !important;
+    color: #e8eaed !important;
+    font-size: 0.95em !important;
+  }
+  
+  table td::before {
+    content: attr(data-cell) ": " !important;
+    position: absolute !important;
+    left: 0 !important;
+    width: 35% !important;
+    padding-right: 1em !important;
+    white-space: nowrap !important;
+    font-weight: 600 !important;
+    color: #a8b3cf !important;
+    text-transform: uppercase !important;
+    font-size: 0.8em !important;
+    letter-spacing: 0.5px !important;
+  }
+  
+  /* Imagens com design moderno */
+  .imagemoto {
+    text-align: center !important;
+    margin: 1em 0 !important;
+  }
+  
+  .imagemoto img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .imagemoto img:hover {
+    transform: scale(1.02) !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4) !important;
+  }
+  
+  /* Informações da moto em grid moderno */
+  .moto-info-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1em !important;
+    margin: 1em 0 !important;
+  }
+  
+  .moto-info-item {
+    background: rgba(255, 255, 255, 0.05) !important;
+    padding: 1em !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    text-align: center !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .moto-info-item:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateY(-2px) !important;
+  }
+  
+  .moto-info-label {
+    font-size: 0.8em !important;
+    color: #a8b3cf !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.5em !important;
+    letter-spacing: 0.5px !important;
+  }
+  
+  .moto-info-value {
+    font-size: 1em !important;
+    color: #e8eaed !important;
+    font-weight: 500 !important;
+  }
+  
+  /* Botões de ação modernos */
+  .action-buttons {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.8em !important;
+    justify-content: center !important;
+    margin: 1.5em 0 !important;
+  }
+  
+  .btn-action {
+    padding: 0.8em 1.5em !important;
+    border-radius: 10px !important;
+    border: none !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 120px !important;
+  }
+  
+  .btn-edit {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4) !important;
+  }
+  
+  .btn-edit:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6) !important;
+  }
+  
+  .btn-delete {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4) !important;
+  }
+  
+  .btn-delete:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6) !important;
+  }
+  
+  /* Formulários modernos */
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100% !important;
+    padding: 1em !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #e8eaed !important;
+    font-size: 1em !important;
+    transition: all 0.3s ease !important;
+    backdrop-filter: blur(5px) !important;
+  }
+  
+  input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+    outline: none !important;
+    border-color: #c73650 !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 0 0 3px rgba(199, 54, 80, 0.2) !important;
+  }
+  
+  /* Modais modernos */
+  .modal-content {
+    background: rgba(28, 29, 38, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+    color: #e8eaed !important;
+    max-width: 90vw !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Totais com destaque */
+  .total-section {
+    background: linear-gradient(135deg, #c73650 0%, #b8455a 100%) !important;
+    color: #ffffff !important;
+    padding: 1.5em !important;
+    border-radius: 12px !important;
+    margin: 1em 0 !important;
+    text-align: center !important;
+    box-shadow: 0 8px 25px rgba(199, 54, 80, 0.3) !important;
+  }
+  
+  .total-label {
+    font-size: 0.9em !important;
+    opacity: 0.9 !important;
+    margin-bottom: 0.5em !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+  
+  .total-value {
+    font-size: 1.8em !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
   }
 }
 
-/* Estilos para visualização mobile da página de Ordem de Serviço */
-
-/* Estilos para o tema escuro global */
-.dark-theme {
-    background-color: #121212 !important;
-    color: #e0e0e0 !important;
+/* Telas muito pequenas (≤480px) */
+@media screen and (max-width: 480px) {
+  #header {
+    padding: 0.8em !important;
+    min-height: 60px !important;
+  }
+  
+  #header #logo img {
+    height: 32px !important;
+    width: 96px !important;
+  }
+  
+  .section-card {
+    margin: 0.8em 0.3em !important;
+    padding: 1.2em !important;
+  }
+  
+  .moto-info-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .action-buttons {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  .btn-action {
+    width: 100% !important;
+    margin: 0.3em 0 !important;
+  }
+  
+  .total-value {
+    font-size: 1.5em !important;
+  }
 }
 
-/* Efeitos touch para o botão mobile */
-.mobile-button:active {
-    transform: scale(0.95) !important;
-    transition: transform 0.1s !important;
-    background-color: #4d5890 !important;
-}
-
-/* Melhoria do contraste visual para maior acessibilidade */
-.button.primary.mobile-button {
-    background-color: #3d4880 !important;
-    color: #ffffff !important;
-    font-weight: bold !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
-    border: 2px solid #5d68a0 !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-    letter-spacing: 0.5px !important;
-}
-
-/* Media query para dispositivos mobile */
-@media screen and (max-width: 768px) {
-    /* Estilos gerais */
-    body {
-        font-size: 14px;
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-    
-    /* Cabeçalho */
-    #header {
-        padding: 0.6em 0.8em;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #181921 !important;
-        min-height: 60px !important;
-        width: 100% !important;
-    }
-    
-    #nav.mobile-nav {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        width: auto !important;
-    }
-    
-    .mobile-logo {
-        margin: 0 !important;
-    }
-    
-    #header #logo img {
-        height: 35px !important;
-        width: 105px !important;
-    }
-    
-    .mobile-nav {
-        margin: 0 !important;
-    }
-    
-    .mobile-menu {
-        display: flex !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .mobile-menu-item {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .mobile-button {
-        padding: 0.7em 1.2em !important;
-        font-size: 1em !important;
-        min-width: 100px !important;
-        text-align: center !important;
-        margin: 5px !important;
-        border-radius: 4px !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        max-width: 100% !important;
-        overflow: hidden !important;
-        white-space: nowrap !important;
-        text-overflow: ellipsis !important;
-        line-height: 1.2 !important;
-        box-sizing: border-box !important;
-        vertical-align: middle !important;
-        height: auto !important;
-    }
-    
-    /* Banner e conteúdo principal */
-    #banner .content {
-        padding: 0.8em;
-        background-color: #121212;
-    }
-    
-    .headers-tabela {
-        font-size: 1.1em;
-        padding: 0.4em 0;
-        background-color: #181921;
-        color: white;
-    }
-    
-    #editableproprietario {
-        font-size: 0.9em !important;
-    }
-    
-    /* Tabelas */
-    .table-wrapper {
-        overflow-x: auto;
-        margin-bottom: 0.8em;
-    }
-    
-    table {
-        width: 100%;
-        min-width: 300px; /* Reduzido para telas menores */
-        background-color: #1e1e1e;
-        color: #e0e0e0;
-    }
-    
-    /* Transformando a tabela para visualização mobile */
-    .table.alt thead {
-        display: none; /* Esconde o cabeçalho da tabela */
-    }
-    
-    .table.alt tbody tr {
-        display: block;
-        margin-bottom: 0.8em;
-        border: 1px solid #333;
-        border-radius: 5px;
-        padding: 0.4em;
-        background-color: #252525;
-    }
-    
-    .table.alt tbody tr td {
-        display: block;
-        text-align: right;
-        border-bottom: 1px solid #333;
-        padding: 0.4em;
-        color: #e0e0e0;
-    }
-    
-    .table.alt tbody tr td::before {
-        content: attr(data-cell) ": ";
-        float: left;
-        font-weight: bold;
-        color: #aaa;
-    }
-    
-    /* Linha de total */
-    .table.alt tbody tr.total {
-        background-color: #303030;
-    }
-    
-    .table.alt tbody tr.total td {
-        text-align: right;
-        color: #ffffff;
-    }
-    
-    /* Informações da moto */
-    #motoinfo {
-        margin: 5px !important;
-        display: block !important;
-    }
-    
-    .motoinfobox {
-        padding: 0.8em !important;
-        background-color: #1e1e1e;
-        border: 1px solid #333;
-    }
-    
-    .moto-info-row {
-        flex-direction: column !important;
-    }
-    
-    .moto-image-col, 
-    .moto-data-col {
-        width: 100% !important;
-        margin-left: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .imagemoto {
-        display: block;
-        text-align: center;
-    }
-    
-    .imagemoto img {
-        margin-right: 0 !important;
-        width: 100% !important;
-        height: auto !important;
-        margin-bottom: 0.8em;
-        border-radius: 8px;
-    }
-    
-    .motoinfo li {
-        border-bottom: 1px solid #333;
-        padding: 6px 0;
-        color: #e0e0e0;
-    }
-    
-    .info-value {
-        float: right;
-        font-weight: normal;
-        color: #aaa;
-    }
-    
-    /* Ajuste para layout de colunas */
-    .row .col-6 {
-        width: 100% !important;
-        margin-left: 0 !important;
-        margin-bottom: 0.8em;
-    }
-    
-    /* Botões e ações */
-    button {
-        margin: 0.2em;
-        background-color: #252525 !important;
-    }
-    
-    button img {
-        filter: brightness(0.9) !important;
-    }
-    
-    .button.primary {
-        background-color: #2c3351 !important;
-        color: #ffffff !important;
-        box-shadow: none !important;
-    }
-
-    .button:hover {
-        background-color: #3a446a !important;
-    }
-    
-    /* Estilos para formulários */
-    input, select, textarea, button.modal-option {
-        background-color: #252525 !important;
-        color: #e0e0e0 !important;
-        border: 1px solid #333 !important;
-    }
-    
-    input:focus, select:focus, textarea:focus {
-        border-color: #3a446a !important;
-        box-shadow: 0 0 0 1px #3a446a !important;
-    }
-
-    /* Menu de medições */
-    .options {
-        background-color: #1e1e1e !important;
-        border: 1px solid #333 !important;
-    }
-    
-    .option-button {
-        background-color: #252525 !important;
-        color: #e0e0e0 !important;
-        border: 1px solid #333 !important;
-    }
-    
-    .option-button:hover {
-        background-color: #3a446a !important;
-    }
-    
-    /* Modal e menus de ação */
-    .modal-content {
-        width: 90% !important;
-        max-width: 100% !important;
-        background-color: #1e1e1e !important;
-        color: #e0e0e0 !important;
-        border: 1px solid #333 !important;
-    }
-    
-    /* Footer */
-    #footer {
-        background-color: #181921 !important;
-        color: #e0e0e0 !important;
-    }
-    
-    /* Ajustes extras para telas muito pequenas */
-    @media screen and (max-width: 320px) {
-        body {
-            font-size: 11px !important;
-        }
-        
-        table {
-            min-width: 280px !important;
-        }
-        
-        .headers-tabela {
-            font-size: 0.9em !important;
-        }
-        
-        #header #logo img {
-            height: 30px !important;
-            width: 90px !important;
-        }
-    }
-    
-    /* Ajustes para telas extremamente pequenas */
-    @media screen and (max-width: 280px) {
-        body {
-            font-size: 10px !important;
-        }
-        
-        .headers-tabela {
-            font-size: 0.8em !important;
-            padding: 3px !important;
-        }
-        
-        #header #logo img {
-            height: 25px !important;
-            width: 75px !important;
-        }
-        
-        .mobile-button {
-            font-size: 0.9em !important;
-            padding: 0.5em 1em !important;
-            width: 90px !important;
-            height: auto !important;
-            overflow: hidden !important;
-            text-overflow: ellipsis !important;
-            white-space: nowrap !important;
-            line-height: 1.2 !important;
-            box-sizing: border-box !important;
-        }
-        
-        .table-wrapper {
-            padding: 2px !important;
-        }
-        
-        table {
-            min-width: 240px !important;
-        }
-        
-        table td {
-            padding: 2px 2px 2px 40% !important;
-        }
-        
-        .imagemoto img {
-            border-radius: 3px;
-        }
-        
-        .motoinfobox {
-            padding: 0.3em !important;
-        }
-        
-        button img {
-            height: 16px !important;
-            width: 16px !important;
-        }
-    }
+/* Telas extra pequenas (≤320px) */
+@media screen and (max-width: 320px) {
+  body.is-peload.landing {
+    font-size: 13px !important;
+  }
+  
+  #header {
+    padding: 0.6em !important;
+    min-height: 55px !important;
+  }
+  
+  #header #logo img {
+    height: 28px !important;
+    width: 84px !important;
+  }
+  
+  .section-card {
+    margin: 0.5em 0.2em !important;
+    padding: 1em !important;
+  }
+  
+  .headers-tabela {
+    font-size: 1em !important;
+    padding: 0.8em !important;
+  }
+  
+  table tr {
+    padding: 1em !important;
+  }
+  
+  table td {
+    padding-left: 45% !important;
+    font-size: 0.9em !important;
+  }
+  
+  .mobile-button, .button.primary {
+    padding: 0.7em 1.2em !important;
+    font-size: 0.9em !important;
+    min-width: 90px !important;
+  }
 }
