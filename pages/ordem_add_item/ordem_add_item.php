@@ -29,22 +29,30 @@ $motoid = mysqli_fetch_assoc($motoid);
                     </div>
 
                     <div id="form_pecas" style="display: none;">
-                        <div class="row">
+                        <div class="row" style="position: relative;">
                             <div class="col-12">
                                 <h3>Selecione uma peça</h3>
-                                <?php
-                                $sql_query = "SELECT * FROM pecas ";
-                                $sql_query .= "ORDER BY pecas.grupo ";
-                                $result = mysqli_query($conn, $sql_query);
-                                ?>
-                                <input type="text" list="pecaid" name="pecaid_display">
-                                <datalist id="pecaid">
-                                    <?php while ($peca = mysqli_fetch_assoc($result)) { ?>
-                                        <option value="<?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?>" data-id="<?php echo $peca["pecaId"] ?>"></option>
-                                    <?php } ?>
-                                </datalist>
-                                <!-- Hidden input for pecaid -->
-                                <input type="hidden" id="pecaid_input" name="pecaid">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="flex: 1;">
+                                        <input type="text" list="pecaid" name="pecaid_display" style="width: 100%;">
+                                        <datalist id="pecaid">
+                                            <?php
+                                            $sql_query = "SELECT * FROM pecas ";
+                                            $sql_query .= "ORDER BY pecas.grupo ";
+                                            $result = mysqli_query($conn, $sql_query);
+                                            while ($peca = mysqli_fetch_assoc($result)) { ?>
+                                                <option value="<?php echo $peca["grupo"] . " - " . $peca["item"] . " - " . $peca["parte"] ?>" data-id="<?php echo $peca["pecaId"] ?>"></option>
+                                            <?php } ?>
+                                        </datalist>
+                                        <!-- Hidden input for pecaid -->
+                                        <input type="hidden" id="pecaid_input" name="pecaid">
+                                    </div>
+                                    <div>
+                                        <a href="tabelaPecasAdd.php" target="_blank" class="button small" title="Criar nova peça">
+                                            + Criar Peça
+                                        </a>
+                                    </div>
+                                </div>
 
                                 <script>
                                     // Autocomplete para peças
@@ -103,22 +111,30 @@ $motoid = mysqli_fetch_assoc($motoid);
                         </div>
                     </div>
                     <div id="form_services" class="row gtr-uniform gtr-50" style="display: none;">
-                        <div class="row">
+                        <div class="row" style="position: relative;">
                             <div class="col-12">
                                 <h3>Selecione um serviço</h3>
-                                <?php
-                                $sql_query = "SELECT * FROM servicos ";
-                                $sql_query .= "ORDER BY servicos.tipo ";
-                                $result = mysqli_query($conn, $sql_query);
-                                ?>
-                                <input type="text" name="servico" list="servicoid_list">
-                                <datalist id="servicoid_list">
-                                    <?php while ($servico = mysqli_fetch_assoc($result)) { ?>
-                                        <option value="<?php echo $servico["tipo"] . " - " . $servico["item"] ?>" data-id="<?php echo $servico["servicoId"] ?>"></option>
-                                    <?php } ?>
-                                </datalist>
-                                <!-- Hidden input for servicoid -->
-                                <input type="hidden" id="servicoid" name="servicoid">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="flex: 1;">
+                                        <input type="text" name="servico" list="servicoid_list" style="width: 100%;">
+                                        <datalist id="servicoid_list">
+                                            <?php
+                                            $sql_query = "SELECT * FROM servicos ";
+                                            $sql_query .= "ORDER BY servicos.tipo ";
+                                            $result = mysqli_query($conn, $sql_query);
+                                            while ($servico = mysqli_fetch_assoc($result)) { ?>
+                                                <option value="<?php echo $servico["tipo"] . " - " . $servico["item"] ?>" data-id="<?php echo $servico["servicoId"] ?>"></option>
+                                            <?php } ?>
+                                        </datalist>
+                                        <!-- Hidden input for servicoid -->
+                                        <input type="hidden" id="servicoid" name="servicoid">
+                                    </div>
+                                    <div>
+                                        <a href="tabelaServicosAdd.php" target="_blank" class="button small" title="Criar novo serviço">
+                                            + Criar Serviço
+                                        </a>
+                                    </div>
+                                </div>
 
                                 <script>
                                     // Autocomplete para serviços
