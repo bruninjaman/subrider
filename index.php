@@ -15,6 +15,7 @@ session_start();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/mobile-navbar.css" />
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
     <!-- jQuery importado no head para estar disponível para todos os scripts -->
@@ -28,6 +29,7 @@ session_start();
 <body class="is-preload landing">
     <div id="page-wrapper">
         <?php
+        require("./includes/mobile-navbar.php");
         require("./pages/index/header.php");
         require("./pages/index/banner.php");
         require("./pages/index/mapa.php");
@@ -50,6 +52,7 @@ session_start();
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/mobile-navbar.js"></script>
     <!-- Instagram feed script -->
     <script type="text/javascript" src="assets/js/index/instafeed.min.js"></script>
     <!-- <script type="text/javascript" src="assets/js/index/instafeed.js"></script> -->

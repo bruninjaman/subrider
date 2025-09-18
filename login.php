@@ -11,6 +11,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/mobile-navbar.css" />
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
@@ -19,6 +20,8 @@
 <body class="is-preload landing">
     <div id="page-wrapper">
         <?php
+        session_start();
+        require("./includes/mobile-navbar.php");
         require("./pages/login/header.php");
         require("./pages/login/login.php");
         require("./pages/login/footer.php");
@@ -35,6 +38,7 @@
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/mobile-navbar.js"></script>
 
 </body>
 

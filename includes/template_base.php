@@ -22,6 +22,7 @@ require_once("./scripts/functions.php");
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/mobile-navbar.css" />
     <link rel="stylesheet" href="assets/css/search.css" />
     <link rel="stylesheet" href="assets/css/sort.css" />
     <link rel="stylesheet" href="assets/css/table.css" />
@@ -35,6 +36,7 @@ require_once("./scripts/functions.php");
     <div id="page-wrapper">
         <!-- content -->
         <?php 
+        require("./includes/mobile-navbar.php");
         require("./pages/{$pageType}/header.php");
         require("./pages/{$pageType}/tabela.php");
         require("./pages/{$pageType}/footer.php");
@@ -49,6 +51,7 @@ require_once("./scripts/functions.php");
     <script src="assets/js/global/breakpoints.min.js"></script>
     <script src="assets/js/global/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/mobile-navbar.js"></script>
     <script src="assets/js/delete_confirm.js"></script>
 </body>
 
@@ -56,4 +59,4 @@ require_once("./scripts/functions.php");
 
 <?php
     mysqli_close($conn);
-?> 
+?>
