@@ -434,5 +434,222 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Validação inicial
     setTimeout(validateAllMeasurementFields, 500);
+    
+    // === CONTROLE DE MUDANÇAS NÃO SALVAS ===
+    let hasUnsavedChanges = false;
+    let originalFormData = {};
+    
+    // Capturar dados originais dos formulários
+    function captureOriginalFormData() {
+        const forms = document.querySelectorAll('.table-form');
+        forms.forEach(form => {
+            const formData = new FormData(form);
+            const formId = form.querySelector('input[name="table"]')?.value || 'unknown';
+            originalFormData[formId] = {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (key.startsWith('medida[')) {
+                    originalFormData[formId][key] = value;
+                }
+            }
+        });
+    }
+    
+    // Verificar se houve mudanças nos formulários
+    function checkForChanges() {
+        const forms = document.querySelectorAll('.table-form');
+        let changesDetected = false;
+        
+        forms.forEach(form => {
+            const formData = new FormData(form);
+            const formId = form.querySelector('input[name="table"]')?.value || 'unknown';
+            const originalData = originalFormData[formId] || {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (key.startsWith('medida[')) {
+                    const originalValue = originalData[key] || '';
+                    if (value !== originalValue) {
+                        changesDetected = true;
+                        break;
+                    }
+                }
+            }
+        });
+        
+        hasUnsavedChanges = changesDetected;
+        updateUnsavedIndicators();
+        return changesDetected;
+    }
+    
+    // Atualizar indicadores visuais de mudanças não salvas
+    function updateUnsavedIndicators() {
+        const forms = document.querySelectorAll('.table-form');
+        
+        forms.forEach(form => {
+            const saveBtn = form.querySelector('.save-btn');
+            const formData = new FormData(form);
+            const formId = form.querySelector('input[name="table"]')?.value || 'unknown';
+            const originalData = originalFormData[formId] || {};
+            let formHasChanges = false;
+            
+            for (let [key, value] of formData.entries()) {
+                if (key.startsWith('medida[')) {
+                    const originalValue = originalData[key] || '';
+                    if (value !== originalValue) {
+                        formHasChanges = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (formHasChanges) {
+                saveBtn?.classList.add('has-unsaved-changes');
+                form.classList.add('form-has-changes');
+            } else {
+                saveBtn?.classList.remove('has-unsaved-changes');
+                form.classList.remove('form-has-changes');
+            }
+        });
+        
+        // Atualizar indicador na aba ativa
+        const activeTab = document.querySelector('.tab-btn.active');
+        if (activeTab && hasUnsavedChanges) {
+            activeTab.classList.add('tab-has-unsaved');
+        } else if (activeTab) {
+            activeTab.classList.remove('tab-has-unsaved');
+        }
+    }
+    
+    // Event listeners para detectar mudanças
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('meas-input')) {
+            setTimeout(checkForChanges, 100);
+        }
+    });
+    
+    document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('meas-input')) {
+            checkForChanges();
+        }
+    });
+    
+    // Prevenir fechamento/navegação sem salvar
+    window.addEventListener('beforeunload', function(e) {
+        if (hasUnsavedChanges) {
+            const message = 'Você tem alterações não salvas. Tem certeza que deseja sair sem salvar?';
+            e.preventDefault();
+            e.returnValue = message;
+            return message;
+        }
+    });
+    
+    // Interceptar cliques em links e botões de navegação
+    document.addEventListener('click', function(e) {
+        if (!hasUnsavedChanges) return;
+        
+        // Verificar se é um elemento que pode causar navegação
+        const target = e.target.closest('a, button, [onclick]');
+        
+        if (target) {
+            // Excluir elementos específicos que não causam navegação
+            const excludeClasses = ['tab-btn', 'toggle-btn', 'ref-btn', 'med-btn', 'save-btn', 'meas-input'];
+            const hasExcludedClass = excludeClasses.some(cls => target.classList.contains(cls));
+            
+            // Excluir elementos por ID que não causam navegação
+            const excludeIds = [''];
+            const hasExcludedId = excludeIds.some(id => target.id === id);
+            
+            // Verificar se é um botão de submit do próprio formulário
+            const isFormSubmit = target.type === 'submit' && target.closest('.table-form');
+            
+            if (!hasExcludedClass && !hasExcludedId && !isFormSubmit) {
+                const confirmLeave = confirm('Você tem alterações não salvas. Tem certeza que deseja continuar sem salvar?');
+                if (!confirmLeave) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    return false;
+                }
+            }
+        }
+    }, true); // Use capture phase para interceptar antes de outros handlers
+    
+    // Interceptar tentativas de fechar o modal
+    const modal = document.getElementById('modal');
+    if (modal) {
+        // Interceptar clique fora do modal
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal && hasUnsavedChanges) {
+                const confirmLeave = confirm('Você tem alterações não salvas. Tem certeza que deseja fechar sem salvar?');
+                if (!confirmLeave) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }
+        });
+    }
+    
+    // Interceptar botões específicos de fechar modal
+    document.querySelectorAll('[id^="closeModal"], .close, #backToMenu').forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (hasUnsavedChanges) {
+                const confirmLeave = confirm('Você tem alterações não salvas. Tem certeza que deseja fechar sem salvar?');
+                if (!confirmLeave) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }
+        });
+    });
+    
+    // Interceptar navegação entre páginas do modal
+    document.querySelectorAll('[id^="btn"], .nav-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (hasUnsavedChanges) {
+                const confirmLeave = confirm('Você tem alterações não salvas. Tem certeza que deseja navegar sem salvar?');
+                if (!confirmLeave) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }
+        });
+    });
+    
+    // Interceptar tecla ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && hasUnsavedChanges) {
+            const confirmLeave = confirm('Você tem alterações não salvas. Tem certeza que deseja fechar sem salvar?');
+            if (!confirmLeave) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
+    });
+    
+    // Resetar flag quando formulário for salvo com sucesso
+    document.addEventListener('submit', function(e) {
+        if (e.target.classList.contains('table-form')) {
+            // Aguardar um pouco para permitir que a página processe o submit
+            setTimeout(() => {
+                // Verificar se houve mensagem de sucesso
+                const successMsg = document.querySelector('.success-msg');
+                if (successMsg) {
+                    hasUnsavedChanges = false;
+                    captureOriginalFormData(); // Recapturar dados após salvar
+                    updateUnsavedIndicators();
+                }
+            }, 1000);
+        }
+    });
+    
+    // Capturar dados originais após carregamento completo
+    setTimeout(() => {
+        captureOriginalFormData();
+        checkForChanges();
+    }, 1000);
 });
 </script>
