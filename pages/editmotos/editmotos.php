@@ -24,6 +24,58 @@ $result = mysqli_fetch_assoc($result);
                     </div>
                 </div>
             </div>
+            
+            <!-- Seção para fotos extras -->
+            <div class="row">
+                <div class="col-12">
+                    <h3>Fotos Extras</h3>
+                    <p>Adicione fotos extras da motocicleta (peças, detalhes, etc)</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="fotos-extras-container">
+                        <?php
+                        // Buscar fotos extras existentes
+                        $sql_fotos_extras = "SELECT * FROM moto_fotos_extras WHERE motoId = " . $_GET["motoID"];
+                        $result_fotos = mysqli_query($conn, $sql_fotos_extras);
+                        
+                        if (mysqli_num_rows($result_fotos) > 0) {
+                            echo '<div class="fotos-existentes">';
+                            echo '<h4>Fotos existentes:</h4>';
+                            echo '<div class="row">';
+                            
+                            while ($foto = mysqli_fetch_assoc($result_fotos)) {
+                                echo '<div class="col-3 foto-extra-item" data-foto-id="' . $foto["id"] . '">';
+                                echo '<img src="' . $foto["foto"] . '" alt="Foto extra" />';
+                                echo '<p>' . $foto["descricao"] . '</p>';
+                                echo '<button type="button" class="button small" onclick="excluirFotoExtra(' . $foto["id"] . ')">Excluir</button>';
+                                echo '</div>';
+                            }
+                            
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                        ?>
+                        
+                        <div class="novas-fotos">
+                            <h4>Adicionar novas fotos:</h4>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="file" name="fotos_extras[]" multiple />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Descrição das fotos:</label>
+                                    <input type="text" name="descricao_fotos" placeholder="Ex: Peça danificada, vista lateral, etc">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-12">
@@ -66,3 +118,6 @@ $result = mysqli_fetch_assoc($result);
         </form>
     </div>
 </section>
+
+<!-- Script para gerenciar fotos extras -->
+<script src="../../assets/js/fotos-extras.js"></script>
