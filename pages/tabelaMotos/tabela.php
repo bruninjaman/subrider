@@ -77,8 +77,10 @@
                                         <td data-cell="Proprietario"><?php echo $moto['proprietario']; ?></td>
                                         <td>
                                             <button style="background: none; border: none;" onclick="location.href='editmotos.php?motoID=<?php echo $moto['motoId'] ?>'"><img src="./assets\css\images\edit-new.png" style="height: 28px; width: 38px;"> </button>
-                                            <button style="background: none; border: none;" onclick="location.href='gerenciarfotos.php?motoID=<?php echo $moto['motoId'] ?>'"><img src="./assets\css\images\photos.png" style="height: 28px; width: 38px;" title="Gerenciar Fotos"> </button>
                                             <button style="background: none; border: none;" onclick="return deleteMoto('<?php echo $moto['motoId']; ?>')"><img src="./assets\css\images\x-button-new.png" style="height: 28px; width: 38px;"></button>
+                                            <a class="button" href="gerenciarfotos.php?motoID=<?php echo $moto['motoId'] ?>" title="Abrir galeria" aria-label="Abrir galeria" style="display:inline-flex;align-items:center;justify-content:center;padding:25px;width:28px;height:28px;">
+                                                <i class="fa-solid fa-image" style="font-size:16px;"></i>
+                                            </a>
                                         </td>
                                     </tr>
                             <?php
