@@ -46,6 +46,36 @@ if (isset($_POST['endereco'])) {
 
     // Execute the query
     mysqli_query($conn, $mysqli_query);
+    
+    // Processar fotos extras
+    if (!empty($_FILES["fotos_extras"]["name"][0])) {
+        $descricao = $_POST['descricao_fotos'];
+        $file_path = "../../upload/moto/extras/";
+        
+        // Criar diretório se não existir
+        if (!file_exists($file_path)) {
+            mkdir($file_path, 0777, true);
+        }
+        
+        // Processar cada arquivo
+        $total_files = count($_FILES["fotos_extras"]["name"]);
+        
+        for ($i = 0; $i < $total_files; $i++) {
+            $fotoName = $_FILES["fotos_extras"]["name"][$i];
+            $fotoSize = $_FILES["fotos_extras"]["size"][$i];
+            $fotoTmpname = $_FILES["fotos_extras"]["tmp_name"][$i];
+            
+            // Upload da foto
+            $foto = uploadFoto($fotoName, $fotoSize, $fotoTmpname, $file_path);
+            // Remove caminho relativo
+            $foto = trim($foto, "../../");
+            
+            // Inserir na tabela de fotos extras
+            $sql_insert_foto = "INSERT INTO moto_fotos_extras (motoId, foto, descricao, data_upload) 
+                               VALUES ('$motoid', '$foto', '$descricao', NOW())";
+            mysqli_query($conn, $sql_insert_foto);
+        }
+    }
 
     // Close the connection
     mysqli_close($conn);
