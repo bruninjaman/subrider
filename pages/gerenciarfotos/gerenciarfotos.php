@@ -217,7 +217,7 @@ if (!$moto) {
     font-size: 18px;
 }
 
-/* Modal Styles */
+/* Modal Styles - Usando o estilo da aplicação */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -236,17 +236,30 @@ if (!$moto) {
 }
 
 .modal-content {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
     width: 90%;
     max-width: 500px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-height: 90vh;
     overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .modal-header {
     padding: 20px 25px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -254,15 +267,15 @@ if (!$moto) {
 
 .modal-header h3 {
     margin: 0;
-    color: white;
-    font-size: 1.2em;
+    color: #ffffff;
+    font-size: 1.4em;
     font-weight: 600;
 }
 
 .modal-close {
     background: none;
     border: none;
-    color: white;
+    color: rgba(255, 255, 255, 0.8);
     font-size: 24px;
     cursor: pointer;
     padding: 0;
@@ -272,11 +285,12 @@ if (!$moto) {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .modal-close:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
 .modal-body {
@@ -285,71 +299,90 @@ if (!$moto) {
 
 .modal-body label {
     display: block;
-    margin-bottom: 10px;
-    color: white;
-    font-weight: 600;
-    font-size: 1em;
+    margin-bottom: 8px;
+    color: #ffffff;
+    font-weight: 500;
 }
 
 .modal-body textarea {
     width: 100%;
+    min-height: 120px;
     padding: 12px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
+    border-radius: 4px;
     background: rgba(255, 255, 255, 0.1);
-    color: white;
-    font-family: inherit;
+    color: #ffffff;
     font-size: 14px;
     resize: vertical;
-    min-height: 100px;
-}
-
-.modal-body textarea::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    font-family: inherit;
 }
 
 .modal-body textarea:focus {
     outline: none;
-    border-color: rgba(255, 255, 255, 0.6);
+    border-color: #e44c65;
     background: rgba(255, 255, 255, 0.15);
+}
+
+.modal-body textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .modal-footer {
     padding: 20px 25px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
     display: flex;
-    gap: 12px;
     justify-content: flex-end;
+    gap: 12px;
 }
 
+/* Usando os estilos de botão da aplicação principal */
 .modal-footer .button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+    color: #ffffff !important;
     cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    display: inline-block;
+    font-weight: 300;
+    height: 3em;
+    line-height: 3em;
+    padding: 0 2.25em;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.modal-footer .button:hover,
+.modal-footer .button:active {
+    box-shadow: inset 0 0 0 1px #e44c65;
+    color: #e44c65 !important;
+}
+
+.modal-footer .button:active {
+    background-color: rgba(228, 76, 101, 0.15);
 }
 
 .modal-footer .button.primary {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: #e44c65;
+    box-shadow: none;
+    color: #ffffff !important;
 }
 
 .modal-footer .button.primary:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background-color: #e76278;
 }
 
-.modal-footer .button.alt {
-    background: transparent;
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.modal-footer .button.alt:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+.modal-footer .button.primary:active {
+    background-color: #e13652;
 }
 
 .upload-multiple {
