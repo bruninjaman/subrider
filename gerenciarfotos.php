@@ -28,6 +28,23 @@ require_once("./scripts/functions.php");
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
+    
+    <style>
+        /* Ajuste para aumentar o espaço lateral e vertical do formulário */
+        .content.form {
+            max-width: 85% !important;
+            width: 85% !important;
+            padding: 2em 0;
+        }
+        
+        @media screen and (max-width: 980px) {
+            .content.form {
+                max-width: 90% !important;
+                width: 90% !important;
+                padding: 1.5em 0;
+            }
+        }
+    </style>
 
 </head>
 
