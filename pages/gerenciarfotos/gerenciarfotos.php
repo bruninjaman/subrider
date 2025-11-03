@@ -40,7 +40,7 @@ if (!$moto) {
                     <div class="upload-image">
                         <div class="card thmb">
                             <img src="<?php echo $moto["foto"] ?>" alt="preview" />
-                            <input type="file" name="foto_principal" /><i class="fas fa-arrow-circle-up"></i>
+                            <input type="file" name="foto_principal" id="foto_principal" /><i class="fas fa-arrow-circle-up"></i>
                         </div>
                     </div>
                 </div>
@@ -60,13 +60,7 @@ if (!$moto) {
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <ul class="actions">
-                        <li><input type="submit" value="Salvar Fotos" class="primary icon solid fa-save" /></li>
-                    </ul>
-                </div>
-            </div>
+            <!-- Botão de salvar removido: upload ocorrerá automaticamente ao selecionar arquivos -->
         </form>
 
         <!-- Exibição das Fotos Existentes -->
@@ -530,6 +524,8 @@ input[type="submit"].icon.solid.fa-save:before {
 document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('fotos');
     const filePreview = document.getElementById('file-preview');
+    const mainInput = document.getElementById('foto_principal');
+    const motoIdInput = document.querySelector('input[name="motoID"]');
     const modal = document.getElementById('descriptionModal');
     const modalFotoID = document.getElementById('modalFotoID');
     const modalDescricao = document.getElementById('modalDescricao');
@@ -557,8 +553,70 @@ document.addEventListener('DOMContentLoaded', function() {
                     reader.readAsDataURL(file);
                 }
             }
+
+            // Upload imediato das fotos adicionais
+            try {
+                const formData = new FormData();
+                if (motoIdInput) formData.append('motoID', motoIdInput.value);
+                formData.append('ajax', '1');
+                for (let i = 0; i < this.files.length; i++) {
+                    formData.append('fotos[]', this.files[i]);
+                }
+
+                fetch('scripts/gerenciarfotos/upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.success) {
+                        alert((data.message) ? data.message : 'Fotos enviadas com sucesso!');
+                        // Recarregar para refletir novas fotos na galeria
+                        window.location.href = `gerenciarfotos.php?motoID=${motoIdInput ? motoIdInput.value : ''}`;
+                    } else {
+                        alert('Falha ao enviar fotos: ' + (data && data.message ? data.message : 'Erro desconhecido'));
+                    }
+                })
+                .catch(err => {
+                    console.error('Erro no upload:', err);
+                    alert('Erro ao enviar fotos. Tente novamente.');
+                });
+            } catch (e) {
+                console.error('Erro ao preparar envio:', e);
+            }
         }
     });
+
+    // Upload imediato da foto principal
+    if (mainInput) {
+        mainInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const formData = new FormData();
+                if (motoIdInput) formData.append('motoID', motoIdInput.value);
+                formData.append('ajax', '1');
+                formData.append('foto_principal', this.files[0]);
+
+                fetch('scripts/gerenciarfotos/upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.success) {
+                        alert((data.message) ? data.message : 'Foto principal atualizada com sucesso!');
+                        // Atualizar visualmente ou recarregar a página
+                        window.location.href = `gerenciarfotos.php?motoID=${motoIdInput ? motoIdInput.value : ''}`;
+                    } else {
+                        alert('Falha ao atualizar foto principal: ' + (data && data.message ? data.message : 'Erro desconhecido'));
+                    }
+                })
+                .catch(err => {
+                    console.error('Erro no upload da principal:', err);
+                    alert('Erro ao atualizar foto principal. Tente novamente.');
+                });
+            }
+        });
+    }
 
     // Abrir modal de edição de descrição
     document.querySelectorAll('.edit-description').forEach(button => {

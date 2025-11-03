@@ -15,6 +15,11 @@ if (!isset($_POST['motoID']) || empty($_POST['motoID'])) {
 }
 
 $motoID = $_POST['motoID'];
+$isAjax = isset($_POST['ajax']);
+
+$uploadedFiles = 0;
+$errors = [];
+$principalUpdated = false;
 
 // Verificar se a foto principal foi enviada
 if (isset($_FILES['foto_principal']) && !empty($_FILES['foto_principal']['name'])) {
@@ -43,19 +48,40 @@ if (isset($_FILES['foto_principal']) && !empty($_FILES['foto_principal']['name']
             $relativePath = 'upload/moto/' . $newFileName;
             $sql = "UPDATE motocicletas SET foto = '$relativePath' WHERE motoId = $motoID";
             mysqli_query($conn, $sql);
+            $principalUpdated = true;
         }
     }
 }
 
 // Verificar se foram enviados arquivos adicionais
 if (!isset($_FILES['fotos']) || empty($_FILES['fotos']['name'][0])) {
-    // Se não houver fotos adicionais mas atualizou a principal, redirecionar
-    if (isset($_FILES['foto_principal']) && !empty($_FILES['foto_principal']['name'])) {
-        echo "<script>alert('Foto principal atualizada com sucesso!'); window.location.href='../../gerenciarfotos.php?motoID=$motoID';</script>";
+    if ($isAjax) {
+        header('Content-Type: application/json');
+        if ($principalUpdated) {
+            echo json_encode([
+                'success' => true,
+                'uploadedFiles' => 0,
+                'principalUpdated' => true,
+                'message' => 'Foto principal atualizada com sucesso!'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'uploadedFiles' => 0,
+                'principalUpdated' => false,
+                'message' => 'Nenhuma foto selecionada'
+            ]);
+        }
         exit;
     } else {
-        echo "<script>alert('Nenhuma foto selecionada!'); window.location.href='../../gerenciarfotos.php?motoID=$motoID';</script>";
-        exit;
+        // Se não houver fotos adicionais mas atualizou a principal, redirecionar
+        if (isset($_FILES['foto_principal']) && !empty($_FILES['foto_principal']['name'])) {
+            echo "<script>alert('Foto principal atualizada com sucesso!'); window.location.href='../../gerenciarfotos.php?motoID=$motoID';</script>";
+            exit;
+        } else {
+            echo "<script>alert('Nenhuma foto selecionada!'); window.location.href='../../gerenciarfotos.php?motoID=$motoID';</script>";
+            exit;
+        }
     }
 }
 
@@ -68,8 +94,6 @@ if (!file_exists($uploadDir)) {
 }
 
 // Processar cada arquivo
-$uploadedFiles = 0;
-$errors = [];
 
 foreach ($_FILES['fotos']['tmp_name'] as $key => $tmp_name) {
     if ($_FILES['fotos']['error'][$key] === 0) {
@@ -116,15 +140,52 @@ foreach ($_FILES['fotos']['tmp_name'] as $key => $tmp_name) {
     }
 }
 
-// Redirecionar com mensagem apropriada
-if ($uploadedFiles > 0) {
-    $message = "$uploadedFiles foto(s) adicionada(s) com sucesso!";
-    if (!empty($errors)) {
-        $message .= " Porém, ocorreram os seguintes erros: " . implode(", ", $errors);
+// Resposta apropriada
+if ($isAjax) {
+    header('Content-Type: application/json');
+    if ($uploadedFiles > 0 || $principalUpdated) {
+        $message = '';
+        if ($uploadedFiles > 0) {
+            $message = $uploadedFiles . ' foto(s) adicionada(s) com sucesso!';
+        }
+        if ($principalUpdated) {
+            $message = trim($message . ' ' . 'Foto principal atualizada com sucesso!');
+        }
+        if (!empty($errors)) {
+            $message .= ' Porém, ocorreram os seguintes erros: ' . implode(', ', $errors);
+        }
+        echo json_encode([
+            'success' => true,
+            'uploadedFiles' => $uploadedFiles,
+            'principalUpdated' => $principalUpdated,
+            'errors' => $errors,
+            'message' => $message
+        ]);
+    } else {
+        $message = 'Nenhuma foto foi adicionada.';
+        if (!empty($errors)) {
+            $message .= ' Erros: ' . implode(', ', $errors);
+        }
+        echo json_encode([
+            'success' => false,
+            'uploadedFiles' => 0,
+            'principalUpdated' => $principalUpdated,
+            'errors' => $errors,
+            'message' => $message
+        ]);
     }
-    echo "<script>alert('$message'); window.location.href='../../gerenciarfotos.php?motoID=$motoID';</script>";
+    exit;
 } else {
-    $message = "Nenhuma foto foi adicionada. Erros: " . implode(", ", $errors);
-    echo "<script>alert('$message'); window.location.href='../../gerenciarfotos.php?motoID=$motoID';</script>";
+    // Comportamento antigo via redirecionamento
+    if ($uploadedFiles > 0) {
+        $message = "$uploadedFiles foto(s) adicionada(s) com sucesso!";
+        if (!empty($errors)) {
+            $message .= " Porém, ocorreram os seguintes erros: " . implode(", ", $errors);
+        }
+        echo "<script>alert('$message'); window.location.href='../../gerenciarfotos.php?motoID=$motoID';</script>";
+    } else {
+        $message = "Nenhuma foto foi adicionada. Erros: " . implode(", ", $errors);
+        echo "<script>alert('$message'); window.location.href='../../gerenciarfotos.php?motoID=$motoID';</script>";
+    }
 }
 ?>
