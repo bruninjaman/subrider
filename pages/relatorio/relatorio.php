@@ -134,7 +134,14 @@ if ($ordem && isset($ordem['motoID'])) {
           <div class="form-row">
             <div class="form-group col-md-12">
               <label>Observações Finais:</label>
-              <textarea id="observacoes_finais" class="form-control" rows="3" style="width: 40em;" placeholder="Observações finais sobre o serviço realizado..."></textarea>
+              <div id="observacoes-finais-editor" class="editor-personalizado" contenteditable="true" style="width: 40em; min-height: 6em; white-space: pre-wrap;" placeholder="Observações finais sobre o serviço realizado..."></div>
+              <!-- Barra de ferramentas para Observações Finais -->
+              <div class="editor-toolbar editor-toolbar-obs" style="margin-top: 6px;">
+                <button type="button" data-command="bold" title="Negrito"><strong>N</strong></button>
+                <button type="button" data-command="underline" title="Sublinhado"><u>S</u></button>
+                <button type="button" data-command="insertUnorderedList" title="Lista com marcadores"><i>•</i></button>
+                <button type="button" data-command="insertOrderedList" title="Lista numerada"><i>1.</i></button>
+              </div>
             </div>
           </div>
         </div>

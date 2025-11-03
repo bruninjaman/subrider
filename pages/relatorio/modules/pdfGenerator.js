@@ -35,7 +35,10 @@ function gerarPDF() {
         const clienteOrdem = document.getElementById('cliente_ordem').value || 'N/A';
         const motoOrdem = document.getElementById('moto_ordem').value || 'N/A';
         const dataConclusao = formatarDataBr(document.getElementById('data-conclusao').value);
-        const observacoesFinais = document.getElementById('observacoes_finais').value;
+        const observacoesFinais = (function(){
+            const el = document.getElementById('observacoes-finais-editor');
+            return el ? el.innerHTML : '';
+        })();
         const conteudoEditor = document.getElementById('editor-personalizado').innerHTML;
         
         // Criar elemento temporário para avaliar o tamanho do conteúdo
@@ -153,6 +156,71 @@ function gerarPDF() {
 }
 
 /**
+ * Gera o PDF via servidor (Dompdf) e inicia download
+ */
+async function gerarPDFServidor() {
+    const loader = document.getElementById('aguarde');
+    if (loader) loader.style.display = 'flex';
+
+    try {
+        const ordemId = document.getElementById('ordem_id')?.value || document.getElementById('numero_ordem')?.value || '';
+        if (!ordemId) {
+            throw new Error('ID da ordem não encontrado.');
+        }
+
+        const url = `scripts/relatorio/pdf.php?ordem=${encodeURIComponent(ordemId)}`;
+        const response = await fetch(url, { method: 'GET', credentials: 'same-origin' });
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                throw new Error('Sessão expirada ou usuário não autenticado.');
+            }
+            const text = await response.text();
+            throw new Error(text || `Falha ao gerar PDF (HTTP ${response.status}).`);
+        }
+
+        const contentType = response.headers.get('Content-Type') || '';
+        if (!contentType.includes('application/pdf')) {
+            const text = await response.text();
+            throw new Error(text || 'Resposta do servidor não é um PDF válido.');
+        }
+        const blob = await response.blob();
+
+        // Tentar extrair nome do arquivo do header
+        let fileName = `relatorio_${String(ordemId).replace(/[\\/]+/g, '-')}.pdf`;
+        const dispo = response.headers.get('Content-Disposition');
+        if (dispo) {
+            const match = dispo.match(/filename="?([^";]+)"?/i);
+            if (match && match[1]) fileName = match[1];
+        }
+
+        const urlObj = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = urlObj;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(urlObj);
+
+        mostrarStatus('PDF gerado pelo servidor com sucesso! Download iniciado.', 'success');
+    } catch (err) {
+        console.error('Erro ao baixar PDF do servidor:', err);
+        mostrarStatus('Erro ao gerar PDF no servidor: ' + err.message, 'error');
+
+        // Fallback: abrir em nova aba (se permitido)
+        try {
+            const ordemId = document.getElementById('ordem_id')?.value || document.getElementById('numero_ordem')?.value || '';
+            if (ordemId) {
+                window.open(`scripts/relatorio/pdf.php?ordem=${encodeURIComponent(ordemId)}`, '_blank');
+            }
+        } catch (_) {}
+    } finally {
+        if (loader) loader.style.display = 'none';
+    }
+}
+
+/**
  * Gera o HTML do relatório para o PDF
  * @param {string} numeroOrdem - Número da ordem de serviço
  * @param {string} dataOrdem - Data da ordem
@@ -170,6 +238,7 @@ function gerarHTMLRelatorio(
 ) {
     // Processamos o conteúdo do editor para otimizar para PDF
     const conteudoOtimizado = otimizarConteudoParaPDF(conteudoEditor);
+    const obsOtimizada = observacoesFinais ? otimizarConteudoParaPDF(observacoesFinais) : '';
     
     return `
         <div style="text-align:center; margin-bottom:15px; border-bottom:2px solid #5a4a96; padding-bottom:8px;">
@@ -203,10 +272,10 @@ function gerarHTMLRelatorio(
             <div style="font-size:10pt; line-height:1.3;">${conteudoOtimizado}</div>
         </div>
         
-        ${observacoesFinais ? `
+        ${obsOtimizada ? `
         <div style="margin-top:15px; border-top:1px dashed #ccc; padding-top:8px;">
             <h3 style="color:#5a4a96; font-size:11pt; margin:0 0 5px 0;">OBSERVAÇÕES FINAIS</h3>
-            <p style="margin:3px 0; font-size:10pt;">${observacoesFinais}</p>
+            <div style="font-size:10pt; line-height:1.3; white-space: pre-line;">${obsOtimizada}</div>
         </div>
         ` : ''}
         
@@ -357,7 +426,9 @@ function tentarMetodoAlternativo() {
         const clienteOrdem = document.getElementById('cliente_ordem').value || 'N/A';
         const motoOrdem = document.getElementById('moto_ordem').value || 'N/A';
         const dataConclusao = formatarDataBr(document.getElementById('data-conclusao').value);
-        const observacoesFinais = document.getElementById('observacoes_finais').value;
+        // Observações finais agora vêm de um editor rich-text
+        const obsEl = document.getElementById('observacoes-finais-editor');
+        const observacoesFinais = obsEl ? obsEl.innerHTML : '';
         const conteudoEditor = document.getElementById('editor-personalizado').innerHTML;
         
         // Avaliar o tamanho do conteúdo
@@ -448,6 +519,7 @@ function gerarHTMLImpressao(
                     padding-top: 10px; 
                     border-top: 1px dashed #ccc; 
                 }
+                #obs-content-print { white-space: pre-line; }
                 .conclusion { 
                     margin-top: 15px; 
                     text-align: right; 
@@ -536,7 +608,7 @@ function gerarHTMLImpressao(
             ${observacoesFinais ? `
             <div class="obs-section">
                 <h3>OBSERVAÇÕES FINAIS</h3>
-                <p>${observacoesFinais}</p>
+                <div id="obs-content-print"></div>
             </div>
             ` : ''}
             
@@ -546,9 +618,11 @@ function gerarHTMLImpressao(
             
             <script>
                 window.onload = function() {
-                    // Preencher conteúdo do editor
+                    // Preencher conteúdo dos editores
                     const contenedor = document.getElementById('editor-content-print');
                     contenedor.innerHTML = \`${conteudoEditor}\`;
+                    const obsPrint = document.getElementById('obs-content-print');
+                    if (obsPrint) { obsPrint.innerHTML = \`${observacoesFinais}\`; }
                     
                     // Iniciar impressão automática após carregar
                     setTimeout(function() {
@@ -572,4 +646,5 @@ function formatarDataBr(dataString) {
     return data.toLocaleDateString('pt-BR');
 }
 
-export { gerarPDF }; 
+export { gerarPDF };
+export { gerarPDFServidor };

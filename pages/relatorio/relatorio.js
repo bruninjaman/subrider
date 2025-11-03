@@ -5,7 +5,7 @@
 
 import { inicializarEditor } from './modules/editor.js';
 import { carregarRelatorio, salvarRelatorio } from './modules/relatorioApi.js';
-import { gerarPDF } from './modules/pdfGenerator.js';
+import { gerarPDFServidor } from './modules/pdfGenerator.js';
 import { mostrarStatus } from './modules/utils.js';
 // Inicializar quando o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", function() {
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (btnGerarPDF) {
         btnGerarPDF.addEventListener('click', function(e) {
             e.preventDefault();
-            gerarPDF();
+            gerarPDFServidor();
         });
     }
 

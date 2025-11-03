@@ -21,30 +21,38 @@
 })();
 
 /**
- * Inicializa o editor personalizado
+ * Inicializa um editor e sua barra de ferramentas
+ * @param {HTMLElement} editorEl - Elemento contenteditable alvo
+ * @param {NodeList} botoesToolbar - Botões da toolbar associados
  */
-function inicializarEditor() {
-    const editorPersonalizado = document.getElementById('editor-personalizado');
-    const botoesEditor = document.querySelectorAll('.editor-toolbar button');
-    
-    if (!editorPersonalizado) return;
-    
-    // Adicionar manipuladores de eventos para os botões da barra de ferramentas
-    botoesEditor.forEach(button => {
+function inicializarEditorComToolbar(editorEl, botoesToolbar) {
+    if (!editorEl || !botoesToolbar || botoesToolbar.length === 0) return;
+
+    botoesToolbar.forEach(button => {
         button.addEventListener('click', () => {
             const command = button.getAttribute('data-command');
-            
-            // Executar comando padrão do documento
             document.execCommand(command, false, null);
-            
-            // Manter o foco no editor
-            editorPersonalizado.focus();
+            editorEl.focus();
         });
     });
-    
-    // Verificar estado atual dos botões ao clicar no editor
-    editorPersonalizado.addEventListener('click', () => atualizarEstadoBotoes(botoesEditor));
-    editorPersonalizado.addEventListener('keyup', () => atualizarEstadoBotoes(botoesEditor));
+
+    editorEl.addEventListener('click', () => atualizarEstadoBotoes(botoesToolbar));
+    editorEl.addEventListener('keyup', () => atualizarEstadoBotoes(botoesToolbar));
+}
+
+/**
+ * Inicializa os editores personalizados da página
+ */
+function inicializarEditor() {
+    // Editor principal (Detalhes do Serviço)
+    const editorPrincipal = document.getElementById('editor-personalizado');
+    const toolbarPrincipal = document.querySelectorAll('.editor-toolbar button');
+    inicializarEditorComToolbar(editorPrincipal, toolbarPrincipal);
+
+    // Editor de Observações Finais
+    const editorObs = document.getElementById('observacoes-finais-editor');
+    const toolbarObs = document.querySelectorAll('.editor-toolbar-obs button');
+    inicializarEditorComToolbar(editorObs, toolbarObs);
 }
 
 /**
@@ -67,4 +75,4 @@ function atualizarEstadoBotoes(botoesEditor) {
 }
 
 // Exportar funções
-export { inicializarEditor }; 
+export { inicializarEditor };

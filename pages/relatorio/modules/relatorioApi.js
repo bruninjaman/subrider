@@ -55,11 +55,18 @@ async function carregarRelatorio(ordem_id) {
                 }
             }
             
-            // Preencher observações finais se existirem
+            // Preencher observações finais com HTML, se existirem
             if (data.observacoes_finais) {
-                const obsFinais = document.getElementById('observacoes_finais');
-                if (obsFinais) {
-                    obsFinais.value = data.observacoes_finais;
+                const obsFinaisEditor = document.getElementById('observacoes-finais-editor');
+                if (obsFinaisEditor) {
+                    const obs = data.observacoes_finais;
+                    const hasHTML = /<\/?[a-z][\s\S]*>/i.test(obs);
+                    if (hasHTML) {
+                        obsFinaisEditor.innerHTML = obs;
+                    } else {
+                        // Conteúdo puro: usar textContent para evitar interpretação de tags
+                        obsFinaisEditor.textContent = obs;
+                    }
                 }
             }
             
@@ -102,8 +109,8 @@ async function salvarRelatorio(ordem_id) {
         
         // Obter outros campos do formulário
         const dataConclusao = document.getElementById('data-conclusao').value;
-        const observacoesFinais = document.getElementById('observacoes_finais') ? 
-            document.getElementById('observacoes_finais').value : '';
+        const observacoesFinais = document.getElementById('observacoes-finais-editor') ? 
+            document.getElementById('observacoes-finais-editor').innerHTML : '';
         const quilometragem = document.getElementById('km_ordem') ? 
             document.getElementById('km_ordem').value : '';
         
@@ -174,4 +181,4 @@ function formatarData(dataString) {
     return data.toLocaleString('pt-BR');
 }
 
-export { carregarRelatorio, salvarRelatorio, formatarData }; 
+export { carregarRelatorio, salvarRelatorio, formatarData };
