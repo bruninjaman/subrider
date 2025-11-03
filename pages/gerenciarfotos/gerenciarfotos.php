@@ -83,7 +83,7 @@ if (!$moto) {
                         while ($foto = mysqli_fetch_assoc($result)) {
                             $hasDescription = !empty($foto['descricao']);
                             $descriptionClass = $hasDescription ? ' has-description' : '';
-                            echo "<div class='gallery-item{$descriptionClass}' data-foto-id='" . $foto['id'] . "'>";
+                            echo "<div class='gallery-item{$descriptionClass}' data-foto-id='" . $foto['id'] . "' data-descricao='" . htmlspecialchars($foto['descricao'] ?? '', ENT_QUOTES) . "'>";
                             echo "<div class='gallery-image'>";
                             echo "<img src='" . $foto['caminho_foto'] . "' alt='Foto Adicional'>";
                             echo "<div class='gallery-actions'>";
@@ -122,6 +122,15 @@ if (!$moto) {
                 <button type="button" class="button alt modal-cancel">Cancelar</button>
             </div>
         </form>
+</div>
+</div>
+
+<!-- Lightbox para Zoom de Imagem -->
+<div id="imageLightbox" class="lightbox-overlay">
+    <div class="lightbox-content">
+        <img id="lightboxImg" class="lightbox-img" src="" alt="Zoom da imagem">
+        <div id="lightboxCaption" class="lightbox-caption"></div>
+        <button type="button" id="lightboxClose" class="lightbox-close" title="Fechar">&times;</button>
     </div>
 </div>
 
@@ -443,6 +452,78 @@ input[type="submit"].icon.fa-save:before,
 input[type="submit"].icon.solid.fa-save:before {
     margin-right: 0.5em;
 }
+
+/* Cursor de mão nas miniaturas para indicar clique/zoom */
+.gallery-item,
+.gallery-image img {
+    cursor: pointer;
+}
+
+/* Ajustes para a Foto Principal: remover ícone sobre a imagem e permitir zoom */
+.upload-image .thmb i {
+    display: none;
+}
+.upload-image .thmb img {
+    position: relative;
+    z-index: 3;
+    cursor: pointer;
+}
+.upload-image .thmb input {
+    z-index: 1; /* manter input atrás da imagem para permitir clique de zoom na imagem */
+}
+
+/* Lightbox de imagem (zoom em tela cheia) */
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+.lightbox-overlay.active {
+    display: flex;
+}
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.lightbox-img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 6px;
+}
+.lightbox-caption {
+    margin-top: 12px;
+    color: #fff;
+    text-align: center;
+    font-size: 1em;
+    opacity: 0.9;
+}
+.lightbox-close {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+.lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
 </style>
 
 <script>
@@ -537,6 +618,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     // Atualizar a classe CSS da galeria
                     const galleryItem = editButton.closest('.gallery-item');
+                    if (galleryItem) {
+                        galleryItem.setAttribute('data-descricao', descricao);
+                    }
                     if (descricao.trim() !== '') {
                         galleryItem.classList.add('has-description');
                     } else {
@@ -557,5 +641,64 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Erro ao salvar descrição. Tente novamente.');
         });
     });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ====== Lightbox: Zoom em tela cheia com descrição ======
+    const imageLightbox = document.getElementById('imageLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxCloseBtn = document.getElementById('lightboxClose');
+
+    function openLightbox(src, captionText) {
+        lightboxImg.src = src;
+        lightboxCaption.textContent = captionText || '';
+        imageLightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+        imageLightbox.classList.remove('active');
+        lightboxImg.src = '';
+        lightboxCaption.textContent = '';
+    }
+
+    // Fechar lightbox
+    if (lightboxCloseBtn) {
+        lightboxCloseBtn.addEventListener('click', closeLightbox);
+    }
+    imageLightbox.addEventListener('click', function(e) {
+        if (e.target === imageLightbox) {
+            closeLightbox();
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && imageLightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    // Clique nas fotos adicionais para abrir o lightbox
+    document.querySelectorAll('.gallery-item .gallery-image img').forEach(img => {
+        img.addEventListener('click', function() {
+            const galleryItem = this.closest('.gallery-item');
+            const src = this.getAttribute('src');
+            let caption = '';
+            if (galleryItem) {
+                caption = galleryItem.getAttribute('data-descricao') || '';
+            }
+            openLightbox(src, caption);
+        });
+    });
+
+    // Clique na foto principal para abrir o lightbox
+    const mainPhoto = document.querySelector('.upload-image .thmb img');
+    if (mainPhoto) {
+        mainPhoto.addEventListener('click', function() {
+            const src = this.getAttribute('src');
+            openLightbox(src, '');
+        });
+    }
 });
 </script>
