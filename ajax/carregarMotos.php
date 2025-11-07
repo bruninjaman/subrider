@@ -88,7 +88,7 @@ $result = mysqli_query($conn, $sql_query);
                                 <button style="background: none; border: none;" onclick="location.href='editmotos.php?motoID=<?php echo $moto['motoId'] ?>'"><img src="assets/css/images/edit-new.png" style="height: 28px; width: 38px;"> </button>
                                 <button style="background: none; border: none;" onclick="return deleteMoto('<?php echo $moto['motoId']; ?>')"><img src="assets/css/images/x-button-new.png" style="height: 28px; width: 38px;"></button>
                                 <a class="button" href="gerenciarfotos.php?motoID=<?php echo $moto['motoId'] ?>" title="Abrir galeria" aria-label="Abrir galeria" style="display:inline-flex;align-items:center;justify-content:center;padding:25px;width:28px;height:28px;">
-                                    <i class="fa-solid fa-image" style="font-size:16px;"></i>
+                                    <img src="assets/css/images/gallery-button.png" style="height: 28px; width: 38px;" alt="Abrir galeria">
                                 </a>
                             </td>
                         </tr>
@@ -123,4 +123,4 @@ function deleteMoto(motoID) {
     }
     return false;
 }
-</script> 
+</script>
