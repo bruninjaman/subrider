@@ -150,6 +150,8 @@ $css = "@page { size: A4; margin: {$s['pageMargin']}; }\n" .
        ".obs .content { page-break-before: avoid; }\n" .
        "/* Melhorar quebra de palavras para evitar estouro de linha */\n" .
        ".content { word-break: break-word; }\n" .
+       "/* Preservar quebras de linha em Observações Finais, mesmo sem <br> */\n" .
+       ".obs-content { white-space: pre-line; }\n" .
        "ul, ol { margin: {$s['listMargin']}; }\n" .
        "li { margin: {$s['liMargin']}; }\n" .
        ".obs { margin-top: 12px; padding-top: 8px; border-top: 1px dashed #bbb; }\n" .
