@@ -14,6 +14,7 @@ session_start();
     <title>Subrider</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/palette.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/mobile-navbar.css" />
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
