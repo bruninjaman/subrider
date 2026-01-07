@@ -39,10 +39,10 @@
                     </div>
                 </div>
 
-                <div class="col-md-6" id="folga_eixo_bronzina_section">
+                <div class="col-md-6" id="folga_eixo_biela_section">
                     <div class="floating-input">
-                        <input type="text" name="folga_eixo_bronzina" class="form-control" data-type="decimal" placeholder=" ">
-                        <label>Folga Eixo-Bronzina Máx (mm)</label>
+                        <input type="text" name="folga_eixo_biela" class="form-control" data-type="decimal" placeholder=" ">
+                        <label>Folga Eixo-Biela Máx (mm)</label>
                         <div class="focus-border"></div>
                     </div>
                 </div>

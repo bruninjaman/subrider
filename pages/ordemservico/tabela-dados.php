@@ -270,7 +270,7 @@ function displayComponentMeasurements($conn, $ordem, $table, $title) {
                     if ($medicoes) {
                         $campos_virabrequim = [
                             'folga_mancal' => 'Folga Mancal',
-                            'folga_bronzina' => 'Folga Bronzina',
+                            'folga_eixo_biela' => 'Folga Eixo Biela',
                             'folga_lateral_biela' => 'Folga Lat. Biela',
                             'folga_lateral_eixo_min' => 'Folga Lat. Eixo Mín',
                             'folga_lateral_eixo_max' => 'Folga Lat. Eixo Máx',

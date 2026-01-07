@@ -40,7 +40,7 @@ function toggleVirabrequimFields() {
     const rolamentoType = document.querySelector('input[name="rolamento_type"]:checked');
     const sections = {
         'folga_lateral_biela_section': ['rolamento', 'bronzina'],
-        'folga_eixo_bronzina_section': ['bronzina'],
+        'folga_eixo_biela_section': ['bronzina'],
         'folga_eixo_mancal_section': ['rolamento'],
         'folga_lateral_eixo_section': ['rolamento', 'bronzina'],
         'empenamento_max_section': ['rolamento', 'bronzina']

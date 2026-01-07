@@ -69,7 +69,7 @@ function displayVirabrequimMedicoes($conn, $ordem) {
             $virabrequimRef = [
                 'tipo' => '',
                 'folga_mancal' => 0.0,
-                'folga_bronzina' => 0.0,
+                'folga_eixo_biela' => 0.0,
                 'folga_lateral_biela' => 0.0,
                 'folga_lateral_eixo_min' => 0.0,
                 'folga_lateral_eixo_max' => 0.0,
@@ -109,7 +109,7 @@ function displayVirabrequimMedicoes($conn, $ordem) {
             if (in_array($campo, ['id', 'ordem', 'is_reference', 'tipo', 'medicoes'])) continue;
             $campoLower = strtolower($campo);
             $virabrequimClass = '';
-            if (in_array($campoLower, ['folga_bronzina'])) {
+            if (in_array($campoLower, ['folga_eixo_biela'])) {
                 $virabrequimClass = 'virabrequim-bronzina-field';
             } else if (in_array($campoLower, ['folga_lateral_biela', 'folga_lateral_eixo_min', 'folga_lateral_eixo_max', 'empenamento'])) {
                 $virabrequimClass = 'virabrequim-rolamento-field';
