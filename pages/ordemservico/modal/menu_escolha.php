@@ -5,7 +5,7 @@
         border-radius: 12px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
-    
+
     .modal-menu h2 {
         color: #e44c5c;
         text-align: center;
@@ -14,14 +14,14 @@
         font-weight: 600;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
-    
+
     .modal-menu .button-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 15px;
         margin-bottom: 20px;
     }
-    
+
     .modal-menu .button.secondary {
         background: linear-gradient(135deg, #e44c5c 0%, #c73650 100%) !important;
         color: white !important;
@@ -37,29 +37,29 @@
         align-items: center !important;
         justify-content: center !important;
     }
-    
+
     .modal-menu .button.secondary:hover {
         background: linear-gradient(135deg, #c73650 0%, #a82d44 100%) !important;
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(228, 76, 92, 0.4) !important;
         color: white !important;
     }
-    
+
     .modal-menu .button.secondary:active {
         transform: translateY(0) !important;
         box-shadow: 0 2px 10px rgba(228, 76, 92, 0.3) !important;
     }
-    
+
     .modal-menu #btnDados {
         background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
         box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3) !important;
     }
-    
+
     .modal-menu #btnDados:hover {
         background: linear-gradient(135deg, #e67e22 0%, #d35400 100%) !important;
         box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4) !important;
     }
-    
+
     .modal-menu .button.primary.button--sair {
         background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%) !important;
         color: white !important;
@@ -77,13 +77,13 @@
         margin: 0 auto !important;
         width: fit-content !important;
     }
-    
+
     .modal-menu .button.primary.button--sair:hover {
         background: linear-gradient(135deg, #7f8c8d 0%, #34495e 100%) !important;
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(149, 165, 166, 0.4) !important;
     }
-    
+
     .modal-menu .button.primary.button--sair i {
         font-size: 1.1em;
     }
