@@ -322,6 +322,11 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                             if ($tipoVira === 'rolamento' && !in_array($campo, ['folga_mancal', 'folga_biela', 'folga_bronzina', 'folga_eixo_biela', 'folga_lateral_eixo_min', 'folga_lateral_eixo_max', 'empenamento'])) {
                                 continue;
                             }
+                            // Ocultar campos que não devem aparecer no relatório
+                            if (in_array($campo, ['qtd_cilindros', 'qtd_munhoes', 'diametro_munhao', 'diametro_munhoes'])) {
+                                continue;
+                            }
+
                             // Ocultar lateral biela para bronzina apenas se não houver valor
                             if ($tipoVira === 'bronzina' && $campo === 'folga_lateral_biela' && ($valor === null || $valor === '')) {
                                 continue;
