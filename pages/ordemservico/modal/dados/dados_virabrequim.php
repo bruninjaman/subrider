@@ -157,6 +157,11 @@ function displayVirabrequimMedicoes($conn, $ordem)
             if (in_array($campo, ['id', 'ordem', 'is_reference', 'tipo', 'medicoes', 'qtd_cilindros', 'qtd_munhoes', 'diametro_moente', 'diametro_munhao', 'folga_mancal', 'folga_biela']))
                 continue;
 
+            // Pular campos omitidos (referência zero ou vazia)
+            if ($referencia === null || $referencia === '' || (is_numeric($referencia) && floatval($referencia) == 0)) {
+                continue;
+            }
+
             $campoLower = strtolower($campo);
             $virabrequimClass = '';
 
@@ -165,16 +170,19 @@ function displayVirabrequimMedicoes($conn, $ordem)
                 in_array($campoLower, [
                     'diametro_munhoes',
                     'diametro_moente',
-                    'diametro_munhao'
+                    'diametro_munhao',
+                    'folga_mancal'
                 ])
             ) {
                 $virabrequimClass = 'virabrequim-bronzina-field';
             }
-            // Campos presentes em ambos ou específicos de Rolamento
-            else if (in_array($campoLower, ['folga_biela', 'folga_mancal', 'folga_lateral_eixo_min', 'folga_lateral_eixo_max', 'empenamento'])) {
+            // Campos específicos de Rolamento
+            else if (in_array($campoLower, ['empenamento', 'folga_lateral_biela', 'folga_lateral_eixo_min', 'folga_lateral_eixo_max'])) {
+                $virabrequimClass = 'virabrequim-rolamento-field';
+            }
+            // Campos presentes em ambos
+            else if (in_array($campoLower, ['folga_biela'])) {
                 $virabrequimClass = 'virabrequim-both-field';
-            } else if (in_array($campoLower, ['folga_lateral_biela'])) {
-                $virabrequimClass = 'virabrequim-bronzina-field'; // Esconder lateral biela para rolamento conforme lista do usuário
             }
 
             $validationType = 'exact';
@@ -186,18 +194,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
 
             $refDisplay = '-';
             if (is_numeric($referencia) && $referencia != 0) {
-                $fRef = (floor($referencia) == $referencia) ? number_format($referencia, 0, ',', '.') : number_format($referencia, 2, ',', '.');
-                if ($validationType === 'exact') {
-                    $min = $referencia * 0.95;
-                    $max = $referencia * 1.05;
-                    $fMin = (floor($min) == $min) ? number_format($min, 0, ',', '.') : number_format($min, 2, ',', '.');
-                    $fMax = (floor($max) == $max) ? number_format($max, 0, ',', '.') : number_format($max, 2, ',', '.');
-                    $refDisplay = "$fMin - $fMax";
-                } elseif ($validationType === 'min') {
-                    $refDisplay = $fRef . ' (mín)';
-                } else {
-                    $refDisplay = $fRef . ' (máx)';
-                }
+                $refDisplay = (floor($referencia) == $referencia) ? number_format($referencia, 0, ',', '.') : number_format($referencia, 2, ',', '.');
             } else {
                 $refDisplay = htmlspecialchars($referencia);
             }
@@ -233,17 +230,10 @@ function displayVirabrequimMedicoes($conn, $ordem)
             echo "</tr>";
 
             // Linha do Diâmetro Moente
-            if ($qtdCilindros > 0) {
+            $refMoente = isset($virabrequimRef['diametro_moente']) ? $virabrequimRef['diametro_moente'] : null;
+            if ($qtdCilindros > 0 && ($refMoente !== null && $refMoente != 0 && $refMoente !== '')) {
                 $diametrosMoente = isset($medicoes['diametro_moente']) ? $medicoes['diametro_moente'] : [];
-                $refMoente = isset($virabrequimRef['diametro_moente']) ? $virabrequimRef['diametro_moente'] : null;
-                $refMoenteDisplay = '-';
-                if ($refMoente !== null && is_numeric($refMoente) && $refMoente != 0) {
-                    $min = $refMoente * 0.95;
-                    $max = $refMoente * 1.05;
-                    $fMin = (floor($min) == $min) ? number_format($min, 0, ',', '.') : number_format($min, 2, ',', '.');
-                    $fMax = (floor($max) == $max) ? number_format($max, 0, ',', '.') : number_format($max, 2, ',', '.');
-                    $refMoenteDisplay = "$fMin - $fMax";
-                }
+                $refMoenteDisplay = (floor($refMoente) == $refMoente) ? number_format($refMoente, 0, ',', '.') : number_format($refMoente, 2, ',', '.');
 
                 echo "<tr class='virabrequim-bronzina-field'>";
                 echo "<td>Diâmetro Moente (mm)</td>";
@@ -262,17 +252,10 @@ function displayVirabrequimMedicoes($conn, $ordem)
             }
 
             // Linha do Diâmetro Munhão
-            if ($qtdMunhoes > 0) {
+            $refMunhao = isset($virabrequimRef['diametro_munhao']) ? $virabrequimRef['diametro_munhao'] : null;
+            if ($qtdMunhoes > 0 && ($refMunhao !== null && $refMunhao != 0 && $refMunhao !== '')) {
                 $diametrosMunhao = isset($medicoes['diametro_munhao']) ? $medicoes['diametro_munhao'] : [];
-                $refMunhao = isset($virabrequimRef['diametro_munhao']) ? $virabrequimRef['diametro_munhao'] : null;
-                $refMunhaoDisplay = '-';
-                if ($refMunhao !== null && is_numeric($refMunhao) && $refMunhao != 0) {
-                    $min = $refMunhao * 0.95;
-                    $max = $refMunhao * 1.05;
-                    $fMin = (floor($min) == $min) ? number_format($min, 0, ',', '.') : number_format($min, 2, ',', '.');
-                    $fMax = (floor($max) == $max) ? number_format($max, 0, ',', '.') : number_format($max, 2, ',', '.');
-                    $refMunhaoDisplay = "$fMin - $fMax";
-                }
+                $refMunhaoDisplay = (floor($refMunhao) == $refMunhao) ? number_format($refMunhao, 0, ',', '.') : number_format($refMunhao, 2, ',', '.');
 
                 echo "<tr class='virabrequim-bronzina-field'>";
                 echo "<td>Diâmetro Munhão (mm)</td>";
@@ -291,20 +274,16 @@ function displayVirabrequimMedicoes($conn, $ordem)
             }
 
             // Linha da Folga Mancal (por munhão)
-            if ($qtdMunhoes > 0) {
+            $refFolgaMancal = isset($virabrequimRef['folga_mancal']) ? $virabrequimRef['folga_mancal'] : (isset($virabrequimRef['folga_eixo_mancal']) ? $virabrequimRef['folga_eixo_mancal'] : null);
+            if ($qtdMunhoes > 0 && ($refFolgaMancal !== null && $refFolgaMancal != 0 && $refFolgaMancal !== '')) {
                 $folgaMancal = isset($medicoes['folga_mancal']) ? $medicoes['folga_mancal'] : [];
-                $refFolgaMancal = isset($virabrequimRef['folga_mancal']) ? $virabrequimRef['folga_mancal'] : (isset($virabrequimRef['folga_eixo_mancal']) ? $virabrequimRef['folga_eixo_mancal'] : null);
-                $refFolgaMancalDisplay = '-';
-                if ($refFolgaMancal !== null && is_numeric($refFolgaMancal) && $refFolgaMancal != 0) {
-                    $min = $refFolgaMancal * 0.95;
-                    $max = $refFolgaMancal * 1.05;
-                    $fMin = (floor($min) == $min) ? number_format($min, 0, ',', '.') : number_format($min, 2, ',', '.');
-                    $fMax = (floor($max) == $max) ? number_format($max, 0, ',', '.') : number_format($max, 2, ',', '.');
-                    $refFolgaMancalDisplay = "$fMin - $fMax";
-                }
+                $refFolgaMancalDisplay = (floor($refFolgaMancal) == $refFolgaMancal) ? number_format($refFolgaMancal, 0, ',', '.') : number_format($refFolgaMancal, 2, ',', '.');
 
-                echo "<tr class='virabrequim-both-field'>";
-                echo "<td>Folga Mancal (mm)</td>";
+                $labelMancal = 'Folga Eixo-Mancal Máx (mm)';
+                $mancalClass = 'virabrequim-bronzina-field';
+
+                echo "<tr class='$mancalClass'>";
+                echo "<td>$labelMancal</td>";
                 echo "<td>$refFolgaMancalDisplay</td>";
                 for ($i = 1; $i <= $maxColunas; $i++) {
                     if ($i <= $qtdMunhoes) {
@@ -320,21 +299,15 @@ function displayVirabrequimMedicoes($conn, $ordem)
             }
 
             // Linha da Folga Biela (por cilindro)
-            if ($qtdCilindros > 0) {
+            $refFolgaBiela = isset($virabrequimRef['folga_biela']) ? $virabrequimRef['folga_biela'] : null;
+            if ($qtdCilindros > 0 && ($refFolgaBiela !== null && $refFolgaBiela != 0 && $refFolgaBiela !== '')) {
                 $folgaBiela = isset($medicoes['folga_biela']) ? $medicoes['folga_biela'] : [];
-                $refFolgaBiela = isset($virabrequimRef['folga_biela']) ? $virabrequimRef['folga_biela'] : null;
-                $refFolgaBielaDisplay = '-';
-                if ($refFolgaBiela !== null && is_numeric($refFolgaBiela) && $refFolgaBiela != 0) {
-                    $min = $refFolgaBiela * 0.95;
-                    $max = $refFolgaBiela * 1.05;
-                    $fMin = (floor($min) == $min) ? number_format($min, 0, ',', '.') : number_format($min, 2, ',', '.');
-                    $fMax = (floor($max) == $max) ? number_format($max, 0, ',', '.') : number_format($max, 2, ',', '.');
-                    $refFolgaBielaDisplay = "$fMin - $fMax";
-                }
+                $refFolgaBielaDisplay = (floor($refFolgaBiela) == $refFolgaBiela) ? number_format($refFolgaBiela, 0, ',', '.') : number_format($refFolgaBiela, 2, ',', '.');
 
-                $labelBiela = ($tipoAtual === 'bronzina') ? 'Folga Bronzina (mm)' : 'Folga Biela (mm)';
+                $labelBiela = ($tipoAtual === 'bronzina') ? 'Folga Eixo-Bronzina Máx (mm)' : 'Folga Biela (mm)';
+                $bielaClass = ($tipoAtual === 'bronzina') ? 'virabrequim-bronzina-field' : 'virabrequim-both-field';
 
-                echo "<tr class='virabrequim-both-field'>";
+                echo "<tr class='$bielaClass'>";
                 echo "<td>$labelBiela</td>";
                 echo "<td>$refFolgaBielaDisplay</td>";
                 for ($i = 1; $i <= $maxColunas; $i++) {

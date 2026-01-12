@@ -118,21 +118,7 @@ function formatReferenceValue($value, $table, $campo)
     if ($value === null || $value === '' || $value == 0 || !is_numeric($value))
         return is_string($value) ? htmlspecialchars($value) : '-';
 
-    $validationType = getValidationType($campo, $table);
-    $formattedValue = formatNumber($value);
-
-    switch ($validationType) {
-        case 'min':
-            return $formattedValue . ' mm (mín)';
-        case 'max':
-            return $formattedValue . ' mm (máx)';
-        case 'exact':
-            $min = $value * 0.95;
-            $max = $value * 1.05;
-            return formatNumber($min) . ' - ' . formatNumber($max) . ' mm';
-        default:
-            return $formattedValue;
-    }
+    return formatNumber($value) . ' mm';
 }
 
 function displayComponentMeasurements($conn, $ordem, $table, $title)
@@ -196,7 +182,7 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                     $medicoes_friccao = json_decode($row['medicoes_friccao'], true);
                     if ($medicoes_friccao) {
                         $referenceMin = isset($referenceData['disco_friccao_espes_min']) ? $referenceData['disco_friccao_espes_min'] : null;
-                        $refFormatted = $referenceMin ? formatNumber($referenceMin) . ' mm (mín)' : '-';
+                        $refFormatted = $referenceMin ? formatNumber($referenceMin) . ' mm' : '-';
 
                         foreach ($medicoes_friccao as $index => $valor) {
                             $formattedValue = formatNumber($valor);
