@@ -1,4 +1,37 @@
-/* Container e Layout Base */
+/* ==========================================================================
+   Configurações Globais e Variáveis
+   ========================================================================== */
+:root {
+    --primary-color: #e44c65;
+    --primary-hover: #d43c55;
+    --success-color: #00c063;
+    --bg-dark: #181921;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-input: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-main: #e5e5e5;
+    --text-muted: #aaa;
+    --transition-speed: 0.3s;
+}
+
+@font-face {
+    font-family: 'Inter-SemiBold';
+    src: url(../fonts/Inter-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: 'Inter-Bold';
+    src: url(../fonts/Inter-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Inter-Medium';
+    src: url(../fonts/Inter-Medium.ttf);
+}
+
+/* ==========================================================================
+   Layout Base
+   ========================================================================== */
 .form-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -6,27 +39,43 @@
     border-radius: 20px;
 }
 
-/* Títulos e Decorações */
+h1 {
+    font-family: 'Inter-SemiBold';
+    color: white;
+    text-align: center;
+    background-color: var(--bg-dark);
+    padding: 10px;
+    border-radius: 5px;
+}
+
 .title-underline {
     width: 80px;
     height: 4px;
-    background: #e44c65;
+    background: var(--primary-color);
     margin: 1rem auto;
     border-radius: 2px;
 }
 
-.title-motor,
-.title-bomba,
-.title-cabecote,
-.title-embreagem,
-.title-virabrequim {
-    background-color: #e44c65;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
+.section-title {
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    text-align: center;
 }
 
-/* Inputs Flutuantes */
+.section-group {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   Componentes de Formulário
+   ========================================================================== */
+
+/* Inputs Flutuantes (Floating Labels) */
 .floating-input {
     position: relative;
     margin-bottom: 1rem;
@@ -37,16 +86,20 @@
 .floating-input select {
     width: 100%;
     min-width: 200px;
-    height: 56px;
-    padding: 1.5rem 1rem 0.5rem 1rem;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(255, 255, 255, 0.05);
+    height: 60px;
+    /* Aumentado ligeiramente para caber melhor o texto */
+    padding: 1.2rem 1rem 0.2rem 1rem;
+    /* Ajustado para dar mais espaço ao texto principal */
+    border: 2px solid var(--border-color);
+    background-color: var(--bg-input);
     border-radius: 8px;
-    font-size: 1rem;
-    color: #e5e5e5;
-    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    /* Aumentado ligeiramente */
+    color: var(--text-main);
+    transition: all var(--transition-speed) ease;
 }
 
+/* Correção para Selects */
 .floating-input select {
     padding-right: 2.5rem;
     appearance: none;
@@ -56,143 +109,103 @@
     background-size: 16px 12px;
 }
 
-.floating-input input[data-max]::after {
-    content: "max";
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #aaa;
-    font-size: 0.9rem;
-    pointer-events: none;
-}
-
+/* Label principal (Estado "UP" por padrão) */
 .floating-input label {
     position: absolute;
     left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 10px;
+    transform: none;
     background: transparent;
-    padding: 0 0.5rem;
-    color: #aaa;
-    transition: all 0.3s ease;
+    padding: 0 0.2rem;
+    color: var(--primary-color);
+    font-size: 0.75rem;
+    transition: all var(--transition-speed) ease;
     pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 2rem);
+    font-family: 'Inter-Medium';
+    z-index: 10;
 }
 
+/* Estado "DOWN" (Apenas para inputs, quando vazio e não focado) */
+.floating-input input:placeholder-shown:not(:focus)+label {
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+/* Estados de Foco */
 .floating-input input:focus,
-.floating-input input:not(:placeholder-shown),
-.floating-input select:focus,
-.floating-input select:valid,
-.floating-input select {
-    border-color: #e44c65;
+.floating-input select:focus {
+    border-color: var(--primary-color);
     background-color: rgba(255, 255, 255, 0.08);
+    outline: none;
 }
 
 .floating-input input:focus+label,
-.floating-input input:not(:placeholder-shown)+label,
-.floating-input select:focus+label,
-.floating-input select:valid+label,
-.floating-input select+label {
-    top: 5px;
-    transform: none;
-    font-size: 0.75rem;
-    color: #e44c65;
+.floating-input select:focus+label {
+    color: var(--primary-color);
 }
 
-/* Range Input Styles */
-.floating-input .range-fields {
+/* Campos de Range */
+.range-fields {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 0;
-    position: relative;
     width: 100%;
 }
 
-.floating-input .range-fields input {
-    width: calc(50% - 1rem);
-}
-
-.floating-input .range-fields .floating-input {
-    width: calc(50% - 1rem);
+.range-fields .floating-input {
     margin-bottom: 0;
+    flex: 1;
 }
 
-.floating-input .range-fields .floating-input input {
-    width: 100%;
+/* Label externa para grupos (ex: Folga Lateral) */
+.floating-input .outer-label {
+    position: absolute;
+    top: -22px !important;
+    left: 0;
+    font-size: 0.85rem !important;
+    color: var(--text-muted) !important;
+    background: transparent !important;
+    padding: 0;
+    transform: none !important;
 }
 
-.floating-input .range-separator {
-    color: #e5e5e5;
+/* Ajuste para containers de grupo */
+.group-input {
+    margin-top: 1.8rem !important;
+}
+
+.range-separator {
+    color: var(--text-main);
     font-size: 1rem;
+    flex-shrink: 0;
+    padding-top: 1.1rem;
+    /* Alinha com o texto dos inputs que têm padding-top: 1.2rem */
 }
 
-/* Seções e Grupos */
-.section-title {
-    font-size: 1.2rem;
-    color: #e5e5e5;
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-    text-align: center;
-}
-
-.section-group {
-    background: rgba(255, 255, 255, 0.03);
-    padding: 1.5rem;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-}
-
-/* Botões */
-.action-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    padding-top: 2rem;
-}
-
-.btn {
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.btn-primary {
-    background: #e44c65;
-    border: none;
-    color: white;
-}
-
-.btn-outline {
-    border: 2px solid #aaa;
-    color: #e5e5e5;
-    background: transparent;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Radio Inputs */
+/* Radio Buttons Customizados */
 .radio-input {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--bg-input);
     border-radius: 8px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--border-color);
+    transition: border-color var(--transition-speed);
+}
+
+.radio-input:has(input:checked) {
+    border-color: var(--primary-color);
 }
 
 .radio-input label {
-    color: #e5e5e5;
+    color: var(--text-main);
     margin: 0;
     cursor: pointer;
 }
@@ -201,33 +214,129 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+    accent-color: var(--primary-color);
 }
 
-/* Range Inputs */
-.range-input .range-fields {
+/* ==========================================================================
+   Botões e Ações
+   ========================================================================== */
+.action-buttons {
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 1rem;
+    padding-top: 2rem;
 }
 
-.range-separator {
-    color: #e5e5e5;
-    font-size: 1rem;
+.btn,
+.button.primary,
+.button.secondary {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Inter-Medium';
 }
 
-/* Utilidades */
-.hidden {
+.btn-primary,
+.button.primary {
+    background: var(--primary-color);
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover,
+.button.primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline,
+.button.secondary {
+    border: 2px solid var(--text-muted);
+    color: var(--text-main);
+    background: transparent;
+}
+
+.btn-outline:hover,
+.button.secondary:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+input[type="submit"] {
+    font-family: 'Inter-SemiBold';
+    background-color: var(--success-color);
+    border: none;
+    font-size: 1.1em;
+    padding: 0.8rem 2rem;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+input[type="submit"]:hover {
+    background-color: var(--primary-color);
+}
+
+/* ==========================================================================
+   Modais e Iframes
+   ========================================================================== */
+.modal {
     display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
-    .col-md-6 {
-        width: 100%;
-    }
+.modal-content {
+    background-color: var(--bg-dark);
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Estilos específicos do Cabeçote */
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--primary-color);
+}
+
+iframe {
+    border: none;
+    width: 100%;
+    height: 500px;
+    border-radius: 8px;
+}
+
+/* ==========================================================================
+   Estilos Específicos por Módulo
+   ========================================================================== */
+
+/* --- Cabeçote --- */
 .custom-radio-group {
     display: flex;
     gap: 1rem;
@@ -242,19 +351,20 @@
 
 .custom-radio-group label {
     padding: 0.8rem 1.5rem;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    color: #e5e5e5;
+    transition: all var(--transition-speed) ease;
+    color: var(--text-main);
 }
 
 .custom-radio-group input[type="radio"]:checked+label {
-    background: #e44c65;
-    border-color: #e44c65;
+    background: var(--primary-color);
+    border-color: var(--primary-color);
     color: white;
 }
 
+/* Tucho Switch */
 .tucho-switch-container {
     display: flex;
     flex-direction: column;
@@ -279,46 +389,69 @@
     height: 30px;
     padding: 0;
     line-height: 30px;
-    border: 2px solid #e44c65;
+    border: 2px solid var(--primary-color);
     border-radius: 30px;
     background-color: transparent;
-    transition: background-color 0.3s ease-in;
+    transition: background-color var(--transition-speed) ease-in;
 }
 
 .tucho-switch-label:before {
     content: "";
     display: block;
-    width: 30px;
-    height: 30px;
-    margin: -2px;
-    background: #e44c65;
+    width: 26px;
+    /* Ajustado */
+    height: 26px;
+    /* Ajustado */
+    margin: 0;
+    /* Ajustado */
+    background: var(--primary-color);
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 2px;
+    left: 2px;
     border-radius: 50%;
-    transition: all 0.3s ease-in 0s;
+    transition: all var(--transition-speed) ease-in;
 }
 
 .tucho-switch-input:checked+.tucho-switch-label {
-    background-color: #e44c65;
+    background-color: var(--primary-color);
 }
 
 .tucho-switch-input:checked+.tucho-switch-label:before {
-    left: calc(100% - 26px);
+    left: calc(100% - 28px);
     background-color: #FFFFFF;
 }
 
-.tucho-labels {
-    display: flex;
-    justify-content: space-between;
-    width: 120px;
-    color: #FFFFFF;
-    font-size: 0.9rem;
-    margin-top: 8px;
+/* --- Motor --- */
+.measure-group {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.measure-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* --- Embreagem --- */
+/* Escopando seletores globais problemáticos */
+.form-container input[type="number"] {
+    width: 100%;
+    /* Padronizado para containers flexíveis */
+    max-width: 150px;
+}
+
+/* ==========================================================================
+   Utilidades e Animações
+   ========================================================================== */
+.hidden {
+    display: none;
 }
 
 .animated-section {
-    transition: all 0.3s ease;
+    transition: all var(--transition-speed) ease;
     opacity: 0;
     transform: translateY(20px);
 }
@@ -328,205 +461,18 @@
     transform: translateY(0);
 }
 
-/* Estilos específicos do Motor */
-.measure-group {
-    background: rgba(255, 255, 255, 0.03);
-    padding: 1.5rem;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-}
+/* Media Queries */
+@media (max-width: 768px) {
+    .measure-inputs {
+        grid-template-columns: 1fr;
+    }
 
-.measure-label {
-    display: block;
-    color: #e5e5e5;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-}
+    .form-container {
+        padding: 1rem;
+    }
 
-.measure-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-/* Estilos específicos da Embreagem */
-input[type="number"] {
-    width: 120px;
-}
-
-input[type="number"]:focus {
-    border: 3px solid #fb4545;
-}
-
-input[type="submit"] {
-    font-family: 'Inter-SemiBold';
-    background-color: #00c063;
-    border-color: #00c063;
-    font-size: 1.2em;
-    width: 250px;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: #e44c65;
-    border-color: #e44c65;
-}
-
-input:focus {
-    border-color: #fb4545;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type="file"] {
-    background: transparent;
-    border: none;
-}
-
-/* Fontes específicas */
-@font-face {
-    font-family: 'Inter-SemiBold';
-    src: url(../fonts/Inter-SemiBold.ttf);
-}
-
-@font-face {
-    font-family: 'Inter-Bold';
-    src: url(../fonts/Inter-Bold.ttf);
-}
-
-@font-face {
-    font-family: 'Inter-Medium';
-    src: url(../fonts/Inter-Medium.ttf);
-}
-
-label {
-    color: gray;
-    display: block;
-    font-family: 'Inter-Medium';
-}
-
-h1 {
-    font-family: 'Inter-SemiBold';
-    color: white;
-    text-align: center;
-    background-color: #181921;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-/* Estilos específicos do Menu Medições */
-.buttons-table {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-    background-color: #181921;
-    margin: 5% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 800px;
-    position: relative;
-}
-
-.modal-page {
-    transition: all 0.3s ease;
-}
-
-/* Estilos específicos do Menu Motor */
-.custom-form {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.custom-form input[type="number"] {
-    width: 100%;
-}
-
-.custom-form .form-group {
-    margin-bottom: 1.5rem;
-}
-
-.custom-form label {
-    margin-bottom: 0.5rem;
-}
-
-/* Botões específicos */
-.button.secondary {
-    background-color: transparent;
-    border: 2px solid #aaa;
-    color: #e5e5e5;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.button.secondary:hover {
-    border-color: #e44c65;
-    color: #e44c65;
-}
-
-.button.primary {
-    background-color: #e44c65;
-    border: none;
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.button.primary:hover {
-    background-color: #d43c55;
-}
-
-/* Estilos do iframe */
-iframe {
-    border: none;
-    width: 100%;
-    height: 500px;
-    border-radius: 8px;
-}
-
-/* Estilos do close button */
-.close {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #aaa;
-    cursor: pointer;
-}
-
-.close:hover {
-    color: #e44c65;
+    .range-fields {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }

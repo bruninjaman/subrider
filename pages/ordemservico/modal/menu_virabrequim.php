@@ -102,48 +102,51 @@ function vVal($data, $key)
                     </div>
                 </div>
 
-                <div class="col-md-4" id="folga_eixo_bronzina_section">
+                <div class="col-md-4" id="folga_biela_section">
                     <div class="floating-input">
-                        <input type="text" name="folga_eixo_bronzina" class="form-control" data-type="decimal"
-                            placeholder=" " value="<?php echo vVal($virabrequimRefData, 'folga_bronzina'); ?>">
-                        <label>Folga Eixo-Bronzina Máx (mm)</label>
+                        <input type="text" name="folga_biela" class="form-control" data-type="decimal" placeholder=" "
+                            value="<?php echo vVal($virabrequimRefData, 'folga_biela'); ?>">
+                        <label id="label_folga_biela">Folga Biela (mm)</label>
                         <div class="focus-border"></div>
                     </div>
                 </div>
 
-                <div class="col-md-4" id="folga_eixo_mancal_section">
+                <div class="col-md-4" id="folga_mancal_section">
                     <div class="floating-input">
-                        <input type="text" name="folga_eixo_mancal" class="form-control" data-type="decimal"
-                            placeholder=" " value="<?php echo vVal($virabrequimRefData, 'folga_mancal'); ?>">
-                        <label>Folga Eixo-Mancal Máx (mm)</label>
+                        <input type="text" name="folga_mancal" class="form-control" data-type="decimal" placeholder=" "
+                            value="<?php echo vVal($virabrequimRefData, 'folga_mancal'); ?>">
+                        <label id="label_folga_mancal">Folga Mancal (mm)</label>
                         <div class="focus-border"></div>
                     </div>
                 </div>
 
                 <div class="col-md-8" id="folga_lateral_eixo_section">
-                    <div class="floating-input">
+                    <div class="floating-input group-input">
                         <div class="range-fields">
-                            <input type="text" name="folga_lateral_eixo_min" class="form-control" data-type="decimal"
-                                placeholder=" "
-                                value="<?php echo vVal($virabrequimRefData, 'folga_lateral_eixo_min'); ?>">
+                            <div class="floating-input">
+                                <input type="text" name="folga_lateral_eixo_min" class="form-control"
+                                    data-type="decimal" placeholder=" "
+                                    value="<?php echo vVal($virabrequimRefData, 'folga_lateral_eixo_min'); ?>">
+                                <label>mínimo</label>
+                            </div>
                             <span class="range-separator">a</span>
                             <div class="floating-input">
                                 <input type="text" name="folga_lateral_eixo_max" class="form-control"
                                     data-type="decimal" placeholder=" "
                                     value="<?php echo vVal($virabrequimRefData, 'folga_lateral_eixo_max'); ?>">
-                                <label>maximo</label>
+                                <label>máximo</label>
                             </div>
                         </div>
-                        <label for="folga_lateral_eixo_min">Folga Lateral Eixo (mm)</label>
+                        <label class="outer-label">Folga Lateral Eixo (mm)</label>
                         <div class="focus-border"></div>
                     </div>
                 </div>
 
-                <div class="col-md-4" id="empenamento_max_section">
+                <div class="col-md-4" id="empenamento_section">
                     <div class="floating-input">
-                        <input type="text" name="empenamento_max" class="form-control" data-type="decimal"
-                            placeholder=" " value="<?php echo vVal($virabrequimRefData, 'empenamento'); ?>">
-                        <label>Empenamento Máx (mm)</label>
+                        <input type="text" name="empenamento" class="form-control" data-type="decimal" placeholder=" "
+                            value="<?php echo vVal($virabrequimRefData, 'empenamento'); ?>">
+                        <label>Empenamento (mm)</label>
                         <div class="focus-border"></div>
                     </div>
                 </div>
@@ -261,21 +264,40 @@ function vVal($data, $key)
             qtdCilindrosSelect.dispatchEvent(new Event('change'));
         }
 
-        // Controle de visibilidade das seções Moente e Munhões
+        // Controle de visibilidade das seções
         function toggleMoenteMunhoes() {
-            // Verifica se a opção 'bronzina' está marcada
             const bronzinaRadio = document.querySelector('input[name="rolamento_type"][value="bronzina"]');
             const isBronzina = bronzinaRadio ? bronzinaRadio.checked : false;
 
-            const display = isBronzina ? 'block' : 'none';
-
+            // Seções para Bronzina
             const moenteSection = document.getElementById('diametro_moente_section');
             const munhoesSection = document.getElementById('diametro_munhoes_section');
             const refSection = document.getElementById('referencia_diametros_section');
+            const lateralBielaSection = document.getElementById('folga_lateral_biela_section');
 
-            if (moenteSection) moenteSection.style.display = display;
-            if (munhoesSection) munhoesSection.style.display = display;
-            if (refSection) refSection.style.display = display;
+            // Campos e Labels
+            const labelBiela = document.getElementById('label_folga_biela');
+            const labelMancal = document.getElementById('label_folga_mancal');
+
+            if (isBronzina) {
+                // Layout Bronzina
+                if (moenteSection) moenteSection.style.display = 'block';
+                if (munhoesSection) munhoesSection.style.display = 'block';
+                if (refSection) refSection.style.display = 'block';
+                if (lateralBielaSection) lateralBielaSection.style.display = 'block';
+
+                if (labelBiela) labelBiela.innerText = 'Folga Eixo-Bronzina Máx (mm)';
+                if (labelMancal) labelMancal.innerText = 'Folga Eixo-Mancal Máx (mm)';
+            } else {
+                // Layout Rolamento
+                if (moenteSection) moenteSection.style.display = 'none';
+                if (munhoesSection) munhoesSection.style.display = 'none';
+                if (refSection) refSection.style.display = 'none';
+                if (lateralBielaSection) lateralBielaSection.style.display = 'none';
+
+                if (labelBiela) labelBiela.innerText = 'Folga Biela (mm)';
+                if (labelMancal) labelMancal.innerText = 'Folga Eixo Mancal (mm)';
+            }
 
             // Ajustar obrigatoriedade
             if (qtdCilindrosSelect) qtdCilindrosSelect.required = isBronzina;

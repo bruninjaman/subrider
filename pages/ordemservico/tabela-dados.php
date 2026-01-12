@@ -39,7 +39,10 @@ function getReferenceData($conn, $ordem, $table)
 
 function isInRange($value, $reference, $validationType)
 {
-    if ($value === null || $reference === null || $reference == 0)
+    if ($value === null || $value === '' || $reference === null || $reference === '' || $reference == 0)
+        return true;
+
+    if (!is_numeric($value) || !is_numeric($reference))
         return true;
 
     switch ($validationType) {
@@ -89,11 +92,15 @@ function getValidationType($campo, $table)
         ],
         'virabrequim' => [
             'folga_mancal' => 'exact',
+            'folga_biela' => 'exact',
             'folga_bronzina' => 'exact',
+            'folga_bronzinha' => 'exact',
             'folga_lateral_biela' => 'exact',
             'folga_lateral_eixo_min' => 'min',
             'folga_lateral_eixo_max' => 'max',
-            'empenamento' => 'max'
+            'empenamento' => 'max',
+            'diametro_moente' => 'exact',
+            'diametro_munhao' => 'exact'
         ],
         'cabecote' => [
             'val_adm_limite_min' => 'min',
@@ -104,6 +111,28 @@ function getValidationType($campo, $table)
     ];
 
     return isset($validationRules[$table][$campo]) ? $validationRules[$table][$campo] : 'exact';
+}
+
+function formatReferenceValue($value, $table, $campo)
+{
+    if ($value === null || $value === '' || $value == 0 || !is_numeric($value))
+        return is_string($value) ? htmlspecialchars($value) : '-';
+
+    $validationType = getValidationType($campo, $table);
+    $formattedValue = formatNumber($value);
+
+    switch ($validationType) {
+        case 'min':
+            return $formattedValue . ' mm (mín)';
+        case 'max':
+            return $formattedValue . ' mm (máx)';
+        case 'exact':
+            $min = $value * 0.95;
+            $max = $value * 1.05;
+            return formatNumber($min) . ' - ' . formatNumber($max) . ' mm';
+        default:
+            return $formattedValue;
+    }
 }
 
 function displayComponentMeasurements($conn, $ordem, $table, $title)
@@ -142,11 +171,11 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                             if ($formattedValue !== null) {
                                 $label = isset($campos[$campo]) ? $campos[$campo] : ucfirst(str_replace('_', ' ', $campo));
                                 $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
-                                $refFormatted = $referenceValue ? formatNumber($referenceValue) : '-';
+                                $refFormatted = formatReferenceValue($referenceValue, $table, $campo);
 
                                 // Só aplicar cor se houver referência válida
                                 $colorClass = '';
-                                if ($referenceValue !== null && $referenceValue != 0) {
+                                if ($referenceValue !== null && $referenceValue !== '' && $referenceValue != 0) {
                                     $validationType = getValidationType($campo, $table);
                                     $inRange = isInRange($valor, $referenceValue, $validationType);
                                     $colorClass = $inRange ? 'in-range' : 'out-range';
@@ -173,7 +202,7 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                             $formattedValue = formatNumber($valor);
                             if ($formattedValue !== null) {
                                 $colorClass = '';
-                                if ($referenceMin !== null && $referenceMin != 0) {
+                                if ($referenceMin !== null && $referenceMin !== '' && $referenceMin != 0) {
                                     $inRange = isInRange($valor, $referenceMin, 'min');
                                     $colorClass = $inRange ? 'in-range' : 'out-range';
                                 }
@@ -189,13 +218,13 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                     $medicoes_separador = json_decode($row['medicoes_separador'], true);
                     if ($medicoes_separador) {
                         $referenceMax = isset($referenceData['disco_separador_emp_max']) ? $referenceData['disco_separador_emp_max'] : null;
-                        $refFormatted = $referenceMax ? formatNumber($referenceMax) . ' mm (máx)' : '-';
+                        $refFormatted = formatReferenceValue($referenceMax, $table, 'disco_separador_emp');
 
                         foreach ($medicoes_separador as $index => $valor) {
                             $formattedValue = formatNumber($valor);
                             if ($formattedValue !== null) {
                                 $colorClass = '';
-                                if ($referenceMax !== null && $referenceMax != 0) {
+                                if ($referenceMax !== null && $referenceMax !== '' && $referenceMax != 0) {
                                     $inRange = isInRange($valor, $referenceMax, 'max');
                                     $colorClass = $inRange ? 'in-range' : 'out-range';
                                 }
@@ -244,26 +273,10 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                                     if ($formattedValue !== null) {
                                         $label = isset($campos_motor[$campo]) ? $campos_motor[$campo] : ucfirst(str_replace('_', ' ', $campo));
                                         $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
-                                        $refFormatted = $referenceValue ? formatNumber($referenceValue) : '-';
-
-                                        // Adicionar indicador de tipo de validação
-                                        if ($referenceValue) {
-                                            $validationType = getValidationType($campo, $table);
-                                            switch ($validationType) {
-                                                case 'min':
-                                                    $refFormatted .= ' (mín)';
-                                                    break;
-                                                case 'max':
-                                                    $refFormatted .= ' (máx)';
-                                                    break;
-                                                case 'exact':
-                                                    $refFormatted .= ' (±5%)';
-                                                    break;
-                                            }
-                                        }
+                                        $refFormatted = formatReferenceValue($referenceValue, $table, $campo);
 
                                         $colorClass = '';
-                                        if ($referenceValue !== null && $referenceValue != 0) {
+                                        if ($referenceValue !== null && $referenceValue !== '' && $referenceValue != 0) {
                                             $validationType = getValidationType($campo, $table);
                                             $inRange = isInRange($valor, $referenceValue, $validationType);
                                             $colorClass = $inRange ? 'in-range' : 'out-range';
@@ -285,14 +298,16 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                     if ($medicoes) {
                         $tipoVira = isset($referenceData['tipo']) ? strtolower($referenceData['tipo']) : '';
                         $campos_virabrequim = [
-                            'folga_mancal' => 'Folga Mancal',
+                            'folga_mancal' => ($tipoVira === 'rolamento') ? 'Folga Eixo Mancal' : 'Folga Mancal',
+                            'folga_biela' => ($tipoVira === 'rolamento') ? 'Folga Biela' : 'Folga Bronzina',
+                            'folga_bronzina' => 'Folga Bronzina',
+                            'folga_bronzinha' => 'Folga Bronzina',
                             'folga_eixo_biela' => 'Folga Eixo Biela',
+                            'folga_eixo_mancal' => 'Folga Eixo Mancal',
                             'folga_lateral_biela' => 'Folga Lat. Biela',
                             'folga_lateral_eixo_min' => 'Folga Lat. Eixo Mín',
                             'folga_lateral_eixo_max' => 'Folga Lat. Eixo Máx',
                             'empenamento' => 'Empenamento',
-                            'folga_bronzina' => 'Folga Bronzina',
-                            'folga_bronzinha' => 'Folga Bronzina',
                             'diametro_moente' => 'Diâmetro Moente',
                             'diametro_munhao' => 'Diâmetro Munhão'
                         ];
@@ -303,11 +318,12 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                             if (is_array($valor))
                                 continue;
 
-                            // Ocultar campos conforme o tipo de virabrequim
-                            if ($tipoVira === 'rolamento' && in_array($campo, ['qtd_cilindros', 'qtd_munhoes', 'folga_mancal', 'folga_bronzina', 'folga_bronzinha', 'folga_eixo_biela', 'diametro_moente', 'diametro_munhao'])) {
+                            // Ocultar campos conforme o tipo de virabrequim (Whitelist para Rolamento)
+                            if ($tipoVira === 'rolamento' && !in_array($campo, ['folga_mancal', 'folga_biela', 'folga_bronzina', 'folga_eixo_biela', 'folga_lateral_eixo_min', 'folga_lateral_eixo_max', 'empenamento'])) {
                                 continue;
                             }
-                            if ($tipoVira === 'bronzina' && in_array($campo, ['folga_lateral_biela', 'folga_lateral_eixo_min', 'folga_lateral_eixo_max', 'empenamento'])) {
+                            // Ocultar lateral biela para bronzina apenas se não houver valor
+                            if ($tipoVira === 'bronzina' && $campo === 'folga_lateral_biela' && ($valor === null || $valor === '')) {
                                 continue;
                             }
 
@@ -315,26 +331,10 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                             if ($formattedValue !== null) {
                                 $label = isset($campos_virabrequim[$campo]) ? $campos_virabrequim[$campo] : ucfirst(str_replace('_', ' ', $campo));
                                 $referenceValue = isset($referenceData[$campo]) ? $referenceData[$campo] : null;
-                                $refFormatted = $referenceValue ? formatNumber($referenceValue) . ' mm' : '-';
-
-                                // Adicionar indicador de tipo de validação
-                                if ($referenceValue) {
-                                    $validationType = getValidationType($campo, $table);
-                                    switch ($validationType) {
-                                        case 'min':
-                                            $refFormatted .= ' (mín)';
-                                            break;
-                                        case 'max':
-                                            $refFormatted .= ' (máx)';
-                                            break;
-                                        case 'exact':
-                                            $refFormatted .= ' (±5%)';
-                                            break;
-                                    }
-                                }
+                                $refFormatted = formatReferenceValue($referenceValue, $table, $campo);
 
                                 $colorClass = '';
-                                if ($referenceValue !== null && $referenceValue != 0) {
+                                if ($referenceValue !== null && $referenceValue !== '' && $referenceValue != 0) {
                                     $validationType = getValidationType($campo, $table);
                                     $inRange = isInRange($valor, $referenceValue, $validationType);
                                     $colorClass = $inRange ? 'in-range' : 'out-range';
@@ -348,12 +348,17 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                         // Processar Moentes individuais
                         if ($tipoVira !== 'rolamento' && isset($medicoes['diametro_moente']) && is_array($medicoes['diametro_moente'])) {
                             $refMoente = isset($referenceData['diametro_moente']) ? $referenceData['diametro_moente'] : null;
-                            $refFormatted = $refMoente ? formatNumber($refMoente) . ' mm' : '-';
+                            $refFormatted = formatReferenceValue($refMoente, $table, 'diametro_moente');
 
                             foreach ($medicoes['diametro_moente'] as $i => $v) {
                                 $formattedValue = formatNumber($v);
                                 if ($formattedValue !== null) {
-                                    $tableContent .= "<tr><td>Diâmetro Moente $i</td><td class='reference-value'>$refFormatted</td><td>$formattedValue mm</td></tr>";
+                                    $colorClass = '';
+                                    if ($refMoente !== null && $refMoente !== '' && $refMoente != 0) {
+                                        $inRange = isInRange($v, $refMoente, 'exact');
+                                        $colorClass = $inRange ? 'in-range' : 'out-range';
+                                    }
+                                    $tableContent .= "<tr><td>Diâmetro Moente $i</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue mm</td></tr>";
                                     $hasVisibleData = true;
                                 }
                             }
@@ -362,44 +367,66 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
                         // Processar Munhões individuais
                         if ($tipoVira !== 'rolamento' && isset($medicoes['diametro_munhao']) && is_array($medicoes['diametro_munhao'])) {
                             $refMunhao = isset($referenceData['diametro_munhao']) ? $referenceData['diametro_munhao'] : null;
-                            $refFormatted = $refMunhao ? formatNumber($refMunhao) . ' mm' : '-';
+                            $refFormatted = formatReferenceValue($refMunhao, $table, 'diametro_munhao');
 
                             foreach ($medicoes['diametro_munhao'] as $i => $v) {
                                 $formattedValue = formatNumber($v);
                                 if ($formattedValue !== null) {
-                                    $tableContent .= "<tr><td>Diâmetro Munhão $i</td><td class='reference-value'>$refFormatted</td><td>$formattedValue mm</td></tr>";
+                                    $colorClass = '';
+                                    if ($refMunhao !== null && $refMunhao !== '' && $refMunhao != 0) {
+                                        $inRange = isInRange($v, $refMunhao, 'exact');
+                                        $colorClass = $inRange ? 'in-range' : 'out-range';
+                                    }
+                                    $tableContent .= "<tr><td>Diâmetro Munhão $i</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue mm</td></tr>";
                                     $hasVisibleData = true;
                                 }
                             }
                         }
 
                         // Processar Folga Mancal individual
-                        if ($tipoVira !== 'rolamento' && isset($medicoes['folga_mancal']) && is_array($medicoes['folga_mancal'])) {
+                        if (isset($medicoes['folga_mancal']) && is_array($medicoes['folga_mancal'])) {
                             $refMancal = isset($referenceData['folga_mancal']) ? $referenceData['folga_mancal'] : null;
-                            $refFormatted = $refMancal ? formatNumber($refMancal) . ' mm' : '-';
+                            $refFormatted = formatReferenceValue($refMancal, $table, 'folga_mancal');
 
                             foreach ($medicoes['folga_mancal'] as $i => $v) {
                                 $formattedValue = formatNumber($v);
                                 if ($formattedValue !== null) {
-                                    $tableContent .= "<tr><td>Folga Mancal $i</td><td class='reference-value'>$refFormatted</td><td>$formattedValue mm</td></tr>";
+                                    $colorClass = '';
+                                    if ($refMancal !== null && $refMancal !== '' && $refMancal != 0) {
+                                        $inRange = isInRange($v, $refMancal, 'exact');
+                                        $colorClass = $inRange ? 'in-range' : 'out-range';
+                                    }
+                                    $tableContent .= "<tr><td>Folga Mancal $i</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue mm</td></tr>";
                                     $hasVisibleData = true;
                                 }
                             }
                         }
 
-                        // Processar Folga Bronzina individual
-                        if ($tipoVira !== 'rolamento' && isset($medicoes['folga_bronzina']) && is_array($medicoes['folga_bronzina'])) {
-                            $refBronzina = isset($referenceData['folga_bronzina']) ? $referenceData['folga_bronzina'] : (isset($referenceData['folga_eixo_biela']) ? $referenceData['folga_eixo_biela'] : null);
-                            $refFormatted = $refBronzina ? formatNumber($refBronzina) . ' mm' : '-';
+                        // Processar Folga Biela individual (suporta folga_biela, folga_bronzina ou folga_bronzinha)
+                        $bielaKey = isset($medicoes['folga_biela']) ? 'folga_biela' : (isset($medicoes['folga_bronzina']) ? 'folga_bronzina' : (isset($medicoes['folga_bronzinha']) ? 'folga_bronzinha' : null));
+                        if ($bielaKey && is_array($medicoes[$bielaKey])) {
+                            $refBiela = isset($referenceData['folga_biela']) ? $referenceData['folga_biela'] : (isset($referenceData['folga_bronzina']) ? $referenceData['folga_bronzina'] : null);
+                            $refFormatted = formatReferenceValue($refBiela, $table, 'folga_biela');
+                            $labelBase = ($tipoVira === 'rolamento') ? 'Folga Biela' : 'Folga Bronzina';
 
-                            foreach ($medicoes['folga_bronzina'] as $i => $v) {
+                            foreach ($medicoes[$bielaKey] as $i => $v) {
                                 $formattedValue = formatNumber($v);
                                 if ($formattedValue !== null) {
-                                    $tableContent .= "<tr><td>Folga Bronzina $i</td><td class='reference-value'>$refFormatted</td><td>$formattedValue mm</td></tr>";
+                                    $colorClass = '';
+                                    if ($refBiela !== null && $refBiela !== '' && $refBiela != 0) {
+                                        $inRange = isInRange($v, $refBiela, 'exact');
+                                        $colorClass = $inRange ? 'in-range' : 'out-range';
+                                    }
+                                    $tableContent .= "<tr><td>$labelBase $i</td><td class='reference-value'>$refFormatted</td><td class='$colorClass'>$formattedValue mm</td></tr>";
                                     $hasVisibleData = true;
                                 }
                             }
                         }
+                    }
+
+                    // Se o registro de medições existe, garantimos que a seção apareça se tivermos algum conteúdo
+                    if ($tableContent !== "") {
+                        $hasVisibleData = true;
                     }
                 }
                 break;
@@ -489,11 +516,11 @@ function displayComponentMeasurements($conn, $ordem, $table, $title)
 
                                         // Folga
                                         $colorClass = '';
-                                        if ($formattedFolga !== null && (($referenceMin !== null && $referenceMin != 0) || ($referenceMax !== null && $referenceMax != 0))) {
+                                        if ($formattedFolga !== null && (($referenceMin !== null && $referenceMin !== '' && $referenceMin != 0) || ($referenceMax !== null && $referenceMax !== '' && $referenceMax != 0))) {
                                             $inRange = true;
-                                            if ($referenceMin !== null && $referenceMin != 0 && $folgaValue < $referenceMin)
+                                            if ($referenceMin !== null && $referenceMin !== '' && $referenceMin != 0 && $folgaValue < $referenceMin)
                                                 $inRange = false;
-                                            if ($referenceMax !== null && $referenceMax != 0 && $folgaValue > $referenceMax)
+                                            if ($referenceMax !== null && $referenceMax !== '' && $referenceMax != 0 && $folgaValue > $referenceMax)
                                                 $inRange = false;
                                             $colorClass = $inRange ? 'in-range' : 'out-range';
                                         }

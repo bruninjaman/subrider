@@ -322,11 +322,11 @@ function processVirabrequim($post, $ordem)
     // Sanitiza os dados de entrada
     $rolamento_type = sanitizeInput($post['rolamento_type'] ?? '');
     $folga_lateral_biela = sanitizeInput($post['folga_lateral_biela'] ?? 0, 'float');
-    $folga_eixo_bronzina = sanitizeInput($post['folga_eixo_bronzina'] ?? 0, 'float');
-    $folga_eixo_mancal = sanitizeInput($post['folga_eixo_mancal'] ?? 0, 'float');
+    $folga_biela = sanitizeInput($post['folga_biela'] ?? 0, 'float');
+    $folga_mancal = sanitizeInput($post['folga_mancal'] ?? 0, 'float');
     $folga_lateral_eixo_min = sanitizeInput($post['folga_lateral_eixo_min'] ?? 0, 'float');
     $folga_lateral_eixo_max = sanitizeInput($post['folga_lateral_eixo_max'] ?? 0, 'float');
-    $empenamento_max = sanitizeInput($post['empenamento_max'] ?? 0, 'float');
+    $empenamento = sanitizeInput($post['empenamento'] ?? 0, 'float');
 
     $qtd_cilindros = sanitizeInput($post['qtd_cilindros'] ?? 0, 'int');
     $qtd_munhoes = sanitizeInput($post['qtd_munhoes'] ?? 0, 'int');
@@ -347,7 +347,7 @@ function processVirabrequim($post, $ordem)
     $fields = [
         'tipo',
         'folga_lateral_biela',
-        'folga_bronzina',
+        'folga_biela',
         'folga_mancal',
         'folga_lateral_eixo_min',
         'folga_lateral_eixo_max',
@@ -362,11 +362,11 @@ function processVirabrequim($post, $ordem)
     $values = [
         $rolamento_type,
         $folga_lateral_biela,
-        $folga_eixo_bronzina,
-        $folga_eixo_mancal,
+        $folga_biela,
+        $folga_mancal,
         $folga_lateral_eixo_min,
         $folga_lateral_eixo_max,
-        $empenamento_max,
+        $empenamento,
         $qtd_cilindros,
         $qtd_munhoes,
         $diametro_moente,
