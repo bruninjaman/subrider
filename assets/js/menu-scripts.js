@@ -1,24 +1,24 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Funções para o menu do cabeçote
     const initCabecoteForm = () => {
         const form = document.getElementById('cabecoteForm');
         if (form) {
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 const formData = new FormData(form);
                 const data = {};
-                
+
                 for (let [key, value] of formData.entries()) {
                     data[key] = value === '' ? null : value;
                 }
-                
+
                 console.log(data);
             });
         }
 
         const tuchoSwitch = document.getElementById('tucho');
         if (tuchoSwitch) {
-            tuchoSwitch.addEventListener('change', function() {
+            tuchoSwitch.addEventListener('change', function () {
                 console.log('Tucho Mecânico:', this.checked);
             });
         }
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const dohcFields = document.getElementById('dohc_fields');
             const isOHC = document.getElementById('ohc')?.checked;
             const isDOHC = document.getElementById('dohc')?.checked;
-            
+
             if (ohcField && dohcFields) {
                 if (isOHC) {
                     ohcField.style.display = 'block';
@@ -62,18 +62,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const initVirabrequim = () => {
         const rolamento1 = document.getElementById('rolamento_1');
         const rolamento2 = document.getElementById('rolamento_2');
-        const sectionsToHide = [
+
+        const rolamentoSections = [
             document.getElementById('folga_lateral_biela_section'),
             document.getElementById('folga_lateral_eixo_section'),
             document.getElementById('empenamento_max_section')
         ];
 
+        const bronzinaSections = [
+            document.getElementById('folga_eixo_bronzina_section'),
+            document.getElementById('folga_eixo_mancal_section')
+        ];
+
         const toggleSections = () => {
-            if (rolamento2?.checked) {
-                sectionsToHide.forEach(section => section?.classList.add('hidden'));
-            } else {
-                sectionsToHide.forEach(section => section?.classList.remove('hidden'));
-            }
+            const isBronzina = rolamento2?.checked;
+
+            rolamentoSections.forEach(section => {
+                if (section) {
+                    if (isBronzina) section.classList.add('hidden');
+                    else section.classList.remove('hidden');
+                }
+            });
+
+            bronzinaSections.forEach(section => {
+                if (section) {
+                    if (isBronzina) section.classList.remove('hidden');
+                    else section.classList.add('hidden');
+                }
+            });
         };
 
         if (rolamento1 && rolamento2) {
@@ -99,11 +115,32 @@ document.addEventListener('DOMContentLoaded', function() {
         return value;
     }
 
+    // Função global para inicializar inputs decimais (útil para campos dinâmicos)
+    window.initDecimalInputs = function () {
+        const decimalInputs = document.querySelectorAll('input[data-type="decimal"]:not([data-initialized])');
+
+        decimalInputs.forEach(input => {
+            input.setAttribute('data-initialized', 'true');
+
+            // Formata valor inicial se existir
+            if (input.value) {
+                input.value = formatNumberWithComma(input.value);
+            }
+
+            // Formata ao perder o foco
+            input.addEventListener('blur', function () {
+                if (this.value) {
+                    this.value = formatNumberWithComma(this.value);
+                }
+            });
+        });
+    };
+
     // Adiciona evento para converter valores antes do submit
-    document.addEventListener('submit', function(e) {
+    document.addEventListener('submit', function (e) {
         const form = e.target;
         const decimalInputs = form.querySelectorAll('input[data-type="decimal"]');
-        
+
         decimalInputs.forEach(input => {
             if (input.value) {
                 input.value = convertCommaToDot(input.value);
@@ -111,22 +148,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Adiciona evento para formatar valores ao exibir
-    const decimalInputs = document.querySelectorAll('input[data-type="decimal"]');
-    
-    decimalInputs.forEach(input => {
-        // Formata valor inicial se existir
-        if (input.value) {
-            input.value = formatNumberWithComma(input.value);
-        }
-        
-        // Formata ao perder o foco
-        input.addEventListener('blur', function() {
-            if (this.value) {
-                this.value = formatNumberWithComma(this.value);
-            }
-        });
-    });
+    // Inicializa inputs decimais existentes na página
+    initDecimalInputs();
 
     // Inicializar todas as funções
     initCabecoteForm();

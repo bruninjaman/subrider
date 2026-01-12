@@ -1,59 +1,62 @@
 <?php
 
 // Funções auxiliares
-function formatarIntervalo($min, $max) {
+function formatarIntervalo($min, $max)
+{
     return number_format(floatval($min), 2, ',', '.') . " a " . number_format(floatval($max), 2, ',', '.');
 }
 
 // Função para detectar se um valor precisa de correção centesimal
-function needsCentesimalCorrection($inputValue, $referenceValue) {
+function needsCentesimalCorrection($inputValue, $referenceValue)
+{
     // Converter vírgula para ponto
     $input = floatval(str_replace(',', '.', $inputValue));
-    
+
     // Verificar se a referência é um range (formato "min a max")
     if (strpos($referenceValue, ' a ') !== false) {
         $parts = explode(' a ', $referenceValue);
         if (count($parts) == 2) {
             $min = floatval(str_replace(',', '.', trim($parts[0])));
             $max = floatval(str_replace(',', '.', trim($parts[1])));
-            
+
             // Usar o valor mínimo como referência para detecção
             $reference = $min;
-            
+
             // Se o valor de entrada é >= 10 e a referência é < 1
             if ($input >= 10 && $reference < 1) {
                 return true;
             }
-            
+
             // Se o valor de entrada é >= 100 vezes maior que a referência
             if ($reference > 0 && ($input / $reference) >= 100) {
                 return true;
             }
-            
+
             return false;
         }
     }
-    
+
     // Para valores únicos
     $reference = floatval(str_replace(',', '.', $referenceValue));
-    
+
     // Se o valor de entrada é >= 10 e a referência é < 1
     if ($input >= 10 && $reference < 1) {
         return true;
     }
-    
+
     // Se o valor de entrada é >= 100 vezes maior que a referência
     if ($reference > 0 && ($input / $reference) >= 100) {
         return true;
     }
-    
+
     return false;
 }
 
 // Função para aplicar correção centesimal baseada na referência
-function applyCentesimalCorrection($inputValue, $referenceValue) {
+function applyCentesimalCorrection($inputValue, $referenceValue)
+{
     $input = floatval(str_replace(',', '.', $inputValue));
-    
+
     // Extrair valor de referência (usar mínimo se for range)
     $reference = $referenceValue;
     if (strpos($referenceValue, ' a ') !== false) {
@@ -64,65 +67,67 @@ function applyCentesimalCorrection($inputValue, $referenceValue) {
     } else {
         $reference = floatval(str_replace(',', '.', $referenceValue));
     }
-    
+
     // Calcular o fator de correção baseado na referência
     if ($reference > 0) {
         // Encontrar a potência de 10 mais próxima da referência
         $factor = 1;
         $tempRef = $reference;
-        
+
         // Se referência < 1, encontrar quantas casas decimais precisamos
         while ($tempRef < 1 && $factor < 10000) {
             $tempRef *= 10;
             $factor *= 10;
         }
-        
+
         // Aplicar correção se o valor de entrada for muito maior
         if ($input >= ($reference * $factor)) {
             return $input / $factor;
         }
     }
-    
+
     return $input;
 }
 
 // Função para detectar se um valor está fora do range baseado na referência
-function isValueOutOfRange($inputValue, $referenceValue) {
+function isValueOutOfRange($inputValue, $referenceValue)
+{
     // Converter vírgula para ponto
     $input = floatval(str_replace(',', '.', $inputValue));
-    
+
     // Verificar se a referência contém um range (formato "min a max")
     if (strpos($referenceValue, ' a ') !== false) {
         $parts = explode(' a ', $referenceValue);
         if (count($parts) == 2) {
             $min = floatval(str_replace(',', '.', trim($parts[0])));
             $max = floatval(str_replace(',', '.', trim($parts[1])));
-            
+
             // Verificar se precisa de correção centesimal
             if (needsCentesimalCorrection($inputValue, $referenceValue)) {
                 $input = applyCentesimalCorrection($inputValue, $referenceValue);
             }
-            
+
             return $input < $min || $input > $max;
         }
     }
-    
+
     // Para valores únicos, verificar se está muito distante
     $reference = floatval(str_replace(',', '.', $referenceValue));
     if (needsCentesimalCorrection($inputValue, $referenceValue)) {
         $input = applyCentesimalCorrection($inputValue, $referenceValue);
     }
-    
+
     // Considerar fora do range se a diferença for muito grande (mais de 50% da referência)
     if ($reference > 0) {
         $tolerance = $reference * 0.5;
         return abs($input - $reference) > $tolerance;
     }
-    
+
     return false;
 }
 
-function displayTableData($conn, $tableName, $tableTitle) {
+function displayTableData($conn, $tableName, $tableTitle)
+{
     if (!isset($_GET['ordem'])) {
         echo "<p>Parâmetro 'ordem' inválido ou não fornecido.</p>";
         return;
@@ -140,26 +145,26 @@ function displayTableData($conn, $tableName, $tableTitle) {
             mysqli_stmt_execute($refStmt);
             $refResult = mysqli_stmt_get_result($refStmt);
             $refRow = mysqli_fetch_assoc($refResult);
-            
+
             if ($refRow) {
                 $refId = $refRow['id'];
-                
+
                 // Atualizar valores na referência
                 foreach ($_POST['measured'] as $fields) {
                     $updates = [];
                     $params = [];
                     $types = '';
-                    
+
                     // Atualizar a parte do salvamento para usar a referência correta
                     foreach ($fields as $field => $value) {
                         // Converter vírgula para ponto se for um número
                         if (is_numeric(str_replace(',', '.', $value))) {
                             $value = str_replace(',', '.', $value);
-                            
+
                             // Aplicar correção centesimal se necessário
                             if (isset($refRow[$field])) {
                                 $referenceValue = $refRow[$field];
-                                
+
                                 // Debug: verificar se a detecção está funcionando
                                 if (needsCentesimalCorrection($value, $referenceValue)) {
                                     $originalValue = $value;
@@ -168,18 +173,18 @@ function displayTableData($conn, $tableName, $tableTitle) {
                                 }
                             }
                         }
-                        
+
                         $updates[] = "`$field` = ?";
                         $params[] = $value;
                         $types .= is_numeric($value) ? 'd' : 's';
                     }
-                    
+
                     $params[] = $refId;
                     $types .= 'i';
 
-                    $updateQuery = "UPDATE " . $tableName . 
-                                  " SET " . implode(', ', $updates) . 
-                                  " WHERE id = ?";
+                    $updateQuery = "UPDATE " . $tableName .
+                        " SET " . implode(', ', $updates) .
+                        " WHERE id = ?";
                     $stmt = mysqli_prepare($conn, $updateQuery);
                     if ($stmt) {
                         if (count($params) > 0) {
@@ -229,7 +234,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
         foreach ($refRow as $key => $value) {
             $keyLower = strtolower($key);
-            
+
             // Verificar se é um campo que deve ser ignorado para rolamento
             if ($tableName === 'virabrequim') {
                 $tipoAtual = '';
@@ -241,85 +246,97 @@ function displayTableData($conn, $tableName, $tableTitle) {
                 }
                 // Adicionar classes CSS para controle dinâmico
                 $virabrequimClass = '';
-                if (in_array($keyLower, [
-                    'folga_bronzina',
-                ])) {
+                if (
+                    in_array($keyLower, [
+                        'folga_bronzina',
+                        'folga_bronzinha',
+                        'folga_eixo_biela',
+                        'folga_eixo_mancal',
+                        'folga_eixo_bronzina',
+                        'folga_mancal',
+                        'diametro_moente',
+                        'diametro_munhao',
+                        'diametro_munhoes',
+                        'qtd_cilindros',
+                        'qtd_munhoes'
+                    ])
+                ) {
                     $virabrequimClass = 'virabrequim-bronzina-field';
-                } else if (in_array($keyLower, [
-                    'folga_lateral_biela',
-                    'folga_lateral_eixo_min',
-                    'folga_lateral_eixo_max',
-                    'empenamento'
-                ])) {
+                } else if (
+                    in_array($keyLower, [
+                        'folga_lateral_biela',
+                        'folga_lateral_eixo_min',
+                        'folga_lateral_eixo_max',
+                        'empenamento'
+                    ])
+                ) {
                     $virabrequimClass = 'virabrequim-rolamento-field';
                 }
             }
-            
-            if ($keyLower !== 'id' && 
-                $keyLower !== 'ordem' && 
-                $keyLower !== 'is_reference' && 
-                $value !== null &&
-                !($tableName === 'cabecote' && ($keyLower === 'motor_tipo' || $keyLower === 'tipo_val')) &&
-                !($tableName === 'motor' && ($keyLower === 'created_at' || $keyLower === 'updated_at'))) {
-                
+
+            if (
+                !in_array($keyLower, ['id', 'ordem', 'is_reference', 'medicoes', 'created_at', 'updated_at']) &&
+                ($value !== null || $tableName === 'virabrequim') &&
+                !($tableName === 'cabecote' && ($keyLower === 'motor_tipo' || $keyLower === 'tipo_val'))
+            ) {
+
                 echo "<tr" . (isset($virabrequimClass) && $virabrequimClass ? " class='$virabrequimClass'" : "") . ">";
-                echo "<td class='data-label'>" . 
-                     htmlspecialchars(ucfirst(str_replace("_", " ", $key))) . 
-                     "</td>";
-                
+                echo "<td class='data-label'>" .
+                    htmlspecialchars(ucfirst(str_replace("_", " ", $key))) .
+                    "</td>";
+
                 // Tratamento especial para o campo tucho
                 if ($tableName === 'cabecote' && $keyLower === 'tucho') {
                     $displayValue = ($value == 1) ? 'Sim' : 'Não';
-                    echo "<td class='ref-value'>" . 
-                         htmlspecialchars($displayValue) . 
-                         "</td>";
-                    
+                    echo "<td class='ref-value'>" .
+                        htmlspecialchars($displayValue) .
+                        "</td>";
+
                     echo "<td class='meas-values'>";
                     echo "<select name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
-                         "class='meas-input first'>";
+                        "class='meas-input first'>";
                     echo "<option value='1' " . ($value == 1 ? 'selected' : '') . ">Sim</option>";
                     echo "<option value='0' " . ($value == 0 ? 'selected' : '') . ">Não</option>";
                     echo "</select>";
                     echo "</td>";
-                } 
+                }
                 // Tratamento especial para o campo tipo do virabrequim
                 else if ($tableName === 'virabrequim' && $keyLower === 'tipo') {
                     $tipoBanco = trim(strtolower($value));
-                    echo "<td class='ref-value'>" . 
-                         htmlspecialchars($value) . 
-                         "</td>";
-                    
+                    echo "<td class='ref-value'>" .
+                        htmlspecialchars($value) .
+                        "</td>";
+
                     echo "<td class='meas-values'>";
                     echo "<select name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
-                         "class='meas-input first' " .
-                         "onchange='toggleVirabrequimFields(this.value)'>";
+                        "class='meas-input first' " .
+                        "onchange='toggleVirabrequimFields(this.value)'>";
                     echo "<option value='Rolamento' " . ($tipoBanco == 'rolamento' ? 'selected' : '') . ">Rolamento</option>";
                     echo "<option value='Bronzina' " . ($tipoBanco == 'bronzina' ? 'selected' : '') . ">Bronzina</option>";
                     echo "</select>";
                     echo "</td>";
-                }
-                else {
-                    echo "<td class='ref-value'>" . 
-                         htmlspecialchars($value) . 
-                         "</td>";
-                    
+                } else {
+                    echo "<td class='ref-value'>" .
+                        htmlspecialchars($value) .
+                        "</td>";
+
                     echo "<td class='meas-values'>";
-                    
+
                     // Adicionar classe para validação em tempo real
                     $inputClass = 'meas-input first';
                     if (isValueOutOfRange($value, $value)) {
                         $inputClass .= ' out-of-range-input';
                     }
-                    
+
                     echo "<input type='text' " .
-                         "name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
-                         "value='" . htmlspecialchars($value) . "' " .
-                         "class='$inputClass' " .
-                         "data-reference='" . htmlspecialchars($value) . "' " .
-                         "oninput='validateInput(this)'>";
+                        "name='measured[" . $refRow['id'] . "][" . htmlspecialchars($key) . "]' " .
+                        "value='" . htmlspecialchars($value) . "' " .
+                        "class='$inputClass' " .
+                        "data-reference='" . htmlspecialchars($value) . "' " .
+                        "oninput='validateInput(this)'>";
                     echo "</td>";
                 }
-                
+
                 echo "</tr>";
             }
         }
@@ -329,7 +346,7 @@ function displayTableData($conn, $tableName, $tableTitle) {
 
         echo "<button type='submit' class='save-btn'>Salvar Alterações</button>";
         echo "</form>";
-        
+
         // Adicionar script para validação em tempo real
         echo "<script>
         function validateInput(input) {
@@ -391,17 +408,19 @@ function displayTableData($conn, $tableName, $tableTitle) {
             return false;
         }
         </script>";
-        
+
         // Adicionar script para alternar campos dinamicamente
         if ($tableName === 'virabrequim') {
             echo "<script>
             function toggleVirabrequimFields(tipo) {
+                if (!tipo) return;
+                var t = tipo.toLowerCase();
                 var bronzinaFields = document.querySelectorAll('.virabrequim-bronzina-field');
                 var rolamentoFields = document.querySelectorAll('.virabrequim-rolamento-field');
-                if (tipo === 'Bronzina') {
+                if (t === 'bronzina') {
                     bronzinaFields.forEach(function(el) { el.style.display = ''; });
                     rolamentoFields.forEach(function(el) { el.style.display = 'none'; });
-                } else if (tipo === 'Rolamento') {
+                } else if (t === 'rolamento') {
                     bronzinaFields.forEach(function(el) { el.style.display = 'none'; });
                     rolamentoFields.forEach(function(el) { el.style.display = ''; });
                 } else {

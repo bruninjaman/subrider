@@ -33,16 +33,27 @@
     width: 100%;
 }
 
-.floating-input input {
+.floating-input input,
+.floating-input select {
     width: 100%;
     min-width: 200px;
-    padding: 1rem;
+    height: 56px;
+    padding: 1.5rem 1rem 0.5rem 1rem;
     border: 2px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     font-size: 1rem;
     color: #e5e5e5;
     transition: all 0.3s ease;
+}
+
+.floating-input select {
+    padding-right: 2.5rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23e5e5e5' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
 }
 
 .floating-input input[data-max]::after {
@@ -69,15 +80,22 @@
 }
 
 .floating-input input:focus,
-.floating-input input:not(:placeholder-shown) {
+.floating-input input:not(:placeholder-shown),
+.floating-input select:focus,
+.floating-input select:valid,
+.floating-input select {
     border-color: #e44c65;
-    background: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
-.floating-input input:focus + label,
-.floating-input input:not(:placeholder-shown) + label {
-    top: 0;
-    font-size: 0.85rem;
+.floating-input input:focus+label,
+.floating-input input:not(:placeholder-shown)+label,
+.floating-input select:focus+label,
+.floating-input select:valid+label,
+.floating-input select+label {
+    top: 5px;
+    transform: none;
+    font-size: 0.75rem;
     color: #e44c65;
 }
 
@@ -231,7 +249,7 @@
     color: #e5e5e5;
 }
 
-.custom-radio-group input[type="radio"]:checked + label {
+.custom-radio-group input[type="radio"]:checked+label {
     background: #e44c65;
     border-color: #e44c65;
     color: white;
@@ -278,14 +296,14 @@
     top: 0;
     left: 0;
     border-radius: 50%;
-    transition: all 0.3s ease-in 0s; 
+    transition: all 0.3s ease-in 0s;
 }
 
-.tucho-switch-input:checked + .tucho-switch-label {
+.tucho-switch-input:checked+.tucho-switch-label {
     background-color: #e44c65;
 }
 
-.tucho-switch-input:checked + .tucho-switch-label:before {
+.tucho-switch-input:checked+.tucho-switch-label:before {
     left: calc(100% - 26px);
     background-color: #FFFFFF;
 }
@@ -511,4 +529,4 @@ iframe {
 
 .close:hover {
     color: #e44c65;
-} 
+}
