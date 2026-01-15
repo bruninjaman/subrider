@@ -1,6 +1,8 @@
 
 import { query } from '@/lib/db';
 import { NextResponse } from 'next/server';
+import { writeFile } from 'fs/promises';
+import path from 'path';
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
@@ -77,5 +79,45 @@ export async function DELETE(request) {
     } catch (error) {
         console.error('Delete Error:', error);
         return NextResponse.json({ error: 'Erro ao excluir motocicleta.' }, { status: 500 });
+    }
+}
+
+
+
+export async function POST(request) {
+    try {
+        const formData = await request.formData();
+        const endereco = formData.get('endereco');
+        const ano = formData.get('ano');
+        const modelo = formData.get('modelo');
+        const marca = formData.get('marca');
+        const placa = formData.get('placa');
+        const km = formData.get('km');
+        const proprietario = formData.get('proprietario');
+        const file = formData.get('foto');
+
+        let fotoPath = '';
+
+        if (file && file.size > 0 && file.name !== 'undefined') {
+            const buffer = Buffer.from(await file.arrayBuffer());
+            // Create unique filename to avoid collisions
+            const filename = Date.now() + '_' + file.name.replace(/\s+/g, '_');
+            // Resolve upload directory relative to next-app root
+            const uploadDir = path.join(process.cwd(), '../upload/moto');
+
+            await writeFile(path.join(uploadDir, filename), buffer);
+
+            // Store path format consistent with existing PHP logic (relative to root? or just path)
+            // PHP logic trims "../../" from "../../upload/moto/" -> "upload/moto/"
+            fotoPath = 'upload/moto/' + filename;
+        }
+
+        const sql = `INSERT INTO motocicletas (foto, endereco, ano, modelo, marca, placa, KM, proprietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        const result = await query(sql, [fotoPath, endereco, ano, modelo, marca, placa, km, proprietario]);
+
+        return NextResponse.json({ success: true, id: result.insertId });
+    } catch (error) {
+        console.error('POST Error:', error);
+        return NextResponse.json({ error: 'Erro ao salvar motocicleta: ' + error.message }, { status: 500 });
     }
 }
