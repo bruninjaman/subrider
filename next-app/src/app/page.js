@@ -107,7 +107,11 @@ export default function Home() {
                   <td className="img-table" style={{ padding: '15px' }}>
                     {order.foto ? <img src={order.foto.startsWith('http') ? order.foto : `/${order.foto}`} alt="" style={{ width: '80px', height: '80px', borderRadius: '12px', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }} /> : <div style={{ width: '80px', height: '80px', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>SEM FOTO</div>}
                   </td>
-                  <td style={{ fontWeight: '700', color: 'white', fontSize: '1.1rem' }}>{order.Codigo}</td>
+                  <td style={{ fontWeight: '700', color: 'white', fontSize: '1.1rem' }}>
+                    <Link href={`/ordemservico/${order.Codigo}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                      {order.Codigo}
+                    </Link>
+                  </td>
                   <td>{order.ano}</td>
                   <td style={{ fontWeight: '500' }}>{order.modelo}</td>
                   <td>{order.marca}</td>

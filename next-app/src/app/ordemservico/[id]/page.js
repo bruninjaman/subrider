@@ -51,7 +51,6 @@ export default function OrderPage() {
             <div className="container">
                 <OrderHeader id={id} date={order.Data} owner={order.proprietario_ordem} km={order.KM} />
 
-                {/* Quick Actions Bar - Premium Redesign */}
                 <div style={{
                     display: 'flex',
                     gap: '20px',
@@ -64,6 +63,9 @@ export default function OrderPage() {
                     border: '1px solid rgba(255,255,255,0.05)',
                     backdropFilter: 'blur(5px)'
                 }}>
+                    <button className="button secondary" onClick={() => window.location.href = '/'} style={{ minWidth: '180px' }}>
+                        <span style={{ marginRight: '8px' }}>⬅️</span> Voltar
+                    </button>
                     <button className="button secondary" onClick={() => window.location.href = `/ordem_add_item?ordem=${id}`} style={{ minWidth: '180px' }}>
                         <span style={{ marginRight: '8px' }}>➕</span> Adicionar Item
                     </button>
@@ -77,6 +79,7 @@ export default function OrderPage() {
                         <span style={{ marginRight: '8px' }}>🖨️</span> Imprimir / PDF
                     </button>
                 </div>
+
 
                 <ItemsTable items={items} />
 

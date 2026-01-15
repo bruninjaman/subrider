@@ -1,4 +1,5 @@
 import { formatDate } from '@/lib/utils';
+import Link from 'next/link';
 
 export default function OrderHeader({ id, date, owner, km }) {
     return (
@@ -14,13 +15,20 @@ export default function OrderHeader({ id, date, owner, km }) {
             border: '1px solid rgba(255,255,255,0.05)'
         }}>
             <div className="content">
-                <h2 style={{
-                    fontSize: '3rem',
-                    fontWeight: '700',
-                    color: 'white',
-                    marginBottom: '10px',
-                    textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                }}>ORDEM Nº {id}</h2>
+                <Link href={`/ordemservico/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <h2 style={{
+                        fontSize: '3.5rem',
+                        fontWeight: '800',
+                        color: 'white',
+                        marginBottom: '10px',
+                        textShadow: '0 4px 15px rgba(0,0,0,1)',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease'
+                    }}
+                        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    >ORDEM Nº {id}</h2>
+                </Link>
 
                 <div style={{
                     display: 'flex',
