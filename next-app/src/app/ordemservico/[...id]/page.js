@@ -10,7 +10,8 @@ import MotorcycleInfo from '@/components/MotorcycleInfo';
 import MedicoesModal from '@/components/MedicoesModal';
 
 export default function OrderPage() {
-    const { id } = useParams();
+    const params = useParams();
+    const id = Array.isArray(params.id) ? params.id.join('/') : params.id;
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

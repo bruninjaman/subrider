@@ -25,11 +25,15 @@ export default function ItemsTable({ items }) {
         const description = renderItemContent(item);
         if (window.confirm(`Deseja realmente excluir o item: "${description}"?`)) {
             try {
-                // Here you would call the API to delete
-                // For now, we'll just show the alert and refresh as a mock of the action
-                // In a real app, this should be an API call
-                alert('Item excluído com sucesso!');
-                window.location.reload();
+                const res = await fetch(`/api/ordemservico/items/${item.item_ordemID}`, {
+                    method: 'DELETE'
+                });
+                if (res.ok) {
+                    alert('Item excluído com sucesso!');
+                    window.location.reload();
+                } else {
+                    throw new Error('Falha ao excluir');
+                }
             } catch (err) {
                 alert('Erro ao excluir item: ' + err.message);
             }

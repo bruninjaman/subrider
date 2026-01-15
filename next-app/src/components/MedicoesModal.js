@@ -202,10 +202,72 @@ export default function MedicoesModal({ isOpen, onClose, id, measurements, refer
                                 </div>
                             )}
 
-                            {['motor', 'virabrequim', 'embreagem'].includes(currentPage) && (
-                                <div style={{ padding: '50px', textAlign: 'center', opacity: 0.5, border: '1px dashed #444', borderRadius: '12px' }}>
-                                    <span style={{ fontSize: '3rem', display: 'block', marginBottom: '15px' }}>🚧</span>
-                                    Fomulário de {categories.find(c => c.id === currentPage)?.label} em desenvolvimento...
+                            {currentPage === 'motor' && (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                                    <div className="section-group">
+                                        <h3 style={{ color: '#e44c65', fontSize: '1.2rem', marginBottom: '15px', borderBottom: '1px solid #333' }}>Medições do Motor</h3>
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                                            <div>
+                                                <label style={{ color: '#888', fontSize: '0.85rem' }}>Diâmetro Cilindro Máx</label>
+                                                <input type="text" name="diametro_cilindro_max" className="search-input" style={{ width: '100%' }} onChange={handleChange} />
+                                            </div>
+                                            <div>
+                                                <label style={{ color: '#888', fontSize: '0.85rem' }}>Pistão Diâmetro Mín</label>
+                                                <input type="text" name="diametro_pistao_min" className="search-input" style={{ width: '100%' }} onChange={handleChange} />
+                                            </div>
+                                            <div>
+                                                <label style={{ color: '#888', fontSize: '0.85rem' }}>Conicidade Máx</label>
+                                                <input type="text" name="conicidade_max" className="search-input" style={{ width: '100%' }} onChange={handleChange} />
+                                            </div>
+                                            <div>
+                                                <label style={{ color: '#888', fontSize: '0.85rem' }}>Ovalização Máx</label>
+                                                <input type="text" name="ovalizacao_max" className="search-input" style={{ width: '100%' }} onChange={handleChange} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {currentPage === 'virabrequim' && (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                                    <div className="section-group">
+                                        <h3 style={{ color: '#e44c65', fontSize: '1.2rem', marginBottom: '15px', borderBottom: '1px solid #333' }}>Virabrequim</h3>
+                                        <div style={{ marginBottom: '20px' }}>
+                                            <p style={{ color: '#ccc', marginBottom: '10px' }}>Tipo de Virabrequim</p>
+                                            <div style={{ display: 'flex', gap: '20px' }}>
+                                                {['Rolamento', 'Bronzina'].map(t => (
+                                                    <label key={t} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                                        <input type="radio" name="tipo" value={t.toLowerCase()} onChange={handleChange} />
+                                                        {t}
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                                            <div>
+                                                <label style={{ color: '#888', fontSize: '0.85rem' }}>Folga Lateral Biela</label>
+                                                <input type="text" name="folga_lateral_biela" className="search-input" style={{ width: '100%' }} onChange={handleChange} />
+                                            </div>
+                                            <div>
+                                                <label style={{ color: '#888', fontSize: '0.85rem' }}>Empenamento</label>
+                                                <input type="text" name="empenamento" className="search-input" style={{ width: '100%' }} onChange={handleChange} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {currentPage === 'embreagem' && (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                                    <div className="section-group">
+                                        <h3 style={{ color: '#e44c65', fontSize: '1.2rem', marginBottom: '15px', borderBottom: '1px solid #333' }}>Medições de Embreagem</h3>
+                                        <div>
+                                            <label style={{ color: '#888', fontSize: '0.85rem' }}>Espessura Disco Fricção Mín (Ref)</label>
+                                            <input type="text" name="disco_friccao_espes_min" className="search-input" style={{ width: '100%', marginBottom: '10px' }} onChange={handleChange} />
+                                            <label style={{ color: '#888', fontSize: '0.85rem' }}>Empenamento Disco Separador Máx (Ref)</label>
+                                            <input type="text" name="disco_separador_emp_max" className="search-input" style={{ width: '100%' }} onChange={handleChange} />
+                                        </div>
+                                    </div>
                                 </div>
                             )}
 

@@ -1,7 +1,53 @@
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function OrderHeader({ id, date, owner, km }) {
+    const [isEditing, setIsEditing] = useState(null); // 'date', 'owner', 'km'
+    const [values, setValues] = useState({ date, owner, km });
+
+    const handleUpdate = async (field, value) => {
+        try {
+            const res = await fetch(`/api/ordemservico/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify({ [field]: value }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            if (res.ok) {
+                setValues(prev => ({ ...prev, [field]: value }));
+                setIsEditing(null);
+            }
+        } catch (err) {
+            console.error('Failed to update:', err);
+        }
+    };
+
+    const renderEditable = (field, label, value, type = 'text') => {
+        const editing = isEditing === field;
+        return (
+            <div
+                style={{ borderLeft: field !== 'date' ? '1px solid rgba(255,255,255,0.1)' : 'none', paddingLeft: field !== 'date' ? '40px' : '0', cursor: 'pointer' }}
+                onClick={() => !editing && setIsEditing(field)}
+            >
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', display: 'block' }}>{label}</span>
+                {editing ? (
+                    <input
+                        autoFocus
+                        type={type}
+                        defaultValue={field === 'date' ? value?.split('T')[0] : value}
+                        onBlur={(e) => handleUpdate(field, e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleUpdate(field, e.target.value)}
+                        style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid #e44c65', color: 'white', padding: '2px 8px', borderRadius: '4px', fontSize: '1.2rem', width: 'auto' }}
+                    />
+                ) : (
+                    <span style={{ fontSize: '1.2rem', color: field === 'owner' ? 'white' : '#e44c65' }}>
+                        {field === 'date' ? formatDate(values.date) : (field === 'km' ? `${values.km || '---'} KM` : (values.owner || 'NÃO DEFINIDO'))}
+                    </span>
+                )}
+            </div>
+        );
+    };
+
     return (
         <section id="banner" style={{
             padding: '3em 0',
@@ -35,23 +81,13 @@ export default function OrderHeader({ id, date, owner, km }) {
                     justifyContent: 'center',
                     gap: '40px',
                     marginTop: '30px',
-                    color: '#e44c65',
                     fontWeight: '600',
                     textTransform: 'uppercase',
                     letterSpacing: '2px'
                 }}>
-                    <div>
-                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', display: 'block' }}>DATA</span>
-                        <span style={{ fontSize: '1.2rem' }}>{formatDate(date)}</span>
-                    </div>
-                    <div style={{ borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '40px' }}>
-                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', display: 'block' }}>PROPRIETÁRIO</span>
-                        <span style={{ fontSize: '1.2rem', color: 'white' }}>{owner || 'NÃO DEFINIDO'}</span>
-                    </div>
-                    <div style={{ borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '40px' }}>
-                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', display: 'block' }}>QUILOMETRAGEM</span>
-                        <span style={{ fontSize: '1.2rem' }}>{km || '---'} KM</span>
-                    </div>
+                    {renderEditable('date', 'DATA', values.date, 'date')}
+                    {renderEditable('owner', 'PROPRIETÁRIO', values.owner)}
+                    {renderEditable('km', 'QUILOMETRAGEM', values.km, 'number')}
                 </div>
             </div>
         </section>

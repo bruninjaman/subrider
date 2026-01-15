@@ -2,7 +2,8 @@ import { query } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request, { params }) {
-    const { id } = params;
+    const rawParams = await params;
+    const id = Array.isArray(rawParams.id) ? rawParams.id.join('/') : rawParams.id;
     const body = await request.json();
     const { table, measurements } = body;
 
