@@ -22,6 +22,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('Tucho Mecânico:', this.checked);
             });
         }
+
+        // Toggle engine configuration section based on cylinder count
+        const numCilindrosInput = document.getElementById('num_cilindros');
+        const engineConfigSection = document.getElementById('engine_config_section');
+
+        if (numCilindrosInput && engineConfigSection) {
+            const toggleEngineConfig = () => {
+                const cylinderCount = parseInt(numCilindrosInput.value) || 0;
+
+                // Hide engine configuration if only 1 cylinder
+                if (cylinderCount === 1) {
+                    engineConfigSection.style.display = 'none';
+                    // Clear any selected engine type
+                    const engineTypeInputs = document.querySelectorAll('input[name="engine_type"]');
+                    engineTypeInputs.forEach(input => input.checked = false);
+                } else if (cylinderCount > 1) {
+                    engineConfigSection.style.display = 'block';
+                }
+            };
+
+            numCilindrosInput.addEventListener('input', toggleEngineConfig);
+            numCilindrosInput.addEventListener('change', toggleEngineConfig);
+
+            // Run on page load to handle pre-filled values
+            toggleEngineConfig();
+        }
     };
 
     // Funções para toggle de campos do cabeçote
