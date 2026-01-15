@@ -1,0 +1,252 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,700&display=swap");
+
+:root {
+  --bg-color: #1c1d26;
+  --text-color: rgba(255, 255, 255, 0.75);
+  --header-text: #ffffff;
+  --accent-color: #e44c65;
+  --secondary-bg: #24262e;
+  --border-color: rgba(255, 255, 255, 0.3);
+  --in-range-bg: rgba(76, 175, 80, 0.2);
+  --out-range-bg: rgba(244, 67, 54, 0.2);
+  --primary-button: #c73650;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Roboto", Helvetica, sans-serif;
+  font-size: 15pt;
+  font-weight: 100;
+  line-height: 1.75em;
+  -webkit-text-size-adjust: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--header-text);
+  font-weight: 300;
+  line-height: 1em;
+  margin: 0 0 1em 0;
+}
+
+h2 {
+  font-size: 2em;
+  line-height: 1.5em;
+  letter-spacing: -0.025em;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: calc(100% - 4em);
+  width: 70em;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.8em 1.5em;
+  background-color: var(--primary-button);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #e44c65;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(199, 54, 80, 0.4);
+}
+
+.button.secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.button.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Table Wrapper and Search */
+.table-wrapper {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  background: #17171e;
+  border: 2px solid #2c2d34;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+/* Report Styles */
+.report-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 15px;
+  background-color: var(--secondary-bg);
+  border-radius: 8px;
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #3a3d47;
+  padding-bottom: 10px;
+}
+
+.component-section {
+  margin-bottom: 20px;
+  border: 1px solid #3a3d47;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.component-header {
+  background-color: #2d303a;
+  padding: 12px 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.component-header:hover {
+  background-color: #363945;
+}
+
+.measurements-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.measurements-table td,
+.measurements-table th {
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.measurements-table thead td {
+  font-weight: bold;
+  color: var(--accent-color);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.img-table img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.in-range {
+  background-color: var(--in-range-bg) !important;
+}
+
+.out-range {
+  background-color: var(--out-range-bg) !important;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: var(--secondary-bg);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  border-radius: 12px;
+  overflow-y: auto;
+  position: relative;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .container {
+    width: 95%;
+    max-width: 100%;
+  }
+
+  .measurements-table td {
+    padding: 8px 10px;
+  }
+
+  .img-table img {
+    width: 40px;
+    height: 40px;
+  }
+}
