@@ -5,7 +5,7 @@ export async function POST(request, { params }) {
     const rawParams = await params;
     const id = Array.isArray(rawParams.id) ? rawParams.id.join('/') : rawParams.id;
     const body = await request.json();
-    const { table, measurements } = body;
+    const { table, measurements, is_reference = 0 } = body;
 
     if (!table || !measurements) {
         return NextResponse.json({ error: 'Faltam dados da tabela ou medições' }, { status: 400 });
@@ -13,16 +13,16 @@ export async function POST(request, { params }) {
 
     try {
         // Check if record exists
-        const existing = await query(`SELECT * FROM ${table} WHERE ordem = ? AND is_reference = 0`, [id]);
+        const existing = await query(`SELECT * FROM ${table} WHERE ordem = ? AND is_reference = ?`, [id, is_reference]);
 
-        const measurementsJson = JSON.stringify(measurements);
+        const measurementsJson = typeof measurements === 'string' ? measurements : JSON.stringify(measurements);
 
         if (existing.length > 0) {
             // Update
-            await query(`UPDATE ${table} SET medicoes = ? WHERE ordem = ? AND is_reference = 0`, [measurementsJson, id]);
+            await query(`UPDATE ${table} SET medicoes = ? WHERE ordem = ? AND is_reference = ?`, [measurementsJson, id, is_reference]);
         } else {
             // Insert
-            await query(`INSERT INTO ${table} (ordem, medicoes, is_reference) VALUES (?, ?, 0)`, [id, measurementsJson]);
+            await query(`INSERT INTO ${table} (ordem, medicoes, is_reference) VALUES (?, ?, ?)`, [id, measurementsJson, is_reference]);
         }
 
         return NextResponse.json({ success: true });

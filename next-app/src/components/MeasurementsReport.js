@@ -17,30 +17,16 @@ export default function MeasurementsReport({ measurements, references, id }) {
     };
 
     const expandAll = () => {
-        setExpanded({
-            cabecote: true,
-            motor: true,
-            virabrequim: true,
-            embreagem: true,
-            bomba: true
-        });
+        setExpanded({ cabecote: true, motor: true, virabrequim: true, embreagem: true, bomba: true });
     };
 
     const collapseAll = () => {
-        setExpanded({
-            cabecote: false,
-            motor: false,
-            virabrequim: false,
-            embreagem: false,
-            bomba: false
-        });
+        setExpanded({ cabecote: false, motor: false, virabrequim: false, embreagem: false, bomba: false });
     };
 
     const handlePrint = () => {
         expandAll();
-        setTimeout(() => {
-            window.print();
-        }, 300);
+        setTimeout(() => { window.print(); }, 300);
     };
 
     const components = [
@@ -51,131 +37,90 @@ export default function MeasurementsReport({ measurements, references, id }) {
         { key: 'bomba', title: 'Bomba', icon: '⛽' }
     ];
 
+    const parseMedicoes = (json) => {
+        if (!json) return null;
+        try { return typeof json === 'string' ? JSON.parse(json) : json; }
+        catch (e) { return null; }
+    };
+
     const renderComponentTable = (tableKey, title, icon) => {
         const row = measurements[tableKey];
-        const refData = references[tableKey];
+        const refData = references[tableKey]?.medicoes ? parseMedicoes(references[tableKey].medicoes) : null;
         if (!row) return null;
+
+        const medicoes = parseMedicoes(row.medicoes);
+        if (!medicoes) return null;
 
         let content = [];
         let hasData = false;
 
-        const parseMedicoes = (json) => {
-            if (!json) return null;
-            try { return typeof json === 'string' ? JSON.parse(json) : json; }
-            catch (e) { return null; }
-        };
-
-        const medicoes = parseMedicoes(row.medicoes);
-
         switch (tableKey) {
-            case 'bomba': {
-                if (medicoes) {
-                    const fields = {
-                        pressao_oleo_min: 'Pressão Óleo Mín',
-                        pressao_oleo_max: 'Pressão Óleo Máx',
-                        vazao_min: 'Vazão Mín',
-                        vazao_max: 'Vazão Máx',
-                        comb_pressao: 'Pressão Combustível'
-                    };
-                    Object.entries(medicoes).forEach(([campo, valor]) => {
-                        const formatted = formatNumber(valor);
-                        if (formatted !== null) {
-                            const label = fields[campo] || campo;
-                            const refVal = refData?.[campo];
-                            const inRangeResult = isInRange(valor, refVal, getValidationType(campo, 'bomba'));
-                            content.push(
-                                <tr key={campo}>
-                                    <td style={{ color: 'rgba(255,255,255,0.7)' }}>{label}</td>
-                                    <td className="reference-value" style={{ fontStyle: 'italic', opacity: 0.5 }}>{refVal ? `${formatNumber(refVal)} mm` : '-'}</td>
-                                    <td className={refVal ? (inRangeResult ? 'in-range' : 'out-range') : ''} style={{ fontWeight: 'bold', textAlign: 'center' }}>
-                                        {formatted} {refVal ? 'mm' : ''}
-                                    </td>
-                                </tr>
-                            );
-                            hasData = true;
-                        }
-                    });
-                }
-                break;
-            }
+            case 'cabecote': {
+                const cilCount = parseInt(refData?.num_cilindros) || 0;
+                for (let c = 1; c <= cilCount; c++) {
+                    content.push(<tr key={`h-c-${c}`} className="group-header"><td>CILINDRO {c}</td><td>-</td><td>-</td></tr>);
 
-            case 'embreagem': {
-                const medicoesFriccao = parseMedicoes(row.medicoes_friccao);
-                const medicoesSeparador = parseMedicoes(row.medicoes_separador);
+                    // Admissão
+                    ['direita', 'esquerda'].forEach(side => {
+                        const folga = medicoes[`adm_folga_${side}`]?.[c];
+                        const refMin = refData?.val_adm_limite_min;
+                        const refMax = refData?.val_adm_limite_max;
+                        if (folga) {
+                            const inRange = isInRange(folga, { min: refMin, max: refMax }, 'range');
+                            content.push(<tr key={`af-${side}-${c}`}><td>Folga Adm ({side})</td><td>{refMin}-{refMax}</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(folga)} mm</td></tr>);
+                            hasData = true;
+                        }
+                        const past = medicoes[`adm_pastilha_${side}`]?.[c];
+                        if (past) {
+                            content.push(<tr key={`ap-${side}-${c}`}><td>Pastilha Adm ({side})</td><td>-</td><td>{formatNumber(past)} mm</td></tr>);
+                            hasData = true;
+                        }
+                    });
 
-                if (medicoesFriccao) {
-                    const refMin = refData?.disco_friccao_espes_min;
-                    medicoesFriccao.forEach((valor, i) => {
-                        const formatted = formatNumber(valor);
-                        if (formatted) {
-                            const inRangeResult = isInRange(valor, refMin, 'min');
-                            content.push(
-                                <tr key={`fric-${i}`}>
-                                    <td style={{ color: 'rgba(255,255,255,0.7)' }}>Disco Fricção {i + 1}</td>
-                                    <td style={{ fontStyle: 'italic', opacity: 0.5 }}>{refMin ? `${formatNumber(refMin)} mm (mín)` : '-'}</td>
-                                    <td className={refMin ? (inRangeResult ? 'in-range' : 'out-range') : ''} style={{ fontWeight: 'bold', textAlign: 'center' }}>{formatted} mm</td>
-                                </tr>
-                            );
+                    // Escape
+                    ['direita', 'esquerda'].forEach(side => {
+                        const folga = medicoes[`esc_folga_${side}`]?.[c];
+                        const refMin = refData?.val_esc_limite_min;
+                        const refMax = refData?.val_esc_limite_max;
+                        if (folga) {
+                            const inRange = isInRange(folga, { min: refMin, max: refMax }, 'range');
+                            content.push(<tr key={`ef-${side}-${c}`}><td>Folga Esc ({side})</td><td>{refMin}-{refMax}</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(folga)} mm</td></tr>);
+                            hasData = true;
+                        }
+                        const past = medicoes[`esc_pastilha_${side}`]?.[c];
+                        if (past) {
+                            content.push(<tr key={`ep-${side}-${c}`}><td>Pastilha Esc ({side})</td><td>-</td><td>{formatNumber(past)} mm</td></tr>);
                             hasData = true;
                         }
                     });
-                }
-                if (medicoesSeparador) {
-                    const refMax = refData?.disco_separador_emp_max;
-                    medicoesSeparador.forEach((valor, i) => {
-                        const formatted = formatNumber(valor);
-                        if (formatted) {
-                            const inRangeResult = isInRange(valor, refMax, 'max');
-                            content.push(
-                                <tr key={`sep-${i}`}>
-                                    <td style={{ color: 'rgba(255,255,255,0.7)' }}>Disco Separador {i + 1}</td>
-                                    <td style={{ fontStyle: 'italic', opacity: 0.5 }}>{refMax ? `${formatNumber(refMax)} mm (máx)` : '-'}</td>
-                                    <td className={refMax ? (inRangeResult ? 'in-range' : 'out-range') : ''} style={{ fontWeight: 'bold', textAlign: 'center' }}>{formatted} mm</td>
-                                </tr>
-                            );
-                            hasData = true;
-                        }
-                    });
+
+                    const comp = medicoes.compressao?.[c];
+                    if (comp) {
+                        content.push(<tr key={`comp-${c}`}><td>Compressão</td><td>{refData?.compressao_min}-{refData?.compressao_max}</td><td>{formatNumber(comp)}</td></tr>);
+                        hasData = true;
+                    }
                 }
                 break;
             }
 
             case 'motor': {
-                if (medicoes) {
-                    const fields = {
-                        curso_pistao: 'Curso Pistão',
-                        diametro_cilindro_max: 'Diâm. Cilindro Máx',
-                        conicidade_max: 'Conicidade Máx',
-                        ovalizacao_max: 'Ovalização Máx',
-                        diametro_pistao_min: 'Diâm. Pistão Mín',
-                        folga_cil_pis_max: 'Folga Cil/Pis Máx',
-                        aber_anel_1_max: 'Aber. Anel 1 Máx',
-                        aber_anel_2_max: 'Aber. Anel 2 Máx',
-                        aber_anel_1_pres_min: 'Press. Anel 1 Mín',
-                        aber_anel_2_pres_min: 'Press. Anel 2 Mín'
-                    };
-                    Object.entries(medicoes).sort().forEach(([cilindro, dados]) => {
-                        if (dados && typeof dados === 'object') {
-                            content.push(
-                                <tr key={`cyl-${cilindro}`} style={{ background: 'rgba(228, 76, 101, 0.05)' }}>
-                                    <td colSpan="3" style={{ textAlign: 'center', fontWeight: 'bold', color: '#e44c65', letterSpacing: '2px', padding: '10px' }}>CILINDRO {cilindro}</td>
-                                </tr>
-                            );
-                            Object.entries(dados).forEach(([campo, valor]) => {
-                                const formatted = formatNumber(valor);
-                                if (formatted) {
-                                    const refVal = refData?.[campo];
-                                    const inRangeResult = isInRange(valor, refVal, getValidationType(campo, 'motor'));
-                                    content.push(
-                                        <tr key={`${cilindro}-${campo}`}>
-                                            <td style={{ color: 'rgba(255,255,255,0.7)' }}>{fields[campo] || campo}</td>
-                                            <td style={{ fontStyle: 'italic', opacity: 0.5 }}>{refVal ? `${formatNumber(refVal)} mm` : '-'}</td>
-                                            <td className={refVal ? (inRangeResult ? 'in-range' : 'out-range') : ''} style={{ fontWeight: 'bold', textAlign: 'center' }}>{formatted} mm</td>
-                                        </tr>
-                                    );
-                                    hasData = true;
-                                }
-                            });
+                const cilCount = parseInt(refData?.nr_cilindros) || 0;
+                const fields = [
+                    { id: 'diametro_cilindro', label: 'Diâm. Cilindro', ref: 'diametro_cilindro_max', type: 'max' },
+                    { id: 'diametro_pistao', label: 'Diâm. Pistão', ref: 'diametro_pistao_min', type: 'min' },
+                    { id: 'conicidade', label: 'Conicidade', ref: 'conicidade_max', type: 'max' },
+                    { id: 'ovalizacao', label: 'Ovalização', ref: 'ovalizacao_max', type: 'max' }
+                ];
+
+                for (let c = 1; c <= cilCount; c++) {
+                    content.push(<tr key={`h-m-${c}`} className="group-header"><td>CILINDRO {c}</td><td>-</td><td>-</td></tr>);
+                    fields.forEach(f => {
+                        const val = medicoes[f.id]?.[c];
+                        if (val) {
+                            const refVal = refData?.[f.ref];
+                            const inRange = isInRange(val, refVal, f.type);
+                            content.push(<tr key={`f-m-${f.id}-${c}`}><td>{f.label}</td><td>{refVal || '-'}</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(val)} mm</td></tr>);
+                            hasData = true;
                         }
                     });
                 }
@@ -183,144 +128,77 @@ export default function MeasurementsReport({ measurements, references, id }) {
             }
 
             case 'virabrequim': {
-                if (medicoes) {
-                    const tipo = refData?.tipo?.toLowerCase() || '';
-                    const fields = {
-                        folga_mancal: tipo === 'rolamento' ? 'Folga Eixo Mancal' : 'Folga Mancal',
-                        folga_biela: tipo === 'rolamento' ? 'Folga Biela' : 'Folga Bronzina',
-                        folga_bronzina: 'Folga Bronzina',
-                        folga_lateral_biela: 'Folga Lat. Biela',
-                        folga_lateral_eixo_min: 'Folga Lat. Eixo Mín',
-                        folga_lateral_eixo_max: 'Folga Lat. Eixo Máx',
-                        empenamento: 'Empenamento'
-                    };
+                const cilCount = parseInt(refData?.qtd_cilindros) || 0;
+                const isBronzina = refData?.rolamento_type === 'bronzina';
 
-                    // Header for basic fields
-                    content.push(<tr key="h-vira" style={{ background: 'rgba(0,0,0,0.1)' }}><td colSpan="3" style={{ fontSize: '0.8rem', padding: '5px 25px', opacity: 0.5 }}>GERAL</td></tr>);
-
-                    Object.entries(medicoes).forEach(([campo, valor]) => {
-                        if (typeof valor !== 'object' && fields[campo]) {
-                            const formatted = formatNumber(valor);
-                            if (formatted) {
-                                const refVal = refData?.[campo];
-                                const inRangeResult = isInRange(valor, refVal, getValidationType(campo, 'virabrequim'));
-                                content.push(
-                                    <tr key={campo}>
-                                        <td style={{ color: 'rgba(255,255,255,0.7)' }}>{fields[campo]}</td>
-                                        <td style={{ fontStyle: 'italic', opacity: 0.5 }}>{refVal ? `${formatNumber(refVal)} mm` : '-'}</td>
-                                        <td className={refVal ? (inRangeResult ? 'in-range' : 'out-range') : ''} style={{ fontWeight: 'bold', textAlign: 'center' }}>{formatted} mm</td>
-                                    </tr>
-                                );
-                                hasData = true;
-                            }
+                for (let c = 1; c <= cilCount; c++) {
+                    content.push(<tr key={`h-v-${c}`} className="group-header"><td>CILINDRO {c}</td><td>-</td><td>-</td></tr>);
+                    if (isBronzina) {
+                        const moente = medicoes.diametro_moente?.[c];
+                        if (moente) {
+                            content.push(<tr key={`v-mo-${c}`}><td>Diâm. Moente</td><td>{refData?.diametro_moente}</td><td>{formatNumber(moente)} mm</td></tr>);
+                            hasData = true;
                         }
-                    });
-
-                    // Dynamic arrays (Moentes, Munhoes, etc)
-                    const processArray = (key, label, refKey) => {
-                        if (medicoes[key] && typeof medicoes[key] === 'object') {
-                            content.push(<tr key={`h-${key}`} style={{ background: 'rgba(0,0,0,0.1)' }}><td colSpan="3" style={{ fontSize: '0.8rem', padding: '5px 25px', opacity: 0.5 }}>{label.toUpperCase()}</td></tr>);
-                            const refVal = refData?.[refKey || key];
-                            Object.entries(medicoes[key]).forEach(([i, v]) => {
-                                const formatted = formatNumber(v);
-                                if (formatted) {
-                                    const inRangeResult = isInRange(v, refVal, 'exact');
-                                    content.push(
-                                        <tr key={`${key}-${i}`}>
-                                            <td style={{ color: 'rgba(255,255,255,0.7)' }}>{label} {i}</td>
-                                            <td style={{ fontStyle: 'italic', opacity: 0.5 }}>{refVal ? `${formatNumber(refVal)} mm` : '-'}</td>
-                                            <td className={refVal ? (inRangeResult ? 'in-range' : 'out-range') : ''} style={{ fontWeight: 'bold', textAlign: 'center' }}>{formatted} mm</td>
-                                        </tr>
-                                    );
-                                    hasData = true;
-                                }
-                            });
+                        const folgaB = medicoes.folga_biela?.[c];
+                        if (folgaB) {
+                            const inRange = isInRange(folgaB, refData?.folga_biela, 'max');
+                            content.push(<tr key={`v-fb-${c}`}><td>Folga Bronzina</td><td>{refData?.folga_biela} MAX</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(folgaB)} mm</td></tr>);
+                            hasData = true;
                         }
-                    };
-
-                    processArray('diametro_moente', 'Diâmetro Moente');
-                    processArray('diametro_munhao', 'Diâmetro Munhão');
-                    processArray('folga_mancal_ind', 'Folga Mancal', 'folga_mancal');
-                    processArray('folga_biela_ind', tipo === 'rolamento' ? 'Folga Biela' : 'Folga Bronzina', 'folga_biela');
+                    } else {
+                        const folgaBi = medicoes.folga_biela?.[c];
+                        if (folgaBi) {
+                            const inRange = isInRange(folgaBi, refData?.folga_biela, 'max');
+                            content.push(<tr key={`v-fi-${c}`}><td>Folga Biela</td><td>{refData?.folga_biela} MAX</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(folgaBi)} mm</td></tr>);
+                            hasData = true;
+                        }
+                    }
+                    const empen = medicoes.empenamento?.[c];
+                    if (empen) {
+                        const inRange = isInRange(empen, refData?.empenamento, 'max');
+                        content.push(<tr key={`v-em-${c}`}><td>Empenamento</td><td>{refData?.empenamento} MAX</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(empen)} mm</td></tr>);
+                        hasData = true;
+                    }
                 }
                 break;
             }
 
-            case 'cabecote': {
-                if (medicoes) {
-                    // Organize by Cylinder
-                    const cylinders = {};
-                    const labels = {
-                        adm_folga: 'Folga Adm',
-                        esc_folga: 'Folga Esc',
-                        adm_pastilha: 'Pastilha Adm',
-                        esc_pastilha: 'Pastilha Esc'
-                    };
-
-                    Object.entries(medicoes).forEach(([type, data]) => {
-                        if (data && typeof data === 'object') {
-                            Object.entries(data).forEach(([side, values]) => {
-                                if (values && typeof values === 'object') {
-                                    Object.entries(values).forEach(([cyl, val]) => {
-                                        if (!cylinders[cyl]) cylinders[cyl] = {};
-                                        if (!cylinders[cyl][type]) cylinders[cyl][type] = {};
-                                        cylinders[cyl][type][side] = val;
-                                    });
-                                }
-                            });
-                        }
-                    });
-
-                    Object.keys(cylinders).sort().forEach(cyl => {
-                        content.push(
-                            <tr key={`cyl-head-${cyl}`} style={{ background: 'rgba(228, 76, 101, 0.05)' }}>
-                                <td colSpan="3" style={{ textAlign: 'center', fontWeight: 'bold', color: '#e44c65', letterSpacing: '2px', padding: '10px' }}>CILINDRO {cyl}</td>
-                            </tr>
-                        );
-
-                        ['adm', 'esc'].forEach(vType => {
-                            const folgaKey = `${vType}_folga`;
-                            const pastilhaKey = `${vType}_pastilha`;
-                            const refMin = refData?.[`val_${vType}_limite_min`];
-                            const refMax = refData?.[`val_${vType}_limite_max`];
-                            const refLabel = (refMin || refMax) ? `${formatNumber(refMin) || '0'}-${formatNumber(refMax) || '∞'} mm` : '-';
-
-                            const sides = cylinders[cyl][folgaKey] ? Object.keys(cylinders[cyl][folgaKey]) : (cylinders[cyl][pastilhaKey] ? Object.keys(cylinders[cyl][pastilhaKey]) : []);
-
-                            sides.sort().forEach(side => {
-                                const folgaVal = cylinders[cyl][folgaKey]?.[side];
-                                const pastVal = cylinders[cyl][pastilhaKey]?.[side];
-
-                                if (folgaVal) {
-                                    const inRangeResult = (!refMin || folgaVal >= refMin) && (!refMax || folgaVal <= refMax);
-                                    content.push(
-                                        <tr key={`${cyl}-${vType}-f-${side}`}>
-                                            <td style={{ color: 'rgba(255,255,255,0.7)' }}>Folga Válv. {vType.toUpperCase()} ({side})</td>
-                                            <td style={{ fontStyle: 'italic', opacity: 0.5 }}>{refLabel}</td>
-                                            <td className={(refMin || refMax) ? (inRangeResult ? 'in-range' : 'out-range') : ''} style={{ fontWeight: 'bold', textAlign: 'center' }}>{formatNumber(folgaVal)} mm</td>
-                                        </tr>
-                                    );
-                                    hasData = true;
-                                }
-                                if (pastVal) {
-                                    content.push(
-                                        <tr key={`${cyl}-${vType}-p-${side}`}>
-                                            <td style={{ color: 'rgba(255,255,255,0.7)' }}>Pastilha Válv. {vType.toUpperCase()} ({side})</td>
-                                            <td style={{ fontStyle: 'italic', opacity: 0.5 }}>-</td>
-                                            <td style={{ textAlign: 'center', opacity: 0.8 }}>{formatNumber(pastVal)} mm</td>
-                                        </tr>
-                                    );
-                                    hasData = true;
-                                }
-                            });
-                        });
-                    });
+            case 'embreagem': {
+                const fric = medicoes.disco_fric_esp?.[0];
+                const sep = medicoes.disco_sep_emp?.[0];
+                if (fric) {
+                    const inRange = isInRange(fric, refData?.disco_fric_esp_min, 'min');
+                    content.push(<tr key="emb-f"><td>Espessura Fricção (Média)</td><td>{refData?.disco_fric_esp_min} MIN</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(fric)} mm</td></tr>);
+                    hasData = true;
+                }
+                if (sep) {
+                    const inRange = isInRange(sep, refData?.disco_sep_emp_max, 'max');
+                    content.push(<tr key="emb-s"><td>Empenamento Separador (Máx)</td><td>{refData?.disco_sep_emp_max} MAX</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(sep)} mm</td></tr>);
+                    hasData = true;
                 }
                 break;
             }
 
-            default:
+            case 'bomba': {
+                const prOleo = medicoes.pressao_oleo?.[0];
+                if (prOleo) {
+                    const inRange = isInRange(prOleo, { min: refData?.pressao_oleo_min, max: refData?.pressao_oleo_max }, 'range');
+                    content.push(<tr key="b-o"><td>Pressão Óleo</td><td>{refData?.pressao_oleo_min}-{refData?.pressao_oleo_max}</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(prOleo)}</td></tr>);
+                    hasData = true;
+                }
+                const prComb = medicoes.pressao_combustao?.[0];
+                if (prComb) {
+                    content.push(<tr key="b-c"><td>Pressão Combustível</td><td>{refData?.pressao_combustao} REF</td><td>{formatNumber(prComb)}</td></tr>);
+                    hasData = true;
+                }
+                const vaComb = medicoes.vazao_combustao?.[0];
+                if (vaComb) {
+                    const inRange = isInRange(vaComb, { min: refData?.vazao_combustao_min, max: refData?.vazao_combustao_max }, 'range');
+                    content.push(<tr key="b-v"><td>Vazão Combustível</td><td>{refData?.vazao_combustao_min}-{refData?.vazao_combustao_max}</td><td className={inRange ? 'in-range' : 'out-range'}>{formatNumber(vaComb)}</td></tr>);
+                    hasData = true;
+                }
                 break;
+            }
         }
 
         if (!hasData) return null;
@@ -328,22 +206,15 @@ export default function MeasurementsReport({ measurements, references, id }) {
         const isExpanded = expanded[tableKey];
 
         return (
-            <div key={tableKey} className="component-section" style={{ marginBottom: '30px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
-                <div className="component-header"
-                    onClick={() => toggle(tableKey)}
+            <div key={tableKey} className="component-section" style={{ marginBottom: '30px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)', borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="component-header" onClick={() => toggle(tableKey)}
                     style={{
-                        padding: '18px 25px',
-                        background: 'linear-gradient(90deg, #2d303a 0%, #24262e 100%)',
+                        padding: '18px 25px', background: 'linear-gradient(90deg, #2d303a 0%, #24262e 100%)',
                         borderLeft: isExpanded ? '4px solid #e44c65' : '4px solid transparent',
-                        transition: 'all 0.3s',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
+                        cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                     }}>
                     <h4 style={{ margin: 0, fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '15px' }}>
-                        <span style={{ fontSize: '1.5rem' }}>{icon}</span>
-                        {title}
+                        <span style={{ fontSize: '1.5rem' }}>{icon}</span> {title}
                     </h4>
                     <span style={{ opacity: 0.5, fontSize: '0.8rem' }}>{isExpanded ? 'RECOLHER ▲' : 'EXPANDIR ▼'}</span>
                 </div>
@@ -353,13 +224,11 @@ export default function MeasurementsReport({ measurements, references, id }) {
                             <thead>
                                 <tr style={{ background: 'rgba(0,0,0,0.2)', fontSize: '0.8rem', fontWeight: 'bold', color: '#888' }}>
                                     <td style={{ padding: '10px 25px' }}>DESCRIÇÃO DA MEDIÇÃO</td>
-                                    <td style={{ padding: '10px 25px' }}>REFERÊNCIA DE FÁBRICA</td>
+                                    <td style={{ padding: '10px 25px' }}>REFERÊNCIA</td>
                                     <td style={{ padding: '10px 25px', textAlign: 'center' }}>VALOR MEDIDO</td>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {content}
-                            </tbody>
+                            <tbody>{content}</tbody>
                         </table>
                     </div>
                 )}
@@ -368,28 +237,26 @@ export default function MeasurementsReport({ measurements, references, id }) {
     };
 
     return (
-        <div className="report-container" style={{ maxWidth: '1000px', background: 'transparent', padding: 0 }}>
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '30px',
-                borderBottom: '2px solid rgba(255,255,255,0.05)',
-                paddingBottom: '20px'
-            }}>
-                <h2 style={{ fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '15px', margin: 0 }}>
-                    <span style={{ color: '#e44c65' }}>📊</span>
-                    Relatório de Medições Técnicas - OS: {id}
-                </h2>
+        <div className="report-container" style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', borderBottom: '2px solid rgba(255,255,255,0.05)', paddingBottom: '20px' }}>
+                <h2 style={{ fontSize: '1.8rem', margin: 0 }}><span style={{ color: '#e44c65' }}>📊</span> Relatório Técnico - OS: {id}</h2>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                    <button className="button secondary" style={{ padding: '8px 15px', fontSize: '0.8rem' }} onClick={expandAll}>EXPANDIR</button>
-                    <button className="button secondary" style={{ padding: '8px 15px', fontSize: '0.8rem' }} onClick={collapseAll}>RECOLHER</button>
-                    <button className="button primary" style={{ padding: '8px 15px', fontSize: '0.8rem', background: '#e44c65' }} onClick={handlePrint}>IMPRIMIR</button>
+                    <button className="button secondary" onClick={expandAll}>EXPANDIR</button>
+                    <button className="button secondary" onClick={collapseAll}>RECOLHER</button>
+                    <button className="button primary" onClick={handlePrint}>IMPRIMIR</button>
                 </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {components.map(c => renderComponentTable(c.key, c.title, c.icon))}
-            </div>
+            {components.map(c => renderComponentTable(c.key, c.title, c.icon))}
+            <style jsx>{`
+                .button { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; }
+                .button.primary { background: #e44c65; color: white; }
+                .button.secondary { background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); }
+                .measurements-table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.02); }
+                .measurements-table td { padding: 12px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem; }
+                .in-range { color: #00c063; font-weight: bold; text-align: center; }
+                .out-range { color: #e44c65; font-weight: bold; text-align: center; }
+                .group-header td { background: rgba(228, 76, 101, 0.1); color: #e44c65; font-weight: bold; text-align: center; letter-spacing: 1px; }
+            `}</style>
         </div>
     );
 }
