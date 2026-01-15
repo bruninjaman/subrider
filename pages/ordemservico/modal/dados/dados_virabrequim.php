@@ -194,7 +194,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
 
             $refDisplay = '-';
             if (is_numeric($referencia) && $referencia != 0) {
-                $refDisplay = (floor($referencia) == $referencia) ? number_format($referencia, 0, ',', '.') : number_format($referencia, 2, ',', '.');
+                $refDisplay = (floor($referencia) == $referencia) ? number_format($referencia, 0, ',', '.') : number_format($referencia, 3, ',', '.');
             } else {
                 $refDisplay = htmlspecialchars($referencia);
             }
@@ -202,7 +202,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
             echo "<tr" . ($virabrequimClass ? " class='$virabrequimClass'" : '') . ">";
             echo "<td>" . htmlspecialchars(ucfirst(str_replace('_', ' ', $campo))) . "</td>";
             echo "<td>$refDisplay</td>";
-            $valor = isset($medicoes[$campo]) && $medicoes[$campo] !== null ? (is_numeric($medicoes[$campo]) ? ((floor($medicoes[$campo]) == $medicoes[$campo]) ? number_format($medicoes[$campo], 0, ',', '.') : number_format($medicoes[$campo], 2, ',', '.')) : htmlspecialchars($medicoes[$campo])) : '';
+            $valor = isset($medicoes[$campo]) && $medicoes[$campo] !== null ? (is_numeric($medicoes[$campo]) ? ((floor($medicoes[$campo]) == $medicoes[$campo]) ? number_format($medicoes[$campo], 0, ',', '.') : number_format($medicoes[$campo], 3, ',', '.')) : htmlspecialchars($medicoes[$campo])) : '';
             echo "<td><input type='text' name='medida[" . htmlspecialchars($campo) . "]' class='meas-input' data-reference='" . $referencia . "' data-validation-type='" . $validationType . "' value='$valor'></td>";
             echo "</tr>";
         }
@@ -233,7 +233,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
             $refMoente = isset($virabrequimRef['diametro_moente']) ? $virabrequimRef['diametro_moente'] : null;
             if ($qtdCilindros > 0 && ($refMoente !== null && $refMoente != 0 && $refMoente !== '')) {
                 $diametrosMoente = isset($medicoes['diametro_moente']) ? $medicoes['diametro_moente'] : [];
-                $refMoenteDisplay = (floor($refMoente) == $refMoente) ? number_format($refMoente, 0, ',', '.') : number_format($refMoente, 2, ',', '.');
+                $refMoenteDisplay = (floor($refMoente) == $refMoente) ? number_format($refMoente, 0, ',', '.') : number_format($refMoente, 3, ',', '.');
 
                 echo "<tr class='virabrequim-bronzina-field'>";
                 echo "<td>Diâmetro Moente (mm)</td>";
@@ -241,7 +241,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
                 for ($i = 1; $i <= $maxColunas; $i++) {
                     if ($i <= $qtdCilindros) {
                         $valorMoente = isset($diametrosMoente[$i]) && $diametrosMoente[$i] !== null
-                            ? ((floor($diametrosMoente[$i]) == $diametrosMoente[$i]) ? number_format($diametrosMoente[$i], 0, ',', '.') : number_format($diametrosMoente[$i], 2, ',', '.'))
+                            ? ((floor($diametrosMoente[$i]) == $diametrosMoente[$i]) ? number_format($diametrosMoente[$i], 0, ',', '.') : number_format($diametrosMoente[$i], 3, ',', '.'))
                             : '';
                         echo "<td><input type='text' name='diametro_moente[$i]' class='meas-input' value='$valorMoente'></td>";
                     } else {
@@ -255,7 +255,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
             $refMunhao = isset($virabrequimRef['diametro_munhao']) ? $virabrequimRef['diametro_munhao'] : null;
             if ($qtdMunhoes > 0 && ($refMunhao !== null && $refMunhao != 0 && $refMunhao !== '')) {
                 $diametrosMunhao = isset($medicoes['diametro_munhao']) ? $medicoes['diametro_munhao'] : [];
-                $refMunhaoDisplay = (floor($refMunhao) == $refMunhao) ? number_format($refMunhao, 0, ',', '.') : number_format($refMunhao, 2, ',', '.');
+                $refMunhaoDisplay = (floor($refMunhao) == $refMunhao) ? number_format($refMunhao, 0, ',', '.') : number_format($refMunhao, 3, ',', '.');
 
                 echo "<tr class='virabrequim-bronzina-field'>";
                 echo "<td>Diâmetro Munhão (mm)</td>";
@@ -263,7 +263,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
                 for ($i = 1; $i <= $maxColunas; $i++) {
                     if ($i <= $qtdMunhoes) {
                         $valorMunhao = isset($diametrosMunhao[$i]) && $diametrosMunhao[$i] !== null
-                            ? ((floor($diametrosMunhao[$i]) == $diametrosMunhao[$i]) ? number_format($diametrosMunhao[$i], 0, ',', '.') : number_format($diametrosMunhao[$i], 2, ',', '.'))
+                            ? ((floor($diametrosMunhao[$i]) == $diametrosMunhao[$i]) ? number_format($diametrosMunhao[$i], 0, ',', '.') : number_format($diametrosMunhao[$i], 3, ',', '.'))
                             : '';
                         echo "<td><input type='text' name='diametro_munhao[$i]' class='meas-input' value='$valorMunhao'></td>";
                     } else {
@@ -277,7 +277,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
             $refFolgaMancal = isset($virabrequimRef['folga_mancal']) ? $virabrequimRef['folga_mancal'] : (isset($virabrequimRef['folga_eixo_mancal']) ? $virabrequimRef['folga_eixo_mancal'] : null);
             if ($qtdMunhoes > 0 && ($refFolgaMancal !== null && $refFolgaMancal != 0 && $refFolgaMancal !== '')) {
                 $folgaMancal = isset($medicoes['folga_mancal']) ? $medicoes['folga_mancal'] : [];
-                $refFolgaMancalDisplay = (floor($refFolgaMancal) == $refFolgaMancal) ? number_format($refFolgaMancal, 0, ',', '.') : number_format($refFolgaMancal, 2, ',', '.');
+                $refFolgaMancalDisplay = (floor($refFolgaMancal) == $refFolgaMancal) ? number_format($refFolgaMancal, 0, ',', '.') : number_format($refFolgaMancal, 3, ',', '.');
 
                 $labelMancal = 'Folga Eixo-Mancal Máx (mm)';
                 $mancalClass = 'virabrequim-bronzina-field';
@@ -288,7 +288,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
                 for ($i = 1; $i <= $maxColunas; $i++) {
                     if ($i <= $qtdMunhoes) {
                         $valorFolgaMancal = isset($folgaMancal[$i]) && $folgaMancal[$i] !== null
-                            ? ((floor($folgaMancal[$i]) == $folgaMancal[$i]) ? number_format($folgaMancal[$i], 0, ',', '.') : number_format($folgaMancal[$i], 2, ',', '.'))
+                            ? ((floor($folgaMancal[$i]) == $folgaMancal[$i]) ? number_format($folgaMancal[$i], 0, ',', '.') : number_format($folgaMancal[$i], 3, ',', '.'))
                             : '';
                         echo "<td><input type='text' name='folga_mancal[$i]' class='meas-input' value='$valorFolgaMancal'></td>";
                     } else {
@@ -302,7 +302,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
             $refFolgaBiela = isset($virabrequimRef['folga_biela']) ? $virabrequimRef['folga_biela'] : null;
             if ($qtdCilindros > 0 && ($refFolgaBiela !== null && $refFolgaBiela != 0 && $refFolgaBiela !== '')) {
                 $folgaBiela = isset($medicoes['folga_biela']) ? $medicoes['folga_biela'] : [];
-                $refFolgaBielaDisplay = (floor($refFolgaBiela) == $refFolgaBiela) ? number_format($refFolgaBiela, 0, ',', '.') : number_format($refFolgaBiela, 2, ',', '.');
+                $refFolgaBielaDisplay = (floor($refFolgaBiela) == $refFolgaBiela) ? number_format($refFolgaBiela, 0, ',', '.') : number_format($refFolgaBiela, 3, ',', '.');
 
                 $labelBiela = ($tipoAtual === 'bronzina') ? 'Folga Eixo-Bronzina Máx (mm)' : 'Folga Biela (mm)';
                 $bielaClass = ($tipoAtual === 'bronzina') ? 'virabrequim-bronzina-field' : 'virabrequim-both-field';
@@ -313,7 +313,7 @@ function displayVirabrequimMedicoes($conn, $ordem)
                 for ($i = 1; $i <= $maxColunas; $i++) {
                     if ($i <= $qtdCilindros) {
                         $valorFolgaBiela = isset($folgaBiela[$i]) && $folgaBiela[$i] !== null
-                            ? ((floor($folgaBiela[$i]) == $folgaBiela[$i]) ? number_format($folgaBiela[$i], 0, ',', '.') : number_format($folgaBiela[$i], 2, ',', '.'))
+                            ? ((floor($folgaBiela[$i]) == $folgaBiela[$i]) ? number_format($folgaBiela[$i], 0, ',', '.') : number_format($folgaBiela[$i], 3, ',', '.'))
                             : '';
                         echo "<td><input type='text' name='folga_biela[$i]' class='meas-input' value='$valorFolgaBiela'></td>";
                     } else {

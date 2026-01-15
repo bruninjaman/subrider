@@ -3,7 +3,7 @@
 // Funções auxiliares
 function formatarIntervalo($min, $max)
 {
-    return number_format(floatval($min), 2, ',', '.') . " a " . number_format(floatval($max), 2, ',', '.');
+    return number_format(floatval($min), 3, ',', '.') . " a " . number_format(floatval($max), 3, ',', '.');
 }
 
 // Função para detectar se um valor precisa de correção centesimal

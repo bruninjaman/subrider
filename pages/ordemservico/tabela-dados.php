@@ -16,7 +16,7 @@ function formatNumber($value)
 {
     if ($value === null || $value === '' || $value == 0)
         return null;
-    return is_numeric($value) ? number_format($value, 2, ',', '.') : htmlspecialchars($value);
+    return is_numeric($value) ? number_format($value, 3, ',', '.') : htmlspecialchars($value);
 }
 
 function formatPastilha($value)
@@ -24,7 +24,7 @@ function formatPastilha($value)
     if ($value === null || $value === '' || $value == 0)
         return null;
     // Para pastilhas, dividir por 100 para converter de centésimos para centímetros
-    return is_numeric($value) ? number_format($value, 2, ',', '.') : htmlspecialchars($value);
+    return is_numeric($value) ? number_format($value, 3, ',', '.') : htmlspecialchars($value);
 }
 
 function getReferenceData($conn, $ordem, $table)
