@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export default function GerenciarFotos() {
+function GerenciarFotosContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const motoId = searchParams.get('motoID');
@@ -421,3 +421,12 @@ export default function GerenciarFotos() {
         </div>
     );
 }
+
+export default function GerenciarFotos() {
+    return (
+        <Suspense fallback={<div style={{ color: 'white', padding: '50px', textAlign: 'center' }}>Carregando galeria...</div>}>
+            <GerenciarFotosContent />
+        </Suspense>
+    );
+}
+
