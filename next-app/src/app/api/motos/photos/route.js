@@ -28,6 +28,7 @@ export async function POST(request) {
         const formData = await request.formData();
         const motoId = formData.get('motoId');
         const files = formData.getAll('fotos');
+        const descricao = formData.get('descricao') || '';
 
         if (!motoId) {
             return NextResponse.json({ error: 'Moto ID is required' }, { status: 400 });
@@ -60,8 +61,8 @@ export async function POST(request) {
                     // Path relative to web root matching PHP logic: ./upload/moto/filename
                     const dbPath = './upload/moto/' + filename;
 
-                    const sql = `INSERT INTO moto_fotos (motoId, caminho_foto, data_upload) VALUES (?, ?, NOW())`;
-                    const result = await query(sql, [motoId, dbPath]);
+                    const sql = `INSERT INTO moto_fotos (motoId, caminho_foto, data_upload, descricao) VALUES (?, ?, NOW(), ?)`;
+                    const result = await query(sql, [motoId, dbPath, descricao]);
 
                     uploadedPhotos.push({
                         id: result.insertId,

@@ -73,22 +73,7 @@ export default function Header() {
                     margin: 0,
                     padding: 0
                 }}>
-                    <li>
-                        <Link
-                            href="/"
-                            style={{
-                                color: pathname === '/' ? '#e44c65' : 'rgba(255,255,255,0.75)',
-                                fontSize: '1rem',
-                                fontWeight: '300',
-                                transition: 'color 0.2s ease',
-                                border: 'none',
-                                padding: '5px 0',
-                                textTransform: 'none'
-                            }}
-                        >
-                            Início
-                        </Link>
-                    </li>
+
 
                     {pathname === '/login' && (
                         <li>
