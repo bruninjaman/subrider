@@ -50,9 +50,44 @@ export default function OrderPage() {
     return (
         <div id="page-wrapper" className="landing" style={{ paddingBottom: '100px' }}>
             <div className="container">
-                <OrderHeader id={id} date={order.Data} owner={order.proprietario_ordem} km={order.KM} />
+                {/* Print Header - Visible only on print */}
+                <div className="print-header" style={{ display: 'none', marginBottom: '30px', fontFamily: 'Arial, sans-serif' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '2px solid #000', paddingBottom: '20px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                            {/* Try to use a black version of logo if available, or just filter it. Using filter: invert(1) might turn white to black if the image is transparent white. */}
+                            <img src="/assets/css/images/logo-branco-crop.png" alt="Subrider" style={{ height: '60px', filter: 'invert(1) brightness(0)' }} />
+                            <div>
+                                <h1 style={{ margin: 0, fontSize: '24pt', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>SUBRIDER</h1>
+                                <p style={{ margin: 0, fontSize: '10pt', textTransform: 'uppercase' }}>Oficina Especializada</p>
+                            </div>
+                        </div>
+                        <div style={{ textAlign: 'right', fontSize: '10pt' }}>
+                            <p style={{ margin: 0 }}><strong>Localização:</strong> Quadra 12, conjunto L, St. Sul</p>
+                            <p style={{ margin: 0 }}>Brasília - DF, 72415-612</p>
+                            <p style={{ margin: 0, marginTop: '5px' }}><strong>WhatsApp:</strong> (61) 98128-2136</p>
+                        </div>
+                    </div>
 
-                <div style={{
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '30px', background: '#f5f5f5', padding: '15px', borderRadius: '8px', border: '1px solid #ddd' }}>
+                        <div style={{ flex: 1 }}>
+                            <h2 style={{ fontSize: '14pt', margin: '0 0 10px 0', borderBottom: '1px solid #ddd', paddingBottom: '5px' }}>DADOS DA ORDEM</h2>
+                            <p style={{ margin: '5px 0' }}><strong>NÚMERO:</strong> #{id}</p>
+                            <p style={{ margin: '5px 0' }}><strong>DATA:</strong> {formatDate(order.Data)}</p>
+                        </div>
+                        <div style={{ flex: 1, paddingLeft: '20px', borderLeft: '1px solid #ddd' }}>
+                            <h2 style={{ fontSize: '14pt', margin: '0 0 10px 0', borderBottom: '1px solid #ddd', paddingBottom: '5px' }}>CLIENTE / VEÍCULO</h2>
+                            <p style={{ margin: '5px 0' }}><strong>PROPRIETÁRIO:</strong> {order.proprietario_ordem}</p>
+                            <p style={{ margin: '5px 0' }}><strong>VEÍCULO:</strong> {motorcycle ? `${motorcycle.marca} ${motorcycle.modelo}` : '---'}</p>
+                            <p style={{ margin: '5px 0' }}><strong>PLACA:</strong> {motorcycle ? motorcycle.placa : '---'} <span style={{ marginLeft: '15px' }}><strong>ANO:</strong> {motorcycle ? motorcycle.ano : '---'}</span> <span style={{ marginLeft: '15px' }}><strong>KM:</strong> {order.KM}</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="no-print">
+                    <OrderHeader id={id} date={order.Data} owner={order.proprietario_ordem} km={order.KM} />
+                </div>
+
+                <div className="no-print" style={{
                     display: 'flex',
                     gap: '20px',
                     marginBottom: '50px',
@@ -84,17 +119,17 @@ export default function OrderPage() {
 
                 <ItemsTable items={items} />
 
-                <div style={{ marginTop: '50px' }}>
+                <div className="no-print" style={{ marginTop: '50px' }}>
                     <MeasurementsReport id={id} measurements={measurements} references={references} />
                 </div>
 
                 {motorcycle && (
-                    <div style={{ marginTop: '50px' }}>
+                    <div className="no-print" style={{ marginTop: '50px' }}>
                         <MotorcycleInfo motorcycle={motorcycle} />
                     </div>
                 )}
 
-                <footer style={{ textAlign: 'center', padding: '60px 0', borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: '80px' }}>
+                <footer className="no-print" style={{ textAlign: 'center', padding: '60px 0', borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: '80px' }}>
                     <img src="/assets/css/images/logo-branco-crop.png" alt="Logo" style={{ height: '35px', opacity: 0.3, marginBottom: '20px' }} />
                     <p style={{ opacity: 0.3, fontSize: '0.9rem' }}>&copy; 2024 Subrider. Todos os direitos reservados.</p>
                 </footer>
