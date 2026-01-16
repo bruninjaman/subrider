@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,700&display=swap");
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --bg-color: #1c1d26;
   --text-color: rgba(255, 255, 255, 0.75);

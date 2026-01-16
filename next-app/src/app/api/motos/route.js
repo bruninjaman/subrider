@@ -108,7 +108,7 @@ export async function POST(request) {
             // Create unique filename to avoid collisions
             const filename = Date.now() + '_' + file.name.replace(/\s+/g, '_');
             // Resolve upload directory relative to next-app root
-            const uploadDir = path.join(process.cwd(), '../upload/moto');
+            const uploadDir = path.join(process.cwd(), 'public/upload/moto');
 
             // Ensure directory exists
             try {
@@ -158,7 +158,7 @@ export async function PUT(request) {
         if (file && file.size > 0 && file.name !== 'undefined') {
             const buffer = Buffer.from(await file.arrayBuffer());
             const filename = Date.now() + '_' + file.name.replace(/\s+/g, '_');
-            const uploadDir = path.join(process.cwd(), '../upload/moto');
+            const uploadDir = path.join(process.cwd(), 'public/upload/moto');
 
             // Ensure dir
             const fs = require('fs');

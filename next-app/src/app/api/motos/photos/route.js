@@ -37,7 +37,7 @@ export async function POST(request) {
             return NextResponse.json({ error: 'No files uploaded' }, { status: 400 });
         }
 
-        const uploadDir = path.join(process.cwd(), '../upload/moto');
+        const uploadDir = path.join(process.cwd(), 'public/upload/moto');
 
         // Ensure directory exists
         if (!fs.existsSync(uploadDir)) {
@@ -113,7 +113,7 @@ export async function DELETE(request) {
         }
         // fsPath is now 'upload/moto/filename'
         // Join with ../
-        const fullPath = path.join(process.cwd(), '../', fsPath);
+        const fullPath = path.join(process.cwd(), 'public', fsPath);
 
         try {
             if (fs.existsSync(fullPath)) {

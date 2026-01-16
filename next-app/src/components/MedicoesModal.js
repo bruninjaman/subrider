@@ -317,7 +317,60 @@ export default function MedicoesModal({ isOpen, onClose, id, measurements, refer
                 .meas-field { width: 75px; background: #000; border: 2px solid #333; color: #00c063; padding: 10px; text-align: center; border-radius: 8px; font-weight: 800; font-size: 1.1rem; transition: all 0.3s; }
                 .meas-field:focus { border-color: #e44c5c; outline: none; box-shadow: 0 0 10px rgba(0, 192, 99, 0.2); }
                 .shim-display { font-size: 0.8rem; color: #ff9800; margin-top: 5px; font-weight: 800; background: rgba(255, 152, 0, 0.1); padding: 2px 5px; border-radius: 4px; }
+
+                .ref-badge {
+                    font-size: 0.6rem;
+                    padding: 1px 6px;
+                    border-radius: 4px;
+                    font-weight: 900;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+                .ref-badge--max { background: rgba(228, 76, 92, 0.15); color: #e44c5c; border: 1px solid rgba(228, 76, 92, 0.2); }
+                .ref-badge--min { background: rgba(255, 193, 7, 0.15); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.2); }
+                .ref-badge--ref { background: rgba(33, 150, 243, 0.15); color: #2196f3; border: 1px solid rgba(33, 150, 243, 0.2); }
+                .ref-badge--range { background: rgba(255, 255, 255, 0.05); color: #888; border: 1px solid #333; }
             `}</style>
+        </div>
+    );
+}
+
+// --------------------------- HELPERS ---------------------------
+
+function renderRefDisplay(value, type) {
+    if (!value && value !== 0) return <span style={{ opacity: 0.3 }}>-</span>;
+
+    if (type === 'RANGE') {
+        const parts = String(value).split('-');
+        const min = parts[0];
+        const max = parts[1];
+        if (!max) return renderRefDisplay(min, 'REF');
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                <span style={{ fontWeight: '800', fontSize: '1rem', color: '#fff', whiteSpace: 'nowrap' }}>{min} ~ {max}</span>
+                <span className="ref-badge ref-badge--range">FAIXA</span>
+            </div>
+        );
+    }
+
+    let label = type;
+    let className = 'ref-badge';
+
+    if (type === 'MAX') {
+        label = 'MÁX';
+        className += ' ref-badge--max';
+    } else if (type === 'MIN') {
+        label = 'MÍN';
+        className += ' ref-badge--min';
+    } else if (type === 'REF') {
+        label = 'REF';
+        className += ' ref-badge--ref';
+    }
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+            <span style={{ fontWeight: '800', fontSize: '1.05rem', color: '#fff' }}>{value}</span>
+            <span className={className}>{label}</span>
         </div>
     );
 }
@@ -548,7 +601,7 @@ function renderCabecoteMed(ref, med, onChange, onSave, calcShim) {
                             const lado = i === 0 ? 'direita' : 'esquerda';
                             return (
                                 <tr key={`af-${lado}`} className="valvula-admissao">
-                                    <td style={{ fontWeight: 700 }}>Folga ADM ({lado})</td><td>{ref.val_adm_limite_min}-{ref.val_adm_limite_max}</td>
+                                    <td style={{ fontWeight: 700 }}>Folga ADM ({lado})</td><td>{renderRefDisplay(`${ref.val_adm_limite_min}-${ref.val_adm_limite_max}`, 'RANGE')}</td>
                                     {cilArr.map(c => <td key={c}><input className="meas-field" value={med[`adm_folga_${lado}`]?.[c] || ''} onChange={e => onChange('measurement', 'cabecote', `adm_folga_${lado}`, e.target.value, c)} /></td>)}
                                 </tr>
                             );
@@ -557,7 +610,7 @@ function renderCabecoteMed(ref, med, onChange, onSave, calcShim) {
                             const lado = i === 0 ? 'direita' : 'esquerda';
                             return (
                                 <tr key={`ap-${lado}`} className="valvula-admissao">
-                                    <td style={{ fontWeight: 700 }}>Pastilha ADM ({lado})</td><td>ORIGINAL</td>
+                                    <td style={{ fontWeight: 700 }}>Pastilha ADM ({lado})</td><td>{renderRefDisplay('ORIGINAL', 'REF')}</td>
                                     {cilArr.map(c => {
                                         const corr = calcShim('adm', lado, c);
                                         return <td key={c}><input className="meas-field" value={med[`adm_pastilha_${lado}`]?.[c] || ''} onChange={e => onChange('measurement', 'cabecote', `adm_pastilha_${lado}`, e.target.value, c)} />{corr && <div className="shim-display">IDEAL: {corr}</div>}</td>;
@@ -569,7 +622,7 @@ function renderCabecoteMed(ref, med, onChange, onSave, calcShim) {
                             const lado = i === 0 ? 'direita' : 'esquerda';
                             return (
                                 <tr key={`ef-${lado}`} className="valvula-escape">
-                                    <td style={{ fontWeight: 700 }}>Folga ESC ({lado})</td><td>{ref.val_esc_limite_min}-{ref.val_esc_limite_max}</td>
+                                    <td style={{ fontWeight: 700 }}>Folga ESC ({lado})</td><td>{renderRefDisplay(`${ref.val_esc_limite_min}-${ref.val_esc_limite_max}`, 'RANGE')}</td>
                                     {cilArr.map(c => <td key={c}><input className="meas-field" value={med[`esc_folga_${lado}`]?.[c] || ''} onChange={e => onChange('measurement', 'cabecote', `esc_folga_${lado}`, e.target.value, c)} /></td>)}
                                 </tr>
                             );
@@ -578,7 +631,7 @@ function renderCabecoteMed(ref, med, onChange, onSave, calcShim) {
                             const lado = i === 0 ? 'direita' : 'esquerda';
                             return (
                                 <tr key={`ep-${lado}`} className="valvula-escape">
-                                    <td style={{ fontWeight: 700 }}>Pastilha ESC ({lado})</td><td>ORIGINAL</td>
+                                    <td style={{ fontWeight: 700 }}>Pastilha ESC ({lado})</td><td>{renderRefDisplay('ORIGINAL', 'REF')}</td>
                                     {cilArr.map(c => {
                                         const corr = calcShim('esc', lado, c);
                                         return <td key={c}><input className="meas-field" value={med[`esc_pastilha_${lado}`]?.[c] || ''} onChange={e => onChange('measurement', 'cabecote', `esc_pastilha_${lado}`, e.target.value, c)} />{corr && <div className="shim-display">IDEAL: {corr}</div>}</td>;
@@ -586,7 +639,7 @@ function renderCabecoteMed(ref, med, onChange, onSave, calcShim) {
                                 </tr>
                             );
                         })}
-                        <tr className="group-heading"><td style={{ fontWeight: 800 }}>Compressão Motor</td><td>{ref.compressao_min}-{ref.compressao_max}</td>{cilArr.map(c => <td key={c}><input className="meas-field" value={med.compressao?.[c] || ''} onChange={e => onChange('measurement', 'cabecote', 'compressao', e.target.value, c)} /></td>)}</tr>
+                        <tr className="group-heading"><td style={{ fontWeight: 800 }}>Compressão Motor</td><td>{renderRefDisplay(`${ref.compressao_min}-${ref.compressao_max}`, 'RANGE')}</td>{cilArr.map(c => <td key={c}><input className="meas-field" value={med.compressao?.[c] || ''} onChange={e => onChange('measurement', 'cabecote', 'compressao', e.target.value, c)} /></td>)}</tr>
                     </tbody>
                 </table>
             </div>
@@ -615,7 +668,7 @@ function renderMotorMed(ref, med, onChange, onSave) {
                     <tbody>
                         {fields.map(f => (
                             <tr key={f.id}>
-                                <td style={{ fontWeight: 700 }}>{f.label}</td><td>{ref[f.ref]} {f.suffix}</td>
+                                <td style={{ fontWeight: 700 }}>{f.label}</td><td>{renderRefDisplay(ref[f.ref], f.suffix)}</td>
                                 {cilArr.map(c => <td key={c}><input className="meas-field" value={med[f.id]?.[c] || ''} onChange={e => onChange('measurement', 'motor', f.id, e.target.value, c)} /></td>)}
                             </tr>
                         ))}
@@ -646,25 +699,25 @@ function renderVirabrequimMed(ref, med, onChange, onSave) {
                         {isBronzina && (
                             <>
                                 <tr>
-                                    <td style={{ fontWeight: 700 }}>Diâm Moente</td><td>{ref.diametro_moente} REF</td>
+                                    <td style={{ fontWeight: 700 }}>Diâm Moente</td><td>{renderRefDisplay(ref.diametro_moente, 'REF')}</td>
                                     {colArr.map(c => <td key={c}>{c <= numCil ? <input className="meas-field" value={med.diametro_moente?.[c] || ''} onChange={e => onChange('measurement', 'virabrequim', 'diametro_moente', e.target.value, c)} /> : '-'}</td>)}
                                 </tr>
                                 <tr>
-                                    <td style={{ fontWeight: 700 }}>Diâm Munhão</td><td>{ref.diametro_munhao} REF</td>
+                                    <td style={{ fontWeight: 700 }}>Diâm Munhão</td><td>{renderRefDisplay(ref.diametro_munhao, 'REF')}</td>
                                     {colArr.map(c => <td key={c}>{c <= numMun ? <input className="meas-field" value={med.diametro_munhao?.[c] || ''} onChange={e => onChange('measurement', 'virabrequim', 'diametro_munhao', e.target.value, c)} /> : '-'}</td>)}
                                 </tr>
                                 <tr>
-                                    <td style={{ fontWeight: 700 }}>Folga Mancal</td><td>{ref.folga_mancal} MAX</td>
+                                    <td style={{ fontWeight: 700 }}>Folga Mancal</td><td>{renderRefDisplay(ref.folga_mancal, 'MAX')}</td>
                                     {colArr.map(c => <td key={c}>{c <= numMun ? <input className="meas-field" value={med.folga_mancal?.[c] || ''} onChange={e => onChange('measurement', 'virabrequim', 'folga_mancal', e.target.value, c)} /> : '-'}</td>)}
                                 </tr>
                             </>
                         )}
                         <tr>
-                            <td style={{ fontWeight: 700 }}>{isBronzina ? 'Folga Bronzina' : 'Folga Biela'}</td><td>{ref.folga_biela} MAX</td>
+                            <td style={{ fontWeight: 700 }}>{isBronzina ? 'Folga Bronzina' : 'Folga Biela'}</td><td>{renderRefDisplay(ref.folga_biela, 'MAX')}</td>
                             {colArr.map(c => <td key={c}>{c <= numCil ? <input className="meas-field" value={med.folga_biela?.[c] || ''} onChange={e => onChange('measurement', 'virabrequim', 'folga_biela', e.target.value, c)} /> : '-'}</td>)}
                         </tr>
                         <tr>
-                            <td style={{ fontWeight: 700 }}>Empenamento</td><td>{ref.empenamento} MAX</td>
+                            <td style={{ fontWeight: 700 }}>Empenamento</td><td>{renderRefDisplay(ref.empenamento, 'MAX')}</td>
                             {colArr.map(c => <td key={c}>{c <= numCil ? <input className="meas-field" value={med.empenamento?.[c] || ''} onChange={e => onChange('measurement', 'virabrequim', 'empenamento', e.target.value, c)} /> : '-'}</td>)}
                         </tr>
                     </tbody>

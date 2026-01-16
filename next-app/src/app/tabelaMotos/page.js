@@ -53,8 +53,10 @@ export default function TabelaMotos() {
 
     const getImageUrl = (path) => {
         if (!path) return '';
-        // Remove ../ if present and ensure it starts with /
-        return '/' + path.replace('../', '').replace(/^\/+/, '');
+        // Handle paths that might start with ./ or contain ../ 
+        // Our API saves as ./upload/... or upload/...
+        // We want /upload/...
+        return '/' + path.replace(/^\.?\/?/, '').replace('..', '');
     };
 
     const formatKM = (km) => {

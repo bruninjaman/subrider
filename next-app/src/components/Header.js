@@ -2,27 +2,55 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 export default function Header() {
     const pathname = usePathname();
+    const [session, setSession] = useState({ loggedIn: false, user: null });
 
-    const navLinks = [
-        { name: 'Ordens', href: '/' },
+    useEffect(() => {
+        const checkSession = async () => {
+            try {
+                const res = await fetch('/api/session');
+                if (res.ok) {
+                    const data = await res.json();
+                    setSession(data);
+                }
+            } catch (err) {
+                console.error('Session check failed:', err);
+            }
+        };
+        checkSession();
+    }, [pathname]);
+
+    let navLinks = [
         { name: 'Motocicletas', href: '/tabelaMotos' },
         { name: 'Peças', href: '/tabelaPecas' },
         { name: 'Serviços', href: '/tabelaServicos' },
     ];
 
+    if (pathname === '/tabelaMotos') {
+        navLinks[0] = { name: 'Ordens de Serviço', href: '/tabelaOrdens' };
+    } else if (pathname === '/tabelaPecas') {
+        navLinks[1] = { name: 'Ordens de Serviço', href: '/tabelaOrdens' };
+    } else if (pathname === '/tabelaServicos') {
+        navLinks[2] = { name: 'Ordens de Serviço', href: '/tabelaOrdens' };
+    }
+
+    // Exibe o header mesmo na página de login, mas com opções simplificadas
+
     return (
         <header style={{
-            background: '#1c1d26',
+            background: pathname === '/login' ? 'transparent' : '#1c1d26',
             padding: '1.2rem 2rem',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            borderBottom: '1px solid rgba(255,255,255,0.05)',
-            position: 'sticky',
+            borderBottom: pathname === '/login' ? 'none' : '1px solid rgba(255,255,255,0.05)',
+            position: pathname === '/login' ? 'absolute' : 'sticky',
             top: 0,
+            left: 0,
+            right: 0,
             zIndex: 1000,
             backdropFilter: 'blur(10px)'
         }}>
@@ -45,7 +73,43 @@ export default function Header() {
                     margin: 0,
                     padding: 0
                 }}>
-                    {navLinks.map((link) => (
+                    <li>
+                        <Link
+                            href="/"
+                            style={{
+                                color: pathname === '/' ? '#e44c65' : 'rgba(255,255,255,0.75)',
+                                fontSize: '1rem',
+                                fontWeight: '300',
+                                transition: 'color 0.2s ease',
+                                border: 'none',
+                                padding: '5px 0',
+                                textTransform: 'none'
+                            }}
+                        >
+                            Início
+                        </Link>
+                    </li>
+
+                    {pathname === '/login' && (
+                        <li>
+                            <Link
+                                href="/#four"
+                                style={{
+                                    color: 'rgba(255,255,255,0.75)',
+                                    fontSize: '1rem',
+                                    fontWeight: '300',
+                                    transition: 'color 0.2s ease',
+                                    border: 'none',
+                                    padding: '5px 0',
+                                    textTransform: 'none'
+                                }}
+                            >
+                                Nossos Serviços
+                            </Link>
+                        </li>
+                    )}
+
+                    {session.loggedIn && navLinks.map((link) => (
                         <li key={link.href}>
                             <Link
                                 href={link.href}
@@ -58,74 +122,54 @@ export default function Header() {
                                     padding: '5px 0',
                                     textTransform: 'none'
                                 }}
-                                onMouseOver={(e) => e.currentTarget.style.color = '#e44c65'}
-                                onMouseOut={(e) => {
-                                    if (pathname !== link.href) {
-                                        e.currentTarget.style.color = 'rgba(255,255,255,0.75)';
-                                    }
-                                }}
                             >
                                 {link.name}
                             </Link>
                         </li>
                     ))}
-                    {pathname !== '/' && (
-                        <li>
+
+                    <li>
+                        {session.loggedIn ? (
                             <Link
-                                href="/"
+                                href="/logout"
+                                className="button primary"
                                 style={{
-                                    color: 'rgba(255,255,255,0.75)',
+                                    padding: '0.6rem 1.8rem',
                                     fontSize: '1rem',
-                                    fontWeight: '500',
-                                    padding: '0.5rem 1rem',
+                                    background: '#e44c65',
                                     borderRadius: '4px',
-                                    border: '1px solid rgba(255,255,255,0.2)',
-                                    transition: 'all 0.2s',
-                                    textDecoration: 'none'
-                                }}
-                                onMouseOver={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                                    e.currentTarget.style.borderColor = '#e44c65';
-                                    e.currentTarget.style.color = '#e44c65';
-                                }}
-                                onMouseOut={(e) => {
-                                    e.currentTarget.style.background = 'transparent';
-                                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
-                                    e.currentTarget.style.color = 'rgba(255,255,255,0.75)';
+                                    color: 'white',
+                                    fontWeight: '400',
+                                    transition: 'all 0.2s ease',
+                                    border: 'none',
+                                    display: 'inline-block',
+                                    lineHeight: '1.5em',
+                                    height: 'auto'
                                 }}
                             >
-                                ← Voltar
+                                Sair
                             </Link>
-                        </li>
-                    )}
-                    <li>
-                        <Link
-                            href="/logout"
-                            className="button primary"
-                            style={{
-                                padding: '0.6rem 1.8rem',
-                                fontSize: '1rem',
-                                background: '#e44c65',
-                                borderRadius: '4px',
-                                color: 'white',
-                                fontWeight: '400',
-                                transition: 'all 0.2s ease',
-                                border: 'none',
-                                display: 'inline-block',
-                                lineHeight: '1.5em',
-                                height: 'auto'
-                            }}
-                            onMouseOver={(e) => {
-                                e.currentTarget.style.filter = 'brightness(1.1)';
-                                e.currentTarget.style.transform = 'translateY(-1px)';
-                            }}
-                            onMouseOut={(e) => {
-                                e.currentTarget.style.filter = 'brightness(1)';
-                                e.currentTarget.style.transform = 'translateY(0)';
-                            }}
-                        >
-                            Sair
-                        </Link>
+                        ) : (
+                            <Link
+                                href={pathname === '/login' ? '/' : '/login'}
+                                className="button primary"
+                                style={{
+                                    padding: '0.6rem 1.8rem',
+                                    fontSize: '1rem',
+                                    background: '#e44c65',
+                                    borderRadius: '4px',
+                                    color: 'white',
+                                    fontWeight: '400',
+                                    transition: 'all 0.2s ease',
+                                    border: 'none',
+                                    display: 'inline-block',
+                                    lineHeight: '1.5em',
+                                    height: 'auto'
+                                }}
+                            >
+                                {pathname === '/login' ? 'Voltar' : 'Entrar'}
+                            </Link>
+                        )}
                     </li>
                 </ul>
             </nav>
