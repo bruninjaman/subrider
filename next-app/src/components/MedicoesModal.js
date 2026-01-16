@@ -22,7 +22,6 @@ export default function MedicoesModal({ isOpen, onClose, id, measurements, refer
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
-            setIsMenuOpen(true);
             // Process references
             const initialRefs = {};
             if (references) {

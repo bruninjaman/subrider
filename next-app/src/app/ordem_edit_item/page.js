@@ -2,17 +2,20 @@
 
 import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import styles from './page.module.css';
+import styles from '../ordem_add_item/page.module.css';
 
-function AddItemContent() {
+function EditItemContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const ordem = searchParams.get('ordem');
+    const itemOrdemId = searchParams.get('item_ordemID');
 
+    const [loading, setLoading] = useState(true);
     const [tipoItem, setTipoItem] = useState('');
     const [parts, setParts] = useState([]);
     const [services, setServices] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [originalItem, setOriginalItem] = useState(null);
 
     // Peça form states
     const [selectedPart, setSelectedPart] = useState('');
@@ -37,6 +40,49 @@ function AddItemContent() {
     const [aitem, setAitem] = useState('');
     const [avalor, setAvalor] = useState(0);
 
+    // Load item data
+    useEffect(() => {
+        const fetchItemData = async () => {
+            if (!itemOrdemId) return;
+
+            try {
+                const res = await fetch(`/api/ordem_edit_item?item_ordemID=${itemOrdemId}`);
+                const data = await res.json();
+
+                if (data.item) {
+                    const item = data.item;
+                    setOriginalItem(item);
+
+                    // Set category/type
+                    if (item.Categoria == 2) {
+                        setTipoItem('pecas');
+                        const partValue = `${item.Grupo} - ${item.Item} - ${item.Parte}`;
+                        setSelectedPart(partValue);
+                        setScode(item.Codigo || '');
+                        setPquantidade(item.Quantidade || 1);
+                        setPvalor(item.Valor || 0);
+                    } else if (item.Categoria == 1) {
+                        setTipoItem('service');
+                        const serviceValue = `${item.Tipo} - ${item.Item}`;
+                        setSelectedService(serviceValue);
+                        setSquantidade(item.Quantidade || 1);
+                        setSvalor(item.Valor || 0);
+                    } else if (item.Categoria == 3) {
+                        setTipoItem('adiantamento');
+                        setAitem(item.Descricao || '');
+                        setAvalor(item.Valor || 0);
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching item:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchItemData();
+    }, [itemOrdemId]);
+
     // Load parts and services on mount
     useEffect(() => {
         const fetchParts = async () => {
@@ -46,6 +92,16 @@ function AddItemContent() {
                 if (data.items) {
                     setParts(data.items);
                     setFilteredParts(data.items);
+
+                    // Find matching part for selectedPart
+                    if (selectedPart && originalItem?.Categoria == 2) {
+                        const matchingPart = data.items.find(p =>
+                            `${p.grupo} - ${p.item} - ${p.parte}` === selectedPart
+                        );
+                        if (matchingPart) {
+                            setSelectedPartId(matchingPart.pecaId);
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching parts:', error);
@@ -59,6 +115,16 @@ function AddItemContent() {
                 if (Array.isArray(data)) {
                     setServices(data);
                     setFilteredServices(data);
+
+                    // Find matching service for selectedService
+                    if (selectedService && originalItem?.Categoria == 1) {
+                        const matchingService = data.find(s =>
+                            `${s.tipo} - ${s.item}` === selectedService
+                        );
+                        if (matchingService) {
+                            setSelectedServiceId(matchingService.servicoId);
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching services:', error);
@@ -67,11 +133,7 @@ function AddItemContent() {
 
         fetchParts();
         fetchServices();
-
-        // Adiantamento default description
-        const today = new Date().toLocaleDateString('pt-BR');
-        setAitem(`Pagamento ${today}`);
-    }, []);
+    }, [selectedPart, selectedService, originalItem]);
 
     // Click outside to close suggestions
     useEffect(() => {
@@ -142,8 +204,8 @@ function AddItemContent() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ordem) {
-            alert('Ordem ID está faltando');
+        if (!ordem || !itemOrdemId) {
+            alert('Ordem ID ou Item ID está faltando');
             return;
         }
 
@@ -156,7 +218,8 @@ function AddItemContent() {
 
         const payload = {
             tipo_item: tipoItem,
-            ordem
+            ordem,
+            item_ordemID: itemOrdemId
         };
 
         if (tipoItem === 'pecas') {
@@ -189,8 +252,8 @@ function AddItemContent() {
         }
 
         try {
-            const res = await fetch('/api/ordem_add_item', {
-                method: 'POST',
+            const res = await fetch('/api/ordem_edit_item', {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
@@ -199,7 +262,7 @@ function AddItemContent() {
             if (data.success) {
                 router.push(`/ordemservico/${ordem}`);
             } else {
-                alert('Erro ao inserir item: ' + data.error);
+                alert('Erro ao editar item: ' + data.error);
             }
         } catch (error) {
             console.error('Submit error:', error);
@@ -213,6 +276,15 @@ function AddItemContent() {
         router.push(`/ordemservico/${ordem}`);
     };
 
+    if (loading) {
+        return (
+            <div className={styles.loading}>
+                <div className={styles.loadingSpinner}></div>
+                <p>Carregando dados do item...</p>
+            </div>
+        );
+    }
+
     return (
         <section className={styles.container}>
             <div className={styles.content}>
@@ -222,14 +294,14 @@ function AddItemContent() {
                         alt="Logo"
                         className={styles.logo}
                     />
-                    <h2 className={styles.title}>Adicionar Item à Ordem</h2>
-                    <p className={styles.subtitle}>Ordem: <strong>{ordem}</strong></p>
+                    <h2 className={styles.title}>Editar Item da Ordem</h2>
+                    <p className={styles.subtitle}>Ordem: <strong>{ordem}</strong> | Item ID: <strong>{itemOrdemId}</strong></p>
                 </div>
 
                 <form onSubmit={handleSubmit}>
                     {/* Tipo de Item Selection */}
                     <div className={styles.typeSelection}>
-                        <h3 className={styles.sectionTitle}>Selecione o tipo de item</h3>
+                        <h3 className={styles.sectionTitle}>Tipo do item</h3>
                         <div className={styles.radioGroup}>
                             <label className={`${styles.radioCard} ${tipoItem === 'pecas' ? styles.radioCardActive : ''}`}>
                                 <input
@@ -277,7 +349,7 @@ function AddItemContent() {
                     {tipoItem === 'pecas' && (
                         <div className={styles.formSection}>
                             <div className={styles.formHeader}>
-                                <h3>Adicionar Peça</h3>
+                                <h3>Editar Peça</h3>
                                 <a
                                     href="/tabelaPecasAdd"
                                     target="_blank"
@@ -374,7 +446,7 @@ function AddItemContent() {
                                         className={styles.submitButton}
                                         disabled={isSubmitting}
                                     >
-                                        {isSubmitting ? 'Adicionando...' : 'Adicionar Peça'}
+                                        {isSubmitting ? 'Salvando...' : 'Salvar Peça'}
                                     </button>
                                 </div>
                             </div>
@@ -385,7 +457,7 @@ function AddItemContent() {
                     {tipoItem === 'service' && (
                         <div className={styles.formSection}>
                             <div className={styles.formHeader}>
-                                <h3>Adicionar Serviço</h3>
+                                <h3>Editar Serviço</h3>
                                 <a
                                     href="/tabelaServicosAdd"
                                     target="_blank"
@@ -466,7 +538,7 @@ function AddItemContent() {
                                         className={styles.submitButton}
                                         disabled={isSubmitting}
                                     >
-                                        {isSubmitting ? 'Adicionando...' : 'Adicionar Serviço'}
+                                        {isSubmitting ? 'Salvando...' : 'Salvar Serviço'}
                                     </button>
                                 </div>
                             </div>
@@ -477,7 +549,7 @@ function AddItemContent() {
                     {tipoItem === 'adiantamento' && (
                         <div className={styles.formSection}>
                             <div className={styles.formHeader}>
-                                <h3>Registrar Adiantamento</h3>
+                                <h3>Editar Adiantamento</h3>
                             </div>
 
                             <div className={styles.row}>
@@ -513,7 +585,7 @@ function AddItemContent() {
                                         className={styles.submitButton}
                                         disabled={isSubmitting}
                                     >
-                                        {isSubmitting ? 'Registrando...' : 'Registrar Adiantamento'}
+                                        {isSubmitting ? 'Salvando...' : 'Salvar Adiantamento'}
                                     </button>
                                 </div>
                             </div>
@@ -536,7 +608,7 @@ function AddItemContent() {
     );
 }
 
-export default function AddItemPage() {
+export default function EditItemPage() {
     return (
         <Suspense fallback={
             <div className={styles.loading}>
@@ -544,7 +616,7 @@ export default function AddItemPage() {
                 <p>Carregando...</p>
             </div>
         }>
-            <AddItemContent />
+            <EditItemContent />
         </Suspense>
     );
 }

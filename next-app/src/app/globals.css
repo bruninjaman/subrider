@@ -255,20 +255,55 @@ a:hover {
   }
 }
 
+/* Print Styles */
+.only-print {
+  display: none !important;
+}
+
 @media print {
   @page {
     size: A4;
-    margin: 10mm;
+    margin: 0;
   }
 
+  html,
   body {
     background-color: white !important;
+    background: white !important;
     color: black !important;
-    font-size: 10pt;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
   }
 
-  /* Hide elements */
+  /* Reset all wrappers */
+  #page-wrapper,
+  #page-wrapper.landing,
+  .container {
+    background: white !important;
+    background-color: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+  }
+
+  /* Show dedicated print view, hide everything else */
+  .only-print {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: white !important;
+    padding: 8mm !important;
+    z-index: 9999 !important;
+  }
+
   .no-print,
   #header,
   #nav,
@@ -277,163 +312,167 @@ a:hover {
   .search-container,
   .modal-overlay,
   footer,
-  button {
+  button,
+  .print-header,
+  .table-wrapper,
+  .items-table-header,
+  .financial-summary,
+  .measurements-table,
+  .component-section,
+  .table-section {
     display: none !important;
   }
 
-  /* Reset Layout */
-  .container {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  #page-wrapper {
-    padding: 0 !important;
+  /* OrderPrintView Styles */
+  .order-print-view {
+    width: 100%;
     background: white !important;
   }
 
-  /* Print Header */
-  .print-header {
-    display: block !important;
+  .print-table {
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 1px;
+    font-size: 10px;
+    background-color: rgb(218, 218, 218);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border: 0.1px solid white;
   }
 
-  /* Tables */
-  .table-wrapper {
-    background: transparent !important;
+  .print-table thead {
+    background-color: #dadde6;
+    font-size: 11px;
+    color: rgb(3, 3, 3);
+    font-family: Arial, sans-serif;
+  }
+
+  .print-table th,
+  .print-table td {
+    padding: 1.3px;
+    border: 0.1px solid white;
+  }
+
+  .print-table tbody {
+    background-color: #eee;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+
+  .print-table tbody tr td {
+    padding: 1px;
+    color: #1f274d;
+  }
+
+  .print-table tbody tr:last-child {
+    background-color: #eee;
+  }
+
+  /* Specific Header Table Styles */
+  .print-header-table th {
+    text-align: left;
+    padding: 2px 5px;
+  }
+
+  .print-header-table .head-content {
+    font-size: 9px;
+    color: rgb(78, 78, 78);
+    background: #f5f5f5;
+  }
+
+  .logo-th {
+    position: relative;
+    height: 60px;
+    background: white !important;
     border: none !important;
-    padding: 0 !important;
-    margin: 10px 0 !important;
-    overflow: visible !important;
   }
 
-  .items-table-header {
-    background: transparent !important;
-    color: black !important;
-    padding: 5px 0 !important;
-    border-bottom: 2px solid #000 !important;
-    justify-content: flex-start !important;
-    gap: 20px;
+  .print-logo {
+    width: 140px;
+    height: 55px;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
-  .items-table-header span {
-    opacity: 1 !important;
-    font-size: 11pt !important;
+  .order-number {
+    text-align: right;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
   }
 
-  table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-    font-size: 9pt !important;
+  /* Section Titles */
+  .section-title {
+    background-color: #0a1e58;
+    color: white !important;
+    font-weight: bold;
+    padding: 5px;
+    font-size: 12px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
-  td,
-  th {
-    padding: 4px 5px !important;
-    border-bottom: 1px solid #ddd !important;
-    color: black !important;
-    background: transparent !important;
+  .main-th {
+    color: #0a1e58;
+  }
+
+  /* Items */
+  .item-description {
+    display: flex;
+    align-items: center;
     text-align: left;
   }
 
-  thead tr {
-    background: #f0f0f0 !important;
-    border-bottom: 2px solid #000 !important;
+  .item-image {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin-right: 5px;
+    vertical-align: middle;
+    display: inline-block !important;
+    /* Force show images in print view */
   }
 
-  thead td {
+  /* Totals */
+  .total-row td {
+    border-top: 1px solid #ccc;
+  }
+
+  .valores-totais {
+    color: black !important;
     font-weight: bold !important;
-    color: black !important;
   }
 
-  /* Hide Actions Column */
-  td:last-child,
-  th:last-child {
-    display: none !important;
+  /* Resumo Table */
+  .resumo-table td {
+    text-align: left !important;
+    padding: 5px !important;
   }
 
-  /* Financial Summary */
-  .financial-summary {
-    background: transparent !important;
-    border: 1px solid #000 !important;
-    box-shadow: none !important;
-    padding: 15px !important;
-    page-break-inside: avoid;
-    color: black !important;
-    width: 50%;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-  }
-
-  .financial-summary h3 {
-    color: black !important;
-    border-bottom: 1px solid #000;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-  }
-
-  .financial-summary div {
-    color: black !important;
-    font-weight: normal !important;
-  }
-
-  .financial-summary span {
-    color: black !important;
-    opacity: 1 !important;
-  }
-
-  /* Measurements Report Optimization */
-  .report-container {
-    background: transparent !important;
-    padding: 0 !important;
-    margin-top: 20px !important;
-    page-break-before: auto;
-  }
-
-  .report-header,
-  .controls {
-    display: none !important;
-  }
-
-  .component-section {
-    border: 1px solid #ccc !important;
-    box-shadow: none !important;
-    margin-bottom: 10px !important;
-    page-break-inside: avoid;
-  }
-
-  .component-header {
-    background: #f0f0f0 !important;
-    color: black !important;
-    padding: 5px 10px !important;
-    border-bottom: 1px solid #ccc !important;
-    border-left: none !important;
-  }
-
-  .in-range {
-    background-color: #e8f5e8 !important;
-    color: black !important;
+  .resumo-table .final-total {
+    background-color: #dadde6 !important;
+    font-weight: bold;
+    font-size: 12px;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  .out-range {
-    background-color: #ffe8e8 !important;
-    color: black !important;
+  .resumo-table .saldo-value {
+    color: #e44c65 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  /* Images in table */
-  .img-table img {
-    display: none;
-    /* Hide images in table to save space/ink */
-  }
-
-  /* General Print Fixes */
+  /* Force white background for body to save ink/look like original */
   * {
-    text-shadow: none !important;
     box-shadow: none !important;
+    text-shadow: none !important;
   }
 }
